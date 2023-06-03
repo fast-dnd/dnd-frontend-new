@@ -1,15 +1,36 @@
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { jibril } from "@/utils/fonts";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="text-3xl">
-      Hello world
-      <Box title="AWD" className="ml-20 mt-20 w-96 h-96">
-        <div className="mt-20 ml-10">hello</div>
-      </Box>
+    <main>
+      <div className="flex gap-12 items-center">
+        <div className="mt-10 flex-1 h-0.5 border-t border-tomato" />
+        <div className="mt-10 flex items-center justify-center flex-col gap-1">
+          <Image src="/images/logo-up.png" width={114} height={6} alt="logo-up" />
+          <div className="relative flex justify-center">
+            <div className="absolute w-full h-full flex items-center justify-center">
+              <Image src="/images/logo-red-layer.png" width={204} height={35} alt="logo-red-layer" />
+            </div>
+            <div className="absolute w-full h-full flex items-center justify-center z-20">
+              <p style={jibril.style} className="text-2xl tracking-[0.415em] text-center indent-[0.415em] uppercase">
+                v3rpg
+              </p>
+            </div>
+            <Image className="z-10" src="/images/logo-black-layer.png" alt="logo-black-layer" width={199} height={42} />
+          </div>
+          <Image src="/images/logo-down.png" width={72} height={14} alt="logo-down" />
+        </div>
+        <div className="mt-10 flex-1 h-0.5 border-t border-tomato" />
+      </div>
+      <div className="flex items-center justify-center mt-24">
+        <Box title="ACCOUNT" className="w-[450px]">
+          LOGIN
+        </Box>
+      </div>
     </main>
   );
 }
