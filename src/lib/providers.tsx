@@ -1,6 +1,6 @@
 "use client";
 
-import AuthProvider from "@/components/auth-checker";
+import AuthProvider from "@/components/auth-provider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import React from "react";
 
