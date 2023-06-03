@@ -8,7 +8,7 @@ import React from "react";
 const GoogleLoginButton = () => {
   const router = useRouter();
 
-  const redirectURL = localStorage.getItem("redirectURL");
+  const redirectURL = typeof window !== "undefined" ? localStorage.getItem("redirectURL") : null;
   const redirectTo = redirectURL ? redirectURL : "/home";
 
   return <GoogleLogin onSuccess={(response) => authService.login(response).then(() => router.push(redirectTo))} />;

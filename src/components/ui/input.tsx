@@ -36,6 +36,7 @@ export interface InputProps
   endIconProps?: React.SVGProps<SVGSVGElement>;
   successMessage?: string;
   errorMessage?: string;
+  label?: string;
 }
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -48,6 +49,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       endIconProps,
       successMessage,
       errorMessage,
+      label,
       disabled,
       className,
       ...props
@@ -56,6 +58,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     return (
       <div className="flex flex-col">
+        {label && <div className="bg-black/5 backdrop-blur-none px-4 py-2 w-fit">{label}</div>}
         <div
           className={cn(
             inputContainerVariants({ state, className }),

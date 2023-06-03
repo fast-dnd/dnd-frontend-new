@@ -12,7 +12,7 @@ export interface BoxProps extends React.HTMLAttributes<HTMLDivElement>, VariantP
 
 export const Box = React.forwardRef<HTMLDivElement, BoxProps>(({ className, children, title, ...props }, ref) => {
   return (
-    <div className={cn(boxVariants({ className }))} ref={ref} {...props}>
+    <div>
       <div className="py-6 border-t-2 border-tomato/90 bg-black flex items-center justify-center gap-4">
         <div className="bg-tomato w-2 h-2 rotate-45" />
         <p className="text-xl" style={jibril.style}>
@@ -20,7 +20,9 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(({ className, chil
         </p>
         <div className="bg-tomato w-2 h-2 rotate-45" />
       </div>
-      {children}
+      <div className={cn(boxVariants({ className }))} ref={ref} {...props}>
+        {children}
+      </div>
     </div>
   );
 });
