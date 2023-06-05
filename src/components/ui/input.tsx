@@ -58,7 +58,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     return (
       <div className="flex flex-col">
-        {label && <div className="bg-black/5 backdrop-blur-none px-4 py-2 w-fit">{label}</div>}
+        {label && (
+          <div className="bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit">
+            {label}
+          </div>
+        )}
         <div
           className={cn(
             inputContainerVariants({ state, className }),

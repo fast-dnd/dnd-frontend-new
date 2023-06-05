@@ -11,7 +11,7 @@ const Tabs = <TValue extends string>(props: {
 }) => {
   const { tabs, selectedTab, setTab, onTabClick } = props;
   return (
-    <div className="flex flex-row items-center gap-6">
+    <div className="flex flex-row min-w-fit items-center gap-6">
       {tabs
         .map<React.ReactNode>((tab) => (
           <div
@@ -25,7 +25,7 @@ const Tabs = <TValue extends string>(props: {
               onTabClick?.();
             }}
           >
-            <p className="text-[22px] leading-7 tracking-[0.15em] -mr-[0.15em] uppercase">
+            <p className="text-[22px] leading-7 tracking-[0.15em] -mr-[0.15em] whitespace-nowrap uppercase">
               {tab}
             </p>
           </div>
