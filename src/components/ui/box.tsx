@@ -15,7 +15,7 @@ export interface BoxProps
 export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
   ({ className, children, title, ...props }, ref) => {
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         <div className="py-6 border-t-2 border-tomato/90 bg-black flex items-center justify-center gap-4">
           <div className="bg-tomato w-2 h-2 rotate-45" />
           <p className="text-xl" style={jibril.style}>

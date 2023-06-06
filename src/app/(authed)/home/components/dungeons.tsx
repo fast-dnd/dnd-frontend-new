@@ -24,10 +24,11 @@ const Dungeons = (props: {
           onClick={() => setDungeon(dungeon)}
         >
           <Image
-            src={dungeon.image || ""}
+            src={dungeon.image || "/images/bg-cover.png"}
             alt={dungeon.name}
             width={180}
             height={180}
+            className="h-[180px]"
           />
           <div className="flex flex-col py-4 gap-4 w-full">
             <div className="flex flex-row justify-between w-full pr-8">
@@ -37,7 +38,7 @@ const Dungeons = (props: {
               {dungeon === selectedDungeon && (
                 <div className="flex flex-row items-center px-3 gap-4 border border-tomato justify-self-end">
                   <AiOutlineCheck className="text-tomato text-lg" />
-                  <p className="leading-7 tracking-[0.15em] text-tomato uppercase">
+                  <p className="leading-6 tracking-[0.15em] text-tomato uppercase">
                     SELECTED
                   </p>
                 </div>

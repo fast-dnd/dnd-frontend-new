@@ -15,11 +15,13 @@ const useHome = () => {
   const [recommendedDungeons, setRecommendedDungeons] = useState<IDungeon[]>(
     []
   );
+  const [myDungeons, setMyDungeons] = useState<IDungeon[]>([]);
 
   useEffect(() => {
     dndService
       .getRecommendedDungeons()
       .then((res) => setRecommendedDungeons(res.data));
+    dndService.getDungeons().then((res) => setMyDungeons(res.data));
     dndService.getRooms().then((res) => setRoomHistory(res.data.rooms));
   }, []);
 
@@ -34,6 +36,7 @@ const useHome = () => {
     setRoomId,
     roomHistory,
     recommendedDungeons,
+    myDungeons,
     setRecommendedDungeons,
   };
 };
