@@ -1,7 +1,7 @@
 import React from "react";
 
-const Game = () => {
+const Lobby = () => {
   return <div>Game</div>;
 };
 
-export default Game;
+export default Lobby;
