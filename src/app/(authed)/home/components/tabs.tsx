@@ -1,5 +1,3 @@
-"use client";
-
 import { cn } from "@/utils/style-utils";
 import { Dispatch, SetStateAction } from "react";
 

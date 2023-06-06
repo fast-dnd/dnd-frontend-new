@@ -1,5 +1,3 @@
-"use client";
-
 import { IDungeon } from "@/types/dnd";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";

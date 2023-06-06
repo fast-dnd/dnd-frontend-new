@@ -1,5 +1,3 @@
-"use client";
-
 import { IKingdom } from "@/services/dndService";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";

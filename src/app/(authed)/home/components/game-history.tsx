@@ -1,5 +1,3 @@
-"use client";
-
 import { IRoomData } from "@/services/dndService";
 import Image from "next/image";
 import { AiOutlineRight } from "react-icons/ai";
