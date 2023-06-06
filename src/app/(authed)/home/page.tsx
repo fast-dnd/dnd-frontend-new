@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import GameHistory from "./components/game-history";
 import Avatars from "./components/avatars";
 
+// TODO: redirect to create-avatar if there are no avatars
+
 const Home = () => {
   const {
     homeTab,
