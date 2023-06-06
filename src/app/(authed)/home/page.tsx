@@ -59,7 +59,7 @@ const Home = () => {
             <div className="flex flex-row justify-between">
               <div className="flex flex-row gap-4 items-center text-white/50 cursor-pointer">
                 <AiOutlineQuestionCircle className="text-2xl" />
-                <p className="leading-7 tracking-[0.15em]  uppercase">
+                <p className="leading-7 tracking-[0.15em] uppercase">
                   HOW TO PLAY
                 </p>
               </div>
