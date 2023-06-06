@@ -8,8 +8,8 @@ import { AiOutlineCheck } from "react-icons/ai";
 
 const Dungeons = (props: {
   dungeons: IDungeon[];
-  selectedDungeon: IDungeon | undefined;
-  setDungeon: Dispatch<SetStateAction<IDungeon | undefined>>;
+  selectedDungeon?: IDungeon;
+  setDungeon?: Dispatch<SetStateAction<IDungeon | undefined>>;
 }) => {
   const { dungeons, selectedDungeon, setDungeon } = props;
   return (
@@ -21,7 +21,7 @@ const Dungeons = (props: {
             "flex flex-row gap-8 hover:bg-white/5",
             dungeon === selectedDungeon && "bg-white/5"
           )}
-          onClick={() => setDungeon(dungeon)}
+          onClick={() => setDungeon?.(dungeon)}
         >
           <Image
             src={dungeon.image || "/images/bg-cover.png"}

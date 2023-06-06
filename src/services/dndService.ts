@@ -64,6 +64,7 @@ export interface IAvatar {
   level: number;
   kingdomId: string;
   label: string;
+  image?: string;
 }
 
 export interface IKingdom {
