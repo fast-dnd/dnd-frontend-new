@@ -8,7 +8,7 @@ const handleInterceptors = (apiInstance: AxiosInstance) => {
   apiInstance.interceptors.response.use(
     (response) => response,
     (error) => {
-      if (error.response.status === 401) {
+      if (error.response && error.response.status === 401) {
         localStorage.removeItem("jwtToken");
         redirect("/");
       }
