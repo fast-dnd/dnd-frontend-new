@@ -9,6 +9,7 @@ import Dungeons from "./components/dungeons";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import GameHistory from "./components/game-history";
 
 const Home = () => {
   const {
@@ -17,7 +18,10 @@ const Home = () => {
     dungeonTab,
     setDungeonTab,
     dungeon,
+    roomId,
+    setRoomId,
     setDungeon,
+    roomHistory,
     recommendedDungeons,
   } = useHome();
 
@@ -51,10 +55,24 @@ const Home = () => {
             <Button className="px-8 w-fit">CREATE</Button>
           </div>
         </Box>
-        <div className="flex flex-col flex-1 min-w-fit gap-12">
+        <div className="flex flex-col flex-1 h-full min-w-fit gap-12">
           <Box title="JOIN ROOM" className="flex flex-col gap-8 p-8">
-            <Input label="Room ID" onChange={(e) => {}} />
+            <Input
+              label="Room ID"
+              onChange={(e) => setRoomId(e.target.value)}
+            />
+            <Button
+              disabled={roomId.length === 0}
+              variant={roomId ? "primary" : "outline"}
+            >
+              JOIN
+            </Button>
           </Box>
+          <div className="flex flex-col flex-1 min-h-0">
+            <Box title="GAME HISTORY" className="flex flex-1 min-h-0 px-8 pt-8">
+              <GameHistory roomHistory={roomHistory} />
+            </Box>
+          </div>
         </div>
       </div>
     </div>

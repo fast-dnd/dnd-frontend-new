@@ -8,10 +8,10 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-tomato text-black hover:shadow-basic",
+        primary: "bg-tomato border border-tomato text-black hover:shadow-basic",
         outline:
           "bg-transparent text-white border border-tomato hover:bg-tomato hover:text-black",
-        ghost: "bg-transparent text-white",
+        ghost: "bg-transparent border border-transparent text-white",
       },
     },
     defaultVariants: {

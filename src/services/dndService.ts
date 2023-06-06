@@ -40,6 +40,8 @@ export interface IRoomData {
   generateAudio: string;
   location: ILocation;
   adventureMission: string;
+  conversationId: string;
+  image?: string;
 }
 
 export interface IPlayerMove {
@@ -151,6 +153,10 @@ const postDungeon = async (data: IPostDungeon) => {
   return await dndApi.post<IDungeon>("dungeon", data);
 };
 
+const getRooms = async () => {
+  return await dndApi.get<{ rooms: IRoomData[] }>("rooms");
+};
+
 const postChampions = async (data: { champions: Partial<IChampion>[] }) => {
   return await dndApi.post<IChampion[]>("champions", data);
 };
@@ -181,6 +187,7 @@ const dndService = {
   getDungeon,
   getDungeons,
   getRecommendedDungeons,
+  getRooms,
   postChampions,
   postComplaint,
   postQuestion,
