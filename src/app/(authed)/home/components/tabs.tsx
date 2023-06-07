@@ -2,7 +2,7 @@
 
 import { cn } from "@/utils/style-utils";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { dungeonTabs, homeTabs } from "../types/home";
 import { Fragment } from "react";
 
@@ -14,7 +14,6 @@ interface ITabsProps {
 const Tabs = ({ selectedTab, homeOrDungeons }: ITabsProps) => {
   const tabs = homeOrDungeons === "home" ? homeTabs : dungeonTabs;
   const pathname = usePathname();
-  const router = useRouter();
 
   return (
     <div className="flex flex-row min-w-fit items-center gap-6">
