@@ -8,44 +8,26 @@ import dndService, { IKingdom, IRoomData } from "@/services/dndService";
 // TODO: maybe url query hometab & dungeontab
 
 const useHome = () => {
-  const [homeTab, setHomeTab] = useState<HomeTabType>("PLAY");
-  const [dungeonTab, setDungeonTab] = useState<DungeonTabType>("MY DUNGEONS");
-  const [dungeon, setDungeon] = useState<IDungeon>();
-  const [roomId, setRoomId] = useState<string>("");
-  const [roomHistory, setRoomHistory] = useState<IRoomData[]>([]);
-  const [kingdom, setKingdom] = useState<IKingdom>();
-  const [dungeonId, setDungeonId] = useState<string>("");
-
-  const [recommendedDungeons, setRecommendedDungeons] = useState<IDungeon[]>(
-    []
-  );
+  const [recommendedDungeons, setRecommendedDungeons] = useState<IDungeon[]>([]);
   const [myDungeons, setMyDungeons] = useState<IDungeon[]>([]);
+  const [roomHistory, setRoomHistory] = useState<IRoomData[]>([]);
+  const [kingdom, setKingdom] = useState<IKingdom | null>(null);
 
   useEffect(() => {
-    dndService
-      .getRecommendedDungeons()
-      .then((res) => setRecommendedDungeons(res.data));
-    dndService.getDungeons().then((res) => setMyDungeons(res.data));
-    dndService.getRooms().then((res) => setRoomHistory(res.data.rooms));
-    dndService.getKingdom().then((res) => setKingdom(res.data));
+    async function fetchData() {
+      await dndService.getRecommendedDungeons().then((res) => setRecommendedDungeons(res.data));
+      await dndService.getDungeons().then((res) => setMyDungeons(res.data));
+      await dndService.getRooms().then((res) => setRoomHistory(res.data.rooms));
+      await dndService.getKingdom().then((res) => setKingdom(res.data));
+    }
+    fetchData();
   }, []);
 
   return {
-    homeTab,
-    setHomeTab,
-    dungeonTab,
-    setDungeonTab,
-    dungeon,
-    setDungeon,
-    roomId,
-    setRoomId,
-    roomHistory,
     recommendedDungeons,
     myDungeons,
-    setRecommendedDungeons,
+    roomHistory,
     kingdom,
-    dungeonId,
-    setDungeonId,
   };
 };
 

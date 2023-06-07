@@ -12,7 +12,7 @@ export const inputVariants = cva(
 export const inputContainerVariants = cva(
   [
     "relative mb-2 flex items-center bg-transparent py-2 pl-4 text-base border border-white/50",
-    "focus-within:border-primary-default hover:focus-within:border-opacity-100",
+    "focus-within:border-tomato hover:focus-within:border-opacity-100 transition-all duration-300",
   ],
   {
     variants: {
@@ -59,9 +59,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="flex flex-col">
         {label && (
-          <div className="bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit">
-            {label}
-          </div>
+          <div className="bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit">{label}</div>
         )}
         <div
           className={cn(
