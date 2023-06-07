@@ -1,4 +1,11 @@
-import { IChampion, IDungeon, ILocation, IPlayer, IRoom, MoveType } from "@/types/dnd";
+import {
+  IChampion,
+  IDungeon,
+  ILocation,
+  IPlayer,
+  IRoom,
+  MoveType,
+} from "@/types/dnd";
 
 import createApi from "./apiFactory";
 
@@ -119,7 +126,14 @@ const playMove = async (data: IPlayMove) => {
   return await dndApi.post<IPlayMoveResponse>("play", data);
 };
 
-const postLocations = async (data: { locations: Partial<ILocation>[] }) => {
+export interface IPostLocation {
+  name: string;
+  description: string;
+  mission: string;
+  transition: string;
+}
+
+const postLocations = async (data: { locations: IPostLocation[] }) => {
   return await dndApi.post<ILocation[]>("locations", data);
 };
 
@@ -128,7 +142,6 @@ export interface IPostDungeon {
   description: string;
   locations: string[];
   champions: string[];
-  publiclySeen: boolean;
 }
 
 const getDungeon = async (dungeonId: string) => {
@@ -159,7 +172,10 @@ const postComplaint = async (data: { text: string }) => {
   return await dndApi.post("complaint", data);
 };
 
-const postQuestion = async (data: { question: string; conversationId: string }) => {
+const postQuestion = async (data: {
+  question: string;
+  conversationId: string;
+}) => {
   return await dndApi.post("ask", data);
 };
 

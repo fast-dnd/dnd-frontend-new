@@ -30,7 +30,7 @@ const GameHistory = () => {
             </p>
             {room.state === "GAMING" && (
               <p className="text-sm tracking-[0.15em] text-tomato/50 uppercase">
-                RESUME (TURN {room.currentRound})
+                RESUME (TURN {room.currentRound + 1})
               </p>
             )}
           </div>

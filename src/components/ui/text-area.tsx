@@ -5,11 +5,11 @@ import { cn } from "@/utils/style-utils";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 
-export const inputVariants = cva(
+export const textAreaVariants = cva(
   "bg-transparent outline-none placeholder:text-white/30 w-full flex disabled:text-opacity-35 mr-1 overflow-auto"
 );
 
-export const inputContainerVariants = cva(
+export const textAreaContainerVariants = cva(
   [
     "relative mb-2 flex items-center bg-transparent py-2 pl-4 text-base border border-white/50",
     "focus-within:border-tomato hover:focus-within:border-opacity-100 transition-all duration-300",
@@ -26,10 +26,10 @@ export const inputContainerVariants = cva(
   }
 );
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
-    VariantProps<typeof inputVariants>,
-    VariantProps<typeof inputContainerVariants> {
+export interface TextAreaProps
+  extends React.InputHTMLAttributes<HTMLTextAreaElement>,
+    VariantProps<typeof textAreaVariants>,
+    VariantProps<typeof textAreaContainerVariants> {
   StartIcon?: (iconProps: React.SVGProps<SVGSVGElement>) => JSX.Element;
   startIconProps?: React.SVGProps<SVGSVGElement>;
   EndIcon?: (iconProps: React.SVGProps<SVGSVGElement>) => JSX.Element;
@@ -37,9 +37,10 @@ export interface InputProps
   successMessage?: string;
   errorMessage?: string;
   label?: string;
+  disableResize?: boolean;
 }
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (
     {
       state,
@@ -50,6 +51,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       successMessage,
       errorMessage,
       label,
+      disableResize,
       disabled,
       className,
       ...props
@@ -57,7 +59,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ref
   ) => {
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         {label && (
           <div className="bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit">
             {label}
@@ -65,7 +67,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         <div
           className={cn(
-            inputContainerVariants({ state, className }),
+            textAreaContainerVariants({ state, className }),
             disabled && "pointer-events-none bg-opacity-20 text-opacity-20"
           )}
         >
@@ -74,7 +76,15 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               <StartIcon {...startIconProps} />
             </div>
           )}
-          <input className={cn(inputVariants())} ref={ref} {...props} />
+          <textarea
+            className={cn(
+              "h-full",
+              disableResize && "resize-none",
+              textAreaVariants()
+            )}
+            ref={ref}
+            {...props}
+          />
           {EndIcon && (
             <div className="mr-4 flex justify-center">
               <EndIcon {...endIconProps} />
@@ -96,4 +106,4 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-Input.displayName = "Input";
+TextArea.displayName = "TextArea";
