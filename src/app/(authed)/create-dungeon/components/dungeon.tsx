@@ -38,7 +38,7 @@ const Dungeon = ({
           <TextArea
             label="Description"
             value={description}
-            className="h-full w-full m-0"
+            className="h-full m-0"
             disableResize
             onChange={(e) => setDescription(e.target.value)}
           />

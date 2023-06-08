@@ -164,7 +164,14 @@ const getRooms = async () => {
   return await dndApi.get<{ rooms: IRoomData[] }>("rooms");
 };
 
-const postChampions = async (data: { champions: Partial<IChampion>[] }) => {
+export interface IPostChampion {
+  name: string;
+  description: string;
+  label: string;
+  moveMapping: { [key in MoveType]?: string };
+}
+
+const postChampions = async (data: { champions: IPostChampion[] }) => {
   return await dndApi.post<IChampion[]>("champions", data);
 };
 

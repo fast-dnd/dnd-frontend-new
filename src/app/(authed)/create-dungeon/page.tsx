@@ -6,19 +6,21 @@ import { useRouter } from "next/navigation";
 import { AiOutlineLeft } from "react-icons/ai";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import { IPostLocation } from "@/services/dndService";
+import { IPostChampion, IPostLocation } from "@/services/dndService";
 import Dungeon from "./components/dungeon";
+import Locations from "./components/locations";
 
 const CreateDungeon = () => {
   const router = useRouter();
   const [step, setStep] = useState<number>(0);
   const [locations, setLocations] = useState<IPostLocation[]>([]);
+  const [champions, setChampions] = useState<IPostChampion[]>([]);
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [image, setImage] = useState<string>("");
 
   return (
-    <div className="flex justify-center h-full p-16">
+    <div className="flex justify-center h-full p-16 overflow-y-hidden">
       <div className="flex flex-col items-center gap-8">
         <div
           className="flex flex-row gap-1 w-full font-medium items-center tracking-[0.08em] cursor-pointer uppercase"
@@ -37,13 +39,14 @@ const CreateDungeon = () => {
                 {stepTitles[step]}
               </p>
               {step > 0 && step < steps.length - 1 && (
-                <div
-                  className="flex flex-row gap-1 items-center whitespace-nowrap font-medium tracking-[0.08em]  text-white/50 cursor-pointer uppercase"
+                <Button
+                  className="flex flex-row gap-1 font-medium tracking-[0.08em] w-fit text-white/50 uppercase"
+                  variant="ghost"
                   onClick={() => setStep(step - 1)}
                 >
                   <AiOutlineLeft className="inline-block" />
                   PREVIOUS
-                </div>
+                </Button>
               )}
               {step < steps.length - 1 && (
                 <Button
@@ -67,6 +70,9 @@ const CreateDungeon = () => {
                   image={image}
                   setImage={setImage}
                 />
+              )}
+              {steps[step] === "LOCATIONS" && (
+                <Locations locations={locations} setLocations={setLocations} />
               )}
             </div>
           </Box>
