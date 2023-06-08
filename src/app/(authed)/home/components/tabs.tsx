@@ -9,9 +9,10 @@ import { Fragment } from "react";
 interface ITabsProps {
   homeOrDungeons: "home" | "dungeon";
   selectedTab?: string;
+  onTabClick?: () => void;
 }
 
-const Tabs = ({ selectedTab, homeOrDungeons }: ITabsProps) => {
+const Tabs = ({ selectedTab, homeOrDungeons, onTabClick }: ITabsProps) => {
   const tabs = homeOrDungeons === "home" ? homeTabs : dungeonTabs;
   const pathname = usePathname();
 
@@ -24,6 +25,7 @@ const Tabs = ({ selectedTab, homeOrDungeons }: ITabsProps) => {
               "cursor-pointer",
               tab === selectedTab && "font-extrabold border-b-2 border-tomato"
             )}
+            onClick={onTabClick}
             href={{
               pathname,
               query: {

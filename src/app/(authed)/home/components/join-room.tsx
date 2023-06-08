@@ -3,15 +3,29 @@
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import dndService from "@/services/dndService";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const JoinRoom = () => {
-  const [roomId, setRoomId] = React.useState<string>("");
+  const [roomLink, setRoomLink] = React.useState<string>("");
+
+  const router = useRouter();
+
+  const joinRoom = () => {
+    dndService
+      .joinRoom({ link: roomLink })
+      .then((res) => router.push(`lobby/${res.data.conversationId}`));
+  };
 
   return (
     <Box title="JOIN ROOM" className="flex flex-col gap-8 p-8">
-      <Input label="Room ID" onChange={(e) => setRoomId(e.target.value)} />
-      <Button disabled={roomId.length === 0} variant={roomId ? "primary" : "outline"}>
+      <Input label="Room ID" onChange={(e) => setRoomLink(e.target.value)} />
+      <Button
+        disabled={roomLink.length === 0}
+        variant="outline"
+        onClick={joinRoom}
+      >
         JOIN
       </Button>
     </Box>

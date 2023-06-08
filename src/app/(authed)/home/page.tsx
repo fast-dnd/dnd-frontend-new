@@ -1,6 +1,5 @@
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
 import AddDungeon from "./components/add-dungeon";
 import Avatars from "./components/avatars";
 import Dungeons from "./components/dungeons";
@@ -9,6 +8,7 @@ import JoinRoom from "./components/join-room";
 import Tabs from "./components/tabs";
 import { DungeonTabType, HomeTabType } from "./types/home";
 import { cn } from "@/utils/style-utils";
+import CreateRoom from "./components/create-room";
 
 const Home = ({
   searchParams,
@@ -35,20 +35,7 @@ const Home = ({
           title="CREATE ROOM"
           className="p-8 flex flex-col min-h-0 flex-1 gap-8"
         >
-          <Tabs homeOrDungeons="dungeon" selectedTab={dungeonTab} />
-          <Dungeons
-            dungeonType={dungeonTab === "TOP DUNGEONS" ? "recommended" : "my"}
-            canSelect
-          />
-          <div className="flex flex-row justify-between">
-            <div className="flex flex-row gap-4 items-center text-white/50 cursor-pointer">
-              <AiOutlineQuestionCircle className="text-2xl" />
-              <p className="leading-7 tracking-[0.15em]  uppercase">
-                HOW TO PLAY
-              </p>
-            </div>
-            <Button className="px-8 w-fit">CREATE</Button>
-          </div>
+          <CreateRoom dungeonTab={dungeonTab} />
         </Box>
         <div className="flex flex-col flex-1 basis-1/3 h-full min-w-fit gap-12">
           <JoinRoom />
@@ -82,7 +69,7 @@ const Home = ({
             title="MY DUNGEONS"
             className="flex flex-col flex-1 min-h-0 gap-8 p-8"
           >
-            <Dungeons dungeonType="my" />
+            <Dungeons />
             <AddDungeon />
           </Box>
         </div>

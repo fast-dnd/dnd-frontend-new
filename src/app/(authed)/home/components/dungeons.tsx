@@ -7,27 +7,15 @@ import { useState } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import useHome from "../hooks/use-home";
 
-interface IDungeonsProps {
-  dungeonType: "recommended" | "my";
-  canSelect?: boolean;
-}
-
-const Dungeons = ({ dungeonType, canSelect }: IDungeonsProps) => {
-  const { recommendedDungeons, myDungeons } = useHome();
-  const dungeons =
-    dungeonType === "recommended" ? recommendedDungeons : myDungeons;
-  const [selectedDungeon, setSelectedDungeon] = useState<IDungeon>();
+const Dungeons = () => {
+  const { myDungeons } = useHome();
 
   return (
     <div className="flex flex-col gap-12 flex-1 overflow-y-auto pr-8">
-      {dungeons.map((dungeon) => (
+      {myDungeons.map((dungeon) => (
         <div
           key={dungeon._id}
-          className={cn(
-            "flex flex-row gap-8 hover:bg-white/5",
-            dungeon === selectedDungeon && "bg-white/5"
-          )}
-          onClick={() => canSelect && setSelectedDungeon(dungeon)}
+          className={cn("flex flex-row gap-8 hover:bg-white/5")}
         >
           <Image
             src={dungeon.image || "/images/bg-cover.png"}
@@ -41,14 +29,6 @@ const Dungeons = ({ dungeonType, canSelect }: IDungeonsProps) => {
               <p className="text-[22px] leading-7 font-medium tracking-[0.15em] uppercase">
                 {dungeon.name}
               </p>
-              {dungeon === selectedDungeon && (
-                <div className="flex flex-row items-center px-3 gap-4 border border-tomato justify-self-end">
-                  <AiOutlineCheck className="text-tomato text-lg" />
-                  <p className="leading-6 tracking-[0.15em] text-tomato uppercase">
-                    SELECTED
-                  </p>
-                </div>
-              )}
             </div>
             <p className="font-light text-lg tracking-widest">
               {dungeon.description}
