@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UploadImage from "@/components/ui/upload-image";
 import dndService from "@/services/dndService";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
@@ -17,12 +18,12 @@ const CreateAvatar = () => {
 
   return (
     <div className="flex flex-col items-center gap-8 mt-16">
-      <div
-        className="flex flex-row gap-1 items-center font-medium tracking-[0.08em] cursor-pointer uppercase"
-        onClick={() => router.back()}
+      <Link
+        className="flex gap-1 items-center font-medium tracking-[0.08em] uppercase"
+        href="/home"
       >
         <AiOutlineLeft className="inline-block" /> GO BACK
-      </div>
+      </Link>
       <div>
         <Box title="CREATE AVATAR" className="flex flex-row gap-8 p-8">
           <UploadImage

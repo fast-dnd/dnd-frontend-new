@@ -3,53 +3,57 @@ import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 import { IPostLocation } from "@/services/dndService";
 import { Dispatch, SetStateAction, useState } from "react";
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { MdDelete, MdEdit } from "react-icons/md";
 
-export interface LocationProps {
+export interface LocationsProps {
   locations: IPostLocation[];
   setLocations: Dispatch<SetStateAction<IPostLocation[]>>;
 }
 
-const Locations = ({ locations, setLocations }: LocationProps) => {
+const Locations = ({ locations, setLocations }: LocationsProps) => {
   const [status, setStatus] = useState<"LIST" | "CREATING" | "EDITING">("LIST");
   const [currentLocation, setCurrentLocation] =
     useState<Partial<IPostLocation>>();
   const [editIndex, setEditIndex] = useState(-1);
 
   return (
-    <div className="h-full">
+    <div className="w-full h-full">
       {status === "LIST" && (
-        <div className="flex flex-col gap-8">
-          {locations.map((loc, i) => (
-            <div
-              key={`${loc.name}${i}`}
-              className="w-full bg-white/5 flex flex-row items-center p-4 gap-4"
-            >
-              <p className="w-full text-2xl font-medium tracking-widest">
-                {i + 1}. {loc.name}
-              </p>
-              <MdEdit
-                className="text-white/75 cursor-pointer"
-                size={32}
-                onClick={() => {
-                  setEditIndex(i);
-                  setCurrentLocation(loc);
-                  setStatus("EDITING");
-                }}
-              />
+        <div className="flex flex-col gap-8 w-full h-full">
+          {locations.length > 0 && (
+            <div className="flex flex-col gap-8 w-full overflow-y-auto no-scrollbar">
+              {locations.map((loc, i) => (
+                <div
+                  key={`${loc.name}${i}`}
+                  className="w-full bg-white/5 flex flex-row items-center p-4 gap-4"
+                >
+                  <p className="w-full text-2xl font-medium tracking-widest">
+                    {i + 1}. {loc.name}
+                  </p>
+                  <MdEdit
+                    className="text-white/75 cursor-pointer"
+                    size={32}
+                    onClick={() => {
+                      setEditIndex(i);
+                      setCurrentLocation(loc);
+                      setStatus("EDITING");
+                    }}
+                  />
 
-              <MdDelete
-                className="text-white/75 cursor-pointer"
-                size={32}
-                onClick={() =>
-                  setLocations(locations.filter((_, j) => i !== j))
-                }
-              />
+                  <MdDelete
+                    className="text-white/75 cursor-pointer"
+                    size={32}
+                    onClick={() =>
+                      setLocations(locations.filter((_, j) => i !== j))
+                    }
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-          <p className="text-xl tracking-[0.07em] -my-1 text-white/50">
-            Create between 2 and 4 locations
+          )}
+
+          <p className="text-xl tracking-[0.07em] text-white/50">
+            Create between 3 and 4 locations
           </p>
 
           <Button

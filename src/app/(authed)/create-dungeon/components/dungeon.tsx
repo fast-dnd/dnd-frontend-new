@@ -25,7 +25,7 @@ const Dungeon = ({
   const inputFile = useRef<HTMLInputElement | null>(null);
 
   return (
-    <div className="flex flex-row gap-8 h-full">
+    <div className="flex flex-row w-full gap-8 h-full">
       <UploadImage image={image} inputFile={inputFile} setImage={setImage} />
       <div className="flex flex-col gap-8 flex-1">
         <Input

@@ -6,9 +6,15 @@ import { useRouter } from "next/navigation";
 import { AiOutlineLeft } from "react-icons/ai";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import { IPostChampion, IPostLocation } from "@/services/dndService";
+import dndService, {
+  IPostChampion,
+  IPostLocation,
+} from "@/services/dndService";
 import Dungeon from "./components/dungeon";
 import Locations from "./components/locations";
+import Champions from "./components/champions";
+import Spinner from "@/components/ui/spinner";
+import Link from "next/link";
 
 const CreateDungeon = () => {
   const router = useRouter();
@@ -19,15 +25,33 @@ const CreateDungeon = () => {
   const [description, setDescription] = useState<string>("");
   const [image, setImage] = useState<string>("");
 
+  const [dungeonId, setDungeonId] = useState<string>("");
+
+  const onSubmit = () => {
+    dndService.postLocations({ locations }).then((re) => {
+      dndService.postChampions({ champions }).then((res) => {
+        dndService
+          .postDungeon({
+            name,
+            description,
+            locations: re.data.map((loc) => loc._id),
+            champions: res.data.map((champ) => champ._id),
+          })
+          .then((resp) => setDungeonId(resp.data._id));
+      });
+    });
+  };
+
   return (
     <div className="flex justify-center h-full p-16 overflow-y-hidden">
-      <div className="flex flex-col items-center gap-8">
-        <div
-          className="flex flex-row gap-1 w-full font-medium items-center tracking-[0.08em] cursor-pointer uppercase"
-          onClick={() => router.back()}
+      <div className="flex flex-col gap-8">
+        <Link
+          className="flex flex-row gap-1 w-fit font-medium items-center tracking-[0.08em]  uppercase"
+          href="/home"
         >
           <AiOutlineLeft className="inline-block" /> GO BACK
-        </div>
+        </Link>
+
         <div className="flex h-full">
           <Box
             title="CREATE DUNGEON"
@@ -51,16 +75,24 @@ const CreateDungeon = () => {
               {step < steps.length - 1 && (
                 <Button
                   className="w-fit px-8 whitespace-nowrap"
-                  onClick={() => setStep(step + 1)}
+                  onClick={() => {
+                    if (step === steps.length - 2) {
+                      onSubmit();
+                    }
+                    setStep(step + 1);
+                  }}
                   variant={step < steps.length - 2 ? "outline" : "primary"}
-                  disabled={false /* TODD */}
+                  disabled={
+                    step === steps.length - 2 &&
+                    (locations.length < 3 || champions.length < 2)
+                  }
                 >
                   {step < steps.length - 2 ? "NEXT STEP" : "FINISH"}
                 </Button>
               )}
             </div>
             <div className="w-full border-t border-white/20" />
-            <div className="w-full h-full">
+            <div className="flex flex-1 basis-0 min-h-0 w-full">
               {steps[step] === "INITIAL" && (
                 <Dungeon
                   name={name}
@@ -73,6 +105,34 @@ const CreateDungeon = () => {
               )}
               {steps[step] === "LOCATIONS" && (
                 <Locations locations={locations} setLocations={setLocations} />
+              )}
+              {steps[step] === "CHAMPIONS" && (
+                <Champions champions={champions} setChampions={setChampions} />
+              )}
+              {steps[step] === "FINAL" && (
+                <div className="w-full">
+                  {dungeonId.length === 0 && <Spinner />}
+                  {dungeonId.length === 0 && (
+                    <div className="flex flex-col gap-8">
+                      <p className="text-xl tracking-[0.07em] -my-1 text-white/50">
+                        Copy to share with your friends!
+                      </p>
+                      <div className="flex items-center gap-8">
+                        <p className="px-4 py-2 bg-white/5 font-medium text-2xl tracking-widest w-full">
+                          {dungeonId}
+                        </p>
+                        <Button
+                          className="w-fit px-8"
+                          onClick={() =>
+                            navigator.clipboard.writeText(dungeonId)
+                          }
+                        >
+                          COPY
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           </Box>

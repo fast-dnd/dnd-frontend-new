@@ -4,7 +4,7 @@ import React from "react";
 import Spinner from "./spinner";
 
 export const buttonVariants = cva(
-  "w-full py-2 font-semibold text-xl disabled:bg-opacity-50 disabled:text-opacity-50 disabled:pointer-events-none text-center inline-flex items-center justify-center transition-all duration-300",
+  "w-full py-2 font-semibold text-xl disabled:bg-opacity-50 disabled:text-opacity-50 disabled:border-opacity-30 disabled:pointer-events-none text-center inline-flex items-center justify-center transition-all duration-300",
   {
     variants: {
       variant: {
