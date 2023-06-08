@@ -83,10 +83,7 @@ const Home = ({
             className="flex flex-col flex-1 min-h-0 gap-8 p-8"
           >
             <Dungeons dungeonType="my" />
-            <div className="flex flex-row gap-8">
-              <AddDungeon />
-              <Button className="w-fit px-8">CREATE</Button>
-            </div>
+            <AddDungeon />
           </Box>
         </div>
       </div>

@@ -92,7 +92,7 @@ const CreateDungeon = () => {
               )}
             </div>
             <div className="w-full border-t border-white/20" />
-            <div className="flex flex-1 basis-0 min-h-0 w-full">
+            <div className="flex flex-1 basis-0 min-h-0">
               {steps[step] === "INITIAL" && (
                 <Dungeon
                   name={name}
