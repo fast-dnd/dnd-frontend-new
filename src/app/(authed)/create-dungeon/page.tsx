@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { stepTitles, steps } from "./types/create-dungeon";
 import { useRouter } from "next/navigation";
 import { AiOutlineLeft } from "react-icons/ai";

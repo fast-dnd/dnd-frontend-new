@@ -1,10 +1,7 @@
 "use client";
 
-import { IDungeon } from "@/types/dnd";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
-import { useState } from "react";
-import { AiOutlineCheck } from "react-icons/ai";
 import useHome from "../hooks/use-home";
 
 const Dungeons = () => {

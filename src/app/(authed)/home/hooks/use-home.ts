@@ -26,7 +26,7 @@ const useHome = () => {
       if (_kingdom?.avatars.length === 0) router.push("/create-avatar");
     }
     fetchData();
-  }, []);
+  }, [router]);
 
   return {
     recommendedDungeons,
