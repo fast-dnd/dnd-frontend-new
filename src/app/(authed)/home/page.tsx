@@ -1,3 +1,5 @@
+"use client";
+
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import AddDungeon from "./components/add-dungeon";
@@ -9,16 +11,11 @@ import Tabs from "./components/tabs";
 import { DungeonTabType, HomeTabType } from "./types/home";
 import { cn } from "@/utils/style-utils";
 import CreateRoom from "./components/create-room";
+import { useTabStore } from "./stores/tab-store";
 
-const Home = ({
-  searchParams,
-}: {
-  searchParams?: { homeTab?: HomeTabType; dungeonTab?: DungeonTabType };
-}) => {
-  const { homeTab, dungeonTab } = {
-    homeTab: searchParams?.homeTab ?? "PLAY",
-    dungeonTab: searchParams?.dungeonTab ?? "MY DUNGEONS",
-  };
+const Home = () => {
+  const { homeTab } = useTabStore((state) => state);
+
   return (
     <div className="flex flex-col w-full min-h-0 h-full px-16 pb-12">
       <div className="flex items-center justify-center my-16">
@@ -32,7 +29,7 @@ const Home = ({
         )}
       >
         <Box title="CREATE ROOM" className="p-8 flex flex-col min-h-0 flex-1 gap-8">
-          <CreateRoom dungeonTab={dungeonTab} />
+          <CreateRoom />
         </Box>
         <div className="flex flex-col flex-1 basis-1/3 h-full min-w-fit gap-12">
           <JoinRoom />

@@ -11,19 +11,21 @@ import { useRouter } from "next/navigation";
 import dndService from "@/services/dndService";
 import Image from "next/image";
 import { cn } from "@/utils/style-utils";
+import { useTabStore } from "../stores/tab-store";
 
 export interface CreateRoomProps {
   dungeonTab: DungeonTabType;
 }
 
-const CreateRoom = ({ dungeonTab }: CreateRoomProps) => {
+const CreateRoom = () => {
+  const { dungeonTab } = useTabStore((state) => state);
   const { recommendedDungeons, myDungeons } = useHome();
   const dungeons = dungeonTab === "TOP DUNGEONS" ? recommendedDungeons : myDungeons;
   const [selectedDungeon, setSelectedDungeon] = useState<IDungeon>();
   const router = useRouter();
 
   const createRoom = () => {
-    // audio & images not in design
+    // TODO: audio & images not in design
     dndService
       .createRoom({
         generateAudio: false,
