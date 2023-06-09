@@ -3,7 +3,7 @@
 import dndService from "@/services/dndService";
 import { useQuery } from "@tanstack/react-query";
 
-const useHome = () => {
+const useGetHomeData = () => {
   const recommendedDungeonsQuery = useQuery({
     queryKey: ["recommendedDungeons"],
     queryFn: dndService.getRecommendedDungeons,
@@ -21,4 +21,4 @@ const useHome = () => {
   return [recommendedDungeonsQuery, myDungeonsQuery, roomHistoryQuery, kingdomQuery] as const;
 };
 
-export default useHome;
+export default useGetHomeData;

@@ -1,5 +1,3 @@
-"use client";
-
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 import UploadImage from "@/components/ui/upload-image";

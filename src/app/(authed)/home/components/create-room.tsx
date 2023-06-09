@@ -1,20 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import dndService from "@/services/dndService";
 import { IDungeon } from "@/types/dnd";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineCheck, AiOutlineQuestionCircle } from "react-icons/ai";
+import useCreateRoom from "../hooks/use-create-room";
 import { useTabStore } from "../stores/tab-store";
 import { DungeonTabType } from "../types/home";
 import Tabs from "./tabs";
-
-export interface CreateRoomProps {
-  dungeonTab: DungeonTabType;
-}
 
 interface ICreateRoomProps {
   recommendedDungeons: IDungeon[];
@@ -25,20 +20,14 @@ const CreateRoom = ({ recommendedDungeons, myDungeons }: ICreateRoomProps) => {
   const { dungeonTab } = useTabStore((state) => state);
   const dungeons = dungeonTab === "TOP DUNGEONS" ? recommendedDungeons : myDungeons;
   const [selectedDungeon, setSelectedDungeon] = useState<IDungeon>();
-  const router = useRouter();
 
-  const createRoom = () => {
+  const { mutate: createRoom, isLoading } = useCreateRoom();
+
+  const onCreateRoom = () => {
     // TODO: audio & images not in design
-    dndService
-      .createRoom({
-        generateAudio: false,
-        generateImages: false,
-        dungeon: selectedDungeon?._id,
-      })
-      .then((res) => {
-        router.push(`lobby/${res.data.conversationId}`);
-      });
+    createRoom({ generateAudio: false, generateImages: false, dungeon: selectedDungeon?._id });
   };
+
   return (
     <>
       <Tabs
@@ -52,7 +41,7 @@ const CreateRoom = ({ recommendedDungeons, myDungeons }: ICreateRoomProps) => {
           <div
             key={dungeon._id}
             className={cn(
-              "flex flex-row gap-8 hover:bg-white/5",
+              "cursor-pointer flex flex-row gap-8 hover:bg-white/5",
               dungeon === selectedDungeon && "bg-white/5",
             )}
             onClick={() => setSelectedDungeon(selectedDungeon === dungeon ? undefined : dungeon)}
@@ -87,7 +76,12 @@ const CreateRoom = ({ recommendedDungeons, myDungeons }: ICreateRoomProps) => {
           <AiOutlineQuestionCircle className="text-2xl" />
           <p className="leading-7 tracking-[0.15em]  uppercase">HOW TO PLAY</p>
         </div>
-        <Button className="px-8 w-fit" disabled={!selectedDungeon} onClick={createRoom}>
+        <Button
+          isLoading={isLoading}
+          className="px-8 w-fit"
+          disabled={!selectedDungeon}
+          onClick={onCreateRoom}
+        >
           CREATE
         </Button>
       </div>

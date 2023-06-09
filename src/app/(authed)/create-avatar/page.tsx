@@ -4,24 +4,20 @@ import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UploadImage from "@/components/ui/upload-image";
-import dndService from "@/services/dndService";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
-import { toast } from "react-toastify";
+import useCreateAvatar from "./hooks/use-create-avatar";
 
 const CreateAvatar = () => {
-  const router = useRouter();
   const [name, setName] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const inputFile = useRef<HTMLInputElement | null>(null);
 
-  const createAvatar = async () => {
-    await dndService.createAvatar({ name }).then(() => {
-      router.push("/home");
-      toast.success("Avatar created successfully!");
-    });
+  const { mutate: createAvatar, isLoading } = useCreateAvatar();
+
+  const onCreateAvatar = () => {
+    createAvatar({ name });
   };
 
   return (
@@ -42,7 +38,12 @@ const CreateAvatar = () => {
               onChange={(e) => setName(e.target.value)}
               className="text-xl tracking-[0.07em]"
             />
-            <Button disabled={!name} variant={name ? "primary" : "outline"} onClick={createAvatar}>
+            <Button
+              isLoading={isLoading}
+              disabled={!name}
+              variant={name ? "primary" : "outline"}
+              onClick={onCreateAvatar}
+            >
               CREATE
             </Button>
           </div>

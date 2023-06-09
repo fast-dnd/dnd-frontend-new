@@ -11,13 +11,13 @@ import Dungeons from "./components/dungeons";
 import GameHistory from "./components/game-history";
 import JoinRoom from "./components/join-room";
 import Tabs from "./components/tabs";
-import useHome from "./hooks/use-home";
+import useGetHomeData from "./hooks/use-get-home-data";
 import { useTabStore } from "./stores/tab-store";
 
 const Home = () => {
   const { homeTab } = useTabStore((state) => state);
 
-  const allQueries = useHome();
+  const allQueries = useGetHomeData();
   const [recommendedDungeonsQuery, myDungeonsQuery, roomHistoryQuery, kingdomQuery] = allQueries;
 
   if (allQueries.some((query) => query.isLoading)) {
