@@ -112,7 +112,7 @@ const CreateDungeon = () => {
               {steps[step] === "FINAL" && (
                 <div className="w-full">
                   {dungeonId.length === 0 && <Spinner />}
-                  {dungeonId.length === 0 && (
+                  {dungeonId.length > 0 && (
                     <div className="flex flex-col gap-8">
                       <p className="text-xl tracking-[0.07em] -my-1 text-white/50">
                         Copy to share with your friends!
