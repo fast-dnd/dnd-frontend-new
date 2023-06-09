@@ -1,12 +1,12 @@
-"use client";
-
+import { IRoomData } from "@/services/dndService";
 import Image from "next/image";
 import { AiOutlineRight } from "react-icons/ai";
-import useHome from "../hooks/use-home";
 
-const GameHistory = () => {
-  const { roomHistory } = useHome();
+interface IGameHistoryProps {
+  roomHistory: IRoomData[];
+}
 
+const GameHistory = ({ roomHistory }: IGameHistoryProps) => {
   return (
     <div className="flex flex-col flex-1 gap-8 overflow-y-auto no-scrollbar">
       {roomHistory.map((room, i) => (

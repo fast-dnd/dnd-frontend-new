@@ -67,7 +67,7 @@ export interface IKingdom {
 }
 
 const getKingdom = async () => {
-  return await dndApi.get<IKingdom>("kingdom");
+  return await dndApi.get<IKingdom>("kingdom").then((res) => res.data);
 };
 
 const createAvatar = async (data: { name: string }) => {
@@ -142,11 +142,11 @@ const getDungeon = async (dungeonId: string) => {
 };
 
 const getDungeons = async () => {
-  return await dndApi.get<IDungeon[]>("dungeons");
+  return await dndApi.get<IDungeon[]>("dungeons").then((res) => res.data);
 };
 
 const getRecommendedDungeons = async () => {
-  return await dndApi.get<IDungeon[]>("dungeons/recommended");
+  return await dndApi.get<IDungeon[]>("dungeons/recommended").then((res) => res.data);
 };
 
 const postDungeon = async (data: IPostDungeon) => {
@@ -154,7 +154,7 @@ const postDungeon = async (data: IPostDungeon) => {
 };
 
 const getRooms = async () => {
-  return await dndApi.get<{ rooms: IRoomData[] }>("rooms");
+  return await dndApi.get<{ rooms: IRoomData[] }>("rooms").then((res) => res.data);
 };
 
 export interface IPostChampion {

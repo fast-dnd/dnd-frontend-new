@@ -1,37 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { IDungeon } from "@/types/dnd";
-import { IKingdom, IRoomData } from "@/services/dndService";
-import HomeState from "../utils/home-state";
-import { useRouter } from "next/navigation";
+import dndService from "@/services/dndService";
+import { useQuery } from "@tanstack/react-query";
 
 const useHome = () => {
-  const [recommendedDungeons, setRecommendedDungeons] = useState<IDungeon[]>([]);
-  const [myDungeons, setMyDungeons] = useState<IDungeon[]>([]);
-  const [roomHistory, setRoomHistory] = useState<IRoomData[]>([]);
-  const [kingdom, setKingdom] = useState<IKingdom>();
-  const router = useRouter();
+  const recommendedDungeonsQuery = useQuery({
+    queryKey: ["recommendedDungeons"],
+    queryFn: dndService.getRecommendedDungeons,
+  });
+  const myDungeonsQuery = useQuery({
+    queryKey: ["myDungeons"],
+    queryFn: dndService.getDungeons,
+  });
+  const roomHistoryQuery = useQuery({
+    queryKey: ["roomHistory"],
+    queryFn: dndService.getRooms,
+  });
+  const kingdomQuery = useQuery({ queryKey: ["kingdom"], queryFn: dndService.getKingdom });
 
-  useEffect(() => {
-    async function fetchData() {
-      const { _recommendedDungeons, _myDungeons, _roomHistory, _kingdom } =
-        await HomeState.fetchData();
-      setRecommendedDungeons(_recommendedDungeons);
-      setMyDungeons(_myDungeons);
-      setRoomHistory(_roomHistory);
-      setKingdom(_kingdom);
-      if (_kingdom?.avatars.length === 0) router.push("/create-avatar");
-    }
-    fetchData();
-  }, [router]);
-
-  return {
-    recommendedDungeons,
-    myDungeons,
-    roomHistory,
-    kingdom,
-  };
+  return [recommendedDungeonsQuery, myDungeonsQuery, roomHistoryQuery, kingdomQuery] as const;
 };
 
 export default useHome;

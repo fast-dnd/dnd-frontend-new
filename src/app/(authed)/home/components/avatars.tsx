@@ -1,12 +1,12 @@
-"use client";
-
+import { IKingdom } from "@/services/dndService";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
-import useHome from "../hooks/use-home";
 
-const Avatars = () => {
-  const { kingdom } = useHome();
+interface IKingdomProps {
+  kingdom: IKingdom;
+}
 
+const Avatars = ({ kingdom }: IKingdomProps) => {
   // TODO: avatar exp % (currently set at 80)
   return (
     <div className="h-full flex flex-col gap-8 overflow-y-auto no-scrollbar">

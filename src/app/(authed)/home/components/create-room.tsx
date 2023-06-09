@@ -1,25 +1,28 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import dndService from "@/services/dndService";
+import { IDungeon } from "@/types/dnd";
+import { cn } from "@/utils/style-utils";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { AiOutlineCheck, AiOutlineQuestionCircle } from "react-icons/ai";
+import { useTabStore } from "../stores/tab-store";
 import { DungeonTabType } from "../types/home";
 import Tabs from "./tabs";
-import { Button } from "@/components/ui/button";
-import useHome from "../hooks/use-home";
-import { useState } from "react";
-import { IDungeon } from "@/types/dnd";
-import { useRouter } from "next/navigation";
-import dndService from "@/services/dndService";
-import Image from "next/image";
-import { cn } from "@/utils/style-utils";
-import { useTabStore } from "../stores/tab-store";
 
 export interface CreateRoomProps {
   dungeonTab: DungeonTabType;
 }
 
-const CreateRoom = () => {
+interface ICreateRoomProps {
+  recommendedDungeons: IDungeon[];
+  myDungeons: IDungeon[];
+}
+
+const CreateRoom = ({ recommendedDungeons, myDungeons }: ICreateRoomProps) => {
   const { dungeonTab } = useTabStore((state) => state);
-  const { recommendedDungeons, myDungeons } = useHome();
   const dungeons = dungeonTab === "TOP DUNGEONS" ? recommendedDungeons : myDungeons;
   const [selectedDungeon, setSelectedDungeon] = useState<IDungeon>();
   const router = useRouter();
@@ -52,7 +55,7 @@ const CreateRoom = () => {
               "flex flex-row gap-8 hover:bg-white/5",
               dungeon === selectedDungeon && "bg-white/5",
             )}
-            onClick={() => setSelectedDungeon(dungeon)}
+            onClick={() => setSelectedDungeon(selectedDungeon === dungeon ? undefined : dungeon)}
           >
             <Image
               src={dungeon.image || "/images/bg-cover.png"}

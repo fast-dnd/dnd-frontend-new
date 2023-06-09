@@ -1,12 +1,12 @@
-"use client";
-
+import { IDungeon } from "@/types/dnd";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
-import useHome from "../hooks/use-home";
 
-const Dungeons = () => {
-  const { myDungeons } = useHome();
+interface IDungeonProps {
+  myDungeons: IDungeon[];
+}
 
+const Dungeons = ({ myDungeons }: IDungeonProps) => {
   return (
     <div className="flex flex-col gap-12 flex-1 overflow-y-auto pr-8">
       {myDungeons.map((dungeon) => (
