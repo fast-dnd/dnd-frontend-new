@@ -4,21 +4,20 @@ import React from "react";
 import Spinner from "./spinner";
 
 export const buttonVariants = cva(
-  "w-full py-2 font-semibold text-xl disabled:bg-opacity-50 disabled:text-opacity-50 disabled:pointer-events-none text-center inline-flex items-center justify-center transition-all duration-300",
+  "w-full py-2 font-semibold text-xl disabled:border-opacity-50 disabled:bg-opacity-50 disabled:text-opacity-50 disabled:pointer-events-none text-center inline-flex items-center justify-center transition-all duration-300",
   {
     variants: {
       variant: {
         primary:
           "bg-tomato border border-tomato text-black disabled:border-transparent hover:shadow-basic",
-        outline:
-          "bg-transparent text-white border border-tomato hover:bg-tomato hover:text-black",
+        outline: "bg-transparent text-white border border-tomato hover:bg-tomato hover:text-black",
         ghost: "bg-transparent border border-transparent text-white",
       },
     },
     defaultVariants: {
       variant: "primary",
     },
-  }
+  },
 );
 
 export interface ButtonProps
@@ -29,10 +28,7 @@ export interface ButtonProps
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    { className, disabled, href, isLoading, children, variant, ...props },
-    ref
-  ) => {
+  ({ className, disabled, href, isLoading, children, variant, ...props }, ref) => {
     if (href) {
       return (
         <a href={href} className={cn(buttonVariants({ variant, className }))}>
@@ -51,7 +47,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           {children}
         </button>
       );
-  }
+  },
 );
 
 Button.displayName = "Button";

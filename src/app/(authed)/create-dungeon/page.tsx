@@ -6,10 +6,7 @@ import { useRouter } from "next/navigation";
 import { AiOutlineLeft } from "react-icons/ai";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import dndService, {
-  IPostChampion,
-  IPostLocation,
-} from "@/services/dndService";
+import dndService, { IPostChampion, IPostLocation } from "@/services/dndService";
 import Dungeon from "./components/dungeon";
 import Locations from "./components/locations";
 import Champions from "./components/champions";
@@ -18,14 +15,16 @@ import Link from "next/link";
 
 const CreateDungeon = () => {
   const router = useRouter();
-  const [step, setStep] = useState<number>(0);
+  const [step, setStep] = useState(0);
   const [locations, setLocations] = useState<IPostLocation[]>([]);
   const [champions, setChampions] = useState<IPostChampion[]>([]);
-  const [name, setName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [image, setImage] = useState<string>("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
 
-  const [dungeonId, setDungeonId] = useState<string>("");
+  const [dungeonId, setDungeonId] = useState("");
+
+  const [copied, setCopied] = useState(false);
 
   const onSubmit = () => {
     dndService.postLocations({ locations }).then((re) => {
@@ -53,10 +52,7 @@ const CreateDungeon = () => {
         </Link>
 
         <div className="flex h-full">
-          <Box
-            title="CREATE DUNGEON"
-            className="flex flex-col gap-8 min-h-0 flex-1 w-[1200px] p-8"
-          >
+          <Box title="CREATE DUNGEON" className="flex flex-col gap-8 min-h-0 flex-1 w-[1200px] p-8">
             <div className="flex flex-row items-center gap-8 justify-between">
               <p className=" text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
                 {step < steps.length - 1 && `${step + 1}. `}
@@ -83,8 +79,7 @@ const CreateDungeon = () => {
                   }}
                   variant={step < steps.length - 2 ? "outline" : "primary"}
                   disabled={
-                    step === steps.length - 2 &&
-                    (locations.length < 3 || champions.length < 2)
+                    step === steps.length - 2 && (locations.length < 3 || champions.length < 2)
                   }
                 >
                   {step < steps.length - 2 ? "NEXT STEP" : "FINISH"}
@@ -111,7 +106,11 @@ const CreateDungeon = () => {
               )}
               {steps[step] === "FINAL" && (
                 <div className="w-full">
-                  {dungeonId.length === 0 && <Spinner />}
+                  {dungeonId.length === 0 && (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <Spinner className="w-20 h-20" />
+                    </div>
+                  )}
                   {dungeonId.length > 0 && (
                     <div className="flex flex-col gap-8">
                       <p className="text-xl tracking-[0.07em] -my-1 text-white/50">
@@ -123,11 +122,12 @@ const CreateDungeon = () => {
                         </p>
                         <Button
                           className="w-fit px-8"
-                          onClick={() =>
-                            navigator.clipboard.writeText(dungeonId)
-                          }
+                          onClick={() => {
+                            navigator.clipboard.writeText(dungeonId);
+                            setCopied(true);
+                          }}
                         >
-                          COPY
+                          {copied ? "COPIED" : "COPY"}
                         </Button>
                       </div>
                     </div>

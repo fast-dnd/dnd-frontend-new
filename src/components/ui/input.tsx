@@ -6,7 +6,7 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 
 export const inputVariants = cva(
-  "bg-transparent outline-none placeholder:text-white/30 w-full flex disabled:text-opacity-35 mr-1 overflow-auto"
+  "bg-transparent outline-none placeholder:text-white/30 w-full flex disabled:text-opacity-35 mr-1 overflow-auto",
 );
 
 export const inputContainerVariants = cva(
@@ -23,7 +23,7 @@ export const inputContainerVariants = cva(
           "border-success border border-opacity-100 hover:border-success hover:border-opacity-100 focus-within:border-success focus-within:border-opacity-100",
       },
     },
-  }
+  },
 );
 
 export interface InputProps
@@ -54,7 +54,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     return (
       <div className="flex flex-col">
@@ -66,7 +66,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <div
           className={cn(
             inputContainerVariants({ state, className }),
-            disabled && "pointer-events-none bg-opacity-20 text-opacity-20"
+            disabled && "pointer-events-none bg-opacity-20 text-opacity-20",
           )}
         >
           {StartIcon && (
@@ -93,7 +93,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = "Input";

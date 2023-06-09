@@ -14,8 +14,7 @@ export interface ChampionsProps {
 
 const Champions = ({ champions, setChampions }: ChampionsProps) => {
   const [status, setStatus] = useState<"LIST" | "CREATING" | "EDITING">("LIST");
-  const [currentChampion, setCurrentChampion] =
-    useState<Partial<IPostChampion>>();
+  const [currentChampion, setCurrentChampion] = useState<Partial<IPostChampion>>();
   const [editIndex, setEditIndex] = useState(-1);
 
   return (
@@ -33,7 +32,7 @@ const Champions = ({ champions, setChampions }: ChampionsProps) => {
                     {i + 1}. {chm.name}
                   </p>
                   <MdEdit
-                    className="text-white/75 cursor-pointer"
+                    className="text-white/75 cursor-pointer hover:text-warning transition-colors duration-300"
                     size={32}
                     onClick={() => {
                       setEditIndex(i);
@@ -43,11 +42,9 @@ const Champions = ({ champions, setChampions }: ChampionsProps) => {
                   />
 
                   <MdDelete
-                    className="text-white/75 cursor-pointer"
+                    className="text-white/75 cursor-pointer hover:text-error transition-colors duration-300"
                     size={32}
-                    onClick={() =>
-                      setChampions(champions.filter((_, j) => i !== j))
-                    }
+                    onClick={() => setChampions(champions.filter((_, j) => i !== j))}
                   />
                 </div>
               ))}
@@ -120,9 +117,7 @@ const Champions = ({ champions, setChampions }: ChampionsProps) => {
               />
               <Input
                 label="Team action text"
-                value={
-                  currentChampion?.moveMapping?.conversation_with_team || ""
-                }
+                value={currentChampion?.moveMapping?.conversation_with_team || ""}
                 onChange={(e) => {
                   setCurrentChampion({
                     ...currentChampion,
@@ -180,15 +175,12 @@ const Champions = ({ champions, setChampions }: ChampionsProps) => {
               variant="outline"
               onClick={() => {
                 if (status === "CREATING") {
-                  setChampions([
-                    ...champions,
-                    currentChampion as IPostChampion,
-                  ]);
+                  setChampions([...champions, currentChampion as IPostChampion]);
                 } else {
                   setChampions(
                     champions.map((chm, i) =>
-                      i === editIndex ? (currentChampion as IPostChampion) : chm
-                    )
+                      i === editIndex ? (currentChampion as IPostChampion) : chm,
+                    ),
                   );
                 }
                 setEditIndex(-1);

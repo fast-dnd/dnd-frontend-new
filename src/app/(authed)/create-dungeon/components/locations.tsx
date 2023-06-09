@@ -14,8 +14,7 @@ export interface LocationsProps {
 
 const Locations = ({ locations, setLocations }: LocationsProps) => {
   const [status, setStatus] = useState<"LIST" | "CREATING" | "EDITING">("LIST");
-  const [currentLocation, setCurrentLocation] =
-    useState<Partial<IPostLocation>>();
+  const [currentLocation, setCurrentLocation] = useState<Partial<IPostLocation>>();
   const [editIndex, setEditIndex] = useState(-1);
 
   return (
@@ -33,7 +32,7 @@ const Locations = ({ locations, setLocations }: LocationsProps) => {
                     {i + 1}. {loc.name}
                   </p>
                   <MdEdit
-                    className="text-white/75 cursor-pointer"
+                    className="text-white/75 cursor-pointer hover:text-warning transition-colors duration-300"
                     size={32}
                     onClick={() => {
                       setEditIndex(i);
@@ -43,11 +42,9 @@ const Locations = ({ locations, setLocations }: LocationsProps) => {
                   />
 
                   <MdDelete
-                    className="text-white/75 cursor-pointer"
+                    className="text-white/75 cursor-pointer hover:text-error transition-colors duration-300"
                     size={32}
-                    onClick={() =>
-                      setLocations(locations.filter((_, j) => i !== j))
-                    }
+                    onClick={() => setLocations(locations.filter((_, j) => i !== j))}
                   />
                 </div>
               ))}
@@ -147,15 +144,12 @@ const Locations = ({ locations, setLocations }: LocationsProps) => {
               variant="outline"
               onClick={() => {
                 if (status === "CREATING") {
-                  setLocations([
-                    ...locations,
-                    currentLocation as IPostLocation,
-                  ]);
+                  setLocations([...locations, currentLocation as IPostLocation]);
                 } else {
                   setLocations(
                     locations.map((loc, i) =>
-                      i === editIndex ? (currentLocation as IPostLocation) : loc
-                    )
+                      i === editIndex ? (currentLocation as IPostLocation) : loc,
+                    ),
                   );
                 }
                 setEditIndex(-1);
