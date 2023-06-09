@@ -11,7 +11,11 @@ const GoogleLoginButton = () => {
   const redirectURL = typeof window !== "undefined" ? localStorage.getItem("redirectURL") : null;
   const redirectTo = redirectURL ? redirectURL : "/home";
 
-  return <GoogleLogin onSuccess={(response) => authService.login(response).then(() => router.push(redirectTo))} />;
+  return (
+    <GoogleLogin
+      onSuccess={(response) => authService.login(response).then(() => router.push(redirectTo))}
+    />
+  );
 };
 
 export default GoogleLoginButton;

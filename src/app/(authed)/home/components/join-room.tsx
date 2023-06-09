@@ -21,11 +21,7 @@ const JoinRoom = () => {
   return (
     <Box title="JOIN ROOM" className="flex flex-col gap-8 p-8">
       <Input label="Room ID" onChange={(e) => setRoomLink(e.target.value)} />
-      <Button
-        disabled={roomLink.length === 0}
-        variant="outline"
-        onClick={joinRoom}
-      >
+      <Button disabled={roomLink.length === 0} variant="outline" onClick={joinRoom}>
         JOIN
       </Button>
     </Box>

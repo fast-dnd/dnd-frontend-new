@@ -20,22 +20,15 @@ const Avatars = () => {
             className="h-16"
           />
           <div className="flex flex-col justify-center gap-1">
-            <p className="text-2xl tracking-[0.07em] uppercase">
-              {avatar.name}
-            </p>
+            <p className="text-2xl tracking-[0.07em] uppercase">{avatar.name}</p>
             <div className="flex flex-row items-center gap-4">
-              <p className="text-xl tracking-[0.15em] font-light">
-                Level {avatar.level}
-              </p>
+              <p className="text-xl tracking-[0.15em] font-light">Level {avatar.level}</p>
               <div className="h-2 w-2 rotate-45 bg-white/25" />
               <div className="flex flex-row gap-1">
                 {Array.from({ length: 5 }, (_, i) => (
                   <div
                     key={i}
-                    className={cn(
-                      "w-2.5 h-3.5 bg-tomato",
-                      (i + 1) * 20 > 80 && "opacity-20"
-                    )}
+                    className={cn("w-2.5 h-3.5 bg-tomato", (i + 1) * 20 > 80 && "opacity-20")}
                   />
                 ))}
               </div>

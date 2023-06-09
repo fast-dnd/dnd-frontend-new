@@ -6,7 +6,7 @@ import { AiFillCheckCircle } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 
 export const textAreaVariants = cva(
-  "bg-transparent outline-none placeholder:text-white/30 w-full flex disabled:text-opacity-35 mr-1 overflow-auto"
+  "bg-transparent outline-none placeholder:text-white/30 w-full flex disabled:text-opacity-35 mr-1 overflow-auto",
 );
 
 export const textAreaContainerVariants = cva(
@@ -23,7 +23,7 @@ export const textAreaContainerVariants = cva(
           "border-success border border-opacity-100 hover:border-success hover:border-opacity-100 focus-within:border-success focus-within:border-opacity-100",
       },
     },
-  }
+  },
 );
 
 export interface TextAreaProps
@@ -56,7 +56,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     return (
       <div className="flex flex-col w-full">
@@ -68,7 +68,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
         <div
           className={cn(
             textAreaContainerVariants({ state, className }),
-            disabled && "pointer-events-none bg-opacity-20 text-opacity-20"
+            disabled && "pointer-events-none bg-opacity-20 text-opacity-20",
           )}
         >
           {StartIcon && (
@@ -77,11 +77,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
             </div>
           )}
           <textarea
-            className={cn(
-              "h-full",
-              disableResize && "resize-none",
-              textAreaVariants()
-            )}
+            className={cn("h-full", disableResize && "resize-none", textAreaVariants())}
             ref={ref}
             {...props}
           />
@@ -103,7 +99,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 TextArea.displayName = "TextArea";

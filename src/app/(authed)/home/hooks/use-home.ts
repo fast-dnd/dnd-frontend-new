@@ -7,9 +7,7 @@ import HomeState from "../utils/home-state";
 import { useRouter } from "next/navigation";
 
 const useHome = () => {
-  const [recommendedDungeons, setRecommendedDungeons] = useState<IDungeon[]>(
-    []
-  );
+  const [recommendedDungeons, setRecommendedDungeons] = useState<IDungeon[]>([]);
   const [myDungeons, setMyDungeons] = useState<IDungeon[]>([]);
   const [roomHistory, setRoomHistory] = useState<IRoomData[]>([]);
   const [kingdom, setKingdom] = useState<IKingdom>();

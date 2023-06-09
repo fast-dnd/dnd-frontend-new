@@ -10,10 +10,7 @@ const Dungeons = () => {
   return (
     <div className="flex flex-col gap-12 flex-1 overflow-y-auto pr-8">
       {myDungeons.map((dungeon) => (
-        <div
-          key={dungeon._id}
-          className={cn("flex flex-row gap-8 hover:bg-white/5")}
-        >
+        <div key={dungeon._id} className={cn("flex flex-row gap-8 hover:bg-white/5")}>
           <Image
             src={dungeon.image || "/images/bg-cover.png"}
             alt={dungeon.name}
@@ -27,9 +24,7 @@ const Dungeons = () => {
                 {dungeon.name}
               </p>
             </div>
-            <p className="font-light text-lg tracking-widest">
-              {dungeon.description}
-            </p>
+            <p className="font-light text-lg tracking-widest">{dungeon.description}</p>
           </div>
         </div>
       ))}

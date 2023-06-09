@@ -23,7 +23,7 @@ const Tabs = ({ selectedTab, homeOrDungeons, onTabClick }: ITabsProps) => {
           <Link
             className={cn(
               "cursor-pointer",
-              tab === selectedTab && "font-extrabold border-b-2 border-tomato"
+              tab === selectedTab && "font-extrabold border-b-2 border-tomato",
             )}
             onClick={onTabClick}
             href={{
@@ -37,9 +37,7 @@ const Tabs = ({ selectedTab, homeOrDungeons, onTabClick }: ITabsProps) => {
               {tab}
             </p>
           </Link>
-          {index !== tabs.length - 1 && (
-            <div className="w-2 h-2 rotate-45 bg-white opacity-25" />
-          )}
+          {index !== tabs.length - 1 && <div className="w-2 h-2 rotate-45 bg-white opacity-25" />}
         </Fragment>
       ))}
     </div>

@@ -25,10 +25,7 @@ const AddDungeon = () => {
           ADD
         </Button>
       </div>
-      <Button
-        className="w-fit px-8"
-        onClick={() => router.push("/create-dungeon")}
-      >
+      <Button className="w-fit px-8" onClick={() => router.push("/create-dungeon")}>
         CREATE
       </Button>
     </div>

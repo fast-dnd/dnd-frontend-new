@@ -18,8 +18,7 @@ export interface CreateRoomProps {
 
 const CreateRoom = ({ dungeonTab }: CreateRoomProps) => {
   const { recommendedDungeons, myDungeons } = useHome();
-  const dungeons =
-    dungeonTab === "TOP DUNGEONS" ? recommendedDungeons : myDungeons;
+  const dungeons = dungeonTab === "TOP DUNGEONS" ? recommendedDungeons : myDungeons;
   const [selectedDungeon, setSelectedDungeon] = useState<IDungeon>();
   const router = useRouter();
 
@@ -49,7 +48,7 @@ const CreateRoom = ({ dungeonTab }: CreateRoomProps) => {
             key={dungeon._id}
             className={cn(
               "flex flex-row gap-8 hover:bg-white/5",
-              dungeon === selectedDungeon && "bg-white/5"
+              dungeon === selectedDungeon && "bg-white/5",
             )}
             onClick={() => setSelectedDungeon(dungeon)}
           >
@@ -68,15 +67,11 @@ const CreateRoom = ({ dungeonTab }: CreateRoomProps) => {
                 {dungeon === selectedDungeon && (
                   <div className="flex flex-row items-center px-3 gap-4 border border-tomato justify-self-end">
                     <AiOutlineCheck className="text-tomato text-lg" />
-                    <p className="leading-6 tracking-[0.15em] text-tomato uppercase">
-                      SELECTED
-                    </p>
+                    <p className="leading-6 tracking-[0.15em] text-tomato uppercase">SELECTED</p>
                   </div>
                 )}
               </div>
-              <p className="font-light text-lg tracking-widest">
-                {dungeon.description}
-              </p>
+              <p className="font-light text-lg tracking-widest">{dungeon.description}</p>
             </div>
           </div>
         ))}
@@ -87,11 +82,7 @@ const CreateRoom = ({ dungeonTab }: CreateRoomProps) => {
           <AiOutlineQuestionCircle className="text-2xl" />
           <p className="leading-7 tracking-[0.15em]  uppercase">HOW TO PLAY</p>
         </div>
-        <Button
-          className="px-8 w-fit"
-          disabled={!selectedDungeon}
-          onClick={createRoom}
-        >
+        <Button className="px-8 w-fit" disabled={!selectedDungeon} onClick={createRoom}>
           CREATE
         </Button>
       </div>

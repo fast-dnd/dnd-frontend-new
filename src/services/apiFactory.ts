@@ -16,7 +16,7 @@ const handleInterceptors = (apiInstance: AxiosInstance) => {
         toast.error(error.response.data.message);
       }
       return Promise.reject(error);
-    }
+    },
   );
 
   apiInstance.interceptors.request.use(
@@ -27,7 +27,7 @@ const handleInterceptors = (apiInstance: AxiosInstance) => {
 
       return config;
     },
-    (error) => Promise.reject(error)
+    (error) => Promise.reject(error),
   );
 };
 

@@ -14,14 +14,7 @@ export interface DungeonProps {
   setImage: Dispatch<SetStateAction<string>>;
 }
 
-const Dungeon = ({
-  name,
-  setName,
-  description,
-  setDescription,
-  image,
-  setImage,
-}: DungeonProps) => {
+const Dungeon = ({ name, setName, description, setDescription, image, setImage }: DungeonProps) => {
   const inputFile = useRef<HTMLInputElement | null>(null);
 
   return (
