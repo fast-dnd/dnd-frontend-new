@@ -13,8 +13,8 @@ const UploadImage = (props: {
     <div className="relative h-[250px] w-[250px]">
       <div
         className={cn(
-          "absolute h-[250px] w-[250px] bg-black/50 text-white/75 flex flex-col z-10 gap-4 items-center cursor-pointer justify-center",
-          image && "bg-black/20"
+          "absolute h-[250px] w-[250px] bg-black/50 text-white/75 flex flex-col z-10 gap-4 items-center cursor-pointer justify-center hover:bg-black/30",
+          image && "bg-black/20",
         )}
         onClick={() => {
           inputFile.current?.click();

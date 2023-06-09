@@ -15,7 +15,7 @@ const handleInterceptors = (apiInstance: AxiosInstance) => {
       if (error.response && error.response.data && error.response.data.message) {
         toast.error(error.response.data.message);
       }
-      //   return Promise.reject(error);
+      return Promise.reject(error);
     }
   );
 

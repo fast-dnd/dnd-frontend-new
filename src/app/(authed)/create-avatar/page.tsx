@@ -9,12 +9,20 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 const CreateAvatar = () => {
   const router = useRouter();
   const [name, setName] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const inputFile = useRef<HTMLInputElement | null>(null);
+
+  const createAvatar = async () => {
+    await dndService.createAvatar({ name }).then(() => {
+      router.push("/home");
+      toast.success("Avatar created successfully!");
+    });
+  };
 
   return (
     <div className="flex flex-col items-center gap-8 mt-16">
@@ -26,11 +34,7 @@ const CreateAvatar = () => {
       </Link>
       <div>
         <Box title="CREATE AVATAR" className="flex flex-row gap-8 p-8">
-          <UploadImage
-            image={image}
-            setImage={setImage}
-            inputFile={inputFile}
-          />
+          <UploadImage image={image} setImage={setImage} inputFile={inputFile} />
           <div className="flex flex-col gap-12 justify-center w-96">
             <Input
               label="Your avatar's name"
@@ -38,15 +42,7 @@ const CreateAvatar = () => {
               onChange={(e) => setName(e.target.value)}
               className="text-xl tracking-[0.07em]"
             />
-            <Button
-              disabled={!name}
-              variant={name ? "primary" : "outline"}
-              onClick={() => {
-                dndService
-                  .createAvatar({ name })
-                  .then(() => router.push("/home"));
-              }}
-            >
+            <Button disabled={!name} variant={name ? "primary" : "outline"} onClick={createAvatar}>
               CREATE
             </Button>
           </div>
