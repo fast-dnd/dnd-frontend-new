@@ -1,15 +1,28 @@
 import { IRoomData } from "@/services/dndService";
 import Image from "next/image";
 import { AiOutlineRight } from "react-icons/ai";
+import { useGetRoomHistory } from "../hooks/use-get-home-data";
+import Spinner from "@/components/ui/spinner";
+import Skeleton from "@/components/ui/skeleton";
 
-interface IGameHistoryProps {
-  roomHistory: IRoomData[];
-}
+const GameHistory = () => {
+  const { data: roomHistory, isLoading } = useGetRoomHistory();
 
-const GameHistory = ({ roomHistory }: IGameHistoryProps) => {
+  if (isLoading) {
+    return <Skeleton />;
+  }
+
+  if (!roomHistory) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="text-white text-5xl">Something went wrong</div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col flex-1 gap-8 overflow-y-auto no-scrollbar">
-      {roomHistory.map((room, i) => (
+      {roomHistory.rooms.map((room, i) => (
         <div key={i /* room.conversationId */} className="flex flex-row items-center gap-4">
           <Image
             src={room.image || "/images/bg-cover.png"}

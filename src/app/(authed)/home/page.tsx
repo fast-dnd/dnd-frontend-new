@@ -2,7 +2,6 @@
 
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import Spinner from "@/components/ui/spinner";
 import { cn } from "@/utils/style-utils";
 import AddDungeon from "./components/add-dungeon";
 import Avatars from "./components/avatars";
@@ -11,35 +10,10 @@ import Dungeons from "./components/dungeons";
 import GameHistory from "./components/game-history";
 import JoinRoom from "./components/join-room";
 import Tabs from "./components/tabs";
-import useGetHomeData from "./hooks/use-get-home-data";
 import { useTabStore } from "./stores/tab-store";
 
 const Home = () => {
   const { homeTab } = useTabStore((state) => state);
-
-  const allQueries = useGetHomeData();
-  const [recommendedDungeonsQuery, myDungeonsQuery, roomHistoryQuery, kingdomQuery] = allQueries;
-
-  if (allQueries.some((query) => query.isLoading)) {
-    return (
-      <div className="w-full h-full flex items-center justify-center">
-        <Spinner className="w-40 h-40" />
-      </div>
-    );
-  }
-
-  if (
-    !recommendedDungeonsQuery.data ||
-    !myDungeonsQuery.data ||
-    !roomHistoryQuery.data ||
-    !kingdomQuery.data
-  ) {
-    return (
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="text-white text-5xl">Something went wrong</div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col w-full min-h-0 h-full px-16 pb-12">
@@ -54,16 +28,16 @@ const Home = () => {
         )}
       >
         <Box title="CREATE ROOM" className="p-8 flex flex-col min-h-0 flex-1 gap-8">
-          <CreateRoom
-            recommendedDungeons={recommendedDungeonsQuery.data}
-            myDungeons={myDungeonsQuery.data}
-          />
+          <CreateRoom />
         </Box>
         <div className="flex flex-col flex-1 basis-1/3 h-full min-w-fit gap-12">
           <JoinRoom />
           <div className="flex flex-1 min-h-0">
-            <Box title="GAME HISTORY" className="flex min-h-0 flex-1 px-8 pt-8">
-              <GameHistory roomHistory={roomHistoryQuery.data.rooms} />
+            <Box
+              title="GAME HISTORY"
+              className="flex flex-col items-start min-h-0 flex-1 px-8 pt-8 gap-8"
+            >
+              <GameHistory />
             </Box>
           </div>
         </div>
@@ -77,7 +51,7 @@ const Home = () => {
       >
         <div className="flex h-full flex-1 basis-1/4">
           <Box title="MY AVATARS" className="flex flex-col flex-1 min-h-0 gap-8 p-8">
-            <Avatars kingdom={kingdomQuery.data} />
+            <Avatars />
             <Button disabled={true} variant={"outline"}>
               GET MORE
             </Button>
@@ -85,7 +59,7 @@ const Home = () => {
         </div>
         <div className="flex flex-1 basis-2/3">
           <Box title="MY DUNGEONS" className="flex flex-col flex-1 min-h-0 gap-8 p-8">
-            <Dungeons myDungeons={myDungeonsQuery.data} />
+            <Dungeons />
             <AddDungeon />
           </Box>
         </div>

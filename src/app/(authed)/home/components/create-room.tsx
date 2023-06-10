@@ -10,18 +10,30 @@ import useCreateRoom from "../hooks/use-create-room";
 import { useTabStore } from "../stores/tab-store";
 import { DungeonTabType } from "../types/home";
 import Tabs from "./tabs";
+import { useGetMyDungeons, useGetRecommendedDungeons } from "../hooks/use-get-home-data";
+import Skeleton from "@/components/ui/skeleton";
 
-interface ICreateRoomProps {
-  recommendedDungeons: IDungeon[];
-  myDungeons: IDungeon[];
-}
+const CreateRoom = () => {
+  const { dungeonTab, homeTab } = useTabStore((state) => state);
 
-const CreateRoom = ({ recommendedDungeons, myDungeons }: ICreateRoomProps) => {
-  const { dungeonTab } = useTabStore((state) => state);
-  const dungeons = dungeonTab === "TOP DUNGEONS" ? recommendedDungeons : myDungeons;
+  const { data: dungeons, isLoading } =
+    dungeonTab === "TOP DUNGEONS"
+      ? useGetRecommendedDungeons(homeTab == "PLAY")
+      : useGetMyDungeons(homeTab == "PLAY");
+
   const [selectedDungeon, setSelectedDungeon] = useState<IDungeon>();
 
-  const { mutate: createRoom, isLoading } = useCreateRoom();
+  const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
+
+  if (isLoading) return <Skeleton amount={3} />;
+
+  if (!dungeons) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="text-white text-5xl">Something went wrong</div>
+      </div>
+    );
+  }
 
   const onCreateRoom = () => {
     // TODO: audio & images not in design
