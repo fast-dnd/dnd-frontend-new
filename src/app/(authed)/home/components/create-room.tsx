@@ -36,8 +36,7 @@ const CreateRoom = () => {
   }
 
   const onCreateRoom = () => {
-    // TODO: audio & images not in design
-    createRoom({ generateAudio: false, generateImages: false, dungeon: selectedDungeon?._id });
+    createRoom({ generateAudio: true, generateImages: true, dungeon: selectedDungeon?._id });
   };
 
   return (
