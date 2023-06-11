@@ -4,7 +4,7 @@ import checkJWT from "@/utils/check-jwt";
 import { redirect, usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const AuthProvider = ({ children }: React.PropsWithChildren) => {
+const useAuthCheck = () => {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -19,7 +19,7 @@ const AuthProvider = ({ children }: React.PropsWithChildren) => {
     }
   }, [pathname, router]);
 
-  return <>{children}</>;
+  return;
 };
 
-export default AuthProvider;
+export default useAuthCheck;
