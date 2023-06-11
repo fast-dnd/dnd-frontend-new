@@ -30,7 +30,7 @@ const CreateAvatar = () => {
       </Link>
       <div>
         <Box title="CREATE AVATAR" className="flex flex-row gap-8 p-8">
-          <UploadImage image={image} setImage={setImage} inputFile={inputFile} />
+          <UploadImage image={image} inputFile={inputFile} onClick={() => {}} />
           <div className="flex flex-col gap-12 justify-center w-96">
             <Input
               label="Your avatar's name"

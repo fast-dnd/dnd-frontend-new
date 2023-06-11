@@ -61,7 +61,13 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
     return (
       <div className="flex flex-col w-full">
         {label && (
-          <div className="bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit">
+          <div
+            className={cn(
+              "bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit",
+              state === "error" && "text-error",
+              state === "success" && "text-success",
+            )}
+          >
             {label}
           </div>
         )}
