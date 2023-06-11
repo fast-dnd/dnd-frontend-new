@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { IChampionSchema, championSchema } from "../schemas/champion-schema";
 import { useDungeonFormStore } from "../stores/form-store";
 import useStore from "@/hooks/use-store";
+import { DevTool } from "@hookform/devtools";
 
 interface IChampionProps {
   status: "LIST" | "CREATING" | "EDITING";
@@ -25,6 +26,7 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<IChampionSchema>({
     resolver: zodResolver(championSchema),
@@ -134,6 +136,7 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
           {status === "CREATING" ? "ADD CHAMPION" : "EDIT CHAMPION"}
         </Button>
       </div>
+      <DevTool control={control} id={`champion-${editIndex}-form`} />
     </form>
   );
 };

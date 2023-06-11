@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ILocationSchema, locationSchema } from "../schemas/location-schema";
 import { useDungeonFormStore } from "../stores/form-store";
 import useStore from "@/hooks/use-store";
+import { DevTool } from "@hookform/devtools";
 
 interface ILocationProps {
   status: "LIST" | "CREATING" | "EDITING";
@@ -25,6 +26,7 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<ILocationSchema>({
     resolver: zodResolver(locationSchema),
@@ -119,6 +121,7 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
           {status === "CREATING" ? "ADD LOCATION" : "EDIT LOCATION"}
         </Button>
       </div>
+      <DevTool control={control} id={`location-${editIndex}-form`} />
     </form>
   );
 };

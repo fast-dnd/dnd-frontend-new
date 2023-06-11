@@ -1,18 +1,18 @@
 "use client";
 
 import { Box } from "@/components/ui/box";
-import React, { useRef } from "react";
-import { stepTitles, steps, useDungeonFormStore } from "../stores/form-store";
 import { Button } from "@/components/ui/button";
-import UploadImage from "@/components/ui/upload-image";
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
+import UploadImage from "@/components/ui/upload-image";
+import useStore from "@/hooks/use-store";
+import { fileToBase64 } from "@/utils/b64";
+import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { fileToBase64 } from "@/utils/b64";
-import { cn } from "@/utils/style-utils";
-import useStore from "@/hooks/use-store";
+import { stepTitles, useDungeonFormStore } from "../stores/form-store";
 
 const Initial = () => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
@@ -22,6 +22,7 @@ const Initial = () => {
     handleSubmit,
     setValue,
     watch,
+    control,
     formState: { errors },
   } = useForm<IInitialSchema>({
     resolver: zodResolver(initialSchema),
@@ -55,7 +56,6 @@ const Initial = () => {
             1.
             {stepTitles[currentStep]}
           </p>
-
           <Button className="w-fit px-8 whitespace-nowrap" variant="outline">
             NEXT STEP
           </Button>
@@ -88,6 +88,7 @@ const Initial = () => {
           </div>
         </div>
       </Box>
+      <DevTool control={control} id="initial-form" />
     </form>
   );
 };
