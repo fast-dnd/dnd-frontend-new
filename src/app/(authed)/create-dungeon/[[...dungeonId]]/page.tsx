@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import useStore from "@/hooks/use-store";
@@ -10,20 +11,22 @@ import Initial from "./components/initial";
 import Locations from "./components/locations";
 import { useDungeonFormStore } from "./stores/form-store";
 import useGetDungeon from "./hooks/use-get-dungeon";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const router = useRouter();
 
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
 
+  const previousDungeonFormStore = useRef(dungeonFormStore);
+
   const dungeonId = params.dungeonId?.[0];
   const dungeonQuery = useGetDungeon(dungeonId);
 
-  useEffect(() => {
+  const loadDungeonData = () => {
     if (dungeonId) {
       // editing...
-      if (dungeonQuery?.data && dungeonFormStore) {
+      if (dungeonQuery?.data && dungeonFormStore && !dungeonFormStore.dungeonFormData.id) {
         dungeonFormStore.updateDungeonFormData({
           id: dungeonId,
           name: dungeonQuery.data.name,
@@ -34,36 +37,35 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
       }
     } else {
       // creating...
-      dungeonFormStore?.updateDungeonFormData({
-        id: undefined,
-        name: "",
-        description: "",
-        locations: [],
-        champions: [],
-      });
+      dungeonFormStore?.resetDungeonFormData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dungeonQuery?.data]);
+
+    // Update previousDungeonFormStore two times to ensure it is always one step behind dungeonFormStore
+    previousDungeonFormStore.current = dungeonFormStore;
+  };
+
+  useEffect(() => {
+    loadDungeonData();
+  }, [dungeonQuery?.data, dungeonId]);
+
+  //! Hacky way to wait for dungeonFormStore to become defined (mounted) after nextjs hydration
+  useEffect(() => {
+    // Check if dungeonFormStore has become defined
+    if (dungeonFormStore && !previousDungeonFormStore.current) {
+      loadDungeonData();
+    }
+  }, [dungeonFormStore]);
 
   if (dungeonQuery?.isError) return redirect("/home");
 
   if (dungeonQuery?.isLoading || !dungeonFormStore) return <DungeonSkeleton />;
 
-  if (!dungeonFormStore) return <DungeonSkeleton />;
-
-  const { currentStep, setCurrentStep, updateDungeonFormData } = dungeonFormStore;
+  const { currentStep, setCurrentStep, resetDungeonFormData } = dungeonFormStore;
 
   const abortDungeonCreation = () => {
     router.push("/home");
     setCurrentStep("INITIAL");
-    if (dungeonId) return;
-    updateDungeonFormData({
-      id: undefined,
-      name: "",
-      description: "",
-      locations: [],
-      champions: [],
-    });
+    resetDungeonFormData();
   };
 
   return (

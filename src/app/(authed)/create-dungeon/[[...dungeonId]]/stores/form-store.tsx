@@ -48,6 +48,7 @@ interface IDungeonFormStore {
   setCurrentStep: (currentStep: Step) => void;
   dungeonFormData: IDungeonFormData;
   updateDungeonFormData: (dungeonFormData: Partial<IDungeonFormData>) => void;
+  resetDungeonFormData: () => void;
 }
 
 export const useDungeonFormStore = create<IDungeonFormStore>()(
@@ -57,7 +58,6 @@ export const useDungeonFormStore = create<IDungeonFormStore>()(
         currentStep: "INITIAL",
         setCurrentStep: (currentStep: Step) => set({ currentStep }),
         dungeonFormData: {
-          //TODO: swap this with api call
           name: "",
           description: "",
           locations: [],
@@ -66,6 +66,17 @@ export const useDungeonFormStore = create<IDungeonFormStore>()(
         updateDungeonFormData: (dungeonFormData: Partial<IDungeonFormData>) => {
           set((state) => {
             state.dungeonFormData = { ...state.dungeonFormData, ...dungeonFormData };
+          });
+        },
+        resetDungeonFormData: () => {
+          set((state) => {
+            state.dungeonFormData = {
+              id: undefined,
+              name: "",
+              description: "",
+              locations: [],
+              champions: [],
+            };
           });
         },
       })),
