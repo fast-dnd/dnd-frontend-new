@@ -11,8 +11,11 @@ import GameHistory from "./components/game-history";
 import JoinRoom from "./components/join-room";
 import Tabs from "./components/tabs";
 import { useTabStore } from "./stores/tab-store";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
+  const router = useRouter();
+
   const { homeTab } = useTabStore((state) => state);
 
   return (
@@ -52,9 +55,7 @@ const Home = () => {
         <div className="flex h-full flex-1 basis-1/4">
           <Box title="MY AVATARS" className="flex flex-col flex-1 min-h-0 gap-8 p-8">
             <Avatars />
-            <Button disabled={true} variant={"outline"}>
-              GET MORE
-            </Button>
+            <Button onClick={() => router.push("/create-avatar")}>GET MORE</Button>
           </Box>
         </div>
         <div className="flex flex-1 basis-2/3">

@@ -8,16 +8,38 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import useCreateAvatar from "./hooks/use-create-avatar";
+import { DevTool } from "@hookform/devtools";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { IAvatarSchema, avatarSchema } from "./schemas/avatar-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { fileToBase64 } from "@/utils/b64";
 
 const CreateAvatar = () => {
-  const [name, setName] = useState<string>("");
-  const [image, setImage] = useState<string>("");
-  const inputFile = useRef<HTMLInputElement | null>(null);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm<IAvatarSchema>({
+    resolver: zodResolver(avatarSchema),
+  });
+
+  const image = watch("image");
+  const imageRef = useRef<HTMLInputElement>(null);
 
   const { mutate: createAvatar, isLoading } = useCreateAvatar();
 
-  const onCreateAvatar = () => {
-    createAvatar({ name });
+  const onSubmit: SubmitHandler<IAvatarSchema> = (data) => {
+    createAvatar(data);
+  };
+
+  const addImage = () => {
+    imageRef.current?.click();
+    imageRef.current?.addEventListener("change", async (e) => {
+      setValue("image", (await fileToBase64((e.target as HTMLInputElement).files?.[0])) as string);
+    });
   };
 
   return (
@@ -28,27 +50,23 @@ const CreateAvatar = () => {
       >
         <AiOutlineLeft className="inline-block" /> GO BACK
       </Link>
-      <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Box title="CREATE AVATAR" className="flex flex-row gap-8 p-8">
-          <UploadImage image={image} inputFile={inputFile} onClick={() => {}} />
+          <UploadImage image={image} inputFile={imageRef} onClick={addImage} />
           <div className="flex flex-col gap-12 justify-center w-96">
             <Input
               label="Your avatar's name"
               placeholder="Thorian Blackthorn"
-              onChange={(e) => setName(e.target.value)}
               className="text-xl tracking-[0.07em]"
+              {...register("name")}
+              state={errors?.name ? "error" : undefined}
+              errorMessage={errors?.name?.message}
             />
-            <Button
-              isLoading={isLoading}
-              disabled={!name}
-              variant={name ? "primary" : "outline"}
-              onClick={onCreateAvatar}
-            >
-              CREATE
-            </Button>
+            <Button isLoading={isLoading}>CREATE</Button>
           </div>
         </Box>
-      </div>
+      </form>
+      <DevTool control={control} id="avatar-form" />
     </div>
   );
 };
