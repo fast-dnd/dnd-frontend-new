@@ -13,7 +13,7 @@ export interface IChampion {
   name: string;
   description: string;
   label: string;
-  moveMapping: { [key in MoveType]?: string };
+  moveMapping: { [key in MoveType]: string };
 }
 
 export interface IPlayer {

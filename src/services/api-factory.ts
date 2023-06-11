@@ -15,8 +15,8 @@ const handleInterceptors = (apiInstance: AxiosInstance) => {
       if (error.response && error.response.data && error.response.data.message) {
         toast.error(error.response.data.message);
       }
-      //   return Promise.reject(error);
-    }
+      return Promise.reject(error);
+    },
   );
 
   apiInstance.interceptors.request.use(
@@ -27,23 +27,25 @@ const handleInterceptors = (apiInstance: AxiosInstance) => {
 
       return config;
     },
-    (error) => Promise.reject(error)
+    (error) => Promise.reject(error),
   );
 };
 
 interface IApiOptions extends AxiosRequestConfig {
-  commonPrefix: string;
-  port: number;
-  prodURL: string;
+  commonPrefix?: string;
+  port?: number;
+  prodURL?: string;
 }
 
-const createApi = (options?: IApiOptions) => {
+const createApi = (options: IApiOptions) => {
+  const { commonPrefix, port, prodURL, ...rest } = options;
+
   const api = axios.create({
-    baseURL: BACKEND_URL + "v1/",
+    baseURL: `${BACKEND_URL}v1/${commonPrefix}`,
     headers: {
       "Content-Type": "application/json",
     },
-    ...options,
+    ...rest,
   });
 
   handleInterceptors(api);
