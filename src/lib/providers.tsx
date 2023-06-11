@@ -1,6 +1,6 @@
 "use client";
 
-import useAuthCheck from "@/components/use-auth-check";
+import useAuthCheck from "@/hooks/use-auth-check";
 import { queryClientConfig } from "@/utils/query-client";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
