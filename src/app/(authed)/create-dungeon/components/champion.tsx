@@ -55,6 +55,12 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
     setEditIndex(-1);
   };
 
+  const onCancel = () => {
+    reset();
+    setStatus("LIST");
+    setEditIndex(-1);
+  };
+
   return (
     <form className="flex flex-col h-full gap-8 w-full" onSubmit={handleSubmit(onSubmit)}>
       <p className="text-xl tracking-[0.07em] -my-1 text-white/50">
@@ -119,11 +125,7 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
         <Button
           className="font-medium tracking-[0.08em] w-fit text-white/50 uppercase"
           variant="ghost"
-          onClick={() => {
-            reset();
-            setStatus("LIST");
-            setEditIndex(-1);
-          }}
+          onClick={onCancel}
           type="reset"
         >
           CANCEL

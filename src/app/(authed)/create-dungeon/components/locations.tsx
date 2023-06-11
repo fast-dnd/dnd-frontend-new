@@ -35,7 +35,7 @@ const Locations = () => {
   };
 
   return (
-    <div className={cn("h-full flex")}>
+    <div className="h-full flex">
       <Box title="CREATE DUNGEON" className="flex flex-col gap-8 min-h-0 flex-1 w-[1200px] p-8">
         <div className="flex flex-row items-center gap-8 justify-between">
           <p className="text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">

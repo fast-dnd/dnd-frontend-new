@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const dungeonSchema = z.object({
+export const initialSchema = z.object({
   name: z.string().min(1, "This field is required").min(5, "Name must be at least 5 characters"),
   description: z
     .string()
@@ -9,4 +9,4 @@ export const dungeonSchema = z.object({
   image: z.string().optional(),
 });
 
-export type IDungeonSchema = z.infer<typeof dungeonSchema>;
+export type IInitialSchema = z.infer<typeof initialSchema>;

@@ -8,7 +8,7 @@ import UploadImage from "@/components/ui/upload-image";
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { IDungeonSchema, dungeonSchema } from "../schemas/dungeon-schema";
+import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { fileToBase64 } from "@/utils/b64";
 import { cn } from "@/utils/style-utils";
@@ -23,18 +23,22 @@ const Initial = () => {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<IDungeonSchema>({
-    resolver: zodResolver(dungeonSchema),
+  } = useForm<IInitialSchema>({
+    resolver: zodResolver(initialSchema),
     values: dungeonFormStore?.dungeonFormData,
   });
 
-  const onSubmit: SubmitHandler<IDungeonSchema> = (data) => {
-    dungeonFormStore?.updateDungeonFormData(data);
-    dungeonFormStore?.setCurrentStep("LOCATIONS");
-  };
-
   const image = watch("image");
   const imageRef = useRef<HTMLInputElement>(null);
+
+  if (!dungeonFormStore) return null;
+
+  const { currentStep, setCurrentStep, updateDungeonFormData } = dungeonFormStore;
+
+  const onSubmit: SubmitHandler<IInitialSchema> = (data) => {
+    updateDungeonFormData(data);
+    setCurrentStep("LOCATIONS");
+  };
 
   const addImage = () => {
     imageRef.current?.click();
@@ -43,15 +47,8 @@ const Initial = () => {
     });
   };
 
-  if (!dungeonFormStore) return null;
-
-  const { currentStep } = dungeonFormStore;
-
   return (
-    <form
-      className={cn("h-full", currentStep === "INITIAL" ? "flex" : "hidden")}
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form className="h-full flex" onSubmit={handleSubmit(onSubmit)}>
       <Box title="CREATE DUNGEON" className="flex flex-col gap-8 min-h-0 flex-1 w-[1200px] p-8">
         <div className="flex flex-row items-center gap-8 justify-between">
           <p className="text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">

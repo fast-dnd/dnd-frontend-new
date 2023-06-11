@@ -15,6 +15,7 @@ export const stepTitles = {
 } as const;
 
 export interface IDungeonFormData {
+  id?: string;
   name: string;
   description: string;
   locations: ILocationFormData[];
@@ -22,6 +23,7 @@ export interface IDungeonFormData {
 }
 
 interface ILocationFormData {
+  id?: string;
   name: string;
   description: string;
   mission: string;
@@ -29,6 +31,7 @@ interface ILocationFormData {
 }
 
 interface IChampionFormData {
+  id?: string;
   name: string;
   description: string;
   moveMapping: { [key in MoveType]?: string };
@@ -37,7 +40,7 @@ interface IChampionFormData {
 interface IDungeonFormStore {
   currentStep: Step;
   setCurrentStep: (currentStep: Step) => void;
-  dungeonFormData: IDungeonFormData & { id?: string };
+  dungeonFormData: IDungeonFormData;
   updateDungeonFormData: (dungeonFormData: Partial<IDungeonFormData>) => void;
 }
 

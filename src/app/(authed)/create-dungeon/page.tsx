@@ -1,20 +1,21 @@
 "use client";
 
+import useStore from "@/hooks/use-store";
 import { useRouter } from "next/navigation";
 import { AiOutlineLeft } from "react-icons/ai";
 import Champions from "./components/champions";
+import DungeonSkeleton from "./components/dungeon-skeleton";
 import Final from "./components/final";
 import Initial from "./components/initial";
 import Locations from "./components/locations";
 import { useDungeonFormStore } from "./stores/form-store";
-import useStore from "@/hooks/use-store";
 
 const CreateDungeon = () => {
   const router = useRouter();
 
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
 
-  if (!dungeonFormStore) return null;
+  if (!dungeonFormStore) return <DungeonSkeleton />;
 
   const { currentStep, setCurrentStep, updateDungeonFormData } = dungeonFormStore;
 
