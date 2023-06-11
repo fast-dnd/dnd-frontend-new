@@ -80,7 +80,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               <StartIcon {...startIconProps} />
             </div>
           )}
+
           <input className={cn(inputVariants())} ref={ref} {...props} />
+
           {EndIcon && (
             <div className="mr-4 flex justify-center">
               <EndIcon {...endIconProps} />

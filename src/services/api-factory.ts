@@ -41,7 +41,7 @@ const createApi = (options: IApiOptions) => {
   const { commonPrefix, port, prodURL, ...rest } = options;
 
   const api = axios.create({
-    baseURL: `${BACKEND_URL}v1/${commonPrefix}`,
+    baseURL: `${BACKEND_URL}v1/${commonPrefix ?? ""}`,
     headers: {
       "Content-Type": "application/json",
     },
