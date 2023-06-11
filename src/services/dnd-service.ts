@@ -38,10 +38,6 @@ const createAvatar = async (data: { name: string }) => {
   return await dndApi.post("avatar", data);
 };
 
-const startGame = async (data: { conversationId: string }) => {
-  return await dndApi.post("room/start", data);
-};
-
 interface IEditChampion {
   conversationId: string;
   championId: string;
@@ -114,17 +110,20 @@ const postQuestion = async (data: { question: string; conversationId: string }) 
 };
 
 const dndService = {
+  // this should go to profile service
   getKingdom,
   createAvatar,
+
+  // this should go to room service
   editChampion,
   editAvatar,
 
+  // this should go to dungeon service
   postLocations,
-
-  startGame,
-  playMove,
-
   postChampions,
+
+  // this should go to game service
+  playMove,
   postComplaint,
   postQuestion,
 };

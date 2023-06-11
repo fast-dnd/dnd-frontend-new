@@ -44,11 +44,16 @@ const getRooms = async () => {
   return await roomApi.get<{ rooms: IRoomData[] }>("").then((res) => res.data);
 };
 
+const startGame = async (data: { conversationId: string }) => {
+  return await roomApi.post("room/start", data);
+};
+
 const roomService = {
   createRoom,
   joinRoom,
   getRoomData,
   getRooms,
+  startGame,
 };
 
 export default roomService;

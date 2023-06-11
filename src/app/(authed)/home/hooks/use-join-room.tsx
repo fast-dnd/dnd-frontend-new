@@ -7,7 +7,7 @@ const useJoinRoom = () => {
 
   return useMutation({
     mutationFn: roomService.joinRoom,
-    onSuccess: (data) => router.push(`lobby/${data.data.conversationId}`),
+    onSuccess: (data) => router.push(`room/${data.data.conversationId}`),
   });
 };
 
