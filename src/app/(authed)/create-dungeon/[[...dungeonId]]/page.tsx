@@ -25,7 +25,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
       // editing...
       if (dungeonQuery?.data && dungeonFormStore) {
         dungeonFormStore.updateDungeonFormData({
-          id: dungeonQuery.data._id,
+          id: dungeonId,
           name: dungeonQuery.data.name,
           description: dungeonQuery.data.description,
           locations: dungeonQuery.data.locations,
@@ -56,6 +56,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const abortDungeonCreation = () => {
     router.push("/home");
     setCurrentStep("INITIAL");
+    if (dungeonId) return;
     updateDungeonFormData({
       id: undefined,
       name: "",
