@@ -1,7 +1,7 @@
 import { IChampion, IDungeon, ILocation, IPlayer, IRoom, MoveType } from "@/types/dnd";
 
 import createApi from "./apiFactory";
-import { IDungeonFormData } from "@/app/(authed)/create-dungeon/stores/form-store";
+import { IDungeonFormData } from "@/app/(authed)/create-dungeon/[[...dungeonId]]/stores/form-store";
 
 const dndApi = createApi();
 
@@ -139,7 +139,7 @@ export interface IPostDungeon {
 }
 
 const getDungeon = async (dungeonId: string) => {
-  return await dndApi.get<IDungeon>(`dungeon/${dungeonId}/`);
+  return await dndApi.get<IDungeon>(`dungeon/${dungeonId}/`).then((res) => res.data);
 };
 
 const getDungeons = async () => {
@@ -152,6 +152,14 @@ const getRecommendedDungeons = async () => {
 
 const createDungeon = async (data: IDungeonFormData) => {
   return await dndApi.post<IDungeon>("dungeon", data);
+};
+
+const updateDungeon = async (data: IDungeonFormData) => {
+  return await dndApi.put<IDungeon>("dungeon", data);
+};
+
+const deleteDungeon = async (dungeonId: string) => {
+  return await dndApi.delete(`dungeon/${dungeonId}`);
 };
 
 const getRooms = async () => {
@@ -189,9 +197,11 @@ const dndService = {
   playMove,
   postLocations,
   createDungeon,
+  updateDungeon,
   getDungeon,
   getDungeons,
   getRecommendedDungeons,
+  deleteDungeon,
   getRooms,
   postChampions,
   postComplaint,

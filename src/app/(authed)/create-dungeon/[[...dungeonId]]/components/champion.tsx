@@ -28,7 +28,7 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
     formState: { errors },
   } = useForm<IChampionSchema>({
     resolver: zodResolver(championSchema),
-    defaultValues:
+    values:
       status === "EDITING" ? dungeonFormStore?.dungeonFormData.champions[editIndex] : undefined,
   });
 

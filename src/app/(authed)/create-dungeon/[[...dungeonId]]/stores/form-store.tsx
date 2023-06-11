@@ -34,7 +34,13 @@ interface IChampionFormData {
   id?: string;
   name: string;
   description: string;
-  moveMapping: { [key in MoveType]?: string };
+  moveMapping: {
+    free_will?: string;
+    discover_health: string;
+    discover_mana: string;
+    conversation_with_team: string;
+    rest: string;
+  };
 }
 
 interface IDungeonFormStore {

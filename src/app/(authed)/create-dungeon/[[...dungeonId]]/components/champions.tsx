@@ -11,14 +11,16 @@ import { stepTitles, useDungeonFormStore } from "../stores/form-store";
 import Champion from "./champion";
 import useCreateDungeon from "../hooks/use-create-dungeon";
 import useStore from "@/hooks/use-store";
+import useUpdateDungeon from "../hooks/use-update-dungeon";
 
-const Champions = () => {
+const Champions = ({ dungeonId }: { dungeonId?: string }) => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
 
   const [status, setStatus] = useState<"LIST" | "CREATING" | "EDITING">("LIST");
   const [editIndex, setEditIndex] = useState(-1);
 
-  const { mutate: createDungeon, isLoading } = useCreateDungeon();
+  const { mutate: createDungeon, isLoading: isCreating } = useCreateDungeon();
+  const { mutate: updateDungeon, isLoading: isUpdating } = useUpdateDungeon();
 
   if (!dungeonFormStore) return null;
 
@@ -38,16 +40,24 @@ const Champions = () => {
   };
 
   const onFinishForm = () => {
-    createDungeon(dungeonFormData, {
-      onSuccess: (data) => {
-        setCurrentStep("FINAL");
-        updateDungeonFormData(
-          produce(dungeonFormData, (draft) => {
-            draft.id = data.data._id;
-          }),
-        );
-      },
-    });
+    if (dungeonId) {
+      updateDungeon(dungeonFormData, {
+        onSuccess: (_data) => {
+          setCurrentStep("FINAL");
+        },
+      });
+    } else {
+      createDungeon(dungeonFormData, {
+        onSuccess: (data) => {
+          setCurrentStep("FINAL");
+          updateDungeonFormData(
+            produce(dungeonFormData, (draft) => {
+              draft.id = data.data._id;
+            }),
+          );
+        },
+      });
+    }
   };
 
   return (
@@ -67,7 +77,7 @@ const Champions = () => {
             PREVIOUS
           </Button>
           <Button
-            isLoading={isLoading}
+            isLoading={isCreating}
             className="w-fit px-8 whitespace-nowrap"
             onClick={onFinishForm}
             variant="primary"

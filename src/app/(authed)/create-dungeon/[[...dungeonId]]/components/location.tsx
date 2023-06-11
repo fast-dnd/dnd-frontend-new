@@ -28,7 +28,7 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
     formState: { errors },
   } = useForm<ILocationSchema>({
     resolver: zodResolver(locationSchema),
-    defaultValues:
+    values:
       status === "EDITING" ? dungeonFormStore?.dungeonFormData.locations[editIndex] : undefined,
   });
 
