@@ -1,4 +1,4 @@
-import { IKingdom } from "@/services/dndService";
+import { IKingdom } from "@/services/dnd-service";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
 import { useGetKingdom } from "../hooks/use-get-home-data";

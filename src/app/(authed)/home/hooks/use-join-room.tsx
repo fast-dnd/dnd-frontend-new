@@ -1,4 +1,4 @@
-import dndService from "@/services/dndService";
+import roomService from "@/services/room-service";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
@@ -6,7 +6,7 @@ const useJoinRoom = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: dndService.joinRoom,
+    mutationFn: roomService.joinRoom,
     onSuccess: (data) => router.push(`lobby/${data.data.conversationId}`),
   });
 };

@@ -1,9 +1,9 @@
-import dndService from "@/services/dndService";
+import dungeonService from "@/services/dungeon-service";
 import { useMutation } from "@tanstack/react-query";
 
 const useCreateDungeon = () => {
   return useMutation({
-    mutationFn: dndService.createDungeon,
+    mutationFn: dungeonService.createDungeon,
   });
 };
 

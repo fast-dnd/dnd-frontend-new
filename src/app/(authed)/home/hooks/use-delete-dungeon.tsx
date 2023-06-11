@@ -1,11 +1,11 @@
 "use client";
 
-import dndService from "@/services/dndService";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import dungeonService from "@/services/dungeon-service";
+import { useMutation } from "@tanstack/react-query";
 
 const useDeleteDungeon = () => {
   return useMutation({
-    mutationFn: dndService.deleteDungeon,
+    mutationFn: dungeonService.deleteDungeon,
   });
 };
 

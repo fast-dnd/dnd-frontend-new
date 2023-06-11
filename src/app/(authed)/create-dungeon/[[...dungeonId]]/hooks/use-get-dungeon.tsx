@@ -1,6 +1,6 @@
 "use client";
 
-import dndService from "@/services/dndService";
+import dungeonService from "@/services/dungeon-service";
 import { useQuery } from "@tanstack/react-query";
 
 const useGetDungeon = (dungeonId?: string) => {
@@ -9,7 +9,7 @@ const useGetDungeon = (dungeonId?: string) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   return useQuery({
     queryKey: ["kingdom", dungeonId],
-    queryFn: () => dndService.getDungeon(dungeonId),
+    queryFn: () => dungeonService.getDungeon(dungeonId),
   });
 };
 

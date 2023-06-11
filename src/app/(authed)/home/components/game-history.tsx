@@ -1,9 +1,7 @@
-import { IRoomData } from "@/services/dndService";
+import Skeleton from "@/components/ui/skeleton";
 import Image from "next/image";
 import { AiOutlineRight } from "react-icons/ai";
 import { useGetRoomHistory } from "../hooks/use-get-home-data";
-import Spinner from "@/components/ui/spinner";
-import Skeleton from "@/components/ui/skeleton";
 
 const GameHistory = () => {
   const { data: roomHistory, isLoading } = useGetRoomHistory();

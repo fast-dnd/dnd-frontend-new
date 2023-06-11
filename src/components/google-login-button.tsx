@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import authService from "@/services/authService";
+import authService from "@/services/auth-service";
 import { GoogleLogin } from "@react-oauth/google";
 import React from "react";
 

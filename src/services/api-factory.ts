@@ -32,18 +32,20 @@ const handleInterceptors = (apiInstance: AxiosInstance) => {
 };
 
 interface IApiOptions extends AxiosRequestConfig {
-  commonPrefix: string;
-  port: number;
-  prodURL: string;
+  commonPrefix?: string;
+  port?: number;
+  prodURL?: string;
 }
 
-const createApi = (options?: IApiOptions) => {
+const createApi = (options: IApiOptions) => {
+  const { commonPrefix, port, prodURL, ...rest } = options;
+
   const api = axios.create({
-    baseURL: BACKEND_URL + "v1/",
+    baseURL: `${BACKEND_URL}v1/${commonPrefix}`,
     headers: {
       "Content-Type": "application/json",
     },
-    ...options,
+    ...rest,
   });
 
   handleInterceptors(api);

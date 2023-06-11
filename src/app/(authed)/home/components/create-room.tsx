@@ -2,17 +2,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Skeleton from "@/components/ui/skeleton";
 import { IDungeon } from "@/types/dnd";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
 import { useState } from "react";
 import { AiOutlineCheck, AiOutlineQuestionCircle } from "react-icons/ai";
 import useCreateRoom from "../hooks/use-create-room";
-import { useTabStore } from "../stores/tab-store";
-import { DungeonTabType } from "../types/home";
-import Tabs from "./tabs";
 import { useGetMyDungeons, useGetRecommendedDungeons } from "../hooks/use-get-home-data";
-import Skeleton from "@/components/ui/skeleton";
+import { useTabStore } from "../stores/tab-store";
+import Tabs from "./tabs";
 
 const CreateRoom = () => {
   const { dungeonTab, homeTab } = useTabStore((state) => state);
