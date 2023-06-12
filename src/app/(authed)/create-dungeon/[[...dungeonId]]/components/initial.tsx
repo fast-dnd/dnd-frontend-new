@@ -34,7 +34,7 @@ const Initial = () => {
 
   if (!dungeonFormStore) return null;
 
-  const { currentStep, setCurrentStep, updateDungeonFormData } = dungeonFormStore;
+  const { currentStep, setCurrentStep, dungeonFormData, updateDungeonFormData } = dungeonFormStore;
 
   const onSubmit: SubmitHandler<IInitialSchema> = (data) => {
     updateDungeonFormData(data);
@@ -63,7 +63,12 @@ const Initial = () => {
         <div className="w-full border-t border-white/20" />
         <div className="flex flex-1 basis-0 min-h-0">
           <div className="flex flex-row w-full gap-8 h-full">
-            <UploadImage image={image} inputFile={imageRef} onClick={addImage} />
+            <UploadImage
+              image={image}
+              inputFile={imageRef}
+              onClick={addImage}
+              defaultImage={dungeonFormData.imageUrl}
+            />
             <div className="flex flex-col gap-8 flex-1">
               <Input
                 label="Name"

@@ -16,7 +16,7 @@ const getRecommendedDungeons = async () => {
   return await dungeonApi.get<IDungeon[]>("recommended").then((res) => res.data);
 };
 
-const createDungeon = async (data: IDungeonFormData) => {
+const createDungeon = async (data: IDungeonFormData & { image?: string }) => {
   return await dungeonApi.post<IDungeon>("", data);
 };
 

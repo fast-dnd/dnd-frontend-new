@@ -39,14 +39,15 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
   };
 
   const onFinishForm = () => {
+    const postDungeonFormData = { ...dungeonFormData, image: dungeonFormData.imageUrl };
     if (dungeonId) {
-      updateDungeon(dungeonFormData, {
+      updateDungeon(postDungeonFormData, {
         onSuccess: (_data) => {
           setCurrentStep("FINAL");
         },
       });
     } else {
-      createDungeon(dungeonFormData, {
+      createDungeon(postDungeonFormData, {
         onSuccess: (data) => {
           setCurrentStep("FINAL");
           updateDungeonFormData(

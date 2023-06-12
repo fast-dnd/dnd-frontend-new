@@ -54,6 +54,7 @@ export interface IDungeon {
   description: string;
   locations: ILocation[];
   champions: IChampion[];
-  label: string;
-  image?: string;
+  imageUrl?: string;
+  recommended: boolean;
+  publiclySeen: boolean;
 }

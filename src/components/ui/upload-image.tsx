@@ -6,9 +6,10 @@ interface IUploadImageProps {
   image?: string;
   inputFile: React.MutableRefObject<HTMLInputElement | null>;
   onClick: React.MouseEventHandler<HTMLDivElement>;
+  defaultImage?: string;
 }
 
-const UploadImage = ({ image, inputFile, onClick }: IUploadImageProps) => {
+const UploadImage = ({ image, inputFile, onClick, defaultImage }: IUploadImageProps) => {
   return (
     <div className="relative h-[250px] w-[250px]">
       <div
@@ -25,7 +26,7 @@ const UploadImage = ({ image, inputFile, onClick }: IUploadImageProps) => {
         </p>
       </div>
       <Image
-        src={image || "/images/bg-cover.png"}
+        src={image || defaultImage || "/images/bg-cover.png"}
         width={250}
         height={250}
         className={cn("h-[250px]", !image && "opacity-40")}
