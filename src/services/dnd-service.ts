@@ -1,7 +1,7 @@
-import { IChampion, IDungeon, ILocation, IPlayer, IRoom, MoveType } from "@/types/dnd";
+import { IChampion, ILocation, MoveType } from "@/types/dnd";
 
 import createApi from "./api-factory";
-import { IDungeonFormData } from "@/app/(authed)/create-dungeon/[[...dungeonId]]/stores/form-store";
+import { IAvatarSchema } from "@/app/(authed)/create-avatar/[[...avatarId]]/schemas/avatar-schema";
 
 const dndApi = createApi({});
 
@@ -33,8 +33,16 @@ const getKingdom = async () => {
   return await dndApi.get<IKingdom>("kingdom").then((res) => res.data);
 };
 
-const createAvatar = async (data: { name: string }) => {
+const getAvatar = async (avatarId: string) => {
+  return await dndApi.get<IAvatar>(`avatar/${avatarId}`).then((res) => res.data);
+};
+
+const createAvatar = async (data: IAvatarSchema) => {
   return await dndApi.post("avatar", data);
+};
+
+const updateAvatar = async (data: IAvatarSchema & { avatarId: string }) => {
+  return await dndApi.put("avatar", data);
 };
 
 interface IEditChampion {
@@ -111,7 +119,9 @@ const postQuestion = async (data: { question: string; conversationId: string }) 
 const dndService = {
   // this should go to profile service
   getKingdom,
+  getAvatar,
   createAvatar,
+  updateAvatar,
 
   // this should go to room service
   editChampion,

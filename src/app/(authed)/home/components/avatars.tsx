@@ -1,20 +1,13 @@
-import { IKingdom } from "@/services/dnd-service";
+import Skeleton from "@/components/ui/skeleton";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
 import { useGetKingdom } from "../hooks/use-get-home-data";
-import Spinner from "@/components/ui/spinner";
-import Skeleton from "@/components/ui/skeleton";
-
-interface IKingdomProps {
-  kingdom: IKingdom;
-}
+import Link from "next/link";
 
 const Avatars = () => {
   const { data: kingdom, isLoading } = useGetKingdom();
 
-  if (isLoading) {
-    return <Skeleton />;
-  }
+  if (isLoading) return <Skeleton />;
 
   if (!kingdom) {
     return (
@@ -28,7 +21,11 @@ const Avatars = () => {
   return (
     <div className="h-full flex flex-col gap-8 overflow-y-auto no-scrollbar">
       {kingdom.avatars.map((avatar) => (
-        <div key={avatar._id} className="flex flex-row items-center gap-6">
+        <Link
+          key={avatar._id}
+          className="flex flex-row items-center gap-6"
+          href={`/create-avatar/${avatar._id}`}
+        >
           <Image
             src={avatar.imageUrl || "/images/default-avatar.png"}
             alt="avatar"
@@ -51,7 +48,7 @@ const Avatars = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

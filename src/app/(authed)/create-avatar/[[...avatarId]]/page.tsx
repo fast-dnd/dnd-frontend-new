@@ -4,17 +4,24 @@ import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UploadImage from "@/components/ui/upload-image";
-import Link from "next/link";
-import { useRef, useState } from "react";
-import { AiOutlineLeft } from "react-icons/ai";
-import useCreateAvatar from "./hooks/use-create-avatar";
-import { DevTool } from "@hookform/devtools";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { IAvatarSchema, avatarSchema } from "./schemas/avatar-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { fileToBase64 } from "@/utils/b64";
+import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useRef } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { AiOutlineLeft } from "react-icons/ai";
+import DungeonSkeleton from "../../create-dungeon/[[...dungeonId]]/components/dungeon-skeleton";
+import useCreateAvatar from "./hooks/use-create-avatar";
+import useGetAvatar from "./hooks/use-get-avatar";
+import useUpdateAvatar from "./hooks/use-update-avatar";
+import { IAvatarSchema, avatarSchema } from "./schemas/avatar-schema";
 
-const CreateAvatar = () => {
+const CreateAvatar = ({ params }: { params: { avatarId?: [string] } }) => {
+  const avatarId = params.avatarId?.[0];
+
+  const avatarQuery = useGetAvatar(avatarId);
+
   const {
     register,
     handleSubmit,
@@ -24,15 +31,18 @@ const CreateAvatar = () => {
     formState: { errors },
   } = useForm<IAvatarSchema>({
     resolver: zodResolver(avatarSchema),
+    values: avatarQuery?.data,
   });
 
   const image = watch("image");
   const imageRef = useRef<HTMLInputElement>(null);
 
-  const { mutate: createAvatar, isLoading } = useCreateAvatar();
+  const { mutate: createAvatar, isLoading: isCreating } = useCreateAvatar();
+  const { mutate: updateAvatar, isLoading: isUpdating } = useUpdateAvatar();
 
   const onSubmit: SubmitHandler<IAvatarSchema> = (data) => {
-    createAvatar(data);
+    if (avatarId) updateAvatar({ ...data, avatarId });
+    else createAvatar(data);
   };
 
   const addImage = () => {
@@ -41,6 +51,8 @@ const CreateAvatar = () => {
       setValue("image", (await fileToBase64((e.target as HTMLInputElement).files?.[0])) as string);
     });
   };
+
+  if (avatarQuery?.isLoading) return <DungeonSkeleton />;
 
   return (
     <div className="flex flex-col items-center gap-8 mt-16">
@@ -56,7 +68,7 @@ const CreateAvatar = () => {
             image={image}
             inputFile={imageRef}
             onClick={addImage}
-            defaultImage="/images/default-avatar.png"
+            defaultImage={avatarQuery?.data?.imageUrl || "/images/default-avatar.png"}
           />
           <div className="flex flex-col gap-12 justify-center w-96">
             <Input
@@ -67,7 +79,7 @@ const CreateAvatar = () => {
               state={errors?.name ? "error" : undefined}
               errorMessage={errors?.name?.message}
             />
-            <Button isLoading={isLoading}>CREATE</Button>
+            <Button isLoading={isCreating || isUpdating}>{avatarId ? "UPDATE" : "CREATE"}</Button>
           </div>
         </Box>
       </form>

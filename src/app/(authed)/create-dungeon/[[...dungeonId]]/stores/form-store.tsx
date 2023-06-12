@@ -19,6 +19,7 @@ export interface IDungeonFormData {
   name: string;
   description: string;
   imageUrl?: string;
+  image?: string;
   locations: ILocationFormData[];
   champions: IChampionFormData[];
 }
@@ -62,6 +63,7 @@ export const useDungeonFormStore = create<IDungeonFormStore>()(
           name: "",
           description: "",
           imageUrl: undefined,
+          image: undefined,
           locations: [],
           champions: [],
         },
@@ -77,6 +79,7 @@ export const useDungeonFormStore = create<IDungeonFormStore>()(
               name: "",
               description: "",
               imageUrl: undefined,
+              image: undefined,
               locations: [],
               champions: [],
             };
