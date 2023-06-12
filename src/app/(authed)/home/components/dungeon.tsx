@@ -26,7 +26,7 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
   return (
     <div className={cn("flex flex-row gap-8 hover:bg-white/5")}>
       <Image
-        src={dungeon.image || "/images/bg-cover.png"}
+        src={dungeon.imageUrl || "/images/bg-cover.png"}
         alt={dungeon.name}
         width={180}
         height={180}

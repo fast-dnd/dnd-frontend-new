@@ -30,7 +30,7 @@ const Avatars = () => {
       {kingdom.avatars.map((avatar) => (
         <div key={avatar._id} className="flex flex-row items-center gap-6">
           <Image
-            src={avatar.image || "/images/bg-cover.png"}
+            src={avatar.imageUrl || "/images/default-avatar.png"}
             alt="avatar"
             width={64}
             height={64}

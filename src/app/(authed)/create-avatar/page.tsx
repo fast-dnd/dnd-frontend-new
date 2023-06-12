@@ -52,7 +52,12 @@ const CreateAvatar = () => {
       </Link>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box title="CREATE AVATAR" className="flex flex-row gap-8 p-8">
-          <UploadImage image={image} inputFile={imageRef} onClick={addImage} />
+          <UploadImage
+            image={image}
+            inputFile={imageRef}
+            onClick={addImage}
+            defaultImage="/images/default-avatar.png"
+          />
           <div className="flex flex-col gap-12 justify-center w-96">
             <Input
               label="Your avatar's name"

@@ -20,8 +20,7 @@ export interface IAvatar {
   energy: number;
   level: number;
   kingdomId: string;
-  label: string;
-  image?: string;
+  imageUrl?: string;
 }
 
 export interface IKingdom {
