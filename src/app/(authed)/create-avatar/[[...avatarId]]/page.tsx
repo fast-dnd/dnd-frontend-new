@@ -63,7 +63,7 @@ const CreateAvatar = ({ params }: { params: { avatarId?: [string] } }) => {
         <AiOutlineLeft className="inline-block" /> GO BACK
       </Link>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Box title="CREATE AVATAR" className="flex flex-row gap-8 p-8">
+        <Box title={avatarId ? "EDIT AVATAR" : "CREATE AVATAR"} className="flex flex-row gap-8 p-8">
           <UploadImage
             image={image}
             inputFile={imageRef}

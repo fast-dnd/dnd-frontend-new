@@ -3,9 +3,13 @@ import { cn } from "@/utils/style-utils";
 import Image from "next/image";
 import { useGetKingdom } from "../hooks/use-get-home-data";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { MdEdit } from "react-icons/md";
+import { Button } from "@/components/ui/button";
 
 const Avatars = () => {
   const { data: kingdom, isLoading } = useGetKingdom();
+  const router = useRouter();
 
   if (isLoading) return <Skeleton />;
 
@@ -21,17 +25,13 @@ const Avatars = () => {
   return (
     <div className="h-full flex flex-col gap-8 overflow-y-auto no-scrollbar">
       {kingdom.avatars.map((avatar) => (
-        <Link
-          key={avatar._id}
-          className="flex flex-row items-center gap-6"
-          href={`/create-avatar/${avatar._id}`}
-        >
+        <div key={avatar._id} className="flex flex-row items-center gap-6 hover:bg-white/5 p-2">
           <Image
             src={avatar.imageUrl || "/images/default-avatar.png"}
             alt="avatar"
-            width={64}
-            height={64}
-            className="h-16"
+            width={96}
+            height={96}
+            className="h-24 w-24"
           />
           <div className="flex flex-col justify-center gap-1">
             <p className="text-2xl tracking-[0.07em] uppercase">{avatar.name}</p>
@@ -47,8 +47,15 @@ const Avatars = () => {
                 ))}
               </div>
             </div>
+            <div
+              className="cursor-pointer px-3 py-2 items-center bg-white/10 w-fit flex gap-2"
+              onClick={() => router.push(`/create-avatar/${avatar._id}`)}
+            >
+              <MdEdit />
+              EDIT
+            </div>
           </div>
-        </Link>
+        </div>
       ))}
     </div>
   );
