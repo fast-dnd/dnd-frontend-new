@@ -12,6 +12,7 @@ import useCreateRoom from "../hooks/use-create-room";
 import { useGetMyDungeons, useGetRecommendedDungeons } from "../hooks/use-get-home-data";
 import { useTabStore } from "../stores/tab-store";
 import Tabs from "./tabs";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const CreateRoom = () => {
   const { dungeonTab, homeTab } = useTabStore((state) => state);
@@ -22,6 +23,8 @@ const CreateRoom = () => {
       : useGetMyDungeons(homeTab == "PLAY");
 
   const [selectedDungeon, setSelectedDungeon] = useState<IDungeon>();
+  const [generateImages, setGenerateImages] = useState(false);
+  const [generateAudio, setGenerateAudio] = useState(false);
 
   const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
 
@@ -36,7 +39,7 @@ const CreateRoom = () => {
   }
 
   const onCreateRoom = () => {
-    createRoom({ generateAudio: true, generateImages: true, dungeon: selectedDungeon?._id });
+    createRoom({ generateAudio, generateImages, dungeon: selectedDungeon?._id });
   };
 
   return (
@@ -87,14 +90,26 @@ const CreateRoom = () => {
           <AiOutlineQuestionCircle className="text-2xl" />
           <p className="leading-7 tracking-[0.15em]  uppercase">HOW TO PLAY</p>
         </div>
-        <Button
-          isLoading={isLoading}
-          className="px-8 w-fit"
-          disabled={!selectedDungeon}
-          onClick={onCreateRoom}
-        >
-          CREATE
-        </Button>
+        <div className="flex gap-8">
+          <Checkbox
+            label="images"
+            checked={generateImages}
+            onCheckedChange={(checked) => setGenerateImages(checked as boolean)}
+          />
+          <Checkbox
+            label="audio"
+            checked={generateAudio}
+            onCheckedChange={(checked) => setGenerateAudio(checked as boolean)}
+          />
+          <Button
+            isLoading={isLoading}
+            className="px-8 w-fit"
+            disabled={!selectedDungeon}
+            onClick={onCreateRoom}
+          >
+            CREATE
+          </Button>
+        </div>
       </div>
     </>
   );
