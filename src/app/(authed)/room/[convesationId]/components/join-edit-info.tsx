@@ -29,7 +29,6 @@ const JoinEditInfo = () => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Avatars</SelectLabel>
             {avatars.map((avatar) => (
               <SelectItem key={avatar} value={avatar}>
                 {avatar}
@@ -44,7 +43,6 @@ const JoinEditInfo = () => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Avatars</SelectLabel>
             {roles.map((role) => (
               <SelectItem key={role} value={role}>
                 {role}

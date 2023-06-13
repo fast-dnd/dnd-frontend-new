@@ -4,10 +4,6 @@ import { IDungeonFormData } from "@/app/(authed)/create-dungeon/[[...dungeonId]]
 
 const dungeonApi = createApi({ commonPrefix: "dungeons/" });
 
-const getDungeon = async (dungeonId: string) => {
-  return await dungeonApi.get<IDungeon>(dungeonId).then((res) => res.data);
-};
-
 const getDungeons = async () => {
   return await dungeonApi.get<IDungeon[]>("").then((res) => res.data);
 };
@@ -16,7 +12,11 @@ const getRecommendedDungeons = async () => {
   return await dungeonApi.get<IDungeon[]>("recommended").then((res) => res.data);
 };
 
-const createDungeon = async (data: IDungeonFormData & { image?: string }) => {
+const getDungeon = async (dungeonId: string) => {
+  return await dungeonApi.get<IDungeon>(dungeonId).then((res) => res.data);
+};
+
+const createDungeon = async (data: IDungeonFormData) => {
   return await dungeonApi.post<IDungeon>("", data);
 };
 
