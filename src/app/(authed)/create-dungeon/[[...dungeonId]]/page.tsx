@@ -33,6 +33,8 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
           description: dungeonQuery.data.description,
           locations: dungeonQuery.data.locations,
           champions: dungeonQuery.data.champions,
+          imageUrl: dungeonQuery.data.imageUrl,
+          image: dungeonQuery.data.imageUrl,
         });
       }
     } else {
