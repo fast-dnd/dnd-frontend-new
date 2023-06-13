@@ -18,6 +18,7 @@ export interface IDungeonFormData {
   id?: string;
   name: string;
   description: string;
+  style: string;
   imageUrl?: string;
   image?: string;
   locations: ILocationFormData[];
@@ -45,6 +46,17 @@ interface IChampionFormData {
   };
 }
 
+export const initialDungeonFormData: IDungeonFormData = {
+  id: undefined,
+  name: "",
+  description: "",
+  style: "",
+  imageUrl: undefined,
+  image: undefined,
+  locations: [],
+  champions: [],
+};
+
 interface IDungeonFormStore {
   currentStep: Step;
   setCurrentStep: (currentStep: Step) => void;
@@ -59,14 +71,7 @@ export const useDungeonFormStore = create<IDungeonFormStore>()(
       immer((set) => ({
         currentStep: "INITIAL",
         setCurrentStep: (currentStep: Step) => set({ currentStep }),
-        dungeonFormData: {
-          name: "",
-          description: "",
-          imageUrl: undefined,
-          image: undefined,
-          locations: [],
-          champions: [],
-        },
+        dungeonFormData: initialDungeonFormData,
         updateDungeonFormData: (dungeonFormData: Partial<IDungeonFormData>) => {
           set((state) => {
             state.dungeonFormData = { ...state.dungeonFormData, ...dungeonFormData };
@@ -74,15 +79,7 @@ export const useDungeonFormStore = create<IDungeonFormStore>()(
         },
         resetDungeonFormData: () => {
           set((state) => {
-            state.dungeonFormData = {
-              id: undefined,
-              name: "",
-              description: "",
-              imageUrl: undefined,
-              image: undefined,
-              locations: [],
-              champions: [],
-            };
+            state.dungeonFormData = initialDungeonFormData;
           });
         },
       })),

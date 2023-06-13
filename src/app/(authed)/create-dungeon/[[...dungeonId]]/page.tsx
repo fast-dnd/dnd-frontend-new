@@ -9,9 +9,10 @@ import DungeonSkeleton from "./components/dungeon-skeleton";
 import Final from "./components/final";
 import Initial from "./components/initial";
 import Locations from "./components/locations";
-import { useDungeonFormStore } from "./stores/form-store";
+import { initialDungeonFormData, useDungeonFormStore } from "./stores/form-store";
 import useGetDungeon from "./hooks/use-get-dungeon";
 import { useEffect, useRef } from "react";
+import { isEqual } from "lodash";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const router = useRouter();
@@ -39,7 +40,12 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
       }
     } else {
       // creating...
-      dungeonFormStore?.resetDungeonFormData();
+      if (dungeonFormStore) {
+        // check if the user is in creation process and not editing
+        console.log(dungeonFormStore.dungeonFormData, initialDungeonFormData);
+        if (isEqual(dungeonFormStore.dungeonFormData, initialDungeonFormData))
+          dungeonFormStore?.resetDungeonFormData();
+      }
     }
 
     // Update previousDungeonFormStore two times to ensure it is always one step behind dungeonFormStore

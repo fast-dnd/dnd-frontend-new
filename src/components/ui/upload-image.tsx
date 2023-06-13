@@ -1,6 +1,6 @@
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
-import { AiOutlineUpload } from "react-icons/ai";
+import { FiUpload } from "react-icons/fi";
 
 interface IUploadImageProps {
   image?: string;
@@ -20,7 +20,7 @@ const UploadImage = ({ image, inputFile, onClick, defaultImage }: IUploadImagePr
         onClick={onClick}
       >
         <input type="file" ref={inputFile} className="hidden" accept="image/*" />
-        <AiOutlineUpload size={90} />
+        <FiUpload size={90} />
         <p className="text-xs font-medium tracking-[0.07em] text-center indent-[0.07em] uppercase">
           UPLOAD IMAGE
         </p>

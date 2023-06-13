@@ -29,6 +29,7 @@
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",
     "immer": "^10.0.2",
+    "lodash": "^4.17.21",
     "next": "13.4.4",
     "postcss": "8.4.24",
     "react": "18.2.0",
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
+    "@types/lodash": "^4.14.195",
     "prettier": "^2.8.8"
   }
 }
