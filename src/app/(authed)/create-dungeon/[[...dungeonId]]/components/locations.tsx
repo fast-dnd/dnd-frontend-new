@@ -42,11 +42,7 @@ const Locations = () => {
             2.
             {stepTitles[currentStep]}
           </p>
-          <Button
-            className="flex flex-row gap-1 font-medium tracking-[0.08em] w-fit text-white/50 uppercase"
-            variant="ghost"
-            onClick={() => setCurrentStep("INITIAL")}
-          >
+          <Button className="gap-1 w-fit" variant="ghost" onClick={() => setCurrentStep("INITIAL")}>
             <AiOutlineLeft className="inline-block" />
             PREVIOUS
           </Button>

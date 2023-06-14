@@ -2,11 +2,11 @@
 
 import Skeleton from "@/components/ui/skeleton";
 import { useGetMyDungeons } from "../hooks/use-get-home-data";
-import { useTabStore } from "../stores/tab-store";
+import { useHomeStore } from "../stores/tab-store";
 import Dungeon from "./dungeon";
 
 const Dungeons = () => {
-  const { homeTab } = useTabStore((state) => state);
+  const { homeTab } = useHomeStore((state) => state);
 
   const { data: myDungeons, isLoading } = useGetMyDungeons(homeTab === "MY KINGDOM");
 
