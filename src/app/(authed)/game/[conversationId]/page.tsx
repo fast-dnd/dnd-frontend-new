@@ -1,7 +1,8 @@
 import React from "react";
+import Feedback from "./components/feedback";
 
 const Game = () => {
-  return <div>Game</div>;
+  return <Feedback />;
 };
 
 export default Game;
