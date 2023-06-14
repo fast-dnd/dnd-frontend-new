@@ -14,16 +14,18 @@ import { useHomeStore } from "./stores/tab-store";
 import { useRouter } from "next/navigation";
 import Settings from "./components/settings";
 import HowToPlay from "@/components/how-to-play";
+import Link from "next/link";
+import { AiOutlineLeft } from "react-icons/ai";
 
 const Home = () => {
   const router = useRouter();
 
-  const { homeTab, displayHowToPlay } = useHomeStore((state) => state);
+  const { homeTab, displayHowToPlay, setDisplayHowToPlay } = useHomeStore((state) => state);
 
   return (
     <div className="flex flex-col w-full min-h-0 h-full px-16 pb-12">
       {displayHowToPlay ? (
-        <HowToPlay />
+        <HowToPlay onHideHowToPlay={() => setDisplayHowToPlay(false)} hideText="Go back" />
       ) : (
         <>
           <div className="flex items-center justify-center my-16">
