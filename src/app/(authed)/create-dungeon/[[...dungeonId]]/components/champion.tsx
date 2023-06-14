@@ -82,7 +82,6 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
             <TextArea
               label="Description"
               placeholder="You are a brave warrior ready to fight..."
-              disableResize
               className="m-0 h-full"
               {...register("description")}
               state={errors?.description ? "error" : undefined}
@@ -124,12 +123,7 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
         </div>
       </div>
       <div className="flex flex-row justify-end gap-8">
-        <Button
-          className="font-medium tracking-[0.08em] w-fit text-white/50 uppercase"
-          variant="ghost"
-          onClick={onCancel}
-          type="reset"
-        >
+        <Button className="w-fit" variant="ghost" onClick={onCancel} type="reset">
           CANCEL
         </Button>
         <Button className="w-fit px-8 uppercase" variant="outline">

@@ -2,7 +2,7 @@
 
 import { cn } from "@/utils/style-utils";
 import { Fragment } from "react";
-import { useTabStore } from "../stores/tab-store";
+import { useHomeStore } from "../stores/tab-store";
 import { DungeonTabType, HomeTabType, dungeonTabs, homeTabs } from "../types/home";
 
 interface ITabsProps {
@@ -14,7 +14,7 @@ interface ITabsProps {
 const Tabs = ({ selectedTab, homeOrDungeons, onTabClick }: ITabsProps) => {
   const tabs = homeOrDungeons === "home" ? homeTabs : dungeonTabs;
 
-  const { setDungeonTab, setHomeTab } = useTabStore((state) => state);
+  const { setDungeonTab, setHomeTab } = useHomeStore((state) => state);
 
   return (
     <div className="flex flex-row min-w-fit items-center gap-6">

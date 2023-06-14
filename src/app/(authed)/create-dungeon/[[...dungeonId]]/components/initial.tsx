@@ -91,7 +91,6 @@ const Initial = () => {
                   label="Description"
                   placeholder="Venture into the heart of an enchanted forest, where the ancient spirits..."
                   className="h-full m-0"
-                  disableResize
                   {...register("description")}
                   state={errors?.description ? "error" : undefined}
                   errorMessage={errors?.description?.message}
