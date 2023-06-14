@@ -10,9 +10,9 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
 
   return (
     <div className="flex justify-center h-full p-16 overflow-y-hidden">
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col items-center gap-8">
         <Link
-          className="cursor-pointer flex flex-row gap-1 font-medium items-center justify-center text-center w-full tracking-[0.08em] uppercase"
+          className="flex gap-1 items-center font-medium tracking-[0.08em] uppercase"
           href="/home"
         >
           <AiOutlineLeft className="inline-block" /> GO BACK

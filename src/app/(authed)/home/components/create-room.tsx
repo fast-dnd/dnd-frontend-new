@@ -10,12 +10,12 @@ import { useState } from "react";
 import { AiOutlineCheck, AiOutlineQuestionCircle } from "react-icons/ai";
 import useCreateRoom from "../hooks/use-create-room";
 import { useGetMyDungeons, useGetRecommendedDungeons } from "../hooks/use-get-home-data";
-import { useTabStore } from "../stores/tab-store";
+import { useHomeStore } from "../stores/tab-store";
 import Tabs from "./tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const CreateRoom = () => {
-  const { dungeonTab, homeTab } = useTabStore((state) => state);
+  const { dungeonTab, homeTab, setDisplayHowToPlay } = useHomeStore((state) => state);
 
   const { data: dungeons, isLoading } =
     dungeonTab === "TOP DUNGEONS"
@@ -86,10 +86,10 @@ const CreateRoom = () => {
       </div>
 
       <div className="flex flex-row justify-between">
-        <div className="flex flex-row gap-4 items-center text-white/50 cursor-pointer">
+        <Button variant="ghost" className="w-fit gap-4" onClick={() => setDisplayHowToPlay(true)}>
           <AiOutlineQuestionCircle className="text-2xl" />
-          <p className="leading-7 tracking-[0.15em]  uppercase">HOW TO PLAY</p>
-        </div>
+          <p className="leading-7 tracking-[0.15em]">HOW TO PLAY</p>
+        </Button>
         <div className="flex gap-8">
           <Checkbox
             label="images"

@@ -78,12 +78,19 @@ const Initial = () => {
                 state={errors?.name ? "error" : undefined}
                 errorMessage={errors?.name?.message}
               />
+              <Input
+                label="Style"
+                placeholder="The Enchanted Grove"
+                className="m-0"
+                {...register("style")}
+                state={errors?.style ? "error" : undefined}
+                errorMessage={errors?.style?.message}
+              />
               <div className="flex flex-1 w-full min-h-0">
                 <TextArea
                   label="Description"
                   placeholder="Venture into the heart of an enchanted forest, where the ancient spirits..."
                   className="h-full m-0"
-                  disableResize
                   {...register("description")}
                   state={errors?.description ? "error" : undefined}
                   errorMessage={errors?.description?.message}

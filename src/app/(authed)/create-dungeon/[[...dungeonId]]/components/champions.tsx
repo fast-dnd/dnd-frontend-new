@@ -72,7 +72,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
             {stepTitles[currentStep]}
           </p>
           <Button
-            className="flex flex-row gap-1 font-medium tracking-[0.08em] w-fit text-white/50 uppercase"
+            className="gap-1 w-fit"
             variant="ghost"
             onClick={() => setCurrentStep("LOCATIONS")}
           >

@@ -57,6 +57,12 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
     setEditIndex(-1);
   };
 
+  const onCancel = () => {
+    reset();
+    setStatus("LIST");
+    setEditIndex(-1);
+  };
+
   return (
     <form className="flex flex-col h-full gap-8" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-row gap-8 h-full">
@@ -73,7 +79,6 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
             <TextArea
               label="Mission"
               placeholder="The goal is to find the secret treasure hidden somewhere in the old castle..."
-              disableResize
               className="m-0 h-full"
               {...register("mission")}
               state={errors?.mission ? "error" : undefined}
@@ -85,7 +90,6 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
           <TextArea
             label="Description"
             placeholder="Venture into the heart of an enchanted forest..."
-            disableResize
             className="m-0 h-full"
             {...register("description")}
             state={errors?.description ? "error" : undefined}
@@ -96,7 +100,6 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
           <TextArea
             label="Transition"
             placeholder="You leave this place to enter the dark swamp..."
-            disableResize
             className="m-0 h-full"
             {...register("transition")}
             state={errors?.transition ? "error" : undefined}
@@ -105,16 +108,7 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
         </div>
       </div>
       <div className="flex flex-row justify-end gap-8">
-        <Button
-          className="font-medium tracking-[0.08em] w-fit text-white/50 uppercase"
-          variant="ghost"
-          onClick={() => {
-            reset();
-            setStatus("LIST");
-            setEditIndex(-1);
-          }}
-          type="reset"
-        >
+        <Button className="w-fit" variant="ghost" onClick={onCancel} type="reset">
           CANCEL
         </Button>
         <Button className="w-fit px-8" variant="outline">

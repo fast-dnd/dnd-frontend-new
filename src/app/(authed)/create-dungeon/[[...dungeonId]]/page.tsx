@@ -9,9 +9,10 @@ import DungeonSkeleton from "./components/dungeon-skeleton";
 import Final from "./components/final";
 import Initial from "./components/initial";
 import Locations from "./components/locations";
-import { useDungeonFormStore } from "./stores/form-store";
+import { initialDungeonFormData, useDungeonFormStore } from "./stores/form-store";
 import useGetDungeon from "./hooks/use-get-dungeon";
 import { useEffect, useRef } from "react";
+import { isEqual } from "lodash";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const router = useRouter();
@@ -39,7 +40,11 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
       }
     } else {
       // creating...
-      dungeonFormStore?.resetDungeonFormData();
+      if (dungeonFormStore) {
+        // if the user is not in creation process but just started it then reset the form
+        if (isEqual(dungeonFormStore.dungeonFormData, initialDungeonFormData))
+          dungeonFormStore?.resetDungeonFormData();
+      }
     }
 
     // Update previousDungeonFormStore two times to ensure it is always one step behind dungeonFormStore
@@ -72,9 +77,9 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
 
   return (
     <div className="flex justify-center h-full p-16 overflow-y-hidden">
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col items-center gap-8">
         <div
-          className="cursor-pointer flex flex-row gap-1 w-fit font-medium items-center tracking-[0.08em]  uppercase"
+          className="cursor-pointer flex flex-row gap-1 w-fit font-medium items-center justify-center tracking-[0.08em] uppercase"
           onClick={abortDungeonCreation}
         >
           <AiOutlineLeft className="inline-block" /> GO BACK

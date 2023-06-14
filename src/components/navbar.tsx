@@ -15,7 +15,7 @@ const Navbar = () => {
           <div className="absolute w-full h-full flex items-center justify-center z-20">
             <p
               style={jibril.style}
-              className="text-2xl tracking-[0.415em] text-center indent-[0.415em] uppercase"
+              className="text-2xl tracking-[0.415em] text-center indent-[0.415em] uppercase absolute top-0 translate-y-1/4"
             >
               v3rpg
             </p>
