@@ -2,24 +2,27 @@
 
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getQueryClient } from "@/lib/query-client";
+import { IRoomData } from "@/services/room-service";
 import React, { useState } from "react";
 
 const avatars = ["Random avatar 1", "Random avatar 2", "Random avatar 3", "Random avatar 4"];
 const roles = ["Random role 1", "Random role 2", "Random role 3", "Random role 4"];
 
-const JoinEditInfo = () => {
+const JoinEditInfo = (props: { conversationId: string }) => {
+  const { conversationId } = props;
   const [avatar, setAvatar] = useState<string>();
   const [role, setRole] = useState<string>();
+
+  const onUpdate = () => {};
 
   return (
     <Box title="Join" className="flex flex-col gap-8 min-h-0 w-[490px] h-fit p-8">
@@ -52,8 +55,8 @@ const JoinEditInfo = () => {
         </SelectContent>
       </Select>
       <div className="w-full flex justify-end">
-        <Button variant="primary" className="w-fit px-8 uppercase">
-          enter
+        <Button variant="primary" className="w-fit px-8 uppercase" onClick={onUpdate}>
+          update
         </Button>
       </div>
     </Box>

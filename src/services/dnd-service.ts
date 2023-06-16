@@ -45,24 +45,6 @@ const updateAvatar = async (data: IAvatarSchema & { avatarId: string }) => {
   return await dndApi.put("avatar", data);
 };
 
-interface IEditChampion {
-  conversationId: string;
-  championId: string;
-}
-
-const editChampion = async (data: IEditChampion) => {
-  return await dndApi.put("player/champion/edit", data);
-};
-
-interface IEditAvatar {
-  conversationId: string;
-  avatarId: string;
-}
-
-const editAvatar = async (data: IEditAvatar) => {
-  return await dndApi.put("player/avatar/edit", data);
-};
-
 interface IPlayMove {
   conversationId: string;
   playerId: string;
@@ -122,10 +104,6 @@ const dndService = {
   getAvatar,
   createAvatar,
   updateAvatar,
-
-  // this should go to room service
-  editChampion,
-  editAvatar,
 
   // this should go to dungeon service
   postLocations,
