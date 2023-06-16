@@ -1,11 +1,11 @@
 "use client";
 
-import * as React from "react";
-import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { cn } from "@/utils/style-utils";
-import { BsCheck2 } from "react-icons/bs";
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { VariantProps, cva } from "class-variance-authority";
+import * as React from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
+import { FaCheck } from "react-icons/fa";
 import { GiCancel } from "react-icons/gi";
 
 export const checkboxVariants = cva(
@@ -48,7 +48,7 @@ const Checkbox = React.forwardRef<
     >
       <CheckboxPrimitive.Root ref={ref} className={cn(checkboxVariants(), className)} {...props}>
         <CheckboxPrimitive.Indicator className={cn("flex items-center justify-center text-white")}>
-          <BsCheck2 className="font-bold h-4 w-4" />
+          <FaCheck />
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Root>
       <p
