@@ -18,9 +18,12 @@ import Spinner from "@/components/ui/spinner";
 import { useGetKingdom } from "@/hooks/use-get-kingdom";
 import useUpdateAvatar from "../hooks/use-update-avatar";
 import useUpdateRole from "../hooks/use-update-role";
+import useRoomSocket from "../hooks/use-room-socket";
+import useStartGame from "../hooks/use-start-game";
 
 const JoinEditInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
+  const { gameStarting } = useRoomSocket(conversationId);
   const [avatarId, setAvatarId] = useState<string>();
   const [role, setRole] = useState<string>();
 
@@ -30,10 +33,15 @@ const JoinEditInfo = (props: { conversationId: string }) => {
 
   const { mutate: updateAvatar } = useUpdateAvatar();
   const { mutate: updateRole } = useUpdateRole();
+  const { mutate: startGame } = useStartGame();
 
   const onUpdate = () => {
     if (avatarId) updateAvatar({ conversationId, avatarId });
     if (role) updateRole({ conversationId, championId: role });
+  };
+
+  const canBegin = () => {
+    return roomData?.playerState.every((player) => player.champion) ?? false;
   };
 
   useEffect(() => {
@@ -42,7 +50,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
         (player) => player.accountId === localStorage.getItem("accountId"),
       );
       setAvatarId(currentPlayer?.avatarId);
-      setRole(currentPlayer?.championId);
+      setRole(currentPlayer?.champion?._id);
     }
   }, [roomData]);
 
@@ -88,10 +96,23 @@ const JoinEditInfo = (props: { conversationId: string }) => {
         </SelectContent>
       </Select>
       <div className="w-full flex justify-end">
-        <Button variant="primary" className="w-fit px-8 uppercase" onClick={onUpdate}>
+        <Button
+          variant="primary"
+          disabled={gameStarting}
+          className="w-fit px-8 uppercase"
+          onClick={onUpdate}
+        >
           update
         </Button>
       </div>
+      <div className="w-full border-t border-white/20" />
+      <Button
+        className="px-8 uppercase"
+        disabled={!canBegin() || gameStarting}
+        onClick={() => startGame({ conversationId })}
+      >
+        begin
+      </Button>
     </Box>
   );
 };
