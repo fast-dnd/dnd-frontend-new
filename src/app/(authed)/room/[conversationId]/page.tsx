@@ -5,7 +5,7 @@ import RoomInfo from "./components/room-info";
 import JoinEditInfo from "./components/join-edit-info";
 
 const Room = ({ params }: { params: { conversationId: string } }) => {
-  const conversationId = params.conversationId || "";
+  const conversationId = params.conversationId;
 
   return (
     <div className="flex justify-center h-full p-16 overflow-y-hidden">

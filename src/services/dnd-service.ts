@@ -1,4 +1,4 @@
-import { IChampion, ILocation, MoveType } from "@/types/dnd";
+import { DefaultMove, IChampion, ILocation, MoveType } from "@/types/dnd";
 
 import createApi from "./api-factory";
 import { IAvatarSchema } from "@/app/(authed)/create-avatar/[[...avatarId]]/schemas/avatar-schema";
@@ -49,7 +49,7 @@ interface IPlayMove {
   conversationId: string;
   playerId: string;
   mana: number;
-  moveType: string;
+  moveType: MoveType;
   message?: string;
 }
 
@@ -83,7 +83,7 @@ export interface IPostChampion {
   name: string;
   description: string;
   label: string;
-  moveMapping: { [key in MoveType]?: string };
+  moveMapping: { [key in DefaultMove]?: string };
 }
 
 const postChampions = async (data: { champions: IPostChampion[] }) => {

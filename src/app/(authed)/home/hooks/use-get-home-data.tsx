@@ -1,6 +1,5 @@
 "use client";
 
-import dndService from "@/services/dnd-service";
 import dungeonService from "@/services/dungeon-service";
 import roomService from "@/services/room-service";
 import { useQuery } from "@tanstack/react-query";

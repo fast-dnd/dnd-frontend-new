@@ -4,8 +4,8 @@ import { Box } from "@/components/ui/box";
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import useGetRoomData from "../hooks/use-get-room-data";
 import Spinner from "@/components/ui/spinner";
+import useGetRoomData from "@/hooks/use-get-room-data";
 
 const RoomInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
