@@ -10,9 +10,9 @@ import Final from "./components/final";
 import Initial from "./components/initial";
 import Locations from "./components/locations";
 import { initialDungeonFormData, useDungeonFormStore } from "./stores/form-store";
-import useGetDungeon from "./hooks/use-get-dungeon";
 import { useEffect, useRef } from "react";
 import { isEqual } from "lodash";
+import useGetDungeon from "@/hooks/use-get-dungeon";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const router = useRouter();
@@ -63,9 +63,9 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
     }
   }, [dungeonFormStore]);
 
-  if (dungeonQuery?.isError) return redirect("/home");
+  if (dungeonQuery.isError) return redirect("/home");
 
-  if (dungeonQuery?.isLoading || !dungeonFormStore) return <DungeonSkeleton />;
+  if (dungeonQuery.isLoading || !dungeonFormStore) return <DungeonSkeleton />;
 
   const { currentStep, setCurrentStep, resetDungeonFormData } = dungeonFormStore;
 

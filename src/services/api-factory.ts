@@ -10,6 +10,7 @@ const handleInterceptors = (apiInstance: AxiosInstance) => {
     (error) => {
       if (error.response && error.response.status === 401) {
         localStorage.removeItem("jwtToken");
+        localStorage.removeItem("accountId");
         redirect("/");
       }
       if (error.response && error.response.data && error.response.data.message) {

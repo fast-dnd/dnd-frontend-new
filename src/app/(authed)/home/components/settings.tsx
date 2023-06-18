@@ -7,6 +7,7 @@ const Settings = () => {
   const router = useRouter();
   const onSignOut = () => {
     localStorage.removeItem("jwtToken");
+    localStorage.removeItem("accountId");
     router.push("/login");
   };
 

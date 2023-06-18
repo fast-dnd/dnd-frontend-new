@@ -10,31 +10,64 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getQueryClient } from "@/lib/query-client";
-import { IRoomData } from "@/services/room-service";
-import React, { useState } from "react";
 
-const avatars = ["Random avatar 1", "Random avatar 2", "Random avatar 3", "Random avatar 4"];
-const roles = ["Random role 1", "Random role 2", "Random role 3", "Random role 4"];
+import React, { useEffect, useState } from "react";
+import useGetRoomData from "../hooks/use-get-room-data";
+import useGetDungeon from "@/hooks/use-get-dungeon";
+import Spinner from "@/components/ui/spinner";
+import { useGetKingdom } from "@/hooks/use-get-kingdom";
+import useUpdateAvatar from "../hooks/use-update-avatar";
+import useUpdateRole from "../hooks/use-update-role";
 
 const JoinEditInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
-  const [avatar, setAvatar] = useState<string>();
+  const [avatarId, setAvatarId] = useState<string>();
   const [role, setRole] = useState<string>();
 
-  const onUpdate = () => {};
+  const { data: roomData } = useGetRoomData(conversationId);
+  const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
+  const { data: kingdomData } = useGetKingdom();
+
+  const { mutate: updateAvatar } = useUpdateAvatar();
+  const { mutate: updateRole } = useUpdateRole();
+
+  const onUpdate = () => {
+    if (avatarId) updateAvatar({ conversationId, avatarId });
+    if (role) updateRole({ conversationId, championId: role });
+  };
+
+  useEffect(() => {
+    if (roomData) {
+      const currentPlayer = roomData.playerState.find(
+        (player) => player.accountId === localStorage.getItem("accountId"),
+      );
+      setAvatarId(currentPlayer?.avatarId);
+      setRole(currentPlayer?.championId);
+    }
+  }, [roomData]);
+
+  if (!roomData || !dungeonData || !kingdomData) {
+    return (
+      <Box
+        title="Join"
+        className="flex flex-col items-center justify-center gap-8 min-h-0 w-[490px] h-fit p-8"
+      >
+        <Spinner className="h-40 w-40" />
+      </Box>
+    );
+  }
 
   return (
     <Box title="Join" className="flex flex-col gap-8 min-h-0 w-[490px] h-fit p-8">
-      <Select value={avatar} onValueChange={(value) => setAvatar(value)}>
+      <Select value={avatarId} onValueChange={(value) => setAvatarId(value)}>
         <SelectTrigger label="Select an avatar" className="w-full">
           <SelectValue placeholder="Select an avatar" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {avatars.map((avatar) => (
-              <SelectItem key={avatar} value={avatar}>
-                {avatar}
+            {kingdomData.avatars.map((avatar) => (
+              <SelectItem key={avatar._id} value={avatar._id}>
+                {avatar.name}
               </SelectItem>
             ))}
           </SelectGroup>
@@ -46,9 +79,9 @@ const JoinEditInfo = (props: { conversationId: string }) => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {roles.map((role) => (
-              <SelectItem key={role} value={role}>
-                {role}
+            {dungeonData.champions.map((role) => (
+              <SelectItem key={role._id} value={role._id}>
+                {role.name}
               </SelectItem>
             ))}
           </SelectGroup>

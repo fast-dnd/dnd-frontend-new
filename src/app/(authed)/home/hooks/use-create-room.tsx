@@ -7,7 +7,10 @@ const useCreateRoom = () => {
 
   return useMutation({
     mutationFn: roomService.createRoom,
-    onSuccess: (data) => router.push(`room/${data.data.conversationId}`),
+    onSuccess: (data) => {
+      if (data.data.admin) localStorage.setItem("accountId", data.data.admin.accountId);
+      router.push(`room/${data.data.conversationId}`);
+    },
   });
 };
 

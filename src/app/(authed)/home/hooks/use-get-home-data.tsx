@@ -27,10 +27,3 @@ export const useGetRoomHistory = () => {
     queryFn: roomService.getRooms,
   });
 };
-
-export const useGetKingdom = () => {
-  return useQuery({
-    queryKey: ["kingdom"],
-    queryFn: dndService.getKingdom,
-  });
-};
