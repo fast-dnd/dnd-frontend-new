@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IRoomSocketEvent } from "../lib/events";
+import { IRoomSocketEvent } from "../types/events";
 import { socketIO } from "@/lib/socket";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";

@@ -9,6 +9,8 @@ import { IPlayer, MoveType, defaultMoves } from "@/types/dnd";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Die from "./die";
+import Spinner from "@/components/ui/spinner";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -16,9 +18,10 @@ const Gameplay = (props: { conversationId: string }) => {
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [move, setMove] = useState<MoveType>();
-  const [canPlay, setCanPlay] = useState(false);
+  const [canPlay, setCanPlay] = useState(true);
   const [powerUp, setPowerUp] = useState(0);
   const [freeWill, setFreeWill] = useState<string>("");
+  const [timer, setTimer] = useState(0);
 
   useEffect(() => {
     if (roomData) {
@@ -27,10 +30,29 @@ const Gameplay = (props: { conversationId: string }) => {
           (player) => player.accountId === localStorage.getItem("accountId"),
         ),
       );
+      if (roomData.roundEndsAt) {
+        const endsAt = new Date(roomData.roundEndsAt);
+        setTimer(Math.floor((endsAt.getTime() - new Date().getTime()) / 1000));
+      }
     }
   }, [roomData]);
 
-  if (!roomData || !dungeonData || !currentPlayer) return <Box title="" className="h-full"></Box>;
+  useEffect(() => {
+    timer > 0 && setTimeout(() => setTimer(timer - 1), 1000);
+  }, [timer]);
+
+  const timeToDisplay = () => {
+    const minutes = Math.floor(timer / 60);
+    const seconds = timer % 60;
+    return `${minutes}:${("0" + seconds).slice(-2)}`;
+  };
+
+  if (!roomData || !dungeonData || !currentPlayer)
+    return (
+      <Box title="" className="flex h-full justify-center items-center">
+        <Spinner className="h-40 w-40" />
+      </Box>
+    );
 
   return (
     <Box title={dungeonData.name} className="flex flex-col min-h-0 flex-1 gap-8 px-12 py-8">
@@ -66,22 +88,22 @@ const Gameplay = (props: { conversationId: string }) => {
             <div
               className={cn(
                 "py-2.5 px-8 text-center bg-white/5 text-xl tracking-[0.07em] indent-[0.07em]",
-                canPlay && "text-white/50",
+                !canPlay && "text-white/50",
               )}
             >
-              <span className="font-semibold">Choose an action</span> - {"5:20"} Left
+              <span className="font-semibold">Choose an action</span> - {timeToDisplay()} Left
             </div>
             <div className="flex gap-4 w-full flex-wrap">
               {defaultMoves.map((dMove) => (
                 <Button
-                  key={move}
+                  key={dMove}
                   variant="ghost"
-                  disabled={canPlay}
+                  disabled={!canPlay}
                   className={cn(
                     "border-white/25 flex-1 h-12 basis-1/3 normal-case text-white",
                     dMove === move && "border-tomato",
                   )}
-                  onClick={() => setMove(move)}
+                  onClick={() => setMove(dMove)}
                 >
                   {currentPlayer.champion.moveMapping[dMove]}
                 </Button>
@@ -94,17 +116,17 @@ const Gameplay = (props: { conversationId: string }) => {
             <div
               className={cn(
                 "py-2.5 px-8 text-center bg-white/5 text-xl tracking-[0.07em] indent-[0.07em]",
-                canPlay && "text-white/50",
+                !canPlay && "text-white/50",
               )}
             >
-              <span className="font-semibold">Type your move and select a power up</span> - {"5:20"}{" "}
-              Left
+              <span className="font-semibold">Type your move and select a power up</span> -{" "}
+              {timeToDisplay()} Left
             </div>
             <div className="flex gap-4 h-full">
               <TextArea
                 className="m-0 h-full border-white/50"
                 placeholder="I found a secret tunnel and escape through it..."
-                disabled={canPlay}
+                disabled={!canPlay}
                 onChange={(e) => setFreeWill(e.target.value)}
               />
               <div className="flex w-[72px] flex-col gap-2">
@@ -112,7 +134,7 @@ const Gameplay = (props: { conversationId: string }) => {
                   <Button
                     variant="ghost"
                     key={i}
-                    disabled={canPlay || currentPlayer.mana < i}
+                    disabled={!canPlay || currentPlayer.mana < i}
                     className={cn(
                       "font-semibold h-8 text-white bg-white/5 tracking-[0.2em]",
                       powerUp === i && "border-tomato",
@@ -126,9 +148,17 @@ const Gameplay = (props: { conversationId: string }) => {
             </div>
           </div>
         )}
-        <div className="flex flex-col bg-white/5 w-[270px]">
-          <div className="h-32"></div>
-          <div className="h-12 bg-white/5"></div>
+        <div className="flex flex-col justify-between bg-white/5 w-[270px]">
+          <div className="flex items-center justify-center gap-4 h-32">
+            <Die roll={5} />
+            <Die roll={2} />
+          </div>
+          <Button
+            disabled={!canPlay}
+            className={cn("h-12 normal-case", !canPlay && "bg-white/5 text-white")}
+          >
+            {canPlay ? "Roll the dice" : `Dice total: ${"7"}`}
+          </Button>
         </div>
       </div>
     </Box>
