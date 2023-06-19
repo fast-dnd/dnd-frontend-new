@@ -13,7 +13,7 @@ import Die from "./die";
 import Spinner from "@/components/ui/spinner";
 import usePlayMove from "../hooks/use-play-move";
 import { IPlayMove } from "@/services/game-service";
-import useGameSocket from "../hooks/use-game-socket";
+import useGameplaySocket from "../hooks/use-gameplay-socket";
 import { randomDice } from "../utils/dice";
 
 const Gameplay = (props: { conversationId: string }) => {
@@ -30,7 +30,7 @@ const Gameplay = (props: { conversationId: string }) => {
 
   const { mutate: playMove, isLoading: submitting } = usePlayMove();
 
-  const { canPlay, setCanPlay, lastStory } = useGameSocket(conversationId);
+  const { canPlay, setCanPlay, lastStory } = useGameplaySocket(conversationId);
 
   useEffect(() => {
     if (roomData) {
@@ -55,7 +55,10 @@ const Gameplay = (props: { conversationId: string }) => {
   }, [dice, submitting]);
 
   useEffect(() => {
-    timer > 0 && !lastStory && setTimeout(() => setTimer(timer - 1), 1000);
+    const interval = setInterval(() => {
+      timer > 0 && !lastStory && setTimer(timer - 1);
+    }, 1000);
+    return () => clearInterval(interval);
   }, [lastStory, timer]);
 
   const timeToDisplay = () => {
@@ -117,13 +120,13 @@ const Gameplay = (props: { conversationId: string }) => {
               <div className="w-full flex gap-8 items-center">
                 <div className="font-semibold text-2xl tracking-[0.2em] uppercase">
                   <span className="text-tomato">TURN {i + 1}.</span>
-                  {dungeonData.locations[Math.floor(i / 2)].name}
+                  {dungeonData.locations[Math.floor(i / 2)]?.name}
                 </div>
                 <div className="flex-1 border-t border-tomato" />
               </div>
               <div className="flex gap-8">
-                <div className="h-72 w-72 flex flex-shrink-0">
-                  {!!roomData.generatedImages[i] && (
+                {!!roomData.generatedImages[i] && (
+                  <div className="h-72 w-72 flex flex-shrink-0">
                     <Image
                       src={roomData.generatedImages[i] || "/images/bg-cover.png"}
                       alt="dungeon"
@@ -132,8 +135,8 @@ const Gameplay = (props: { conversationId: string }) => {
                       className="h-72 w-72"
                       draggable={false}
                     />
-                  )}
-                </div>
+                  </div>
+                )}
 
                 <div className="flex flex-col gap-4">
                   {/* sound */}

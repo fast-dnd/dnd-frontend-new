@@ -1,7 +1,8 @@
 import { IPlayerMove } from "@/services/dnd-service";
 import { IRoomData } from "@/services/room-service";
 
-export type IGameSocketEvent = ISocketEvent | IPlayerMoveEvent | IChunkEvent | IQuestionEvent;
+export type IGameplaySocketEvent = ISocketEvent | IChunkEvent;
+export type IGeneralSocketEvent = IPlayerMoveEvent | IQuestionEvent;
 
 export interface ISocketEvent {
   event: "REQUEST_SENT_TO_DM" | "ROUND_STORY" | "GAME_ENDED";

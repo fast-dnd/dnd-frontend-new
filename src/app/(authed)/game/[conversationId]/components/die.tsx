@@ -4,6 +4,7 @@ import { dieMap } from "../utils/dice";
 const Die = (props: { roll: number }) => {
   const dieRows = dieMap[props.roll];
 
+  if (!dieRows) return <div className="h-14 w-14 p-1.5 flex flex-col rounded-lg bg-white" />;
   return (
     <div className="h-14 w-14 p-1.5 flex flex-col rounded-lg bg-white">
       {dieRows.map((row, i) => (

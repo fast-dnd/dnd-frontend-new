@@ -1,15 +1,15 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { IGameSocketEvent } from "../types/events";
+import { IGameplaySocketEvent } from "../types/events";
 import { socketIO } from "@/lib/socket";
 
-const useGameSocket = (conversationId: string) => {
+const useGameplaySocket = (conversationId: string) => {
   const queryClient = useQueryClient();
   const [canPlay, setCanPlay] = useState(true);
   const [lastStory, setLastStory] = useState<string>("");
 
   useEffect(() => {
-    const onEvent = (event: IGameSocketEvent) => {
+    const onEvent = (event: IGameplaySocketEvent) => {
       switch (event.event) {
         case "ROUND_STORY_CHUNK":
           setLastStory(`${lastStory}${event.data.chunk}`);
@@ -39,4 +39,4 @@ const useGameSocket = (conversationId: string) => {
   return { canPlay, setCanPlay, lastStory };
 };
 
-export default useGameSocket;
+export default useGameplaySocket;

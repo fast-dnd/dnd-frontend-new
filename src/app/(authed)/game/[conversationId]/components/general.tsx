@@ -2,13 +2,16 @@
 import { Box } from "@/components/ui/box";
 import useGetRoomData from "@/hooks/use-get-room-data";
 import { IPlayer } from "@/types/dnd";
-import { FormEventHandler, useEffect, useState } from "react";
+import { FormEventHandler, useEffect, useRef, useState } from "react";
 import Player from "./player";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 import { AiOutlineLeft } from "react-icons/ai";
 import { Input } from "@/components/ui/input";
 import { IoMdSend } from "react-icons/io";
+import { zip } from "lodash";
+import useAskQuestion from "../hooks/use-ask-question";
+import useGeneralSocket from "../hooks/use-general-socket";
 
 const General = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -16,6 +19,8 @@ const General = (props: { conversationId: string }) => {
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [statsOpened, setStatsOpened] = useState(false);
   const [question, setQuestion] = useState("");
+  useGeneralSocket(conversationId);
+  const { mutate: askQuestion } = useAskQuestion();
 
   useEffect(() => {
     if (roomData) {
@@ -29,8 +34,17 @@ const General = (props: { conversationId: string }) => {
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (ev) => {
     ev.preventDefault();
-    console.log(question);
+    askQuestion({ conversationId, question });
+    setQuestion("");
   };
+
+  const autoBottomScrollDiv = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (autoBottomScrollDiv.current) {
+      autoBottomScrollDiv.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [roomData?.moves, roomData?.questions3History]);
 
   if (!roomData || !currentPlayer) {
     return <Box title="general" className="h-full"></Box>;
@@ -48,13 +62,59 @@ const General = (props: { conversationId: string }) => {
         >
           Team stats
         </Button>
-
-        <div className="flex flex-col min-h-0 h-full  "></div>
+        {/* currently printing moves before questions until we get timestamps */}
+        <div className="flex flex-col min-h-0 h-full gap-4 pr-6 overflow-y-auto">
+          {zip(roomData.moves, roomData.questions3History).map((val, i) => (
+            <div key={i} className="flex flex-col gap-4">
+              {!!val[0] && (
+                <>
+                  {val[0].map((move) => (
+                    <div key={move.playerAccountId} className="flex flex-col gap-4">
+                      <div className="bg-white/5 opacity-50 text-lg px-4 py-2">
+                        <span className="font-semibold">{move.playerName}: </span>
+                        {move.action} - And rolled {move.dice}
+                      </div>
+                      {!!move.aiDescription && (
+                        <div className="flex flex-col gap-2 bg-white/10 text-lg px-4 py-2">
+                          <p>
+                            <span className="font-semibold text-tomato">Master</span> thought:
+                          </p>
+                          <p>{move.aiDescription}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </>
+              )}
+              {!!val[1] && !!val[1].question && (
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-2 px-4 py-2 bg-white/10">
+                    <p>
+                      <span className="font-semibold">{val[1].questioner || ""}</span> asked:
+                    </p>
+                    <p>{val[1].question}</p>
+                  </div>
+                  {!!val[1].bob3Answer && (
+                    <div className="flex flex-col gap-2 px-4 py-2 bg-white/10">
+                      <p>
+                        <span className="font-semibold text-tomato">Master</span> answered{" "}
+                        <span className="font-semibold">{val[1].questioner || ""}</span>:
+                      </p>
+                      <p>{val[1].bob3Answer}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+          <div ref={autoBottomScrollDiv} />
+        </div>
 
         <form onSubmit={onSubmit} className="flex w-full items-end gap-8">
           <div className="flex flex-col flex-1">
             <Input
               label="Ask master"
+              value={question}
               className="m-0"
               onChange={(e) => {
                 setQuestion(e.target.value);

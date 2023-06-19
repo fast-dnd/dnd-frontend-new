@@ -9,7 +9,7 @@ export const defaultMoves = [
 ] as const;
 export type DefaultMove = (typeof defaultMoves)[number];
 
-export type MoveType = "free_will" | DefaultMove;
+export type MoveType = "no_input" | "free_will" | DefaultMove;
 
 export type LocationPhase = "discovery" | "end";
 
