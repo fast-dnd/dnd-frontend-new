@@ -1,5 +1,5 @@
 import { cn } from "@/utils/style-utils";
-import { dieMap } from "../utils/die-map";
+import { dieMap } from "../utils/dice";
 
 const Die = (props: { roll: number }) => {
   const dieRows = dieMap[props.roll];

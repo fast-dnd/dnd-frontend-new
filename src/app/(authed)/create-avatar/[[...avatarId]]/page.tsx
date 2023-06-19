@@ -13,9 +13,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineLeft } from "react-icons/ai";
 import DungeonSkeleton from "../../create-dungeon/[[...dungeonId]]/components/dungeon-skeleton";
 import useCreateAvatar from "./hooks/use-create-avatar";
-import useGetAvatar from "./hooks/use-get-avatar";
 import useUpdateAvatar from "./hooks/use-update-avatar";
 import { IAvatarSchema, avatarSchema } from "./schemas/avatar-schema";
+import useGetAvatar from "@/hooks/use-get-avatar";
 
 const CreateAvatar = ({ params }: { params: { avatarId?: [string] } }) => {
   const avatarId = params.avatarId?.[0];

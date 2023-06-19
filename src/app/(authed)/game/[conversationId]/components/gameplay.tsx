@@ -5,37 +5,54 @@ import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/text-area";
 import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
-import { IPlayer, MoveType, defaultMoves } from "@/types/dnd";
+import { DefaultMove, IPlayer, defaultMoves } from "@/types/dnd";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Die from "./die";
 import Spinner from "@/components/ui/spinner";
+import usePlayMove from "../hooks/use-play-move";
+import { IPlayMove } from "@/services/game-service";
+import useGameSocket from "../hooks/use-game-socket";
+import { randomDice } from "../utils/dice";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
   const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
-  const [move, setMove] = useState<MoveType>();
-  const [canPlay, setCanPlay] = useState(true);
+  const [move, setMove] = useState<DefaultMove>();
   const [powerUp, setPowerUp] = useState(0);
   const [freeWill, setFreeWill] = useState<string>("");
   const [timer, setTimer] = useState(0);
+  const [dice, setDice] = useState([0, 0]);
+  const [diceTotal, setDiceTotal] = useState(0);
+
+  const { mutate: playMove, isLoading: submitting } = usePlayMove();
+
+  const { canPlay, setCanPlay, lastStory } = useGameSocket(conversationId);
 
   useEffect(() => {
     if (roomData) {
-      setCurrentPlayer(
-        roomData.playerState.find(
-          (player) => player.accountId === localStorage.getItem("accountId"),
-        ),
+      const player = roomData.playerState.find(
+        (player) => player.accountId === localStorage.getItem("accountId"),
       );
-      if (roomData.roundEndsAt) {
+      setCurrentPlayer(player);
+      if (player?.health || 0 <= 0) setCanPlay(false);
+      if (lastStory) {
+        setTimer(0);
+      } else if (roomData.roundEndsAt) {
         const endsAt = new Date(roomData.roundEndsAt);
-        setTimer(Math.floor((endsAt.getTime() - new Date().getTime()) / 1000));
+        setTimer(Math.max(Math.floor((endsAt.getTime() - new Date().getTime()) / 1000), 0));
       }
+
+      if (roomData.state !== "GAMING") setCanPlay(false);
     }
-  }, [roomData]);
+  }, [lastStory, roomData, setCanPlay, submitting]);
+
+  useEffect(() => {
+    submitting && setTimeout(() => setDice(randomDice()), 200);
+  }, [dice, submitting]);
 
   useEffect(() => {
     timer > 0 && setTimeout(() => setTimer(timer - 1), 1000);
@@ -47,6 +64,14 @@ const Gameplay = (props: { conversationId: string }) => {
     return `${minutes}:${("0" + seconds).slice(-2)}`;
   };
 
+  const autoBottomScrollDiv = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (autoBottomScrollDiv.current) {
+      autoBottomScrollDiv.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [roomData?.chatGptResponses, roomData?.generatedImages, lastStory]);
+
   if (!roomData || !dungeonData || !currentPlayer)
     return (
       <Box title="" className="flex h-full justify-center items-center">
@@ -54,36 +79,74 @@ const Gameplay = (props: { conversationId: string }) => {
       </Box>
     );
 
+  const play = () => {
+    let moveToPlay: IPlayMove | undefined;
+    if (roomData.location.phase === "discovery" && move) {
+      moveToPlay = {
+        conversationId,
+        mana: 0,
+        moveType: move,
+        playerId: currentPlayer.accountId,
+        message: "",
+      };
+    } else if (roomData.location.phase === "end") {
+      moveToPlay = {
+        conversationId,
+        mana: powerUp,
+        moveType: "free_will",
+        message: freeWill,
+        playerId: currentPlayer.accountId,
+      };
+    }
+    if (moveToPlay) {
+      setCanPlay(false);
+      playMove(moveToPlay, {
+        onSuccess: (res) => {
+          setDiceTotal(res.data.diceAfterBonus);
+          setTimeout(() => setDice(randomDice(res.data.diceAfterBonus)), 250);
+        },
+      });
+    }
+  };
   return (
     <Box title={dungeonData.name} className="flex flex-col min-h-0 flex-1 gap-8 px-12 py-8">
       <div className="w-full flex flex-col flex-1 gap-8 pr-6 overflow-y-auto">
-        {roomData.chatGptResponses.map((story, i) => (
-          <div key={story} className="flex flex-col gap-8 w-full">
-            <div className="w-full flex gap-8 items-center">
-              <div className="font-semibold text-2xl tracking-[0.2em] uppercase">
-                <span className="text-tomato">TURN {i + 1}.</span>
-                {dungeonData.locations[Math.floor(i / 2)].name}
+        {(lastStory ? [...roomData.chatGptResponses, lastStory] : roomData.chatGptResponses).map(
+          (story, i) => (
+            <div key={story} className="flex flex-col gap-8 w-full">
+              <div className="w-full flex gap-8 items-center">
+                <div className="font-semibold text-2xl tracking-[0.2em] uppercase">
+                  <span className="text-tomato">TURN {i + 1}.</span>
+                  {dungeonData.locations[Math.floor(i / 2)].name}
+                </div>
+                <div className="flex-1 border-t border-tomato" />
               </div>
-              <div className="flex-1 border-t border-tomato" />
-            </div>
-            <div className="flex gap-8">
-              <Image
-                src={dungeonData.imageUrl || "/images/bg-cover.png"}
-                alt="dungeon"
-                height={280}
-                width={280}
-                className="h-72 w-72"
-              />
-              <div className="flex flex-col gap-4">
-                {/* sound */}
-                <div className="text-[22px] leading-8 tracking-widest">{story}</div>
+              <div className="flex gap-8">
+                <div className="h-72 w-72 flex flex-shrink-0">
+                  {!!roomData.generatedImages[i] && (
+                    <Image
+                      src={roomData.generatedImages[i] || "/images/bg-cover.png"}
+                      alt="dungeon"
+                      height={280}
+                      width={280}
+                      className="h-72 w-72"
+                      draggable={false}
+                    />
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-4">
+                  {/* sound */}
+                  <div className="text-[22px] leading-8 tracking-widest">{story}</div>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ),
+        )}
+        <div ref={autoBottomScrollDiv} />
       </div>
       <div className="flex gap-8 w-full">
-        {roomData.location.phase === "end" && (
+        {roomData.location.phase === "discovery" && (
           <div className="flex flex-col flex-1 gap-4">
             <div
               className={cn(
@@ -111,7 +174,7 @@ const Gameplay = (props: { conversationId: string }) => {
             </div>
           </div>
         )}
-        {roomData.location.phase === "discovery" && (
+        {roomData.location.phase === "end" && (
           <div className="flex flex-col h-full flex-1 gap-4">
             <div
               className={cn(
@@ -150,14 +213,20 @@ const Gameplay = (props: { conversationId: string }) => {
         )}
         <div className="flex flex-col justify-between bg-white/5 w-[270px]">
           <div className="flex items-center justify-center gap-4 h-32">
-            <Die roll={5} />
-            <Die roll={2} />
+            {dice.map((roll, i) => (
+              <Die key={i} roll={roll} />
+            ))}
           </div>
           <Button
-            disabled={!canPlay}
+            disabled={
+              !canPlay ||
+              (!move && roomData.location.phase === "discovery") ||
+              (!freeWill && roomData.location.phase === "end")
+            }
             className={cn("h-12 normal-case", !canPlay && "bg-white/5 text-white")}
+            onClick={play}
           >
-            {canPlay ? "Roll the dice" : `Dice total: ${"7"}`}
+            {canPlay ? "Roll the dice" : `Dice total: ${!submitting && diceTotal}`}
           </Button>
         </div>
       </div>

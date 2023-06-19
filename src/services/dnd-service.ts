@@ -45,29 +45,6 @@ const updateAvatar = async (data: IAvatarSchema & { avatarId: string }) => {
   return await dndApi.put("avatar", data);
 };
 
-interface IPlayMove {
-  conversationId: string;
-  playerId: string;
-  mana: number;
-  moveType: MoveType;
-  message?: string;
-}
-
-export interface IPlayMoveResponse {
-  dice: number;
-  diceAfterBonus: number;
-  diceBreakdown: {
-    aiDiceBonus: number;
-    bonusApplied: number;
-    dice: number;
-    mana: number;
-  };
-}
-
-const playMove = async (data: IPlayMove) => {
-  return await dndApi.post<IPlayMoveResponse>("play", data);
-};
-
 export interface IPostLocation {
   name: string;
   description: string;
@@ -90,14 +67,6 @@ const postChampions = async (data: { champions: IPostChampion[] }) => {
   return await dndApi.post<IChampion[]>("champions", data);
 };
 
-const postComplaint = async (data: { text: string }) => {
-  return await dndApi.post("complaint", data);
-};
-
-const postQuestion = async (data: { question: string; conversationId: string }) => {
-  return await dndApi.post("ask", data);
-};
-
 const dndService = {
   // this should go to profile service
   getKingdom,
@@ -108,11 +77,6 @@ const dndService = {
   // this should go to dungeon service
   postLocations,
   postChampions,
-
-  // this should go to game service
-  playMove,
-  postComplaint,
-  postQuestion,
 };
 
 export default dndService;
