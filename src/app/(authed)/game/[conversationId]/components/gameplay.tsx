@@ -38,7 +38,7 @@ const Gameplay = (props: { conversationId: string }) => {
         (player) => player.accountId === localStorage.getItem("accountId"),
       );
       setCurrentPlayer(player);
-      if (player?.health || 0 <= 0) setCanPlay(false);
+      if ((player?.health || 0) <= 0) setCanPlay(false);
       if (lastStory) {
         setTimer(0);
       } else if (roomData.roundEndsAt) {
@@ -46,17 +46,17 @@ const Gameplay = (props: { conversationId: string }) => {
         setTimer(Math.max(Math.floor((endsAt.getTime() - new Date().getTime()) / 1000), 0));
       }
 
-      if (roomData.state !== "GAMING") setCanPlay(false);
+      if (roomData.state === "CLOSED") setCanPlay(false);
     }
-  }, [lastStory, roomData, setCanPlay, submitting]);
+  }, [canPlay, lastStory, roomData, setCanPlay, submitting]);
 
   useEffect(() => {
     submitting && setTimeout(() => setDice(randomDice()), 200);
   }, [dice, submitting]);
 
   useEffect(() => {
-    timer > 0 && setTimeout(() => setTimer(timer - 1), 1000);
-  }, [timer]);
+    timer > 0 && !lastStory && setTimeout(() => setTimer(timer - 1), 1000);
+  }, [lastStory, timer]);
 
   const timeToDisplay = () => {
     const minutes = Math.floor(timer / 60);
@@ -226,7 +226,7 @@ const Gameplay = (props: { conversationId: string }) => {
             className={cn("h-12 normal-case", !canPlay && "bg-white/5 text-white")}
             onClick={play}
           >
-            {canPlay ? "Roll the dice" : `Dice total: ${!submitting && diceTotal}`}
+            {canPlay ? "Roll the dice" : `Dice total: ${!submitting ? diceTotal : ""}`}
           </Button>
         </div>
       </div>

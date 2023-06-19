@@ -40,7 +40,7 @@ const General = (props: { conversationId: string }) => {
     <Box title="general" className="flex flex-col min-h-0 flex-1 gap-8 p-8">
       <Player player={currentPlayer} />
       <div className="w-full border-t border-white/25" />
-      <div className={cn("flex flex-col gap-8", statsOpened && "hidden")}>
+      <div className={cn("flex flex-col min-h-0 flex-1 gap-8", statsOpened && "hidden")}>
         <Button
           variant={"ghost"}
           className="border-white text-white"
@@ -49,7 +49,7 @@ const General = (props: { conversationId: string }) => {
           Team stats
         </Button>
 
-        <div className=" min-h-0 h-full  "></div>
+        <div className="flex flex-col min-h-0 h-full  "></div>
 
         <form onSubmit={onSubmit} className="flex w-full items-end gap-8">
           <div className="flex flex-col flex-1">

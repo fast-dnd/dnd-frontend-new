@@ -20,7 +20,7 @@ const useRoomSocket = (conversationId: string) => {
           setGameStarting(true);
           break;
         case "GAME_STARTED":
-          router.push(`game/${conversationId}`);
+          router.push(`/game/${conversationId}`);
           break;
       }
     };
