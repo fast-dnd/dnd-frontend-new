@@ -12,6 +12,7 @@ import { IoMdSend } from "react-icons/io";
 import { zip } from "lodash";
 import useAskQuestion from "../hooks/use-ask-question";
 import useGeneralSocket from "../hooks/use-general-socket";
+import Spinner from "@/components/ui/spinner";
 
 const General = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -47,7 +48,11 @@ const General = (props: { conversationId: string }) => {
   }, [roomData?.moves, roomData?.questions3History]);
 
   if (!roomData || !currentPlayer) {
-    return <Box title="general" className="h-full"></Box>;
+    return (
+      <Box title="" className="flex h-full justify-center items-center">
+        <Spinner className="h-40 w-40" />
+      </Box>
+    );
   }
 
   return (
@@ -66,26 +71,23 @@ const General = (props: { conversationId: string }) => {
         <div className="flex flex-col min-h-0 h-full gap-4 pr-6 overflow-y-auto">
           {zip(roomData.moves, roomData.questions3History).map((val, i) => (
             <div key={i} className="flex flex-col gap-4">
-              {!!val[0] && (
-                <>
-                  {val[0].map((move) => (
-                    <div key={move.playerAccountId} className="flex flex-col gap-4">
-                      <div className="bg-white/5 opacity-50 text-lg px-4 py-2">
-                        <span className="font-semibold">{move.playerName}: </span>
-                        {move.action} - And rolled {move.dice}
-                      </div>
-                      {!!move.aiDescription && (
-                        <div className="flex flex-col gap-2 bg-white/10 text-lg px-4 py-2">
-                          <p>
-                            <span className="font-semibold text-tomato">Master</span> thought:
-                          </p>
-                          <p>{move.aiDescription}</p>
-                        </div>
-                      )}
+              {Array.isArray(val[0]) &&
+                val[0].map((move) => (
+                  <div key={move.playerAccountId} className="flex flex-col gap-4">
+                    <div className="bg-white/5 opacity-50 text-lg px-4 py-2">
+                      <span className="font-semibold">{move.playerName}: </span>
+                      {move.action} - And rolled {move.dice}
                     </div>
-                  ))}
-                </>
-              )}
+                    {!!move.aiDescription && (
+                      <div className="flex flex-col gap-2 bg-white/10 text-lg px-4 py-2">
+                        <p>
+                          <span className="font-semibold text-tomato">Master</span> thought:
+                        </p>
+                        <p>{move.aiDescription}</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
               {!!val[1] && !!val[1].question && (
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col gap-2 px-4 py-2 bg-white/10">

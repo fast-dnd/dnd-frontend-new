@@ -15,6 +15,7 @@ import usePlayMove from "../hooks/use-play-move";
 import { IPlayMove } from "@/services/game-service";
 import useGameplaySocket from "../hooks/use-gameplay-socket";
 import { randomDice } from "../utils/dice";
+import StyledAudio from "./styled-audio";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -139,7 +140,9 @@ const Gameplay = (props: { conversationId: string }) => {
                 )}
 
                 <div className="flex flex-col gap-4">
-                  {/* sound */}
+                  {roomData.generateAudio && roomData.generatedAudio[i] && (
+                    <StyledAudio audio={roomData.generatedAudio[i]} />
+                  )}
                   <div className="text-[22px] leading-8 tracking-widest">{story}</div>
                 </div>
               </div>
@@ -166,7 +169,7 @@ const Gameplay = (props: { conversationId: string }) => {
                   variant="ghost"
                   disabled={!canPlay}
                   className={cn(
-                    "border-white/25 flex-1 h-12 basis-1/3 normal-case text-white",
+                    "border-white/25 flex-1 h-12 basis-1/3 text-[0.9vw] normal-case text-white px-2",
                     dMove === move && "border-tomato",
                   )}
                   onClick={() => setMove(dMove)}

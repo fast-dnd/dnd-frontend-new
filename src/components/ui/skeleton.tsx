@@ -1,10 +1,12 @@
+import { cn } from "@/utils/style-utils";
 import React from "react";
 
 interface ISkeletonProps {
   amount?: number;
+  small?: boolean;
 }
 
-const Skeleton = ({ amount = 1 }: ISkeletonProps) => {
+const Skeleton = ({ amount = 1, small = false }: ISkeletonProps) => {
   return (
     <>
       {Array.from({ length: amount }, (_, i) => (
@@ -13,7 +15,12 @@ const Skeleton = ({ amount = 1 }: ISkeletonProps) => {
           role="status"
           className="space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex md:items-center"
         >
-          <div className="flex items-center justify-center w-full h-48 rounded sm:w-96 bg-gray-600">
+          <div
+            className={cn(
+              "flex items-center justify-center w-full h-48 rounded sm:w-96 bg-gray-600",
+              small && "h-20 w-20 sm:w-28",
+            )}
+          >
             <svg
               className="w-12 h-12 text-gray-200"
               xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +32,7 @@ const Skeleton = ({ amount = 1 }: ISkeletonProps) => {
             </svg>
           </div>
           <div className="w-full">
-            <div className="h-2.5 rounded-full bg-gray-600 w-48 mb-4"></div>
+            <div className={cn("h-2.5 rounded-full bg-gray-600 w-48 mb-4", small && "w-36")}></div>
             <div className="h-2 rounded-full bg-gray-600 max-w-[480px] mb-2.5"></div>
             <div className="h-2 rounded-full bg-gray-600 mb-2.5"></div>
             <div className="h-2 rounded-full bg-gray-600 max-w-[440px] mb-2.5"></div>

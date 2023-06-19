@@ -28,7 +28,12 @@ const CreateRoom = () => {
 
   const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
 
-  if (isLoading) return <Skeleton amount={3} />;
+  if (isLoading)
+    return (
+      <div className="flex flex-col gap-12 min-h-0 h-full overflow-y-auto pr-8 no-scrollbar">
+        <Skeleton amount={3} />
+      </div>
+    );
 
   if (!dungeons) {
     return (
