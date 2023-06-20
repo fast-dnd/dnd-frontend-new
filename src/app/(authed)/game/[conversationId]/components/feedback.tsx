@@ -6,7 +6,11 @@ import { TextArea } from "@/components/ui/text-area";
 import React, { useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 
-const Feedback = () => {
+interface IFeedbackProps {
+  onHideFeedback?: () => void;
+}
+
+const Feedback = ({ onHideFeedback }: IFeedbackProps) => {
   const [feedback, setFeedback] = useState("");
 
   const onSendFeedback = () => {
@@ -17,7 +21,7 @@ const Feedback = () => {
     <div className="flex gap-8 flex-col items-center justify-center mt-8">
       <div
         className="cursor-pointer flex gap-1 items-center text-lg font-medium tracking-[0.08em] uppercase"
-        //TODO: onClick={() => ()}  hide
+        onClick={onHideFeedback}
       >
         <AiOutlineLeft className="inline-block" /> BACK TO THE GAME
       </div>

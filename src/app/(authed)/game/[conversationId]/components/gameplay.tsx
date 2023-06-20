@@ -16,22 +16,24 @@ import { IPlayMove } from "@/services/game-service";
 import useGameplaySocket from "../hooks/use-gameplay-socket";
 import { randomDice } from "../utils/dice";
 import StyledAudio from "./styled-audio";
+import { useGameStore } from "../stores/game-store";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
   const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
+
+  const { setDisplayHowToPlay, setDisplayFeedback } = useGameStore((store) => store);
+
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
-  const [move, setMove] = useState<DefaultMove>();
   const [powerUp, setPowerUp] = useState(0);
   const [freeWill, setFreeWill] = useState<string>("");
   const [timer, setTimer] = useState(0);
   const [dice, setDice] = useState([0, 0]);
   const [diceTotal, setDiceTotal] = useState(0);
 
+  const { canPlay, setCanPlay, lastStory, move, setMove } = useGameplaySocket(conversationId);
   const { mutate: playMove, isLoading: submitting } = usePlayMove();
-
-  const { canPlay, setCanPlay, lastStory } = useGameplaySocket(conversationId);
 
   useEffect(() => {
     if (roomData) {
@@ -72,7 +74,7 @@ const Gameplay = (props: { conversationId: string }) => {
 
   useEffect(() => {
     if (autoBottomScrollDiv.current) {
-      autoBottomScrollDiv.current.scrollIntoView({ behavior: "smooth" });
+      autoBottomScrollDiv.current.scrollIntoView({ behavior: "instant" });
     }
   }, [roomData?.chatGptResponses, roomData?.generatedImages, lastStory]);
 
@@ -113,7 +115,14 @@ const Gameplay = (props: { conversationId: string }) => {
     }
   };
   return (
-    <Box title={dungeonData.name} className="flex flex-col min-h-0 flex-1 gap-8 px-12 py-8">
+    <Box
+      title={dungeonData.name}
+      howTo
+      onClickHowTo={() => setDisplayHowToPlay(true)}
+      feedback
+      onClickFeedback={() => setDisplayFeedback(true)}
+      className="flex flex-col min-h-0 flex-1 gap-8 px-12 py-8"
+    >
       <div className="w-full flex flex-col flex-1 gap-8 pr-6 overflow-y-auto">
         {(lastStory ? [...roomData.chatGptResponses, lastStory] : roomData.chatGptResponses).map(
           (story, i) => (
@@ -126,8 +135,8 @@ const Gameplay = (props: { conversationId: string }) => {
                 <div className="flex-1 border-t border-tomato" />
               </div>
               <div className="flex gap-8">
-                {!!roomData.generatedImages[i] && (
-                  <div className="h-72 w-72 flex flex-shrink-0">
+                <div className="h-72 w-72 flex flex-shrink-0">
+                  {!!roomData.generatedImages[i] && (
                     <Image
                       src={roomData.generatedImages[i] || "/images/bg-cover.png"}
                       alt="dungeon"
@@ -136,8 +145,8 @@ const Gameplay = (props: { conversationId: string }) => {
                       className="h-72 w-72"
                       draggable={false}
                     />
-                  </div>
-                )}
+                  )}
+                </div>
 
                 <div className="flex flex-col gap-4">
                   {roomData.generateAudio && roomData.generatedAudio[i] && (
@@ -169,8 +178,10 @@ const Gameplay = (props: { conversationId: string }) => {
                   variant="ghost"
                   disabled={!canPlay}
                   className={cn(
-                    "border-white/25 flex-1 h-12 basis-1/3 text-[0.9vw] normal-case text-white px-2",
+                    "border-white/25 flex-1 h-12 basis-1/3 normal-case text-white px-2",
                     dMove === move && "border-tomato",
+                    currentPlayer.champion.moveMapping[dMove].length > 24 && "text-sm",
+                    currentPlayer.champion.moveMapping[dMove].length > 48 && "text-xs",
                   )}
                   onClick={() => setMove(dMove)}
                 >
