@@ -9,10 +9,11 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-tomato border border-tomato text-black disabled:border-transparent hover:shadow-basic",
-        outline: "bg-transparent text-white border border-tomato hover:bg-tomato hover:text-black",
+          "bg-tomato border border-tomato text-black disabled:border-transparent hover:shadow-basic active:shadow-none active:bg-tomato/90",
+        outline:
+          "bg-transparent text-white border border-tomato hover:bg-tomato hover:text-black active:bg-tomato/90",
         ghost:
-          "bg-transparent border border-transparent text-white/50 hover:text-white font-normal tracking-[0.08em]",
+          "bg-transparent border border-transparent text-white/50 hover:text-white font-normal tracking-[0.08em] active:text-white/75",
       },
     },
     defaultVariants: {
