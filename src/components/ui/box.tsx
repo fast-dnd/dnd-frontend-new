@@ -9,6 +9,7 @@ import {
   AiOutlineQuestionCircle,
 } from "react-icons/ai";
 import { Button } from "./button";
+import { Tooltip, TooltipArrow, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
 export const boxVariants = cva("bg-glass backdrop-blur-2xl");
 
@@ -46,14 +47,32 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
           <div className="bg-tomato w-2 h-2 rotate-45" />
           <div className="flex gap-4 h-full absolute right-12 items-center">
             {howTo && (
-              <Button variant="ghost" onClick={onClickHowTo}>
-                <AiOutlineQuestionCircle />
-              </Button>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Button variant="ghost" onClick={onClickHowTo}>
+                      <AiOutlineQuestionCircle />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    <p>How to play</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             )}
             {feedback && (
-              <Button variant="ghost" onClick={onClickFeedback}>
-                <AiOutlineExclamationCircle />
-              </Button>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Button variant="ghost" onClick={onClickFeedback}>
+                      <AiOutlineExclamationCircle />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    <p>Feedback</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             )}
           </div>
         </div>

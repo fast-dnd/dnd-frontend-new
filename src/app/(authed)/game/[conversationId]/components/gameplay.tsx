@@ -86,6 +86,7 @@ const Gameplay = (props: { conversationId: string }) => {
     );
 
   const play = () => {
+    setFreeWill("");
     let moveToPlay: IPlayMove | undefined;
     if (roomData.location.phase === "discovery" && move) {
       moveToPlay = {
@@ -208,6 +209,7 @@ const Gameplay = (props: { conversationId: string }) => {
                 placeholder="I found a secret tunnel and escape through it..."
                 disabled={!canPlay}
                 onChange={(e) => setFreeWill(e.target.value)}
+                value={freeWill}
               />
               <div className="flex w-[72px] flex-col gap-2">
                 {Array.from({ length: 3 }, (_, i) => (
