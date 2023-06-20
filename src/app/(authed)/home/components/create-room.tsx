@@ -55,12 +55,12 @@ const CreateRoom = () => {
         onTabClick={() => setSelectedDungeon(undefined)}
       />
 
-      <div className="flex flex-col gap-12 flex-1 overflow-y-auto pr-8">
+      <div className="flex flex-col gap-4 flex-1 overflow-y-auto pr-8">
         {dungeons.map((dungeon) => (
           <div
             key={dungeon._id}
             className={cn(
-              "cursor-pointer flex flex-row gap-8 hover:bg-white/5 transition-all duration-300",
+              "cursor-pointer flex flex-row gap-8 hover:bg-white/5 rounded-md p-4 transition-all duration-300",
               dungeon === selectedDungeon && "bg-white/5",
             )}
             onClick={() => setSelectedDungeon(selectedDungeon === dungeon ? undefined : dungeon)}

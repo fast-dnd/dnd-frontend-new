@@ -23,9 +23,12 @@ const Avatars = () => {
 
   // TODO: avatar exp % (currently set at 80)
   return (
-    <div className="h-full flex flex-col gap-8 overflow-y-auto no-scrollbar">
+    <div className="h-full flex flex-col gap-4 overflow-y-auto no-scrollbar">
       {kingdom.avatars.map((avatar) => (
-        <div key={avatar._id} className="flex flex-row items-center gap-6 hover:bg-white/5 p-2">
+        <div
+          key={avatar._id}
+          className="flex flex-row items-center gap-6 hover:bg-white/5 p-2 rounded-md transition-colors duration-300"
+        >
           <Image
             src={avatar.imageUrl || "/images/default-avatar.png"}
             alt="avatar"
