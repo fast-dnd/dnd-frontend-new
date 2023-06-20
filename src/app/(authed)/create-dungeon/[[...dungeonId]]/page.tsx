@@ -13,6 +13,7 @@ import { initialDungeonFormData, useDungeonFormStore } from "./stores/form-store
 import { useEffect, useRef } from "react";
 import { isEqual } from "lodash";
 import useGetDungeon from "@/hooks/use-get-dungeon";
+import BoxSkeleton from "@/components/BoxSkeleton";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const router = useRouter();
@@ -65,7 +66,8 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
 
   if (dungeonQuery.isError) return redirect("/home");
 
-  if (dungeonQuery.isLoading || !dungeonFormStore) return <DungeonSkeleton />;
+  if (dungeonQuery.isInitialLoading || !dungeonFormStore)
+    return <BoxSkeleton title={`${dungeonId ? "EDIT" : "CREATE"} DUNGEON`} />;
 
   const { currentStep, setCurrentStep, resetDungeonFormData } = dungeonFormStore;
 
