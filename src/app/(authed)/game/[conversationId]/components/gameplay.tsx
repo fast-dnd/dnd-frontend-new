@@ -130,24 +130,26 @@ const Gameplay = (props: { conversationId: string }) => {
             <div key={story} className="flex flex-col gap-8 w-full">
               <div className="w-full flex gap-8 items-center">
                 <div className="font-semibold text-2xl tracking-[0.2em] uppercase">
-                  <span className="text-tomato">TURN {i + 1}.</span>
+                  <span className="text-tomato mr-2">TURN {i + 1}.</span>
                   {dungeonData.locations[Math.floor(i / 2)]?.name}
                 </div>
                 <div className="flex-1 border-t border-tomato" />
               </div>
               <div className="flex gap-8">
-                <div className="h-72 w-72 flex flex-shrink-0">
-                  {!!roomData.generatedImages[i] && (
-                    <Image
-                      src={roomData.generatedImages[i] || "/images/bg-cover.png"}
-                      alt="dungeon"
-                      height={280}
-                      width={280}
-                      className="h-72 w-72"
-                      draggable={false}
-                    />
-                  )}
-                </div>
+                {roomData.generateImages && (
+                  <div className="h-72 w-72 flex flex-shrink-0">
+                    {!!roomData.generatedImages[i] && (
+                      <Image
+                        src={roomData.generatedImages[i] || "/images/bg-cover.png"}
+                        alt="dungeon"
+                        height={280}
+                        width={280}
+                        className="h-72 w-72"
+                        draggable={false}
+                      />
+                    )}
+                  </div>
+                )}
 
                 <div className="flex flex-col gap-4">
                   {roomData.generateAudio && roomData.generatedAudio[i] && (
