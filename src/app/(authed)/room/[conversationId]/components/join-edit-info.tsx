@@ -20,6 +20,9 @@ import useUpdateRole from "../hooks/use-update-role";
 import useRoomSocket from "../hooks/use-room-socket";
 import useStartGame from "../hooks/use-start-game";
 import useGetRoomData from "@/hooks/use-get-room-data";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { cn } from "@/utils/style-utils";
+import { MdCheck, MdOutlineContentCopy } from "react-icons/md";
 
 const JoinEditInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -31,18 +34,16 @@ const JoinEditInfo = (props: { conversationId: string }) => {
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
   const { data: kingdomData } = useGetKingdom();
 
-  const { mutate: updateAvatar } = useUpdateAvatar();
-  const { mutate: updateRole } = useUpdateRole();
-  const { mutate: startGame } = useStartGame();
+  const { mutate: updateAvatar, isLoading: isUpdatingAvatar } = useUpdateAvatar();
+  const { mutate: updateRole, isLoading: isUpdatingRole } = useUpdateRole();
+  const { mutate: startGame, isLoading: isGameStarting } = useStartGame();
 
   const onUpdate = () => {
     if (avatarId) updateAvatar({ conversationId, avatarId });
     if (role) updateRole({ conversationId, championId: role });
   };
 
-  const canBegin = () => {
-    return roomData?.playerState.every((player) => player.champion) ?? false;
-  };
+  const canBegin = roomData?.playerState.every((player) => player.champion) ?? false;
 
   useEffect(() => {
     if (roomData) {
@@ -101,18 +102,31 @@ const JoinEditInfo = (props: { conversationId: string }) => {
           disabled={gameStarting}
           className="w-fit px-8 uppercase"
           onClick={onUpdate}
+          isLoading={isUpdatingAvatar || isUpdatingRole}
         >
-          update
+          {isUpdatingAvatar || isUpdatingRole ? "updating" : "update"}
         </Button>
       </div>
       <div className="w-full border-t border-white/20" />
-      <Button
-        className="px-8 uppercase"
-        disabled={!canBegin() || gameStarting}
-        onClick={() => startGame({ conversationId })}
-      >
-        begin
-      </Button>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              className="px-8 uppercase"
+              disabled={!canBegin || gameStarting}
+              isLoading={isGameStarting || gameStarting}
+              onClick={() => startGame({ conversationId })}
+            >
+              begin
+            </Button>
+          </TooltipTrigger>
+          {!canBegin && (
+            <TooltipContent>
+              <p>Please choose your role and avatar</p>
+            </TooltipContent>
+          )}
+        </Tooltip>
+      </TooltipProvider>
     </Box>
   );
 };

@@ -107,7 +107,7 @@ const CreateRoom = () => {
             onCheckedChange={(checked) => setGenerateAudio(checked as boolean)}
           />
           <Button
-            isLoading={isLoading}
+            isLoading={isCreatingRoom}
             className="px-8 w-fit"
             disabled={!selectedDungeon}
             onClick={onCreateRoom}
