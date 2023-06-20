@@ -13,9 +13,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineLeft } from "react-icons/ai";
 import DungeonSkeleton from "../../create-dungeon/[[...dungeonId]]/components/dungeon-skeleton";
 import useCreateAvatar from "./hooks/use-create-avatar";
-import useGetAvatar from "./hooks/use-get-avatar";
 import useUpdateAvatar from "./hooks/use-update-avatar";
 import { IAvatarSchema, avatarSchema } from "./schemas/avatar-schema";
+import useGetAvatar from "@/hooks/use-get-avatar";
+import BoxSkeleton from "@/components/BoxSkeleton";
 
 const CreateAvatar = ({ params }: { params: { avatarId?: [string] } }) => {
   const avatarId = params.avatarId?.[0];
@@ -52,7 +53,8 @@ const CreateAvatar = ({ params }: { params: { avatarId?: [string] } }) => {
     });
   };
 
-  if (avatarQuery?.isLoading) return <DungeonSkeleton />;
+  if (avatarQuery?.isInitialLoading)
+    return <BoxSkeleton title={`${avatarId ? "EDIT" : "CREATE"} AVATAR`} />;
 
   return (
     <div className="flex flex-col items-center gap-8 mt-16">

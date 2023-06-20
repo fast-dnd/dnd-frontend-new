@@ -1,11 +1,11 @@
 import Skeleton from "@/components/ui/skeleton";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
-import { useGetKingdom } from "../hooks/use-get-home-data";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MdEdit } from "react-icons/md";
 import { Button } from "@/components/ui/button";
+import { useGetKingdom } from "@/hooks/use-get-kingdom";
 
 const Avatars = () => {
   const { data: kingdom, isLoading } = useGetKingdom();
@@ -23,9 +23,12 @@ const Avatars = () => {
 
   // TODO: avatar exp % (currently set at 80)
   return (
-    <div className="h-full flex flex-col gap-8 overflow-y-auto no-scrollbar">
+    <div className="h-full flex flex-col gap-4 overflow-y-auto no-scrollbar">
       {kingdom.avatars.map((avatar) => (
-        <div key={avatar._id} className="flex flex-row items-center gap-6 hover:bg-white/5 p-2">
+        <div
+          key={avatar._id}
+          className="flex flex-row items-center gap-6 hover:bg-white/5 p-2 rounded-md transition-colors duration-300"
+        >
           <Image
             src={avatar.imageUrl || "/images/default-avatar.png"}
             alt="avatar"

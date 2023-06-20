@@ -1,6 +1,5 @@
 "use client";
 
-import dndService from "@/services/dnd-service";
 import dungeonService from "@/services/dungeon-service";
 import roomService from "@/services/room-service";
 import { useQuery } from "@tanstack/react-query";
@@ -25,12 +24,5 @@ export const useGetRoomHistory = () => {
   return useQuery({
     queryKey: ["roomHistory"],
     queryFn: roomService.getRooms,
-  });
-};
-
-export const useGetKingdom = () => {
-  return useQuery({
-    queryKey: ["kingdom"],
-    queryFn: dndService.getKingdom,
   });
 };

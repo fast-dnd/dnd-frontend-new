@@ -28,7 +28,12 @@ const CreateRoom = () => {
 
   const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
 
-  if (isLoading) return <Skeleton amount={3} />;
+  if (isLoading)
+    return (
+      <div className="flex flex-col gap-12 min-h-0 h-full overflow-y-auto pr-8 no-scrollbar">
+        <Skeleton amount={3} />
+      </div>
+    );
 
   if (!dungeons) {
     return (
@@ -50,12 +55,12 @@ const CreateRoom = () => {
         onTabClick={() => setSelectedDungeon(undefined)}
       />
 
-      <div className="flex flex-col gap-12 flex-1 overflow-y-auto pr-8">
+      <div className="flex flex-col gap-4 flex-1 overflow-y-auto pr-8">
         {dungeons.map((dungeon) => (
           <div
             key={dungeon._id}
             className={cn(
-              "cursor-pointer flex flex-row gap-8 hover:bg-white/5",
+              "cursor-pointer flex flex-row gap-8 hover:bg-white/5 rounded-md p-4 transition-all duration-300",
               dungeon === selectedDungeon && "bg-white/5",
             )}
             onClick={() => setSelectedDungeon(selectedDungeon === dungeon ? undefined : dungeon)}
@@ -102,7 +107,7 @@ const CreateRoom = () => {
             onCheckedChange={(checked) => setGenerateAudio(checked as boolean)}
           />
           <Button
-            isLoading={isLoading}
+            isLoading={isCreatingRoom}
             className="px-8 w-fit"
             disabled={!selectedDungeon}
             onClick={onCreateRoom}

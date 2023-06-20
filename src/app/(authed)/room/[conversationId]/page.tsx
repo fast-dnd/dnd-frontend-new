@@ -1,4 +1,3 @@
-import { Box } from "@/components/ui/box";
 import Link from "next/link";
 import React from "react";
 import { AiOutlineLeft } from "react-icons/ai";
@@ -18,8 +17,8 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
           <AiOutlineLeft className="inline-block" /> GO BACK
         </Link>
         <div className="flex flex-row gap-12 w-full">
-          <RoomInfo />
-          <JoinEditInfo />
+          <RoomInfo conversationId={conversationId} />
+          <JoinEditInfo conversationId={conversationId} />
         </div>
       </div>
     </div>

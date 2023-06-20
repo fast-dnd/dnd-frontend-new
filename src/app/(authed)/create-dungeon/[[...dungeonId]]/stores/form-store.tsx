@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { devtools, persist } from "zustand/middleware";
-import { MoveType } from "@/types/dnd";
 
 export const steps = ["INITIAL", "LOCATIONS", "CHAMPIONS", "FINAL"] as const;
 
@@ -38,7 +37,6 @@ interface IChampionFormData {
   name: string;
   description: string;
   moveMapping: {
-    free_will?: string;
     discover_health: string;
     discover_mana: string;
     conversation_with_team: string;

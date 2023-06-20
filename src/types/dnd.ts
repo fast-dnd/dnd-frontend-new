@@ -1,19 +1,24 @@
 export const ChampionClasses = ["mage", "warrior", "explorer"] as const;
 export type ChampionClass = (typeof ChampionClasses)[number];
 
-export type MoveType =
-  | "free_will"
-  | "discover_health"
-  | "discover_mana"
-  | "conversation_with_team"
-  | "rest";
+export const defaultMoves = [
+  "discover_health",
+  "discover_mana",
+  "conversation_with_team",
+  "rest",
+] as const;
+export type DefaultMove = (typeof defaultMoves)[number];
+
+export type MoveType = "no_input" | "free_will" | DefaultMove;
+
+export type LocationPhase = "discovery" | "end";
 
 export interface IChampion {
   _id: string;
   name: string;
   description: string;
   label: string;
-  moveMapping: { [key in MoveType]: string };
+  moveMapping: { [key in DefaultMove]: string };
 }
 
 export interface IPlayer {
@@ -21,7 +26,6 @@ export interface IPlayer {
   accountId: string;
   avatarId: string;
   champion: IChampion;
-  championId: string;
   health: number;
   mana: number;
   gold: number;
@@ -42,7 +46,7 @@ export interface ILocation {
   description: string;
   mission: string;
   transition: string;
-  phase: string;
+  phase: LocationPhase;
   allPlayersRollSum: number;
   neededRollSumPercent: number;
   missionCompleted: boolean;
