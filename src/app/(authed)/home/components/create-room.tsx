@@ -60,7 +60,7 @@ const CreateRoom = () => {
           <div
             key={dungeon._id}
             className={cn(
-              "cursor-pointer flex flex-row gap-8 hover:bg-white/5 rounded-md p-4 transition-all duration-300",
+              "cursor-pointer flex flex-row gap-8 hover:bg-white/5 rounded-md p-4 pr-0 transition-all duration-300",
               dungeon === selectedDungeon && "bg-white/5",
             )}
             onClick={() => setSelectedDungeon(selectedDungeon === dungeon ? undefined : dungeon)}
