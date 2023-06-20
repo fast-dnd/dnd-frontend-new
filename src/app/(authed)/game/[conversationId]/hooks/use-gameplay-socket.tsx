@@ -2,11 +2,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { IGameplaySocketEvent } from "../types/events";
 import { socketIO } from "@/lib/socket";
+import { DefaultMove } from "@/types/dnd";
 
 const useGameplaySocket = (conversationId: string) => {
   const queryClient = useQueryClient();
   const [canPlay, setCanPlay] = useState(true);
   const [lastStory, setLastStory] = useState<string>("");
+  const [move, setMove] = useState<DefaultMove>();
 
   useEffect(() => {
     const onEvent = (event: IGameplaySocketEvent) => {
@@ -27,6 +29,7 @@ const useGameplaySocket = (conversationId: string) => {
           queryClient.setQueryData(["room", conversationId], event.data);
           setCanPlay(true);
           setLastStory("");
+          setMove(undefined);
           break;
       }
     };
@@ -36,7 +39,7 @@ const useGameplaySocket = (conversationId: string) => {
     };
   }, [canPlay, conversationId, lastStory, queryClient]);
 
-  return { canPlay, setCanPlay, lastStory };
+  return { canPlay, setCanPlay, lastStory, move, setMove };
 };
 
 export default useGameplaySocket;
