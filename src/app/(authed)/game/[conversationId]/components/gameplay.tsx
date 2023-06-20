@@ -74,7 +74,7 @@ const Gameplay = (props: { conversationId: string }) => {
 
   useEffect(() => {
     if (autoBottomScrollDiv.current) {
-      autoBottomScrollDiv.current.scrollIntoView({ behavior: "instant" });
+      autoBottomScrollDiv.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [roomData?.chatGptResponses, roomData?.generatedImages, lastStory]);
 
