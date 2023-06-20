@@ -3,10 +3,12 @@ import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
 import { IRoomData } from "@/services/room-service";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { AiOutlineRight } from "react-icons/ai";
 
 const RoomItem = (props: { room: IRoomData }) => {
   const { room } = props;
+  const router = useRouter();
   const { data: roomData } = useGetRoomData(room.conversationId);
   const { data: dungeonData } = useGetDungeon(room.dungeonId);
 
@@ -35,7 +37,11 @@ const RoomItem = (props: { room: IRoomData }) => {
         )}
       </div>
       {room.state === "GAMING" && (
-        <AiOutlineRight className="cursor-pointer text-tomato h-8 w-5" preserveAspectRatio="none" />
+        <AiOutlineRight
+          className="cursor-pointer text-tomato h-8 w-5"
+          preserveAspectRatio="none"
+          onClick={() => router.push(`/game/${room.conversationId}`)}
+        />
       )}
     </div>
   );
