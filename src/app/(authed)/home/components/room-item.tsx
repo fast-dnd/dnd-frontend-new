@@ -17,7 +17,7 @@ const RoomItem = (props: { room: IRoomData }) => {
   );
 
   return (
-    <div className="flex flex-row items-center gap-4">
+    <div className="flex flex-row items-center gap-4 w-full hover:bg-white/10 p-4 rounded-md transition-colors duration-300">
       <Image
         src={"" || "/images/bg-cover.png"}
         alt={"Game"}
@@ -28,6 +28,9 @@ const RoomItem = (props: { room: IRoomData }) => {
       <div className="flex flex-col gap-1 flex-1 justify-center">
         <p className="leading-5 font-medium tracking-widest uppercase">{dungeonData.name}</p>
         <p className="text-sm tracking-[0.15em] text-white/50 uppercase">{player?.name}</p>
+        {room.state === "CLOSED" && (
+          <p className="text-sm tracking-[0.15em] text-white/50 uppercase">FINISHED</p>
+        )}
         {room.state === "GAMING" && (
           <p className="text-sm tracking-[0.15em] text-tomato/50 uppercase">
             RESUME (TURN {room.currentRound + 1})
@@ -35,7 +38,10 @@ const RoomItem = (props: { room: IRoomData }) => {
         )}
       </div>
       {room.state === "GAMING" && (
-        <AiOutlineRight className="cursor-pointer text-tomato h-8 w-5" preserveAspectRatio="none" />
+        <AiOutlineRight
+          className="cursor-pointer text-tomato/50 h-8 w-5 hover:text-tomato transition-colors duration-300"
+          preserveAspectRatio="none"
+        />
       )}
     </div>
   );
