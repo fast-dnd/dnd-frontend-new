@@ -12,7 +12,7 @@ interface IHomeStore {
 
 export const useHomeStore = create<IHomeStore>()((set) => ({
   homeTab: "PLAY",
-  dungeonTab: "MY DUNGEONS",
+  dungeonTab: "TOP DUNGEONS",
   setHomeTab: (homeTab: HomeTabType) => set({ homeTab }),
   setDungeonTab: (dungeonTab: DungeonTabType) => set({ dungeonTab }),
   displayHowToPlay: false,
