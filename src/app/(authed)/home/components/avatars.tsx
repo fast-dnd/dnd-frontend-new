@@ -1,10 +1,8 @@
 import Skeleton from "@/components/ui/skeleton";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MdEdit } from "react-icons/md";
-import { Button } from "@/components/ui/button";
 import { useGetKingdom } from "@/hooks/use-get-kingdom";
 
 const Avatars = () => {
