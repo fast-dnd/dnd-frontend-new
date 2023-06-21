@@ -30,6 +30,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
   const { gameStarting } = useRoomSocket(conversationId);
   const [avatarId, setAvatarId] = useState<string>();
   const [role, setRole] = useState<string>();
+  const [copied, setCopied] = React.useState(false);
 
   const { data: roomData, isLoading: isLoadingRoomData, isError } = useGetRoomData(conversationId);
   const { data: dungeonData, isLoading: isLoadingDungeonData } = useGetDungeon(roomData?.dungeonId);
@@ -62,7 +63,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
     return (
       <Box
         title="Join"
-        className="flex flex-col items-center justify-center gap-8 min-h-0 w-[490px] h-fit p-8"
+        className="flex flex-col items-center justify-center gap-8 flex-1 min-h-0 w-[490px] h-fit p-8"
       >
         <Spinner className="h-40 w-40" />
       </Box>
@@ -71,8 +72,16 @@ const JoinEditInfo = (props: { conversationId: string }) => {
 
   if (!roomData || !dungeonData || !kingdomData) return <div>Something went wrong</div>;
 
+  const onCopyRoomId = () => {
+    navigator.clipboard.writeText(roomData.link);
+    setCopied(true);
+  };
+
   return (
-    <Box title="Join" className="flex flex-col gap-8 min-h-0 w-[490px] h-fit p-8">
+    <Box
+      title="Join"
+      className="flex flex-col gap-8 justify-between flex-1 min-h-0 w-[490px] h-fit p-8"
+    >
       <Select value={avatarId} onValueChange={(value) => setAvatarId(value)}>
         <SelectTrigger label="Select an avatar" className="w-full">
           <SelectValue placeholder="Select an avatar" />
@@ -113,6 +122,18 @@ const JoinEditInfo = (props: { conversationId: string }) => {
         </Button>
       </div>
       <div className="w-full border-t border-white/20" />
+      <div className="flex justify-between gap-4">
+        <p className="mt-2 text-2xl text-center flex-1 whitespace-nowrap">{roomData.link}</p>
+        <Button
+          onClick={onCopyRoomId}
+          variant={copied ? "primary" : "outline"}
+          className="uppercase w-fit px-8"
+        >
+          {copied ? "Copied" : "Copy room id"}
+        </Button>
+      </div>
+      <div className="w-full border-t border-white/20" />
+
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>

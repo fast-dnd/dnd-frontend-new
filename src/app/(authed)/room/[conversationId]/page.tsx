@@ -8,7 +8,7 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
   const conversationId = params.conversationId;
 
   return (
-    <div className="flex justify-center h-full p-16 overflow-y-hidden">
+    <div className="flex justify-center h-full p-16 pt-8 overflow-y-hidden">
       <div className="flex flex-col items-center gap-8">
         <Link
           className="flex gap-1 items-center font-medium tracking-[0.08em] uppercase"
@@ -16,7 +16,7 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
         >
           <AiOutlineLeft className="inline-block" /> GO BACK
         </Link>
-        <div className="flex flex-row gap-12 w-full">
+        <div className="flex flex-row flex-1 min-h-0 gap-12 w-full">
           <RoomInfo conversationId={conversationId} />
           <JoinEditInfo conversationId={conversationId} />
         </div>

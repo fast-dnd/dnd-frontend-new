@@ -65,7 +65,6 @@ export interface IRoomData {
   adventureMission: string;
   conversationId: string;
   questions3History: IQuestion[];
-  image?: string;
 }
 
 const getRoomData = async (conversationId: string) => {
