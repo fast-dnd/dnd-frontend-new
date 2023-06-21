@@ -30,9 +30,9 @@ const Gameplay = (props: { conversationId: string }) => {
   const [freeWill, setFreeWill] = useState<string>("");
   const [timer, setTimer] = useState(0);
   const [dice, setDice] = useState([0, 0]);
-  const [diceTotal, setDiceTotal] = useState(0);
 
-  const { canPlay, setCanPlay, lastStory, move, setMove } = useGameplaySocket(conversationId);
+  const { canPlay, setCanPlay, lastStory, move, setMove, diceTotal, setDiceTotal } =
+    useGameplaySocket(conversationId);
   const { mutate: playMove, isLoading: submitting } = usePlayMove();
 
   useEffect(() => {
@@ -47,6 +47,16 @@ const Gameplay = (props: { conversationId: string }) => {
       } else if (roomData.roundEndsAt) {
         const endsAt = new Date(roomData.roundEndsAt);
         setTimer(Math.max(Math.floor((endsAt.getTime() - new Date().getTime()) / 1000), 0));
+      }
+      const moveLength = roomData.moves?.length;
+      if (canPlay && moveLength === roomData.currentRound + 1) {
+        if (
+          roomData.moves[moveLength - 1].find(
+            (move) => move.playerAccountId === localStorage.getItem("accountId"),
+          )
+        ) {
+          setCanPlay(false);
+        }
       }
 
       if (roomData.state === "CLOSED") setCanPlay(false);
@@ -234,9 +244,7 @@ const Gameplay = (props: { conversationId: string }) => {
         )}
         <div className="flex flex-col justify-between bg-white/5 w-[270px]">
           <div className="flex items-center justify-center gap-4 h-32">
-            {dice.map((roll, i) => (
-              <Die key={i} roll={roll} />
-            ))}
+            {(diceTotal >= 2 || submitting) && dice.map((roll, i) => <Die key={i} roll={roll} />)}
           </div>
           <Button
             disabled={

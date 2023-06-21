@@ -9,6 +9,7 @@ const useGameplaySocket = (conversationId: string) => {
   const [canPlay, setCanPlay] = useState(true);
   const [lastStory, setLastStory] = useState<string>("");
   const [move, setMove] = useState<DefaultMove>();
+  const [diceTotal, setDiceTotal] = useState(0);
 
   useEffect(() => {
     const onEvent = (event: IGameplaySocketEvent) => {
@@ -30,6 +31,7 @@ const useGameplaySocket = (conversationId: string) => {
           setCanPlay(true);
           setLastStory("");
           setMove(undefined);
+          setDiceTotal(0);
           break;
       }
     };
@@ -39,7 +41,7 @@ const useGameplaySocket = (conversationId: string) => {
     };
   }, [canPlay, conversationId, lastStory, queryClient]);
 
-  return { canPlay, setCanPlay, lastStory, move, setMove };
+  return { canPlay, setCanPlay, lastStory, move, setMove, diceTotal, setDiceTotal };
 };
 
 export default useGameplaySocket;

@@ -36,6 +36,7 @@ const General = (props: { conversationId: string }) => {
       if (questionsLength === roomData.currentRound + 1) {
         if (roomData.questions3History[questionsLength - 1].question) {
           setQuestionAsked(undefined);
+          setCanAsk(false);
         }
       } else if (questionAsked && !questionAsked.playerName && questionAsked.playerAccountId) {
         const player = roomData.playerState.find(
@@ -84,10 +85,10 @@ const General = (props: { conversationId: string }) => {
         )}
         {/* currently printing moves before questions until we get timestamps */}
         <div className="flex flex-col min-h-0 h-full gap-4 pr-6 overflow-y-auto">
-          {zip(roomData.moves, roomData.questions3History).map((val, i) => (
+          {zip(roomData.questions3History, roomData.moves).map((val, i) => (
             <div key={i} className="flex flex-col gap-4">
-              {Array.isArray(val[0]) && <Moves moves={val[0]} />}
-              {!!val[1] && !!val[1].question && <Question question={val[1]} />}
+              {!!val[0] && !!val[0].question && <Question question={val[0]} />}
+              {Array.isArray(val[1]) && <Moves moves={val[1]} />}
             </div>
           ))}
           {!!questionAsked && <Question question={questionAsked} />}
