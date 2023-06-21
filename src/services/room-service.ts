@@ -38,6 +38,17 @@ export interface IMove {
 
 export interface IRoomData {
   state: "CREATING" | "GAMING" | "CLOSED";
+  dungeon: {
+    id: string;
+    name: string;
+    imageUrl: string;
+  };
+  avatar: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  turn: number;
   moves: IMove[][];
   playerState: IPlayer[];
   roundEndsAt: string | null;
