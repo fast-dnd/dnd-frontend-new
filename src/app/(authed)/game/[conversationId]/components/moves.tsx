@@ -5,7 +5,7 @@ const Moves = ({ moves }: { moves: IMove[] }) => {
     <>
       {moves.map((move) => (
         <div key={move.playerAccountId} className="flex flex-col gap-4">
-          <div className="bg-white/5 opacity-50 text-lg px-4 py-2">
+          <div className="bg-white/10 text-lg px-4 py-2">
             <span className="font-semibold">{move.playerName}: </span>
             {move.action} - And rolled {move.dice}
           </div>
