@@ -136,6 +136,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
 
       <TooltipProvider>
         <Tooltip>
+          {/* TODO: can't put button inside TooltipTrigger, since it's also a button */}
           <TooltipTrigger>
             <Button
               className="px-8 uppercase"

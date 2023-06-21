@@ -49,10 +49,11 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
             {howTo && (
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger>
-                    <Button variant="ghost" onClick={onClickHowTo}>
-                      <AiOutlineQuestionCircle />
-                    </Button>
+                  <TooltipTrigger
+                    onClick={onClickHowTo}
+                    className="text-xl text-white/50 hover:text-white"
+                  >
+                    <AiOutlineQuestionCircle />
                   </TooltipTrigger>
                   <TooltipContent side="bottom">
                     <p>How to play</p>
@@ -63,10 +64,11 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
             {feedback && (
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger>
-                    <Button variant="ghost" onClick={onClickFeedback}>
-                      <AiOutlineExclamationCircle />
-                    </Button>
+                  <TooltipTrigger
+                    onClick={onClickFeedback}
+                    className="text-xl text-white/50 hover:text-white"
+                  >
+                    <AiOutlineExclamationCircle />
                   </TooltipTrigger>
                   <TooltipContent side="bottom">
                     <p>Feedback</p>
