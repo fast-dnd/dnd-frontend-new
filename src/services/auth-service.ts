@@ -1,3 +1,4 @@
+import { IAccount } from "@/types/dnd";
 import createApi from "./api-factory";
 
 const authApi = createApi({});
@@ -8,7 +9,12 @@ const login = async (data: { credential?: string }) => {
   });
 };
 
+const account = async () => {
+  return await authApi.get<IAccount>("account").then((res) => res.data);
+};
+
 const authService = {
   login,
+  account,
 };
 export default authService;

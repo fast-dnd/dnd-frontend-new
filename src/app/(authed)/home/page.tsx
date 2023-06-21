@@ -14,10 +14,13 @@ import { useHomeStore } from "./stores/tab-store";
 import { useRouter } from "next/navigation";
 import Settings from "./components/settings";
 import HowToPlay from "@/components/how-to-play";
+import useGetAccount from "./hooks/use-get-account";
 
 const Home = () => {
   const router = useRouter();
   const { homeTab, displayHowToPlay, setDisplayHowToPlay } = useHomeStore((state) => state);
+
+  const { data: account } = useGetAccount();
 
   return (
     <div className="flex flex-col w-full min-h-0 h-full px-16 pb-12">
@@ -76,7 +79,7 @@ const Home = () => {
               homeTab !== "SETTINGS" && "hidden",
             )}
           >
-            <Settings />
+            <Settings account={account} />
           </div>
         </>
       )}

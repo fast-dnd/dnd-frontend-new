@@ -23,6 +23,7 @@ import useGetRoomData from "@/hooks/use-get-room-data";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/utils/style-utils";
 import { MdCheck, MdOutlineContentCopy } from "react-icons/md";
+import { redirect } from "next/navigation";
 
 const JoinEditInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -30,9 +31,9 @@ const JoinEditInfo = (props: { conversationId: string }) => {
   const [avatarId, setAvatarId] = useState<string>();
   const [role, setRole] = useState<string>();
 
-  const { data: roomData } = useGetRoomData(conversationId);
-  const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
-  const { data: kingdomData } = useGetKingdom();
+  const { data: roomData, isLoading: isLoadingRoomData, isError } = useGetRoomData(conversationId);
+  const { data: dungeonData, isLoading: isLoadingDungeonData } = useGetDungeon(roomData?.dungeonId);
+  const { data: kingdomData, isLoading: isLoadingKingdomData } = useGetKingdom();
 
   const { mutate: updateAvatar, isLoading: isUpdatingAvatar } = useUpdateAvatar();
   const { mutate: updateRole, isLoading: isUpdatingRole } = useUpdateRole();
@@ -55,7 +56,9 @@ const JoinEditInfo = (props: { conversationId: string }) => {
     }
   }, [roomData]);
 
-  if (!roomData || !dungeonData || !kingdomData) {
+  if (isError) redirect("/home");
+
+  if (isLoadingRoomData || isLoadingDungeonData || isLoadingKingdomData) {
     return (
       <Box
         title="Join"
@@ -65,6 +68,8 @@ const JoinEditInfo = (props: { conversationId: string }) => {
       </Box>
     );
   }
+
+  if (!roomData || !dungeonData || !kingdomData) return <div>Something went wrong</div>;
 
   return (
     <Box title="Join" className="flex flex-col gap-8 min-h-0 w-[490px] h-fit p-8">
