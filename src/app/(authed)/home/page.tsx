@@ -25,7 +25,7 @@ const Home = () => {
         <HowToPlay onHideHowToPlay={() => setDisplayHowToPlay(false)} hideText="Go back" />
       ) : (
         <>
-          <div className="flex items-center justify-center my-16">
+          <div className="flex items-center justify-center my-6">
             <Tabs homeOrDungeons="home" selectedTab={homeTab} />
           </div>
 
