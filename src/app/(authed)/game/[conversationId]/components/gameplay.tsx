@@ -182,7 +182,7 @@ const Gameplay = (props: { conversationId: string }) => {
                   disabled={!canPlay}
                   className={cn(
                     "border-white/25 flex-1 h-12 basis-1/3 normal-case text-white px-2",
-                    dMove === move && "border-tomato",
+                    dMove === move && "border-tomato border-2",
                     currentPlayer.champion.moveMapping[dMove].length > 24 && "text-sm",
                     currentPlayer.champion.moveMapping[dMove].length > 48 && "text-xs",
                   )}

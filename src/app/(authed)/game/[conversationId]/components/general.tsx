@@ -60,13 +60,15 @@ const General = (props: { conversationId: string }) => {
       <Player player={currentPlayer} />
       <div className="w-full border-t border-white/25" />
       <div className={cn("flex flex-col min-h-0 flex-1 gap-8", statsOpened && "hidden")}>
-        <Button
-          variant={"ghost"}
-          className="border-white text-white"
-          onClick={() => setStatsOpened(true)}
-        >
-          Team stats
-        </Button>
+        {roomData.playerState.length > 1 && (
+          <Button
+            variant={"ghost"}
+            className="border-white text-white"
+            onClick={() => setStatsOpened(true)}
+          >
+            Team stats
+          </Button>
+        )}
         {/* currently printing moves before questions until we get timestamps */}
         <div className="flex flex-col min-h-0 h-full gap-4 pr-6 overflow-y-auto">
           {zip(roomData.moves, roomData.questions3History).map((val, i) => (

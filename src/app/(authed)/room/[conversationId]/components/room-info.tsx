@@ -36,7 +36,7 @@ const RoomInfo = (props: { conversationId: string }) => {
         {roomData.playerState.map((player) => (
           <div key={player.accountId} className="flex flex-row gap-6">
             <Image
-              src="/images/bg-cover.png"
+              src={player.avatarUrl || "/images/default-avatar.png"}
               width={64}
               height={64}
               alt={`player-${player.accountId}-avatar`}
