@@ -43,6 +43,7 @@ const General = (props: { conversationId: string }) => {
           (player) => player.accountId === questionAsked.playerAccountId,
         );
         setQuestionAsked({ ...questionAsked, playerName: player?.name });
+        setCanAsk(false);
       }
     }
   }, [questionAsked, roomData, setCanAsk, setQuestionAsked]);

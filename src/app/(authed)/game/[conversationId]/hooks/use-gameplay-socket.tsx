@@ -16,7 +16,7 @@ const useGameplaySocket = (conversationId: string) => {
       switch (event.event) {
         case "ROUND_STORY_CHUNK":
           setLastStory(`${lastStory}${event.data.chunk}`);
-          if (canPlay) setCanPlay(false);
+          setCanPlay(false);
           break;
         case "REQUEST_SENT_TO_DM":
           queryClient.setQueryData(["room", conversationId], event.data);
