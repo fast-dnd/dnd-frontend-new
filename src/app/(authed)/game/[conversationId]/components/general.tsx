@@ -13,6 +13,8 @@ import { zip } from "lodash";
 import useAskQuestion from "../hooks/use-ask-question";
 import useGeneralSocket from "../hooks/use-general-socket";
 import Spinner from "@/components/ui/spinner";
+import Question from "./question";
+import Moves from "./moves";
 
 const General = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -20,7 +22,7 @@ const General = (props: { conversationId: string }) => {
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [statsOpened, setStatsOpened] = useState(false);
   const [question, setQuestion] = useState("");
-  useGeneralSocket(conversationId);
+  const { canAsk, setCanAsk, questionAsked, setQuestionAsked } = useGeneralSocket(conversationId);
   const { mutate: askQuestion } = useAskQuestion();
 
   useEffect(() => {
@@ -30,8 +32,19 @@ const General = (props: { conversationId: string }) => {
           (player) => player.accountId === localStorage.getItem("accountId"),
         ),
       );
+      const questionsLength = roomData.questions3History.length;
+      if (questionsLength === roomData.currentRound + 1) {
+        if (roomData.questions3History[questionsLength - 1].question) {
+          setQuestionAsked(undefined);
+        }
+      } else if (questionAsked && !questionAsked.playerName && questionAsked.playerAccountId) {
+        const player = roomData.playerState.find(
+          (player) => player.accountId === questionAsked.playerAccountId,
+        );
+        setQuestionAsked({ ...questionAsked, playerName: player?.name });
+      }
     }
-  }, [roomData]);
+  }, [questionAsked, roomData, setCanAsk, setQuestionAsked]);
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (ev) => {
     ev.preventDefault();
@@ -43,9 +56,9 @@ const General = (props: { conversationId: string }) => {
 
   useEffect(() => {
     if (autoBottomScrollDiv.current) {
-      autoBottomScrollDiv.current.scrollIntoView({ behavior: "smooth" });
+      autoBottomScrollDiv.current.scrollIntoView({ behavior: "instant" });
     }
-  }, [roomData?.moves, roomData?.questions3History]);
+  }, [roomData?.moves, roomData?.questions3History, questionAsked]);
 
   if (!roomData || !currentPlayer) {
     return (
@@ -73,51 +86,19 @@ const General = (props: { conversationId: string }) => {
         <div className="flex flex-col min-h-0 h-full gap-4 pr-6 overflow-y-auto">
           {zip(roomData.moves, roomData.questions3History).map((val, i) => (
             <div key={i} className="flex flex-col gap-4">
-              {Array.isArray(val[0]) &&
-                val[0].map((move) => (
-                  <div key={move.playerAccountId} className="flex flex-col gap-4">
-                    <div className="bg-white/5 opacity-50 text-lg px-4 py-2">
-                      <span className="font-semibold">{move.playerName}: </span>
-                      {move.action} - And rolled {move.dice}
-                    </div>
-                    {!!move.aiDescription && (
-                      <div className="flex flex-col gap-2 bg-white/10 text-lg px-4 py-2">
-                        <p>
-                          <span className="font-semibold text-tomato">Master</span> thought:
-                        </p>
-                        <p>{move.aiDescription}</p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              {!!val[1] && !!val[1].question && (
-                <div className="flex flex-col gap-4">
-                  <div className="flex flex-col gap-2 px-4 py-2 bg-white/10">
-                    <p>
-                      <span className="font-semibold">{val[1].questioner || ""}</span> asked:
-                    </p>
-                    <p>{val[1].question}</p>
-                  </div>
-                  {!!val[1].bob3Answer && (
-                    <div className="flex flex-col gap-2 px-4 py-2 bg-white/10">
-                      <p>
-                        <span className="font-semibold text-tomato">Master</span> answered{" "}
-                        <span className="font-semibold">{val[1].questioner || ""}</span>:
-                      </p>
-                      <p>{val[1].bob3Answer}</p>
-                    </div>
-                  )}
-                </div>
-              )}
+              {Array.isArray(val[0]) && <Moves moves={val[0]} />}
+              {!!val[1] && !!val[1].question && <Question question={val[1]} />}
             </div>
           ))}
+          {!!questionAsked && <Question question={questionAsked} />}
           <div ref={autoBottomScrollDiv} />
         </div>
 
         <form onSubmit={onSubmit} className="flex w-full items-end gap-8">
           <div className="flex flex-col flex-1">
             <Input
-              label="Ask master"
+              disabled={!canAsk}
+              label="Ask Bob"
               value={question}
               className="m-0"
               onChange={(e) => {
@@ -125,7 +106,12 @@ const General = (props: { conversationId: string }) => {
               }}
             />
           </div>
-          <Button type="submit" variant="ghost" className="text-tomato w-fit text-2xl">
+          <Button
+            disabled={!canAsk}
+            type="submit"
+            variant="ghost"
+            className="text-tomato w-fit text-2xl"
+          >
             <IoMdSend />
           </Button>
         </form>

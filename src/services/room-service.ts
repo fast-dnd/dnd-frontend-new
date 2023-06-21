@@ -32,7 +32,7 @@ export interface IMove {
   aiDescription: string;
   aiRating: number;
   dice: number;
-  mana: 0;
+  mana: number;
   moveType: MoveType;
   playerChampion: string;
   playerName: string;

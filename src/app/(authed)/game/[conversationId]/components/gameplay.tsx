@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/text-area";
 import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
-import { DefaultMove, IPlayer, defaultMoves } from "@/types/dnd";
+import { IPlayer, defaultMoves } from "@/types/dnd";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -136,7 +136,7 @@ const Gameplay = (props: { conversationId: string }) => {
                 <div className="flex-1 border-t border-tomato" />
               </div>
               <div className="flex gap-8">
-                {roomData.generateImages && (
+                {roomData.genrateImages && (
                   <div className="h-72 w-72 flex flex-shrink-0">
                     {!!roomData.generatedImages[i] && (
                       <Image

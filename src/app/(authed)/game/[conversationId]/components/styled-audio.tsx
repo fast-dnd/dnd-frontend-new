@@ -44,7 +44,7 @@ const StyledAudio = (props: { audio: string }) => {
           {!playing && <BsPlayFill />}
         </Button>
         <div className="flex relative items-center w-48">
-          {!!audioRef.current && (
+          {!!audioRef.current && !!audioRef.current.duration && (
             <input
               type="range"
               min="0"
