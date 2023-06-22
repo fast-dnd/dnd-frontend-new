@@ -13,8 +13,10 @@ import { useGetMyDungeons, useGetRecommendedDungeons } from "../hooks/use-get-ho
 import { useHomeStore } from "../stores/tab-store";
 import Tabs from "./tabs";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useRouter } from "next/navigation";
 
 const CreateRoom = () => {
+  const router = useRouter();
   const { dungeonTab, homeTab, setDisplayHowToPlay } = useHomeStore((state) => state);
 
   const { data: dungeons, isLoading } =
@@ -25,6 +27,7 @@ const CreateRoom = () => {
   const [selectedDungeon, setSelectedDungeon] = useState<IDungeon>();
   const [generateImages, setGenerateImages] = useState(false);
   const [generateAudio, setGenerateAudio] = useState(false);
+  const [loadingRoom, setLoadingRoom] = useState(false);
 
   const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
 
@@ -44,7 +47,16 @@ const CreateRoom = () => {
   }
 
   const onCreateRoom = () => {
-    createRoom({ generateAudio, generateImages, dungeon: selectedDungeon?._id });
+    createRoom(
+      { generateAudio, generateImages, dungeon: selectedDungeon?._id },
+      {
+        onSuccess: (data) => {
+          if (data.data.admin) localStorage.setItem("accountId", data.data.admin.accountId);
+          setLoadingRoom(true);
+          router.push(`room/${data.data.conversationId}`);
+        },
+      },
+    );
   };
 
   return (
@@ -107,7 +119,7 @@ const CreateRoom = () => {
             onCheckedChange={(checked) => setGenerateAudio(checked as boolean)}
           />
           <Button
-            isLoading={isCreatingRoom}
+            isLoading={isCreatingRoom || loadingRoom}
             className="px-8 w-fit"
             disabled={!selectedDungeon}
             onClick={onCreateRoom}
