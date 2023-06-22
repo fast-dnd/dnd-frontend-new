@@ -10,7 +10,7 @@ import Spinner from "@/components/ui/spinner";
 const Avatars = () => {
   const { data: kingdom, isLoading } = useGetKingdom();
   const router = useRouter();
-  const [isLoadingEdit, setIsLoadingEdit] = useState(false);
+  const [loadingEdit, setLoadingEdit] = useState("");
 
   if (isLoading) return <Skeleton />;
 
@@ -54,12 +54,12 @@ const Avatars = () => {
             <div
               className="cursor-pointer px-3 py-2 items-center bg-white/10 w-fit flex gap-2"
               onClick={() => {
-                setIsLoadingEdit(true);
+                setLoadingEdit(avatar._id);
                 router.push(`/create-avatar/${avatar._id}`);
               }}
             >
-              {isLoadingEdit && <Spinner className="m-0" />}
-              {!isLoadingEdit && <MdEdit />}
+              {loadingEdit !== avatar._id && <Spinner className="m-0" />}
+              {loadingEdit === avatar._id && <MdEdit />}
               EDIT
             </div>
           </div>
