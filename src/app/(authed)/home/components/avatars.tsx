@@ -58,8 +58,8 @@ const Avatars = () => {
                 router.push(`/create-avatar/${avatar._id}`);
               }}
             >
-              {loadingEdit !== avatar._id && <Spinner className="m-0" />}
-              {loadingEdit === avatar._id && <MdEdit />}
+              {loadingEdit === avatar._id && <Spinner className="m-0" />}
+              {loadingEdit !== avatar._id && <MdEdit />}
               EDIT
             </div>
           </div>
