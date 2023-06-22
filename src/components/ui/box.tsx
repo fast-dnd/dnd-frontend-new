@@ -6,6 +6,7 @@ import { jibril } from "@/utils/fonts";
 import {
   AiOutlineExclamation,
   AiOutlineExclamationCircle,
+  AiOutlineHome,
   AiOutlineQuestionCircle,
 } from "react-icons/ai";
 import { Button } from "./button";
@@ -21,6 +22,8 @@ export interface BoxProps
   onClickHowTo?: () => void;
   feedback?: boolean;
   onClickFeedback?: () => void;
+  home?: boolean;
+  onClickHome?: () => void;
 }
 
 export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
@@ -33,6 +36,8 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
       onClickHowTo,
       feedback = false,
       onClickFeedback,
+      home = false,
+      onClickHome,
       ...props
     },
     ref,
@@ -41,18 +46,36 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
       <div className="flex flex-col w-full">
         <div className="py-6 border-t-2 relative border-tomato/90 bg-black flex items-center justify-center gap-4">
           <div className="bg-tomato w-2 h-2 rotate-45" />
-          <p className="text-xl leading-7 tracking-[0.2em]" style={jibril.style}>
+          <p className="mt-1 text-xl leading-7 tracking-[0.2em]" style={jibril.style}>
             {title}
           </p>
           <div className="bg-tomato w-2 h-2 rotate-45" />
+          <div className="flex gap-4 h-full absolute left-12 items-center">
+            {home && (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger
+                    onClick={onClickHome}
+                    className="text-xl text-white/50 hover:text-white"
+                  >
+                    <AiOutlineHome />
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    <p>Go to home</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
+          </div>
           <div className="flex gap-4 h-full absolute right-12 items-center">
             {howTo && (
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger>
-                    <Button variant="ghost" onClick={onClickHowTo}>
-                      <AiOutlineQuestionCircle />
-                    </Button>
+                  <TooltipTrigger
+                    onClick={onClickHowTo}
+                    className="text-xl text-white/50 hover:text-white"
+                  >
+                    <AiOutlineQuestionCircle />
                   </TooltipTrigger>
                   <TooltipContent side="bottom">
                     <p>How to play</p>
@@ -63,10 +86,11 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
             {feedback && (
               <TooltipProvider>
                 <Tooltip>
-                  <TooltipTrigger>
-                    <Button variant="ghost" onClick={onClickFeedback}>
-                      <AiOutlineExclamationCircle />
-                    </Button>
+                  <TooltipTrigger
+                    onClick={onClickFeedback}
+                    className="text-xl text-white/50 hover:text-white"
+                  >
+                    <AiOutlineExclamationCircle />
                   </TooltipTrigger>
                   <TooltipContent side="bottom">
                     <p>Feedback</p>

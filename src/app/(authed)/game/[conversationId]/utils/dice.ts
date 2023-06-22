@@ -52,7 +52,7 @@ export const dieMap: boolean[][][] = [
 ];
 
 export const randomDice = (total?: number, limit?: number) => {
-  const maxValue = limit ?? 9;
+  const maxValue = limit ?? 6;
   if (!total) {
     //generating something random
     const min = 1;
@@ -61,10 +61,11 @@ export const randomDice = (total?: number, limit?: number) => {
     const second = Math.floor(Math.random() * (max - min + 1)) + min;
     return [first, second];
   } else {
-    const min = Math.max(1, total - maxValue);
-    const max = Math.min(total - min, maxValue);
+    const newTotal = Math.min(total, 12);
+    const min = Math.max(1, newTotal - maxValue);
+    const max = Math.min(newTotal - min, maxValue);
     const first = Math.floor(Math.random() * (max - min + 1)) + min;
-    const second = total - first;
+    const second = newTotal - first;
     return [first, second];
   }
 };

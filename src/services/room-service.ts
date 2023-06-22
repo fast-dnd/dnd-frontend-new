@@ -19,9 +19,11 @@ const joinRoom = async (data: { link: string }) => {
 //would work better if IQuestion and IMove had timestamps of some sort
 
 export interface IQuestion {
-  questioner?: string;
+  playerName: string;
+  playerChampion: string;
+  playerAccountId: string;
   question: string;
-  bob3Answer: string;
+  bob3Answer?: string;
 }
 
 export interface IMove {
@@ -30,7 +32,7 @@ export interface IMove {
   aiDescription: string;
   aiRating: number;
   dice: number;
-  mana: 0;
+  mana: number;
   moveType: MoveType;
   playerChampion: string;
   playerName: string;
@@ -58,14 +60,13 @@ export interface IRoomData {
   currentRound: number;
   chatGptResponses: string[];
   generatedImages: string[];
-  generateImages: boolean;
+  genrateImages: boolean;
   generatedAudio: string[];
   generateAudio: string;
   location: ILocation;
   adventureMission: string;
   conversationId: string;
   questions3History: IQuestion[];
-  image?: string;
 }
 
 const getRoomData = async (conversationId: string) => {

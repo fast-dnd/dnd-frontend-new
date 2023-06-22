@@ -33,6 +33,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
           id: dungeonId,
           name: dungeonQuery.data.name,
           description: dungeonQuery.data.description,
+          style: dungeonQuery.data.style,
           locations: dungeonQuery.data.locations,
           champions: dungeonQuery.data.champions,
           imageUrl: dungeonQuery.data.imageUrl,

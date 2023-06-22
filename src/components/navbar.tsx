@@ -8,7 +8,7 @@ const Navbar = () => {
       <div className="mt-10 flex-1 h-0.5 border-t border-tomato" />
       <div className="mt-10 flex items-center justify-center flex-col gap-1">
         <Image src="/images/logo-up.png" width={114} height={6} alt="logo-up" />
-        <div className="relative flex w-[204px] justify-center">
+        <div className="relative flex w-52 justify-center">
           <div className="absolute w-full h-full flex items-center justify-center">
             <Image src="/images/logo-red-layer.png" width={204} height={35} alt="logo-red-layer" />
           </div>

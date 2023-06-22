@@ -1,19 +1,21 @@
 "use client";
 
 import { Box } from "@/components/ui/box";
-import React from "react";
-import Image from "next/image";
+import React, { Fragment } from "react";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/ui/spinner";
 import useGetRoomData from "@/hooks/use-get-room-data";
+import Player from "./player";
+import Image from "next/image";
+import useGetDungeon from "@/hooks/use-get-dungeon";
 
 const RoomInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
-  const [copied, setCopied] = React.useState(false);
 
   const { data: roomData } = useGetRoomData(conversationId);
+  const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
 
-  if (!roomData) {
+  if (!roomData || !dungeonData) {
     return (
       <Box
         title="ROOM"
@@ -24,36 +26,27 @@ const RoomInfo = (props: { conversationId: string }) => {
     );
   }
 
-  const onCopyRoomId = () => {
-    navigator.clipboard.writeText(roomData.link);
-    setCopied(true);
-  };
-
   return (
     <Box title="ROOM" className="flex flex-col gap-8 min-h-0 flex-1 w-[490px] p-8">
+      <div className="flex flex-row items-center gap-4 pr-0">
+        <Image
+          src={dungeonData.imageUrl || "/images/bg-cover.png"}
+          alt={dungeonData.name}
+          width={100}
+          height={100}
+          className="h-[100px]"
+        />
+        <div className="flex flex-col gap-4">
+          <p className="text-xl font-semibold">{dungeonData.name}</p>
+          <p>{dungeonData.description}</p>
+        </div>
+      </div>
       <p className="font-semibold text-2xl">PLAYERS</p>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col flex-1 min-h-0 gap-4 overflow-y-auto">
         {roomData.playerState.map((player) => (
-          <div key={player.accountId} className="flex flex-row gap-6">
-            <Image
-              src={player.avatarImageUrl || "/images/default-avatar.png"}
-              width={64}
-              height={64}
-              alt={`player-${player.accountId}-avatar`}
-              className="w-16 h-16"
-            />
-            <div className="flex flex-col gap-1">
-              <p className="text-2xl">{player.name}</p>
-              <p className="text-xl font-light">{player.champion?.name}</p>
-            </div>
-          </div>
+          <Player key={player.accountId} player={player} />
         ))}
       </div>
-      <div className="w-full border-t border-white/20" />
-      <p className="mt-2 text-2xl text-center">{roomData.link}</p>
-      <Button onClick={onCopyRoomId} variant={copied ? "primary" : "outline"} className="uppercase">
-        {copied ? "Copied" : "Copy room id"}
-      </Button>
     </Box>
   );
 };

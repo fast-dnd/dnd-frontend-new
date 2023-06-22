@@ -5,21 +5,25 @@ import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/text-area";
 import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
-import { DefaultMove, IPlayer, defaultMoves } from "@/types/dnd";
+import { IPlayer, defaultMoves } from "@/types/dnd";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import Die from "./die";
 import Spinner from "@/components/ui/spinner";
 import usePlayMove from "../hooks/use-play-move";
-import { IPlayMove } from "@/services/game-service";
+import { IPlayMove, IPlayMoveResponse } from "@/services/game-service";
 import useGameplaySocket from "../hooks/use-gameplay-socket";
 import { randomDice } from "../utils/dice";
 import StyledAudio from "./styled-audio";
 import { useGameStore } from "../stores/game-store";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { useRouter } from "next/navigation";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
+  const router = useRouter();
   const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
 
@@ -30,9 +34,10 @@ const Gameplay = (props: { conversationId: string }) => {
   const [freeWill, setFreeWill] = useState<string>("");
   const [timer, setTimer] = useState(0);
   const [dice, setDice] = useState([0, 0]);
-  const [diceTotal, setDiceTotal] = useState(0);
+  const [rollInfo, setRollInfo] = useState<IPlayMoveResponse>();
 
-  const { canPlay, setCanPlay, lastStory, move, setMove } = useGameplaySocket(conversationId);
+  const { canPlay, setCanPlay, lastStory, move, setMove, diceTotal, setDiceTotal } =
+    useGameplaySocket(conversationId);
   const { mutate: playMove, isLoading: submitting } = usePlayMove();
 
   useEffect(() => {
@@ -47,6 +52,16 @@ const Gameplay = (props: { conversationId: string }) => {
       } else if (roomData.roundEndsAt) {
         const endsAt = new Date(roomData.roundEndsAt);
         setTimer(Math.max(Math.floor((endsAt.getTime() - new Date().getTime()) / 1000), 0));
+      }
+      const moveLength = roomData.moves?.length;
+      if (canPlay && moveLength === roomData.currentRound + 1) {
+        if (
+          roomData.moves[moveLength - 1].find(
+            (move) => move.playerAccountId === localStorage.getItem("accountId"),
+          )
+        ) {
+          setCanPlay(false);
+        }
       }
 
       if (roomData.state === "CLOSED") setCanPlay(false);
@@ -110,6 +125,7 @@ const Gameplay = (props: { conversationId: string }) => {
       playMove(moveToPlay, {
         onSuccess: (res) => {
           setDiceTotal(res.data.diceAfterBonus);
+          setRollInfo(res.data);
           setTimeout(() => setDice(randomDice(res.data.diceAfterBonus)), 250);
         },
       });
@@ -122,6 +138,10 @@ const Gameplay = (props: { conversationId: string }) => {
       onClickHowTo={() => setDisplayHowToPlay(true)}
       feedback
       onClickFeedback={() => setDisplayFeedback(true)}
+      home
+      onClickHome={() => {
+        router.push("/home");
+      }}
       className="flex flex-col min-h-0 flex-1 gap-8 px-12 py-8"
     >
       <div className="w-full flex flex-col flex-1 gap-8 pr-6 overflow-y-auto">
@@ -136,7 +156,7 @@ const Gameplay = (props: { conversationId: string }) => {
                 <div className="flex-1 border-t border-tomato" />
               </div>
               <div className="flex gap-8">
-                {roomData.generateImages && (
+                {roomData.genrateImages && (
                   <div className="h-72 w-72 flex flex-shrink-0">
                     {!!roomData.generatedImages[i] && (
                       <Image
@@ -233,10 +253,30 @@ const Gameplay = (props: { conversationId: string }) => {
           </div>
         )}
         <div className="flex flex-col justify-between bg-white/5 w-[270px]">
-          <div className="flex items-center justify-center gap-4 h-32">
-            {dice.map((roll, i) => (
-              <Die key={i} roll={roll} />
-            ))}
+          <div className="flex items-center relative justify-center gap-4 h-32">
+            {(diceTotal >= 2 || submitting) && (
+              <>
+                {dice.map((roll, i) => (
+                  <Die key={i} roll={roll} />
+                ))}
+
+                <div className="absolute bottom-4 right-4 h-4 w-4">
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger className="text-lg cursor-default">
+                        <AiOutlineQuestionCircle />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Rolled: {rollInfo?.diceBreakdown.dice}</p>
+                        <p>Bonus applied: {rollInfo?.diceBreakdown.bonusApplied}</p>
+                        <p>Mana used: {rollInfo?.diceBreakdown.mana}</p>
+                        <p>Bob thought: {rollInfo?.diceBreakdown.aiDiceBonus}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              </>
+            )}
           </div>
           <Button
             disabled={

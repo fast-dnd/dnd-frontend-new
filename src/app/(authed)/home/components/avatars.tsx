@@ -1,15 +1,16 @@
 import Skeleton from "@/components/ui/skeleton";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MdEdit } from "react-icons/md";
-import { Button } from "@/components/ui/button";
 import { useGetKingdom } from "@/hooks/use-get-kingdom";
+import { useState } from "react";
+import Spinner from "@/components/ui/spinner";
 
 const Avatars = () => {
   const { data: kingdom, isLoading } = useGetKingdom();
   const router = useRouter();
+  const [isLoadingEdit, setIsLoadingEdit] = useState(false);
 
   if (isLoading) return <Skeleton />;
 
@@ -52,9 +53,13 @@ const Avatars = () => {
             </div>
             <div
               className="cursor-pointer px-3 py-2 items-center bg-white/10 w-fit flex gap-2"
-              onClick={() => router.push(`/create-avatar/${avatar._id}`)}
+              onClick={() => {
+                setIsLoadingEdit(true);
+                router.push(`/create-avatar/${avatar._id}`);
+              }}
             >
-              <MdEdit />
+              {isLoadingEdit && <Spinner className="m-0" />}
+              {!isLoadingEdit && <MdEdit />}
               EDIT
             </div>
           </div>
