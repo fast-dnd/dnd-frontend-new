@@ -13,6 +13,7 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
 
   const { mutate: deleteDungeon, isLoading } = useDeleteDungeon();
 
+  const [loadingEdit, setLoadingEdit] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const sharedIconClassNames =
@@ -60,10 +61,20 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <MdEdit
-                    onClick={() => router.push(`/create-dungeon/${dungeon._id}`)}
-                    className={cn(sharedIconClassNames, "hover:text-warning")}
-                  />
+                  {loadingEdit && (
+                    <div className="flex justify-center items-center h-6 w-6">
+                      <Spinner className="h-5 w-5 m-0" />
+                    </div>
+                  )}
+                  {!loadingEdit && (
+                    <MdEdit
+                      onClick={() => {
+                        setLoadingEdit(true);
+                        router.push(`/create-dungeon/${dungeon._id}`);
+                      }}
+                      className={cn(sharedIconClassNames, "hover:text-warning")}
+                    />
+                  )}
                 </TooltipTrigger>
                 <TooltipContent className="border-warning">
                   <p className="text-warning">Edit</p>
