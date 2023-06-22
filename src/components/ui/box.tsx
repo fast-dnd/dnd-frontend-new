@@ -6,6 +6,7 @@ import { jibril } from "@/utils/fonts";
 import {
   AiOutlineExclamation,
   AiOutlineExclamationCircle,
+  AiOutlineHome,
   AiOutlineQuestionCircle,
 } from "react-icons/ai";
 import { Button } from "./button";
@@ -21,6 +22,8 @@ export interface BoxProps
   onClickHowTo?: () => void;
   feedback?: boolean;
   onClickFeedback?: () => void;
+  home?: boolean;
+  onClickHome?: () => void;
 }
 
 export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
@@ -33,6 +36,8 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
       onClickHowTo,
       feedback = false,
       onClickFeedback,
+      home = false,
+      onClickHome,
       ...props
     },
     ref,
@@ -45,6 +50,23 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
             {title}
           </p>
           <div className="bg-tomato w-2 h-2 rotate-45" />
+          <div className="flex gap-4 h-full absolute left-12 items-center">
+            {home && (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger
+                    onClick={onClickHome}
+                    className="text-xl text-white/50 hover:text-white"
+                  >
+                    <AiOutlineHome />
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    <p>Go to home</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
+          </div>
           <div className="flex gap-4 h-full absolute right-12 items-center">
             {howTo && (
               <TooltipProvider>

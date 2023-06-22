@@ -19,9 +19,11 @@ import StyledAudio from "./styled-audio";
 import { useGameStore } from "../stores/game-store";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { useRouter } from "next/navigation";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
+  const router = useRouter();
   const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
 
@@ -136,6 +138,10 @@ const Gameplay = (props: { conversationId: string }) => {
       onClickHowTo={() => setDisplayHowToPlay(true)}
       feedback
       onClickFeedback={() => setDisplayFeedback(true)}
+      home
+      onClickHome={() => {
+        router.push("/home");
+      }}
       className="flex flex-col min-h-0 flex-1 gap-8 px-12 py-8"
     >
       <div className="w-full flex flex-col flex-1 gap-8 pr-6 overflow-y-auto">
