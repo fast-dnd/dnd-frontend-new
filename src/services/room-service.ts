@@ -56,7 +56,7 @@ export interface IRoomData {
   roundEndsAt: string | null;
   dungeonId: string;
   link: string;
-  queuedMoves: string[];
+  queuedMoves: IMove[];
   currentRound: number;
   chatGptResponses: string[];
   generatedImages: string[];

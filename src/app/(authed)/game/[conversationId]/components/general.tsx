@@ -15,6 +15,7 @@ import useGeneralSocket from "../hooks/use-general-socket";
 import Spinner from "@/components/ui/spinner";
 import Question from "./question";
 import Moves from "./moves";
+import { IMove, IQuestion } from "@/services/room-service";
 
 const General = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -24,7 +25,8 @@ const General = (props: { conversationId: string }) => {
   const [question, setQuestion] = useState("");
   const { canAsk, setCanAsk, questionAsked, setQuestionAsked } = useGeneralSocket(conversationId);
   const { mutate: askQuestion } = useAskQuestion();
-
+  const [moveHistory, setMoveHistory] = useState<IMove[][]>([]);
+  const [questionHistory, setQuestionHistory] = useState<Partial<IQuestion>[]>([]);
   useEffect(() => {
     if (roomData) {
       setCurrentPlayer(
@@ -36,15 +38,22 @@ const General = (props: { conversationId: string }) => {
       if (questionsLength === roomData.currentRound + 1) {
         if (roomData.questions3History[questionsLength - 1].question) {
           setQuestionAsked(undefined);
+          setQuestionHistory(roomData.questions3History);
           setCanAsk(false);
         }
       } else if (questionAsked && !questionAsked.playerName && questionAsked.playerAccountId) {
         const player = roomData.playerState.find(
           (player) => player.accountId === questionAsked.playerAccountId,
         );
-        setQuestionAsked({ ...questionAsked, playerName: player?.name });
+        setQuestionHistory(
+          roomData.questions3History
+            ? [...roomData.questions3History, { ...questionAsked, playerName: player?.name }]
+            : [{ ...questionAsked, playerName: player?.name }],
+        );
         setCanAsk(false);
       }
+      const moves = roomData.moves || [];
+      setMoveHistory(roomData.queuedMoves ? [...moves, roomData.queuedMoves] : moves);
     }
   }, [questionAsked, roomData, setCanAsk, setQuestionAsked]);
 
@@ -60,7 +69,7 @@ const General = (props: { conversationId: string }) => {
     if (autoBottomScrollDiv.current) {
       autoBottomScrollDiv.current.scrollIntoView({ behavior: "instant" });
     }
-  }, [roomData?.moves, roomData?.questions3History, questionAsked]);
+  }, [moveHistory, questionHistory]);
 
   if (!roomData || !currentPlayer) {
     return (
@@ -86,13 +95,12 @@ const General = (props: { conversationId: string }) => {
         )}
         {/* TODO: update when BE updates requests and socket events */}
         <div className="flex flex-col min-h-0 h-full gap-4 pr-6 overflow-y-auto">
-          {zip(roomData.questions3History, roomData.moves).map((val, i) => (
+          {zip(questionHistory, moveHistory).map((val, i) => (
             <div key={i} className="flex flex-col gap-4">
               {!!val[0] && !!val[0].question && <Question question={val[0]} />}
               {Array.isArray(val[1]) && <Moves moves={val[1]} />}
             </div>
           ))}
-          {!!questionAsked && <Question question={questionAsked} />}
           <div ref={autoBottomScrollDiv} />
         </div>
 

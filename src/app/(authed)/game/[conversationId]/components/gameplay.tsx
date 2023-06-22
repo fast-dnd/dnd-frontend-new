@@ -20,6 +20,7 @@ import { useGameStore } from "../stores/game-store";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useRouter } from "next/navigation";
+import { HiOutlineX } from "react-icons/hi";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -35,6 +36,7 @@ const Gameplay = (props: { conversationId: string }) => {
   const [timer, setTimer] = useState(0);
   const [dice, setDice] = useState([0, 0]);
   const [rollInfo, setRollInfo] = useState<IPlayMoveResponse>();
+  const [openBreakdown, setOpenBreakdown] = useState(false);
 
   const { canPlay, setCanPlay, lastStory, move, setMove, diceTotal, setDiceTotal } =
     useGameplaySocket(conversationId);
@@ -53,10 +55,9 @@ const Gameplay = (props: { conversationId: string }) => {
         const endsAt = new Date(roomData.roundEndsAt);
         setTimer(Math.max(Math.floor((endsAt.getTime() - new Date().getTime()) / 1000), 0));
       }
-      const moveLength = roomData.moves?.length;
-      if (canPlay && moveLength === roomData.currentRound + 1) {
+      if (canPlay && roomData.queuedMoves) {
         if (
-          roomData.moves[moveLength - 1].find(
+          roomData.queuedMoves.find(
             (move) => move.playerAccountId === localStorage.getItem("accountId"),
           )
         ) {
@@ -261,19 +262,30 @@ const Gameplay = (props: { conversationId: string }) => {
                 ))}
 
                 <div className="absolute bottom-4 right-4 h-4 w-4">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger className="text-lg cursor-default">
-                        <AiOutlineQuestionCircle />
-                      </TooltipTrigger>
-                      <TooltipContent>
+                  <AiOutlineQuestionCircle
+                    className="cursor-pointer"
+                    onClick={() => setOpenBreakdown(true)}
+                  />
+                  {openBreakdown && (
+                    <div
+                      tabIndex={0}
+                      onBlur={() => setOpenBreakdown(false)}
+                      className="flex justify-center w-full absolute bottom-5"
+                    >
+                      <div className="flex flex-col bg-black/30 whitespace-nowrap p-4 border border-white rounded-lg ">
+                        <div className="flex justify-end">
+                          <HiOutlineX
+                            className="cursor-pointer"
+                            onClick={() => setOpenBreakdown(false)}
+                          />
+                        </div>
                         <p>Rolled: {rollInfo?.diceBreakdown.dice}</p>
                         <p>Bonus applied: {rollInfo?.diceBreakdown.bonusApplied}</p>
                         <p>Mana used: {rollInfo?.diceBreakdown.mana}</p>
                         <p>Bob thought: {rollInfo?.diceBreakdown.aiDiceBonus}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </>
             )}
