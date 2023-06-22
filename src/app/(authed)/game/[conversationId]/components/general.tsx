@@ -84,7 +84,7 @@ const General = (props: { conversationId: string }) => {
             Team stats
           </Button>
         )}
-        {/* currently printing moves before questions until we get timestamps */}
+        {/* TODO: update when BE updates requests and socket events */}
         <div className="flex flex-col min-h-0 h-full gap-4 pr-6 overflow-y-auto">
           {zip(roomData.questions3History, roomData.moves).map((val, i) => (
             <div key={i} className="flex flex-col gap-4">
