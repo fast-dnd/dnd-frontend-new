@@ -31,6 +31,7 @@ export interface IPlayer {
   gold: number;
   bonusForNextRound: number;
   played?: boolean;
+  avatarImageUrl: string;
 }
 
 export interface IRoom {
