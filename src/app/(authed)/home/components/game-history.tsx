@@ -1,6 +1,4 @@
 import Skeleton from "@/components/ui/skeleton";
-import Image from "next/image";
-import { AiOutlineRight } from "react-icons/ai";
 import { useGetRoomHistory } from "../hooks/use-get-home-data";
 import RoomItem from "./room-item";
 

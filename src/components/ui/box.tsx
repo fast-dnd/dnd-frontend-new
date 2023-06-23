@@ -1,16 +1,13 @@
 import { cn } from "@/utils/style-utils";
 import { cva, VariantProps } from "class-variance-authority";
 import React from "react";
-import Spinner from "./spinner";
 import { jibril } from "@/utils/fonts";
 import {
-  AiOutlineExclamation,
   AiOutlineExclamationCircle,
   AiOutlineHome,
   AiOutlineQuestionCircle,
 } from "react-icons/ai";
-import { Button } from "./button";
-import { Tooltip, TooltipArrow, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
 export const boxVariants = cva("bg-glass backdrop-blur-2xl");
 

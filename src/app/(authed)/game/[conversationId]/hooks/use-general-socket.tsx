@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { IGeneralSocketEvent } from "../types/events";
 import { socketIO } from "@/lib/socket";
-import { IMove, IQuestion } from "@/services/room-service";
+import { IQuestion } from "@/services/room-service";
 
 const useGeneralSocket = (conversationId: string) => {
   const queryClient = useQueryClient();

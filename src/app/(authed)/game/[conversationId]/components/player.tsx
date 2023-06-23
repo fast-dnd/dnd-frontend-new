@@ -7,7 +7,6 @@ import { HiSparkles } from "react-icons/hi";
 import { RiCopperCoinFill } from "react-icons/ri";
 import { cn } from "@/utils/style-utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { MdCheck, MdOutlineContentCopy } from "react-icons/md";
 
 const Player = (props: { player: IPlayer }) => {
   const { player } = props;

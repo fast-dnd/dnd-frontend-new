@@ -21,8 +21,6 @@ import useRoomSocket from "../hooks/use-room-socket";
 import useStartGame from "../hooks/use-start-game";
 import useGetRoomData from "@/hooks/use-get-room-data";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { cn } from "@/utils/style-utils";
-import { MdCheck, MdOutlineContentCopy } from "react-icons/md";
 import { redirect } from "next/navigation";
 
 const JoinEditInfo = (props: { conversationId: string }) => {

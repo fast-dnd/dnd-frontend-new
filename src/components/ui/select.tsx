@@ -4,7 +4,6 @@ import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { cn } from "@/utils/style-utils";
 import { FiChevronDown } from "react-icons/fi";
-import { BsCheckLg } from "react-icons/bs";
 import { VariantProps, cva } from "class-variance-authority";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";

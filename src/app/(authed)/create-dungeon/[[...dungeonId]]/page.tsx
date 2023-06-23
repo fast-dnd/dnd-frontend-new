@@ -5,7 +5,6 @@ import useStore from "@/hooks/use-store";
 import { redirect, useRouter } from "next/navigation";
 import { AiOutlineLeft } from "react-icons/ai";
 import Champions from "./components/champions";
-import DungeonSkeleton from "./components/dungeon-skeleton";
 import Final from "./components/final";
 import Initial from "./components/initial";
 import Locations from "./components/locations";
