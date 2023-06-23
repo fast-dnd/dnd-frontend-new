@@ -39,7 +39,8 @@ const Gameplay = (props: { conversationId: string }) => {
   const [diceTotal, setDiceTotal] = useState(0);
   const [stories, setStories] = useState<string[]>([]);
 
-  const { canPlay, setCanPlay, lastStory, move, setMove } = useGameplaySocket(conversationId);
+  const { canPlay, setCanPlay, lastStory, move, setMove, loadingText } =
+    useGameplaySocket(conversationId);
   const { mutate: playMove, isLoading: submitting } = usePlayMove();
 
   useEffect(() => {
@@ -154,6 +155,7 @@ const Gameplay = (props: { conversationId: string }) => {
       onClickHome={() => {
         router.push("/home");
       }}
+      loading={loadingText}
       className="flex flex-col min-h-0 flex-1 gap-8 px-12 py-8"
     >
       <div className="w-full flex flex-col flex-1 gap-8 pr-6 overflow-y-auto">
@@ -205,7 +207,7 @@ const Gameplay = (props: { conversationId: string }) => {
         ))}
         <div ref={autoBottomScrollDiv} />
       </div>
-      <div className="flex gap-8 h-44 w-full">
+      <div className="flex gap-8 w-full">
         {roomData.location.phase === "discovery" && (
           <div className="flex flex-col flex-1 gap-4">
             <div

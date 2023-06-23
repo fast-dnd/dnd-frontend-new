@@ -23,7 +23,8 @@ const General = (props: { conversationId: string }) => {
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [statsOpened, setStatsOpened] = useState(false);
   const [question, setQuestion] = useState("");
-  const { canAsk, setCanAsk, questionAsked, setQuestionAsked } = useGeneralSocket(conversationId);
+  const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =
+    useGeneralSocket(conversationId);
   const { mutate: askQuestion } = useAskQuestion();
   const [moveHistory, setMoveHistory] = useState<IMove[][]>([]);
   const [questionHistory, setQuestionHistory] = useState<Partial<IQuestion>[]>([]);
@@ -56,6 +57,7 @@ const General = (props: { conversationId: string }) => {
     ev.preventDefault();
     askQuestion({ conversationId, question });
     setQuestion("");
+    setAsking(true);
   };
 
   const autoBottomScrollDiv = useRef<HTMLDivElement>(null);
@@ -117,7 +119,8 @@ const General = (props: { conversationId: string }) => {
             variant="ghost"
             className="text-tomato w-fit text-2xl"
           >
-            <IoMdSend />
+            {!asking && <IoMdSend />}
+            {asking && <Spinner className="m-0 w-6 h-6 opacity-50" />}
           </Button>
         </form>
       </div>
