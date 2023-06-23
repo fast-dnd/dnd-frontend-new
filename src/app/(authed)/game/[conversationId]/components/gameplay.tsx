@@ -20,6 +20,7 @@ import { useGameStore } from "../stores/game-store";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { HiOutlineX } from "react-icons/hi";
+import Modal from "@/components/ui/modal";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -38,6 +39,7 @@ const Gameplay = (props: { conversationId: string }) => {
   const [openBreakdown, setOpenBreakdown] = useState(false);
   const [diceTotal, setDiceTotal] = useState(0);
   const [stories, setStories] = useState<string[]>([]);
+  const [imageModal, setImageModal] = useState("");
 
   const { canPlay, setCanPlay, lastStory, move, setMove, loadingText } =
     useGameplaySocket(conversationId);
@@ -179,18 +181,16 @@ const Gameplay = (props: { conversationId: string }) => {
                       width={280}
                       className="h-72 w-72"
                       draggable={false}
+                      onClick={() => setImageModal(roomData.generatedImages[i])}
                     />
                   )}
-                  <div
-                    className={cn(
-                      "bg-white/5 rounded-xl h-72 w-72 gap-4 flex items-center justify-center",
-                      (!!roomData.generatedImages[i] || i % 2 !== 0) && "hidden",
-                    )}
-                  >
-                    <div className="w-16 h-16 rounded-full bg-white/50" />
-                    <div className="w-16 h-16 rounded-full bg-white/50" />
-                    <div className="w-16 h-16 rounded-full bg-white/50" />
-                  </div>
+                  {!roomData.generatedImages[i] && (
+                    <div className="bg-white/5 rounded-xl h-72 w-72 gap-4 flex items-center justify-center">
+                      <div className="w-16 h-16 rounded-full bg-white/50" />
+                      <div className="w-16 h-16 rounded-full bg-white/50" />
+                      <div className="w-16 h-16 rounded-full bg-white/50" />
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -326,6 +326,20 @@ const Gameplay = (props: { conversationId: string }) => {
           </Button>
         </div>
       </div>
+      <Modal
+        className="outline-none"
+        tabIndex={0}
+        open={Boolean(imageModal)}
+        onClose={() => setImageModal("")}
+      >
+        <Image
+          src={imageModal}
+          alt="image-modal"
+          className="w-full h-full object-cover"
+          height={280}
+          width={280}
+        />
+      </Modal>
     </Box>
   );
 };
