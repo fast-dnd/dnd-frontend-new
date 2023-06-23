@@ -24,7 +24,7 @@ const Player = (props: { player: IPlayer }) => {
       />
 
       <div className="flex flex-col gap-1.5">
-        <p className="font-semibold text-xl tracking-[0.07em] uppercase">{player.name}</p>
+        <p className="font-semibold text-xl tracking-[0.07em] -mt-1 uppercase">{player.name}</p>
         <p className="font-light tracking-[0.15em]">{player.champion.name}</p>
         <div className="flex gap-8">
           <div>

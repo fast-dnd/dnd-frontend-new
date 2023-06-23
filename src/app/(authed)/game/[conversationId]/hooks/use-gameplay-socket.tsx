@@ -9,7 +9,6 @@ const useGameplaySocket = (conversationId: string) => {
   const [canPlay, setCanPlay] = useState(true);
   const [lastStory, setLastStory] = useState<string>("");
   const [move, setMove] = useState<DefaultMove>();
-  const [diceTotal, setDiceTotal] = useState(0);
 
   useEffect(() => {
     const onEvent = (event: IGameplaySocketEvent) => {
@@ -23,15 +22,14 @@ const useGameplaySocket = (conversationId: string) => {
           setCanPlay(false);
           break;
         case "GAME_ENDED":
-          queryClient.setQueryData(["room", conversationId], event.data);
+          queryClient.refetchQueries(["room", conversationId]);
           setLastStory("");
           break;
         case "ROUND_STORY":
-          queryClient.setQueryData(["room", conversationId], event.data);
+          queryClient.refetchQueries(["room", conversationId]);
           setCanPlay(true);
           setLastStory("");
           setMove(undefined);
-          setDiceTotal(0);
           break;
       }
     };
@@ -41,7 +39,7 @@ const useGameplaySocket = (conversationId: string) => {
     };
   }, [canPlay, conversationId, lastStory, queryClient]);
 
-  return { canPlay, setCanPlay, lastStory, move, setMove, diceTotal, setDiceTotal };
+  return { canPlay, setCanPlay, lastStory, move, setMove };
 };
 
 export default useGameplaySocket;

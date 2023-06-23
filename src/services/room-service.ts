@@ -38,8 +38,9 @@ export interface IMove {
   playerName: string;
 }
 
-export interface IRoomData {
+export interface IRoomArrayElement {
   state: "CREATING" | "GAMING" | "CLOSED";
+  turn: number;
   dungeon: {
     id: string;
     name: string;
@@ -50,7 +51,13 @@ export interface IRoomData {
     name: string;
     image: string;
   };
-  turn: number;
+  conversationId: string;
+  generateAudio: boolean;
+  genrateImages: boolean;
+}
+
+export interface IRoomData {
+  state: "CREATING" | "GAMING" | "CLOSED";
   moves: IMove[][];
   playerState: IPlayer[];
   roundEndsAt: string | null;
@@ -74,7 +81,7 @@ const getRoomData = async (conversationId: string) => {
 };
 
 const getRooms = async () => {
-  return await roomApi.get<{ rooms: IRoomData[] }>("rooms").then((res) => res.data);
+  return await roomApi.get<{ rooms: IRoomArrayElement[] }>("rooms").then((res) => res.data);
 };
 
 const startGame = async (data: { conversationId: string }) => {

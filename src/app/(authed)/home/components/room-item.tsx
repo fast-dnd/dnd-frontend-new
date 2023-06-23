@@ -1,12 +1,12 @@
 import Skeleton from "@/components/ui/skeleton";
 import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
-import { IRoomData } from "@/services/room-service";
+import { IRoomArrayElement } from "@/services/room-service";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { AiOutlineRight } from "react-icons/ai";
 
-const RoomItem = (props: { room: IRoomData }) => {
+const RoomItem = (props: { room: IRoomArrayElement }) => {
   const { room } = props;
   const router = useRouter();
 
@@ -27,7 +27,7 @@ const RoomItem = (props: { room: IRoomData }) => {
         )}
         {room.state === "GAMING" && (
           <p className="text-sm tracking-[0.15em] text-tomato/50 uppercase">
-            RESUME (TURN {room.currentRound + 1})
+            RESUME (TURN {room.turn + 1})
           </p>
         )}
       </div>

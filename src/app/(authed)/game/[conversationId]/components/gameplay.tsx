@@ -17,7 +17,6 @@ import useGameplaySocket from "../hooks/use-gameplay-socket";
 import { randomDice } from "../utils/dice";
 import StyledAudio from "./styled-audio";
 import { useGameStore } from "../stores/game-store";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { HiOutlineX } from "react-icons/hi";
@@ -37,9 +36,9 @@ const Gameplay = (props: { conversationId: string }) => {
   const [dice, setDice] = useState([0, 0]);
   const [rollInfo, setRollInfo] = useState<IPlayMoveResponse>();
   const [openBreakdown, setOpenBreakdown] = useState(false);
+  const [diceTotal, setDiceTotal] = useState(0);
 
-  const { canPlay, setCanPlay, lastStory, move, setMove, diceTotal, setDiceTotal } =
-    useGameplaySocket(conversationId);
+  const { canPlay, setCanPlay, lastStory, move, setMove } = useGameplaySocket(conversationId);
   const { mutate: playMove, isLoading: submitting } = usePlayMove();
 
   useEffect(() => {
@@ -48,6 +47,9 @@ const Gameplay = (props: { conversationId: string }) => {
         (player) => player.accountId === localStorage.getItem("accountId"),
       );
       setCurrentPlayer(player);
+      if ((player?.mana || 0) < powerUp) {
+        setPowerUp(0);
+      }
       if ((player?.health || 0) <= 0) setCanPlay(false);
       if (lastStory) {
         setTimer(0);
@@ -55,19 +57,21 @@ const Gameplay = (props: { conversationId: string }) => {
         const endsAt = new Date(roomData.roundEndsAt);
         setTimer(Math.max(Math.floor((endsAt.getTime() - new Date().getTime()) / 1000), 0));
       }
-      if (canPlay && roomData.queuedMoves) {
+      if (roomData.queuedMoves) {
         if (
           roomData.queuedMoves.find(
             (move) => move.playerAccountId === localStorage.getItem("accountId"),
           )
         ) {
           setCanPlay(false);
+        } else if (!lastStory) {
+          setCanPlay(true);
         }
       }
 
       if (roomData.state === "CLOSED") setCanPlay(false);
     }
-  }, [canPlay, lastStory, roomData, setCanPlay, submitting]);
+  }, [canPlay, lastStory, powerUp, roomData, setCanPlay, submitting]);
 
   useEffect(() => {
     submitting && setTimeout(() => setDice(randomDice()), 200);

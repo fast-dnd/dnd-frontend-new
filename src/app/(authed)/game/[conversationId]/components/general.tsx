@@ -45,11 +45,13 @@ const General = (props: { conversationId: string }) => {
         const player = roomData.playerState.find(
           (player) => player.accountId === questionAsked.playerAccountId,
         );
-        setQuestionHistory(
-          roomData.questions3History
-            ? [...roomData.questions3History, { ...questionAsked, playerName: player?.name }]
-            : [{ ...questionAsked, playerName: player?.name }],
-        );
+        if (Array.isArray(roomData.questions3History)) {
+          setQuestionHistory([
+            ...roomData.questions3History,
+            { ...questionAsked, playerName: player?.name },
+          ]);
+        }
+
         setCanAsk(false);
       }
       const moves = roomData.moves || [];

@@ -1,4 +1,3 @@
-import useGetAvatar from "@/hooks/use-get-avatar";
 import { IPlayer } from "@/types/dnd";
 import Image from "next/image";
 
