@@ -12,6 +12,15 @@ const useGeneralSocket = (conversationId: string) => {
   useEffect(() => {
     const onEvent = (event: IGeneralSocketEvent) => {
       switch (event.event) {
+        case "PLAYER_ASKED_QUESTION":
+          setCanAsk(false);
+          setQuestionAsked({
+            ...questionAsked,
+            question: event.data.question,
+            playerAccountId: event.data.accountId,
+            playerName: event.data.player.name,
+          });
+          break;
         case "DM_ANSWERED_QUESTION":
           setCanAsk(false);
           setQuestionAsked({
@@ -19,15 +28,9 @@ const useGeneralSocket = (conversationId: string) => {
             question: event.data.question,
             bob3Answer: event.data.answer,
           });
+          queryClient.invalidateQueries(["room", conversationId]);
           break;
-        case "PLAYER_ASKED_QUESTION":
-          setCanAsk(false);
-          setQuestionAsked({
-            ...questionAsked,
-            question: event.data.question,
-            playerAccountId: event.data.accountId,
-          });
-          break;
+
         case "PLAYER_MOVE":
           queryClient.refetchQueries(["room", conversationId]);
           break;
