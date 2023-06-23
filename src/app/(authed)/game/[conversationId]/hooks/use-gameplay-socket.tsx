@@ -21,15 +21,11 @@ const useGameplaySocket = (conversationId: string) => {
           queryClient.setQueryData(["room", conversationId], event.data);
           setCanPlay(false);
           break;
-        case "GAME_ENDED":
-          queryClient.refetchQueries(["room", conversationId]);
-          setLastStory("");
-          break;
         case "ROUND_STORY":
-          queryClient.refetchQueries(["room", conversationId]);
           setCanPlay(true);
-          setLastStory("");
           setMove(undefined);
+        case "GAME_ENDED":
+          queryClient.refetchQueries(["room", conversationId]).then(() => setLastStory(""));
           break;
       }
     };

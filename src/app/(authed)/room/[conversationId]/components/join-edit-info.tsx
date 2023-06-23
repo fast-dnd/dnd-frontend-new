@@ -134,8 +134,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
 
       <TooltipProvider>
         <Tooltip>
-          {/* TODO: can't put button inside TooltipTrigger, since it's also a button */}
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <Button
               className="px-8 uppercase"
               disabled={!canBegin || gameStarting}
