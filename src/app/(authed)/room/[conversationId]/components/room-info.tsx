@@ -30,7 +30,7 @@ const RoomInfo = (props: { conversationId: string }) => {
     <Box title="ROOM" className="flex flex-col gap-8 min-h-0 flex-1 w-[490px] p-8">
       <div className="flex flex-row items-center gap-4 pr-0">
         <Image
-          src={dungeonData.imageUrl || "/images/bg-cover.png"}
+          src={dungeonData.imageUrl || "/images/default-dungeon.png"}
           alt={dungeonData.name}
           width={100}
           height={100}

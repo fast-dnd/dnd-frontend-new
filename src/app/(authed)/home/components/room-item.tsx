@@ -1,6 +1,3 @@
-import Skeleton from "@/components/ui/skeleton";
-import useGetDungeon from "@/hooks/use-get-dungeon";
-import useGetRoomData from "@/hooks/use-get-room-data";
 import { IRoomArrayElement } from "@/services/room-service";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -13,7 +10,7 @@ const RoomItem = (props: { room: IRoomArrayElement }) => {
   return (
     <div className="flex flex-row items-center gap-4 w-full hover:bg-white/10 p-4 rounded-md transition-colors duration-300">
       <Image
-        src={room.dungeon.imageUrl || "/images/bg-cover.png"}
+        src={room.dungeon.imageUrl || "/images/default-dungeon.png"}
         alt={"Game"}
         width={80}
         height={80}

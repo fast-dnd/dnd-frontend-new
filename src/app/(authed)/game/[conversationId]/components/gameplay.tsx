@@ -165,7 +165,7 @@ const Gameplay = (props: { conversationId: string }) => {
                   <div className="h-72 w-72 flex flex-shrink-0">
                     {!!roomData.generatedImages[i] && (
                       <Image
-                        src={roomData.generatedImages[i] || "/images/bg-cover.png"}
+                        src={roomData.generatedImages[i] || "/images/default-dungeon.png"}
                         alt="dungeon"
                         height={280}
                         width={280}

@@ -74,7 +74,7 @@ const CreateRoom = () => {
               onClick={() => setSelectedDungeon(selectedDungeon === dungeon ? undefined : dungeon)}
             >
               <Image
-                src={dungeon.imageUrl || "/images/bg-cover.png"}
+                src={dungeon.imageUrl || "/images/default-dungeon.png"}
                 alt={dungeon.name}
                 width={180}
                 height={180}
