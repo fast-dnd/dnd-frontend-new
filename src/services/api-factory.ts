@@ -40,7 +40,6 @@ interface IApiOptions extends AxiosRequestConfig {
 
 const createApi = (options: IApiOptions) => {
   const { commonPrefix, port, prodURL, ...rest } = options;
-  const x = 1;
 
   const api = axios.create({
     baseURL: `${BACKEND_URL}v1/${commonPrefix ?? ""}`,
