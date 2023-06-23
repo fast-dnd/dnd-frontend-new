@@ -20,6 +20,7 @@ import { useGameStore } from "../stores/game-store";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { HiOutlineX } from "react-icons/hi";
+import Modal from "@/components/ui/modal";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -37,6 +38,7 @@ const Gameplay = (props: { conversationId: string }) => {
   const [rollInfo, setRollInfo] = useState<IPlayMoveResponse>();
   const [openBreakdown, setOpenBreakdown] = useState(false);
   const [diceTotal, setDiceTotal] = useState(0);
+  const [imageModal, setImageModal] = useState("");
 
   const { canPlay, setCanPlay, lastStory, move, setMove } = useGameplaySocket(conversationId);
   const { mutate: playMove, isLoading: submitting } = usePlayMove();
@@ -169,8 +171,8 @@ const Gameplay = (props: { conversationId: string }) => {
                         alt="dungeon"
                         height={280}
                         width={280}
-                        className="h-72 w-72"
                         draggable={false}
+                        onClick={() => setImageModal(roomData.generatedImages[i])}
                       />
                     )}
                   </div>
@@ -307,6 +309,20 @@ const Gameplay = (props: { conversationId: string }) => {
           </Button>
         </div>
       </div>
+      <Modal
+        className="outline-none"
+        tabIndex={0}
+        open={Boolean(imageModal)}
+        onClose={() => setImageModal("")}
+      >
+        <Image
+          src={imageModal}
+          alt="image-modal"
+          className="w-full h-full object-cover"
+          height={280}
+          width={280}
+        />
+      </Modal>
     </Box>
   );
 };
