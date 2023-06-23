@@ -38,7 +38,8 @@ const General = (props: { conversationId: string }) => {
       const questionsLength = roomData.questions3History.length;
       if (roomData.state !== "GAMING") {
         setCanAsk(false);
-      } else if (questionsLength === roomData.currentRound + 1) {
+      }
+      if (questionsLength === roomData.currentRound + 1) {
         if (roomData.questions3History[questionsLength - 1].question) {
           setQuestionAsked(undefined);
           setCanAsk(false);

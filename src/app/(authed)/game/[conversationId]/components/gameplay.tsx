@@ -72,10 +72,10 @@ const Gameplay = (props: { conversationId: string }) => {
           setCanPlay(true);
         }
       }
-
+      console.log(lastStory);
       if (lastStory) {
         setStories([...roomData.chatGptResponses, lastStory]);
-      } else if (roomData.chatGptResponses.length === roomData.currentRound + 1) {
+      } else if (roomData.chatGptResponses.length >= roomData.currentRound + 1) {
         setStories(roomData.chatGptResponses);
       }
 
