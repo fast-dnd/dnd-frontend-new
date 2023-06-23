@@ -9,6 +9,7 @@ const useGameplaySocket = (conversationId: string) => {
   const [canPlay, setCanPlay] = useState(true);
   const [lastStory, setLastStory] = useState<string>("");
   const [move, setMove] = useState<DefaultMove>();
+  const [loadingText, setLoadingText] = useState(false);
 
   useEffect(() => {
     const onEvent = (event: IGameplaySocketEvent) => {
@@ -16,20 +17,21 @@ const useGameplaySocket = (conversationId: string) => {
         case "ROUND_STORY_CHUNK":
           setLastStory(`${lastStory}${event.data.chunk}`);
           setCanPlay(false);
+          setLoadingText(true);
           break;
         case "REQUEST_SENT_TO_DM":
           queryClient.setQueryData(["room", conversationId], event.data);
           setCanPlay(false);
-          break;
-        case "GAME_ENDED":
-          queryClient.refetchQueries(["room", conversationId]);
-          setLastStory("");
+          setLoadingText(true);
           break;
         case "ROUND_STORY":
-          queryClient.refetchQueries(["room", conversationId]);
           setCanPlay(true);
-          setLastStory("");
+        case "GAME_ENDED":
           setMove(undefined);
+          queryClient.refetchQueries(["room", conversationId]).then(() => {
+            setLastStory("");
+            setLoadingText(false);
+          });
           break;
       }
     };
@@ -39,7 +41,7 @@ const useGameplaySocket = (conversationId: string) => {
     };
   }, [canPlay, conversationId, lastStory, queryClient]);
 
-  return { canPlay, setCanPlay, lastStory, move, setMove };
+  return { canPlay, setCanPlay, lastStory, move, setMove, loadingText };
 };
 
 export default useGameplaySocket;

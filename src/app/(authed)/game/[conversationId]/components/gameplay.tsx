@@ -38,9 +38,11 @@ const Gameplay = (props: { conversationId: string }) => {
   const [rollInfo, setRollInfo] = useState<IPlayMoveResponse>();
   const [openBreakdown, setOpenBreakdown] = useState(false);
   const [diceTotal, setDiceTotal] = useState(0);
+  const [stories, setStories] = useState<string[]>([]);
   const [imageModal, setImageModal] = useState("");
 
-  const { canPlay, setCanPlay, lastStory, move, setMove } = useGameplaySocket(conversationId);
+  const { canPlay, setCanPlay, lastStory, move, setMove, loadingText } =
+    useGameplaySocket(conversationId);
   const { mutate: playMove, isLoading: submitting } = usePlayMove();
 
   useEffect(() => {
@@ -71,6 +73,12 @@ const Gameplay = (props: { conversationId: string }) => {
         }
       }
 
+      if (lastStory) {
+        setStories([...roomData.chatGptResponses, lastStory]);
+      } else if (roomData.chatGptResponses.length === roomData.currentRound + 1) {
+        setStories(roomData.chatGptResponses);
+      }
+
       if (roomData.state === "CLOSED") setCanPlay(false);
     }
   }, [canPlay, lastStory, powerUp, roomData, setCanPlay, submitting]);
@@ -98,7 +106,7 @@ const Gameplay = (props: { conversationId: string }) => {
     if (autoBottomScrollDiv.current) {
       autoBottomScrollDiv.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [roomData?.chatGptResponses, roomData?.generatedImages, lastStory]);
+  }, [stories, roomData, lastStory]);
 
   if (!roomData || !dungeonData || !currentPlayer)
     return (
@@ -149,45 +157,54 @@ const Gameplay = (props: { conversationId: string }) => {
       onClickHome={() => {
         router.push("/home");
       }}
+      loading={loadingText}
       className="flex flex-col min-h-0 flex-1 gap-8 px-12 py-8"
     >
       <div className="w-full flex flex-col flex-1 gap-8 pr-6 overflow-y-auto">
-        {(lastStory ? [...roomData.chatGptResponses, lastStory] : roomData.chatGptResponses).map(
-          (story, i) => (
-            <div key={story} className="flex flex-col gap-8 w-full">
-              <div className="w-full flex gap-8 items-center">
-                <div className="font-semibold text-2xl tracking-[0.2em] uppercase">
-                  <span className="text-tomato mr-2">TURN {i + 1}.</span>
-                  {dungeonData.locations[Math.floor(i / 2)]?.name}
-                </div>
-                <div className="flex-1 border-t border-tomato" />
+        {stories.map((story, i) => (
+          <div key={story} className="flex flex-col gap-8 w-full">
+            <div className="w-full flex gap-8 items-center">
+              <div className="font-semibold text-2xl tracking-[0.2em] uppercase">
+                <span className="text-tomato mr-2">TURN {i + 1}.</span>
+                {dungeonData.locations[Math.floor(i / 2)]?.name}
               </div>
-              <div className="flex gap-8">
-                {roomData.genrateImages && (
-                  <div className="h-72 w-72 flex flex-shrink-0">
-                    {!!roomData.generatedImages[i] && (
-                      <Image
-                        src={roomData.generatedImages[i] || "/images/default-dungeon.png"}
-                        alt="dungeon"
-                        height={280}
-                        width={280}
-                        draggable={false}
-                        onClick={() => setImageModal(roomData.generatedImages[i])}
-                      />
-                    )}
+              <div className="flex-1 border-t border-tomato" />
+            </div>
+            <div>
+              {roomData.genrateImages && i % 2 === 0 && (
+                <div className="h-72 w-72 inline-block float-left mr-6 mb-4">
+                  {!!roomData.generatedImages[i] && (
+                    <Image
+                      src={roomData.generatedImages[i] || "/images/default-dungeon.png"}
+                      alt="dungeon"
+                      height={280}
+                      width={280}
+                      className="h-72 w-72"
+                      draggable={false}
+                      onClick={() => setImageModal(roomData.generatedImages[i])}
+                    />
+                  )}
+                  {!roomData.generatedImages[i] && (
+                    <div className="bg-white/5 rounded-xl h-72 w-72 gap-4 flex items-center justify-center">
+                      <div className="w-16 h-16 rounded-full bg-white/50" />
+                      <div className="w-16 h-16 rounded-full bg-white/50" />
+                      <div className="w-16 h-16 rounded-full bg-white/50" />
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <div className="text-[22px] leading-8 tracking-widest">
+                {roomData.generateAudio && (
+                  <div className="mb-4">
+                    <StyledAudio audio={roomData.generatedAudio[i]} />
                   </div>
                 )}
-
-                <div className="flex flex-col gap-4">
-                  {roomData.generateAudio && roomData.generatedAudio[i] && (
-                    <StyledAudio audio={roomData.generatedAudio[i]} />
-                  )}
-                  <div className="text-[22px] leading-8 tracking-widest">{story}</div>
-                </div>
+                {story}
               </div>
             </div>
-          ),
-        )}
+          </div>
+        ))}
         <div ref={autoBottomScrollDiv} />
       </div>
       <div className="flex gap-8 w-full">
@@ -270,7 +287,7 @@ const Gameplay = (props: { conversationId: string }) => {
                 <div className="absolute bottom-4 right-4 h-4 w-4">
                   <AiOutlineQuestionCircle
                     className="cursor-pointer"
-                    onClick={() => setOpenBreakdown(true)}
+                    onClick={() => setOpenBreakdown(!openBreakdown)}
                   />
                   {openBreakdown && (
                     <div

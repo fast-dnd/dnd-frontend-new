@@ -1,5 +1,6 @@
 import { IPlayerMove } from "@/services/dnd-service";
 import { IRoomData } from "@/services/room-service";
+import { IPlayer } from "@/types/dnd";
 
 export type IGameplaySocketEvent = ISocketEvent | IChunkEvent;
 export type IGeneralSocketEvent = ISocketEvent | IPlayerMoveEvent | IQuestionEvent;
@@ -21,7 +22,7 @@ export interface IChunkEvent {
 
 export interface IAskEvent {
   event: "PLAYER_ASKED_QUESTION";
-  data: { accountId: string; question: string };
+  data: { accountId: string; question: string; player: IPlayer };
 }
 
 export interface IAnswerEvent {

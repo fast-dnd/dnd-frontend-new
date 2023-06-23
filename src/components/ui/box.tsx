@@ -2,12 +2,9 @@ import { cn } from "@/utils/style-utils";
 import { cva, VariantProps } from "class-variance-authority";
 import React from "react";
 import { jibril } from "@/utils/fonts";
-import {
-  AiOutlineExclamationCircle,
-  AiOutlineHome,
-  AiOutlineQuestionCircle,
-} from "react-icons/ai";
+import { AiOutlineExclamationCircle, AiOutlineHome, AiOutlineQuestionCircle } from "react-icons/ai";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
+import Spinner from "./spinner";
 
 export const boxVariants = cva("bg-glass backdrop-blur-2xl");
 
@@ -21,6 +18,7 @@ export interface BoxProps
   onClickFeedback?: () => void;
   home?: boolean;
   onClickHome?: () => void;
+  loading?: boolean;
 }
 
 export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
@@ -35,6 +33,7 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
       onClickFeedback,
       home = false,
       onClickHome,
+      loading = false,
       ...props
     },
     ref,
@@ -65,6 +64,7 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
             )}
           </div>
           <div className="flex gap-4 h-full absolute right-12 items-center">
+            {loading && <Spinner className="opacity-50 m-0" />}
             {howTo && (
               <TooltipProvider>
                 <Tooltip>

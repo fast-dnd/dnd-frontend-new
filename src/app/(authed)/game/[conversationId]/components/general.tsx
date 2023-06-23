@@ -23,7 +23,8 @@ const General = (props: { conversationId: string }) => {
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [statsOpened, setStatsOpened] = useState(false);
   const [question, setQuestion] = useState("");
-  const { canAsk, setCanAsk, questionAsked, setQuestionAsked } = useGeneralSocket(conversationId);
+  const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =
+    useGeneralSocket(conversationId);
   const { mutate: askQuestion } = useAskQuestion();
   const [moveHistory, setMoveHistory] = useState<IMove[][]>([]);
   const [questionHistory, setQuestionHistory] = useState<Partial<IQuestion>[]>([]);
@@ -35,25 +36,18 @@ const General = (props: { conversationId: string }) => {
         ),
       );
       const questionsLength = roomData.questions3History.length;
-      if (questionsLength === roomData.currentRound + 1) {
+      if (roomData.state !== "GAMING") {
+        setCanAsk(false);
+      } else if (questionsLength === roomData.currentRound + 1) {
         if (roomData.questions3History[questionsLength - 1].question) {
           setQuestionAsked(undefined);
-          setQuestionHistory(roomData.questions3History);
           setCanAsk(false);
         }
-      } else if (questionAsked && !questionAsked.playerName && questionAsked.playerAccountId) {
-        const player = roomData.playerState.find(
-          (player) => player.accountId === questionAsked.playerAccountId,
-        );
-        if (Array.isArray(roomData.questions3History)) {
-          setQuestionHistory([
-            ...roomData.questions3History,
-            { ...questionAsked, playerName: player?.name },
-          ]);
-        }
-
+      } else if (questionAsked && questionAsked.playerAccountId) {
         setCanAsk(false);
       }
+      const questions = roomData.questions3History || [];
+      setQuestionHistory(questionAsked ? [...questions, questionAsked] : questions);
       const moves = roomData.moves || [];
       setMoveHistory(roomData.queuedMoves ? [...moves, roomData.queuedMoves] : moves);
     }
@@ -63,6 +57,7 @@ const General = (props: { conversationId: string }) => {
     ev.preventDefault();
     askQuestion({ conversationId, question });
     setQuestion("");
+    setAsking(true);
   };
 
   const autoBottomScrollDiv = useRef<HTMLDivElement>(null);
@@ -124,7 +119,8 @@ const General = (props: { conversationId: string }) => {
             variant="ghost"
             className="text-tomato w-fit text-2xl"
           >
-            <IoMdSend />
+            {!asking && <IoMdSend />}
+            {asking && <Spinner className="m-0 w-6 h-6 opacity-50" />}
           </Button>
         </form>
       </div>
