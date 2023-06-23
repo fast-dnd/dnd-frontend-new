@@ -9,12 +9,17 @@ import Image from "next/image";
 import { useState } from "react";
 import { AiOutlineCheck, AiOutlineQuestionCircle } from "react-icons/ai";
 import useCreateRoom from "../hooks/use-create-room";
-import { useGetMyDungeons, useGetRecommendedDungeons } from "../hooks/use-get-home-data";
+import {
+  useGetFavoriteDungeons,
+  useGetMyDungeons,
+  useGetRecommendedDungeons,
+} from "../hooks/use-get-home-data";
 import { useHomeStore } from "../stores/tab-store";
 import Tabs from "./tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
+import useAddFavorite from "../hooks/use-add-favorite";
 
 const CreateRoom = () => {
   const router = useRouter();
@@ -23,7 +28,9 @@ const CreateRoom = () => {
   const { data: dungeons, isLoading } =
     dungeonTab === "TOP DUNGEONS"
       ? useGetRecommendedDungeons(homeTab == "PLAY")
-      : useGetMyDungeons(homeTab == "PLAY");
+      : dungeonTab === "MY DUNGEONS"
+      ? useGetMyDungeons(homeTab == "PLAY")
+      : useGetFavoriteDungeons(homeTab == "PLAY");
 
   const [selectedDungeon, setSelectedDungeon] = useState<IDungeon>();
   const [generateImages, setGenerateImages] = useState(false);
@@ -31,7 +38,11 @@ const CreateRoom = () => {
   const [loadingRoom, setLoadingRoom] = useState(false);
   const [templateSentences, setTemplateSentences] = useState("");
 
+  const [dungeonId, setDungeonId] = useState<string>("");
+
   const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
+
+  const { mutate: addFavorite, isLoading: isAddingFavorite } = useAddFavorite();
 
   if (!isLoading && !dungeons) {
     return (
@@ -99,7 +110,7 @@ const CreateRoom = () => {
         {isLoading && <Skeleton amount={3} />}
       </div>
 
-      <div className="flex flex-row w-full gap-8 justify-between">
+      <div className="flex flex-row gap-8 justify-center items-center">
         <div className="flex items-end">
           <Button
             variant="ghost"
@@ -110,13 +121,38 @@ const CreateRoom = () => {
             <p className="leading-7 tracking-[0.15em] whitespace-nowrap">HOW TO PLAY</p>
           </Button>
         </div>
+        {dungeonTab === "FAVORITE DUNGEONS" && (
+          <div className="flex flex-row gap-8 flex-1 justify-center">
+            <Input
+              placeholder="Enter dungeon ID..."
+              onChange={(e) => setDungeonId(e.target.value)}
+              className="m-0 h-14 min-w-[200px] text-xl"
+            />
+            <Button
+              isLoading={isAddingFavorite}
+              disabled={!dungeonId}
+              variant={dungeonId ? "primary" : "outline"}
+              className="h-14 px-8 w-fit"
+              onClick={() => addFavorite(dungeonId)}
+            >
+              ADD FAVORITE
+            </Button>
+          </div>
+        )}
 
-        <div className="flex flex-1 flex-wrap justify-end gap-8">
-          <Input
-            className="m-0 h-14 min-w-[200px] text-xl"
-            placeholder="Template sentences"
-            onChange={(e) => setTemplateSentences(e.target.value)}
-          />
+        <div
+          className={cn(
+            "flex flex-wrap justify-end gap-8",
+            dungeonTab !== "FAVORITE DUNGEONS" && "flex-1",
+          )}
+        >
+          {dungeonTab !== "FAVORITE DUNGEONS" && (
+            <Input
+              className="m-0 h-14 min-w-[200px] text-xl"
+              placeholder="Template sentences"
+              onChange={(e) => setTemplateSentences(e.target.value)}
+            />
+          )}
 
           <div className="flex gap-8">
             <Checkbox

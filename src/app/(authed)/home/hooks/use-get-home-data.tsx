@@ -26,3 +26,11 @@ export const useGetRoomHistory = () => {
     queryFn: roomService.getRooms,
   });
 };
+
+export const useGetFavoriteDungeons = (enabled: boolean) => {
+  return useQuery({
+    queryKey: ["favorites"],
+    queryFn: dungeonService.getFavorites,
+    enabled,
+  });
+};

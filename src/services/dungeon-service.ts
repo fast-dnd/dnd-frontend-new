@@ -28,6 +28,14 @@ const deleteDungeon = async (dungeonId: string) => {
   return await dungeonApi.delete(dungeonId);
 };
 
+const addFavorite = async (dungeonId: string) => {
+  return await dungeonApi.post("favourite", { dungeonId });
+};
+
+const getFavorites = async () => {
+  return await dungeonApi.get<IDungeon[]>("favourite").then((res) => res.data);
+};
+
 const dungeonService = {
   createDungeon,
   updateDungeon,
@@ -35,6 +43,8 @@ const dungeonService = {
   getDungeons,
   getRecommendedDungeons,
   deleteDungeon,
+  addFavorite,
+  getFavorites,
 };
 
 export default dungeonService;
