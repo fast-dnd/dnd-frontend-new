@@ -3,7 +3,7 @@ import { cn } from "@/utils/style-utils";
 import { useEffect, useRef, useState } from "react";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 
-const StyledAudio = (props: { audio: string }) => {
+const StyledAudio = (props: { audio?: string }) => {
   const { audio } = props;
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -21,23 +21,28 @@ const StyledAudio = (props: { audio: string }) => {
 
   return (
     <div>
-      <audio
-        src={audio}
-        ref={audioRef}
-        className="hidden"
-        onTimeUpdate={(e) => {
-          setProgress(e.currentTarget.currentTime);
-        }}
-      />
+      {!!audio && (
+        <audio
+          src={audio}
+          ref={audioRef}
+          className="hidden"
+          onTimeUpdate={(e) => {
+            setProgress(e.currentTarget.currentTime);
+          }}
+        />
+      )}
 
       <div className="flex gap-2 items-center">
         <Button
+          disabled={!audio}
           variant="ghost"
           className="w-fit text-white"
           onClick={() => {
-            if (playing) audioRef.current?.pause();
-            else audioRef.current?.play();
-            setPlaying(!playing);
+            if (audio) {
+              if (playing) audioRef.current?.pause();
+              else audioRef.current?.play();
+              setPlaying(!playing);
+            }
           }}
         >
           {playing && <BsPauseFill />}

@@ -166,9 +166,9 @@ const Gameplay = (props: { conversationId: string }) => {
               </div>
               <div className="flex-1 border-t border-tomato" />
             </div>
-            <div className="flex gap-8">
-              {roomData.genrateImages && (
-                <div className="h-72 w-72 flex flex-shrink-0">
+            <div>
+              {roomData.genrateImages && i % 2 === 0 && (
+                <div className="h-72 w-72 inline-block float-left mr-6 mb-4">
                   {!!roomData.generatedImages[i] && (
                     <Image
                       src={roomData.generatedImages[i] || "/images/default-dungeon.png"}
@@ -192,11 +192,13 @@ const Gameplay = (props: { conversationId: string }) => {
                 </div>
               )}
 
-              <div className="flex flex-col gap-4">
-                {roomData.generateAudio && roomData.generatedAudio[i] && (
-                  <StyledAudio audio={roomData.generatedAudio[i]} />
+              <div className="text-[22px] leading-8 tracking-widest">
+                {roomData.generateAudio && (
+                  <div className="mb-4">
+                    <StyledAudio audio={roomData.generatedAudio[i]} />
+                  </div>
                 )}
-                <div className="text-[22px] leading-8 tracking-widest">{story}</div>
+                {story}
               </div>
             </div>
           </div>
