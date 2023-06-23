@@ -1,10 +1,13 @@
+const path = require("path");
+
+const buildEslintCommand = (filenames) =>
+  `next lint --fix --file ${filenames
+    .map((f) => path.relative(process.cwd(), f))
+    .join(" --file ")}`;
+
+const buildPrettierCommand = (filenames) =>
+  `prettier --write ${filenames.map((f) => path.relative(process.cwd(), f)).join(" ")}`;
+
 module.exports = {
-  "./src/**/*.(ts|tsx)": () => "pnpm run type-check",
-
-  "./src/**/*.(ts|tsx|js)": (filenames) => [
-    `pnpm run lint:fix ${filenames.join(" ")}`,
-    `pnpm run format:fix ${filenames.join(" ")}`,
-  ],
-
-  "./src/**/*.(md|json)": (filenames) => `pnpm run format:fix ${filenames.join(" ")}`,
+  "*.{js,jsx,ts,tsx}": [buildEslintCommand, buildPrettierCommand],
 };
