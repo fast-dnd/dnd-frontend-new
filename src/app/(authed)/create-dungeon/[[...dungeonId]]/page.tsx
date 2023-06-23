@@ -79,10 +79,10 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   };
 
   return (
-    <div className="flex justify-center h-full p-16 overflow-y-hidden">
+    <div className="flex justify-center h-full p-16 pt-8 overflow-y-hidden">
       <div className="flex flex-col items-center gap-8">
         <div
-          className="cursor-pointer flex flex-row gap-1 w-fit font-medium items-center justify-center tracking-[0.08em] uppercase"
+          className="cursor-pointer text-lg flex flex-row gap-1 w-fit font-medium items-center justify-center tracking-[0.08em] uppercase"
           onClick={abortDungeonCreation}
         >
           <AiOutlineLeft className="inline-block" /> GO BACK

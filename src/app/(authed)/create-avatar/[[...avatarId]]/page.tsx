@@ -57,9 +57,9 @@ const CreateAvatar = ({ params }: { params: { avatarId?: [string] } }) => {
     return <BoxSkeleton title={`${avatarId ? "EDIT" : "CREATE"} AVATAR`} />;
 
   return (
-    <div className="flex flex-col items-center gap-8 mt-16">
+    <div className="flex flex-col items-center gap-8 mt-8">
       <Link
-        className="flex gap-1 items-center font-medium tracking-[0.08em] uppercase"
+        className="flex gap-1 text-lg items-center font-medium tracking-[0.08em] uppercase"
         href="/home"
       >
         <AiOutlineLeft className="inline-block" /> GO BACK
