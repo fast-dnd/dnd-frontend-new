@@ -125,7 +125,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
         <Button
           onClick={onCopyRoomId}
           variant={copied ? "primary" : "outline"}
-          className="uppercase w-fit px-8"
+          className="uppercase w-fit px-8 flex-1 whitespace-nowrap"
         >
           {copied ? "Copied" : "Copy room id"}
         </Button>
