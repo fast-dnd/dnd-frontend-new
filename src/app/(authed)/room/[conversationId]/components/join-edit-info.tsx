@@ -78,7 +78,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
   return (
     <Box
       title="Join"
-      className="flex flex-col gap-8 justify-between flex-1 min-h-0 w-[490px] h-fit p-8"
+      className="flex flex-col gap-8 justify-between flex-1 min-h-0 w-[490px] h-fit p-8 overflow-y-auto"
     >
       <Select value={avatarId} onValueChange={(value) => setAvatarId(value)}>
         <SelectTrigger label="Select an avatar" className="w-full">
@@ -121,11 +121,11 @@ const JoinEditInfo = (props: { conversationId: string }) => {
       </div>
       <div className="w-full border-t border-white/20" />
       <div className="flex justify-between gap-4">
-        <p className="mt-2 text-xl text-center flex-1 px-4 whitespace-nowrap">{roomData.link}</p>
+        <p className="mt-2 text-lg text-center flex-1 whitespace-nowrap">{roomData.link}</p>
         <Button
           onClick={onCopyRoomId}
           variant={copied ? "primary" : "outline"}
-          className="uppercase text-lg w-fit px-8 flex-1 whitespace-nowrap"
+          className="uppercase text-lg w-fit px-4 whitespace-nowrap"
         >
           {copied ? "Copied" : "Copy room id"}
         </Button>
