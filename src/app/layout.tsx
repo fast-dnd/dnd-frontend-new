@@ -17,7 +17,7 @@ export const metadata = {
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
-      <body className={cn("h-screen flex flex-col", jost.className)}>
+      <body className={cn("flex flex-col", jost.className)}>
         <Providers>
           <div className="absolute -z-10 w-full h-full">
             <Image src="/images/bg-cover.png" fill quality={100} alt="bg-cover" />
