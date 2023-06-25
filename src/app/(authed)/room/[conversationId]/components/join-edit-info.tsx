@@ -121,11 +121,11 @@ const JoinEditInfo = (props: { conversationId: string }) => {
       </div>
       <div className="w-full border-t border-white/20" />
       <div className="flex justify-between gap-4">
-        <p className="mt-2 text-2xl text-center flex-1 whitespace-nowrap">{roomData.link}</p>
+        <p className="mt-2 text-xl text-center flex-1 whitespace-nowrap">{roomData.link}</p>
         <Button
           onClick={onCopyRoomId}
           variant={copied ? "primary" : "outline"}
-          className="uppercase w-fit px-8 flex-1 whitespace-nowrap"
+          className="uppercase text-lg w-fit px-8 flex-1 whitespace-nowrap"
         >
           {copied ? "Copied" : "Copy room id"}
         </Button>
