@@ -5,6 +5,7 @@
 body {
   color: #ffffff;
   overflow: hidden;
+  height: 100vh;
 }
 
 @media (min-width: 768px) {
@@ -16,14 +17,22 @@ body {
 
 @media (min-width: 1024px) {
   body {
-    zoom: 75%;
-    height: 133vh;
+    zoom: 65%;
+    height: 154vh;
   }
 }
+
+@media (min-width: 1280px) {
+  body {
+    zoom: 80%;
+    height: 125vh;
+  }
+}
+
 @media (min-width: 1536px) {
   body {
-    zoom: 100%;
-    height: 100vh;
+    zoom: 90%;
+    height: 111vh;
   }
 }
 
