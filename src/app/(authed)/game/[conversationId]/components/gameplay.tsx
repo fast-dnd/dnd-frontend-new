@@ -2,26 +2,27 @@
 
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
+import Modal from "@/components/ui/modal";
+import Spinner from "@/components/ui/spinner";
 import { TextArea } from "@/components/ui/text-area";
 import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
+import { IPlayMove, IPlayMoveResponse } from "@/services/game-service";
 import { IPlayer, defaultMoves } from "@/types/dnd";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import Die from "./die";
-import Spinner from "@/components/ui/spinner";
-import usePlayMove from "../hooks/use-play-move";
-import { IPlayMove, IPlayMoveResponse } from "@/services/game-service";
-import useGameplaySocket from "../hooks/use-gameplay-socket";
-import { randomDice } from "../utils/dice";
-import StyledAudio from "./styled-audio";
-import { useGameStore } from "../stores/game-store";
 import { useRouter } from "next/navigation";
-import { HiSparkles } from "react-icons/hi";
-import Modal from "@/components/ui/modal";
+import { useEffect, useRef, useState } from "react";
+
 import { FaDice, FaRobot } from "react-icons/fa";
-import { BiSolidRightArrowSquare } from "react-icons/bi";
+import { HiSparkles } from "react-icons/hi";
+import useGameplaySocket from "../hooks/use-gameplay-socket";
+import usePlayMove from "../hooks/use-play-move";
+import { useGameStore } from "../stores/game-store";
+import { randomDice } from "../utils/dice";
+import Die from "./die";
+import StyledAudio from "./styled-audio";
+import { BsFillArrowRightSquareFill } from "react-icons/bs";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -132,7 +133,7 @@ const Gameplay = (props: { conversationId: string }) => {
       </Box>
     );
 
-  const play = () => {
+  const onPlay = () => {
     let moveToPlay: IPlayMove | undefined;
     if (roomData.location.phase === "discovery" && move) {
       moveToPlay = {
@@ -164,6 +165,7 @@ const Gameplay = (props: { conversationId: string }) => {
       });
     }
   };
+
   return (
     <Box
       title={dungeonData.name}
@@ -317,7 +319,7 @@ const Gameplay = (props: { conversationId: string }) => {
                     </div>
                     <div className="flex w-full justify-between opacity-50">
                       <div className="flex items-center gap-2">
-                        <BiSolidRightArrowSquare /> Round bonus
+                        <BsFillArrowRightSquareFill /> Round bonus
                       </div>
                       <p>
                         {rollInfo.diceBreakdown.bonusApplied > 0 && "+"}
@@ -357,7 +359,7 @@ const Gameplay = (props: { conversationId: string }) => {
               "h-12 normal-case",
               rollButtonState !== "ROLL" && "bg-white/5 text-white",
             )}
-            onClick={play}
+            onClick={onPlay}
           >
             {rollButtonState === "ROLL" && <p className="text-center">Roll the dice</p>}
             {rollButtonState === "ROLLING" && <p className="text-center">Rolling...</p>}
