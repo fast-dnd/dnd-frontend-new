@@ -154,13 +154,17 @@ const Gameplay = (props: { conversationId: string }) => {
     }
     if (moveToPlay) {
       setRollButtonState("ROLLING");
-      setFreeWill("");
       setCanPlay(false);
       playMove(moveToPlay, {
         onSuccess: (res) => {
+          setFreeWill("");
           setRollInfo(res.data);
           setTimeout(() => setRollButtonState("ROLLED"), 1500);
           setTimeout(() => setDice(randomDice(res.data.diceAfterBonus)), 250);
+        },
+        onError: () => {
+          setRollButtonState("ROLLED");
+          setCanPlay(true);
         },
       });
     }
