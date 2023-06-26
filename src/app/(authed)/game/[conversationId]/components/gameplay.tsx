@@ -17,10 +17,11 @@ import useGameplaySocket from "../hooks/use-gameplay-socket";
 import { randomDice } from "../utils/dice";
 import StyledAudio from "./styled-audio";
 import { useGameStore } from "../stores/game-store";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { HiOutlineX } from "react-icons/hi";
+import { HiSparkles } from "react-icons/hi";
 import Modal from "@/components/ui/modal";
+import { FaDice, FaRobot } from "react-icons/fa";
+import { BiSolidRightArrowSquare } from "react-icons/bi";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -36,13 +37,19 @@ const Gameplay = (props: { conversationId: string }) => {
   const [timer, setTimer] = useState(0);
   const [dice, setDice] = useState([0, 0]);
   const [rollInfo, setRollInfo] = useState<IPlayMoveResponse>();
-  const [openBreakdown, setOpenBreakdown] = useState(false);
-  const [diceTotal, setDiceTotal] = useState(0);
   const [stories, setStories] = useState<string[]>([]);
   const [imageModal, setImageModal] = useState("");
 
-  const { canPlay, setCanPlay, lastStory, move, setMove, loadingText } =
-    useGameplaySocket(conversationId);
+  const {
+    canPlay,
+    setCanPlay,
+    lastStory,
+    move,
+    setMove,
+    loadingText,
+    rollButtonState,
+    setRollButtonState,
+  } = useGameplaySocket(conversationId);
   const { mutate: playMove, isLoading: submitting } = usePlayMove();
 
   useEffect(() => {
@@ -61,16 +68,16 @@ const Gameplay = (props: { conversationId: string }) => {
         const endsAt = new Date(roomData.roundEndsAt);
         setTimer(Math.max(Math.floor((endsAt.getTime() - new Date().getTime()) / 1000), 0));
       }
-      if (roomData.queuedMoves) {
-        if (
-          roomData.queuedMoves.find(
-            (move) => move.playerAccountId === localStorage.getItem("accountId"),
-          )
-        ) {
+      if (roomData.queuedMoves && roomData.queuedMoves.length > 0) {
+        const currentPlayerMove = roomData.queuedMoves.find(
+          (move) => move.playerAccountId === player?.accountId,
+        );
+        if (currentPlayerMove) {
           setCanPlay(false);
-        } else if (!lastStory) {
-          setCanPlay(true);
         }
+      } else if (!lastStory && rollButtonState !== "ROLLING") {
+        setCanPlay(true);
+        setRollButtonState("ROLL");
       }
       if (lastStory) {
         setStories([...roomData.chatGptResponses, lastStory]);
@@ -78,9 +85,20 @@ const Gameplay = (props: { conversationId: string }) => {
         setStories(roomData.chatGptResponses);
       }
 
+      //TODO setRollInfo of most recent move, when move format contains all required fields
+
       if (roomData.state === "CLOSED") setCanPlay(false);
     }
-  }, [canPlay, lastStory, powerUp, roomData, setCanPlay, submitting]);
+  }, [
+    canPlay,
+    lastStory,
+    powerUp,
+    roomData,
+    setCanPlay,
+    rollButtonState,
+    setRollButtonState,
+    submitting,
+  ]);
 
   useEffect(() => {
     submitting && setTimeout(() => setDice(randomDice()), 200);
@@ -115,7 +133,6 @@ const Gameplay = (props: { conversationId: string }) => {
     );
 
   const play = () => {
-    setFreeWill("");
     let moveToPlay: IPlayMove | undefined;
     if (roomData.location.phase === "discovery" && move) {
       moveToPlay = {
@@ -135,11 +152,13 @@ const Gameplay = (props: { conversationId: string }) => {
       };
     }
     if (moveToPlay) {
+      setRollButtonState("ROLLING");
+      setFreeWill("");
       setCanPlay(false);
       playMove(moveToPlay, {
         onSuccess: (res) => {
-          setDiceTotal(res.data.diceAfterBonus);
           setRollInfo(res.data);
+          setTimeout(() => setRollButtonState("ROLLED"), 1500);
           setTimeout(() => setDice(randomDice(res.data.diceAfterBonus)), 250);
         },
       });
@@ -283,38 +302,48 @@ const Gameplay = (props: { conversationId: string }) => {
         )}
         <div className="flex flex-col justify-between bg-white/5 w-[270px]">
           <div className="flex items-center relative justify-center gap-4 h-32">
-            {(diceTotal >= 2 || submitting) && (
+            {((rollInfo?.diceAfterBonus || 0) >= 2 || submitting) && (
               <>
-                {dice.map((roll, i) => (
-                  <Die key={i} roll={roll} />
-                ))}
+                {rollButtonState === "ROLLING" &&
+                  dice.map((roll, i) => <Die key={i} roll={roll} />)}
 
-                <div className="absolute bottom-4 right-4 h-4 w-4">
-                  <AiOutlineQuestionCircle
-                    className="cursor-pointer"
-                    onClick={() => setOpenBreakdown(!openBreakdown)}
-                  />
-                  {openBreakdown && (
-                    <div
-                      tabIndex={0}
-                      onBlur={() => setOpenBreakdown(false)}
-                      className="flex justify-center w-full absolute bottom-5"
-                    >
-                      <div className="flex flex-col bg-black/30 whitespace-nowrap p-4 border border-white rounded-lg ">
-                        <div className="flex justify-end">
-                          <HiOutlineX
-                            className="cursor-pointer"
-                            onClick={() => setOpenBreakdown(false)}
-                          />
-                        </div>
-                        <p>Rolled: {rollInfo?.diceBreakdown.dice}</p>
-                        <p>Bonus applied: {rollInfo?.diceBreakdown.bonusApplied}</p>
-                        <p>Mana used: {rollInfo?.diceBreakdown.mana}</p>
-                        <p>Bob thought: {rollInfo?.diceBreakdown.aiDiceBonus}</p>
+                {!!rollInfo && rollButtonState !== "ROLLING" && (
+                  <div className="flex flex-col w-full px-4">
+                    <div className="flex w-full justify-between">
+                      <div className="flex items-center gap-2">
+                        <FaDice /> You rolled
                       </div>
+                      <p>{rollInfo.diceBreakdown.dice}</p>
                     </div>
-                  )}
-                </div>
+                    <div className="flex w-full justify-between opacity-50">
+                      <div className="flex items-center gap-2">
+                        <BiSolidRightArrowSquare /> Round bonus
+                      </div>
+                      <p>
+                        {rollInfo.diceBreakdown.bonusApplied > 0 && "+"}
+                        {rollInfo.diceBreakdown.bonusApplied}
+                      </p>
+                    </div>
+                    <div className="flex w-full justify-between opacity-50">
+                      <div className="flex items-center gap-2">
+                        <FaRobot /> Bob gave
+                      </div>
+                      <p>
+                        {rollInfo.diceBreakdown.aiDiceBonus > 0 && "+"}
+                        {rollInfo.diceBreakdown.aiDiceBonus}
+                      </p>
+                    </div>
+                    <div className="flex w-full justify-between opacity-50">
+                      <div className="flex items-center gap-2">
+                        <HiSparkles /> Mana used
+                      </div>
+                      <p>
+                        {rollInfo.diceBreakdown.mana > 0 && "+"}
+                        {rollInfo.diceBreakdown.mana}
+                      </p>
+                    </div>
+                  </div>
+                )}
               </>
             )}
           </div>
@@ -324,10 +353,20 @@ const Gameplay = (props: { conversationId: string }) => {
               (!move && roomData.location.phase === "discovery") ||
               (!freeWill && roomData.location.phase === "end")
             }
-            className={cn("h-12 normal-case", !canPlay && "bg-white/5 text-white")}
+            className={cn(
+              "h-12 normal-case",
+              rollButtonState !== "ROLL" && "bg-white/5 text-white",
+            )}
             onClick={play}
           >
-            {canPlay ? "Roll the dice" : `Dice total: ${!submitting ? diceTotal : ""}`}
+            {rollButtonState === "ROLL" && <p className="text-center">Roll the dice</p>}
+            {rollButtonState === "ROLLING" && <p className="text-center">Rolling...</p>}
+            {rollButtonState === "ROLLED" && (
+              <div className="flex w-full justify-between px-4">
+                <p>Total</p>
+                <p>{rollInfo?.diceAfterBonus}</p>
+              </div>
+            )}
           </Button>
         </div>
       </div>
