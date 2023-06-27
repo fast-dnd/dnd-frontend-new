@@ -27,7 +27,7 @@ const RoomInfo = (props: { conversationId: string }) => {
 
   return (
     <Box title="ROOM" className="flex flex-col gap-8 min-h-0 flex-1 w-[490px] p-8">
-      <div className="flex flex-row items-center gap-4 pr-0">
+      <div className="flex flex-row gap-4 pr-0">
         <Image
           src={dungeonData.imageUrl || "/images/default-dungeon.png"}
           alt={dungeonData.name}
@@ -35,7 +35,7 @@ const RoomInfo = (props: { conversationId: string }) => {
           height={100}
           className="h-[100px]"
         />
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col max-h-[150px] gap-4 overflow-y-auto">
           <p className="text-xl font-semibold">{dungeonData.name}</p>
           <p>{dungeonData.description}</p>
         </div>
