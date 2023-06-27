@@ -163,7 +163,7 @@ const Gameplay = (props: { conversationId: string }) => {
           setTimeout(() => setDice(randomDice(res.data.diceAfterBonus)), 250);
         },
         onError: () => {
-          setRollButtonState("ROLLED");
+          setRollButtonState("ROLL");
           setCanPlay(true);
         },
       });

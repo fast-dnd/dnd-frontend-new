@@ -22,6 +22,8 @@ const Avatars = () => {
     );
   }
 
+  if (!kingdom.avatars || kingdom.avatars.length === 0) router.push("/create-avatar");
+
   // TODO: avatar exp % (currently set at 80)
   return (
     <div className="h-full flex flex-col gap-4 overflow-y-auto no-scrollbar">
