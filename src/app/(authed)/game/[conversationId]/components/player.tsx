@@ -31,7 +31,7 @@ const Player = (props: { player: IPlayer }) => {
               <Tooltip>
                 <TooltipTrigger className="flex gap-2 text-lg items-center cursor-default">
                   <VscHeartFilled />
-                  <span className="mt-0.5">{player.health}</span>
+                  <span className="mt-0.5">{Math.max(0, player.health)}</span>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Health</p>

@@ -195,9 +195,9 @@ const Gameplay = (props: { conversationId: string }) => {
               <div className="flex-1 border-t border-tomato" />
             </div>
             <div>
-              {roomData.genrateImages && i % 2 === 0 && (
+              {roomData.generatedImages[i] && roomData.genrateImages && i % 2 === 0 && (
                 <div className="h-72 w-72 inline-block float-left mr-6 mb-4">
-                  {!!roomData.generatedImages[i] && (
+                  {roomData.generatedImages[i].length > 0 ? (
                     <Image
                       src={roomData.generatedImages[i] || "/images/default-dungeon.png"}
                       alt="dungeon"
@@ -207,8 +207,7 @@ const Gameplay = (props: { conversationId: string }) => {
                       draggable={false}
                       onClick={() => setImageModal(roomData.generatedImages[i])}
                     />
-                  )}
-                  {!roomData.generatedImages[i] && (
+                  ) : (
                     <div className="flex items-center justify-center animate-pulse h-72 w-72 rounded  bg-gray-600">
                       <svg
                         className="w-24 h-24 text-gray-200"

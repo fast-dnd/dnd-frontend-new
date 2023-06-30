@@ -56,8 +56,8 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
                   >
                     <AiOutlineHome />
                   </TooltipTrigger>
-                  <TooltipContent side="bottom">
-                    <p>Go to home</p>
+                  <TooltipContent side="bottom" className="mt-2">
+                    <p>Go home</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -74,7 +74,7 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
                   >
                     <AiOutlineQuestionCircle />
                   </TooltipTrigger>
-                  <TooltipContent side="bottom">
+                  <TooltipContent side="bottom" className="mt-2">
                     <p>How to play</p>
                   </TooltipContent>
                 </Tooltip>
@@ -89,7 +89,7 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
                   >
                     <AiOutlineExclamationCircle />
                   </TooltipTrigger>
-                  <TooltipContent side="bottom">
+                  <TooltipContent side="bottom" className="mt-2">
                     <p>Feedback</p>
                   </TooltipContent>
                 </Tooltip>
