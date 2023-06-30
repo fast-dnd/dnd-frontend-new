@@ -63,7 +63,7 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
                 <TooltipTrigger>
                   {loadingEdit && (
                     <div className="flex justify-center items-center h-6 w-6">
-                      <Spinner className="h-5 w-5 m-0" />
+                      <Spinner className="h-5 w-5 m-0 text-warning" />
                     </div>
                   )}
                   {!loadingEdit && (

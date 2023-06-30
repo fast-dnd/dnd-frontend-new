@@ -11,6 +11,7 @@ import useCreateDungeon from "../hooks/use-create-dungeon";
 import useUpdateDungeon from "../hooks/use-update-dungeon";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
 import Champion from "./champion";
+import { cn } from "@/utils/style-utils";
 
 const Champions = ({ dungeonId }: { dungeonId?: string }) => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
@@ -66,7 +67,12 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
   return (
     <div className="h-ful flex">
       <Box title="CREATE DUNGEON" className="flex flex-col gap-8 min-h-0 flex-1 w-[1200px] p-8">
-        <div className="flex flex-row items-center gap-8 justify-between">
+        <div
+          className={cn(
+            "flex flex-row items-center gap-8 justify-between",
+            editIndex !== -1 && "hidden",
+          )}
+        >
           <p className="text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
             3.
             {stepTitles[currentStep]}

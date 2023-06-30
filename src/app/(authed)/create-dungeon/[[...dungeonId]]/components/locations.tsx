@@ -9,6 +9,7 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
 import Location from "./location";
 import useStore from "@/hooks/use-store";
+import { cn } from "@/utils/style-utils";
 
 const Locations = () => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
@@ -16,14 +17,14 @@ const Locations = () => {
   const [status, setStatus] = useState<"LIST" | "CREATING" | "EDITING">("LIST");
   const [editIndex, setEditIndex] = useState(-1);
 
+  if (!dungeonFormStore) return null;
+
+  const { currentStep, setCurrentStep, dungeonFormData, updateDungeonFormData } = dungeonFormStore;
+
   const onEditLocation = (index: number) => {
     setEditIndex(index);
     setStatus("EDITING");
   };
-
-  if (!dungeonFormStore) return null;
-
-  const { currentStep, setCurrentStep, dungeonFormData, updateDungeonFormData } = dungeonFormStore;
 
   const onDeleteLocation = (index: number) => {
     updateDungeonFormData(
@@ -32,11 +33,15 @@ const Locations = () => {
       }),
     );
   };
-
   return (
     <div className="h-full flex">
       <Box title="CREATE DUNGEON" className="flex flex-col gap-8 min-h-0 flex-1 w-[1200px] p-8">
-        <div className="flex flex-row items-center gap-8 justify-between">
+        <div
+          className={cn(
+            "flex flex-row items-center gap-8 justify-between",
+            editIndex !== -1 && "hidden",
+          )}
+        >
           <p className="text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
             2.
             {stepTitles[currentStep]}
