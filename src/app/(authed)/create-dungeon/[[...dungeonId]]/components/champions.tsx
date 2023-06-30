@@ -3,15 +3,17 @@
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import useStore from "@/hooks/use-store";
+import { cn } from "@/utils/style-utils";
+import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { produce } from "immer";
 import { useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
-import { MdDelete, MdEdit } from "react-icons/md";
 import useCreateDungeon from "../hooks/use-create-dungeon";
 import useUpdateDungeon from "../hooks/use-update-dungeon";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
 import Champion from "./champion";
-import { cn } from "@/utils/style-utils";
+import SortableItem from "./sortable-item";
 
 const Champions = ({ dungeonId }: { dungeonId?: string }) => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
@@ -64,6 +66,23 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
     }
   };
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (!over) return;
+
+    if (active.id !== over.id) {
+      updateDungeonFormData(
+        produce(dungeonFormData, (draft) => {
+          const oldIndex = draft.champions.findIndex((chmp) => JSON.stringify(chmp) === active.id);
+          const newIndex = draft.champions.findIndex((chmp) => JSON.stringify(chmp) === over.id);
+          const [removed] = draft.champions.splice(oldIndex, 1);
+          draft.champions.splice(newIndex, 0, removed);
+        }),
+      );
+    }
+  };
+
   return (
     <div className="h-ful flex">
       <Box title="CREATE DUNGEON" className="flex flex-col gap-8 min-h-0 flex-1 w-[1200px] p-8">
@@ -99,29 +118,24 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
           {status === "LIST" && (
             <div className="flex flex-col gap-8 w-full h-full">
               {dungeonFormData.champions.length > 0 && (
-                <div className="flex flex-col gap-8 w-full overflow-y-auto no-scrollbar">
-                  {dungeonFormData.champions.map((chmp, i) => (
-                    <div
-                      key={crypto.randomUUID()}
-                      className="w-full bg-white/5 flex flex-row items-center p-4 gap-4"
+                <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                  <div className="flex flex-col gap-8 w-full ">
+                    <SortableContext
+                      items={dungeonFormData.champions.map((chmp) => JSON.stringify(chmp))}
+                      strategy={verticalListSortingStrategy}
                     >
-                      <p className="w-full text-2xl font-medium tracking-widest">
-                        {i + 1}. {chmp.name}
-                      </p>
-                      <MdEdit
-                        className="text-white/75 cursor-pointer hover:text-warning transition-colors duration-300"
-                        size={32}
-                        onClick={() => onEditChampion(i)}
-                      />
-
-                      <MdDelete
-                        className="text-white/75 cursor-pointer hover:text-error transition-colors duration-300"
-                        size={32}
-                        onClick={() => onDeleteChampion(i)}
-                      />
-                    </div>
-                  ))}
-                </div>
+                      {dungeonFormData.champions.map((chmp, i) => (
+                        <SortableItem
+                          key={crypto.randomUUID()}
+                          item={chmp}
+                          i={i}
+                          onEdit={onEditChampion}
+                          onDelete={onDeleteChampion}
+                        />
+                      ))}
+                    </SortableContext>
+                  </div>
+                </DndContext>
               )}
 
               <p className="text-xl tracking-[0.07em] text-white/50">
