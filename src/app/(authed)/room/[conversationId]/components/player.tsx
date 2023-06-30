@@ -15,6 +15,7 @@ const Player = ({ player }: { player: IPlayer }) => {
       <div className="flex flex-col gap-1">
         <p className="text-2xl">{player.name}</p>
         <p className="text-xl font-light">{player.champion?.name}</p>
+        <p className="text-sm font-light">{player.champion?.description}</p>
       </div>
     </div>
   );

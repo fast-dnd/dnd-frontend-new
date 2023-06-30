@@ -78,7 +78,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
   return (
     <Box
       title="Join"
-      className="flex flex-col gap-8 justify-between flex-1 min-h-0 w-[490px] h-fit p-8 overflow-y-auto"
+      className="flex flex-col gap-8 justify-between flex-1 min-h-0 w-[490px] h-fit p-8"
     >
       <Select value={avatarId} onValueChange={(value) => setAvatarId(value)}>
         <SelectTrigger label="Select an avatar" className="w-full">
