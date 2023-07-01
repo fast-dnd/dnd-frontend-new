@@ -43,7 +43,7 @@ const Avatars = () => {
             <p className="md:text-2xl tracking-wider md:tracking-[0.07em] uppercase">
               {avatar.name}
             </p>
-            <div className="flex md:flex-col gap-4 md:gap-1 items-center justify-center">
+            <div className="flex md:flex-col gap-4 md:gap-1 items-center justify-center md:justify-start md:items-start">
               <div className="flex flex-row items-center gap-4">
                 <p className="text-sm md:text-xl tracking-[0.15em] font-light whitespace-nowrap">
                   Level {avatar.level}

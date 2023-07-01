@@ -73,7 +73,7 @@ const CreateRoom = () => {
         onTabClick={() => setSelectedDungeon(undefined)}
       />
 
-      <div className="flex flex-col gap-4 flex-1 overflow-y-auto pr-8">
+      <div className="flex flex-col gap-4 flex-1 overflow-y-auto md:pr-8">
         {!isLoading &&
           dungeons.map((dungeon) => (
             <div
@@ -89,21 +89,23 @@ const CreateRoom = () => {
                 alt={dungeon.name}
                 width={180}
                 height={180}
-                className="h-[180px]"
+                className="hidden md:h-[180px] md:w-[180px] md:block"
               />
-              <div className="flex flex-col py-4 gap-4 w-full">
-                <div className="flex flex-row justify-between w-full pr-8">
-                  <p className="text-[22px] leading-7 font-medium tracking-[0.15em] uppercase">
+              <div className="flex flex-col py-4 gap-2 md:gap-4 w-full">
+                <div className="flex flex-col md:flex-row justify-between w-full pr-8">
+                  <p className="text-lg md:text-[22px] leading-7 font-medium tracking-widest md:tracking-[0.15em] uppercase truncate">
                     {dungeon.name}
                   </p>
                   {dungeon === selectedDungeon && (
-                    <div className="flex flex-row items-center px-3 gap-4 border border-tomato justify-self-end">
+                    <div className="flex flex-row items-center px-3 gap-4 border border-tomato justify-self-end justify-center py-1">
                       <AiOutlineCheck className="text-tomato text-lg" />
                       <p className="leading-6 tracking-[0.15em] text-tomato uppercase">SELECTED</p>
                     </div>
                   )}
                 </div>
-                <p className="font-light text-lg tracking-widest">{dungeon.description}</p>
+                <p className="font-light text-lg tracking-widest break-all line-clamp-2 pr-2">
+                  {dungeon.description}
+                </p>
               </div>
             </div>
           ))}

@@ -35,7 +35,7 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
       />
       <div className="flex flex-col md:py-4 gap-1 md:gap-4 w-full">
         <div className="flex flex-row justify-between w-full pr-8">
-          <p className="text-lg md:text-[22px] md:leading-7 font-normal md:font-medium tracking-wider md:tracking-[0.15em] uppercase truncate w-48">
+          <p className="text-lg md:text-[22px] md:leading-7 font-normal md:font-medium tracking-wider md:tracking-[0.15em] uppercase truncate w-48 md:w-auto">
             {dungeon.name}
           </p>
 
@@ -101,7 +101,7 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
             </TooltipProvider>
           </div>
         </div>
-        <p className="opacity-50 md:opacity-100 text-white text-[14px] md:text-base leading-tight font-light text-lg tracking-widest break-all line-clamp-2 w-48">
+        <p className="opacity-50 md:opacity-100 text-white text-[14px] md:text-base leading-tight font-light text-lg tracking-widest break-all line-clamp-2 md:line-clamp-none w-48 md:w-auto">
           {dungeon.description}
         </p>
       </div>
