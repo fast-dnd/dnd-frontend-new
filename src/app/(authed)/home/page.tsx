@@ -31,7 +31,7 @@ const Home = () => {
   const { data: account } = useGetAccount();
 
   return (
-    <div className="flex flex-col w-full min-h-0 h-full md:px-16 md:pb-12">
+    <div className="flex flex-col w-full min-h-0 h-full md:px-16 md:pb-12 overflow-y-auto">
       <MobileNavbar />
 
       <div className="hidden md:flex items-center justify-center my-6">
@@ -44,19 +44,19 @@ const Home = () => {
 
       <div
         className={cn(
-          "px-5 md:px-0 flex flex-col md:flex-row flex-1 md:min-w-fit min-h-0 h-full gap-12",
+          "px-5 md:px-0 flex flex-col md:flex-row flex-1 md:min-w-fit min-h-0 h-full gap-12 overflow-y-auto",
           homeTab !== "PLAY" && "hidden",
         )}
       >
         <Box title="CREATE ROOM" className="flex flex-col min-h-0 flex-1 gap-4 p-4 md:gap-8 md:p-8">
           <CreateRoom />
         </Box>
-        <div className="flex flex-col flex-1 basis-1/3 h-full min-w-fit gap-12">
+        <div className="flex flex-col flex-1 basis-1/3 h-full md:min-w-fit gap-12">
           <JoinRoom />
-          <div className="flex flex-1 min-h-0">
+          <div className="flex flex-1 min-h-0 overflow-y-auto">
             <Box
               title="GAME HISTORY"
-              className="flex flex-col items-start min-h-0 flex-1 px-8 pt-8 gap-8"
+              className="flex flex-col items-start min-h-0 flex-1 gap-4 p-4 md:gap-8 md:p-8 mb-4 md:mb-0"
             >
               <GameHistory />
             </Box>

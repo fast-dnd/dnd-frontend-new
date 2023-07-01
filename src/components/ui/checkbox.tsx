@@ -33,46 +33,58 @@ export interface CheckboxProps
   successMessage?: string;
   errorMessage?: string;
   label?: string;
+  boxClassName?: string;
 }
 
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & CheckboxProps
->(({ successMessage, errorMessage, label, state, disabled, className, ...props }, ref) => (
-  <div className="flex flex-col gap-1">
-    <div
-      className={cn(
-        checkboxContainerVariants({ state, className }),
-        disabled && "pointer-events-none bg-opacity-20 text-opacity-20",
-      )}
-    >
-      <CheckboxPrimitive.Root ref={ref} className={cn(checkboxVariants(), className)} {...props}>
-        <CheckboxPrimitive.Indicator className={cn("flex items-center justify-center text-white")}>
-          <FaCheck />
-        </CheckboxPrimitive.Indicator>
-      </CheckboxPrimitive.Root>
-      <p
+>(
+  (
+    { successMessage, errorMessage, label, state, disabled, boxClassName, className, ...props },
+    ref,
+  ) => (
+    <div className="flex flex-col gap-1">
+      <div
         className={cn(
-          "font-semibold text-base uppercase",
-          state === "error" && "text-error",
-          state === "success" && "text-success",
+          checkboxContainerVariants({ state, className }),
+          disabled && "pointer-events-none bg-opacity-20 text-opacity-20",
         )}
       >
-        {label}
-      </p>
+        <CheckboxPrimitive.Root
+          ref={ref}
+          className={cn(checkboxVariants(), boxClassName)}
+          {...props}
+        >
+          <CheckboxPrimitive.Indicator
+            className={cn("flex items-center justify-center text-white")}
+          >
+            <FaCheck />
+          </CheckboxPrimitive.Indicator>
+        </CheckboxPrimitive.Root>
+        <p
+          className={cn(
+            "font-semibold text-base uppercase tracking-widest md:tracking-normal",
+            state === "error" && "text-error",
+            state === "success" && "text-success",
+          )}
+        >
+          {label}
+        </p>
+      </div>
+      {successMessage && (
+        <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-success">
+          <AiFillCheckCircle /> {successMessage}
+        </p>
+      )}
+      {errorMessage && (
+        <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-error">
+          <GiCancel /> {errorMessage}
+        </p>
+      )}
     </div>
-    {successMessage && (
-      <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-success">
-        <AiFillCheckCircle /> {successMessage}
-      </p>
-    )}
-    {errorMessage && (
-      <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-error">
-        <GiCancel /> {errorMessage}
-      </p>
-    )}
-  </div>
-));
+  ),
+);
 Checkbox.displayName = CheckboxPrimitive.Root.displayName;
 
 export { Checkbox };
