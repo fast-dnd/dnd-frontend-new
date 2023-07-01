@@ -68,8 +68,8 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
       <p className="text-xl tracking-[0.07em] -my-1 text-white/50">
         Describe the champion and define custom names for its actions
       </p>
-      <div className="flex flex-row gap-8 h-full">
-        <div className="flex flex-col basis-1/3 gap-8 h-full min-h-0">
+      <div className="flex flex-col md:flex-row gap-5 md:gap-8 h-full">
+        <div className="flex flex-col md:basis-1/3 gap-5 md:gap-8 md:h-full min-h-0">
           <Input
             label="Name"
             placeholder="Warrior"
@@ -78,7 +78,7 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
             state={errors?.name ? "error" : undefined}
             errorMessage={errors?.name?.message}
           />
-          <div className="flex min-h-0 h-full">
+          <div className="flex min-h-0 md:h-full">
             <TextArea
               label="Description"
               placeholder="You are a brave warrior ready to fight..."
@@ -89,7 +89,7 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
             />
           </div>
         </div>
-        <div className="flex flex-col basis-1/3 gap-8 h-full min-h-0">
+        <div className="flex flex-col md:basis-1/3 gap-5 md:gap-8 md:h-full min-h-0">
           <Input
             label="Heal action text"
             placeholder="Try to heal yourself"
@@ -105,7 +105,7 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
             errorMessage={errors?.moveMapping?.conversation_with_team?.message}
           />
         </div>
-        <div className="flex flex-col basis-1/3 gap-8 h-full min-h-0">
+        <div className="flex flex-col md:basis-1/3 gap-5 md:gap-8 md:h-full min-h-0">
           <Input
             label="Mana action text"
             placeholder="Try to find something useful"
@@ -126,7 +126,7 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
         <Button className="w-fit" variant="ghost" onClick={onCancel} type="reset">
           CANCEL
         </Button>
-        <Button className="w-fit px-8 uppercase" variant="outline">
+        <Button className="whitespace-nowrap w-fit px-8 uppercase" variant="outline">
           {status === "CREATING" ? "ADD CHAMPION" : "EDIT CHAMPION"}
         </Button>
       </div>

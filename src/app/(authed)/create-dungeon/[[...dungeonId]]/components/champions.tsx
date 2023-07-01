@@ -85,19 +85,22 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
 
   return (
     <div className="h-ful flex">
-      <Box title="CREATE DUNGEON" className="flex flex-col gap-8 min-h-0 flex-1 w-[1200px] p-8">
+      <Box
+        title="CREATE DUNGEON"
+        className="flex flex-col min-h-0 flex-1 md:w-[1200px] p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0"
+      >
         <div
           className={cn(
             "flex flex-row items-center gap-8 justify-between",
             editIndex !== -1 && "hidden",
           )}
         >
-          <p className="text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
+          <p className="text-lg text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
             3.
             {stepTitles[currentStep]}
           </p>
           <Button
-            className="gap-1 w-fit"
+            className="hidden md:flex gap-1 w-fit"
             variant="ghost"
             onClick={() => setCurrentStep("LOCATIONS")}
           >
@@ -106,7 +109,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
           </Button>
           <Button
             isLoading={isCreating}
-            className="w-fit px-8 whitespace-nowrap"
+            className="hidden md:flex w-fit px-8 whitespace-nowrap"
             onClick={onFinishForm}
             variant="primary"
             disabled={dungeonFormData.champions.length < 2}
@@ -116,10 +119,10 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
         </div>
         <div className="w-full h-full">
           {status === "LIST" && (
-            <div className="flex flex-col gap-8 w-full h-full">
+            <div className="flex flex-col gap-5 md:gap-8 w-full h-full">
               {dungeonFormData.champions.length > 0 && (
                 <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                  <div className="flex flex-col gap-8 w-full ">
+                  <div className="flex flex-col gap-5 md:gap-8 w-full ">
                     <SortableContext
                       items={dungeonFormData.champions.map((chmp) => JSON.stringify(chmp))}
                       strategy={verticalListSortingStrategy}
@@ -138,18 +141,40 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
                 </DndContext>
               )}
 
-              <p className="text-xl tracking-[0.07em] text-white/50">
+              <p className="text-lg md:text-xl tracking-[0.07em] text-white/50">
                 Create between 2 and 4 champions
               </p>
 
               <Button
                 variant="outline"
                 disabled={dungeonFormData.champions.length >= 4}
-                className="w-fit px-8"
+                className="w-full md:w-fit px-8"
                 onClick={() => setStatus("CREATING")}
               >
                 ADD NEW CHAMPION
               </Button>
+
+              <div className="md:hidden block w-full border-t border-white/20" />
+
+              <div className="flex flex-row items-center gap-8 justify-between md:hidden">
+                <Button
+                  className="gap-1 w-fit"
+                  variant="ghost"
+                  onClick={() => setCurrentStep("LOCATIONS")}
+                >
+                  <AiOutlineLeft className="inline-block" />
+                  PREVIOUS
+                </Button>
+                <Button
+                  isLoading={isCreating}
+                  className="w-fit px-8 whitespace-nowrap"
+                  onClick={onFinishForm}
+                  variant="primary"
+                  disabled={dungeonFormData.champions.length < 2}
+                >
+                  FINISH
+                </Button>
+              </div>
             </div>
           )}
           {status !== "LIST" && (
