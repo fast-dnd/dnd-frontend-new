@@ -19,6 +19,7 @@ import CreateRoom from "./components/create-room";
 import GameHistory from "./components/game-history";
 import JoinRoom from "./components/join-room";
 import Tabs from "./components/tabs";
+import Settings from "./components/settings";
 
 const Home = () => {
   const router = useRouter();
@@ -88,6 +89,15 @@ const Home = () => {
             <AddDungeon />
           </Box>
         </div>
+      </div>
+
+      <div
+        className={cn(
+          "px-5 md:px-0 flex flex-row flex-1 justify-center min-h-0 gap-12",
+          homeTab !== "SETTINGS" && "hidden",
+        )}
+      >
+        <Settings account={account} />
       </div>
     </div>
 
