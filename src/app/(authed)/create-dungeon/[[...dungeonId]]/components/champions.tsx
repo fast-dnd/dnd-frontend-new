@@ -42,18 +42,14 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
   };
 
   const onFinishForm = () => {
-    const postDungeonFormData = {
-      ...dungeonFormData,
-      image: dungeonFormData.imageUrl || dungeonFormData.image,
-    };
     if (dungeonId) {
-      updateDungeon(postDungeonFormData, {
+      updateDungeon(dungeonFormData, {
         onSuccess: (_data) => {
           setCurrentStep("FINAL");
         },
       });
     } else {
-      createDungeon(postDungeonFormData, {
+      createDungeon(dungeonFormData, {
         onSuccess: (data) => {
           setCurrentStep("FINAL");
           updateDungeonFormData(
@@ -92,7 +88,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
         <div
           className={cn(
             "flex flex-row items-center gap-8 justify-between",
-            editIndex !== -1 && "hidden",
+            status !== "LIST" && "hidden",
           )}
         >
           <p className="text-lg text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">

@@ -62,7 +62,7 @@ const Locations = () => {
         <div
           className={cn(
             "flex flex-row items-center gap-8 justify-between",
-            editIndex !== -1 && "hidden",
+            status !== "LIST" && "hidden",
           )}
         >
           <p className="text-lg md:text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
