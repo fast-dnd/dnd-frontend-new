@@ -10,18 +10,15 @@ import Avatars from "./components/avatars";
 import CreateRoom from "./components/create-room";
 import Dungeons from "./components/dungeons";
 import GameHistory from "./components/game-history";
-import JoinRoom from "./components/join-room";
 import HomeMobileNavbar from "./components/home-mobile-navbar";
+import JoinRoom from "./components/join-room";
 import Settings from "./components/settings";
 import Tabs from "./components/tabs";
-import useGetAccount from "./hooks/use-get-account";
 import { useHomeStore } from "./stores/tab-store";
 
 const Home = () => {
   const router = useRouter();
   const { homeTab, displayHowToPlay, setDisplayHowToPlay } = useHomeStore((state) => state);
-
-  const { data: account } = useGetAccount();
 
   return (
     <div className="flex flex-col w-full min-h-0 h-full md:px-16 md:pb-12 overflow-y-auto">
@@ -89,7 +86,7 @@ const Home = () => {
           homeTab !== "SETTINGS" && "hidden",
         )}
       >
-        <Settings account={account} />
+        <Settings />
       </div>
     </div>
   );
