@@ -13,6 +13,7 @@ import { useEffect, useRef } from "react";
 import { isEqual } from "lodash";
 import useGetDungeon from "@/hooks/use-get-dungeon";
 import BoxSkeleton from "@/components/BoxSkeleton";
+import MobileNavbar from "@/components/mobile-navbar";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const router = useRouter();
@@ -78,19 +79,22 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   };
 
   return (
-    <div className="flex justify-center h-full p-16 pt-8 overflow-y-hidden">
-      <div className="flex flex-col items-center gap-8">
-        <div
-          className="cursor-pointer text-lg flex flex-row gap-1 w-fit font-medium items-center justify-center tracking-[0.08em] uppercase"
-          onClick={abortDungeonCreation}
-        >
-          <AiOutlineLeft className="inline-block" /> GO BACK
-        </div>
+    <div className="h-full w-full mt-8 md:mt-0 overflow-y-auto">
+      <MobileNavbar />
+      <div className="flex justify-center h-full md:p-16 pt-8 md:overflow-y-hidden">
+        <div className="flex flex-col items-center gap-8">
+          <div
+            className="hidden cursor-pointer text-lg md:flex flex-row gap-1 w-fit font-medium items-center justify-center tracking-[0.08em] uppercase"
+            onClick={abortDungeonCreation}
+          >
+            <AiOutlineLeft className="inline-block" /> GO BACK
+          </div>
 
-        {currentStep === "INITIAL" && <Initial />}
-        {currentStep === "LOCATIONS" && <Locations />}
-        {currentStep === "CHAMPIONS" && <Champions dungeonId={dungeonId} />}
-        {currentStep === "FINAL" && <Final />}
+          {currentStep === "INITIAL" && <Initial />}
+          {currentStep === "LOCATIONS" && <Locations />}
+          {currentStep === "CHAMPIONS" && <Champions dungeonId={dungeonId} />}
+          {currentStep === "FINAL" && <Final />}
+        </div>
       </div>
     </div>
   );

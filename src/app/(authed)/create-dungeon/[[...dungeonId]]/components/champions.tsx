@@ -126,7 +126,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
                     >
                       {dungeonFormData.champions.map((chmp, i) => (
                         <SortableItem
-                          key={crypto.randomUUID()}
+                          key={Math.random()}
                           item={chmp}
                           i={i}
                           onEdit={onEditChampion}

@@ -69,7 +69,7 @@ const CreateAvatar = ({ params }: { params: { avatarId?: [string] } }) => {
       <form onSubmit={handleSubmit(onSubmit)} className="px-5 md:px-0 md:min-w-fit">
         <Box
           title={avatarId ? "EDIT AVATAR" : "CREATE AVATAR"}
-          className="flex flex-col md:flex-row items-center gap-8 p-8"
+          className="flex flex-col md:flex-row items-center gap-5 p-5 md:gap-8 md:p-8"
         >
           <UploadImage
             image={image}

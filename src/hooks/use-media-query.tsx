@@ -3,10 +3,6 @@ import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../tailwind.config";
 const fullConfig = resolveConfig(tailwindConfig);
 
-export const isMobileOrTablet = () => {
-  return window.innerWidth < 768;
-};
-
 const useMediaQuery = (query: string) => {
   const getMatches = (query: string): boolean => {
     // Prevents SSR issues

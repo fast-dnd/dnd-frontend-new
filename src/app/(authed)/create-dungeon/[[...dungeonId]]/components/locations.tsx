@@ -91,7 +91,7 @@ const Locations = () => {
                     >
                       {dungeonFormData.locations.map((loc, i) => (
                         <SortableItem
-                          key={crypto.randomUUID()}
+                          key={Math.random()}
                           item={loc}
                           i={i}
                           onEdit={onEditLocation}
