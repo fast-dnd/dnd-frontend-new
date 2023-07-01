@@ -11,7 +11,7 @@ export const textAreaVariants = cva(
 
 export const textAreaContainerVariants = cva(
   [
-    "relative mb-2 flex items-center bg-transparent py-2 pl-4 text-base border border-white/50",
+    "relative mb-2 flex items-center bg-transparent py-2 pl-4 text-sm md:text-base border border-white/50",
     "focus-within:border-tomato hover:focus-within:border-opacity-100 transition-all duration-300",
   ],
   {

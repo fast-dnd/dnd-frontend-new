@@ -23,7 +23,7 @@ const GameHistory = () => {
   }
 
   return (
-    <div className="-mt-4 flex flex-col w-full gap-2 overflow-y-auto no-scrollbar">
+    <div className="md:-mt-4 flex flex-col w-full gap-2 overflow-y-auto no-scrollbar">
       {roomHistory.rooms.map((room) => (
         <RoomItem room={room} key={room.conversationId} />
       ))}

@@ -22,11 +22,11 @@ const SortableItem = ({ i, item, onEdit, onDelete }: ISortableItemProps) => {
 
   return (
     <div
-      className="w-full bg-white/5 flex flex-row items-center p-4 gap-4"
+      className="w-full bg-white/5 flex flex-row items-center px-4 py-2 md:py-4 gap-4"
       ref={setNodeRef}
       style={style}
     >
-      <p className="w-full text-2xl font-medium tracking-widest">
+      <p className="w-full text-lg md:text-2xl font-medium tracking-widest">
         {i + 1}. {item.name}
       </p>
 

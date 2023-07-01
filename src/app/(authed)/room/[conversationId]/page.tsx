@@ -3,22 +3,26 @@ import React from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import RoomInfo from "./components/room-info";
 import JoinEditInfo from "./components/join-edit-info";
+import MobileNavbar from "@/components/mobile-navbar";
 
 const Room = ({ params }: { params: { conversationId: string } }) => {
   const conversationId = params.conversationId;
 
   return (
-    <div className="flex justify-center h-full p-16 pt-8 overflow-y-hidden">
-      <div className="flex flex-col items-center gap-8">
-        <Link
-          className="flex gap-1 items-center font-medium tracking-[0.08em] uppercase"
-          href="/home"
-        >
-          <AiOutlineLeft className="inline-block" /> GO BACK
-        </Link>
-        <div className="flex flex-row flex-1 min-h-0 gap-12 w-full">
-          <RoomInfo conversationId={conversationId} />
-          <JoinEditInfo conversationId={conversationId} />
+    <div className="h-full w-full mt-8 md:mt-0 overflow-y-auto">
+      <MobileNavbar />
+      <div className="flex justify-center h-full md:p-16 pt-8 md:overflow-y-hidden">
+        <div className="flex flex-col items-center gap-8">
+          <Link
+            className="hidden md:flex gap-1 items-center font-medium tracking-[0.08em] uppercase"
+            href="/home"
+          >
+            <AiOutlineLeft className="inline-block" /> GO BACK
+          </Link>
+          <div className="flex flex-col md:flex-row flex-1 min-h-0 gap-12 w-full">
+            <RoomInfo conversationId={conversationId} />
+            <JoinEditInfo conversationId={conversationId} />
+          </div>
         </div>
       </div>
     </div>

@@ -61,7 +61,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
     return (
       <Box
         title="Join"
-        className="flex flex-col items-center justify-center gap-8 flex-1 min-h-0 w-[490px] h-fit p-8"
+        className="flex flex-col items-center justify-center gap-8 flex-1 min-h-0 w-[350px] md:w-[490px] h-fit p-8"
       >
         <Spinner className="h-40 w-40" />
       </Box>

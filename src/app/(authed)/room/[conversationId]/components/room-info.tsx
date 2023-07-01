@@ -18,7 +18,7 @@ const RoomInfo = (props: { conversationId: string }) => {
     return (
       <Box
         title="ROOM"
-        className="flex flex-col items-center justify-center gap-8 min-h-0 flex-1 w-[490px] p-8"
+        className="flex flex-col items-center justify-center gap-8 min-h-0 flex-1 w-[350px] md:w-[490px] p-8"
       >
         <Spinner className="h-40 w-40" />
       </Box>
@@ -26,7 +26,10 @@ const RoomInfo = (props: { conversationId: string }) => {
   }
 
   return (
-    <Box title="ROOM" className="flex flex-col gap-8 min-h-0 flex-1 w-[490px] p-8">
+    <Box
+      title="ROOM"
+      className="flex flex-col min-h-0 flex-1 md:w-[490px] p-5 gap-5 md:p-8 md:gap-8"
+    >
       <div className="flex flex-row gap-4 pr-0">
         <Image
           src={dungeonData.imageUrl || "/images/default-dungeon.png"}
