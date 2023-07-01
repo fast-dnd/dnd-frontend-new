@@ -31,15 +31,15 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
         alt={dungeon.name}
         width={180}
         height={180}
-        className="h-[180px]"
+        className="h-16 w-16 md:h-[180px] md:w-[180px]"
       />
-      <div className="flex flex-col py-4 gap-4 w-full">
+      <div className="flex flex-col md:py-4 gap-1 md:gap-4 w-full">
         <div className="flex flex-row justify-between w-full pr-8">
-          <p className="text-[22px] leading-7 font-medium tracking-[0.15em] uppercase">
+          <p className="text-lg md:text-[22px] md:leading-7 font-normal md:font-medium tracking-wider md:tracking-[0.15em] uppercase truncate">
             {dungeon.name}
           </p>
 
-          <div className="flex flex-row items-center px-4 gap-4 justify-self-end">
+          <div className="hidden md:flex flex-row items-center px-4 gap-4 justify-self-end">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
@@ -101,7 +101,9 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
             </TooltipProvider>
           </div>
         </div>
-        <p className="font-light text-lg tracking-widest">{dungeon.description}</p>
+        <p className="opacity-50 text-white text-[14px] md:text-base leading-tight font-light text-lg tracking-widest truncate line-clamp-1">
+          {dungeon.description}
+        </p>
       </div>
     </div>
   );

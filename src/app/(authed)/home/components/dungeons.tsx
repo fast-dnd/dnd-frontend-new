@@ -21,7 +21,7 @@ const Dungeons = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4 flex-1 overflow-y-auto pr-8">
+    <div className="flex flex-col gap-4 flex-1 overflow-y-auto max-h-[240px] md:h-auto md:pr-8">
       {myDungeons.map((dungeon) => (
         <Dungeon key={dungeon._id} dungeon={dungeon} />
       ))}

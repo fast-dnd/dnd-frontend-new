@@ -8,7 +8,7 @@ const AddDungeon = () => {
 
   return (
     <div className="flex flex-row justify-end gap-8">
-      <Button className="w-fit px-8" onClick={() => router.push("/create-dungeon")}>
+      <Button className="w-full md:w-fit px-8" onClick={() => router.push("/create-dungeon")}>
         CREATE
       </Button>
     </div>
