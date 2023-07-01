@@ -10,7 +10,7 @@ export const stepTitles = {
   INITIAL: "Describe your dungeon",
   LOCATIONS: "Set up the scenarios",
   CHAMPIONS: "Define the roles",
-  FINAL: "This is your dungeon ID",
+  FINAL: "Dungeon Created",
 } as const;
 
 export interface IDungeonFormData {

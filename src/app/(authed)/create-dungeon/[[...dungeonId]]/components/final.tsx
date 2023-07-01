@@ -17,9 +17,12 @@ const Final = () => {
 
   return (
     <div className="flex h-full">
-      <Box title="CREATE DUNGEON" className="flex flex-col gap-8 min-h-0 flex-1 w-[1200px] p-8">
+      <Box
+        title="CREATE DUNGEON"
+        className="flex flex-col min-h-0 flex-1 w-[350px] md:w-[1200px] p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0"
+      >
         <div className="flex flex-row items-center gap-8 justify-between">
-          <p className="text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
+          <p className="text-lg md:text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
             {stepTitles["FINAL"]}
           </p>
         </div>
@@ -27,15 +30,15 @@ const Final = () => {
         <div className="flex flex-1 basis-0 min-h-0">
           <div className="w-full">
             <div className="flex flex-col gap-8">
-              <p className="text-xl tracking-[0.07em] -my-1 text-white/50">
-                Copy to share with your friends!
+              <p className="md:text-xl tracking-[0.07em] -my-1 text-white/50 break-words">
+                This is your Dungeon ID. Copy to share with your friends!
               </p>
-              <div className="flex items-center gap-8">
-                <p className="px-4 py-2 bg-white/5 font-medium text-2xl tracking-widest w-full">
+              <div className="flex flex-col md:flex-row items-center gap-8">
+                <p className="px-4 py-2 bg-white/5 font-medium text-center md:text-2xl tracking-widest w-full">
                   {dungeonFormData.id}
                 </p>
                 <Button
-                  className="w-fit px-8"
+                  className="w-full md:w-fit px-8"
                   onClick={() => {
                     navigator.clipboard.writeText(dungeonFormData.id ?? "");
                     setCopied(true);
