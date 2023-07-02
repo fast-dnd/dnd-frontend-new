@@ -1,13 +1,11 @@
-import { jibril } from "@/utils/fonts";
+import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineLeft } from "react-icons/ai";
 
 const MobileNavbar = () => {
   return (
     <div className="flex w-full justify-between  px-5 md:hidden">
-      <p style={jibril.style} className="text-lg font-bold text-white">
-        V
-      </p>
+      <Image src="/images/mobile-navbar-logo.svg" width={36} height={24} alt="mobile-navbar-logo" />
       <Link
         className="flex gap-1 items-center font-medium leading-3 tracking-wider uppercase"
         href="/home"

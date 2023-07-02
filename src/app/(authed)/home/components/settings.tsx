@@ -1,15 +1,10 @@
 import BoxSkeleton from "@/components/BoxSkeleton";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import { IAccount } from "@/types/dnd";
 import { useRouter } from "next/navigation";
-import React from "react";
+import useGetAccount from "../hooks/use-get-account";
 
-interface ISettingsProps {
-  account?: IAccount;
-}
-
-const Settings = ({ account }: ISettingsProps) => {
+const Settings = () => {
   const router = useRouter();
   const onSignOut = () => {
     localStorage.removeItem("jwtToken");
@@ -17,7 +12,9 @@ const Settings = ({ account }: ISettingsProps) => {
     router.push("/login");
   };
 
-  if (!account) return <BoxSkeleton title="Account" />;
+  const { data: account, isLoading } = useGetAccount();
+
+  if (!account || isLoading) return <BoxSkeleton title="Account" />;
 
   return (
     <div className="flex justify-center md:w-[450px] h-fit">

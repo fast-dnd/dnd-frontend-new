@@ -1,17 +1,16 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
+import Image from "next/image";
 import { MdMenu } from "react-icons/md";
-import { homeTabs } from "../types/home";
 import { useHomeStore } from "../stores/tab-store";
+import { homeTabs } from "../types/home";
 
 const HomeMobileNavbar = () => {
   const { homeTab, setHomeTab, setDisplayHowToPlay } = useHomeStore((state) => state);
   return (
     <div className="flex justify-between py-8 px-5 md:hidden">
-      <p style={jibril.style} className="text-lg font-bold text-white">
-        V
-      </p>
+      <Image src="/images/mobile-navbar-logo.svg" width={36} height={24} alt="mobile-navbar-logo" />
+
       <p className="text-lg font-medium tracking-widest uppercase">{homeTab}</p>
       <Sheet>
         <SheetTrigger>

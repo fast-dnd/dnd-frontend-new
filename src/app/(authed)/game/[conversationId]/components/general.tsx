@@ -56,9 +56,9 @@ const General = (props: { conversationId: string }) => {
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (ev) => {
     ev.preventDefault();
-    askQuestion({ conversationId, question });
-    setQuestion("");
     setAsking(true);
+    setQuestion("");
+    askQuestion({ conversationId, question }, { onError: () => setAsking(false) });
   };
 
   const autoBottomScrollDiv = useRef<HTMLDivElement>(null);
