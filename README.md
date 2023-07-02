@@ -8,4 +8,5 @@
 
 # Deployed version:
 
-[https://dnd-frontend-new.vercel.app/](https://dnd-frontend-new.vercel.app/)
+[https://v3rpg.fastdnd.net/](https://v3rpg.fastdnd.net/)
+
