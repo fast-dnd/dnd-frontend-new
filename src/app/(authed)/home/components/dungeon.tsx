@@ -11,10 +11,12 @@ import useDeleteDungeon from "../hooks/use-delete-dungeon";
 const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
   const router = useRouter();
 
-  const { mutate: deleteDungeon, isLoading } = useDeleteDungeon();
+  const { mutate: deleteDungeon, isLoading: isDeleting } = useDeleteDungeon();
 
   const [loadingEdit, setLoadingEdit] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  const [showDesktopActions, setShowDesktopActions] = useState(false);
 
   const sharedIconClassNames =
     "cursor-pointer text-2xl text-white/75 transition-colors duration-300";
@@ -25,85 +27,129 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
   };
 
   return (
-    <div className="flex flex-row gap-8 hover:bg-white/5 transition-colors duration-300 p-4 pr-0 rounded-md">
-      <Image
-        src={dungeon.imageUrl || "/images/default-dungeon.png"}
-        alt={dungeon.name}
-        width={180}
-        height={180}
-        className="h-16 w-16 md:h-[180px] md:w-[180px]"
-      />
-      <div className="flex flex-col md:py-4 gap-1 md:gap-4 w-full">
-        <div className="flex flex-row justify-between w-full pr-8">
-          <p className="text-lg md:text-[22px] md:leading-7 font-normal md:font-medium tracking-wider md:tracking-[0.15em] uppercase truncate w-48 md:w-auto">
-            {dungeon.name}
-          </p>
+    <div
+      className="flex flex-col gap-4 hover:bg-white/5 transition-colors duration-300 p-4 pr-0 rounded-md border md:border-0 border-white/10"
+      onMouseOver={() => setShowDesktopActions(true)}
+      onMouseLeave={() => setShowDesktopActions(false)}
+    >
+      <div className="flex flex-row gap-8">
+        <Image
+          src={dungeon.imageUrl || "/images/default-dungeon.png"}
+          alt={dungeon.name}
+          width={180}
+          height={180}
+          className="h-16 w-16 md:h-[180px] md:w-[180px]"
+        />
+        <div className="flex flex-col md:py-4 gap-1 md:gap-4 w-full">
+          <div className="flex flex-row justify-between w-full pr-8">
+            <p className="text-lg md:text-[22px] md:leading-7 font-normal md:font-medium tracking-wider md:tracking-[0.15em] uppercase truncate w-48 md:w-auto">
+              {dungeon.name}
+            </p>
 
-          <div className="hidden md:flex flex-row items-center px-4 gap-4 justify-self-end">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  {copied ? (
-                    <MdCheck className={cn(sharedIconClassNames, "hover:text-info")} />
-                  ) : (
-                    <MdOutlineContentCopy
-                      onClick={onCopy}
-                      className={cn(sharedIconClassNames, "hover:text-info")}
-                    />
-                  )}
-                </TooltipTrigger>
-                <TooltipContent className="border-info">
-                  <p className="text-info">{copied ? "Copied" : "Copy"}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <div
+              className={cn(
+                "hidden md:flex flex-row items-center px-4 gap-4 justify-self-end transition duration-300",
+                showDesktopActions ? "opacity-100" : "opacity-0",
+              )}
+            >
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    {copied ? (
+                      <MdCheck className={cn(sharedIconClassNames, "hover:text-info")} />
+                    ) : (
+                      <MdOutlineContentCopy
+                        onClick={onCopy}
+                        className={cn(sharedIconClassNames, "hover:text-info")}
+                      />
+                    )}
+                  </TooltipTrigger>
+                  <TooltipContent className="border-info">
+                    <p className="text-info">{copied ? "Copied" : "Copy"}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
 
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  {loadingEdit && (
-                    <div className="flex justify-center items-center h-6 w-6">
-                      <Spinner className="h-5 w-5 m-0 text-warning" />
-                    </div>
-                  )}
-                  {!loadingEdit && (
-                    <MdEdit
-                      onClick={() => {
-                        setLoadingEdit(true);
-                        router.push(`/create-dungeon/${dungeon._id}`);
-                      }}
-                      className={cn(sharedIconClassNames, "hover:text-warning")}
-                    />
-                  )}
-                </TooltipTrigger>
-                <TooltipContent className="border-warning">
-                  <p className="text-warning">Edit</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    {loadingEdit && (
+                      <div className="flex justify-center items-center h-6 w-6">
+                        <Spinner className="h-5 w-5 m-0 text-warning" />
+                      </div>
+                    )}
+                    {!loadingEdit && (
+                      <MdEdit
+                        onClick={() => {
+                          setLoadingEdit(true);
+                          router.push(`/create-dungeon/${dungeon._id}`);
+                        }}
+                        className={cn(sharedIconClassNames, "hover:text-warning")}
+                      />
+                    )}
+                  </TooltipTrigger>
+                  <TooltipContent className="border-warning">
+                    <p className="text-warning">Edit</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
 
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  {isLoading ? (
-                    <Spinner className={cn("h-[25px] w-[25px] mr-0 text-error")} />
-                  ) : (
-                    <MdDelete
-                      onClick={() => deleteDungeon(dungeon._id)}
-                      className={cn(sharedIconClassNames, "hover:text-error")}
-                    />
-                  )}
-                </TooltipTrigger>
-                <TooltipContent className="border-error">
-                  {!isLoading && <p className="text-error">Delete</p>}
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    {isDeleting ? (
+                      <Spinner className={cn("h-[25px] w-[25px] mr-0 text-error")} />
+                    ) : (
+                      <MdDelete
+                        onClick={() => deleteDungeon(dungeon._id)}
+                        className={cn(sharedIconClassNames, "hover:text-error")}
+                      />
+                    )}
+                  </TooltipTrigger>
+                  <TooltipContent className="border-error">
+                    {!isDeleting && <p className="text-error">Delete</p>}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
           </div>
+          <p className="opacity-50 md:opacity-100 text-white text-[14px] md:text-base leading-tight font-light text-lg tracking-widest break-all line-clamp-2 md:line-clamp-none w-48 md:w-auto">
+            {dungeon.description}
+          </p>
         </div>
-        <p className="opacity-50 md:opacity-100 text-white text-[14px] md:text-base leading-tight font-light text-lg tracking-widest break-all line-clamp-2 md:line-clamp-none w-48 md:w-auto">
-          {dungeon.description}
-        </p>
+      </div>
+
+      <div className="md:hidden flex gap-4 text-sm">
+        <div
+          className="whitespace-nowrap cursor-pointer px-5 py-2 items-center bg-white/10 flex gap-2"
+          onClick={onCopy}
+        >
+          {copied ? <MdCheck /> : <MdOutlineContentCopy />}
+          <p>{copied ? "Copied" : "Copy ID"}</p>
+        </div>
+        <div
+          className="cursor-pointer px-5 py-2 items-center bg-white/10  flex gap-2"
+          onClick={() => {
+            setLoadingEdit(true);
+            router.push(`/create-dungeon/${dungeon._id}`);
+          }}
+        >
+          {loadingEdit ? (
+            <div className="flex justify-center items-center h-6 w-6">
+              <Spinner className="h-4 w-4 m-0" />
+            </div>
+          ) : (
+            <MdEdit />
+          )}
+          <p>Edit</p>
+        </div>
+        <div
+          className="cursor-pointer px-5 py-2 items-center bg-white/10  flex gap-2"
+          onClick={() => deleteDungeon(dungeon._id)}
+        >
+          {isDeleting ? <Spinner className="h-4 w-4 m-0" /> : <MdDelete />}
+          <p>Delete</p>
+        </div>
       </div>
     </div>
   );
