@@ -14,8 +14,11 @@ import useUpdateDungeon from "../hooks/use-update-dungeon";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
 import Champion from "./champion";
 import SortableItem from "./sortable-item";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Champions = ({ dungeonId }: { dungeonId?: string }) => {
+  const queryClient = useQueryClient();
+
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
 
   const [status, setStatus] = useState<"LIST" | "CREATING" | "EDITING">("LIST");
@@ -46,6 +49,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
       updateDungeon(dungeonFormData, {
         onSuccess: (_data) => {
           setCurrentStep("FINAL");
+          queryClient.invalidateQueries(["kingdom", dungeonId]);
         },
       });
     } else {
