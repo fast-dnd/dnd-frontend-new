@@ -80,7 +80,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
 
   return (
     <div className="h-full w-full mt-8 md:mt-0 overflow-y-auto">
-      <MobileNavbar />
+      <MobileNavbar goBackAction={abortDungeonCreation} />
       <div className="flex justify-center h-full md:p-16 pt-8 md:overflow-y-hidden">
         <div className="flex flex-col items-center gap-8">
           <div
