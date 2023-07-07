@@ -4,7 +4,7 @@ import { IDungeon } from "@/types/dnd";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdCheck, MdDelete, MdEdit, MdOutlineContentCopy } from "react-icons/md";
 import useDeleteDungeon from "../hooks/use-delete-dungeon";
 
@@ -25,6 +25,16 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
     navigator.clipboard.writeText(dungeon._id);
     setCopied(true);
   };
+
+  useEffect(() => {
+    if (copied) {
+      const timeout = setTimeout(() => {
+        setCopied(false);
+      }, 2000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [copied]);
 
   return (
     <div

@@ -17,6 +17,7 @@ export const stepTitles = {
 export interface IDungeonFormData {
   id?: string;
   name: string;
+  maxPlayers: 3;
   duration: DungeonDuration;
   description: string;
   style: string;
@@ -49,6 +50,7 @@ interface IChampionFormData {
 export const initialDungeonFormData: IDungeonFormData = {
   id: undefined,
   name: "",
+  maxPlayers: 3,
   duration: "default-blitz",
   description: "",
   style: "",
