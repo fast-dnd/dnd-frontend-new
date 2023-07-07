@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { devtools, persist } from "zustand/middleware";
-import { DungeonDuration } from "@/utils/dungeon-options";
+import { DungeonDuration, DungeonTag } from "@/utils/dungeon-options";
 
 export const steps = ["INITIAL", "LOCATIONS", "CHAMPIONS", "FINAL"] as const;
 
@@ -21,6 +21,7 @@ export interface IDungeonFormData {
   duration: DungeonDuration;
   description: string;
   style: string;
+  tags: { label: DungeonTag; value: DungeonTag }[];
   imageUrl?: string;
   image?: string;
   locations: ILocationFormData[];
@@ -54,6 +55,7 @@ export const initialDungeonFormData: IDungeonFormData = {
   duration: "default-blitz",
   description: "",
   style: "",
+  tags: [],
   imageUrl: undefined,
   image: undefined,
   locations: [],

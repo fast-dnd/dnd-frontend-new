@@ -7,15 +7,20 @@ import { TextArea } from "@/components/ui/text-area";
 import UploadImage from "@/components/ui/upload-image";
 import useStore from "@/hooks/use-store";
 import { fileToBase64 } from "@/utils/b64";
-import { dungeonDuration } from "@/utils/dungeon-options";
+import { dungeonDuration, dungeonTags } from "@/utils/dungeon-options";
 import { cn } from "@/utils/style-utils";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { useRef } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+import { GiCancel } from "react-icons/gi";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+
+const animatedComponents = makeAnimated();
 
 const Initial = () => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
@@ -50,6 +55,12 @@ const Initial = () => {
       setValue("image", (await fileToBase64((e.target as HTMLInputElement).files?.[0])) as string);
     });
   };
+
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
 
   return (
     <form className="h-full flex" onSubmit={handleSubmit(onSubmit)}>
@@ -93,46 +104,162 @@ const Initial = () => {
                     name="duration"
                     defaultValue="default-blitz"
                     render={({ field }) => (
-                      // TODO: create a custom component for this
-                      <div>
-                        <div
-                          className={cn(
-                            "bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit",
-                          )}
-                        >
-                          Recommended duration
-                        </div>
-                        <ToggleGroup.Root
-                          className="inline-flex items-center justify-center"
-                          type="single"
-                          aria-label="Text alignment"
-                          onValueChange={field.onChange as any}
-                          defaultValue={field.value}
-                        >
-                          {dungeonDuration.map((duration) => (
-                            <ToggleGroup.Item
-                              key={duration.value}
-                              value={duration.value}
-                              className="border-white/25 border text-sm md:text-base px-6 md:px-10 py-[8px] data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center"
-                            >
-                              {duration.icon({})}
-                              {duration.label}
-                            </ToggleGroup.Item>
-                          ))}
-                        </ToggleGroup.Root>
-                      </div>
+                      <ToggleGroup
+                        className="inline-flex items-center justify-center"
+                        type="single"
+                        label="Recommended duration"
+                        value={field.value}
+                        onValueChange={field.onChange as any}
+                      >
+                        {dungeonDuration.map((duration) => (
+                          <ToggleGroupItem
+                            key={duration.value}
+                            value={duration.value}
+                            className="border-white/25 border text-sm md:text-base px-6 md:px-10 py-[8px] data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center"
+                          >
+                            {duration.icon({})}
+                            {duration.label}
+                          </ToggleGroupItem>
+                        ))}
+                      </ToggleGroup>
                     )}
                   />
                 </div>
               </div>
-              <Input
-                label="Style"
-                placeholder="The Enchanted Grove"
-                className="m-0"
-                {...register("style")}
-                state={errors?.style ? "error" : undefined}
-                errorMessage={errors?.style?.message}
-              />
+              <div className="flex flex-col md:flex-row gap-5 md:gap-0">
+                <div className="w-full md:w-1/2 flex flex-col gap-5 md:gap-8 md:pr-8">
+                  <Input
+                    label="Style"
+                    placeholder="The Enchanted Grove"
+                    className="m-0"
+                    {...register("style")}
+                    state={errors?.style ? "error" : undefined}
+                    errorMessage={errors?.style?.message}
+                  />
+                </div>
+                <div className="w-full md:w-1/2 flex flex-col gap-5 md:gap-8 md:-ml-1">
+                  <div>
+                    <div
+                      className={cn(
+                        "bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit",
+                      )}
+                    >
+                      Tags
+                    </div>
+                    <Controller
+                      control={control}
+                      name="tags"
+                      render={({ field }) => {
+                        // console.log(field.value);
+                        // TODO: create a custom component for this
+                        return (
+                          <Select
+                            {...field}
+                            onChange={field.onChange as any}
+                            noOptionsMessage={() => "No tags found"}
+                            // isOptionDisabled={(option) => field.value.length >= 3}
+                            className="w-full"
+                            options={dungeonTags.map((tag) => ({
+                              value: tag,
+                              label: tag,
+                            }))}
+                            isMulti
+                            closeMenuOnSelect={false}
+                            placeholder="Select 1 to 3 tags"
+                            components={animatedComponents}
+                            styles={{
+                              control: (baseStyles, state) => ({
+                                ...baseStyles,
+                                backgroundColor: "transparent",
+                                border: "#ffffff50 1px solid",
+                                borderRadius: 0,
+                                paddingTop: 2,
+                                paddingBottom: 2,
+                                paddingLeft: 4,
+                                boxShadow: "none",
+                                outline: "#ffffff50 1px solid",
+                                "&:hover": {
+                                  borderColor: "#ffffff50",
+                                },
+                                ":focus-within": {
+                                  borderColor: "#ff5a5a",
+                                },
+                              }),
+                              indicatorSeparator: () => ({
+                                display: "none",
+                              }),
+                              clearIndicator: () => ({
+                                display: "none",
+                              }),
+                              multiValue: (baseStyles, state) => ({
+                                ...baseStyles,
+                                backgroundColor: "#ffffff10",
+                                lineHeight: "28px",
+                                letterSpacing: "2.4px",
+                                paddingLeft: "8px",
+                              }),
+                              multiValueLabel: (baseStyles, state) => ({
+                                ...baseStyles,
+                                color: "#ffffff",
+                                fontSize: "12px",
+                                padding: 0,
+                              }),
+                              multiValueRemove: (baseStyles, state) => ({
+                                ...baseStyles,
+                                paddingRight: "8px",
+                                color: "#ffffff",
+                                ":hover": {
+                                  backgroundColor: "#ffffff10",
+                                  color: "#ffffff",
+                                },
+                              }),
+                              menu: (baseStyles, state) => ({
+                                ...baseStyles,
+                                backgroundColor: "#606768",
+                              }),
+                              menuList: (baseStyles, state) => ({
+                                ...baseStyles,
+                                display: "flex",
+                                flexWrap: "wrap",
+                                gap: "12px",
+                                padding: "16px",
+                              }),
+                              option: (baseStyles, state) => ({
+                                ...baseStyles,
+                                backgroundColor: "#555b5c",
+                                color: "#ffffff",
+                                ":hover": {
+                                  backgroundColor: "#ffffff10",
+                                  color: "#ffffff",
+                                },
+                                width: "fit-content",
+                                cursor: "pointer",
+                                transition: "all 0.2s ease",
+                                duration: "0.2s",
+                              }),
+                              noOptionsMessage: (baseStyles, state) => ({
+                                ...baseStyles,
+                                color: "#ffffff",
+                                textAlign: "center",
+                                width: "100%",
+                              }),
+                              input: (baseStyles, state) => ({
+                                ...baseStyles,
+                                color: "#ffffff",
+                              }),
+                            }}
+                          />
+                        );
+                      }}
+                    />
+                    {errors.tags && (
+                      <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-error">
+                        <GiCancel /> {errors.tags.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
               <TextArea
                 label="Description"
                 placeholder="Venture into the heart of an enchanted forest, where the ancient spirits..."
