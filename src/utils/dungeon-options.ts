@@ -1,3 +1,7 @@
+import { BsFillLightningFill } from "react-icons/bs";
+import { LuSwords } from "react-icons/lu";
+import { BiCoffee } from "react-icons/bi";
+
 export const dungeonTags = [
   "love",
   "mystery",
@@ -37,14 +41,17 @@ export const dungeonDuration = [
   {
     label: "Blitz",
     value: "default-blitz",
+    icon: BsFillLightningFill,
   },
   {
     label: "Standard",
     value: "default-standard",
+    icon: LuSwords,
   },
   {
     label: "Long",
     value: "default-long",
+    icon: BiCoffee,
   },
 ] as const;
 

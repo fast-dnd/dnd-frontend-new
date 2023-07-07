@@ -7,21 +7,15 @@ import { TextArea } from "@/components/ui/text-area";
 import UploadImage from "@/components/ui/upload-image";
 import useStore from "@/hooks/use-store";
 import { fileToBase64 } from "@/utils/b64";
+import { dungeonDuration } from "@/utils/dungeon-options";
+import { cn } from "@/utils/style-utils";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
+import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { useRef } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { dungeonDuration } from "@/utils/dungeon-options";
 
 const Initial = () => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
@@ -82,7 +76,7 @@ const Initial = () => {
               defaultImage={dungeonFormData.imageUrl}
             />
             <div className="flex flex-col w-full gap-5 md:gap-8 flex-1 h-full">
-              <div className="flex flex-col md:flex-row gap-8">
+              <div className="flex flex-col md:flex-row gap-5 md:gap-8">
                 <div className="w-full md:w-1/2 flex flex-col gap-5 md:gap-8">
                   <Input
                     label="Name"
@@ -93,26 +87,40 @@ const Initial = () => {
                     errorMessage={errors?.name?.message}
                   />
                 </div>
-                <div className="w-full md:w-1/2 flex flex-col gap-5 md:gap-8">
+                <div className="w-full md:w-1/2 flex flex-col gap-5 md:gap-8 items-center justify-center">
                   <Controller
                     control={control}
                     name="duration"
                     defaultValue="default-blitz"
                     render={({ field }) => (
-                      <Select onValueChange={field.onChange as any} defaultValue={field.value}>
-                        <SelectTrigger label="Recommended duration" className="w-full">
-                          <SelectValue placeholder="Select duration" defaultValue="Blitz" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            {dungeonDuration.map((duration) => (
-                              <SelectItem key={duration.value} value={duration.value}>
-                                {duration.label}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
+                      // TODO: create a custom component for this
+                      <div>
+                        <div
+                          className={cn(
+                            "bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit",
+                          )}
+                        >
+                          Recommended duration
+                        </div>
+                        <ToggleGroup.Root
+                          className="inline-flex items-center justify-center"
+                          type="single"
+                          aria-label="Text alignment"
+                          onValueChange={field.onChange as any}
+                          defaultValue={field.value}
+                        >
+                          {dungeonDuration.map((duration) => (
+                            <ToggleGroup.Item
+                              key={duration.value}
+                              value={duration.value}
+                              className="border-white/25 border text-sm md:text-base px-6 md:px-10 py-[8px] data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center"
+                            >
+                              {duration.icon({})}
+                              {duration.label}
+                            </ToggleGroup.Item>
+                          ))}
+                        </ToggleGroup.Root>
+                      </div>
                     )}
                   />
                 </div>
