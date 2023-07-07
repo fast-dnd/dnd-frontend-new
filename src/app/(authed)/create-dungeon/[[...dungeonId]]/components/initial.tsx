@@ -2,8 +2,10 @@
 
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
+import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import UploadImage from "@/components/ui/upload-image";
 import useStore from "@/hooks/use-store";
 import { fileToBase64 } from "@/utils/b64";
@@ -14,10 +16,7 @@ import { useRef } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
-import { GiCancel } from "react-icons/gi";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import tagsComboboxStyles from "../utils/tags-combobox-styles";
-import { ComboBox } from "@/components/ui/combobox";
 
 const Initial = () => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
@@ -107,6 +106,8 @@ const Initial = () => {
                         label="Recommended duration"
                         value={field.value}
                         onValueChange={field.onChange as any}
+                        state={errors?.duration ? "error" : undefined}
+                        errorMessage={errors?.duration?.message}
                       >
                         {dungeonDuration.map((duration) => (
                           <ToggleGroupItem
@@ -156,15 +157,12 @@ const Initial = () => {
                             closeMenuOnSelect={false}
                             placeholder="Select 1 to 3 tags"
                             styles={tagsComboboxStyles as any}
+                            state={errors?.tags ? "error" : undefined}
+                            errorMessage={errors?.tags?.message}
                           />
                         );
                       }}
                     />
-                    {errors.tags && (
-                      <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-error">
-                        <GiCancel /> {errors.tags.message}
-                      </p>
-                    )}
                   </div>
                 </div>
               </div>

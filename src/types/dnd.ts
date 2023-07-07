@@ -1,3 +1,5 @@
+import { DungeonDuration, DungeonTag } from "@/utils/dungeon-options";
+
 export const ChampionClasses = ["mage", "warrior", "explorer"] as const;
 export type ChampionClass = (typeof ChampionClasses)[number];
 
@@ -56,8 +58,10 @@ export interface ILocation {
 export interface IDungeon {
   _id: string;
   name: string;
+  duration: DungeonDuration;
   description: string;
   style: string;
+  tags: DungeonTag[];
   locations: ILocation[];
   champions: IChampion[];
   imageUrl?: string;

@@ -37,6 +37,7 @@ const tagsComboboxStyles: StylesConfig<{ label: DungeonTag; value: DungeonTag }>
     color: "#ffffff",
     fontSize: "12px",
     padding: 0,
+    textTransform: "capitalize",
   }),
   multiValueRemove: (baseStyles, state) => ({
     ...baseStyles,
@@ -70,6 +71,7 @@ const tagsComboboxStyles: StylesConfig<{ label: DungeonTag; value: DungeonTag }>
     cursor: "pointer",
     transition: "all 0.2s ease",
     duration: "0.2s",
+    textTransform: "capitalize",
   }),
   noOptionsMessage: (baseStyles, state) => ({
     ...baseStyles,
