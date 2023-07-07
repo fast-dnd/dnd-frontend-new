@@ -15,10 +15,13 @@ import JoinRoom from "./components/join-room";
 import Settings from "./components/settings";
 import Tabs from "./components/tabs";
 import { useHomeStore } from "./stores/tab-store";
+import { useState } from "react";
 
 const Home = () => {
   const router = useRouter();
   const { homeTab, displayHowToPlay, setDisplayHowToPlay } = useHomeStore((state) => state);
+
+  const [getMoreLoading, setGetMoreLoading] = useState(false);
 
   return (
     <div className="flex flex-col w-full min-h-0 h-full md:px-16 md:pb-12 overflow-y-auto">
@@ -66,7 +69,15 @@ const Home = () => {
             className="flex flex-col flex-1 min-h-0 gap-4 p-4 md:gap-8 md:p-8"
           >
             <Avatars />
-            <Button onClick={() => router.push("/create-avatar")}>GET MORE</Button>
+            <Button
+              isLoading={getMoreLoading}
+              onClick={() => {
+                setGetMoreLoading(true);
+                router.push("/create-avatar");
+              }}
+            >
+              GET MORE
+            </Button>
           </Box>
         </div>
         <div className="flex flex-1 basis-2/3">

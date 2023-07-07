@@ -7,11 +7,15 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MdCheck, MdDelete, MdEdit, MdOutlineContentCopy } from "react-icons/md";
 import useDeleteDungeon from "../hooks/use-delete-dungeon";
+import Modal from "@/components/ui/modal";
+import { Button } from "@/components/ui/button";
 
 const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
   const router = useRouter();
 
   const { mutate: deleteDungeon, isLoading: isDeleting } = useDeleteDungeon();
+
+  const [openDeleteDungeonModal, setOpenDeleteDungeonModal] = useState(false);
 
   const [loadingEdit, setLoadingEdit] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -51,7 +55,7 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
           className="h-16 w-16 md:h-[180px] md:w-[180px]"
         />
         <div className="flex flex-col md:py-4 gap-1 md:gap-4 w-full">
-          <div className="flex flex-row justify-between w-full pr-8">
+          <div className="flex flex-row justify-between w-full pr-4">
             <p className="text-lg md:text-[22px] md:leading-7 font-normal md:font-medium tracking-wider md:tracking-[0.15em] uppercase truncate w-48 md:w-auto">
               {dungeon.name}
             </p>
@@ -111,13 +115,13 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
                       <Spinner className={cn("h-[25px] w-[25px] mr-0 text-error")} />
                     ) : (
                       <MdDelete
-                        onClick={() => deleteDungeon(dungeon._id)}
+                        onClick={() => setOpenDeleteDungeonModal(true)}
                         className={cn(sharedIconClassNames, "hover:text-error")}
                       />
                     )}
                   </TooltipTrigger>
                   <TooltipContent className="border-error">
-                    {!isDeleting && <p className="text-error">Delete</p>}
+                    <p className="text-error">Delete</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -155,12 +159,38 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
         </div>
         <div
           className="cursor-pointer px-5 py-2 items-center bg-white/10  flex gap-2"
-          onClick={() => deleteDungeon(dungeon._id)}
+          onClick={() => setOpenDeleteDungeonModal(true)}
         >
-          {isDeleting ? <Spinner className="h-4 w-4 m-0" /> : <MdDelete />}
+          <MdDelete />
           <p>Delete</p>
         </div>
       </div>
+      <Modal
+        open={openDeleteDungeonModal}
+        onClose={() => setOpenDeleteDungeonModal(false)}
+        className="px-6 md:px-12 py-8 bg-black/90 md:bg-black/50 flex flex-col gap-8 text-lg md:text-xl items-center w-fit h-fit shadow-xl shadow-white/10"
+      >
+        <p className="uppercase text-center leading-7 tracking-[3.3px]">Delete Dungeon</p>
+        <p className="whitespace-nowrap text-white/60 leading-7 tracking-[2.64px]">
+          This action cannot be reversed.
+        </p>
+        <div className="flex flex-row justify-end gap-8">
+          <Button
+            className="w-fit px-8 py-3"
+            variant="outline"
+            onClick={() => setOpenDeleteDungeonModal(false)}
+          >
+            CANCEL
+          </Button>
+          <Button
+            className="whitespace-nowrap w-fit px-8 py-3"
+            onClick={() => deleteDungeon(dungeon._id)}
+          >
+            {isDeleting && <Spinner className="h-4 w-4 m-0" />}
+            <p>Delete</p>
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };
