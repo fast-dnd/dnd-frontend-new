@@ -10,9 +10,18 @@ import { fileToBase64 } from "@/utils/b64";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { dungeonDuration } from "@/utils/dungeon-options";
 
 const Initial = () => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
@@ -73,14 +82,41 @@ const Initial = () => {
               defaultImage={dungeonFormData.imageUrl}
             />
             <div className="flex flex-col w-full gap-5 md:gap-8 flex-1 h-full">
-              <Input
-                label="Name"
-                placeholder="The Enchanted Grove"
-                className="md:w-1/2 m-0"
-                {...register("name")}
-                state={errors?.name ? "error" : undefined}
-                errorMessage={errors?.name?.message}
-              />
+              <div className="flex flex-col md:flex-row gap-8">
+                <div className="w-full md:w-1/2 flex flex-col gap-5 md:gap-8">
+                  <Input
+                    label="Name"
+                    placeholder="The Enchanted Grove"
+                    className="m-0"
+                    {...register("name")}
+                    state={errors?.name ? "error" : undefined}
+                    errorMessage={errors?.name?.message}
+                  />
+                </div>
+                <div className="w-full md:w-1/2 flex flex-col gap-5 md:gap-8">
+                  <Controller
+                    control={control}
+                    name="duration"
+                    defaultValue="default-blitz"
+                    render={({ field }) => (
+                      <Select onValueChange={field.onChange as any} defaultValue={field.value}>
+                        <SelectTrigger label="Recommended duration" className="w-full">
+                          <SelectValue placeholder="Select duration" defaultValue="Blitz" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {dungeonDuration.map((duration) => (
+                              <SelectItem key={duration.value} value={duration.value}>
+                                {duration.label}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                </div>
+              </div>
               <Input
                 label="Style"
                 placeholder="The Enchanted Grove"

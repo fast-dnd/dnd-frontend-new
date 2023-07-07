@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const initialSchema = z.object({
   name: z.string().min(1, "Name is required").min(5, "Name must be at least 5 characters"),
+  duration: z.enum(["default-blitz", "default-standard", "default-long"]),
   style: z.string().min(1, "Style is required").min(5, "Style must be at least 5 characters"),
   description: z
     .string()
