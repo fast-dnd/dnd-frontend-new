@@ -14,38 +14,47 @@ export interface ToggleGroupProps {
 const ToggleGroup = React.forwardRef<
   React.ElementRef<typeof ToggleGroupPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root> & ToggleGroupProps
->(({ state, label, successMessage, errorMessage, className, children, ...props }, ref) => (
-  <div className="">
-    {label && (
-      <div
+>(
+  (
+    { state, label, successMessage, errorMessage, className, disabled, children, ...props },
+    ref,
+  ) => (
+    <div className="">
+      {label && (
+        <div
+          className={cn(
+            "bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit",
+            state === "error" && "text-error",
+            state === "success" && "text-success",
+          )}
+        >
+          {label}
+        </div>
+      )}
+      <ToggleGroupPrimitive.Root
+        ref={ref}
         className={cn(
-          "bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit",
-          state === "error" && "text-error",
-          state === "success" && "text-success",
+          "inline-flex items-center justify-center",
+          disabled && "opacity-50 pointer-events-none",
+          className,
         )}
+        {...props}
       >
-        {label}
-      </div>
-    )}
-    <ToggleGroupPrimitive.Root
-      ref={ref}
-      className={cn("inline-flex items-center justify-center", className)}
-      {...props}
-    >
-      {children}
-    </ToggleGroupPrimitive.Root>
-    {successMessage && (
-      <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-success">
-        <AiFillCheckCircle /> {successMessage}
-      </p>
-    )}
-    {errorMessage && (
-      <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-error">
-        <GiCancel /> {errorMessage}
-      </p>
-    )}
-  </div>
-));
+        {children}
+      </ToggleGroupPrimitive.Root>
+      {successMessage && (
+        <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-success">
+          <AiFillCheckCircle /> {successMessage}
+        </p>
+      )}
+      {errorMessage && (
+        <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-error">
+          <GiCancel /> {errorMessage}
+        </p>
+      )}
+    </div>
+  ),
+);
 
 ToggleGroup.displayName = ToggleGroupPrimitive.Root.displayName;
 

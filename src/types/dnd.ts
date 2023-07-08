@@ -27,7 +27,7 @@ export interface IPlayer {
   name: string;
   accountId: string;
   avatarId: string;
-  champion: IChampion;
+  champion?: IChampion;
   health: number;
   mana: number;
   gold: number;
@@ -59,6 +59,7 @@ export interface IDungeon {
   _id: string;
   name: string;
   duration: DungeonDuration;
+  recommendedResponseDetailsDepth: DungeonDuration;
   description: string;
   style: string;
   tags: DungeonTag[];

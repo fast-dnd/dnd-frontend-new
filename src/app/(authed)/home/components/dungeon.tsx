@@ -1,14 +1,15 @@
+import { Button } from "@/components/ui/button";
+import Modal from "@/components/ui/modal";
 import Spinner from "@/components/ui/spinner";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import useCopy from "@/hooks/use-copy";
 import { IDungeon } from "@/types/dnd";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MdCheck, MdDelete, MdEdit, MdOutlineContentCopy } from "react-icons/md";
 import useDeleteDungeon from "../hooks/use-delete-dungeon";
-import Modal from "@/components/ui/modal";
-import { Button } from "@/components/ui/button";
 
 const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
   const router = useRouter();
@@ -18,7 +19,7 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
   const [openDeleteDungeonModal, setOpenDeleteDungeonModal] = useState(false);
 
   const [loadingEdit, setLoadingEdit] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useCopy();
 
   const [showDesktopActions, setShowDesktopActions] = useState(false);
 
@@ -29,16 +30,6 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
     navigator.clipboard.writeText(dungeon._id);
     setCopied(true);
   };
-
-  useEffect(() => {
-    if (copied) {
-      const timeout = setTimeout(() => {
-        setCopied(false);
-      }, 2000);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [copied]);
 
   return (
     <div

@@ -22,28 +22,42 @@ import useStartGame from "../hooks/use-start-game";
 import useGetRoomData from "@/hooks/use-get-room-data";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { redirect } from "next/navigation";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { DungeonDuration, dungeonDuration } from "@/utils/dungeon-options";
+import { AiFillSound, AiFillStar } from "react-icons/ai";
+import { BiImages } from "react-icons/bi";
+import useUpdateRoom from "../hooks/use-update-room";
+
+const imagesAudio = [
+  {
+    value: "images",
+    icon: <BiImages />,
+  },
+  {
+    value: "audio",
+    icon: <AiFillSound />,
+  },
+];
 
 const JoinEditInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
   const { gameStarting } = useRoomSocket(conversationId);
+
   const [avatarId, setAvatarId] = useState<string>();
   const [role, setRole] = useState<string>();
-  const [copied, setCopied] = React.useState(false);
+
+  const [duration, setDuration] = useState<DungeonDuration>();
+  const [generateImages, setGenerateImages] = useState<boolean>();
+  const [generateAudio, setGenerateAudio] = useState<boolean>();
 
   const { data: roomData, isLoading: isLoadingRoomData, isError } = useGetRoomData(conversationId);
   const { data: dungeonData, isLoading: isLoadingDungeonData } = useGetDungeon(roomData?.dungeonId);
   const { data: kingdomData, isLoading: isLoadingKingdomData } = useGetKingdom();
 
-  const { mutate: updateAvatar, isLoading: isUpdatingAvatar } = useUpdateAvatar();
-  const { mutate: updateRole, isLoading: isUpdatingRole } = useUpdateRole();
+  const { mutate: updateRoom } = useUpdateRoom(conversationId);
+  const { mutate: updateAvatar } = useUpdateAvatar();
+  const { mutate: updateRole } = useUpdateRole();
   const { mutate: startGame, isLoading: isGameStarting } = useStartGame();
-
-  const onUpdate = () => {
-    if (avatarId) updateAvatar({ conversationId, avatarId });
-    if (role) updateRole({ conversationId, championId: role });
-  };
-
-  const canBegin = roomData?.playerState.every((player) => player.champion) ?? false;
 
   useEffect(() => {
     if (roomData) {
@@ -54,6 +68,18 @@ const JoinEditInfo = (props: { conversationId: string }) => {
       setRole(currentPlayer?.champion?._id);
     }
   }, [roomData]);
+
+  useEffect(() => {
+    if (duration || generateImages || generateAudio) {
+      updateRoom({
+        conversationId,
+        responseDetailsDepth: duration,
+        generateImages,
+        generateAudio,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [duration, generateImages, generateAudio]);
 
   if (isError) redirect("/home");
 
@@ -70,17 +96,31 @@ const JoinEditInfo = (props: { conversationId: string }) => {
 
   if (!roomData || !dungeonData || !kingdomData) return <div>Something went wrong</div>;
 
-  const onCopyRoomId = () => {
-    navigator.clipboard.writeText(roomData.link);
-    setCopied(true);
+  const generateAudioImagesArray = () => {
+    const audioImagesArray = [];
+    if (roomData.generateAudio) audioImagesArray.push("audio");
+    if (roomData.generateImages) audioImagesArray.push("images");
+    return audioImagesArray;
   };
+
+  const currentPlayer = roomData.playerState.find(
+    (player) => player.accountId === localStorage.getItem("accountId"),
+  );
+
+  const canBegin = roomData.playerState.every((player) => player.champion) ?? false;
+
+  const isAdmin = localStorage.getItem("accountId") === roomData.playerState[0].accountId;
 
   return (
     <Box
       title="Join"
-      className="flex flex-col gap-8 justify-between flex-1 min-h-0 w-[490px] h-fit p-8"
+      className="flex flex-col gap-5 md:gap-8 flex-1 min-h-0 md:w-[490px] h-fit p-8 text-sm mb-4 md:mb-0"
     >
-      <Select value={avatarId} onValueChange={(value) => setAvatarId(value)}>
+      <Select
+        defaultValue={currentPlayer?.avatarId}
+        value={avatarId}
+        onValueChange={(value) => updateAvatar({ conversationId, avatarId: value })}
+      >
         <SelectTrigger label="Select an avatar" className="w-full">
           <SelectValue placeholder="Select an avatar" />
         </SelectTrigger>
@@ -94,7 +134,10 @@ const JoinEditInfo = (props: { conversationId: string }) => {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <Select value={role} onValueChange={(value) => setRole(value)}>
+      <Select
+        value={role}
+        onValueChange={(value) => updateRole({ conversationId, championId: value })}
+      >
         <SelectTrigger label="Select a role" className="w-full">
           <SelectValue placeholder="Select a role" />
         </SelectTrigger>
@@ -108,45 +151,74 @@ const JoinEditInfo = (props: { conversationId: string }) => {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <div className="w-full flex justify-end">
-        <Button
-          variant="primary"
-          disabled={gameStarting}
-          className="w-fit px-8 uppercase"
-          onClick={onUpdate}
-          isLoading={isUpdatingAvatar || isUpdatingRole}
-        >
-          {isUpdatingAvatar || isUpdatingRole ? "updating" : "update"}
-        </Button>
-      </div>
+
       <div className="w-full border-t border-white/20" />
-      <div className="flex justify-between gap-4">
-        <p className="mt-2 text-lg text-center flex-1 whitespace-nowrap">{roomData.link}</p>
-        <Button
-          onClick={onCopyRoomId}
-          variant={copied ? "primary" : "outline"}
-          className="uppercase text-lg w-fit px-4 whitespace-nowrap"
-        >
-          {copied ? "Copied" : "Copy room id"}
-        </Button>
-      </div>
-      <div className="w-full border-t border-white/20" />
+
+      <ToggleGroup
+        className="inline-flex items-center justify-center w-full"
+        type="single"
+        onValueChange={(value) => setDuration(value as DungeonDuration)}
+        label="Duration"
+        value={roomData.responseDetailsDepth}
+        disabled={!isAdmin}
+      >
+        {dungeonDuration.map((duration) => (
+          <ToggleGroupItem
+            key={duration.value}
+            value={duration.value}
+            className="border-white/25 border text-sm md:text-base px-6 py-2 data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center w-full relative"
+          >
+            {duration.value === dungeonData.recommendedResponseDetailsDepth && (
+              <div className="absolute right-1 top-1">
+                <AiFillStar className="text-tomato h-3 w-3" />
+              </div>
+            )}
+            {duration.icon({})}
+            {duration.label}
+          </ToggleGroupItem>
+        ))}
+      </ToggleGroup>
+
+      <ToggleGroup
+        className="inline-flex gap-8 items-center justify-center w-full"
+        type="multiple"
+        onValueChange={(value) => {
+          if (value.includes("images")) setGenerateImages(true);
+          else setGenerateImages(false);
+
+          if (value.includes("audio")) setGenerateAudio(true);
+          else setGenerateAudio(false);
+        }}
+        value={generateAudioImagesArray()}
+        disabled={!isAdmin}
+      >
+        {imagesAudio.map((type) => (
+          <ToggleGroupItem
+            key={type.value}
+            value={type.value}
+            className="border-white/25 border text-sm md:text-base px-6 md:px-10 py-2 data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center w-full capitalize"
+          >
+            {type.icon}
+            {type.value}
+          </ToggleGroupItem>
+        ))}
+      </ToggleGroup>
 
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               className="px-8 uppercase"
-              disabled={!canBegin || gameStarting}
+              disabled={!isAdmin || !canBegin || gameStarting}
               isLoading={isGameStarting || gameStarting}
               onClick={() => startGame({ conversationId })}
             >
-              begin
+              START
             </Button>
           </TooltipTrigger>
           {!canBegin && (
             <TooltipContent>
-              <p>Please choose your role and avatar</p>
+              <p>Wait for all players to choose their role and avatar</p>
             </TooltipContent>
           )}
         </Tooltip>

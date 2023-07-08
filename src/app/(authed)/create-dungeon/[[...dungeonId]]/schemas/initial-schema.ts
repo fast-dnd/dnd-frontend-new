@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const initialSchema = z.object({
   name: z.string().min(1, "Name is required").min(5, "Name must be at least 5 characters"),
-  duration: z.enum(["default-blitz", "default-standard", "default-long"], {
+  duration: z.enum(["blitz", "standard", "long"], {
     errorMap: (issue, ctx) => {
       return { message: "Duration is required" };
     },

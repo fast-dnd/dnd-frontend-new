@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import useStore from "@/hooks/use-store";
 import React from "react";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
+import useCopy from "@/hooks/use-copy";
 
 const Final = () => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
 
-  const [copied, setCopied] = React.useState(false);
+  const [copied, setCopied] = useCopy();
 
   if (!dungeonFormStore) return null;
 

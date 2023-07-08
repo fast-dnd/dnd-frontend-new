@@ -195,7 +195,7 @@ const Gameplay = (props: { conversationId: string }) => {
               <div className="flex-1 border-t border-tomato" />
             </div>
             <div>
-              {roomData.generatedImages[i] && roomData.genrateImages && i % 2 === 0 && (
+              {roomData.generatedImages[i] && roomData.generateImages && i % 2 === 0 && (
                 <div className="h-72 w-72 inline-block float-left mr-6 mb-4">
                   {roomData.generatedImages[i].length > 0 ? (
                     <Image

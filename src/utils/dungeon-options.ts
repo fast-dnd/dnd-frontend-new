@@ -40,17 +40,17 @@ export type DungeonTag = (typeof dungeonTags)[number];
 export const dungeonDuration = [
   {
     label: "Blitz",
-    value: "default-blitz",
+    value: "blitz",
     icon: BsFillLightningFill,
   },
   {
     label: "Standard",
-    value: "default-standard",
+    value: "standard",
     icon: LuSwords,
   },
   {
     label: "Long",
-    value: "default-long",
+    value: "long",
     icon: BiCoffee,
   },
 ] as const;

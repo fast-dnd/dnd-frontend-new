@@ -19,7 +19,7 @@ const AddDungeon = () => {
           router.push("/create-dungeon");
         }}
       >
-        CREATE
+        CREATE DUNGEON
       </Button>
     </div>
   );
