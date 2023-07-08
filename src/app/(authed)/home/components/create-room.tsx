@@ -122,6 +122,15 @@ const CreateRoom = () => {
                 <p className="font-light text-lg tracking-widest break-all line-clamp-2 pr-2 order-2 md:order-3 text-center md:text-left">
                   {dungeon.description}
                 </p>
+                <div className="flex flex-wrap gap-2 md:gap-4 order-4">
+                  {dungeon.tags.map((tag) => (
+                    <div key={tag} className="border border-white/25">
+                      <p className="text-sm leading-7 tracking-[2.4px] px-1.5 md:px-3 py-1 capitalize">
+                        {tag}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
