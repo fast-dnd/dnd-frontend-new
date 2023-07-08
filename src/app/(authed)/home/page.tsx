@@ -31,9 +31,7 @@ const Home = () => {
         <Tabs homeOrDungeons="home" selectedTab={homeTab} />
       </div>
 
-      {displayHowToPlay && (
-        <HowToPlay onHideHowToPlay={() => setDisplayHowToPlay(false)} hideText="Go back" />
-      )}
+      {homeTab === "HOW TO PLAY" && <HowToPlay />}
 
       <div
         className={cn(

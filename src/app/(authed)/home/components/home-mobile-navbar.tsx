@@ -35,11 +35,6 @@ const HomeMobileNavbar = () => {
                 </p>
               </div>
             ))}
-            <div className={cn("self-end")} onClick={() => setDisplayHowToPlay(true)}>
-              <p className="text-lg leading-7 tracking-widest whitespace-nowrap uppercase">
-                HOW TO PLAY
-              </p>
-            </div>
           </div>
         </SheetContent>
       </Sheet>

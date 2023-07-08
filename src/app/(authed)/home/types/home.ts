@@ -1,4 +1,4 @@
-export const homeTabs = ["PLAY", "MY KINGDOM", "SETTINGS"] as const;
+export const homeTabs = ["PLAY", "MY KINGDOM", "SETTINGS", "HOW TO PLAY"] as const;
 
 export type HomeTabType = (typeof homeTabs)[number];
 
