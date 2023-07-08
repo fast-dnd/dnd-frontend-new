@@ -54,7 +54,7 @@ const Locations = () => {
   };
 
   return (
-    <div className="h-full flex">
+    <div className="h-full md:flex">
       <Box
         title="CREATE DUNGEON"
         className="flex flex-col min-h-0 flex-1 md:w-[1200px] p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0"
@@ -117,7 +117,7 @@ const Locations = () => {
               <Button
                 variant="outline"
                 disabled={dungeonFormData.locations.length >= 4}
-                className="w-full md:w-fit px-8"
+                className="text-base w-full md:w-fit px-8"
                 onClick={() => setStatus("CREATING")}
               >
                 ADD NEW LOCATION
@@ -127,7 +127,7 @@ const Locations = () => {
 
               <div className="flex flex-row items-center gap-8 justify-between md:hidden">
                 <Button
-                  className="gap-1 w-fit"
+                  className="text-sm gap-1 w-fit"
                   variant="ghost"
                   onClick={() => setCurrentStep("INITIAL")}
                 >
@@ -135,7 +135,7 @@ const Locations = () => {
                   PREVIOUS
                 </Button>
                 <Button
-                  className="w-fit px-8 whitespace-nowrap"
+                  className="text-sm w-fit px-8 whitespace-nowrap"
                   onClick={() => setCurrentStep("CHAMPIONS")}
                   variant="outline"
                   disabled={dungeonFormData.locations.length < 3}

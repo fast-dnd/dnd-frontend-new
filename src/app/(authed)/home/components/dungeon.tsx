@@ -42,7 +42,7 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
 
   return (
     <div
-      className="flex flex-col gap-4 hover:bg-white/5 transition-colors duration-300 p-4 pr-0 rounded-md border md:border-0 border-white/10"
+      className="flex flex-col gap-4 hover:bg-white/5 transition-colors duration-300 p-3 md:p-4 pr-0 rounded-md border md:border-0 border-white/10"
       onMouseOver={() => setShowDesktopActions(true)}
       onMouseLeave={() => setShowDesktopActions(false)}
     >
@@ -133,23 +133,20 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
         </div>
       </div>
 
-      <div className="md:hidden flex gap-4 text-sm">
-        <div
-          className="whitespace-nowrap cursor-pointer px-5 py-2 items-center bg-white/10 flex gap-2"
-          onClick={onCopy}
-        >
+      <div className="md:hidden flex justify-center gap-4 text-sm -ml-3">
+        <div className="px-3 py-2 items-center bg-white/10 flex gap-2" onClick={onCopy}>
           {copied ? <MdCheck /> : <MdOutlineContentCopy />}
           <p>{copied ? "Copied" : "Copy ID"}</p>
         </div>
         <div
-          className="cursor-pointer px-5 py-2 items-center bg-white/10  flex gap-2"
+          className="px-3 py-2 items-center bg-white/10  flex gap-2"
           onClick={() => {
             setLoadingEdit(true);
             router.push(`/create-dungeon/${dungeon._id}`);
           }}
         >
           {loadingEdit ? (
-            <div className="flex justify-center items-center h-6 w-6">
+            <div className="flex justify-center items-center">
               <Spinner className="h-4 w-4 m-0" />
             </div>
           ) : (
@@ -158,7 +155,7 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
           <p>Edit</p>
         </div>
         <div
-          className="cursor-pointer px-5 py-2 items-center bg-white/10  flex gap-2"
+          className="px-3 py-2 items-center bg-white/10  flex gap-2"
           onClick={() => setOpenDeleteDungeonModal(true)}
         >
           <MdDelete />

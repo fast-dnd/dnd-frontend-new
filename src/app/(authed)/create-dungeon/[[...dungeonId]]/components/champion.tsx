@@ -64,8 +64,14 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
   };
 
   return (
-    <form className="flex flex-col h-full gap-8 w-full" onSubmit={handleSubmit(onSubmit)}>
-      <p className="text-xl tracking-[0.07em] -my-1 text-white/50">
+    <form
+      className="w-[330px] flex flex-col h-full gap-8 md:w-full"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <p className="uppercase font-semibold text-xl tracking-[0.07em] -my-1 text-white/50">
+        Add champion
+      </p>
+      <p className="text-lg tracking-[0.07em] -my-1 text-white/50">
         Describe the champion and define custom names for its actions
       </p>
       <div className="flex flex-col md:flex-row gap-5 md:gap-8 h-full">
@@ -122,11 +128,19 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
           />
         </div>
       </div>
-      <div className="flex flex-row justify-end gap-8">
-        <Button className="w-fit" variant="ghost" onClick={onCancel} type="reset">
+      <div className="flex flex-row justify-between md:justify-end gap-8">
+        <Button
+          className="text-sm md:text-lg w-fit"
+          variant="ghost"
+          onClick={onCancel}
+          type="reset"
+        >
           CANCEL
         </Button>
-        <Button className="whitespace-nowrap w-fit px-8 uppercase" variant="outline">
+        <Button
+          className="whitespace-nowrap text-sm md:text-lg w-fit px-8 uppercase"
+          variant="outline"
+        >
           {status === "CREATING" ? "ADD CHAMPION" : "EDIT CHAMPION"}
         </Button>
       </div>

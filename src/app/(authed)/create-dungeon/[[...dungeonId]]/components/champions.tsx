@@ -84,7 +84,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
   };
 
   return (
-    <div className="h-ful flex">
+    <div className="h-full md:flex">
       <Box
         title="CREATE DUNGEON"
         className="flex flex-col min-h-0 flex-1 md:w-[1200px] p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0"
@@ -148,7 +148,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
               <Button
                 variant="outline"
                 disabled={dungeonFormData.champions.length >= 4}
-                className="w-full md:w-fit px-8"
+                className="text-base w-full md:w-fit px-8"
                 onClick={() => setStatus("CREATING")}
               >
                 ADD NEW CHAMPION
@@ -158,7 +158,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
 
               <div className="flex flex-row items-center gap-8 justify-between md:hidden">
                 <Button
-                  className="gap-1 w-fit"
+                  className="text-sm gap-1 w-fit"
                   variant="ghost"
                   onClick={() => setCurrentStep("LOCATIONS")}
                 >
@@ -167,7 +167,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
                 </Button>
                 <Button
                   isLoading={isCreating}
-                  className="w-fit px-8 whitespace-nowrap"
+                  className="text-sm w-fit px-8 whitespace-nowrap"
                   onClick={onFinishForm}
                   variant="primary"
                   disabled={dungeonFormData.champions.length < 2}

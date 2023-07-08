@@ -64,8 +64,13 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
   };
 
   return (
-    <form className="flex flex-col h-full gap-8" onSubmit={handleSubmit(onSubmit)}>
-      <p className="text-xl tracking-[0.07em] -my-1 text-white/50">Add location</p>
+    <form
+      className="w-[330px] flex flex-col h-full gap-8 md:w-full"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <p className="uppercase text-center font-semibold text-xl tracking-[0.07em] -my-1 text-white/50">
+        Add location
+      </p>
       <div className="flex flex-col md:flex-row gap-5 md:gap-8 h-full">
         <div className="flex flex-col md:basis-1/3 gap-5 md:gap-8 md:h-full min-h-0">
           <Input
@@ -108,11 +113,16 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
           />
         </div>
       </div>
-      <div className="flex flex-row justify-end gap-8">
-        <Button className="w-fit" variant="ghost" onClick={onCancel} type="reset">
+      <div className="flex flex-row justify-between md:justify-end gap-8">
+        <Button
+          className="text-sm md:text-lg w-fit"
+          variant="ghost"
+          onClick={onCancel}
+          type="reset"
+        >
           CANCEL
         </Button>
-        <Button className="whitespace-nowrap w-fit px-8" variant="outline">
+        <Button className="text-sm md:text-lg whitespace-nowrap w-fit px-8" variant="outline">
           {status === "CREATING" ? "ADD LOCATION" : "EDIT LOCATION"}
         </Button>
       </div>

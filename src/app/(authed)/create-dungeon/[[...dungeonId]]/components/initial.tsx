@@ -62,7 +62,7 @@ const Initial = () => {
     <form className="h-full flex" onSubmit={handleSubmit(onSubmit)}>
       <Box
         title="CREATE DUNGEON"
-        className="flex flex-col min-h-0 flex-1 md:w-[1200px] p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0"
+        className="flex flex-col min-h-0 flex-1 md:w-[1200px] p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0 overflow-y-auto"
       >
         <div className="flex flex-row items-center gap-8 justify-between">
           <p className="text-lg md:text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
@@ -175,7 +175,7 @@ const Initial = () => {
                 errorMessage={errors?.description?.message}
               />
               <div className="md:hidden block w-full border-t border-white/20" />
-              <Button className="md:hidden block w-full whitespace-nowrap" variant="outline">
+              <Button className="md:hidden block w-full whitespace-nowrap mb-4" variant="outline">
                 NEXT STEP
               </Button>
             </div>

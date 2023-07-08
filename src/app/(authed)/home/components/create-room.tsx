@@ -235,7 +235,7 @@ const CreateRoom = () => {
         {selectedDungeon !== undefined && (
           <div className="flex flex-col md:flex-row gap-4 md:gap-8 flex-1 justify-end">
             <Button
-              className="h-9 md:h-14 px-8 w-full md:w-fit flex gap-2"
+              className="md:h-14 px-8 w-full md:w-fit flex gap-2"
               onClick={() => setSelectedDungeon(undefined)}
               variant="ghost"
             >
@@ -243,7 +243,7 @@ const CreateRoom = () => {
             </Button>
             <Button
               isLoading={isCreatingRoom || loadingRoom}
-              className="h-9 md:h-14 px-8 w-full md:w-fit"
+              className="md:h-14 px-8 w-full md:w-fit"
               onClick={onCreateRoom}
             >
               CREATE ROOM
