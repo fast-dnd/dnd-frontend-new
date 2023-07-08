@@ -52,7 +52,7 @@ export const initialDungeonFormData: IDungeonFormData = {
   id: undefined,
   name: "",
   maxPlayers: 3,
-  duration: "default-blitz",
+  duration: "blitz",
   description: "",
   style: "",
   tags: [],

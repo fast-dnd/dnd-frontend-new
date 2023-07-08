@@ -27,7 +27,7 @@ export interface IPlayer {
   name: string;
   accountId: string;
   avatarId: string;
-  champion?: IChampion;
+  champion: IChampion;
   health: number;
   mana: number;
   gold: number;

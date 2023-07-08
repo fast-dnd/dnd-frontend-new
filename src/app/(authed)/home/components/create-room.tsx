@@ -233,18 +233,17 @@ const CreateRoom = () => {
         )}
 
         {selectedDungeon !== undefined && (
-          <div className="flex flex-col md:flex-row gap-4 md:gap-8 flex-1 justify-end">
+          <div className="flex flex-row justify-between md:justify-end md:gap-8 w-full">
             <Button
-              className="md:h-14 px-8 w-full md:w-fit flex gap-2"
-              onClick={() => setSelectedDungeon(undefined)}
+              className="text-sm md:text-lg w-fit flex gap-2"
               variant="ghost"
+              onClick={() => setSelectedDungeon(undefined)}
             >
               <AiOutlineLeft className="inline-block" /> GO BACK
             </Button>
             <Button
+              className="whitespace-nowrap text-sm md:text-lg w-fit px-8 uppercase"
               isLoading={isCreatingRoom || loadingRoom}
-              className="md:h-14 px-8 w-full md:w-fit"
-              onClick={onCreateRoom}
             >
               CREATE ROOM
             </Button>
