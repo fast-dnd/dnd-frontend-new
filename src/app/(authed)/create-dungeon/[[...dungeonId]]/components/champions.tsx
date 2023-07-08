@@ -84,10 +84,11 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
   };
 
   return (
-    <div className="h-full md:flex">
+    <div className="h-full md:flex w-full">
       <Box
         title="CREATE DUNGEON"
-        className="flex flex-col min-h-0 flex-1 md:w-[1200px] p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0"
+        className="flex flex-col min-h-0 flex-1 p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0"
+        wrapperClassName="w-[95%] md:w-[1200px] mx-auto"
       >
         <div
           className={cn(

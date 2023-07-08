@@ -22,7 +22,7 @@ const RoomInfo = (props: { conversationId: string }) => {
     return (
       <Box
         title="ROOM"
-        className="flex flex-col items-center justify-center gap-8 min-h-0 flex-1 w-[350px] md:w-[490px] p-8"
+        className="flex flex-col items-center justify-center gap-8 min-h-0 flex-1 w-[90%] md:w-[490px] p-8"
       >
         <Spinner className="h-40 w-40" />
       </Box>
@@ -38,6 +38,7 @@ const RoomInfo = (props: { conversationId: string }) => {
     <Box
       title="ROOM"
       className="flex flex-col min-h-0 flex-1 md:w-[490px] p-5 gap-5 md:p-8 md:gap-8"
+      wrapperClassName="block w-[90%] md:w-[490px] mx-auto"
     >
       <div className="flex text-center flex-col md:flex-row justify-between gap-4">
         <p className="mt-2 text-xl flex-1 whitespace-nowrap">{roomData.link}</p>

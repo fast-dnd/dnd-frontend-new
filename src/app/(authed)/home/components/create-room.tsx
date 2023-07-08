@@ -250,47 +250,6 @@ const CreateRoom = () => {
             </Button>
           </div>
         )}
-
-        {/*<div
-          className={cn(
-            "flex flex-col md:flex-row gap-8",
-            dungeonTab !== "favorite dungeons" && "flex-1",
-          )}
-        >
-          {dungeonTab !== "favorite dungeons" && (
-            <Input
-              className="hidden md:flex m-0 h-14 items-center min-w-[200px] text-xl"
-              placeholder="Template sentences"
-              onChange={(e) => setTemplateSentences(e.target.value)}
-            />
-          )}
-
-           <div className="flex flex-col md:flex-row gap-8 w-full md:w-auto">
-            <div className="flex gap-4 md:gap-8 justify-center">
-              <Checkbox
-                label="images"
-                checked={generateImages}
-                onCheckedChange={(checked) => setGenerateImages(checked as boolean)}
-                className="px-8"
-              />
-              <Checkbox
-                label="audio"
-                checked={generateAudio}
-                onCheckedChange={(checked) => setGenerateAudio(checked as boolean)}
-                className="px-8"
-              />
-            </div>
-
-            <Button
-              isLoading={isCreatingRoom || loadingRoom}
-              className="h-14 px-8 w-full md:w-fit"
-              disabled={!selectedDungeon}
-              onClick={onCreateRoom}
-            >
-              CREATE
-            </Button>
-          </div> 
-        </div>*/}
       </div>
     </>
   );

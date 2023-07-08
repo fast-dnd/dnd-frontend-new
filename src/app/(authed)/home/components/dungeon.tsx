@@ -124,13 +124,16 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
         </div>
       </div>
 
-      <div className="md:hidden flex justify-center gap-4 text-sm -ml-3">
-        <div className="px-3 py-2 items-center bg-white/10 flex gap-2" onClick={onCopy}>
+      <div className="md:hidden flex justify-center gap-4 text-sm -ml-3 px-4 whitespace-nowrap">
+        <div
+          className="px-3 py-2 items-center bg-white/10 flex gap-2 w-full justify-center"
+          onClick={onCopy}
+        >
           {copied ? <MdCheck /> : <MdOutlineContentCopy />}
           <p>{copied ? "Copied" : "Copy ID"}</p>
         </div>
         <div
-          className="px-3 py-2 items-center bg-white/10  flex gap-2"
+          className="px-3 py-2 items-center bg-white/10 flex gap-2 w-full justify-center"
           onClick={() => {
             setLoadingEdit(true);
             router.push(`/create-dungeon/${dungeon._id}`);
@@ -146,7 +149,7 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
           <p>Edit</p>
         </div>
         <div
-          className="px-3 py-2 items-center bg-white/10  flex gap-2"
+          className="px-3 py-2 items-center bg-white/10 flex gap-2 w-full justify-center"
           onClick={() => setOpenDeleteDungeonModal(true)}
         >
           <MdDelete />

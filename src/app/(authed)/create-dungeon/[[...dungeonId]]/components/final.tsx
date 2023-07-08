@@ -17,10 +17,11 @@ const Final = () => {
   const { dungeonFormData } = dungeonFormStore;
 
   return (
-    <div className="flex h-fit md:h-full">
+    <div className="flex w-full h-fit md:h-full">
       <Box
         title="CREATE DUNGEON"
-        className="flex flex-col min-h-0 flex-1 w-[360px] md:w-[1200px] p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0"
+        className="flex flex-col min-h-0 flex-1 p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0"
+        wrapperClassName="w-[95%] md:w-[1200px] mx-auto"
       >
         <div className="flex flex-row items-center gap-8 justify-between">
           <p className="text-lg md:text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">

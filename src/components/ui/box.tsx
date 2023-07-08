@@ -19,11 +19,13 @@ export interface BoxProps
   home?: boolean;
   onClickHome?: () => void;
   loading?: boolean;
+  wrapperClassName?: string;
 }
 
 export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
   (
     {
+      wrapperClassName,
       className,
       children,
       title,
@@ -39,7 +41,7 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
     ref,
   ) => {
     return (
-      <div className="flex flex-col w-full">
+      <div className={cn("flex flex-col w-full", wrapperClassName)}>
         <div className="py-6 border-t-2 relative border-tomato/90 bg-black flex items-center justify-center gap-4">
           <div className="bg-tomato w-2 h-2 rotate-45" />
           <p

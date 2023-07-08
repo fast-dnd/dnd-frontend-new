@@ -26,7 +26,7 @@ const SortableItem = ({ i, item, onEdit, onDelete }: ISortableItemProps) => {
       ref={setNodeRef}
       style={style}
     >
-      <p className="w-44 md:w-full text-lg md:text-2xl font-medium tracking-widest truncate">
+      <p className="w-[90%] md:w-full text-lg md:text-2xl font-medium tracking-widest truncate">
         {i + 1}. {item.name}
       </p>
 

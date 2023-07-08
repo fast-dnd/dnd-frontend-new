@@ -58,7 +58,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
               Movement probabilities
             </p>
             <p className="font-semibold md:text-lg mt-4">PREPARATION TURNS</p>
-            <p className="text-lg mt-4 md:mt-2">
+            <p className="md:text-lg mt-4 md:mt-2">
               Depending of what action you choose, the total dice value will have a different effect
               on your champion stats.
             </p>
@@ -144,7 +144,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
             </div>
 
             <p className="font-semibold md:text-lg mt-8 md:tracking-widest">FREE WILL TURNS</p>
-            <p className="text-lg mt-2">
+            <p className="md:text-lg mt-2">
               Despite what you decide, the total dice value will have an effect on your champion
               stats.
             </p>

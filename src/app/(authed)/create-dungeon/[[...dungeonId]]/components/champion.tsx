@@ -64,12 +64,9 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
   };
 
   return (
-    <form
-      className="w-[330px] flex flex-col h-full gap-8 md:w-full"
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form className="flex flex-col h-full gap-8 md:w-full" onSubmit={handleSubmit(onSubmit)}>
       <p className="uppercase font-semibold text-xl tracking-[0.07em] -my-1 text-white/50">
-        Add champion
+        {status === "CREATING" ? "Create" : "Edit"} Champion
       </p>
       <p className="text-lg tracking-[0.07em] -my-1 text-white/50">
         Describe the champion and define custom names for its actions

@@ -59,10 +59,11 @@ const Initial = () => {
   ];
 
   return (
-    <form className="h-full flex" onSubmit={handleSubmit(onSubmit)}>
+    <form className="h-full flex w-full" onSubmit={handleSubmit(onSubmit)}>
       <Box
         title="CREATE DUNGEON"
-        className="flex flex-col min-h-0 flex-1 md:w-[1200px] p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0 overflow-y-auto"
+        className="flex flex-col min-h-0 flex-1 p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0 overflow-y-auto"
+        wrapperClassName=" w-[95%] md:w-[1200px] mx-auto"
       >
         <div className="flex flex-row items-center gap-8 justify-between">
           <p className="text-lg md:text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
@@ -94,14 +95,14 @@ const Initial = () => {
                     errorMessage={errors?.name?.message}
                   />
                 </div>
-                <div className="w-full md:w-1/2 flex flex-col gap-5 md:gap-8 items-center justify-center">
+                <div className="w-full md:w-1/2 flex flex-col gap-5 md:gap-8 ">
                   <Controller
                     control={control}
                     name="duration"
-                    defaultValue="default-blitz"
+                    defaultValue="blitz"
                     render={({ field }) => (
                       <ToggleGroup
-                        className="inline-flex items-center justify-center"
+                        className="inline-flex items-center justify-center w-full"
                         type="single"
                         label="Recommended duration"
                         value={field.value}
@@ -113,7 +114,7 @@ const Initial = () => {
                           <ToggleGroupItem
                             key={duration.value}
                             value={duration.value}
-                            className="border-white/25 border text-sm md:text-base px-6 md:px-10 py-[8px] data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center"
+                            className="border-white/25 border text-sm md:text-base px-6 md:px-10 py-2 data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center w-full"
                           >
                             {duration.icon({})}
                             {duration.label}
@@ -144,6 +145,7 @@ const Initial = () => {
                         return (
                           <ComboBox
                             {...field}
+                            animate
                             label="Tags"
                             onChange={field.onChange as any}
                             noOptionsMessage={() => "No tags found"}
