@@ -11,7 +11,7 @@ const checkJWT = () => {
   if (!token) {
     return false;
   }
-  const jwt = parseJwt(token);
+  const jwt = parseJwt(token) as { exp: number };
   if (!jwt) {
     return false;
   }
