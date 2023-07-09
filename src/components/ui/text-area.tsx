@@ -6,7 +6,7 @@ import { GiCancel } from "react-icons/gi";
 import { cn } from "@/utils/style-utils";
 
 export const textAreaVariants = cva(
-  "disabled:text-opacity-35 mr-1 flex w-full overflow-auto bg-transparent outline-none placeholder:text-white/30",
+  "mr-1 flex w-full overflow-auto bg-transparent outline-none placeholder:text-white/30 disabled:text-white/30",
 );
 
 export const textAreaContainerVariants = cva(
@@ -73,7 +73,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
         <div
           className={cn(
             textAreaContainerVariants({ state, className }),
-            disabled && "bg-current/20 text-current/20 pointer-events-none",
+            disabled && "pointer-events-none opacity-20",
           )}
         >
           {StartIcon && (

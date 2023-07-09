@@ -161,7 +161,7 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
       <Modal
         open={openDeleteDungeonModal}
         onClose={() => setOpenDeleteDungeonModal(false)}
-        className="flex h-fit w-fit flex-col items-center gap-8 bg-black/90 px-6 py-8 text-lg shadow-xl shadow-white/10 lg:bg-black/50 lg:px-12 lg:text-xl"
+        className="flex h-fit w-fit flex-col items-center gap-8 bg-black/90 px-6 py-8 text-lg shadow-xl shadow-white/10 lg:px-12 lg:text-xl"
       >
         <p className="text-center uppercase leading-7 tracking-[3.3px]">Delete Dungeon</p>
         <p className="whitespace-nowrap leading-7 tracking-[2.64px] text-white/60">

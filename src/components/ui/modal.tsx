@@ -37,7 +37,7 @@ const Modal = ({ open, onClose, children, className, ...props }: IModalProps) =>
             >
               <Dialog.Panel
                 className={cn(
-                  "bg-cdl-grey-light h-[700px] w-full max-w-3xl rounded-2xl p-6 text-left align-middle shadow-xl transition-all",
+                  "h-[700px] w-full max-w-3xl rounded-2xl p-6 text-left align-middle shadow-xl transition-all",
                   className,
                 )}
                 {...props}

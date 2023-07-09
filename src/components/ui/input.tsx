@@ -6,13 +6,13 @@ import { GiCancel } from "react-icons/gi";
 import { cn } from "@/utils/style-utils";
 
 export const inputVariants = cva(
-  "disabled:text-opacity-35 mr-1 flex w-full overflow-auto bg-transparent outline-none placeholder:text-white/30",
+  "mr-1 flex w-full overflow-auto bg-transparent outline-none placeholder:text-white/30 disabled:text-white/30",
 );
 
 export const inputContainerVariants = cva(
   [
     "relative mb-2 flex items-center border border-white/50 bg-transparent py-2 pl-4 text-sm lg:text-base",
-    "hover:focus-within:border-current/100 transition-all duration-300 focus-within:border-tomato",
+    "transition-all duration-300 focus-within:border-tomato hover:focus-within:opacity-100",
   ],
   {
     variants: {
@@ -71,7 +71,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <div
           className={cn(
             inputContainerVariants({ state, className }),
-            disabled && "bg-current/20 text-current/20 pointer-events-none",
+            disabled && "pointer-events-none opacity-20",
           )}
         >
           {StartIcon && (

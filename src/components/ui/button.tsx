@@ -6,7 +6,7 @@ import { cn } from "@/utils/style-utils";
 import Spinner from "./spinner";
 
 export const buttonVariants = cva(
-  "disabled:border-current/50 disabled:bg-current/50 disabled:text-current/50 inline-flex w-full flex-row items-center justify-center py-2 text-center text-xl font-semibold uppercase tracking-wider transition-all duration-300 disabled:pointer-events-none lg:tracking-normal",
+  "inline-flex w-full flex-row items-center justify-center py-2 text-center text-xl font-semibold uppercase tracking-wider transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 lg:tracking-normal",
   {
     variants: {
       variant: {

@@ -49,7 +49,7 @@ const Checkbox = React.forwardRef<
       <div
         className={cn(
           checkboxContainerVariants({ state, className }),
-          disabled && "bg-current/20 text-current/20 pointer-events-none",
+          disabled && "pointer-events-none opacity-20",
         )}
       >
         <CheckboxPrimitive.Root

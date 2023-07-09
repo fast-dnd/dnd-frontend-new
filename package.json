@@ -56,6 +56,7 @@
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.0.2",
+    "@tanstack/eslint-plugin-query": "^4.29.9",
     "@total-typescript/ts-reset": "^0.4.2",
     "@types/lodash": "^4.14.195",
     "@typescript-eslint/parser": "^5.61.0",

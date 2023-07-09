@@ -130,6 +130,9 @@ devDependencies:
   '@ianvs/prettier-plugin-sort-imports':
     specifier: ^4.0.2
     version: 4.0.2(prettier@2.8.8)
+  '@tanstack/eslint-plugin-query':
+    specifier: ^4.29.9
+    version: 4.29.9
   '@total-typescript/ts-reset':
     specifier: ^0.4.2
     version: 0.4.2
@@ -1440,6 +1443,10 @@ packages:
     dependencies:
       tslib: 2.5.3
     dev: false
+
+  /@tanstack/eslint-plugin-query@4.29.9:
+    resolution: {integrity: sha512-JlIZcs+zhl/ihta49iIbMCf3E8tSvGDqMIH+oItnYLOzWI7oiujXu7FYgna2E1V79KhR0PaxkPX6jHZLpvacgw==}
+    dev: true
 
   /@tanstack/match-sorter-utils@8.8.4:
     resolution: {integrity: sha512-rKH8LjZiszWEvmi01NR72QWZ8m4xmXre0OOwlRGnjU01Eqz/QnN+cqpty2PJ0efHblq09+KilvyR7lsbzmXVEw==}

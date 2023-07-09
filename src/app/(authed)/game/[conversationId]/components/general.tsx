@@ -132,7 +132,7 @@ const General = (props: { conversationId: string }) => {
         <div className="flex w-full">
           <Button
             variant={"ghost"}
-            className="items center  flex w-fit gap-2 text-base uppercase text-white"
+            className="flex w-fit items-center gap-2 text-base uppercase text-white"
             onClick={() => setStatsOpened(false)}
           >
             <AiOutlineLeft /> <span className="mt-[1px]">back to events</span>

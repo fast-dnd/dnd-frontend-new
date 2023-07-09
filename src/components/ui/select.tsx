@@ -13,7 +13,7 @@ export const selectContainerVariants = cva(
   [
     "relative mb-2 flex items-center justify-between border border-white/50 bg-transparent py-2 pl-4 pr-2 text-base placeholder:text-white/30",
     "transition-all duration-300 focus:outline-none",
-    "disabled:text-current/20 disabled:bg-current/20 disabled:pointer-events-none",
+    "disabled:pointer-events-none disabled:opacity-20",
     "ring-offset-selectSelected focus:ring-2 focus:ring-selectSelected focus:ring-offset-2",
   ],
   {
