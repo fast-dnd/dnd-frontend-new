@@ -214,7 +214,7 @@ const CreateRoom = () => {
       )}
 
       <div className="flex flex-row gap-8 justify-center items-center">
-        {dungeonTab === "favorite dungeons" && (
+        {dungeonTab === "favorite dungeons" && selectedDungeon === undefined && (
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 flex-1 justify-end">
             <Input
               placeholder="Enter dungeon ID..."
