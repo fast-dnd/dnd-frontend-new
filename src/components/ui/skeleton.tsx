@@ -13,12 +13,12 @@ const Skeleton = ({ amount = 1, small = false }: ISkeletonProps) => {
         <div
           key={i}
           role="status"
-          className="space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex md:items-center"
+          className="space-y-8 animate-pulse lg:space-y-0 lg:space-x-8 lg:flex lg:items-center"
         >
           <div
             className={cn(
-              "flex items-center justify-center w-full h-48 rounded sm:w-96 bg-gray-600",
-              small && "h-20 w-20 sm:w-28",
+              "flex items-center justify-center w-full h-48 rounded lg:w-96 bg-gray-600",
+              small && "h-20 w-20 lg:w-28",
             )}
           >
             <svg
@@ -32,12 +32,12 @@ const Skeleton = ({ amount = 1, small = false }: ISkeletonProps) => {
             </svg>
           </div>
           <div className="w-full">
-            <div className={cn("h-2.5 rounded-full bg-gray-600 w-48 mb-4", small && "w-36")}></div>
-            <div className="h-2 rounded-full bg-gray-600 max-w-[480px] mb-2.5"></div>
-            <div className="h-2 rounded-full bg-gray-600 mb-2.5"></div>
-            <div className="h-2 rounded-full bg-gray-600 max-w-[440px] mb-2.5"></div>
-            <div className="h-2 rounded-full bg-gray-600 max-w-[460px] mb-2.5"></div>
-            <div className="h-2 rounded-full bg-gray-600 max-w-[360px]"></div>
+            <div className={cn("h-2.5 rounded-full bg-gray-600 w-48 mb-4", small && "w-36")} />
+            <div className="h-2 rounded-full bg-gray-600 max-w-[480px] mb-2.5" />
+            <div className="h-2 rounded-full bg-gray-600 mb-2.5" />
+            <div className="h-2 rounded-full bg-gray-600 max-w-[440px] mb-2.5" />
+            <div className="h-2 rounded-full bg-gray-600 max-w-[460px] mb-2.5" />
+            <div className="h-2 rounded-full bg-gray-600 max-w-[360px]" />
           </div>
           <span className="sr-only">Loading...</span>
         </div>

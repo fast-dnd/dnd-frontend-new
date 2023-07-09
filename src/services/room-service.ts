@@ -1,5 +1,6 @@
 import { ILocation, IPlayer, IRoom, MoveType } from "@/types/dnd";
 import createApi from "./api-factory";
+import { DungeonDuration } from "@/utils/dungeon-options";
 
 const roomApi = createApi({});
 
@@ -14,6 +15,17 @@ const createRoom = async (data: {
 
 const joinRoom = async (data: { link: string }) => {
   return await roomApi.post<IRoom>("room/join", data);
+};
+
+interface IEditRoom {
+  conversationId: string;
+  responseDetailsDepth?: DungeonDuration;
+  generateImages?: boolean;
+  generateAudio?: boolean;
+}
+
+const editRoom = async (data: IEditRoom) => {
+  return await roomApi.patch<IRoom>(`room/${data.conversationId}`, data);
 };
 
 //would work better if IQuestion and IMove had timestamps of some sort
@@ -53,7 +65,7 @@ export interface IRoomArrayElement {
   };
   conversationId: string;
   generateAudio: boolean;
-  genrateImages: boolean;
+  generateImages: boolean;
 }
 
 export interface IRoomData {
@@ -67,13 +79,14 @@ export interface IRoomData {
   currentRound: number;
   chatGptResponses: string[];
   generatedImages: string[];
-  genrateImages: boolean;
+  generateImages: boolean;
   generatedAudio: string[];
   generateAudio: string;
   location: ILocation;
   adventureMission: string;
   conversationId: string;
   questions3History: IQuestion[];
+  responseDetailsDepth: DungeonDuration;
 }
 
 const getRoomData = async (conversationId: string) => {
@@ -109,6 +122,7 @@ const editAvatar = async (data: IEditAvatar) => {
 const roomService = {
   createRoom,
   joinRoom,
+  editRoom,
   getRoomData,
   getRooms,
   startGame,

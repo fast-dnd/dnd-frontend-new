@@ -32,8 +32,13 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
         dungeonFormStore.updateDungeonFormData({
           id: dungeonId,
           name: dungeonQuery.data.name,
+          duration: dungeonQuery.data.duration,
           description: dungeonQuery.data.description,
           style: dungeonQuery.data.style,
+          tags: dungeonQuery.data.tags.map((tag) => ({
+            label: tag,
+            value: tag,
+          })),
           locations: dungeonQuery.data.locations,
           champions: dungeonQuery.data.champions,
           imageUrl: dungeonQuery.data.imageUrl,
@@ -79,12 +84,12 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   };
 
   return (
-    <div className="h-full w-full mt-8 md:mt-0 overflow-y-auto">
-      <MobileNavbar />
-      <div className="flex justify-center h-full md:p-16 pt-8 md:overflow-y-hidden">
-        <div className="flex flex-col items-center gap-8">
+    <div className="h-full w-full mt-8 lg:mt-0 overflow-y-auto">
+      <MobileNavbar goBackAction={abortDungeonCreation} />
+      <div className="flex justify-center h-full lg:p-16 pt-8 lg:overflow-y-hidden w-full">
+        <div className="flex flex-col items-center gap-8 w-full">
           <div
-            className="hidden cursor-pointer text-lg md:flex flex-row gap-1 w-fit font-medium items-center justify-center tracking-[0.08em] uppercase"
+            className="hidden cursor-pointer text-lg lg:flex flex-row gap-1 w-fit font-medium items-center justify-center tracking-[0.08em] uppercase"
             onClick={abortDungeonCreation}
           >
             <AiOutlineLeft className="inline-block" /> GO BACK

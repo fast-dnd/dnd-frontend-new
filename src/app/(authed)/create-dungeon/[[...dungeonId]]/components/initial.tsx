@@ -2,17 +2,21 @@
 
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
+import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import UploadImage from "@/components/ui/upload-image";
 import useStore from "@/hooks/use-store";
 import { fileToBase64 } from "@/utils/b64";
+import { dungeonDuration, dungeonTags } from "@/utils/dungeon-options";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
+import tagsComboboxStyles from "../utils/tags-combobox-styles";
 
 const Initial = () => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
@@ -48,47 +52,122 @@ const Initial = () => {
     });
   };
 
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
+
   return (
-    <form className="h-full flex" onSubmit={handleSubmit(onSubmit)}>
+    <form className="h-full flex w-full" onSubmit={handleSubmit(onSubmit)}>
       <Box
         title="CREATE DUNGEON"
-        className="flex flex-col min-h-0 flex-1 md:w-[1200px] p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0"
+        className="flex flex-col min-h-0 flex-1 p-5 gap-5 lg:p-8 lg:gap-8 mb-4 lg:mb-0 overflow-y-auto"
+        wrapperClassName="w-[95%] lg:w-[1200px] mx-auto"
       >
         <div className="flex flex-row items-center gap-8 justify-between">
-          <p className="text-lg md:text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
+          <p className="text-lg lg:text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
             1.
             {stepTitles[currentStep]}
           </p>
-          <Button className="hidden md:block w-fit px-8 whitespace-nowrap" variant="outline">
+          <Button className="hidden lg:block w-fit px-8 whitespace-nowrap" variant="outline">
             NEXT STEP
           </Button>
         </div>
-        <div className="hidden md:block w-full border-t border-white/20" />
+        <div className="hidden lg:block w-full border-t border-white/20" />
         <div className="flex flex-1 basis-0 min-h-0">
-          <div className="flex flex-col items-center md:items-start md:flex-row w-full gap-5 md:gap-8 h-full">
+          <div className="flex flex-col items-center lg:items-start lg:flex-row w-full gap-5 lg:gap-8 h-full">
             <UploadImage
               image={image}
               inputFile={imageRef}
               onClick={addImage}
               defaultImage={dungeonFormData.imageUrl}
             />
-            <div className="flex flex-col w-full gap-5 md:gap-8 flex-1 h-full">
-              <Input
-                label="Name"
-                placeholder="The Enchanted Grove"
-                className="md:w-1/2 m-0"
-                {...register("name")}
-                state={errors?.name ? "error" : undefined}
-                errorMessage={errors?.name?.message}
-              />
-              <Input
-                label="Style"
-                placeholder="The Enchanted Grove"
-                className="m-0"
-                {...register("style")}
-                state={errors?.style ? "error" : undefined}
-                errorMessage={errors?.style?.message}
-              />
+            <div className="flex flex-col w-full gap-5 lg:gap-8 flex-1 h-full">
+              <div className="flex flex-col lg:flex-row gap-5 lg:gap-8">
+                <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:gap-8">
+                  <Input
+                    label="Name"
+                    placeholder="The Enchanted Grove"
+                    className="m-0"
+                    {...register("name")}
+                    state={errors?.name ? "error" : undefined}
+                    errorMessage={errors?.name?.message}
+                  />
+                </div>
+                <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:gap-8 ">
+                  <Controller
+                    control={control}
+                    name="duration"
+                    defaultValue="blitz"
+                    render={({ field }) => (
+                      <ToggleGroup
+                        className="inline-flex items-center justify-center w-full"
+                        type="single"
+                        label="Recommended duration"
+                        value={field.value}
+                        onValueChange={field.onChange as any}
+                        state={errors?.duration ? "error" : undefined}
+                        errorMessage={errors?.duration?.message}
+                      >
+                        {dungeonDuration.map((duration) => (
+                          <ToggleGroupItem
+                            key={duration.value}
+                            value={duration.value}
+                            className="border-white/25 border text-sm lg:text-base px-6 lg:px-10 py-2 data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center w-full"
+                          >
+                            {duration.icon({})}
+                            {duration.label}
+                          </ToggleGroupItem>
+                        ))}
+                      </ToggleGroup>
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col lg:flex-row gap-5 lg:gap-0">
+                <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:gap-8 lg:pr-8">
+                  <Input
+                    label="Style"
+                    placeholder="The Enchanted Grove"
+                    className="m-0"
+                    {...register("style")}
+                    state={errors?.style ? "error" : undefined}
+                    errorMessage={errors?.style?.message}
+                  />
+                </div>
+                <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:gap-8 lg:-ml-1">
+                  <div>
+                    <Controller
+                      control={control}
+                      name="tags"
+                      render={({ field }) => {
+                        return (
+                          <ComboBox
+                            {...field}
+                            animate
+                            label="Tags"
+                            onChange={field.onChange as any}
+                            noOptionsMessage={() => "No tags found"}
+                            // isOptionDisabled={(option) => field.value.length >= 3}
+                            className="w-full"
+                            options={dungeonTags.map((tag) => ({
+                              value: tag,
+                              label: tag,
+                            }))}
+                            isMulti
+                            closeMenuOnSelect={false}
+                            placeholder="Select 1 to 3 tags"
+                            styles={tagsComboboxStyles as any}
+                            state={errors?.tags ? "error" : undefined}
+                            errorMessage={errors?.tags?.message}
+                          />
+                        );
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
               <TextArea
                 label="Description"
                 placeholder="Venture into the heart of an enchanted forest, where the ancient spirits..."
@@ -97,8 +176,8 @@ const Initial = () => {
                 state={errors?.description ? "error" : undefined}
                 errorMessage={errors?.description?.message}
               />
-              <div className="md:hidden block w-full border-t border-white/20" />
-              <Button className="md:hidden block w-full whitespace-nowrap" variant="outline">
+              <div className="lg:hidden block w-full border-t border-white/20" />
+              <Button className="lg:hidden block w-full whitespace-nowrap mb-4" variant="outline">
                 NEXT STEP
               </Button>
             </div>

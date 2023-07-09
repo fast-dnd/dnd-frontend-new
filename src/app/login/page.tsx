@@ -6,7 +6,7 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center mt-24">
       <div>
-        <Box title="ACCOUNT" className="md:w-[450px] p-8 flex items-center justify-center">
+        <Box title="ACCOUNT" className="lg:w-[450px] p-8 flex items-center justify-center">
           <GoogleLoginButton />
         </Box>
       </div>

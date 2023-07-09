@@ -22,30 +22,27 @@ const SortableItem = ({ i, item, onEdit, onDelete }: ISortableItemProps) => {
 
   return (
     <div
-      className="w-full bg-white/5 flex flex-row items-center px-4 py-2 md:py-4 gap-4"
+      className="w-full bg-white/5 flex flex-row items-center px-4 py-2 lg:py-4 gap-4"
       ref={setNodeRef}
       style={style}
     >
-      <p className="w-full text-lg md:text-2xl font-medium tracking-widest">
+      <p className="w-[90%] lg:w-full text-lg lg:text-2xl font-medium tracking-widest truncate">
         {i + 1}. {item.name}
       </p>
 
       <MdDragIndicator
-        className="text-white/75 cursor-pointer hover:text-info transition-colors duration-300"
-        size={32}
+        className="w-6 h-6 lg:h-8 lg:w-8 text-white/75 cursor-pointer hover:text-info transition-colors duration-300"
         {...attributes}
         {...listeners}
       />
 
       <MdEdit
-        className="text-white/75 cursor-pointer hover:text-warning transition-colors duration-300"
-        size={32}
+        className="w-6 h-6 lg:h-8 lg:w-8 text-white/75 cursor-pointer hover:text-warning transition-colors duration-300"
         onClick={() => onEdit(i)}
       />
 
       <MdDelete
-        className="text-white/75 cursor-pointer hover:text-error transition-colors duration-300"
-        size={32}
+        className="w-6 h-6 lg:h-8 lg:w-8 text-white/75 cursor-pointer hover:text-error transition-colors duration-300"
         onClick={() => onDelete(i)}
       />
     </div>

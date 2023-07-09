@@ -8,7 +8,7 @@ import { homeTabs } from "../types/home";
 const HomeMobileNavbar = () => {
   const { homeTab, setHomeTab, setDisplayHowToPlay } = useHomeStore((state) => state);
   return (
-    <div className="flex justify-between py-8 px-5 md:hidden">
+    <div className="flex justify-between py-8 px-5 lg:hidden">
       <Image src="/images/mobile-navbar-logo.svg" width={36} height={24} alt="mobile-navbar-logo" />
 
       <p className="text-lg font-medium tracking-widest uppercase">{homeTab}</p>
@@ -35,11 +35,6 @@ const HomeMobileNavbar = () => {
                 </p>
               </div>
             ))}
-            <div className={cn("self-end")} onClick={() => setDisplayHowToPlay(true)}>
-              <p className="text-lg leading-7 tracking-widest whitespace-nowrap uppercase">
-                HOW TO PLAY
-              </p>
-            </div>
           </div>
         </SheetContent>
       </Sheet>

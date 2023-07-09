@@ -17,11 +17,11 @@ const getDungeon = async (dungeonId: string) => {
 };
 
 const createDungeon = async (data: IDungeonFormData) => {
-  return await dungeonApi.post<IDungeon>("", data);
+  return await dungeonApi.post<IDungeon>("", { ...data, tags: data.tags.map((tag) => tag.value) });
 };
 
 const updateDungeon = async (data: IDungeonFormData) => {
-  return await dungeonApi.put<IDungeon>("", data);
+  return await dungeonApi.put<IDungeon>("", { ...data, tags: data.tags.map((tag) => tag.value) });
 };
 
 const deleteDungeon = async (dungeonId: string) => {

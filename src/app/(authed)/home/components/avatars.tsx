@@ -37,15 +37,15 @@ const Avatars = () => {
             alt="avatar"
             width={96}
             height={96}
-            className="w-16 h-16 md:h-24 md:w-24"
+            className="w-16 h-16 lg:h-24 lg:w-24"
           />
           <div className="flex flex-col justify-center gap-1">
-            <p className="md:text-2xl tracking-wider md:tracking-[0.07em] uppercase">
+            <p className="lg:text-2xl tracking-wider lg:tracking-[0.07em] uppercase">
               {avatar.name}
             </p>
-            <div className="flex md:flex-col gap-4 md:gap-1 items-center justify-center md:justify-start md:items-start">
+            <div className="flex lg:flex-col gap-4 lg:gap-1 items-center justify-center lg:justify-start lg:items-start">
               <div className="flex flex-row items-center gap-4">
-                <p className="text-sm md:text-xl tracking-[0.15em] font-light whitespace-nowrap">
+                <p className="text-sm lg:text-xl tracking-[0.15em] font-light whitespace-nowrap">
                   Level {avatar.level}
                 </p>
                 <div className="h-2 w-2 rotate-45 bg-white/25" />
@@ -54,17 +54,17 @@ const Avatars = () => {
                     <div
                       key={i}
                       className={cn(
-                        "w-1.5 h-3 md:w-2.5 md:h-3.5 bg-tomato",
+                        "w-1.5 h-3 lg:w-2.5 lg:h-3.5 bg-tomato",
                         (i + 1) * 20 > 80 && "opacity-20",
                       )}
                     />
                   ))}
                 </div>
               </div>
-              <div className="h-2 w-2 rotate-45 bg-white/25 md:hidden" />
+              <div className="h-2 w-2 rotate-45 bg-white/25 lg:hidden" />
 
               <div
-                className="cursor-pointer px-2 py-1.5 md:px-3 md:py-2 items-center bg-white/10 w-fit flex gap-2"
+                className="cursor-pointer px-2 py-1.5 lg:px-3 lg:py-2 items-center bg-white/10 w-fit flex gap-2"
                 onClick={() => {
                   setLoadingEdit(avatar._id);
                   router.push(`/create-avatar/${avatar._id}`);
@@ -72,7 +72,7 @@ const Avatars = () => {
               >
                 {loadingEdit === avatar._id && <Spinner className="m-0" />}
                 {loadingEdit !== avatar._id && <MdEdit />}
-                <p className="hidden md:block">EDIT</p>
+                <p className="hidden lg:block">EDIT</p>
               </div>
             </div>
           </div>

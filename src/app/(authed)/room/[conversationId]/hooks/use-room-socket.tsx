@@ -16,6 +16,9 @@ const useRoomSocket = (conversationId: string) => {
         case "PLAYER_EDIT":
           queryClient.setQueryData(["room", conversationId], () => event.data);
           break;
+        case "ROOM_SETTINGS_CHANGED":
+          queryClient.setQueryData(["room", conversationId], () => event.data);
+          break;
         case "REQUEST_SENT_TO_DM":
           setGameStarting(true);
           break;

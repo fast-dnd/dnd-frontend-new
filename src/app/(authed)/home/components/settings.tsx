@@ -17,8 +17,8 @@ const Settings = () => {
   if (!account || isLoading) return <BoxSkeleton title="Account" />;
 
   return (
-    <div className="flex justify-center md:w-[450px] h-fit">
-      <Box title="ACCOUNT" className="flex flex-col flex-1 min-h-0 h-fit md:w-[450px] gap-8 p-8">
+    <div className="flex justify-center lg:w-[450px] h-fit">
+      <Box title="ACCOUNT" className="flex flex-col flex-1 min-h-0 h-fit lg:w-[450px] gap-8 p-8">
         <p className="text-center text-white/60 text-2xl break-all">{account.properties.email}</p>
         <Button variant="outline" onClick={onSignOut}>
           SIGN OUT
