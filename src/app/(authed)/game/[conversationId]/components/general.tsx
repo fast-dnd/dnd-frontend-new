@@ -1,21 +1,24 @@
 "use client";
-import { Box } from "@/components/ui/box";
-import useGetRoomData from "@/hooks/use-get-room-data";
-import { IPlayer } from "@/types/dnd";
+
 import { FormEventHandler, useEffect, useRef, useState } from "react";
-import Player from "./player";
-import { Button } from "@/components/ui/button";
+import { IMove, IQuestion } from "@/services/room-service";
 import { cn } from "@/utils/style-utils";
-import { AiOutlineLeft } from "react-icons/ai";
-import { Input } from "@/components/ui/input";
-import { IoMdSend } from "react-icons/io";
 import { zip } from "lodash";
+import { AiOutlineLeft } from "react-icons/ai";
+import { IoMdSend } from "react-icons/io";
+
+import { IPlayer } from "@/types/dnd";
+import useGetRoomData from "@/hooks/use-get-room-data";
+import { Box } from "@/components/ui/box";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Spinner from "@/components/ui/spinner";
+
 import useAskQuestion from "../hooks/use-ask-question";
 import useGeneralSocket from "../hooks/use-general-socket";
-import Spinner from "@/components/ui/spinner";
-import Question from "./question";
 import Moves from "./moves";
-import { IMove, IQuestion } from "@/services/room-service";
+import Player from "./player";
+import Question from "./question";
 
 const General = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -71,17 +74,17 @@ const General = (props: { conversationId: string }) => {
 
   if (!roomData || !currentPlayer) {
     return (
-      <Box title="" className="flex h-full justify-center items-center">
+      <Box title="" className="flex h-full items-center justify-center">
         <Spinner className="h-40 w-40" />
       </Box>
     );
   }
 
   return (
-    <Box title="general" className="flex flex-col min-h-0 flex-1 gap-8 p-8">
+    <Box title="general" className="flex min-h-0 flex-1 flex-col gap-8 p-8">
       <Player player={currentPlayer} />
       <div className="w-full border-t border-white/25" />
-      <div className={cn("flex flex-col min-h-0 flex-1 gap-8", statsOpened && "hidden")}>
+      <div className={cn("flex min-h-0 flex-1 flex-col gap-8", statsOpened && "hidden")}>
         {roomData.playerState.length > 1 && (
           <Button
             variant={"ghost"}
@@ -92,7 +95,7 @@ const General = (props: { conversationId: string }) => {
           </Button>
         )}
         {/* TODO: update when BE updates requests and socket events */}
-        <div className="flex flex-col min-h-0 h-full gap-4 pr-6 overflow-y-auto">
+        <div className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto pr-6">
           {zip(questionHistory, moveHistory).map((val, i) => (
             <div key={i} className="flex flex-col gap-4">
               {!!val[0] && !!val[0].question && <Question question={val[0]} />}
@@ -103,7 +106,7 @@ const General = (props: { conversationId: string }) => {
         </div>
 
         <form onSubmit={onSubmit} className="flex w-full items-end gap-8">
-          <div className="flex flex-col flex-1">
+          <div className="flex flex-1 flex-col">
             <Input
               disabled={!canAsk}
               label="Ask Bob"
@@ -118,10 +121,10 @@ const General = (props: { conversationId: string }) => {
             disabled={!canAsk}
             type="submit"
             variant="ghost"
-            className="text-tomato w-fit text-2xl"
+            className="w-fit text-2xl text-tomato"
           >
             {!asking && <IoMdSend />}
-            {asking && <Spinner className="m-0 w-6 h-6 opacity-50" />}
+            {asking && <Spinner className="m-0 h-6 w-6 opacity-50" />}
           </Button>
         </form>
       </div>
@@ -129,13 +132,13 @@ const General = (props: { conversationId: string }) => {
         <div className="flex w-full">
           <Button
             variant={"ghost"}
-            className="w-fit text-base  gap-2 flex items center text-white uppercase"
+            className="items center  flex w-fit gap-2 text-base uppercase text-white"
             onClick={() => setStatsOpened(false)}
           >
             <AiOutlineLeft /> <span className="mt-[1px]">back to events</span>
           </Button>
         </div>
-        <div className="flex flex-col min-h-0 flex-1 gap-8 overflow-auto">
+        <div className="flex min-h-0 flex-1 flex-col gap-8 overflow-auto">
           {roomData.playerState
             .filter((player) => player.accountId !== currentPlayer.accountId)
             .map((player) => (

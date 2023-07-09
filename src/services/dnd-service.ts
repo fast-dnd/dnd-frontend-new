@@ -1,7 +1,7 @@
 import { DefaultMove, IChampion, ILocation, MoveType } from "@/types/dnd";
+import { IAvatarSchema } from "@/app/(authed)/create-avatar/[[...avatarId]]/schemas/avatar-schema";
 
 import createApi from "./api-factory";
-import { IAvatarSchema } from "@/app/(authed)/create-avatar/[[...avatarId]]/schemas/avatar-schema";
 
 const dndApi = createApi({});
 

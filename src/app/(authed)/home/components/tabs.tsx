@@ -1,9 +1,10 @@
 "use client";
 
-import { cn } from "@/utils/style-utils";
 import { Fragment } from "react";
+import { cn } from "@/utils/style-utils";
+
 import { useHomeStore } from "../stores/tab-store";
-import { DungeonTabType, HomeTabType, dungeonTabs, homeTabs } from "../types/home";
+import { dungeonTabs, DungeonTabType, homeTabs, HomeTabType } from "../types/home";
 
 interface ITabsProps {
   homeOrDungeons: "home" | "dungeon";
@@ -17,13 +18,13 @@ const Tabs = ({ selectedTab, homeOrDungeons, onTabClick }: ITabsProps) => {
   const { setDungeonTab, setHomeTab } = useHomeStore((state) => state);
 
   return (
-    <div className="flex flex-row min-w-fit items-center gap-6">
+    <div className="flex min-w-fit flex-row items-center gap-6">
       {tabs.map<React.ReactNode>((tab, index) => (
         <Fragment key={tab}>
           <div
             className={cn(
               "cursor-pointer",
-              tab === selectedTab && "font-extrabold border-b-2 border-tomato",
+              tab === selectedTab && "border-b-2 border-tomato font-extrabold",
             )}
             onClick={() => {
               if (homeOrDungeons === "home") setHomeTab(tab as HomeTabType);
@@ -31,11 +32,11 @@ const Tabs = ({ selectedTab, homeOrDungeons, onTabClick }: ITabsProps) => {
               onTabClick?.();
             }}
           >
-            <p className="text-[22px] leading-7 tracking-[0.15em] -mr-[0.15em] whitespace-nowrap uppercase">
+            <p className="mr-[-0.15em] whitespace-nowrap text-[22px] uppercase leading-7 tracking-[0.15em]">
               {tab}
             </p>
           </div>
-          {index !== tabs.length - 1 && <div className="w-2 h-2 rotate-45 bg-white opacity-25" />}
+          {index !== tabs.length - 1 && <div className="h-2 w-2 rotate-45 bg-white opacity-25" />}
         </Fragment>
       ))}
     </div>

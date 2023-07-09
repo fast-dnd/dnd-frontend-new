@@ -1,10 +1,11 @@
-import { cn } from "@/utils/style-utils";
-import { cva, VariantProps } from "class-variance-authority";
 import React from "react";
 import { jibril } from "@/utils/fonts";
+import { cn } from "@/utils/style-utils";
+import { cva, VariantProps } from "class-variance-authority";
 import { AiOutlineExclamationCircle, AiOutlineHome, AiOutlineQuestionCircle } from "react-icons/ai";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
+
 import Spinner from "./spinner";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
 export const boxVariants = cva("bg-glass backdrop-blur-2xl");
 
@@ -41,17 +42,17 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
     ref,
   ) => {
     return (
-      <div className={cn("flex flex-col w-full", wrapperClassName)}>
-        <div className="py-6 border-t-2 relative border-tomato/90 bg-black flex items-center justify-center gap-4">
-          <div className="bg-tomato w-2 h-2 rotate-45" />
+      <div className={cn("flex w-full flex-col", wrapperClassName)}>
+        <div className="relative flex items-center justify-center gap-4 border-t-2 border-tomato/90 bg-black py-6">
+          <div className="h-2 w-2 rotate-45 bg-tomato" />
           <p
             className="mt-1 text-lg leading-none tracking-widest lg:text-xl lg:leading-7 lg:tracking-[0.2em]"
             style={jibril.style}
           >
             {title}
           </p>
-          <div className="bg-tomato w-2 h-2 rotate-45" />
-          <div className="flex gap-4 h-full absolute left-12 items-center">
+          <div className="h-2 w-2 rotate-45 bg-tomato" />
+          <div className="absolute left-12 flex h-full items-center gap-4">
             {home && (
               <TooltipProvider>
                 <Tooltip>
@@ -68,8 +69,8 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
               </TooltipProvider>
             )}
           </div>
-          <div className="flex gap-4 h-full absolute right-12 items-center">
-            {loading && <Spinner className="opacity-50 m-0" />}
+          <div className="absolute right-12 flex h-full items-center gap-4">
+            {loading && <Spinner className="m-0 opacity-50" />}
             {howTo && (
               <TooltipProvider>
                 <Tooltip>

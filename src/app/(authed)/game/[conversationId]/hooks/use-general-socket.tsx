@@ -1,8 +1,10 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { IGeneralSocketEvent } from "../types/events";
-import { socketIO } from "@/lib/socket";
 import { IQuestion } from "@/services/room-service";
+import { useQueryClient } from "@tanstack/react-query";
+
+import { socketIO } from "@/lib/socket";
+
+import { IGeneralSocketEvent } from "../types/events";
 
 const useGeneralSocket = (conversationId: string) => {
   const queryClient = useQueryClient();

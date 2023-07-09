@@ -1,5 +1,14 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
+import { DungeonDuration, dungeonDuration } from "@/utils/dungeon-options";
+import { AiFillSound, AiFillStar } from "react-icons/ai";
+import { BiImages } from "react-icons/bi";
+
+import useGetDungeon from "@/hooks/use-get-dungeon";
+import { useGetKingdom } from "@/hooks/use-get-kingdom";
+import useGetRoomData from "@/hooks/use-get-room-data";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,22 +19,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-import React, { useEffect, useState } from "react";
-import useGetDungeon from "@/hooks/use-get-dungeon";
 import Spinner from "@/components/ui/spinner";
-import { useGetKingdom } from "@/hooks/use-get-kingdom";
-import useUpdateAvatar from "../hooks/use-update-avatar";
-import useUpdateRole from "../hooks/use-update-role";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 import useRoomSocket from "../hooks/use-room-socket";
 import useStartGame from "../hooks/use-start-game";
-import useGetRoomData from "@/hooks/use-get-room-data";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { redirect } from "next/navigation";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { DungeonDuration, dungeonDuration } from "@/utils/dungeon-options";
-import { AiFillSound, AiFillStar } from "react-icons/ai";
-import { BiImages } from "react-icons/bi";
+import useUpdateAvatar from "../hooks/use-update-avatar";
+import useUpdateRole from "../hooks/use-update-role";
 import useUpdateRoom from "../hooks/use-update-room";
 
 const imagesAudio = [
@@ -87,7 +88,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
     return (
       <Box
         title="Join"
-        className="flex flex-col items-center justify-center gap-8 flex-1 min-h-0 w-full md:w-[490px] h-fit p-8"
+        className="flex h-fit min-h-0 w-full flex-1 flex-col items-center justify-center gap-8 p-8 md:w-[490px]"
       >
         <Spinner className="h-40 w-40" />
       </Box>
@@ -114,7 +115,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
   return (
     <Box
       title="Settings"
-      className="flex flex-col gap-5 lg:gap-8 flex-1 min-h-0 h-fit p-8 text-sm mb-4 lg:mb-0"
+      className="mb-4 flex h-fit min-h-0 flex-1 flex-col gap-5 p-8 text-sm lg:mb-0 lg:gap-8"
       wrapperClassName="block w-[90%] md:w-[490px] mx-auto"
     >
       <Select
@@ -156,7 +157,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
       <div className="w-full border-t border-white/20" />
 
       <ToggleGroup
-        className="inline-flex items-center justify-center w-full"
+        className="inline-flex w-full items-center justify-center"
         type="single"
         onValueChange={(value) => setDuration(value as DungeonDuration)}
         label="Bob Verbal Engagement"
@@ -167,11 +168,11 @@ const JoinEditInfo = (props: { conversationId: string }) => {
           <ToggleGroupItem
             key={duration.value}
             value={duration.value}
-            className="border-white/25 border text-sm lg:text-base px-4 lg:px-10 py-2 data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center w-full relative"
+            className="relative flex w-full items-center justify-center gap-2 border border-white/25 px-4 py-2 text-sm transition-all duration-300 data-[state=on]:border-tomato lg:px-10 lg:text-base"
           >
             {duration.value === dungeonData.recommendedResponseDetailsDepth && (
               <div className="absolute right-1 top-1">
-                <AiFillStar className="text-tomato h-3 w-3" />
+                <AiFillStar className="h-3 w-3 text-tomato" />
               </div>
             )}
             {duration.icon({})}
@@ -181,7 +182,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
       </ToggleGroup>
 
       <ToggleGroup
-        className="inline-flex gap-8 items-center justify-center w-full"
+        className="inline-flex w-full items-center justify-center gap-8"
         type="multiple"
         onValueChange={(value) => {
           if (value.includes("images")) setGenerateImages(true);
@@ -197,7 +198,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
           <ToggleGroupItem
             key={type.value}
             value={type.value}
-            className="border-white/25 border text-sm lg:text-base px-6 lg:px-10 py-2 data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center w-full capitalize"
+            className="flex w-full items-center justify-center gap-2 border border-white/25 px-6 py-2 text-sm capitalize transition-all duration-300 data-[state=on]:border-tomato lg:px-10 lg:text-base"
           >
             {type.icon}
             {type.value}

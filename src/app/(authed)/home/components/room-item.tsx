@@ -1,6 +1,6 @@
-import { IRoomArrayElement } from "@/services/room-service";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { IRoomArrayElement } from "@/services/room-service";
 import { AiOutlineRight } from "react-icons/ai";
 
 const RoomItem = (props: { room: IRoomArrayElement }) => {
@@ -8,7 +8,7 @@ const RoomItem = (props: { room: IRoomArrayElement }) => {
   const router = useRouter();
 
   return (
-    <div className="flex flex-row items-center gap-4 w-full hover:bg-white/10 p-4 rounded-md transition-colors duration-300">
+    <div className="flex w-full flex-row items-center gap-4 rounded-md p-4 transition-colors duration-300 hover:bg-white/10">
       <Image
         src={room.dungeon.imageUrl || "/images/default-dungeon.png"}
         alt={"Game"}
@@ -16,25 +16,25 @@ const RoomItem = (props: { room: IRoomArrayElement }) => {
         height={80}
         className="h-20"
       />
-      <div className="flex flex-col gap-1 flex-1 justify-center">
-        <p className="leading-5 font-medium tracking-widest uppercase line-clamp-2 lg:line-clamp-none w-48 lg:w-auto">
+      <div className="flex flex-1 flex-col justify-center gap-1">
+        <p className="line-clamp-2 w-48 font-medium uppercase leading-5 tracking-widest lg:line-clamp-none lg:w-auto">
           {room.dungeon.name}
         </p>
-        <p className="text-sm tracking-[0.15em] text-white/50 uppercase truncate w-48 lg:w-auto">
+        <p className="w-48 truncate text-sm uppercase tracking-[0.15em] text-white/50 lg:w-auto">
           {room.avatar.name}
         </p>
         {room.state === "CLOSED" && (
-          <p className="text-sm tracking-[0.15em] text-white/50 uppercase">FINISHED</p>
+          <p className="text-sm uppercase tracking-[0.15em] text-white/50">FINISHED</p>
         )}
         {room.state === "GAMING" && (
-          <p className="text-sm tracking-[0.15em] text-tomato/50 uppercase">
+          <p className="text-sm uppercase tracking-[0.15em] text-tomato/50">
             RESUME (TURN {room.turn + 1})
           </p>
         )}
       </div>
       {room.state === "GAMING" && (
         <AiOutlineRight
-          className="cursor-pointer text-tomato/50 h-8 w-5 hover:text-tomato transition-colors duration-300"
+          className="h-8 w-5 cursor-pointer text-tomato/50 transition-colors duration-300 hover:text-tomato"
           preserveAspectRatio="none"
           onClick={() => router.push(`/game/${room.conversationId}`)}
         />

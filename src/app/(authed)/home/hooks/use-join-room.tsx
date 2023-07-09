@@ -1,6 +1,6 @@
+import { useRouter } from "next/navigation";
 import roomService from "@/services/room-service";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 
 const useJoinRoom = () => {
   const router = useRouter();

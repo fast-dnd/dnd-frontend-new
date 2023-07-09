@@ -1,6 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { cn } from "@/utils/style-utils";
+import { AiOutlineLeft } from "react-icons/ai";
+
+import { IDungeon } from "@/types/dnd";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,12 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Skeleton from "@/components/ui/skeleton";
-import { IDungeon } from "@/types/dnd";
-import { cn } from "@/utils/style-utils";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { AiOutlineLeft } from "react-icons/ai";
+
 import useAddFavorite from "../hooks/use-add-favorite";
 import useCreateRoom from "../hooks/use-create-room";
 import {
@@ -26,7 +28,7 @@ import {
   useGetRecommendedDungeons,
 } from "../hooks/use-get-home-data";
 import { useHomeStore } from "../stores/tab-store";
-import { DungeonTabType, dungeonTabs } from "../types/home";
+import { dungeonTabs, DungeonTabType } from "../types/home";
 import Tabs from "./tabs";
 
 const CreateRoom = () => {
@@ -52,8 +54,8 @@ const CreateRoom = () => {
 
   if (!isLoading && !dungeons) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="text-white text-5xl">Something went wrong</div>
+      <div className="flex h-full w-full items-center justify-center">
+        <div className="text-5xl text-white">Something went wrong</div>
       </div>
     );
   }
@@ -109,14 +111,14 @@ const CreateRoom = () => {
         </>
       )}
 
-      <div className="flex flex-col gap-4 flex-1 max-h-[350px] lg:max-h-full overflow-y-auto lg:pr-8">
+      <div className="flex max-h-[350px] flex-1 flex-col gap-4 overflow-y-auto lg:max-h-full lg:pr-8">
         {!isLoading &&
           selectedDungeon === undefined &&
           dungeons.map((dungeon) => (
             <div
               key={dungeon._id}
               className={cn(
-                "cursor-pointer flex flex-row gap-8 hover:bg-white/5 rounded-md p-4 pr-0 transition-all duration-300 border lg:border-0 border-white/10",
+                "flex cursor-pointer flex-row gap-8 rounded-md border border-white/10 p-4 pr-0 transition-all duration-300 hover:bg-white/5 lg:border-0",
                 dungeon === selectedDungeon && "bg-white/5",
               )}
               onClick={() => setSelectedDungeon(selectedDungeon === dungeon ? undefined : dungeon)}
@@ -126,25 +128,25 @@ const CreateRoom = () => {
                 alt={dungeon.name}
                 width={180}
                 height={180}
-                className="hidden lg:h-[180px] lg:w-[180px] lg:block"
+                className="hidden lg:block lg:h-[180px] lg:w-[180px]"
               />
-              <div className="flex flex-col lg:py-4 gap-2 lg:gap-4 w-full pr-4">
-                <div className="hidden lg:flex flex-row justify-between">
-                  <p className="text-lg lg:text-[22px] leading-7 font-medium tracking-widest lg:tracking-[0.15em] uppercase truncate order-1 text-center lg:text-left">
+              <div className="flex w-full flex-col gap-2 pr-4 lg:gap-4 lg:py-4">
+                <div className="hidden flex-row justify-between lg:flex">
+                  <p className="order-1 truncate text-center text-lg font-medium uppercase leading-7 tracking-widest lg:text-left lg:text-[22px] lg:tracking-[0.15em]">
                     {dungeon.name}
                   </p>
                 </div>
-                <p className="text-lg lg:text-[22px] leading-7 font-medium tracking-widest lg:tracking-[0.15em] uppercase truncate order-1 lg:hidden text-center lg:text-left">
+                <p className="order-1 truncate text-center text-lg font-medium uppercase leading-7 tracking-widest lg:hidden lg:text-left lg:text-[22px] lg:tracking-[0.15em]">
                   {dungeon.name}
                 </p>
 
-                <p className="font-light text-lg tracking-widest break-all line-clamp-2 pr-2 order-2 lg:order-3 text-center lg:text-left">
+                <p className="order-2 line-clamp-2 break-all pr-2 text-center text-lg font-light tracking-widest lg:order-3 lg:text-left">
                   {dungeon.description}
                 </p>
-                <div className="flex flex-wrap gap-2 lg:gap-4 order-4">
+                <div className="order-4 flex flex-wrap gap-2 lg:gap-4">
                   {dungeon.tags.map((tag) => (
                     <div key={tag} className="border-[1.5px] border-white/25">
-                      <p className="text-sm leading-7 tracking-[2.4px] px-1.5 lg:px-3 py-1 capitalize">
+                      <p className="px-1.5 py-1 text-sm capitalize leading-7 tracking-[2.4px] lg:px-3">
                         {tag}
                       </p>
                     </div>
@@ -155,7 +157,7 @@ const CreateRoom = () => {
           ))}
 
         {!isLoading && selectedDungeon !== undefined && (
-          <div className="flex flex-col gap-4 lg:gap-8 lg:pr-4 pr-0">
+          <div className="flex flex-col gap-4 pr-0 lg:gap-8 lg:pr-4">
             <div className="flex gap-4 lg:gap-8">
               <Image
                 src={selectedDungeon.imageUrl || "/images/default-dungeon.png"}
@@ -164,34 +166,37 @@ const CreateRoom = () => {
                 height={180}
                 className="h-20 w-20 lg:h-[180px] lg:w-[180px]"
               />
-              <div className="hidden lg:flex flex-col gap-4">
-                <p className="lg:text-[22px] leading-7 font-medium tracking-widest lg:tracking-[0.15em] uppercase">
+              <p className="inline break-all font-medium uppercase leading-7 tracking-widest lg:hidden lg:text-[22px] lg:tracking-[0.15em]">
+                {selectedDungeon.name}
+              </p>
+              <div className="hidden flex-col gap-4 lg:flex">
+                <p className="font-medium uppercase leading-7 tracking-widest lg:text-[22px] lg:tracking-[0.15em]">
                   {selectedDungeon.name}
                 </p>
-                <div className="hidden lg:flex flex-wrap gap-2 lg:gap-4">
+                <div className="hidden flex-wrap gap-2 lg:flex lg:gap-4">
                   {selectedDungeon.tags.map((tag) => (
                     <div key={tag} className="border-[1.5px] border-white/25">
-                      <p className="text-sm leading-7 tracking-[2.4px] px-1.5 lg:px-3 py-1 capitalize">
+                      <p className="px-1.5 py-1 text-sm capitalize leading-7 tracking-[2.4px] lg:px-3">
                         {tag}
                       </p>
                     </div>
                   ))}
                 </div>
-                <p className="font-light text-sm lg:text-lg tracking-widest">
+                <p className="text-sm font-light tracking-widest lg:text-lg">
                   {selectedDungeon.description}
                 </p>
               </div>
             </div>
-            <div className="flex lg:hidden flex-wrap gap-2 lg:gap-4">
+            <div className="flex flex-wrap gap-2 lg:hidden lg:gap-4">
               {selectedDungeon.tags.map((tag) => (
                 <div key={tag} className="border-[1.5px] border-white/25">
-                  <p className="text-sm leading-7 tracking-[2.4px] px-1.5 lg:px-3 py-1 capitalize">
+                  <p className="px-1.5 py-1 text-sm capitalize leading-7 tracking-[2.4px] lg:px-3">
                     {tag}
                   </p>
                 </div>
               ))}
             </div>
-            <p className="inline lg:hidden font-light text-sm lg:text-lg tracking-widest">
+            <p className="inline text-sm font-light tracking-widest lg:hidden lg:text-lg">
               {selectedDungeon.description}
             </p>
           </div>
@@ -200,32 +205,32 @@ const CreateRoom = () => {
       </div>
 
       {dungeons?.length === 0 && (
-        <div className="flex w-full h-full flex-col gap-4 lg:gap-8 items-center justify-center py-16">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-4 py-16 lg:gap-8">
           <Image src="/images/star-icon.svg" alt="Empty dungeon" width={68} height={64} />
-          <p className="font-semibold text-lg lg:text-2xl leading-7 tracking-widest lg:tracking-[3.3px] text-center">
+          <p className="text-center text-lg font-semibold leading-7 tracking-widest lg:text-2xl lg:tracking-[3.3px]">
             YOU HAVE NO {dungeonTab === "favorite dungeons" ? "FAVORITE" : ""} DUNGEONS YET
           </p>
           {dungeonTab === "favorite dungeons" && (
-            <p className="text-sm lg:text-lg leading-5 lg:leading-7 tracking-wide lg:tracking-widest font-light text-center text-white/50">
+            <p className="text-center text-sm font-light leading-5 tracking-wide text-white/50 lg:text-lg lg:leading-7 lg:tracking-widest">
               Enter the ID below to add a new one
             </p>
           )}
         </div>
       )}
 
-      <div className="flex flex-row gap-8 justify-center items-center">
+      <div className="flex flex-row items-center justify-center gap-8">
         {dungeonTab === "favorite dungeons" && selectedDungeon === undefined && (
-          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 flex-1 justify-end">
+          <div className="flex flex-1 flex-col justify-end gap-4 lg:flex-row lg:gap-8">
             <Input
               placeholder="Enter dungeon ID..."
               onChange={(e) => setDungeonId(e.target.value)}
-              className="m-0 h-9 lg:h-14 min-w-[200px] lg:text-xl"
+              className="m-0 h-9 min-w-[200px] lg:h-14 lg:text-xl"
             />
             <Button
               isLoading={isAddingFavorite}
               disabled={!dungeonId}
               variant={dungeonId ? "primary" : "outline"}
-              className="h-9 lg:h-14 px-8 w-full lg:w-fit"
+              className="h-9 w-full px-8 lg:h-14 lg:w-fit"
               onClick={() => addFavorite(dungeonId)}
             >
               ADD FAVORITE
@@ -234,16 +239,16 @@ const CreateRoom = () => {
         )}
 
         {selectedDungeon !== undefined && (
-          <div className="flex flex-row justify-between lg:justify-end lg:gap-8 w-full">
+          <div className="flex w-full flex-row justify-between lg:justify-end lg:gap-8">
             <Button
-              className="text-sm lg:text-lg w-fit flex gap-2"
+              className="flex w-fit gap-2 text-sm lg:text-lg"
               variant="ghost"
               onClick={() => setSelectedDungeon(undefined)}
             >
               <AiOutlineLeft className="inline-block" /> GO BACK
             </Button>
             <Button
-              className="whitespace-nowrap text-sm lg:text-lg w-fit px-8 uppercase"
+              className="w-fit whitespace-nowrap px-8 text-sm uppercase lg:text-lg"
               isLoading={isCreatingRoom || loadingRoom}
               onClick={onCreateRoom}
             >

@@ -1,8 +1,8 @@
 "use client";
 
-import checkJWT from "@/utils/check-jwt";
-import { redirect, usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { redirect, usePathname, useRouter } from "next/navigation";
+import checkJWT from "@/utils/check-jwt";
 
 const useAuthCheck = () => {
   const pathname = usePathname();

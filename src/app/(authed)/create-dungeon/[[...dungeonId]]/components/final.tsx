@@ -1,11 +1,13 @@
 "use client";
 
+import React from "react";
+
+import useCopy from "@/hooks/use-copy";
+import useStore from "@/hooks/use-store";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import useStore from "@/hooks/use-store";
-import React from "react";
+
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
-import useCopy from "@/hooks/use-copy";
 
 const Final = () => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
@@ -17,30 +19,30 @@ const Final = () => {
   const { dungeonFormData } = dungeonFormStore;
 
   return (
-    <div className="flex w-full h-fit lg:h-full">
+    <div className="flex h-fit w-full lg:h-full">
       <Box
         title="CREATE DUNGEON"
-        className="flex flex-col min-h-0 flex-1 p-5 gap-5 lg:p-8 lg:gap-8 mb-4 lg:mb-0"
+        className="mb-4 flex min-h-0 flex-1 flex-col gap-5 p-5 lg:mb-0 lg:gap-8 lg:p-8"
         wrapperClassName="w-[95%] lg:w-[1200px] mx-auto"
       >
-        <div className="flex flex-row items-center gap-8 justify-between">
-          <p className="text-lg lg:text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
+        <div className="flex flex-row items-center justify-between gap-8">
+          <p className="w-full text-lg font-semibold uppercase leading-7 tracking-[0.15em] lg:text-[22px]">
             {stepTitles["FINAL"]}
           </p>
         </div>
         <div className="w-full border-t border-white/20" />
-        <div className="flex flex-1 lg:basis-0 min-h-0">
+        <div className="flex min-h-0 flex-1 lg:basis-0">
           <div className="w-full">
             <div className="flex flex-col gap-8">
-              <p className="lg:text-xl tracking-[0.07em] -my-1 text-white/50 break-words">
+              <p className="-my-1 break-words tracking-[0.07em] text-white/50 lg:text-xl">
                 This is your Dungeon ID. Copy to share with your friends!
               </p>
-              <div className="flex flex-col lg:flex-row items-center gap-8">
-                <p className="px-4 py-2 bg-white/5 font-medium text-center lg:text-2xl tracking-widest w-full">
+              <div className="flex flex-col items-center gap-8 lg:flex-row">
+                <p className="w-full bg-white/5 px-4 py-2 text-center font-medium tracking-widest lg:text-2xl">
                   {dungeonFormData.id}
                 </p>
                 <Button
-                  className="w-full lg:w-fit px-8"
+                  className="w-full px-8 lg:w-fit"
                   onClick={() => {
                     navigator.clipboard.writeText(dungeonFormData.id ?? "");
                     setCopied(true);

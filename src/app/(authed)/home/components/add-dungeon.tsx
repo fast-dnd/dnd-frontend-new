@@ -1,8 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+import { Button } from "@/components/ui/button";
 
 const AddDungeon = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const AddDungeon = () => {
     <div className="flex flex-row justify-end gap-8">
       <Button
         isLoading={createLoading}
-        className="w-full lg:w-fit px-8"
+        className="w-full px-8 lg:w-fit"
         onClick={() => {
           setCreateLoading(true);
           router.push("/create-dungeon");

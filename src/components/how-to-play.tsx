@@ -1,5 +1,6 @@
 import { AiFillHeart, AiOutlineLeft } from "react-icons/ai";
 import { BsFillLightningFill, BsStars } from "react-icons/bs";
+
 import { Box } from "./ui/box";
 
 interface IHowToPlayProps {
@@ -9,10 +10,10 @@ interface IHowToPlayProps {
 
 const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
   return (
-    <div className="flex gap-8 flex-col lg:items-center lg:justify-center overflow-x-hidden">
+    <div className="flex flex-col gap-8 overflow-x-hidden lg:items-center lg:justify-center">
       {onHideHowToPlay && hideText && (
         <div
-          className="cursor-pointer flex gap-1 items-center text-lg font-medium tracking-[0.08em] uppercase"
+          className="flex cursor-pointer items-center gap-1 text-lg font-medium uppercase tracking-[0.08em]"
           onClick={onHideHowToPlay}
         >
           <AiOutlineLeft className="inline-block" /> {hideText}
@@ -21,13 +22,13 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
       <div className="w-fit px-5 lg:px-0">
         <Box
           title="HOW TO PLAY"
-          className="tracking-wider flex flex-col lg:flex-row gap-5 lg:gap-12 items-start justify-center min-h-0 flex-1 px-5 py-5 lg:px-12 lg:py-8 mb-4"
+          className="mb-4 flex min-h-0 flex-1 flex-col items-start justify-center gap-5 p-5 tracking-wider lg:flex-row lg:gap-12 lg:px-12 lg:py-8"
         >
-          <div className="lg:w-[444px] flex flex-col gap-5">
-            <p className="tracking-widest font-semibold text-lg lg:text-2xl uppercase border-b border-b-tomato w-fit">
+          <div className="flex flex-col gap-5 lg:w-[444px]">
+            <p className="w-fit border-b border-b-tomato text-lg font-semibold uppercase tracking-widest lg:text-2xl">
               Quick guide
             </p>
-            <p className="lg:text-lg leading-6">
+            <p className="leading-6 lg:text-lg">
               🎲 The game consists of a <b>maximum of 8 turns</b>. The turns alternate between{" "}
               <b>preparation turns</b> and <b>free will turns</b>.
               <br />
@@ -50,27 +51,27 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
             </p>
           </div>
 
-          <div className="hidden lg:block border-l border-l-white/20 h-full" />
-          <div className="block lg:hidden border-t border-t-white/20 w-full" />
+          <div className="hidden h-full border-l border-l-white/20 lg:block" />
+          <div className="block w-full border-t border-t-white/20 lg:hidden" />
 
-          <div className="lg:w-[770px] flex flex-col">
-            <p className="font-semibold text-lg lg:text-2xl uppercase border-b border-b-tomato w-fit tracking-widest">
+          <div className="flex flex-col lg:w-[770px]">
+            <p className="w-fit border-b border-b-tomato text-lg font-semibold uppercase tracking-widest lg:text-2xl">
               Movement probabilities
             </p>
-            <p className="font-semibold lg:text-lg mt-4">PREPARATION TURNS</p>
-            <p className="lg:text-lg mt-4 lg:mt-2">
+            <p className="mt-4 font-semibold lg:text-lg">PREPARATION TURNS</p>
+            <p className="mt-4 lg:mt-2 lg:text-lg">
               Depending of what action you choose, the total dice value will have a different effect
               on your champion stats.
             </p>
-            <div className="overflow-x-auto w-[310px] sm:w-full pb-2 lg:pb-0">
-              <table className="w-full mt-4 lg:mt-2 font-normal whitespace-nowrap">
+            <div className="w-[310px] overflow-x-auto pb-2 sm:w-full lg:pb-0">
+              <table className="mt-4 w-full whitespace-nowrap font-normal lg:mt-2">
                 <thead>
-                  <tr className="text-center bg-white/25">
-                    <th className="text-left px-3 py-2 border-b border-b-white/25">Dice total</th>
+                  <tr className="bg-white/25 text-center">
+                    <th className="border-b border-b-white/25 px-3 py-2 text-left">Dice total</th>
                     {["2 to 6", "7 or 8", "9 or 10", "11 or 12"].map((value, index) => (
                       <th
                         key={index}
-                        className="border-l border-l-white/25 border-b border-b-white/25 px-3 py-2"
+                        className="border-b border-l border-b-white/25 border-l-white/25 px-3 py-2"
                       >
                         {value}
                       </th>
@@ -79,13 +80,13 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
                 </thead>
                 <tbody className="bg-white/20">
                   <tr className="text-center">
-                    <td className="text-left px-3 py-2 border-b border-b-white/25">
+                    <td className="border-b border-b-white/25 px-3 py-2 text-left">
                       Try to heal yourself
                     </td>
                     {["-2", "+1", "+2", "+3"].map((value, index) => (
                       <td
                         key={index}
-                        className="border-l border-l-white/25 border-b border-b-white/25"
+                        className="border-b border-l border-b-white/25 border-l-white/25"
                       >
                         <div className="flex flex-row items-center justify-center gap-2">
                           <p>{value}</p>
@@ -96,13 +97,13 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
                   </tr>
 
                   <tr className="text-center">
-                    <td className="text-left px-3 py-2 border-b border-b-white/25">
+                    <td className="border-b border-b-white/25 px-3 py-2 text-left">
                       Try to find something useful
                     </td>
                     {["-2", "+1", "+2", "+3"].map((value, index) => (
                       <td
                         key={index}
-                        className="border-l border-l-white/25 border-b border-b-white/25"
+                        className="border-b border-l border-b-white/25 border-l-white/25"
                       >
                         <div className="flex flex-row items-center justify-center gap-2">
                           <p>{value}</p>
@@ -113,17 +114,17 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
                   </tr>
 
                   <tr className="text-center">
-                    <td className="text-left px-3 py-2 border-b border-b-white/25">
+                    <td className="border-b border-b-white/25 px-3 py-2 text-left">
                       Talk with the team
                     </td>
-                    <td className="border-l border-l-white/25 border-b border-b-white/25">
+                    <td className="border-b border-l border-b-white/25 border-l-white/25">
                       <div className="flex flex-row items-center justify-center gap-2">
                         <p>-1</p>
                         <BsFillLightningFill />
                       </div>
                     </td>
                     <td
-                      className="border-l border-l-white/25 border-b border-b-white/25"
+                      className="border-b border-l border-b-white/25 border-l-white/25"
                       colSpan={3}
                     >
                       <div className="flex flex-row items-center justify-center gap-2">
@@ -134,7 +135,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
                   </tr>
 
                   <tr className="text-center">
-                    <td className="text-left px-3 py-2">Take a rest</td>
+                    <td className="px-3 py-2 text-left">Take a rest</td>
                     <td className="border-l border-l-white/25" colSpan={4}>
                       No effect on your stats
                     </td>
@@ -143,21 +144,21 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
               </table>
             </div>
 
-            <p className="font-semibold lg:text-lg mt-8 lg:tracking-widest">FREE WILL TURNS</p>
-            <p className="lg:text-lg mt-2">
+            <p className="mt-8 font-semibold lg:text-lg lg:tracking-widest">FREE WILL TURNS</p>
+            <p className="mt-2 lg:text-lg">
               Despite what you decide, the total dice value will have an effect on your champion
               stats.
             </p>
 
-            <div className="overflow-x-auto w-[310px] sm:w-full pb-2 lg:pb-0">
-              <table className="w-full mt-4 lg:mt-2 font-normal lg:table-fixed whitespace-nowrap">
+            <div className="w-[310px] overflow-x-auto pb-2 sm:w-full lg:pb-0">
+              <table className="mt-4 w-full whitespace-nowrap font-normal lg:mt-2 lg:table-fixed">
                 <thead>
-                  <tr className="text-center bg-white/25">
-                    <th className="text-left px-3 py-2 border-b border-b-white/25">Dice total</th>
+                  <tr className="bg-white/25 text-center">
+                    <th className="border-b border-b-white/25 px-3 py-2 text-left">Dice total</th>
                     {["2 to 6", "7 to 12"].map((value, index) => (
                       <th
                         key={index}
-                        className="border-l border-l-white/25 border-b border-b-white/25 px-3 py-2"
+                        className="border-b border-l border-b-white/25 border-l-white/25 px-3 py-2"
                       >
                         {value}
                       </th>
@@ -166,13 +167,13 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
                 </thead>
                 <tbody className="bg-white/20">
                   <tr className="text-center">
-                    <td className="text-left px-3 py-2 border-b border-b-white/25">
+                    <td className="border-b border-b-white/25 px-3 py-2 text-left">
                       Try to find something useful
                     </td>
                     {["-2", "+1"].map((value, index) => (
                       <td
                         key={index}
-                        className="border-l border-l-white/25 border-b border-b-white/25"
+                        className="border-b border-l border-b-white/25 border-l-white/25"
                       >
                         <div className="flex flex-row items-center justify-center gap-2">
                           <p>{value}</p>

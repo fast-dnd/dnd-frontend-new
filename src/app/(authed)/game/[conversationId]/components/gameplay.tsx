@@ -1,28 +1,29 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { IPlayMove, IPlayMoveResponse } from "@/services/game-service";
+import { cn } from "@/utils/style-utils";
+import { BsFillArrowRightSquareFill } from "react-icons/bs";
+import { FaDice, FaRobot } from "react-icons/fa";
+import { HiSparkles } from "react-icons/hi";
+
+import { defaultMoves, IPlayer } from "@/types/dnd";
+import useGetDungeon from "@/hooks/use-get-dungeon";
+import useGetRoomData from "@/hooks/use-get-room-data";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/modal";
 import Spinner from "@/components/ui/spinner";
 import { TextArea } from "@/components/ui/text-area";
-import useGetDungeon from "@/hooks/use-get-dungeon";
-import useGetRoomData from "@/hooks/use-get-room-data";
-import { IPlayMove, IPlayMoveResponse } from "@/services/game-service";
-import { IPlayer, defaultMoves } from "@/types/dnd";
-import { cn } from "@/utils/style-utils";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
 
-import { FaDice, FaRobot } from "react-icons/fa";
-import { HiSparkles } from "react-icons/hi";
 import useGameplaySocket from "../hooks/use-gameplay-socket";
 import usePlayMove from "../hooks/use-play-move";
 import { useGameStore } from "../stores/game-store";
 import { randomDice } from "../utils/dice";
 import Die from "./die";
 import StyledAudio from "./styled-audio";
-import { BsFillArrowRightSquareFill } from "react-icons/bs";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -128,7 +129,7 @@ const Gameplay = (props: { conversationId: string }) => {
 
   if (!roomData || !dungeonData || !currentPlayer)
     return (
-      <Box title="" className="flex h-full justify-center items-center">
+      <Box title="" className="flex h-full items-center justify-center">
         <Spinner className="h-40 w-40" />
       </Box>
     );
@@ -182,21 +183,21 @@ const Gameplay = (props: { conversationId: string }) => {
         router.push("/home");
       }}
       loading={loadingText}
-      className="flex flex-col min-h-0 flex-1 gap-8 px-12 py-8"
+      className="flex min-h-0 flex-1 flex-col gap-8 px-12 py-8"
     >
-      <div className="w-full flex flex-col flex-1 gap-8 pr-6 overflow-y-auto">
+      <div className="flex w-full flex-1 flex-col gap-8 overflow-y-auto pr-6">
         {stories.map((story, i) => (
-          <div key={story} className="flex flex-col gap-8 w-full">
-            <div className="w-full flex gap-8 items-center">
-              <div className="font-semibold text-2xl tracking-[0.2em] uppercase">
-                <span className="text-tomato mr-2">TURN {i + 1}.</span>
+          <div key={story} className="flex w-full flex-col gap-8">
+            <div className="flex w-full items-center gap-8">
+              <div className="text-2xl font-semibold uppercase tracking-[0.2em]">
+                <span className="mr-2 text-tomato">TURN {i + 1}.</span>
                 {dungeonData.locations[Math.floor(i / 2)]?.name}
               </div>
               <div className="flex-1 border-t border-tomato" />
             </div>
             <div>
               {roomData.generatedImages[i] && roomData.generateImages && i % 2 === 0 && (
-                <div className="h-72 w-72 inline-block float-left mr-6 mb-4">
+                <div className="float-left mb-4 mr-6 inline-block h-72 w-72">
                   {roomData.generatedImages[i].length > 0 ? (
                     <Image
                       src={roomData.generatedImages[i] || "/images/default-dungeon.png"}
@@ -208,9 +209,9 @@ const Gameplay = (props: { conversationId: string }) => {
                       onClick={() => setImageModal(roomData.generatedImages[i])}
                     />
                   ) : (
-                    <div className="flex items-center justify-center animate-pulse h-72 w-72 rounded  bg-gray-600">
+                    <div className="flex h-72 w-72 animate-pulse items-center justify-center rounded  bg-gray-600">
                       <svg
-                        className="w-24 h-24 text-gray-200"
+                        className="h-24 w-24 text-gray-200"
                         xmlns="http://www.w3.org/2000/svg"
                         aria-hidden="true"
                         fill="currentColor"
@@ -236,26 +237,26 @@ const Gameplay = (props: { conversationId: string }) => {
         ))}
         <div ref={autoBottomScrollDiv} />
       </div>
-      <div className="flex gap-8 w-full">
+      <div className="flex w-full gap-8">
         {roomData.location.phase === "discovery" && (
-          <div className="flex flex-col flex-1 gap-4">
+          <div className="flex flex-1 flex-col gap-4">
             <div
               className={cn(
-                "py-2.5 px-8 text-center bg-white/5 text-xl tracking-[0.07em] indent-[0.07em]",
+                "bg-white/5 px-8 py-2.5 text-center indent-[0.07em] text-xl tracking-[0.07em]",
                 !canPlay && "text-white/50",
               )}
             >
               <span className="font-semibold">Choose an action</span> - {timeToDisplay()} Left
             </div>
-            <div className="flex gap-4 w-full flex-wrap">
+            <div className="flex w-full flex-wrap gap-4">
               {defaultMoves.map((dMove) => (
                 <Button
                   key={dMove}
                   variant="ghost"
                   disabled={!canPlay}
                   className={cn(
-                    "border-white/25 flex-1 h-12 basis-1/3 normal-case text-white px-2",
-                    dMove === move && "border-tomato border-2",
+                    "h-12 flex-1 basis-1/3 border-white/25 px-2 normal-case text-white",
+                    dMove === move && "border-2 border-tomato",
                     currentPlayer.champion.moveMapping[dMove].length > 24 && "text-sm",
                     currentPlayer.champion.moveMapping[dMove].length > 48 && "text-xs",
                   )}
@@ -268,17 +269,17 @@ const Gameplay = (props: { conversationId: string }) => {
           </div>
         )}
         {roomData.location.phase === "end" && (
-          <div className="flex flex-col h-full flex-1 gap-4">
+          <div className="flex h-full flex-1 flex-col gap-4">
             <div
               className={cn(
-                "py-2.5 px-8 text-center bg-white/5 text-xl tracking-[0.07em] indent-[0.07em]",
+                "bg-white/5 px-8 py-2.5 text-center indent-[0.07em] text-xl tracking-[0.07em]",
                 !canPlay && "text-white/50",
               )}
             >
               <span className="font-semibold">Type your move and select a power up</span> -{" "}
               {timeToDisplay()} Left
             </div>
-            <div className="flex gap-4 h-full">
+            <div className="flex h-full gap-4">
               <TextArea
                 className="m-0 h-full border-white/50"
                 placeholder="I found a secret tunnel and escape through it..."
@@ -293,7 +294,7 @@ const Gameplay = (props: { conversationId: string }) => {
                     key={i}
                     disabled={!canPlay || currentPlayer.mana < i}
                     className={cn(
-                      "font-semibold h-8 text-white bg-white/5 tracking-[0.2em]",
+                      "h-8 bg-white/5 font-semibold tracking-[0.2em] text-white",
                       powerUp === i && "border-tomato",
                     )}
                     onClick={() => setPowerUp(i)}
@@ -305,15 +306,15 @@ const Gameplay = (props: { conversationId: string }) => {
             </div>
           </div>
         )}
-        <div className="flex flex-col justify-between bg-white/5 w-[270px]">
-          <div className="flex items-center relative justify-center gap-4 h-32">
+        <div className="flex w-[270px] flex-col justify-between bg-white/5">
+          <div className="relative flex h-32 items-center justify-center gap-4">
             {((rollInfo?.diceAfterBonus || 0) >= 2 || submitting) && (
               <>
                 {rollButtonState === "ROLLING" &&
                   dice.map((roll, i) => <Die key={i} roll={roll} />)}
 
                 {!!rollInfo && rollButtonState !== "ROLLING" && (
-                  <div className="flex flex-col w-full px-4">
+                  <div className="flex w-full flex-col px-4">
                     <div className="flex w-full justify-between">
                       <div className="flex items-center gap-2">
                         <FaDice /> You rolled
@@ -384,7 +385,7 @@ const Gameplay = (props: { conversationId: string }) => {
         <Image
           src={imageModal}
           alt="image-modal"
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
           height={280}
           width={280}
         />

@@ -1,5 +1,5 @@
-import { cn } from "@/utils/style-utils";
 import React from "react";
+import { cn } from "@/utils/style-utils";
 
 const Spinner = (props: React.SVGProps<SVGSVGElement>) => {
   const { className, ...rest } = props;

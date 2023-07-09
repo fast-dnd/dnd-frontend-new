@@ -1,8 +1,10 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { IGameplaySocketEvent } from "../types/events";
-import { socketIO } from "@/lib/socket";
+import { useQueryClient } from "@tanstack/react-query";
+
 import { DefaultMove } from "@/types/dnd";
+import { socketIO } from "@/lib/socket";
+
+import { IGameplaySocketEvent } from "../types/events";
 
 const useGameplaySocket = (conversationId: string) => {
   const queryClient = useQueryClient();

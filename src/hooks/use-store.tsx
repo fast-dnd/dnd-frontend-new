@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 //! Needed for zustand stores that use localstorage persistence because of next.js hydration
 const useStore = <T, F>(

@@ -1,14 +1,16 @@
 "use client";
 
-import { Box } from "@/components/ui/box";
 import React from "react";
-import Spinner from "@/components/ui/spinner";
-import useGetRoomData from "@/hooks/use-get-room-data";
-import Player from "./player";
 import Image from "next/image";
-import useGetDungeon from "@/hooks/use-get-dungeon";
-import { Button } from "@/components/ui/button";
+
 import useCopy from "@/hooks/use-copy";
+import useGetDungeon from "@/hooks/use-get-dungeon";
+import useGetRoomData from "@/hooks/use-get-room-data";
+import { Box } from "@/components/ui/box";
+import { Button } from "@/components/ui/button";
+import Spinner from "@/components/ui/spinner";
+
+import Player from "./player";
 
 const RoomInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -22,7 +24,7 @@ const RoomInfo = (props: { conversationId: string }) => {
     return (
       <Box
         title="ROOM"
-        className="flex flex-col items-center justify-center gap-8 min-h-0 flex-1 w-full md:w-[490px] p-8"
+        className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-8 p-8 md:w-[490px]"
       >
         <Spinner className="h-40 w-40" />
       </Box>
@@ -37,15 +39,15 @@ const RoomInfo = (props: { conversationId: string }) => {
   return (
     <Box
       title="ROOM"
-      className="flex flex-col min-h-0 flex-1 lg:w-[490px] p-5 gap-5 lg:p-8 lg:gap-8"
+      className="flex min-h-0 flex-1 flex-col gap-5 p-5 lg:w-[490px] lg:gap-8 lg:p-8"
       wrapperClassName="block w-[90%] md:w-[490px] mx-auto"
     >
-      <div className="flex text-center flex-col lg:flex-row justify-between gap-4">
-        <p className="mt-2 text-xl flex-1 whitespace-nowrap">{roomData.link}</p>
+      <div className="flex flex-col justify-between gap-4 text-center lg:flex-row">
+        <p className="mt-2 flex-1 whitespace-nowrap text-xl">{roomData.link}</p>
         <Button
           onClick={onCopyRoomId}
           variant={copied ? "primary" : "outline"}
-          className="uppercase text-lg w-full lg:w-fit px-8 whitespace-nowrap"
+          className="w-full whitespace-nowrap px-8 text-lg uppercase lg:w-fit"
         >
           {copied ? "Copied" : "Copy ID"}
         </Button>
@@ -53,7 +55,7 @@ const RoomInfo = (props: { conversationId: string }) => {
 
       <div className="w-full border-t border-white/20" />
 
-      <p className="text-lg lg:text-2xl leading-7 tracking-[3.3px] font-semibold uppercase">
+      <p className="text-lg font-semibold uppercase leading-7 tracking-[3.3px] lg:text-2xl">
         {dungeonData.name}
       </p>
       <div className="flex flex-row gap-6 pr-0">
@@ -64,14 +66,14 @@ const RoomInfo = (props: { conversationId: string }) => {
           height={100}
           className="h-[70px] w-[70px] lg:h-[100px] lg:w-[100px]"
         />
-        <p className="text-sm lg:text-lg font-light leading-7 tracking-widest line-clamp-3">
+        <p className="line-clamp-3 text-sm font-light leading-7 tracking-widest lg:text-lg">
           {dungeonData.description}
         </p>
       </div>
-      <p className="text-lg lg:text-2xl leading-7 tracking-[3.3px] font-semibold uppercase">
+      <p className="text-lg font-semibold uppercase leading-7 tracking-[3.3px] lg:text-2xl">
         PLAYERS
       </p>
-      <div className="flex flex-col flex-1 min-h-0 gap-4 overflow-y-auto">
+      <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto">
         {roomData.playerState.map((player) => (
           <Player key={player.accountId} player={player} />
         ))}

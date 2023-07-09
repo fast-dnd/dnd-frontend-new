@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import { HomeTabType, DungeonTabType } from "../types/home";
+
+import { DungeonTabType, HomeTabType } from "../types/home";
 
 interface IHomeStore {
   homeTab: HomeTabType;

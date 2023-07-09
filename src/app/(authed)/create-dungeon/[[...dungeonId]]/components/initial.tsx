@@ -1,5 +1,13 @@
 "use client";
 
+import { useRef } from "react";
+import { fileToBase64 } from "@/utils/b64";
+import { dungeonDuration, dungeonTags } from "@/utils/dungeon-options";
+import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+
+import useStore from "@/hooks/use-store";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { ComboBox } from "@/components/ui/combobox";
@@ -7,13 +15,7 @@ import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import UploadImage from "@/components/ui/upload-image";
-import useStore from "@/hooks/use-store";
-import { fileToBase64 } from "@/utils/b64";
-import { dungeonDuration, dungeonTags } from "@/utils/dungeon-options";
-import { DevTool } from "@hookform/devtools";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+
 import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
 import tagsComboboxStyles from "../utils/tags-combobox-styles";
@@ -59,33 +61,33 @@ const Initial = () => {
   ];
 
   return (
-    <form className="h-full flex w-full" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex h-full w-full" onSubmit={handleSubmit(onSubmit)}>
       <Box
         title="CREATE DUNGEON"
-        className="flex flex-col min-h-0 flex-1 p-5 gap-5 lg:p-8 lg:gap-8 mb-4 lg:mb-0 overflow-y-auto"
+        className="mb-4 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:mb-0 lg:gap-8 lg:p-8"
         wrapperClassName="w-[95%] lg:w-[1200px] mx-auto"
       >
-        <div className="flex flex-row items-center gap-8 justify-between">
-          <p className="text-lg lg:text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
+        <div className="flex flex-row items-center justify-between gap-8">
+          <p className="w-full text-lg font-semibold uppercase leading-7 tracking-[0.15em] lg:text-[22px]">
             1.
             {stepTitles[currentStep]}
           </p>
-          <Button className="hidden lg:block w-fit px-8 whitespace-nowrap" variant="outline">
+          <Button className="hidden w-fit whitespace-nowrap px-8 lg:block" variant="outline">
             NEXT STEP
           </Button>
         </div>
-        <div className="hidden lg:block w-full border-t border-white/20" />
-        <div className="flex flex-1 basis-0 min-h-0">
-          <div className="flex flex-col items-center lg:items-start lg:flex-row w-full gap-5 lg:gap-8 h-full">
+        <div className="hidden w-full border-t border-white/20 lg:block" />
+        <div className="flex min-h-0 flex-1 basis-0">
+          <div className="flex h-full w-full flex-col items-center gap-5 lg:flex-row lg:items-start lg:gap-8">
             <UploadImage
               image={image}
               inputFile={imageRef}
               onClick={addImage}
               defaultImage={dungeonFormData.imageUrl}
             />
-            <div className="flex flex-col w-full gap-5 lg:gap-8 flex-1 h-full">
-              <div className="flex flex-col lg:flex-row gap-5 lg:gap-8">
-                <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:gap-8">
+            <div className="flex h-full w-full flex-1 flex-col gap-5 lg:gap-8">
+              <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
+                <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8">
                   <Input
                     label="Name"
                     placeholder="The Enchanted Grove"
@@ -95,14 +97,14 @@ const Initial = () => {
                     errorMessage={errors?.name?.message}
                   />
                 </div>
-                <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:gap-8 ">
+                <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8 ">
                   <Controller
                     control={control}
                     name="duration"
                     defaultValue="blitz"
                     render={({ field }) => (
                       <ToggleGroup
-                        className="inline-flex items-center justify-center w-full"
+                        className="inline-flex w-full items-center justify-center"
                         type="single"
                         label="Recommended Bob Verbal Engagement"
                         value={field.value}
@@ -114,7 +116,7 @@ const Initial = () => {
                           <ToggleGroupItem
                             key={duration.value}
                             value={duration.value}
-                            className="border-white/25 border text-sm lg:text-base px-6 lg:px-10 py-2 data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center w-full"
+                            className="flex w-full items-center justify-center gap-2 border border-white/25 px-6 py-2 text-sm transition-all duration-300 data-[state=on]:border-tomato lg:px-10 lg:text-base"
                           >
                             {duration.icon({})}
                             {duration.label}
@@ -125,8 +127,8 @@ const Initial = () => {
                   />
                 </div>
               </div>
-              <div className="flex flex-col lg:flex-row gap-5 lg:gap-0">
-                <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:gap-8 lg:pr-8">
+              <div className="flex flex-col gap-5 lg:flex-row lg:gap-0">
+                <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8 lg:pr-8">
                   <Input
                     label="Style"
                     placeholder="The Enchanted Grove"
@@ -136,7 +138,7 @@ const Initial = () => {
                     errorMessage={errors?.style?.message}
                   />
                 </div>
-                <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:gap-8 lg:-ml-1">
+                <div className="flex w-full flex-col gap-5 lg:-ml-1 lg:w-1/2 lg:gap-8">
                   <div>
                     <Controller
                       control={control}
@@ -171,13 +173,13 @@ const Initial = () => {
               <TextArea
                 label="Description"
                 placeholder="Venture into the heart of an enchanted forest, where the ancient spirits..."
-                className="h-full m-0"
+                className="m-0 h-full"
                 {...register("description")}
                 state={errors?.description ? "error" : undefined}
                 errorMessage={errors?.description?.message}
               />
-              <div className="lg:hidden block w-full border-t border-white/20" />
-              <Button className="lg:hidden block w-full whitespace-nowrap mb-4" variant="outline">
+              <div className="block w-full border-t border-white/20 lg:hidden" />
+              <Button className="mb-4 block w-full whitespace-nowrap lg:hidden" variant="outline">
                 NEXT STEP
               </Button>
             </div>

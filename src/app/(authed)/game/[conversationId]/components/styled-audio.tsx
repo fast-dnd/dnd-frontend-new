@@ -1,7 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { cn } from "@/utils/style-utils";
 import { useEffect, useRef, useState } from "react";
+import { cn } from "@/utils/style-utils";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
+
+import { Button } from "@/components/ui/button";
 
 const StyledAudio = (props: { audio?: string }) => {
   const { audio } = props;
@@ -32,7 +33,7 @@ const StyledAudio = (props: { audio?: string }) => {
         />
       )}
 
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <Button
           disabled={!audio}
           variant="ghost"
@@ -48,7 +49,7 @@ const StyledAudio = (props: { audio?: string }) => {
           {playing && <BsPauseFill />}
           {!playing && <BsPlayFill />}
         </Button>
-        <div className="flex relative items-center w-48">
+        <div className="relative flex w-48 items-center">
           {!!audioRef.current && !!audioRef.current.duration && (
             <input
               type="range"
@@ -60,15 +61,15 @@ const StyledAudio = (props: { audio?: string }) => {
                 setProgress(+e.target.value);
               }}
               className={cn(
-                "w-full h-1 rounded-full appearance-none bg-white/25",
-                "[&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4",
-                "[&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:bg-white",
+                "h-1 w-full appearance-none rounded-full bg-white/25",
+                "[&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none",
+                "[&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white",
               )}
             />
           )}
 
           <div
-            className={cn("absolute rounded-full pointer-events-none h-1 bg-white")}
+            className={cn("pointer-events-none absolute h-1 rounded-full bg-white")}
             ref={progRef}
           />
         </div>

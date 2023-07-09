@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { IRoomSocketEvent } from "../types/events";
-import { socketIO } from "@/lib/socket";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+
+import { socketIO } from "@/lib/socket";
+
+import { IRoomSocketEvent } from "../types/events";
 
 const useRoomSocket = (conversationId: string) => {
   const queryClient = useQueryClient();

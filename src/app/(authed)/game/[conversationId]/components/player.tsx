@@ -1,11 +1,12 @@
-import useGetAvatar from "@/hooks/use-get-avatar";
-import { IPlayer } from "@/types/dnd";
 import Image from "next/image";
+import { cn } from "@/utils/style-utils";
 import { BsFillLightningFill } from "react-icons/bs";
-import { VscHeartFilled } from "react-icons/vsc";
 import { HiSparkles } from "react-icons/hi";
 import { RiCopperCoinFill } from "react-icons/ri";
-import { cn } from "@/utils/style-utils";
+import { VscHeartFilled } from "react-icons/vsc";
+
+import { IPlayer } from "@/types/dnd";
+import useGetAvatar from "@/hooks/use-get-avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const Player = (props: { player: IPlayer }) => {
@@ -14,7 +15,7 @@ const Player = (props: { player: IPlayer }) => {
   const { data: avatarData } = useGetAvatar(player.avatarId);
 
   return (
-    <div className={cn("flex relative gap-6", player.health <= 0 && "opacity-50")}>
+    <div className={cn("relative flex gap-6", player.health <= 0 && "opacity-50")}>
       <Image
         src={avatarData?.imageUrl || "/images/default-avatar.png"}
         alt={player.name}
@@ -23,13 +24,13 @@ const Player = (props: { player: IPlayer }) => {
       />
 
       <div className="flex flex-col gap-1.5">
-        <p className="font-semibold text-xl tracking-[0.07em] -mt-1 uppercase">{player.name}</p>
+        <p className="-mt-1 text-xl font-semibold uppercase tracking-[0.07em]">{player.name}</p>
         <p className="font-light tracking-[0.15em]">{player.champion.name}</p>
         <div className="flex gap-8">
           <div>
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger className="flex gap-2 text-lg items-center cursor-default">
+                <TooltipTrigger className="flex cursor-default items-center gap-2 text-lg">
                   <VscHeartFilled />
                   <span className="mt-0.5">{Math.max(0, player.health)}</span>
                 </TooltipTrigger>
@@ -42,7 +43,7 @@ const Player = (props: { player: IPlayer }) => {
           <div>
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger className="flex gap-2 text-lg items-center cursor-default">
+                <TooltipTrigger className="flex cursor-default items-center gap-2 text-lg">
                   <BsFillLightningFill />
                   <span className="mt-0.5">{player.bonusForNextRound}</span>
                 </TooltipTrigger>
@@ -55,7 +56,7 @@ const Player = (props: { player: IPlayer }) => {
           <div>
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger className="flex gap-2 text-lg items-center cursor-default">
+                <TooltipTrigger className="flex cursor-default items-center gap-2 text-lg">
                   <HiSparkles />
                   <span className="mt-0.5">{player.mana}</span>
                 </TooltipTrigger>
@@ -68,7 +69,7 @@ const Player = (props: { player: IPlayer }) => {
           <div>
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger className="flex gap-2 text-lg items-center cursor-default">
+                <TooltipTrigger className="flex cursor-default items-center gap-2 text-lg">
                   <RiCopperCoinFill />
                   <span className="mt-0.5">{player.gold}</span>
                 </TooltipTrigger>

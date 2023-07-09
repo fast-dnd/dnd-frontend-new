@@ -11,7 +11,7 @@ const MobileNavbar = ({ goBackAction }: IMobileNavbarProps) => {
     <div className="flex w-full justify-between  px-5 lg:hidden">
       <Image src="/images/mobile-navbar-logo.svg" width={36} height={24} alt="mobile-navbar-logo" />
       <Link
-        className="flex gap-1 items-center font-medium leading-3 tracking-wider uppercase"
+        className="flex items-center gap-1 font-medium uppercase leading-3 tracking-wider"
         href="/home"
         onClick={goBackAction}
       >

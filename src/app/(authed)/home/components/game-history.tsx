@@ -1,4 +1,5 @@
 import Skeleton from "@/components/ui/skeleton";
+
 import { useGetRoomHistory } from "../hooks/use-get-home-data";
 import RoomItem from "./room-item";
 
@@ -7,7 +8,7 @@ const GameHistory = () => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col flex-1 gap-8 overflow-y-auto no-scrollbar">
+      <div className="no-scrollbar flex flex-1 flex-col gap-8 overflow-y-auto">
         <Skeleton small />
         <Skeleton small />
       </div>
@@ -16,14 +17,14 @@ const GameHistory = () => {
 
   if (!roomHistory) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="text-white text-5xl">Something went wrong</div>
+      <div className="flex h-full w-full items-center justify-center">
+        <div className="text-5xl text-white">Something went wrong</div>
       </div>
     );
   }
 
   return (
-    <div className="lg:-mt-4 flex flex-col w-full gap-2 overflow-y-auto no-scrollbar">
+    <div className="no-scrollbar flex w-full flex-col gap-2 overflow-y-auto lg:-mt-4">
       {roomHistory.rooms.map((room) => (
         <RoomItem room={room} key={room.conversationId} />
       ))}

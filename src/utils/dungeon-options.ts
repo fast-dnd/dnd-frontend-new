@@ -1,6 +1,6 @@
+import { BiCoffee } from "react-icons/bi";
 import { BsFillLightningFill } from "react-icons/bs";
 import { LuSwords } from "react-icons/lu";
-import { BiCoffee } from "react-icons/bi";
 
 export const dungeonTags = [
   "love",

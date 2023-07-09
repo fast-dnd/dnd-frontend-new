@@ -1,10 +1,13 @@
 "use client";
 
-import HowToPlay from "@/components/how-to-play";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { cn } from "@/utils/style-utils";
+
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/utils/style-utils";
-import { useRouter } from "next/navigation";
+import HowToPlay from "@/components/how-to-play";
+
 import AddDungeon from "./components/add-dungeon";
 import Avatars from "./components/avatars";
 import CreateRoom from "./components/create-room";
@@ -15,7 +18,6 @@ import JoinRoom from "./components/join-room";
 import Settings from "./components/settings";
 import Tabs from "./components/tabs";
 import { useHomeStore } from "./stores/tab-store";
-import { useState } from "react";
 
 const Home = () => {
   const router = useRouter();
@@ -24,10 +26,10 @@ const Home = () => {
   const [getMoreLoading, setGetMoreLoading] = useState(false);
 
   return (
-    <div className="flex flex-col w-full min-h-0 h-full lg:px-16 lg:pb-12 overflow-y-auto">
+    <div className="flex h-full min-h-0 w-full flex-col overflow-y-auto lg:px-16 lg:pb-12">
       <HomeMobileNavbar />
 
-      <div className="hidden lg:flex items-center justify-center my-6">
+      <div className="my-6 hidden items-center justify-center lg:flex">
         <Tabs homeOrDungeons="home" selectedTab={homeTab} />
       </div>
 
@@ -35,19 +37,19 @@ const Home = () => {
 
       <div
         className={cn(
-          "px-5 lg:px-0 flex flex-col lg:flex-row flex-1 lg:min-w-fit min-h-0 h-full gap-12 overflow-y-auto",
+          "flex h-full min-h-0 flex-1 flex-col gap-12 overflow-y-auto px-5 lg:min-w-fit lg:flex-row lg:px-0",
           homeTab !== "PLAY" && "hidden",
         )}
       >
-        <Box title="CREATE ROOM" className="flex flex-col min-h-0 flex-1 gap-4 p-4 lg:gap-8 lg:p-8">
+        <Box title="CREATE ROOM" className="flex min-h-0 flex-1 flex-col gap-4 p-4 lg:gap-8 lg:p-8">
           <CreateRoom />
         </Box>
-        <div className="flex flex-col flex-1 basis-1/3 h-full lg:min-w-fit gap-12">
+        <div className="flex h-full flex-1 basis-1/3 flex-col gap-12 lg:min-w-fit">
           <JoinRoom />
-          <div className="flex flex-1 min-h-0 overflow-y-auto">
+          <div className="flex min-h-0 flex-1 overflow-y-auto">
             <Box
               title="GAME HISTORY"
-              className="flex flex-col items-start min-h-0 flex-1 gap-4 p-4 lg:gap-8 lg:p-8 mb-4 lg:mb-0"
+              className="mb-4 flex min-h-0 flex-1 flex-col items-start gap-4 p-4 lg:mb-0 lg:gap-8 lg:p-8"
             >
               <GameHistory />
             </Box>
@@ -57,14 +59,14 @@ const Home = () => {
 
       <div
         className={cn(
-          "px-5 lg:px-0 flex flex-col lg:flex-row flex-1 lg:min-w-fit min-h-0 h-full gap-12 overflow-y-auto",
+          "flex h-full min-h-0 flex-1 flex-col gap-12 overflow-y-auto px-5 lg:min-w-fit lg:flex-row lg:px-0",
           homeTab !== "MY KINGDOM" && "hidden",
         )}
       >
         <div className="flex h-full flex-1 basis-1/4">
           <Box
             title="MY AVATARS"
-            className="flex flex-col flex-1 min-h-0 gap-4 p-4 lg:gap-8 lg:p-8"
+            className="flex min-h-0 flex-1 flex-col gap-4 p-4 lg:gap-8 lg:p-8"
           >
             <Avatars />
             <Button
@@ -81,7 +83,7 @@ const Home = () => {
         <div className="flex flex-1 basis-2/3">
           <Box
             title="MY DUNGEONS"
-            className="flex flex-col flex-1 min-h-0 gap-4 lg:gap-8 p-4 lg:p-8 mb-4 lg:mb-0"
+            className="mb-4 flex min-h-0 flex-1 flex-col gap-4 p-4 lg:mb-0 lg:gap-8 lg:p-8"
           >
             <Dungeons />
             <AddDungeon />
@@ -91,7 +93,7 @@ const Home = () => {
 
       <div
         className={cn(
-          "px-5 lg:px-0 flex flex-row flex-1 justify-center min-h-0 gap-12",
+          "flex min-h-0 flex-1 flex-row justify-center gap-12 px-5 lg:px-0",
           homeTab !== "SETTINGS" && "hidden",
         )}
       >

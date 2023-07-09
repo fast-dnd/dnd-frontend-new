@@ -1,6 +1,6 @@
+import React, { Fragment } from "react";
 import { cn } from "@/utils/style-utils";
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment } from "react";
 
 interface IModalProps extends React.HTMLAttributes<HTMLDivElement> {
   open: boolean;
@@ -20,7 +20,7 @@ const Modal = ({ open, onClose, children, className, ...props }: IModalProps) =>
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-50" />
+          <div className="fixed inset-0 bg-black/50" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
@@ -36,7 +36,7 @@ const Modal = ({ open, onClose, children, className, ...props }: IModalProps) =>
             >
               <Dialog.Panel
                 className={cn(
-                  "h-[700px] w-full max-w-3xl transform rounded-2xl bg-cdl-grey-light p-6 text-left align-middle shadow-xl transition-all",
+                  "bg-cdl-grey-light h-[700px] w-full max-w-3xl rounded-2xl p-6 text-left align-middle shadow-xl transition-all",
                   className,
                 )}
                 {...props}

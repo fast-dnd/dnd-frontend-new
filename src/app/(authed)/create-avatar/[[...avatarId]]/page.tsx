@@ -1,22 +1,24 @@
 "use client";
 
+import { useRef } from "react";
+import Link from "next/link";
+import { fileToBase64 } from "@/utils/b64";
+import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { AiOutlineLeft } from "react-icons/ai";
+
+import useGetAvatar from "@/hooks/use-get-avatar";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UploadImage from "@/components/ui/upload-image";
-import { fileToBase64 } from "@/utils/b64";
-import { DevTool } from "@hookform/devtools";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { useRef } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { AiOutlineLeft } from "react-icons/ai";
-import useCreateAvatar from "./hooks/use-create-avatar";
-import useUpdateAvatar from "./hooks/use-update-avatar";
-import { IAvatarSchema, avatarSchema } from "./schemas/avatar-schema";
-import useGetAvatar from "@/hooks/use-get-avatar";
 import BoxSkeleton from "@/components/BoxSkeleton";
 import MobileNavbar from "@/components/mobile-navbar";
+
+import useCreateAvatar from "./hooks/use-create-avatar";
+import useUpdateAvatar from "./hooks/use-update-avatar";
+import { avatarSchema, IAvatarSchema } from "./schemas/avatar-schema";
 
 const CreateAvatar = ({ params }: { params: { avatarId?: [string] } }) => {
   const avatarId = params.avatarId?.[0];
@@ -57,19 +59,19 @@ const CreateAvatar = ({ params }: { params: { avatarId?: [string] } }) => {
     return <BoxSkeleton title={`${avatarId ? "EDIT" : "CREATE"} AVATAR`} />;
 
   return (
-    <div className="flex flex-col items-center gap-8 mt-8">
+    <div className="mt-8 flex flex-col items-center gap-8">
       <MobileNavbar />
       <Link
-        className="hidden lg:flex gap-1 text-lg items-center font-medium tracking-[0.08em] uppercase"
+        className="hidden items-center gap-1 text-lg font-medium uppercase tracking-[0.08em] lg:flex"
         href="/home"
       >
         <AiOutlineLeft className="inline-block" /> GO BACK
       </Link>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="px-5 lg:px-0 lg:min-w-fit">
+      <form onSubmit={handleSubmit(onSubmit)} className="px-5 lg:min-w-fit lg:px-0">
         <Box
           title={avatarId ? "EDIT AVATAR" : "CREATE AVATAR"}
-          className="flex flex-col lg:flex-row items-center gap-5 p-5 lg:gap-8 lg:p-8"
+          className="flex flex-col items-center gap-5 p-5 lg:flex-row lg:gap-8 lg:p-8"
         >
           <UploadImage
             image={image}
@@ -77,7 +79,7 @@ const CreateAvatar = ({ params }: { params: { avatarId?: [string] } }) => {
             onClick={addImage}
             defaultImage={avatarQuery?.data?.imageUrl || "/images/default-avatar.png"}
           />
-          <div className="flex flex-col gap-6 lg:gap-12 justify-center w-80 lg:w-96">
+          <div className="flex w-80 flex-col justify-center gap-6 lg:w-96 lg:gap-12">
             <Input
               label="Your avatar's name"
               placeholder="Thorian Blackthorn"
