@@ -1,3 +1,4 @@
+/** @type {import("@ianvs/prettier-plugin-sort-imports").PrettierConfig} */
 module.exports = {
   semi: true,
   trailingComma: "all",
@@ -5,6 +6,8 @@ module.exports = {
   printWidth: 100,
   tabWidth: 2,
   endOfLine: "auto",
+
+  plugins: [require("@ianvs/prettier-plugin-sort-imports"), require("prettier-plugin-tailwindcss")],
 
   importOrder: [
     "^(react/(.*)$)|^(react$)",
@@ -33,6 +36,5 @@ module.exports = {
   importOrderMergeDuplicateImports: true,
   importOrderCombineTypeAndValueImports: true,
 
-  plugins: [require("prettier-plugin-tailwindcss"), require("@ianvs/prettier-plugin-sort-imports")],
   tailwindFunctions: ["cn", "cva"],
 };
