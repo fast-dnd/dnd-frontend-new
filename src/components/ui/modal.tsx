@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
-import { cn } from "@/utils/style-utils";
 import { Dialog, Transition } from "@headlessui/react";
+
+import { cn } from "@/utils/style-utils";
 
 interface IModalProps extends React.HTMLAttributes<HTMLDivElement> {
   open: boolean;

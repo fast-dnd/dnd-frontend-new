@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { cn } from "@/utils/style-utils";
 import { FiUpload } from "react-icons/fi";
+
+import { cn } from "@/utils/style-utils";
 
 interface IUploadImageProps {
   image?: string;

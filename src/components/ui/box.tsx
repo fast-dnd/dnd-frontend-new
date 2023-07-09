@@ -1,8 +1,9 @@
 import React from "react";
-import { jibril } from "@/utils/fonts";
-import { cn } from "@/utils/style-utils";
 import { cva, VariantProps } from "class-variance-authority";
 import { AiOutlineExclamationCircle, AiOutlineHome, AiOutlineQuestionCircle } from "react-icons/ai";
+
+import { jibril } from "@/utils/fonts";
+import { cn } from "@/utils/style-utils";
 
 import Spinner from "./spinner";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";

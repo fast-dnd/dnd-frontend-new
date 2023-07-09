@@ -1,9 +1,10 @@
 import React from "react";
-import { cn } from "@/utils/style-utils";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 import Select, { Props as ReactSelectProps } from "react-select";
 import makeAnimated from "react-select/animated";
+
+import { cn } from "@/utils/style-utils";
 
 export interface ComboBoxProps extends ReactSelectProps {
   state?: "error" | "success";

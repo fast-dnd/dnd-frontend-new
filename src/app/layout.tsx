@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { jost } from "@/utils/fonts";
-import { cn } from "@/utils/style-utils";
 
 import Providers from "@/lib/providers";
+import { jost } from "@/utils/fonts";
+import { cn } from "@/utils/style-utils";
 import Navbar from "@/components/navbar";
 
 import "@/styles/globals.css";

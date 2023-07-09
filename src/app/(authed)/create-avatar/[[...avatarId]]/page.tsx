@@ -2,12 +2,12 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import { fileToBase64 } from "@/utils/b64";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineLeft } from "react-icons/ai";
 
+import { fileToBase64 } from "@/utils/b64";
 import useGetAvatar from "@/hooks/use-get-avatar";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";

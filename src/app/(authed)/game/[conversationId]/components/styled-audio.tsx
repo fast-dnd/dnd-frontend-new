@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { cn } from "@/utils/style-utils";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 
+import { cn } from "@/utils/style-utils";
 import { Button } from "@/components/ui/button";
 
 const StyledAudio = (props: { audio?: string }) => {

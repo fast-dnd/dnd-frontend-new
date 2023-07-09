@@ -1,8 +1,9 @@
 import React from "react";
-import { cn } from "@/utils/style-utils";
 import { cva, VariantProps } from "class-variance-authority";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
+
+import { cn } from "@/utils/style-utils";
 
 export const inputVariants = cva(
   "disabled:text-opacity-35 mr-1 flex w-full overflow-auto bg-transparent outline-none placeholder:text-white/30",

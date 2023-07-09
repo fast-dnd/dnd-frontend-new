@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { cn } from "@/utils/style-utils";
 import { MdMenu } from "react-icons/md";
 
+import { cn } from "@/utils/style-utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 import { useHomeStore } from "../stores/tab-store";

@@ -1,8 +1,9 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
+
 import dungeonService from "@/services/dungeon-service";
 import roomService from "@/services/room-service";
-import { useQuery } from "@tanstack/react-query";
 
 export const useGetRecommendedDungeons = (enabled: boolean) => {
   return useQuery({

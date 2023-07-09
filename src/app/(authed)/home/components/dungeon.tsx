@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { cn } from "@/utils/style-utils";
 import { MdCheck, MdDelete, MdEdit, MdOutlineContentCopy } from "react-icons/md";
 
 import { IDungeon } from "@/types/dnd";
+import { cn } from "@/utils/style-utils";
 import useCopy from "@/hooks/use-copy";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/modal";
@@ -56,7 +56,7 @@ const Dungeon = ({ dungeon }: { dungeon: IDungeon }) => {
             <div
               className={cn(
                 "hidden flex-row items-center gap-4 justify-self-end px-4 transition duration-300 lg:flex",
-                showDesktopActions ? "opacity-100" : "opacity-0",
+                showDesktopActions || loadingEdit ? "opacity-100" : "opacity-0",
               )}
             >
               <TooltipProvider>

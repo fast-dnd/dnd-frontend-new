@@ -1,7 +1,8 @@
 "use client";
 
-import dungeonService from "@/services/dungeon-service";
 import { useQuery } from "@tanstack/react-query";
+
+import dungeonService from "@/services/dungeon-service";
 
 const useGetDungeon = (dungeonId?: string) => {
   return useQuery({

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { cn } from "@/utils/style-utils";
 
+import { cn } from "@/utils/style-utils";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import HowToPlay from "@/components/how-to-play";

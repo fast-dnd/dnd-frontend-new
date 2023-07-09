@@ -1,12 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "@/utils/style-utils";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { cva, VariantProps } from "class-variance-authority";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { FiChevronDown } from "react-icons/fi";
 import { GiCancel } from "react-icons/gi";
+
+import { cn } from "@/utils/style-utils";
 
 export const selectContainerVariants = cva(
   [

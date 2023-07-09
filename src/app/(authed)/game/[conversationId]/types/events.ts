@@ -1,7 +1,6 @@
+import { IPlayer } from "@/types/dnd";
 import { IPlayerMove } from "@/services/dnd-service";
 import { IRoomData } from "@/services/room-service";
-
-import { IPlayer } from "@/types/dnd";
 
 export type IGameplaySocketEvent = ISocketEvent | IChunkEvent;
 export type IGeneralSocketEvent = ISocketEvent | IPlayerMoveEvent | IQuestionEvent;

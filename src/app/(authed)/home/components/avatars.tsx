@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { cn } from "@/utils/style-utils";
 import { MdEdit } from "react-icons/md";
 
+import { cn } from "@/utils/style-utils";
 import { useGetKingdom } from "@/hooks/use-get-kingdom";
 import Skeleton from "@/components/ui/skeleton";
 import Spinner from "@/components/ui/spinner";

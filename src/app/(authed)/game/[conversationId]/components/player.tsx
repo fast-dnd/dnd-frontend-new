@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { cn } from "@/utils/style-utils";
 import { BsFillLightningFill } from "react-icons/bs";
 import { HiSparkles } from "react-icons/hi";
 import { RiCopperCoinFill } from "react-icons/ri";
 import { VscHeartFilled } from "react-icons/vsc";
 
 import { IPlayer } from "@/types/dnd";
+import { cn } from "@/utils/style-utils";
 import useGetAvatar from "@/hooks/use-get-avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 

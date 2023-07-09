@@ -1,8 +1,9 @@
 import * as React from "react";
-import { cn } from "@/utils/style-utils";
 import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
+
+import { cn } from "@/utils/style-utils";
 
 export interface ToggleGroupProps {
   state?: "error" | "success";

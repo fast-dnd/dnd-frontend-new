@@ -2,8 +2,9 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import authService from "@/services/auth-service";
 import { GoogleLogin } from "@react-oauth/google";
+
+import authService from "@/services/auth-service";
 
 const GoogleLoginButton = () => {
   const router = useRouter();

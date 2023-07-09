@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { IRoomArrayElement } from "@/services/room-service";
 import { AiOutlineRight } from "react-icons/ai";
+
+import { IRoomArrayElement } from "@/services/room-service";
 
 const RoomItem = (props: { room: IRoomArrayElement }) => {
   const { room } = props;
