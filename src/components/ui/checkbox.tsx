@@ -64,7 +64,7 @@ const Checkbox = React.forwardRef<
         </CheckboxPrimitive.Root>
         <p
           className={cn(
-            "font-semibold text-base uppercase tracking-widest md:tracking-normal",
+            "font-semibold text-base uppercase tracking-widest lg:tracking-normal",
             state === "error" && "text-error",
             state === "success" && "text-success",
           )}

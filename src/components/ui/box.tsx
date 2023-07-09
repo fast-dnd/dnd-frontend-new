@@ -45,7 +45,7 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
         <div className="py-6 border-t-2 relative border-tomato/90 bg-black flex items-center justify-center gap-4">
           <div className="bg-tomato w-2 h-2 rotate-45" />
           <p
-            className="mt-1 text-lg leading-none tracking-widest md:text-xl md:leading-7 md:tracking-[0.2em]"
+            className="mt-1 text-lg leading-none tracking-widest lg:text-xl lg:leading-7 lg:tracking-[0.2em]"
             style={jibril.style}
           >
             {title}

@@ -87,7 +87,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
     return (
       <Box
         title="Join"
-        className="flex flex-col items-center justify-center gap-8 flex-1 min-h-0 w-full md:w-[490px] h-fit p-8"
+        className="flex flex-col items-center justify-center gap-8 flex-1 min-h-0 w-full lg:w-[490px] h-fit p-8"
       >
         <Spinner className="h-40 w-40" />
       </Box>
@@ -114,8 +114,8 @@ const JoinEditInfo = (props: { conversationId: string }) => {
   return (
     <Box
       title="Join"
-      className="flex flex-col gap-5 md:gap-8 flex-1 min-h-0  h-fit p-8 text-sm mb-4 md:mb-0"
-      wrapperClassName="block w-[90%] md:w-[490px] mx-auto"
+      className="flex flex-col gap-5 lg:gap-8 flex-1 min-h-0  h-fit p-8 text-sm mb-4 lg:mb-0"
+      wrapperClassName="block w-[90%] lg:w-[490px] mx-auto"
     >
       <Select
         defaultValue={currentPlayer?.avatarId}
@@ -167,7 +167,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
           <ToggleGroupItem
             key={duration.value}
             value={duration.value}
-            className="border-white/25 border text-sm md:text-base px-4 md:px-6 py-2 data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center w-full relative"
+            className="border-white/25 border text-sm lg:text-base px-4 lg:px-6 py-2 data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center w-full relative"
           >
             {duration.value === dungeonData.recommendedResponseDetailsDepth && (
               <div className="absolute right-1 top-1">
@@ -197,7 +197,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
           <ToggleGroupItem
             key={type.value}
             value={type.value}
-            className="border-white/25 border text-sm md:text-base px-6 md:px-10 py-2 data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center w-full capitalize"
+            className="border-white/25 border text-sm lg:text-base px-6 lg:px-10 py-2 data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center w-full capitalize"
           >
             {type.icon}
             {type.value}

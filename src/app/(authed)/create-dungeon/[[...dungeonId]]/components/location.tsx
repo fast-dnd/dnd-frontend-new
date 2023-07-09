@@ -64,12 +64,12 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
   };
 
   return (
-    <form className="flex flex-col h-full gap-8 md:w-full" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col h-full gap-8 lg:w-full" onSubmit={handleSubmit(onSubmit)}>
       <p className="uppercase font-semibold text-xl tracking-[0.07em] -my-1 text-white/50">
         {status === "CREATING" ? "Add Location" : "Edit Location"}
       </p>
-      <div className="flex flex-col md:flex-row gap-5 md:gap-8 h-full">
-        <div className="flex flex-col md:basis-1/3 gap-5 md:gap-8 md:h-full min-h-0">
+      <div className="flex flex-col lg:flex-row gap-5 lg:gap-8 h-full">
+        <div className="flex flex-col lg:basis-1/3 gap-5 lg:gap-8 lg:h-full min-h-0">
           <Input
             label="Name"
             placeholder="Misty Forest"
@@ -78,7 +78,7 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
             state={errors?.name ? "error" : undefined}
             errorMessage={errors?.name?.message}
           />
-          <div className="flex min-h-0 md:h-full">
+          <div className="flex min-h-0 lg:h-full">
             <TextArea
               label="Mission"
               placeholder="The goal is to find the secret treasure hidden somewhere in the old castle..."
@@ -89,7 +89,7 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
             />
           </div>
         </div>
-        <div className="flex min-h-0 md:basis-1/3 md:h-full">
+        <div className="flex min-h-0 lg:basis-1/3 lg:h-full">
           <TextArea
             label="Description"
             placeholder="Venture into the heart of an enchanted forest..."
@@ -99,7 +99,7 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
             errorMessage={errors?.description?.message}
           />
         </div>
-        <div className="flex min-h-0 md:basis-1/3 md:h-full">
+        <div className="flex min-h-0 lg:basis-1/3 lg:h-full">
           <TextArea
             label="Transition"
             placeholder="You leave this place to enter the dark swamp..."
@@ -110,16 +110,16 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
           />
         </div>
       </div>
-      <div className="flex flex-row justify-between md:justify-end gap-8">
+      <div className="flex flex-row justify-between lg:justify-end gap-8">
         <Button
-          className="text-sm md:text-lg w-fit"
+          className="text-sm lg:text-lg w-fit"
           variant="ghost"
           onClick={onCancel}
           type="reset"
         >
           CANCEL
         </Button>
-        <Button className="text-sm md:text-lg whitespace-nowrap w-fit px-8" variant="outline">
+        <Button className="text-sm lg:text-lg whitespace-nowrap w-fit px-8" variant="outline">
           {status === "CREATING" ? "ADD LOCATION" : "EDIT LOCATION"}
         </Button>
       </div>

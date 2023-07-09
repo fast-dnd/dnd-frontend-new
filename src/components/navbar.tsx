@@ -4,7 +4,7 @@ import { jibril } from "@/utils/fonts";
 
 const Navbar = () => {
   return (
-    <div className="hidden md:flex gap-12 items-center">
+    <div className="hidden lg:flex gap-12 items-center">
       <div className="mt-10 flex-1 h-0.5 border-t border-tomato" />
       <div className="mt-10 flex items-center justify-center flex-col gap-1">
         <Image src="/images/logo-up.png" width={114} height={6} alt="logo-up" />

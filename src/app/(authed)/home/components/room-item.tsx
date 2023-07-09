@@ -17,10 +17,10 @@ const RoomItem = (props: { room: IRoomArrayElement }) => {
         className="h-20"
       />
       <div className="flex flex-col gap-1 flex-1 justify-center">
-        <p className="leading-5 font-medium tracking-widest uppercase line-clamp-2 md:line-clamp-none w-48 md:w-auto">
+        <p className="leading-5 font-medium tracking-widest uppercase line-clamp-2 lg:line-clamp-none w-48 lg:w-auto">
           {room.dungeon.name}
         </p>
-        <p className="text-sm tracking-[0.15em] text-white/50 uppercase truncate w-48 md:w-auto">
+        <p className="text-sm tracking-[0.15em] text-white/50 uppercase truncate w-48 lg:w-auto">
           {room.avatar.name}
         </p>
         {room.state === "CLOSED" && (

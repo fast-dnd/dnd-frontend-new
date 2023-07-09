@@ -13,7 +13,7 @@ const AddDungeon = () => {
     <div className="flex flex-row justify-end gap-8">
       <Button
         isLoading={createLoading}
-        className="w-full md:w-fit px-8"
+        className="w-full lg:w-fit px-8"
         onClick={() => {
           setCreateLoading(true);
           router.push("/create-dungeon");

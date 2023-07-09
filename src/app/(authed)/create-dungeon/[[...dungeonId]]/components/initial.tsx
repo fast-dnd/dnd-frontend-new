@@ -62,30 +62,30 @@ const Initial = () => {
     <form className="h-full flex w-full" onSubmit={handleSubmit(onSubmit)}>
       <Box
         title="CREATE DUNGEON"
-        className="flex flex-col min-h-0 flex-1 p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0 overflow-y-auto"
-        wrapperClassName="w-[95%] md:w-[1200px] mx-auto"
+        className="flex flex-col min-h-0 flex-1 p-5 gap-5 lg:p-8 lg:gap-8 mb-4 lg:mb-0 overflow-y-auto"
+        wrapperClassName="w-[95%] lg:w-[1200px] mx-auto"
       >
         <div className="flex flex-row items-center gap-8 justify-between">
-          <p className="text-lg md:text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
+          <p className="text-lg lg:text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
             1.
             {stepTitles[currentStep]}
           </p>
-          <Button className="hidden md:block w-fit px-8 whitespace-nowrap" variant="outline">
+          <Button className="hidden lg:block w-fit px-8 whitespace-nowrap" variant="outline">
             NEXT STEP
           </Button>
         </div>
-        <div className="hidden md:block w-full border-t border-white/20" />
+        <div className="hidden lg:block w-full border-t border-white/20" />
         <div className="flex flex-1 basis-0 min-h-0">
-          <div className="flex flex-col items-center md:items-start md:flex-row w-full gap-5 md:gap-8 h-full">
+          <div className="flex flex-col items-center lg:items-start lg:flex-row w-full gap-5 lg:gap-8 h-full">
             <UploadImage
               image={image}
               inputFile={imageRef}
               onClick={addImage}
               defaultImage={dungeonFormData.imageUrl}
             />
-            <div className="flex flex-col w-full gap-5 md:gap-8 flex-1 h-full">
-              <div className="flex flex-col md:flex-row gap-5 md:gap-8">
-                <div className="w-full md:w-1/2 flex flex-col gap-5 md:gap-8">
+            <div className="flex flex-col w-full gap-5 lg:gap-8 flex-1 h-full">
+              <div className="flex flex-col lg:flex-row gap-5 lg:gap-8">
+                <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:gap-8">
                   <Input
                     label="Name"
                     placeholder="The Enchanted Grove"
@@ -95,7 +95,7 @@ const Initial = () => {
                     errorMessage={errors?.name?.message}
                   />
                 </div>
-                <div className="w-full md:w-1/2 flex flex-col gap-5 md:gap-8 ">
+                <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:gap-8 ">
                   <Controller
                     control={control}
                     name="duration"
@@ -114,7 +114,7 @@ const Initial = () => {
                           <ToggleGroupItem
                             key={duration.value}
                             value={duration.value}
-                            className="border-white/25 border text-sm md:text-base px-6 md:px-10 py-2 data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center w-full"
+                            className="border-white/25 border text-sm lg:text-base px-6 lg:px-10 py-2 data-[state=on]:border-tomato transition-all duration-300 flex gap-2 items-center justify-center w-full"
                           >
                             {duration.icon({})}
                             {duration.label}
@@ -125,8 +125,8 @@ const Initial = () => {
                   />
                 </div>
               </div>
-              <div className="flex flex-col md:flex-row gap-5 md:gap-0">
-                <div className="w-full md:w-1/2 flex flex-col gap-5 md:gap-8 md:pr-8">
+              <div className="flex flex-col lg:flex-row gap-5 lg:gap-0">
+                <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:gap-8 lg:pr-8">
                   <Input
                     label="Style"
                     placeholder="The Enchanted Grove"
@@ -136,7 +136,7 @@ const Initial = () => {
                     errorMessage={errors?.style?.message}
                   />
                 </div>
-                <div className="w-full md:w-1/2 flex flex-col gap-5 md:gap-8 md:-ml-1">
+                <div className="w-full lg:w-1/2 flex flex-col gap-5 lg:gap-8 lg:-ml-1">
                   <div>
                     <Controller
                       control={control}
@@ -176,8 +176,8 @@ const Initial = () => {
                 state={errors?.description ? "error" : undefined}
                 errorMessage={errors?.description?.message}
               />
-              <div className="md:hidden block w-full border-t border-white/20" />
-              <Button className="md:hidden block w-full whitespace-nowrap mb-4" variant="outline">
+              <div className="lg:hidden block w-full border-t border-white/20" />
+              <Button className="lg:hidden block w-full whitespace-nowrap mb-4" variant="outline">
                 NEXT STEP
               </Button>
             </div>

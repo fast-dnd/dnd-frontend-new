@@ -54,11 +54,11 @@ const Locations = () => {
   };
 
   return (
-    <div className="h-full md:flex w-full">
+    <div className="h-full lg:flex w-full">
       <Box
         title="CREATE DUNGEON"
-        className="flex flex-col min-h-0 flex-1 p-5 gap-5 md:p-8 md:gap-8 mb-4 md:mb-0"
-        wrapperClassName="w-[95%] md:w-[1200px] mx-auto"
+        className="flex flex-col min-h-0 flex-1 p-5 gap-5 lg:p-8 lg:gap-8 mb-4 lg:mb-0"
+        wrapperClassName="w-[95%] lg:w-[1200px] mx-auto"
       >
         <div
           className={cn(
@@ -66,12 +66,12 @@ const Locations = () => {
             status !== "LIST" && "hidden",
           )}
         >
-          <p className="text-lg md:text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
+          <p className="text-lg lg:text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
             2.
             {stepTitles[currentStep]}
           </p>
           <Button
-            className="hidden md:flex gap-1 w-fit"
+            className="hidden lg:flex gap-1 w-fit"
             variant="ghost"
             onClick={() => setCurrentStep("INITIAL")}
           >
@@ -79,7 +79,7 @@ const Locations = () => {
             PREVIOUS
           </Button>
           <Button
-            className="hidden md:flex w-fit px-8 whitespace-nowrap"
+            className="hidden lg:flex w-fit px-8 whitespace-nowrap"
             onClick={() => setCurrentStep("CHAMPIONS")}
             variant="outline"
             disabled={dungeonFormData.locations.length < 3}
@@ -89,10 +89,10 @@ const Locations = () => {
         </div>
         <div className="w-full h-full">
           {status === "LIST" && (
-            <div className="flex flex-col gap-5 md:gap-8 w-full h-full">
+            <div className="flex flex-col gap-5 lg:gap-8 w-full h-full">
               {dungeonFormData.locations.length > 0 && (
                 <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                  <div className="flex flex-col gap-5 md:gap-8 w-full">
+                  <div className="flex flex-col gap-5 lg:gap-8 w-full">
                     <SortableContext
                       items={dungeonFormData.locations.map((loc) => JSON.stringify(loc))}
                       strategy={verticalListSortingStrategy}
@@ -111,22 +111,22 @@ const Locations = () => {
                 </DndContext>
               )}
 
-              <p className="text-lg md:text-xl tracking-[0.07em] text-white/50">
+              <p className="text-lg lg:text-xl tracking-[0.07em] text-white/50">
                 Create between 3 and 4 locations
               </p>
 
               <Button
                 variant="outline"
                 disabled={dungeonFormData.locations.length >= 4}
-                className="text-base w-full md:w-fit px-8"
+                className="text-base w-full lg:w-fit px-8"
                 onClick={() => setStatus("CREATING")}
               >
                 ADD NEW LOCATION
               </Button>
 
-              <div className="md:hidden block w-full border-t border-white/20" />
+              <div className="lg:hidden block w-full border-t border-white/20" />
 
-              <div className="flex flex-row items-center gap-8 justify-between md:hidden">
+              <div className="flex flex-row items-center gap-8 justify-between lg:hidden">
                 <Button
                   className="text-sm gap-1 w-fit"
                   variant="ghost"

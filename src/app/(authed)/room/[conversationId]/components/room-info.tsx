@@ -22,7 +22,7 @@ const RoomInfo = (props: { conversationId: string }) => {
     return (
       <Box
         title="ROOM"
-        className="flex flex-col items-center justify-center gap-8 min-h-0 flex-1 w-full md:w-[490px] p-8"
+        className="flex flex-col items-center justify-center gap-8 min-h-0 flex-1 w-full lg:w-[490px] p-8"
       >
         <Spinner className="h-40 w-40" />
       </Box>
@@ -37,15 +37,15 @@ const RoomInfo = (props: { conversationId: string }) => {
   return (
     <Box
       title="ROOM"
-      className="flex flex-col min-h-0 flex-1 md:w-[490px] p-5 gap-5 md:p-8 md:gap-8"
-      wrapperClassName="block w-[90%] md:w-[490px] mx-auto"
+      className="flex flex-col min-h-0 flex-1 lg:w-[490px] p-5 gap-5 lg:p-8 lg:gap-8"
+      wrapperClassName="block w-[90%] lg:w-[490px] mx-auto"
     >
-      <div className="flex text-center flex-col md:flex-row justify-between gap-4">
+      <div className="flex text-center flex-col lg:flex-row justify-between gap-4">
         <p className="mt-2 text-xl flex-1 whitespace-nowrap">{roomData.link}</p>
         <Button
           onClick={onCopyRoomId}
           variant={copied ? "primary" : "outline"}
-          className="uppercase text-lg w-full md:w-fit px-8 whitespace-nowrap"
+          className="uppercase text-lg w-full lg:w-fit px-8 whitespace-nowrap"
         >
           {copied ? "Copied" : "Copy ID"}
         </Button>
@@ -53,7 +53,7 @@ const RoomInfo = (props: { conversationId: string }) => {
 
       <div className="w-full border-t border-white/20" />
 
-      <p className="text-lg md:text-2xl leading-7 tracking-[3.3px] font-semibold uppercase">
+      <p className="text-lg lg:text-2xl leading-7 tracking-[3.3px] font-semibold uppercase">
         {dungeonData.name}
       </p>
       <div className="flex flex-row gap-6 pr-0">
@@ -62,13 +62,13 @@ const RoomInfo = (props: { conversationId: string }) => {
           alt={dungeonData.name}
           width={100}
           height={100}
-          className="h-[70px] w-[70px] md:h-[100px] md:w-[100px]"
+          className="h-[70px] w-[70px] lg:h-[100px] lg:w-[100px]"
         />
-        <p className="text-sm md:text-lg font-light leading-7 tracking-widest line-clamp-3">
+        <p className="text-sm lg:text-lg font-light leading-7 tracking-widest line-clamp-3">
           {dungeonData.description}
         </p>
       </div>
-      <p className="text-lg md:text-2xl leading-7 tracking-[3.3px] font-semibold uppercase">
+      <p className="text-lg lg:text-2xl leading-7 tracking-[3.3px] font-semibold uppercase">
         PLAYERS
       </p>
       <div className="flex flex-col flex-1 min-h-0 gap-4 overflow-y-auto">

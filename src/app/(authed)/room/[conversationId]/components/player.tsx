@@ -9,15 +9,15 @@ const Player = ({ player }: { player: IPlayer }) => {
         width={83}
         height={83}
         alt={`player-${player.accountId}-avatar`}
-        className="h-[70px] w-[70px] md:h-[83px] md:w-[83px]"
+        className="h-[70px] w-[70px] lg:h-[83px] lg:w-[83px]"
       />
 
       <div className="flex flex-col gap-1">
-        <p className="text-lg md:text-2xl">{player.name}</p>
+        <p className="text-lg lg:text-2xl">{player.name}</p>
         {player.champion && (
-          <p className="text-base md:text-xl line-clamp-2">
+          <p className="text-base lg:text-xl line-clamp-2">
             {player.champion.name} -{" "}
-            <span className="text-sm md:text-base font-light">{player.champion.description}</span>
+            <span className="text-sm lg:text-base font-light">{player.champion.description}</span>
           </p>
         )}
       </div>
