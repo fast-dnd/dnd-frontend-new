@@ -115,7 +115,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
     <Box
       title="Join"
       className="flex flex-col gap-5 lg:gap-8 flex-1 min-h-0 h-fit p-8 text-sm mb-4 lg:mb-0"
-      wrapperClassName="md:w-[490px] mx-auto"
+      wrapperClassName="block w-[90%] md:w-[490px] mx-auto"
     >
       <Select
         defaultValue={currentPlayer?.avatarId}

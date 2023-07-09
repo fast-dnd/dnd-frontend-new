@@ -38,7 +38,7 @@ const RoomInfo = (props: { conversationId: string }) => {
     <Box
       title="ROOM"
       className="flex flex-col min-h-0 flex-1 lg:w-[490px] p-5 gap-5 lg:p-8 lg:gap-8"
-      wrapperClassName="md:w-[490px] mx-auto"
+      wrapperClassName="block w-[90%] md:w-[490px] mx-auto"
     >
       <div className="flex text-center flex-col lg:flex-row justify-between gap-4">
         <p className="mt-2 text-xl flex-1 whitespace-nowrap">{roomData.link}</p>
