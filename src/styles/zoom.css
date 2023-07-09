@@ -1,0 +1,41 @@
+@media (max-width: 389px) {
+  body {
+    zoom: 90%;
+    height: calc(100vh / 0.9);
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    zoom: 50%;
+    height: calc(100vh / 0.5);
+  }
+}
+
+@media (min-width: 1280px) {
+  body {
+    zoom: 65%;
+    height: calc(100vh / 0.65);
+  }
+}
+
+@media (min-width: 1536px) {
+  body {
+    zoom: 80%;
+    height: calc(100vh / 0.8);
+  }
+}
+
+@media (min-width: 1700px) {
+  body {
+    zoom: 90%;
+    height: calc(100vh / 0.9);
+  }
+}
+
+@media (min-width: 1860px) {
+  body {
+    zoom: 100%;
+    height: 100vh;
+  }
+}

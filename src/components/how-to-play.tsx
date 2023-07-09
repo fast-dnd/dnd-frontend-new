@@ -62,7 +62,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
               Depending of what action you choose, the total dice value will have a different effect
               on your champion stats.
             </p>
-            <div className="overflow-x-auto w-[320px] sm:w-full pb-2 md:pb-0">
+            <div className="overflow-x-auto w-[310px] sm:w-full pb-2 md:pb-0">
               <table className="w-full mt-4 md:mt-2 font-normal whitespace-nowrap">
                 <thead>
                   <tr className="text-center bg-white/25">
@@ -149,7 +149,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
               stats.
             </p>
 
-            <div className="overflow-x-auto w-[320px] sm:w-full pb-2 md:pb-0">
+            <div className="overflow-x-auto w-[310px] sm:w-full pb-2 md:pb-0">
               <table className="w-full mt-4 md:mt-2 font-normal md:table-fixed whitespace-nowrap">
                 <thead>
                   <tr className="text-center bg-white/25">

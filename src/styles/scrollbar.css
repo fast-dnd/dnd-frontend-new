@@ -1,0 +1,26 @@
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff40 #ffffff19;
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ffffff19;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #ffffff40;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: #ffffff90;
+}
+
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+}

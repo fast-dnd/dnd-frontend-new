@@ -31,9 +31,7 @@ import Tabs from "./tabs";
 
 const CreateRoom = () => {
   const router = useRouter();
-  const { dungeonTab, setDungeonTab, homeTab, setDisplayHowToPlay } = useHomeStore(
-    (state) => state,
-  );
+  const { dungeonTab, setDungeonTab, homeTab } = useHomeStore((state) => state);
 
   const { data: dungeons, isLoading } =
     dungeonTab === "top dungeons"
@@ -43,8 +41,6 @@ const CreateRoom = () => {
       : useGetFavoriteDungeons(homeTab == "PLAY");
 
   const [selectedDungeon, setSelectedDungeon] = useState<IDungeon>();
-  const [generateImages, setGenerateImages] = useState(false);
-  const [generateAudio, setGenerateAudio] = useState(false);
   const [loadingRoom, setLoadingRoom] = useState(false);
   const [templateSentences, setTemplateSentences] = useState("");
 
@@ -64,7 +60,12 @@ const CreateRoom = () => {
 
   const onCreateRoom = () => {
     createRoom(
-      { generateAudio, generateImages, dungeon: selectedDungeon?._id, templateSentences },
+      {
+        generateAudio: false,
+        generateImages: false,
+        dungeon: selectedDungeon?._id,
+        templateSentences,
+      },
       {
         onSuccess: (data) => {
           if (data.data.admin) localStorage.setItem("accountId", data.data.admin.accountId);
@@ -244,6 +245,7 @@ const CreateRoom = () => {
             <Button
               className="whitespace-nowrap text-sm md:text-lg w-fit px-8 uppercase"
               isLoading={isCreatingRoom || loadingRoom}
+              onClick={onCreateRoom}
             >
               CREATE ROOM
             </Button>

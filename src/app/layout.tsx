@@ -4,7 +4,9 @@ import { jost } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 import Image from "next/image";
 
-import "./globals.css";
+import "@/styles/globals.css";
+import "@/styles/scrollbar.css";
+import "@/styles/zoom.css";
 
 export const metadata = {
   title: "v3RPG",
