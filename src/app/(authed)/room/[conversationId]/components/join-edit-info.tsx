@@ -113,7 +113,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
 
   return (
     <Box
-      title="Join"
+      title="Settings"
       className="flex flex-col gap-5 lg:gap-8 flex-1 min-h-0 h-fit p-8 text-sm mb-4 lg:mb-0"
       wrapperClassName="block w-[90%] md:w-[490px] mx-auto"
     >
@@ -159,7 +159,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
         className="inline-flex items-center justify-center w-full"
         type="single"
         onValueChange={(value) => setDuration(value as DungeonDuration)}
-        label="Duration"
+        label="Bob Verbal Engagement"
         value={roomData.responseDetailsDepth}
         disabled={!isAdmin}
       >

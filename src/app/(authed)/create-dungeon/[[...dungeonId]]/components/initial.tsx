@@ -104,7 +104,7 @@ const Initial = () => {
                       <ToggleGroup
                         className="inline-flex items-center justify-center w-full"
                         type="single"
-                        label="Recommended duration"
+                        label="Recommended Bob Verbal Engagement"
                         value={field.value}
                         onValueChange={field.onChange as any}
                         state={errors?.duration ? "error" : undefined}
