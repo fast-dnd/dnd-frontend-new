@@ -39,7 +39,7 @@ const RoomInfo = (props: { conversationId: string }) => {
   return (
     <Box
       title="ROOM"
-      className="flex min-h-0 flex-1 flex-col gap-5 p-5 lg:w-[490px] lg:gap-8 lg:p-8"
+      className="flex min-h-0 flex-col gap-5 p-5 lg:max-h-[85%] lg:w-[490px] lg:gap-8 lg:p-8"
       wrapperClassName="block w-[90%] md:w-[490px] mx-auto"
     >
       <div className="flex flex-col justify-between gap-4 text-center lg:flex-row">
@@ -55,28 +55,30 @@ const RoomInfo = (props: { conversationId: string }) => {
 
       <div className="w-full border-t border-white/20" />
 
-      <p className="text-lg font-semibold uppercase leading-7 tracking-[3.3px] lg:text-2xl">
-        {dungeonData.name}
-      </p>
-      <div className="flex flex-row gap-6 pr-0">
-        <Image
-          src={dungeonData.imageUrl || "/images/default-dungeon.png"}
-          alt={dungeonData.name}
-          width={100}
-          height={100}
-          className="h-[70px] w-[70px] lg:h-[100px] lg:w-[100px]"
-        />
-        <p className="line-clamp-3 text-sm font-light leading-7 tracking-widest lg:text-lg">
-          {dungeonData.description}
+      <div className="flex min-h-0 w-full flex-1 flex-col gap-5 lg:gap-8 lg:overflow-y-auto">
+        <p className="text-lg font-semibold uppercase leading-7 tracking-[3.3px] lg:text-2xl">
+          {dungeonData.name}
         </p>
-      </div>
-      <p className="text-lg font-semibold uppercase leading-7 tracking-[3.3px] lg:text-2xl">
-        PLAYERS
-      </p>
-      <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto">
-        {roomData.playerState.map((player) => (
-          <Player key={player.accountId} player={player} />
-        ))}
+        <div className="flex flex-row gap-6 pr-0">
+          <Image
+            src={dungeonData.imageUrl || "/images/default-dungeon.png"}
+            alt={dungeonData.name}
+            width={100}
+            height={100}
+            className="h-[70px] w-[70px] lg:h-[100px] lg:w-[100px]"
+          />
+          <p className="line-clamp-3 text-sm font-light leading-7 tracking-widest lg:text-lg">
+            {dungeonData.description}
+          </p>
+        </div>
+        <p className="text-lg font-semibold uppercase leading-7 tracking-[3.3px] lg:text-2xl">
+          PLAYERS
+        </p>
+        <div className="flex flex-col gap-4">
+          {roomData.playerState.map((player) => (
+            <Player key={player.accountId} player={player} />
+          ))}
+        </div>
       </div>
     </Box>
   );
