@@ -183,9 +183,9 @@ const Gameplay = (props: { conversationId: string }) => {
         router.push("/home");
       }}
       loading={loadingText}
-      className="flex min-h-0 flex-1 flex-col gap-8 px-12 py-8"
+      className="flex min-h-0 flex-1 flex-col gap-8 p-5 lg:px-12 lg:py-8"
     >
-      <div className="flex w-full flex-1 flex-col gap-8 overflow-y-auto pr-6">
+      <div className="flex max-h-[900px] w-full flex-1 flex-col gap-8 overflow-y-auto pr-4 lg:max-h-full lg:pr-6">
         {stories.map((story, i) => (
           <div key={story} className="flex w-full flex-col gap-8">
             <div className="flex w-full items-center gap-8">
@@ -197,7 +197,7 @@ const Gameplay = (props: { conversationId: string }) => {
             </div>
             <div>
               {roomData.generatedImages[i] && roomData.generateImages && i % 2 === 0 && (
-                <div className="float-left mb-4 mr-6 inline-block h-72 w-72">
+                <div className="mb-4 mr-6 inline-block h-72 w-72 lg:float-left">
                   {roomData.generatedImages[i].length > 0 ? (
                     <Image
                       src={roomData.generatedImages[i] || "/images/default-dungeon.png"}
@@ -237,7 +237,7 @@ const Gameplay = (props: { conversationId: string }) => {
         ))}
         <div ref={autoBottomScrollDiv} />
       </div>
-      <div className="flex w-full gap-8">
+      <div className="flex w-full flex-col gap-8 lg:flex-row">
         {roomData.location.phase === "discovery" && (
           <div className="flex flex-1 flex-col gap-4">
             <div
@@ -306,7 +306,7 @@ const Gameplay = (props: { conversationId: string }) => {
             </div>
           </div>
         )}
-        <div className="flex w-[270px] flex-col justify-between bg-white/5">
+        <div className="flex flex-col justify-between bg-white/5 lg:w-[270px]">
           <div className="relative flex h-32 items-center justify-center gap-4">
             {((rollInfo?.diceAfterBonus || 0) >= 2 || submitting) && (
               <>

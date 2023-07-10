@@ -8,7 +8,7 @@ interface IMobileNavbarProps {
 
 const MobileNavbar = ({ goBackAction }: IMobileNavbarProps) => {
   return (
-    <div className="flex w-full justify-between  px-5 lg:hidden">
+    <div className="flex w-full justify-between px-5 lg:hidden">
       <Image src="/images/mobile-navbar-logo.svg" width={36} height={24} alt="mobile-navbar-logo" />
       <Link
         className="flex items-center gap-1 font-medium uppercase leading-3 tracking-wider"

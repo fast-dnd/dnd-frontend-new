@@ -53,7 +53,7 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
             {title}
           </p>
           <div className="h-2 w-2 rotate-45 bg-tomato" />
-          <div className="absolute left-12 flex h-full items-center gap-4">
+          <div className="absolute left-12 hidden h-full items-center gap-4 lg:flex">
             {home && (
               <TooltipProvider>
                 <Tooltip>
@@ -70,7 +70,7 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
               </TooltipProvider>
             )}
           </div>
-          <div className="absolute right-12 flex h-full items-center gap-4">
+          <div className="absolute right-12 hidden h-full items-center gap-4 lg:flex">
             {loading && <Spinner className="m-0 opacity-50" />}
             {howTo && (
               <TooltipProvider>
