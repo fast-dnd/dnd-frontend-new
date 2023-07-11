@@ -185,31 +185,31 @@ const Gameplay = (props: { conversationId: string }) => {
       loading={loadingText}
       className="flex min-h-0 flex-1 flex-col gap-8 p-5 lg:px-12 lg:py-8"
     >
-      <div className="flex max-h-[900px] w-full flex-1 flex-col gap-8 overflow-y-auto pr-4 lg:max-h-full lg:pr-6">
+      <div className="flex  w-full flex-1 flex-col gap-8 pr-4 lg:max-h-full lg:overflow-y-auto lg:pr-6">
         {stories.map((story, i) => (
           <div key={story} className="flex w-full flex-col gap-8">
             <div className="flex w-full items-center gap-8">
-              <div className="text-2xl font-semibold uppercase tracking-[0.2em]">
+              <div className="flex flex-col text-lg font-semibold uppercase tracking-[0.2em] lg:flex-row lg:text-2xl">
                 <span className="mr-2 text-tomato">TURN {i + 1}.</span>
-                {dungeonData.locations[Math.floor(i / 2)]?.name}
+                <span>{dungeonData.locations[Math.floor(i / 2)]?.name}</span>
               </div>
-              <div className="flex-1 border-t border-tomato" />
+              <div className="border-t border-tomato lg:flex-1" />
             </div>
             <div>
               {roomData.generatedImages[i] && roomData.generateImages && i % 2 === 0 && (
-                <div className="mb-4 mr-6 inline-block h-72 w-72 lg:float-left">
+                <div className="mb-4 flex aspect-square w-full justify-center lg:float-left lg:mr-6 lg:inline-block lg:h-72 lg:w-72">
                   {roomData.generatedImages[i].length > 0 ? (
                     <Image
                       src={roomData.generatedImages[i] || "/images/default-dungeon.png"}
                       alt="dungeon"
-                      height={280}
-                      width={280}
-                      className="h-72 w-72"
+                      height={2048}
+                      width={2048}
+                      className="w-full"
                       draggable={false}
                       onClick={() => setImageModal(roomData.generatedImages[i])}
                     />
                   ) : (
-                    <div className="flex h-72 w-72 animate-pulse items-center justify-center rounded  bg-gray-600">
+                    <div className="flex h-full w-full animate-pulse items-center justify-center rounded bg-gray-600">
                       <svg
                         className="h-24 w-24 text-gray-200"
                         xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +224,7 @@ const Gameplay = (props: { conversationId: string }) => {
                 </div>
               )}
 
-              <div className="text-[22px] leading-8 tracking-widest">
+              <div className="tracking-widest lg:text-[22px] lg:leading-8">
                 {roomData.generateAudio && (
                   <div className="mb-4">
                     <StyledAudio audio={roomData.generatedAudio[i]} />

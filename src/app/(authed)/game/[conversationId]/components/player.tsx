@@ -15,7 +15,7 @@ const Player = (props: { player: IPlayer }) => {
   const { data: avatarData } = useGetAvatar(player.avatarId);
 
   return (
-    <div className={cn("relative flex gap-6", player.health <= 0 && "opacity-50")}>
+    <div className={cn("relative flex gap-4 lg:gap-6", player.health <= 0 && "opacity-50")}>
       <Image
         src={avatarData?.imageUrl || "/images/default-avatar.png"}
         alt={player.name}
@@ -26,7 +26,7 @@ const Player = (props: { player: IPlayer }) => {
       <div className="flex flex-col gap-1.5">
         <p className="-mt-1 text-xl font-semibold uppercase tracking-[0.07em]">{player.name}</p>
         <p className="font-light tracking-[0.15em]">{player.champion.name}</p>
-        <div className="flex gap-8">
+        <div className="flex gap-4 lg:gap-8">
           <div>
             <TooltipProvider>
               <Tooltip>

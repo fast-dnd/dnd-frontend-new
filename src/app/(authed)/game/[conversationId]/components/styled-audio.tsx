@@ -49,7 +49,7 @@ const StyledAudio = (props: { audio?: string }) => {
           {playing && <BsPauseFill />}
           {!playing && <BsPlayFill />}
         </Button>
-        <div className="relative flex w-48 items-center">
+        <div className="relative flex w-3/4 items-center lg:w-48">
           {!!audioRef.current && !!audioRef.current.duration && (
             <input
               type="range"

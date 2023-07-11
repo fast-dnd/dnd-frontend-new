@@ -7,7 +7,7 @@ const Moves = ({ moves }: { moves: IMove[] }) => {
         <div key={move.playerAccountId} className="flex flex-col gap-4">
           <div className="bg-white/10 px-4 py-2 text-lg">
             <span className="font-semibold">{move.playerName}: </span>
-            {move.action} - {move.dice} 🎲
+            {move.action}: {move.dice} 🎲
           </div>
           {!!move.aiDescription && move.playerAccountId === localStorage.getItem("accountId") && (
             <div className="flex flex-col gap-2 bg-white/10 px-4 py-2 text-lg">

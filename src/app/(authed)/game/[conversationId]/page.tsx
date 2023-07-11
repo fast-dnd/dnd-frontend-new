@@ -29,11 +29,17 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
 
   return (
     <div className="flex h-full min-h-0 flex-col gap-5 py-8 lg:pb-12">
-      <MobileNavbar />
+      <MobileNavbar
+        goBackText="HOME"
+        howTo
+        onClickHowTo={() => setDisplayHowToPlay(true)}
+        feedback
+        onClickFeedback={() => setDisplayFeedback(true)}
+      />
       <div className="px-5">
         <Button
           variant="outline"
-          className=" border-white normal-case hover:bg-transparent hover:text-white lg:hidden"
+          className=" border-white normal-case hover:bg-transparent hover:text-white active:bg-transparent lg:hidden"
           onClick={() => setOpenedGameplay(!openedGameplay)}
         >
           {openedGameplay && (

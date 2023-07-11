@@ -1,6 +1,7 @@
 import { AiFillHeart, AiOutlineLeft } from "react-icons/ai";
 import { BsFillLightningFill, BsStars } from "react-icons/bs";
 
+import MobileNavbar from "./mobile-navbar";
 import { Box } from "./ui/box";
 
 interface IHowToPlayProps {
@@ -10,10 +11,11 @@ interface IHowToPlayProps {
 
 const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
   return (
-    <div className="flex flex-col gap-8 overflow-x-hidden lg:items-center lg:justify-center">
+    <div className="mt-8 flex flex-col gap-8 overflow-x-hidden lg:mt-4 lg:items-center lg:justify-center">
+      <MobileNavbar goBackAction={onHideHowToPlay} goBackText={hideText} href="" />
       {onHideHowToPlay && hideText && (
         <div
-          className="flex cursor-pointer items-center gap-1 text-lg font-medium uppercase tracking-[0.08em]"
+          className="hidden cursor-pointer items-center gap-1 text-lg font-medium uppercase tracking-[0.08em] lg:flex"
           onClick={onHideHowToPlay}
         >
           <AiOutlineLeft className="inline-block" /> {hideText}
