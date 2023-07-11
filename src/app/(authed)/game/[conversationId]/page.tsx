@@ -36,10 +36,10 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
         feedback
         onClickFeedback={() => setDisplayFeedback(true)}
       />
-      <div className="px-5">
+      <div className="px-5 lg:hidden">
         <Button
           variant="outline"
-          className=" border-white normal-case hover:bg-transparent hover:text-white active:bg-transparent lg:hidden"
+          className=" border-white normal-case hover:bg-transparent hover:text-white active:bg-transparent "
           onClick={() => setOpenedGameplay(!openedGameplay)}
         >
           {openedGameplay && (
@@ -55,7 +55,7 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
         </Button>
       </div>
 
-      <div className="flex h-full min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:min-w-fit lg:flex-row lg:gap-12 lg:px-16">
+      <div className="flex h-full min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:min-w-fit lg:flex-row lg:gap-12 lg:px-16 lg:py-0">
         <div className={cn("flex flex-1 lg:basis-[70%]", !openedGameplay && "hidden", "lg:flex")}>
           <Gameplay conversationId={conversationId} />
         </div>

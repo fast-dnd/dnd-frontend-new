@@ -12,7 +12,9 @@ const useGameplaySocket = (conversationId: string) => {
   const [lastStory, setLastStory] = useState<string>("");
   const [move, setMove] = useState<DefaultMove>();
   const [loadingText, setLoadingText] = useState(false);
-  const [rollButtonState, setRollButtonState] = useState<"ROLL" | "ROLLING" | "ROLLED">("ROLL");
+  const [rollButtonState, setRollButtonState] = useState<"CANPLAY" | "ROLLING" | "ROLLED">(
+    "CANPLAY",
+  );
 
   useEffect(() => {
     const onEvent = (event: IGameplaySocketEvent) => {
@@ -28,7 +30,7 @@ const useGameplaySocket = (conversationId: string) => {
           setLoadingText(true);
           break;
         case "ROUND_STORY":
-          setRollButtonState("ROLL");
+          setRollButtonState("CANPLAY");
           setCanPlay(true);
           setMove(undefined);
           queryClient.refetchQueries(["room", conversationId]).then(() => {

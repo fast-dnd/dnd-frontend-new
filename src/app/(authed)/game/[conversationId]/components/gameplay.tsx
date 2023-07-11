@@ -7,7 +7,7 @@ import { BsFillArrowRightSquareFill } from "react-icons/bs";
 import { FaDice, FaRobot } from "react-icons/fa";
 import { HiSparkles } from "react-icons/hi";
 
-import { defaultMoves, IPlayer } from "@/types/dnd";
+import { IPlayer } from "@/types/dnd";
 import { IPlayMove, IPlayMoveResponse } from "@/services/game-service";
 import { cn } from "@/utils/style-utils";
 import useGetDungeon from "@/hooks/use-get-dungeon";
@@ -79,7 +79,7 @@ const Gameplay = (props: { conversationId: string }) => {
         }
       } else if (!lastStory && rollButtonState !== "ROLLING") {
         setCanPlay(true);
-        setRollButtonState("ROLL");
+        setRollButtonState("CANPLAY");
       }
       if (lastStory) {
         setStories([...roomData.chatGptResponses, lastStory]);
@@ -164,7 +164,7 @@ const Gameplay = (props: { conversationId: string }) => {
           setTimeout(() => setDice(randomDice(res.data.diceAfterBonus)), 250);
         },
         onError: () => {
-          setRollButtonState("ROLL");
+          setRollButtonState("CANPLAY");
           setCanPlay(true);
         },
       });
@@ -238,142 +238,145 @@ const Gameplay = (props: { conversationId: string }) => {
         <div ref={autoBottomScrollDiv} />
       </div>
       <div className="flex w-full flex-col gap-8 lg:flex-row">
-        {roomData.location.phase === "discovery" && (
-          <div className="flex flex-1 flex-col gap-4">
-            <div
-              className={cn(
-                "bg-white/5 px-8 py-2.5 text-center indent-[0.07em] text-xl tracking-[0.07em]",
-                !canPlay && "text-white/50",
-              )}
-            >
-              <span className="font-semibold">Choose an action</span> - {timeToDisplay()} Left
-            </div>
-            <div className="flex w-full flex-wrap gap-4">
-              {defaultMoves.map((dMove) => (
-                <Button
-                  key={dMove}
-                  variant="ghost"
-                  disabled={!canPlay}
-                  className={cn(
-                    "h-12 flex-1 basis-1/3 border-white/25 px-2 normal-case text-white",
-                    dMove === move && "border-2 border-tomato",
-                    currentPlayer.champion.moveMapping[dMove].length > 24 && "text-sm",
-                    currentPlayer.champion.moveMapping[dMove].length > 48 && "text-xs",
-                  )}
-                  onClick={() => setMove(dMove)}
-                >
-                  {currentPlayer.champion.moveMapping[dMove]}
-                </Button>
-              ))}
-            </div>
-          </div>
-        )}
-        {roomData.location.phase === "end" && (
-          <div className="flex h-full flex-1 flex-col gap-4">
-            <div
-              className={cn(
-                "bg-white/5 px-8 py-2.5 text-center indent-[0.07em] text-xl tracking-[0.07em]",
-                !canPlay && "text-white/50",
-              )}
-            >
-              <span className="font-semibold">Type your move and select a power up</span> -{" "}
-              {timeToDisplay()} Left
-            </div>
-            <div className="flex h-full gap-4">
-              <TextArea
-                className="m-0 h-full border-white/50"
-                placeholder="I found a secret tunnel and escape through it..."
-                disabled={!canPlay}
-                onChange={(e) => setFreeWill(e.target.value)}
-                value={freeWill}
-              />
-              <div className="flex w-[72px] flex-col gap-2">
-                {Array.from({ length: 3 }, (_, i) => (
-                  <Button
-                    variant="ghost"
-                    key={i}
-                    disabled={!canPlay || currentPlayer.mana < i}
-                    className={cn(
-                      "h-8 bg-white/5 font-semibold tracking-[0.2em] text-white",
-                      powerUp === i && "border-tomato",
-                    )}
-                    onClick={() => setPowerUp(i)}
-                  >
-                    +{i}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-        <div className="flex flex-col justify-between bg-white/5 lg:w-[270px]">
-          <div className="relative flex h-32 items-center justify-center gap-4">
-            {((rollInfo?.diceAfterBonus || 0) >= 2 || submitting) && (
-              <>
-                {rollButtonState === "ROLLING" &&
-                  dice.map((roll, i) => <Die key={i} roll={roll} />)}
-
-                {!!rollInfo && rollButtonState !== "ROLLING" && (
-                  <div className="flex w-full flex-col px-4">
-                    <div className="flex w-full justify-between">
-                      <div className="flex items-center gap-2">
-                        <FaDice /> You rolled
-                      </div>
-                      <p>{rollInfo.diceBreakdown.dice}</p>
-                    </div>
-                    <div className="flex w-full justify-between opacity-50">
-                      <div className="flex items-center gap-2">
-                        <BsFillArrowRightSquareFill /> Round bonus
-                      </div>
-                      <p>
-                        {rollInfo.diceBreakdown.bonusApplied > 0 && "+"}
-                        {rollInfo.diceBreakdown.bonusApplied}
-                      </p>
-                    </div>
-                    <div className="flex w-full justify-between opacity-50">
-                      <div className="flex items-center gap-2">
-                        <FaRobot /> Bob gave
-                      </div>
-                      <p>
-                        {rollInfo.diceBreakdown.aiDiceBonus > 0 && "+"}
-                        {rollInfo.diceBreakdown.aiDiceBonus}
-                      </p>
-                    </div>
-                    <div className="flex w-full justify-between opacity-50">
-                      <div className="flex items-center gap-2">
-                        <HiSparkles /> Mana used
-                      </div>
-                      <p>
-                        {rollInfo.diceBreakdown.mana > 0 && "+"}
-                        {rollInfo.diceBreakdown.mana}
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-          <Button
-            disabled={
-              !canPlay ||
-              (!move && roomData.location.phase === "discovery") ||
-              (!freeWill && roomData.location.phase === "end")
-            }
+        <div className="flex h-full flex-1 flex-col gap-6">
+          <div
             className={cn(
-              "h-12 normal-case",
-              rollButtonState !== "ROLL" && "bg-white/5 text-white",
+              "bg-white/5 px-8 py-2.5 text-xl uppercase tracking-[0.07em]",
+              !canPlay && "text-white/50",
             )}
-            onClick={onPlay}
           >
-            {rollButtonState === "ROLL" && <p className="text-center">Roll the dice</p>}
-            {rollButtonState === "ROLLING" && <p className="text-center">Rolling...</p>}
-            {rollButtonState === "ROLLED" && (
-              <div className="flex w-full justify-between px-4">
-                <p>Total</p>
-                <p>{rollInfo?.diceAfterBonus}</p>
+            <span className="font-semibold">Type or select your move</span>
+            <span className="opacity-50"> - {timeToDisplay()} Left</span>
+          </div>
+          <div className="flex h-60 lg:h-full">
+            <TextArea
+              className="m-0 h-full border-white/50"
+              placeholder="I found a secret tunnel and escape through it..."
+              disabled={!canPlay}
+              onChange={(e) => setFreeWill(e.target.value)}
+              value={freeWill}
+            />
+          </div>
+        </div>
+        <div className="flex flex-col gap-6">
+          {rollButtonState === "CANPLAY" && (
+            <div className="flex h-12 w-full items-center justify-between bg-white/5">
+              <Button
+                variant="ghost"
+                disabled={powerUp === 0}
+                onClick={() => setPowerUp(powerUp - 1)}
+                className="flex h-full w-12 items-center justify-center bg-white/10 text-4xl"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="17"
+                  height="3"
+                  viewBox="0 0 17 3"
+                  fill="none"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M0.664062 1.47928C0.664062 1.17618 0.78447 0.885488 0.998798 0.671161C1.21312 0.456834 1.50382 0.336426 1.80692 0.336426H15.5212C15.8243 0.336426 16.115 0.456834 16.3293 0.671161C16.5437 0.885488 16.6641 1.17618 16.6641 1.47928C16.6641 1.78239 16.5437 2.07308 16.3293 2.2874C16.115 2.50173 15.8243 2.62214 15.5212 2.62214H1.80692C1.50382 2.62214 1.21312 2.50173 0.998798 2.2874C0.78447 2.07308 0.664063 1.78239 0.664062 1.47928Z"
+                    fill="white"
+                  />
+                </svg>
+              </Button>
+              <div className="flex items-center gap-2.5 text-xl font-semibold">
+                <span className="mt-0.5">{powerUp}</span> <HiSparkles />
               </div>
-            )}
-          </Button>
+              <Button
+                variant="ghost"
+                disabled={powerUp === 2 || powerUp >= currentPlayer.mana}
+                onClick={() => setPowerUp(powerUp - 1)}
+                className="flex h-full w-12 items-center justify-center bg-white/10 text-4xl"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="17"
+                  height="17"
+                  viewBox="0 0 17 17"
+                  fill="none"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M8.66406 0.479492C8.96717 0.479492 9.25786 0.5999 9.47219 0.814227C9.68651 1.02855 9.80692 1.31924 9.80692 1.62235V7.33664H15.5212C15.8243 7.33664 16.115 7.45704 16.3293 7.67137C16.5437 7.8857 16.6641 8.17639 16.6641 8.47949C16.6641 8.7826 16.5437 9.07329 16.3293 9.28761C16.115 9.50194 15.8243 9.62235 15.5212 9.62235H9.80692V15.3366C9.80692 15.6397 9.68651 15.9304 9.47219 16.1448C9.25786 16.3591 8.96717 16.4795 8.66406 16.4795C8.36096 16.4795 8.07027 16.3591 7.85594 16.1448C7.64161 15.9304 7.52121 15.6397 7.52121 15.3366V9.62235H1.80692C1.50382 9.62235 1.21312 9.50194 0.998798 9.28761C0.78447 9.07329 0.664063 8.7826 0.664062 8.47949C0.664062 8.17639 0.78447 7.8857 0.998798 7.67137C1.21312 7.45704 1.50382 7.33664 1.80692 7.33664H7.52121V1.62235C7.52121 1.31924 7.64161 1.02855 7.85594 0.814227C8.07027 0.5999 8.36096 0.479492 8.66406 0.479492Z"
+                    fill="white"
+                  />
+                </svg>
+              </Button>
+            </div>
+          )}
+          <div className="flex flex-col justify-between bg-white/5 lg:w-[270px]">
+            <div className="relative flex h-28 items-center justify-center gap-4">
+              {((rollInfo?.diceAfterBonus || 0) >= 2 || submitting) && (
+                <>
+                  {rollButtonState === "ROLLING" &&
+                    dice.map((roll, i) => <Die key={i} roll={roll} />)}
+
+                  {!!rollInfo && rollButtonState !== "ROLLING" && (
+                    <div className="flex w-full flex-col px-4">
+                      <div className="flex w-full justify-between">
+                        <div className="flex items-center gap-2">
+                          <FaDice /> You rolled
+                        </div>
+                        <p>{rollInfo.diceBreakdown.dice}</p>
+                      </div>
+                      <div className="flex w-full justify-between opacity-50">
+                        <div className="flex items-center gap-2">
+                          <BsFillArrowRightSquareFill /> Round bonus
+                        </div>
+                        <p>
+                          {rollInfo.diceBreakdown.bonusApplied > 0 && "+"}
+                          {rollInfo.diceBreakdown.bonusApplied}
+                        </p>
+                      </div>
+                      <div className="flex w-full justify-between opacity-50">
+                        <div className="flex items-center gap-2">
+                          <FaRobot /> Bob gave
+                        </div>
+                        <p>
+                          {rollInfo.diceBreakdown.aiDiceBonus > 0 && "+"}
+                          {rollInfo.diceBreakdown.aiDiceBonus}
+                        </p>
+                      </div>
+                      <div className="flex w-full justify-between opacity-50">
+                        <div className="flex items-center gap-2">
+                          <HiSparkles /> Mana used
+                        </div>
+                        <p>
+                          {rollInfo.diceBreakdown.mana > 0 && "+"}
+                          {rollInfo.diceBreakdown.mana}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+            <Button
+              disabled={
+                !canPlay ||
+                (!move && roomData.location.phase === "discovery") ||
+                (!freeWill && roomData.location.phase === "end")
+              }
+              className={cn(
+                "h-12 normal-case",
+                rollButtonState !== "CANPLAY" && "bg-white/5 text-white",
+              )}
+              onClick={onPlay}
+            >
+              {rollButtonState === "CANPLAY" && <p className="text-center">Roll the dice</p>}
+              {rollButtonState === "ROLLING" && <p className="text-center">Rolling...</p>}
+              {rollButtonState === "ROLLED" && (
+                <div className="flex w-full justify-between px-4">
+                  <p>Total</p>
+                  <p>{rollInfo?.diceAfterBonus}</p>
+                </div>
+              )}
+            </Button>
+          </div>
         </div>
       </div>
       <Modal
