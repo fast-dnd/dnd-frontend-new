@@ -3,8 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { AiFillHeart } from "react-icons/ai";
 import { BsFillArrowRightSquareFill } from "react-icons/bs";
 import { FaDice, FaRobot } from "react-icons/fa";
+import { GiNightSleep } from "react-icons/gi";
+import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
 
 import { IPlayer } from "@/types/dnd";
@@ -17,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/modal";
 import Spinner from "@/components/ui/spinner";
 import { TextArea } from "@/components/ui/text-area";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import useGameplaySocket from "../hooks/use-gameplay-socket";
 import usePlayMove from "../hooks/use-play-move";
@@ -140,15 +144,15 @@ const Gameplay = (props: { conversationId: string }) => {
 
   const onPlay = () => {
     let moveToPlay: IPlayMove | undefined;
-    if (roomData.location.phase === "discovery" && move) {
+    if (move) {
       moveToPlay = {
         conversationId,
-        mana: 0,
+        mana: powerUp,
         moveType: move,
         playerId: currentPlayer.accountId,
         message: "",
       };
-    } else if (roomData.location.phase === "end") {
+    } else {
       moveToPlay = {
         conversationId,
         mana: powerUp,
@@ -250,66 +254,140 @@ const Gameplay = (props: { conversationId: string }) => {
             <span className="font-semibold">Type or select your move</span>
             <span className="opacity-50"> - {timeToDisplay()} Left</span>
           </div>
-          <div className="flex h-60 lg:h-full">
+          <div className="relative flex h-52 lg:h-full">
             <TextArea
+              maxLength={300}
               className="m-0 h-full border-white/50"
               placeholder="I found a secret tunnel and escape through it..."
-              disabled={!canPlay}
+              disabled={!canPlay || !!move}
               onChange={(e) => setFreeWill(e.target.value)}
-              value={freeWill}
+              value={move ? currentPlayer.champion.moveMapping[move] : freeWill}
             />
-          </div>
-        </div>
-        <div className="flex flex-col gap-6">
-          {rollButtonState === "CANPLAY" && (
-            <div className="flex h-12 w-full items-center justify-between bg-white/5">
-              <Button
-                variant="ghost"
-                disabled={powerUp === 0}
-                onClick={() => setPowerUp(powerUp - 1)}
-                className="flex h-full w-12 items-center justify-center bg-white/10 text-4xl"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="17"
-                  height="3"
-                  viewBox="0 0 17 3"
-                  fill="none"
+            <div className="pointer-events-none absolute bottom-4 flex w-full justify-between  px-4">
+              <div className="flex h-9 gap-2">
+                <Button
+                  variant="ghost"
+                  disabled={!canPlay}
+                  className={cn(
+                    "pointer-events-auto h-9 w-9 bg-white/5 text-white",
+                    move === "discover_health" && "border-tomato",
+                  )}
+                  onClick={() => setMove("discover_health")}
                 >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M0.664062 1.47928C0.664062 1.17618 0.78447 0.885488 0.998798 0.671161C1.21312 0.456834 1.50382 0.336426 1.80692 0.336426H15.5212C15.8243 0.336426 16.115 0.456834 16.3293 0.671161C16.5437 0.885488 16.6641 1.17618 16.6641 1.47928C16.6641 1.78239 16.5437 2.07308 16.3293 2.2874C16.115 2.50173 15.8243 2.62214 15.5212 2.62214H1.80692C1.50382 2.62214 1.21312 2.50173 0.998798 2.2874C0.78447 2.07308 0.664063 1.78239 0.664062 1.47928Z"
-                    fill="white"
-                  />
-                </svg>
-              </Button>
-              <div className="flex items-center gap-2.5 text-xl font-semibold">
-                <span className="mt-0.5">{powerUp}</span> <HiSparkles />
+                  <AiFillHeart />
+                </Button>
+                <Button
+                  variant="ghost"
+                  disabled={!canPlay}
+                  className={cn(
+                    "pointer-events-auto h-9 w-9 bg-white/5 text-white",
+                    move === "discover_mana" && "border-tomato",
+                  )}
+                  onClick={() => setMove("discover_mana")}
+                >
+                  <HiSparkles />
+                </Button>
+                <Button
+                  variant="ghost"
+                  disabled={!canPlay}
+                  className={cn(
+                    "pointer-events-auto h-9 w-9 bg-white/5 text-white",
+                    move === "conversation_with_team" && "border-tomato",
+                  )}
+                  onClick={() => setMove("conversation_with_team")}
+                >
+                  <GoPeople />
+                </Button>
+                <Button
+                  variant="ghost"
+                  disabled={!canPlay}
+                  className={cn(
+                    "pointer-events-auto h-9 w-9 bg-white/5 text-white",
+                    move === "rest" && "border-tomato",
+                  )}
+                  onClick={() => setMove("rest")}
+                >
+                  <GiNightSleep />
+                </Button>
               </div>
               <Button
                 variant="ghost"
-                disabled={powerUp === 2 || powerUp >= currentPlayer.mana}
-                onClick={() => setPowerUp(powerUp - 1)}
-                className="flex h-full w-12 items-center justify-center bg-white/10 text-4xl"
+                disabled={!canPlay}
+                className={cn(
+                  "pointer-events-auto h-9 w-fit bg-white/5 px-4 normal-case text-white",
+                  !move && "border-tomato",
+                )}
+                onClick={() => setMove(undefined)}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="17"
-                  height="17"
-                  viewBox="0 0 17 17"
-                  fill="none"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M8.66406 0.479492C8.96717 0.479492 9.25786 0.5999 9.47219 0.814227C9.68651 1.02855 9.80692 1.31924 9.80692 1.62235V7.33664H15.5212C15.8243 7.33664 16.115 7.45704 16.3293 7.67137C16.5437 7.8857 16.6641 8.17639 16.6641 8.47949C16.6641 8.7826 16.5437 9.07329 16.3293 9.28761C16.115 9.50194 15.8243 9.62235 15.5212 9.62235H9.80692V15.3366C9.80692 15.6397 9.68651 15.9304 9.47219 16.1448C9.25786 16.3591 8.96717 16.4795 8.66406 16.4795C8.36096 16.4795 8.07027 16.3591 7.85594 16.1448C7.64161 15.9304 7.52121 15.6397 7.52121 15.3366V9.62235H1.80692C1.50382 9.62235 1.21312 9.50194 0.998798 9.28761C0.78447 9.07329 0.664063 8.7826 0.664062 8.47949C0.664062 8.17639 0.78447 7.8857 0.998798 7.67137C1.21312 7.45704 1.50382 7.33664 1.80692 7.33664H7.52121V1.62235C7.52121 1.31924 7.64161 1.02855 7.85594 0.814227C8.07027 0.5999 8.36096 0.479492 8.66406 0.479492Z"
-                    fill="white"
-                  />
-                </svg>
+                Use free will
               </Button>
             </div>
-          )}
+          </div>
+        </div>
+        <div className="flex flex-col gap-6">
+          <div
+            className={cn(
+              "flex h-12 w-full items-center justify-between bg-white/5",
+              rollButtonState !== "CANPLAY" && "opacity-50",
+            )}
+          >
+            <Button
+              variant="ghost"
+              disabled={powerUp === 0 || !canPlay}
+              onClick={() => setPowerUp(powerUp - 1)}
+              className="flex h-full w-12 items-center justify-center bg-white/10 text-4xl"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="17"
+                height="3"
+                viewBox="0 0 17 3"
+                fill="none"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M0.664062 1.47928C0.664062 1.17618 0.78447 0.885488 0.998798 0.671161C1.21312 0.456834 1.50382 0.336426 1.80692 0.336426H15.5212C15.8243 0.336426 16.115 0.456834 16.3293 0.671161C16.5437 0.885488 16.6641 1.17618 16.6641 1.47928C16.6641 1.78239 16.5437 2.07308 16.3293 2.2874C16.115 2.50173 15.8243 2.62214 15.5212 2.62214H1.80692C1.50382 2.62214 1.21312 2.50173 0.998798 2.2874C0.78447 2.07308 0.664063 1.78239 0.664062 1.47928Z"
+                  fill="white"
+                />
+              </svg>
+            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="flex cursor-default items-center gap-2.5 text-xl font-semibold">
+                  <span className="mt-0.5">{powerUp}</span> <HiSparkles />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div className="flex flex-col items-center p-4 text-center">
+                    <p className="text-lg font-semibold">Select mana boost</p>
+                    <p>This will power up your luck</p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <Button
+              variant="ghost"
+              disabled={powerUp === 2 || powerUp >= currentPlayer.mana || !canPlay}
+              onClick={() => setPowerUp(powerUp + 1)}
+              className="flex h-full w-12 items-center justify-center bg-white/10 text-4xl"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="17"
+                height="17"
+                viewBox="0 0 17 17"
+                fill="none"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M8.66406 0.479492C8.96717 0.479492 9.25786 0.5999 9.47219 0.814227C9.68651 1.02855 9.80692 1.31924 9.80692 1.62235V7.33664H15.5212C15.8243 7.33664 16.115 7.45704 16.3293 7.67137C16.5437 7.8857 16.6641 8.17639 16.6641 8.47949C16.6641 8.7826 16.5437 9.07329 16.3293 9.28761C16.115 9.50194 15.8243 9.62235 15.5212 9.62235H9.80692V15.3366C9.80692 15.6397 9.68651 15.9304 9.47219 16.1448C9.25786 16.3591 8.96717 16.4795 8.66406 16.4795C8.36096 16.4795 8.07027 16.3591 7.85594 16.1448C7.64161 15.9304 7.52121 15.6397 7.52121 15.3366V9.62235H1.80692C1.50382 9.62235 1.21312 9.50194 0.998798 9.28761C0.78447 9.07329 0.664063 8.7826 0.664062 8.47949C0.664062 8.17639 0.78447 7.8857 0.998798 7.67137C1.21312 7.45704 1.50382 7.33664 1.80692 7.33664H7.52121V1.62235C7.52121 1.31924 7.64161 1.02855 7.85594 0.814227C8.07027 0.5999 8.36096 0.479492 8.66406 0.479492Z"
+                  fill="white"
+                />
+              </svg>
+            </Button>
+          </div>
           <div className="flex flex-col justify-between bg-white/5 lg:w-[270px]">
             <div className="relative flex h-28 items-center justify-center gap-4">
               {((rollInfo?.diceAfterBonus || 0) >= 2 || submitting) && (
@@ -358,11 +436,7 @@ const Gameplay = (props: { conversationId: string }) => {
               )}
             </div>
             <Button
-              disabled={
-                !canPlay ||
-                (!move && roomData.location.phase === "discovery") ||
-                (!freeWill && roomData.location.phase === "end")
-              }
+              disabled={!canPlay || (!move && !freeWill)}
               className={cn(
                 "h-12 normal-case",
                 rollButtonState !== "CANPLAY" && "bg-white/5 text-white",
