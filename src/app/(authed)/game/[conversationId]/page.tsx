@@ -17,8 +17,13 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
   const conversationId = params.conversationId;
   const [openedGameplay, setOpenedGameplay] = useState(true);
 
-  const { displayHowToPlay, setDisplayHowToPlay, displayFeedback, setDisplayFeedback } =
-    useGameStore((state) => state);
+  const {
+    displayHowToPlay,
+    setDisplayHowToPlay,
+    displayFeedback,
+    setDisplayFeedback,
+    setHomeModal,
+  } = useGameStore((state) => state);
 
   if (displayFeedback) return <Feedback onHideFeedback={() => setDisplayFeedback(false)} />;
 
@@ -30,7 +35,9 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
   return (
     <div className="flex h-full min-h-0 flex-col gap-5 py-8 lg:pb-12">
       <MobileNavbar
+        goBackAction={() => setHomeModal(true)}
         goBackText="HOME"
+        href=""
         howTo
         onClickHowTo={() => setDisplayHowToPlay(true)}
         feedback

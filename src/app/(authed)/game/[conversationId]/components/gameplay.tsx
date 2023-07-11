@@ -31,7 +31,9 @@ const Gameplay = (props: { conversationId: string }) => {
   const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
 
-  const { setDisplayHowToPlay, setDisplayFeedback } = useGameStore((store) => store);
+  const { setDisplayHowToPlay, setDisplayFeedback, homeModal, setHomeModal } = useGameStore(
+    (store) => store,
+  );
 
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [powerUp, setPowerUp] = useState(0);
@@ -42,7 +44,6 @@ const Gameplay = (props: { conversationId: string }) => {
   const [stories, setStories] = useState<string[]>([]);
 
   const [imageModal, setImageModal] = useState("");
-  const [homeModal, setHomeModal] = useState(false);
   const [goingHome, setGoingHome] = useState(false);
 
   const {
@@ -413,6 +414,7 @@ const Gameplay = (props: { conversationId: string }) => {
             variant="outline"
             onClick={() => {
               setGoingHome(true);
+              setHomeModal(false);
               router.push("/home");
             }}
           >
