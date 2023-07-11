@@ -40,7 +40,10 @@ const Gameplay = (props: { conversationId: string }) => {
   const [dice, setDice] = useState([0, 0]);
   const [rollInfo, setRollInfo] = useState<IPlayMoveResponse>();
   const [stories, setStories] = useState<string[]>([]);
+
   const [imageModal, setImageModal] = useState("");
+  const [homeModal, setHomeModal] = useState(false);
+  const [goingHome, setGoingHome] = useState(false);
 
   const {
     canPlay,
@@ -129,7 +132,7 @@ const Gameplay = (props: { conversationId: string }) => {
 
   if (!roomData || !dungeonData || !currentPlayer)
     return (
-      <Box title="" className="flex h-full items-center justify-center">
+      <Box title="GAMEPLAY" className="flex h-full items-center justify-center">
         <Spinner className="h-40 w-40" />
       </Box>
     );
@@ -179,9 +182,7 @@ const Gameplay = (props: { conversationId: string }) => {
       feedback
       onClickFeedback={() => setDisplayFeedback(true)}
       home
-      onClickHome={() => {
-        router.push("/home");
-      }}
+      onClickHome={() => setHomeModal(true)}
       loading={loadingText}
       className="flex min-h-0 flex-1 flex-col gap-8 p-5 lg:px-12 lg:py-8"
     >
@@ -379,6 +380,7 @@ const Gameplay = (props: { conversationId: string }) => {
           </div>
         </div>
       </div>
+
       <Modal
         className="outline-none"
         tabIndex={0}
@@ -392,6 +394,35 @@ const Gameplay = (props: { conversationId: string }) => {
           height={280}
           width={280}
         />
+      </Modal>
+
+      <Modal
+        open={homeModal}
+        onClose={() => setHomeModal(false)}
+        className="flex h-fit w-fit flex-col items-center gap-8 bg-black/90 px-6 py-8 text-lg shadow-xl shadow-white/10 lg:px-12 lg:text-xl"
+      >
+        <p className="text-center font-medium uppercase leading-7 tracking-[3.3px]">
+          Leave the game?
+        </p>
+        <p className="text-center leading-7 tracking-[2.64px] text-white/60">
+          Stepping away? Remember, each game phase waits for 10 minutes. Miss it, and face a loss.
+        </p>
+        <div className="flex flex-row justify-center gap-8">
+          <Button
+            className="w-fit px-16 py-3"
+            variant="outline"
+            onClick={() => {
+              setGoingHome(true);
+              router.push("/home");
+            }}
+          >
+            {goingHome && <Spinner className="m-0 h-4 w-4" />}
+            EXIT GAME
+          </Button>
+          <Button className="w-fit whitespace-nowrap px-8 py-3" onClick={() => setHomeModal(false)}>
+            STAY AND PLAY
+          </Button>
+        </div>
       </Modal>
     </Box>
   );

@@ -24,7 +24,7 @@ const RoomInfo = (props: { conversationId: string }) => {
     return (
       <Box
         title="ROOM"
-        className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-8 p-8 md:w-[490px]"
+        className="flex min-h-0 w-full flex-col items-center justify-center gap-8 p-8 md:w-[490px]"
       >
         <Spinner className="h-40 w-40" />
       </Box>
