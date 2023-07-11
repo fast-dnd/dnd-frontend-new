@@ -15,15 +15,29 @@ const Player = (props: { player: IPlayer }) => {
   const { data: avatarData } = useGetAvatar(player.avatarId);
 
   return (
-    <div className={cn("relative flex gap-4 lg:gap-6", player.health <= 0 && "opacity-50")}>
-      <Image
-        src={avatarData?.imageUrl || "/images/default-avatar.png"}
-        alt={player.name}
-        width={90}
-        height={90}
-      />
+    <div className="relative flex gap-4 lg:gap-6">
+      <div className="relative h-[90px] w-[90px]">
+        <Image
+          src={avatarData?.imageUrl || "/images/default-avatar.png"}
+          alt={player.name}
+          draggable={false}
+          width={90}
+          height={90}
+        />
+        {player.health <= 0 && (
+          <div className="absolute top-0 flex h-full w-full items-center justify-center bg-black/75">
+            <Image
+              src={"/images/player-dead.png"}
+              alt={"dead"}
+              draggable={false}
+              width={64}
+              height={64}
+            />
+          </div>
+        )}
+      </div>
 
-      <div className="flex flex-col gap-1.5">
+      <div className={cn("flex flex-col gap-1.5", player.health <= 0 && "opacity-50")}>
         <p className="-mt-1 text-xl font-semibold uppercase tracking-[0.07em]">{player.name}</p>
         <p className="font-light tracking-[0.15em]">{player.champion.name}</p>
         <div className="flex gap-4 lg:gap-8">

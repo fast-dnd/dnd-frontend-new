@@ -259,8 +259,11 @@ const Gameplay = (props: { conversationId: string }) => {
               maxLength={300}
               className="m-0 h-full border-white/50"
               placeholder="I found a secret tunnel and escape through it..."
-              disabled={!canPlay || !!move}
-              onChange={(e) => setFreeWill(e.target.value)}
+              disabled={!canPlay}
+              onChange={(e) => {
+                setFreeWill(e.target.value);
+                setMove(undefined);
+              }}
               value={move ? currentPlayer.champion.moveMapping[move] : freeWill}
             />
             <div className="pointer-events-none absolute bottom-4 flex w-full justify-between  px-4">
