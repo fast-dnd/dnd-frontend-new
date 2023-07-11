@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { Box } from "@/components/ui/box";
@@ -20,8 +21,13 @@ const Settings = () => {
 
   return (
     <div className="flex h-fit justify-center lg:w-[450px]">
-      <Box title="ACCOUNT" className="flex h-fit min-h-0 flex-1 flex-col gap-8 p-8 lg:w-[450px]">
-        <p className="break-all text-center text-2xl text-white/60">{account.properties.email}</p>
+      <Box title="ACCOUNT" className="flex h-fit min-h-0 flex-1 flex-col gap-4 p-8 lg:w-[450px]">
+        <p className="inline-flex items-center justify-center text-lg leading-7">
+          DM coin ballance:
+          <Image src="/images/dm-coin.png" alt="dm-coin" height={30} width={30} className="" />
+          <span className="font-medium"> 10</span>
+        </p>
+        <p className="break-all text-center text-xl text-white/60">{account.properties.email}</p>
         <Button variant="outline" onClick={onSignOut}>
           SIGN OUT
         </Button>

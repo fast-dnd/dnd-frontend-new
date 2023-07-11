@@ -74,7 +74,7 @@ const General = (props: { conversationId: string }) => {
 
   if (!roomData || !currentPlayer) {
     return (
-      <Box title="" className="flex h-full items-center justify-center">
+      <Box title="GENERAL" className="flex h-full items-center justify-center">
         <Spinner className="h-40 w-40" />
       </Box>
     );
