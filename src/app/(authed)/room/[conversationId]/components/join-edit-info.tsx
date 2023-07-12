@@ -71,16 +71,13 @@ const JoinEditInfo = (props: { conversationId: string }) => {
   }, [roomData]);
 
   useEffect(() => {
-    if (duration || generateImages || generateAudio) {
-      updateRoom({
-        conversationId,
-        responseDetailsDepth: duration,
-        generateImages,
-        generateAudio,
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [duration, generateImages, generateAudio]);
+    updateRoom({
+      conversationId,
+      responseDetailsDepth: duration,
+      generateImages,
+      generateAudio,
+    });
+  }, [duration, generateImages, generateAudio, updateRoom, conversationId]);
 
   if (isError) redirect("/home");
 
