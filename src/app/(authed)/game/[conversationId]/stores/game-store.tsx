@@ -15,6 +15,8 @@ interface IGameStore {
   setDisplayFeedback: (displayFeedback: boolean) => void;
   homeModal: boolean;
   setHomeModal: (homeModal: boolean) => void;
+  diedModal: boolean;
+  setDiedModal: (diedModal: boolean) => void;
   changes: PlayerChanges;
   setChanges: (changes: PlayerChanges) => void;
 }
@@ -26,6 +28,8 @@ export const useGameStore = create<IGameStore>()((set) => ({
   setDisplayFeedback: (displayFeedback: boolean) => set({ displayFeedback }),
   homeModal: false,
   setHomeModal: (homeModal: boolean) => set({ homeModal }),
+  diedModal: false,
+  setDiedModal: (diedModal: boolean) => set({ diedModal }),
   changes: {},
   setChanges: (changes: PlayerChanges) => set({ changes }),
 }));

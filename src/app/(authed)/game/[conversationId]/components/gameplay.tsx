@@ -27,6 +27,7 @@ import usePlayMove from "../hooks/use-play-move";
 import { PlayerChanges, useGameStore } from "../stores/game-store";
 import { randomDice } from "../utils/dice";
 import Die from "./die";
+import Player from "./player";
 import StyledAudio from "./styled-audio";
 
 const Gameplay = (props: { conversationId: string }) => {
@@ -34,9 +35,19 @@ const Gameplay = (props: { conversationId: string }) => {
   const router = useRouter();
   const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
+  const [gaming, setGaming] = useState(true);
+  const [gameOverModal, setGameOverModal] = useState(false);
+  const [result, setResult] = useState<"GAMING" | "WON" | "LOST">("GAMING");
 
-  const { setDisplayHowToPlay, setDisplayFeedback, homeModal, setHomeModal, setChanges } =
-    useGameStore((store) => store);
+  const {
+    setDisplayHowToPlay,
+    setDisplayFeedback,
+    homeModal,
+    setHomeModal,
+    diedModal,
+    setDiedModal,
+    setChanges,
+  } = useGameStore((store) => store);
 
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [powerUp, setPowerUp] = useState(0);
@@ -45,6 +56,7 @@ const Gameplay = (props: { conversationId: string }) => {
   const [dice, setDice] = useState([0, 0]);
   const [rollInfo, setRollInfo] = useState<IPlayMoveResponse>();
   const [stories, setStories] = useState<string[]>([]);
+  const [dying, setDying] = useState(false);
 
   const [imageModal, setImageModal] = useState("");
   const [goingHome, setGoingHome] = useState(false);
@@ -84,11 +96,16 @@ const Gameplay = (props: { conversationId: string }) => {
         if (player.gold !== currentPlayer.gold) {
           changes.gainedGold = true;
         }
+        if (changes.lostHealth && player.health <= 0) setDying(true);
         if (Object.keys(changes).length) {
           setChanges(changes);
           setTimeout(() => {
             setChanges({});
-          }, 1000);
+            if (changes.lostHealth && player.health <= 0) {
+              setDying(false);
+              setDiedModal(true);
+            }
+          }, 1500);
         }
       }
       setCurrentPlayer(player);
@@ -121,7 +138,16 @@ const Gameplay = (props: { conversationId: string }) => {
 
       //TODO setRollInfo of most recent move, when move format contains all required fields
 
-      if (roomData.state === "CLOSED") setCanPlay(false);
+      if (roomData.state === "CLOSED") {
+        setCanPlay(false);
+        if (roomData.playerState.every((player) => player.health > 0)) {
+          setResult("WON");
+        } else setResult("LOST");
+        if (gaming) {
+          setGaming(false);
+          setGameOverModal(true);
+        }
+      }
     }
   }, [
     canPlay,
@@ -134,6 +160,9 @@ const Gameplay = (props: { conversationId: string }) => {
     submitting,
     currentPlayer,
     setChanges,
+    setDiedModal,
+    gaming,
+    setGameOverModal,
   ]);
 
   useEffect(() => {
@@ -269,18 +298,30 @@ const Gameplay = (props: { conversationId: string }) => {
         ))}
         <div ref={autoBottomScrollDiv} />
       </div>
-      <div className="flex w-full flex-col gap-8 lg:flex-row">
-        <div className="flex h-full flex-1 flex-col gap-6">
+      <div
+        className={cn(
+          "flex w-full flex-col gap-8 lg:flex-row",
+          (roomData.state === "CLOSED" || currentPlayer.health <= 0) && "hidden",
+        )}
+      >
+        <div
+          className={cn(
+            "flex h-full flex-1 flex-col gap-6",
+            rollButtonState !== "CANPLAY" && "hidden lg:flex",
+          )}
+        >
           <div
             className={cn(
-              "bg-white/5 px-8 py-2.5 text-xl uppercase tracking-[0.07em]",
+              "bg-white/5 px-4 py-2.5 text-xl uppercase tracking-[0.07em] lg:px-8",
               !canPlay && "text-white/50",
             )}
           >
-            <span className="font-semibold">Type or select your move</span>
+            <span className="font-semibold">
+              Type or select <span className="hidden lg:inline"> your move</span>
+            </span>
             <span className="opacity-50"> - {timeToDisplay()} Left</span>
           </div>
-          <div className="relative flex h-52 lg:h-full">
+          <div className="relative flex h-60 lg:h-full">
             <TextArea
               maxLength={300}
               className="m-0 h-full border-white/50"
@@ -292,13 +333,13 @@ const Gameplay = (props: { conversationId: string }) => {
               }}
               value={move ? currentPlayer.champion.moveMapping[move] : freeWill}
             />
-            <div className="pointer-events-none absolute bottom-4 flex w-full justify-between  px-4">
-              <div className="flex h-9 gap-2">
+            <div className="pointer-events-none absolute bottom-4 flex w-full flex-col justify-between gap-2 px-4  lg:flex-row">
+              <div className="flex h-9 justify-between gap-2 lg:justify-start">
                 <Button
                   variant="ghost"
                   disabled={!canPlay}
                   className={cn(
-                    "pointer-events-auto h-9 w-9 bg-white/5 text-white",
+                    "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
                     move === "discover_health" && "border-tomato",
                   )}
                   onClick={() => setMove("discover_health")}
@@ -309,7 +350,7 @@ const Gameplay = (props: { conversationId: string }) => {
                   variant="ghost"
                   disabled={!canPlay}
                   className={cn(
-                    "pointer-events-auto h-9 w-9 bg-white/5 text-white",
+                    "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
                     move === "discover_mana" && "border-tomato",
                   )}
                   onClick={() => setMove("discover_mana")}
@@ -320,7 +361,7 @@ const Gameplay = (props: { conversationId: string }) => {
                   variant="ghost"
                   disabled={!canPlay}
                   className={cn(
-                    "pointer-events-auto h-9 w-9 bg-white/5 text-white",
+                    "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
                     move === "conversation_with_team" && "border-tomato",
                   )}
                   onClick={() => setMove("conversation_with_team")}
@@ -331,7 +372,7 @@ const Gameplay = (props: { conversationId: string }) => {
                   variant="ghost"
                   disabled={!canPlay}
                   className={cn(
-                    "pointer-events-auto h-9 w-9 bg-white/5 text-white",
+                    "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
                     move === "rest" && "border-tomato",
                   )}
                   onClick={() => setMove("rest")}
@@ -343,7 +384,7 @@ const Gameplay = (props: { conversationId: string }) => {
                 variant="ghost"
                 disabled={!canPlay}
                 className={cn(
-                  "pointer-events-auto h-9 w-fit bg-white/5 px-4 normal-case text-white",
+                  "pointer-events-auto h-9 bg-white/5 px-4 normal-case text-white lg:w-fit",
                   !move && "border-tomato",
                 )}
                 onClick={() => setMove(undefined)}
@@ -357,7 +398,7 @@ const Gameplay = (props: { conversationId: string }) => {
           <div
             className={cn(
               "flex h-12 w-full items-center justify-between bg-white/5",
-              rollButtonState !== "CANPLAY" && "opacity-50",
+              rollButtonState !== "CANPLAY" && "hidden opacity-50 lg:flex",
             )}
           >
             <Button
@@ -485,6 +526,13 @@ const Gameplay = (props: { conversationId: string }) => {
         </div>
       </div>
 
+      {currentPlayer.health <= 0 && roomData.state !== "CLOSED" && (
+        <div className="flex h-44 w-full flex-col items-center justify-center bg-white/5 lg:text-xl">
+          <p className="text-center font-semibold">Players are choosing their actions...</p>
+          <p>{timeToDisplay()} Left</p>
+        </div>
+      )}
+
       <Modal
         className="outline-none"
         tabIndex={0}
@@ -526,6 +574,76 @@ const Gameplay = (props: { conversationId: string }) => {
           </Button>
           <Button className="w-fit whitespace-nowrap px-8 py-3" onClick={() => setHomeModal(false)}>
             STAY AND PLAY
+          </Button>
+        </div>
+      </Modal>
+      <Modal
+        open={diedModal}
+        onClose={() => setDiedModal(false)}
+        className="mx-8 flex h-fit w-fit flex-col items-center gap-8 bg-black/90 px-6 py-8 text-lg shadow-xl shadow-white/10 lg:px-12 lg:text-xl"
+      >
+        <p className="text-center font-medium uppercase leading-7 tracking-[3.3px]">You are dead</p>
+        <p className="text-center leading-7 tracking-[2.64px] text-white/60">
+          You have tried with all your might, but you have been defeated.
+        </p>
+        <Button
+          className="whitespace-nowrap px-8 py-3 uppercase"
+          onClick={() => setDiedModal(false)}
+        >
+          spectate
+        </Button>
+      </Modal>
+      <Modal
+        open={gameOverModal && !diedModal && !dying}
+        onClose={() => setGameOverModal(false)}
+        className="mx-8 flex h-fit max-h-[700px] max-w-[375px] flex-col items-center gap-6 bg-black/90 px-6 py-8 text-lg shadow-xl shadow-white/10 lg:max-w-[535px] lg:gap-8 lg:px-12 lg:text-xl"
+      >
+        <div className="flex flex-col gap-3 lg:gap-4">
+          <p className="text-center font-medium uppercase leading-7 tracking-[3.3px]">
+            {result === "WON" && "Game finished"}
+            {result === "LOST" && "You failed"}
+          </p>
+          <p className="text-center leading-7 tracking-[2.64px] text-white/60">
+            {result === "WON" && (
+              <span>
+                You have completed <span className="font-semibold">{dungeonData.name}</span>
+              </span>
+            )}
+            {result === "LOST" && (
+              <span>
+                You and your teammates have died in the adventure.{" "}
+                <span className="font-semibold">Better luck next time!</span>
+              </span>
+            )}
+          </p>
+        </div>
+
+        <div className="w-full border-t border-white/25" />
+        <div className="flex min-h-0 w-full flex-1 flex-col gap-6 overflow-y-scroll lg:gap-8">
+          {roomData.playerState.map((player) => (
+            <Player key={player.accountId} player={player} />
+          ))}
+        </div>
+        <div className="flex w-full flex-wrap justify-between gap-6">
+          <Button
+            variant="outline"
+            className="flex w-fit flex-1 border-tomato px-8 text-base lg:text-xl"
+            onClick={() => {
+              setGameOverModal(false);
+            }}
+          >
+            CLOSE
+          </Button>
+          <Button
+            variant="primary"
+            className="flex w-fit flex-1 whitespace-nowrap px-8 text-base lg:text-xl"
+            onClick={() => {
+              setGoingHome(true);
+              setGameOverModal(false);
+              router.push("/home");
+            }}
+          >
+            GO HOME
           </Button>
         </div>
       </Modal>

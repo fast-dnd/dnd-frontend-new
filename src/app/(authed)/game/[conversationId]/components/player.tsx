@@ -18,7 +18,7 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
 
   return (
     <div className="relative flex gap-4 lg:gap-6">
-      <div className="relative h-[90px] w-[90px]">
+      <div className="relative h-[76px] w-[76px] lg:h-[90px] lg:w-[90px]">
         <Image
           src={avatarData?.imageUrl || "/images/default-avatar.png"}
           alt={player.name}
@@ -28,7 +28,7 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
           className="h-full w-full"
         />
         {player.health <= 0 && (
-          <div className="absolute top-0 flex h-full w-full items-center justify-center bg-black/75">
+          <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black/75">
             <svg
               width="65"
               height="64"
@@ -53,7 +53,7 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
 
       <div
         className={cn(
-          "flex flex-col gap-1.5",
+          "flex flex-col lg:gap-1.5",
           player.health <= 0 && "pointer-events-none opacity-50",
         )}
       >
@@ -64,6 +64,7 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger
+                  disabled={player.health <= 0}
                   className={cn(
                     "flex cursor-default items-center gap-2 text-lg transition-colors duration-500",
                     !!currentPlayer && !!changes && !!changes.gainedHealth && "text-green-500",
@@ -83,6 +84,7 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger
+                  disabled={player.health <= 0}
                   className={cn(
                     "flex cursor-default items-center gap-2 text-lg transition-colors duration-500",
                     !!currentPlayer && !!changes && !!changes.gainedBonus && "text-fuchsia-500",
@@ -101,6 +103,7 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger
+                  disabled={player.health <= 0}
                   className={cn(
                     "flex cursor-default items-center gap-2 text-lg transition-colors duration-500",
                     !!currentPlayer && !!changes && !!changes.gainedMana && "text-cyan-500",
@@ -119,6 +122,7 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger
+                  disabled={player.health <= 0}
                   className={cn(
                     "flex cursor-default items-center gap-2 text-lg transition-colors duration-500",
                     !!currentPlayer && !!changes && !!changes.gainedGold && "text-yellow-400",

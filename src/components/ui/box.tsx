@@ -44,10 +44,10 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
   ) => {
     return (
       <div className={cn("flex w-full flex-col", wrapperClassName)}>
-        <div className="relative flex items-center justify-center gap-4 border-t-2 border-tomato/90 bg-black py-6">
+        <div className="relative flex items-center justify-center gap-4 border-t-2 border-tomato/90 bg-black px-4 py-6">
           <div className="h-2 w-2 rotate-45 bg-tomato" />
           <p
-            className="mt-1 text-lg leading-none tracking-widest lg:text-xl lg:leading-7 lg:tracking-[0.2em]"
+            className="mt-1 truncate leading-none tracking-widest lg:text-xl lg:leading-7 lg:tracking-[0.2em]"
             style={jibril.style}
           >
             {title}
