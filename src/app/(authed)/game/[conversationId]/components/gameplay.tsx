@@ -24,7 +24,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 import useGameplaySocket from "../hooks/use-gameplay-socket";
 import usePlayMove from "../hooks/use-play-move";
-import { useGameStore } from "../stores/game-store";
+import { PlayerChanges, useGameStore } from "../stores/game-store";
 import { randomDice } from "../utils/dice";
 import Die from "./die";
 import StyledAudio from "./styled-audio";
@@ -35,9 +35,8 @@ const Gameplay = (props: { conversationId: string }) => {
   const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
 
-  const { setDisplayHowToPlay, setDisplayFeedback, homeModal, setHomeModal } = useGameStore(
-    (store) => store,
-  );
+  const { setDisplayHowToPlay, setDisplayFeedback, homeModal, setHomeModal, setChanges } =
+    useGameStore((store) => store);
 
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [powerUp, setPowerUp] = useState(0);
@@ -67,6 +66,31 @@ const Gameplay = (props: { conversationId: string }) => {
       const player = roomData.playerState.find(
         (player) => player.accountId === localStorage.getItem("accountId"),
       );
+      if (currentPlayer && player) {
+        const changes: PlayerChanges = {};
+        if (player.health !== currentPlayer.health) {
+          if (currentPlayer.health > player.health) {
+            changes.lostHealth = true;
+          } else {
+            changes.gainedHealth = true;
+          }
+        }
+        if (player.mana !== currentPlayer.mana) {
+          changes.gainedMana = true;
+        }
+        if (player.bonusForNextRound !== currentPlayer.bonusForNextRound) {
+          changes.gainedBonus = true;
+        }
+        if (player.gold !== currentPlayer.gold) {
+          changes.gainedGold = true;
+        }
+        if (Object.keys(changes).length) {
+          setChanges(changes);
+          setTimeout(() => {
+            setChanges({});
+          }, 1000);
+        }
+      }
       setCurrentPlayer(player);
       if ((player?.mana || 0) < powerUp) {
         setPowerUp(0);
@@ -108,6 +132,8 @@ const Gameplay = (props: { conversationId: string }) => {
     rollButtonState,
     setRollButtonState,
     submitting,
+    currentPlayer,
+    setChanges,
   ]);
 
   useEffect(() => {
@@ -348,8 +374,8 @@ const Gameplay = (props: { conversationId: string }) => {
                 fill="none"
               >
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M0.664062 1.47928C0.664062 1.17618 0.78447 0.885488 0.998798 0.671161C1.21312 0.456834 1.50382 0.336426 1.80692 0.336426H15.5212C15.8243 0.336426 16.115 0.456834 16.3293 0.671161C16.5437 0.885488 16.6641 1.17618 16.6641 1.47928C16.6641 1.78239 16.5437 2.07308 16.3293 2.2874C16.115 2.50173 15.8243 2.62214 15.5212 2.62214H1.80692C1.50382 2.62214 1.21312 2.50173 0.998798 2.2874C0.78447 2.07308 0.664063 1.78239 0.664062 1.47928Z"
                   fill="white"
                 />
@@ -383,8 +409,8 @@ const Gameplay = (props: { conversationId: string }) => {
                 fill="none"
               >
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M8.66406 0.479492C8.96717 0.479492 9.25786 0.5999 9.47219 0.814227C9.68651 1.02855 9.80692 1.31924 9.80692 1.62235V7.33664H15.5212C15.8243 7.33664 16.115 7.45704 16.3293 7.67137C16.5437 7.8857 16.6641 8.17639 16.6641 8.47949C16.6641 8.7826 16.5437 9.07329 16.3293 9.28761C16.115 9.50194 15.8243 9.62235 15.5212 9.62235H9.80692V15.3366C9.80692 15.6397 9.68651 15.9304 9.47219 16.1448C9.25786 16.3591 8.96717 16.4795 8.66406 16.4795C8.36096 16.4795 8.07027 16.3591 7.85594 16.1448C7.64161 15.9304 7.52121 15.6397 7.52121 15.3366V9.62235H1.80692C1.50382 9.62235 1.21312 9.50194 0.998798 9.28761C0.78447 9.07329 0.664063 8.7826 0.664062 8.47949C0.664062 8.17639 0.78447 7.8857 0.998798 7.67137C1.21312 7.45704 1.50382 7.33664 1.80692 7.33664H7.52121V1.62235C7.52121 1.31924 7.64161 1.02855 7.85594 0.814227C8.07027 0.5999 8.36096 0.479492 8.66406 0.479492Z"
                   fill="white"
                 />

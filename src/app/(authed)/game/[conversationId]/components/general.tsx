@@ -16,6 +16,7 @@ import Spinner from "@/components/ui/spinner";
 
 import useAskQuestion from "../hooks/use-ask-question";
 import useGeneralSocket from "../hooks/use-general-socket";
+import { useGameStore } from "../stores/game-store";
 import Moves from "./moves";
 import Player from "./player";
 import Question from "./question";
@@ -28,6 +29,7 @@ const General = (props: { conversationId: string }) => {
   const [question, setQuestion] = useState("");
   const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =
     useGeneralSocket(conversationId);
+  const { changes } = useGameStore((state) => state);
   const { mutate: askQuestion } = useAskQuestion();
   const [moveHistory, setMoveHistory] = useState<IMove[][]>([]);
   const [questionHistory, setQuestionHistory] = useState<Partial<IQuestion>[]>([]);
@@ -82,7 +84,7 @@ const General = (props: { conversationId: string }) => {
 
   return (
     <Box title="general" className="flex min-h-0 flex-1 flex-col gap-8 p-8">
-      <Player player={currentPlayer} />
+      <Player player={currentPlayer} currentPlayer changes={changes} />
       <div className="w-full border-t border-white/25" />
       <div className={cn("flex min-h-0 flex-1 flex-col gap-8", statsOpened && "hidden")}>
         {roomData.playerState.length > 1 && (

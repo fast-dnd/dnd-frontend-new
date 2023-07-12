@@ -23,6 +23,7 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
     displayFeedback,
     setDisplayFeedback,
     setHomeModal,
+    changes,
   } = useGameStore((state) => state);
 
   if (displayFeedback) return <Feedback onHideFeedback={() => setDisplayFeedback(false)} />;
@@ -31,9 +32,62 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
     return (
       <HowToPlay onHideHowToPlay={() => setDisplayHowToPlay(false)} hideText={"back to the game"} />
     );
-
   return (
     <div className="flex h-full min-h-0 flex-col gap-5 py-8 lg:pb-12">
+      <div
+        className={cn(
+          "pointer-events-none absolute bottom-0 h-full min-h-0 w-full overflow-hidden",
+        )}
+      >
+        <div
+          className={cn(
+            "absolute left-[-5%] h-full w-full bg-gradient-to-r from-red-500 to-5% transition-all duration-500",
+            changes.lostHealth && "left-0",
+          )}
+        />
+        <div
+          className={cn(
+            "absolute left-[-5%] h-full w-full bg-gradient-to-r from-green-500 to-5% transition-all duration-500",
+            changes.gainedHealth && "left-0 ",
+          )}
+        />
+        <div
+          className={cn(
+            "absolute right-[-5%] h-full w-full bg-gradient-to-l from-red-500 to-5% transition-all duration-500",
+            changes.lostHealth && "right-0",
+          )}
+        />
+        <div
+          className={cn(
+            "absolute right-[-5%] h-full w-full bg-gradient-to-l from-green-500 to-5% transition-all duration-500",
+            changes.gainedHealth && "right-0",
+          )}
+        />
+        <div
+          className={cn(
+            "absolute bottom-[-5%] h-full w-full bg-gradient-to-t from-red-500 to-5% transition-all duration-500",
+            changes.lostHealth && "bottom-0",
+          )}
+        />
+        <div
+          className={cn(
+            "absolute bottom-[-5%] h-full w-full bg-gradient-to-t from-green-500 to-5% transition-all duration-500",
+            changes.gainedHealth && "bottom-0",
+          )}
+        />
+        <div
+          className={cn(
+            "absolute top-[-5%] h-full w-full bg-gradient-to-b from-red-500 to-5% transition-all duration-500",
+            changes.lostHealth && "top-0",
+          )}
+        />
+        <div
+          className={cn(
+            "absolute top-[-5%] h-full w-full bg-gradient-to-b from-green-500 to-5% transition-all duration-500",
+            changes.gainedHealth && "top-0",
+          )}
+        />
+      </div>
       <MobileNavbar
         goBackAction={() => setHomeModal(true)}
         goBackText="HOME"
