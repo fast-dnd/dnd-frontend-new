@@ -1,12 +1,13 @@
-import GoogleLoginButton from "@/components/google-login-button";
-import { Box } from "@/components/ui/box";
 import React from "react";
+
+import { Box } from "@/components/ui/box";
+import GoogleLoginButton from "@/components/google-login-button";
 
 const Login = () => {
   return (
-    <div className="flex items-center justify-center mt-24">
+    <div className="mt-24 flex items-center justify-center">
       <div>
-        <Box title="ACCOUNT" className="lg:w-[450px] p-8 flex items-center justify-center">
+        <Box title="ACCOUNT" className="flex items-center justify-center p-8 lg:w-[450px]">
           <GoogleLoginButton />
         </Box>
       </div>

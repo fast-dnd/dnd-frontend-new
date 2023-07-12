@@ -2,26 +2,26 @@
 
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { cn } from "@/utils/style-utils";
-import { FiChevronDown } from "react-icons/fi";
-import { VariantProps, cva } from "class-variance-authority";
+import { cva, VariantProps } from "class-variance-authority";
 import { AiFillCheckCircle } from "react-icons/ai";
+import { FiChevronDown } from "react-icons/fi";
 import { GiCancel } from "react-icons/gi";
+
+import { cn } from "@/utils/style-utils";
 
 export const selectContainerVariants = cva(
   [
-    "relative mb-2 flex items-center bg-transparent py-2 pl-4 text-base border border-white/50 placeholder:text-white/30 pr-2 justify-between",
-    "focus:outline-none transition-all duration-300",
-    "disabled:pointer-events-none disabled:bg-opacity-20 disabled:text-opacity-20",
+    "relative mb-2 flex items-center justify-between border border-white/50 bg-transparent py-2 pl-4 pr-2 text-base placeholder:text-white/30",
+    "transition-all duration-300 focus:outline-none",
+    "disabled:pointer-events-none disabled:opacity-20",
     "ring-offset-selectSelected focus:ring-2 focus:ring-selectSelected focus:ring-offset-2",
   ],
   {
     variants: {
       state: {
-        error:
-          "border-error border border-opacity-100 hover:border-error hover:border-opacity-100 focus-within:border-error focus-within:border-opacity-100",
+        error: "border border-error/100 focus-within:border-error/100 hover:border-error/100",
         success:
-          "border-success border border-opacity-100 hover:border-success hover:border-opacity-100 focus-within:border-success focus-within:border-opacity-100",
+          "border border-success/100 focus-within:border-success/100 hover:border-success/100",
       },
     },
   },
@@ -51,7 +51,7 @@ const SelectTrigger = React.forwardRef<
     {label && (
       <div
         className={cn(
-          "bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit",
+          "w-fit bg-white/10 px-4 py-1 text-sm tracking-[0.07em] backdrop-blur-none",
           state === "error" && "text-error",
           state === "success" && "text-success",
         )}
@@ -70,12 +70,12 @@ const SelectTrigger = React.forwardRef<
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
     {successMessage && (
-      <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-success">
+      <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-success">
         <AiFillCheckCircle /> {successMessage}
       </p>
     )}
     {errorMessage && (
-      <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-error">
+      <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-error">
         <GiCancel /> {errorMessage}
       </p>
     )}
@@ -131,14 +131,14 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex w-full cursor-default select-none items-center py-1.5 pl-8 pr-2 text-sm outline-none bg-select focus:bg-selectHover data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "relative flex w-full cursor-default select-none items-center bg-select py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-selectHover data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className,
     )}
     {...props}
   >
     <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <div className="bg-tomato w-2 h-2 rotate-45" />
+        <div className="h-2 w-2 rotate-45 bg-tomato" />
       </SelectPrimitive.ItemIndicator>
     </span>
 

@@ -1,16 +1,18 @@
 "use client";
 
+import { Dispatch, SetStateAction } from "react";
+import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { produce } from "immer";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import useStore from "@/hooks/use-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { produce } from "immer";
-import { Dispatch, SetStateAction } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { IChampionSchema, championSchema } from "../schemas/champion-schema";
+
+import { championSchema, IChampionSchema } from "../schemas/champion-schema";
 import { useDungeonFormStore } from "../stores/form-store";
-import useStore from "@/hooks/use-store";
-import { DevTool } from "@hookform/devtools";
 
 interface IChampionProps {
   status: "LIST" | "CREATING" | "EDITING";
@@ -64,15 +66,15 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
   };
 
   return (
-    <form className="flex flex-col h-full gap-8 lg:w-full" onSubmit={handleSubmit(onSubmit)}>
-      <p className="uppercase font-semibold text-xl tracking-[0.07em] -my-1 text-white/50">
+    <form className="flex h-full flex-col gap-8 lg:w-full" onSubmit={handleSubmit(onSubmit)}>
+      <p className="-my-1 text-xl font-semibold uppercase tracking-[0.07em] text-white/50">
         {status === "CREATING" ? "Create" : "Edit"} Champion
       </p>
-      <p className="text-lg tracking-[0.07em] -my-1 text-white/50">
+      <p className="-my-1 text-lg tracking-[0.07em] text-white/50">
         Describe the champion and define custom names for its actions
       </p>
-      <div className="flex flex-col lg:flex-row gap-5 lg:gap-8 h-full">
-        <div className="flex flex-col lg:basis-1/3 gap-5 lg:gap-8 lg:h-full min-h-0">
+      <div className="flex h-full flex-col gap-5 lg:flex-row lg:gap-8">
+        <div className="flex min-h-0 flex-col gap-5 lg:h-full lg:basis-1/3 lg:gap-8">
           <Input
             label="Name"
             placeholder="Warrior"
@@ -92,7 +94,7 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
             />
           </div>
         </div>
-        <div className="flex flex-col lg:basis-1/3 gap-5 lg:gap-8 lg:h-full min-h-0">
+        <div className="flex min-h-0 flex-col gap-5 lg:h-full lg:basis-1/3 lg:gap-8">
           <Input
             label="Heal action text"
             placeholder="Try to heal yourself"
@@ -108,7 +110,7 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
             errorMessage={errors?.moveMapping?.conversation_with_team?.message}
           />
         </div>
-        <div className="flex flex-col lg:basis-1/3 gap-5 lg:gap-8 lg:h-full min-h-0">
+        <div className="flex min-h-0 flex-col gap-5 lg:h-full lg:basis-1/3 lg:gap-8">
           <Input
             label="Mana action text"
             placeholder="Try to find something useful"
@@ -125,9 +127,9 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
           />
         </div>
       </div>
-      <div className="flex flex-row justify-between lg:justify-end gap-8">
+      <div className="flex flex-row justify-between gap-8 lg:justify-end">
         <Button
-          className="text-sm lg:text-lg w-fit"
+          className="w-fit text-sm lg:text-lg"
           variant="ghost"
           onClick={onCancel}
           type="reset"
@@ -135,7 +137,7 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionProps
           CANCEL
         </Button>
         <Button
-          className="whitespace-nowrap text-sm lg:text-lg w-fit px-8 uppercase"
+          className="w-fit whitespace-nowrap px-8 text-sm uppercase lg:text-lg"
           variant="outline"
         >
           {status === "CREATING" ? "ADD CHAMPION" : "EDIT CHAMPION"}

@@ -1,19 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import useStore from "@/hooks/use-store";
+import { useEffect, useRef } from "react";
 import { redirect, useRouter } from "next/navigation";
+import { isEqual } from "lodash";
 import { AiOutlineLeft } from "react-icons/ai";
+
+import useGetDungeon from "@/hooks/use-get-dungeon";
+import useStore from "@/hooks/use-store";
+import BoxSkeleton from "@/components/BoxSkeleton";
+import MobileNavbar from "@/components/mobile-navbar";
+
 import Champions from "./components/champions";
 import Final from "./components/final";
 import Initial from "./components/initial";
 import Locations from "./components/locations";
 import { initialDungeonFormData, useDungeonFormStore } from "./stores/form-store";
-import { useEffect, useRef } from "react";
-import { isEqual } from "lodash";
-import useGetDungeon from "@/hooks/use-get-dungeon";
-import BoxSkeleton from "@/components/BoxSkeleton";
-import MobileNavbar from "@/components/mobile-navbar";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const router = useRouter();
@@ -84,12 +86,12 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   };
 
   return (
-    <div className="h-full w-full mt-8 lg:mt-0 overflow-y-auto">
+    <div className="mt-8 h-full w-full overflow-y-auto lg:mt-0">
       <MobileNavbar goBackAction={abortDungeonCreation} />
-      <div className="flex justify-center h-full lg:p-16 pt-8 lg:overflow-y-hidden w-full">
-        <div className="flex flex-col items-center gap-8 w-full">
+      <div className="flex h-full w-full justify-center pt-8 lg:overflow-y-hidden lg:p-16">
+        <div className="flex w-full flex-col items-center gap-8">
           <div
-            className="hidden cursor-pointer text-lg lg:flex flex-row gap-1 w-fit font-medium items-center justify-center tracking-[0.08em] uppercase"
+            className="hidden w-fit cursor-pointer flex-row items-center justify-center gap-1 text-lg font-medium uppercase tracking-[0.08em] lg:flex"
             onClick={abortDungeonCreation}
           >
             <AiOutlineLeft className="inline-block" /> GO BACK

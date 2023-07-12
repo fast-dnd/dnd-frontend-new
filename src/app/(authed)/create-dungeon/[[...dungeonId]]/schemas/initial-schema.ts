@@ -1,5 +1,6 @@
-import { dungeonTags } from "@/utils/dungeon-options";
 import { z } from "zod";
+
+import { dungeonTags } from "@/utils/dungeon-options";
 
 export const initialSchema = z.object({
   name: z.string().min(1, "Name is required").min(5, "Name must be at least 5 characters"),

@@ -1,19 +1,21 @@
-import { cn } from "@/utils/style-utils";
-import { cva, VariantProps } from "class-variance-authority";
 import React from "react";
+import { cva, VariantProps } from "class-variance-authority";
+
+import { cn } from "@/utils/style-utils";
+
 import Spinner from "./spinner";
 
 export const buttonVariants = cva(
-  "flex-row w-full uppercase py-2 font-semibold text-xl disabled:border-opacity-50 disabled:bg-opacity-50 disabled:text-opacity-50 disabled:pointer-events-none text-center inline-flex items-center justify-center transition-all duration-300 tracking-wider lg:tracking-normal",
+  "inline-flex w-full flex-row items-center justify-center py-2 text-center text-xl font-semibold uppercase tracking-wider transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 lg:tracking-normal",
   {
     variants: {
       variant: {
         primary:
-          "bg-tomato border border-tomato text-black disabled:border-transparent hover:shadow-basic active:shadow-none active:bg-tomato/90",
+          "border border-tomato bg-tomato text-black hover:shadow-basic active:bg-tomato/90 active:shadow-none disabled:border-transparent",
         outline:
-          "bg-transparent text-white border border-tomato hover:bg-tomato hover:text-black active:bg-tomato/90",
+          "border border-tomato bg-transparent text-white hover:bg-tomato hover:text-black active:bg-tomato/90",
         ghost:
-          "bg-transparent border border-transparent text-white/50 hover:text-white font-normal tracking-[0.08em] active:text-white/75",
+          "border border-transparent bg-transparent font-normal tracking-[0.08em] text-white/50 hover:text-white active:text-white/75",
       },
     },
     defaultVariants: {

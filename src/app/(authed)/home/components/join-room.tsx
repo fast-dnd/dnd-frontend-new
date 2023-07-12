@@ -1,9 +1,11 @@
 "use client";
 
+import React from "react";
+
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React from "react";
+
 import useJoinRoom from "../hooks/use-join-room";
 
 const JoinRoom = () => {

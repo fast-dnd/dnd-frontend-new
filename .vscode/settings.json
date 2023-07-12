@@ -6,7 +6,7 @@
   "editor.formatOnSaveMode": "file",
   // "files.autoSave": "onFocusChange" // annoying, if you tab out of the editor often
   "tailwindCSS.experimental.classRegex": [["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]],
-  "[javascript]": {
+  "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

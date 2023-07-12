@@ -1,5 +1,6 @@
-import { cn } from "@/utils/style-utils";
 import React from "react";
+
+import { cn } from "@/utils/style-utils";
 
 interface ISkeletonProps {
   amount?: number;
@@ -13,16 +14,16 @@ const Skeleton = ({ amount = 1, small = false }: ISkeletonProps) => {
         <div
           key={i}
           role="status"
-          className="space-y-8 animate-pulse lg:space-y-0 lg:space-x-8 lg:flex lg:items-center"
+          className="animate-pulse space-y-8 lg:flex lg:items-center lg:space-x-8 lg:space-y-0"
         >
           <div
             className={cn(
-              "flex items-center justify-center w-full h-48 rounded lg:w-96 bg-gray-600",
+              "flex h-48 w-full items-center justify-center rounded bg-gray-600 lg:w-96",
               small && "h-20 w-20 lg:w-28",
             )}
           >
             <svg
-              className="w-12 h-12 text-gray-200"
+              className="h-12 w-12 text-gray-200"
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
               fill="currentColor"
@@ -32,12 +33,12 @@ const Skeleton = ({ amount = 1, small = false }: ISkeletonProps) => {
             </svg>
           </div>
           <div className="w-full">
-            <div className={cn("h-2.5 rounded-full bg-gray-600 w-48 mb-4", small && "w-36")} />
-            <div className="h-2 rounded-full bg-gray-600 max-w-[480px] mb-2.5" />
-            <div className="h-2 rounded-full bg-gray-600 mb-2.5" />
-            <div className="h-2 rounded-full bg-gray-600 max-w-[440px] mb-2.5" />
-            <div className="h-2 rounded-full bg-gray-600 max-w-[460px] mb-2.5" />
-            <div className="h-2 rounded-full bg-gray-600 max-w-[360px]" />
+            <div className={cn("mb-4 h-2.5 w-48 rounded-full bg-gray-600", small && "w-36")} />
+            <div className="mb-2.5 h-2 max-w-[480px] rounded-full bg-gray-600" />
+            <div className="mb-2.5 h-2 rounded-full bg-gray-600" />
+            <div className="mb-2.5 h-2 max-w-[440px] rounded-full bg-gray-600" />
+            <div className="mb-2.5 h-2 max-w-[460px] rounded-full bg-gray-600" />
+            <div className="h-2 max-w-[360px] rounded-full bg-gray-600" />
           </div>
           <span className="sr-only">Loading...</span>
         </div>

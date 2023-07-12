@@ -1,9 +1,10 @@
-import { cn } from "@/utils/style-utils";
 import React from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 import Select, { Props as ReactSelectProps } from "react-select";
 import makeAnimated from "react-select/animated";
+
+import { cn } from "@/utils/style-utils";
 
 export interface ComboBoxProps extends ReactSelectProps {
   state?: "error" | "success";
@@ -22,7 +23,7 @@ const ComboBox = React.forwardRef<HTMLSelectElement, ComboBoxProps>(
         {label && (
           <div
             className={cn(
-              "bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit",
+              "w-fit bg-white/10 px-4 py-1 text-sm tracking-[0.07em] backdrop-blur-none",
               state === "error" && "text-error",
               state === "success" && "text-success",
             )}
@@ -36,12 +37,12 @@ const ComboBox = React.forwardRef<HTMLSelectElement, ComboBoxProps>(
           {...props}
         />
         {successMessage && (
-          <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-success">
+          <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-success">
             <AiFillCheckCircle /> {successMessage}
           </p>
         )}
         {errorMessage && (
-          <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-error">
+          <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-error">
             <GiCancel /> {errorMessage}
           </p>
         )}

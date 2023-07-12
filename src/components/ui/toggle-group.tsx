@@ -1,8 +1,9 @@
-import { cn } from "@/utils/style-utils";
-import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
 import * as React from "react";
+import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
+
+import { cn } from "@/utils/style-utils";
 
 export interface ToggleGroupProps {
   state?: "error" | "success";
@@ -23,7 +24,7 @@ const ToggleGroup = React.forwardRef<
       {label && (
         <div
           className={cn(
-            "bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit",
+            "w-fit bg-white/10 px-4 py-1 text-sm tracking-[0.07em] backdrop-blur-none",
             state === "error" && "text-error",
             state === "success" && "text-success",
           )}
@@ -35,7 +36,7 @@ const ToggleGroup = React.forwardRef<
         ref={ref}
         className={cn(
           "inline-flex items-center justify-center",
-          disabled && "opacity-50 pointer-events-none",
+          disabled && "pointer-events-none opacity-50",
           className,
         )}
         {...props}
@@ -43,12 +44,12 @@ const ToggleGroup = React.forwardRef<
         {children}
       </ToggleGroupPrimitive.Root>
       {successMessage && (
-        <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-success">
+        <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-success">
           <AiFillCheckCircle /> {successMessage}
         </p>
       )}
       {errorMessage && (
-        <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-error">
+        <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-error">
           <GiCancel /> {errorMessage}
         </p>
       )}

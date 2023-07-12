@@ -1,6 +1,7 @@
 import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
 import { devtools, persist } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
+
 import { DungeonDuration, DungeonTag } from "@/utils/dungeon-options";
 
 export const steps = ["INITIAL", "LOCATIONS", "CHAMPIONS", "FINAL"] as const;

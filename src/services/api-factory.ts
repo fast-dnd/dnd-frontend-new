@@ -1,5 +1,5 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { redirect } from "next/navigation";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { toast } from "react-toastify";
 
 const handleInterceptors = (apiInstance: AxiosInstance) => {

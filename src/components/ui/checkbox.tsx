@@ -1,26 +1,27 @@
 "use client";
 
-import { cn } from "@/utils/style-utils";
-import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { VariantProps, cva } from "class-variance-authority";
 import * as React from "react";
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
+import { cva, VariantProps } from "class-variance-authority";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { FaCheck } from "react-icons/fa";
 import { GiCancel } from "react-icons/gi";
 
+import { cn } from "@/utils/style-utils";
+
 export const checkboxVariants = cva(
-  "peer h-4 w-4 shrink-0 rounded-sm border-2 border-white/40 ring-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-transparent data-[state=checked]:text-white data-[state=checked]:border-white transition-all duration-300",
+  "peer h-4 w-4 shrink-0 rounded-sm border-2 border-white/40 ring-gray-600 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-white data-[state=checked]:bg-transparent data-[state=checked]:text-white",
 );
 
 export const checkboxContainerVariants = cva(
-  "relative flex items-center gap-2 py-4 px-5 text-base bg-white/5 transition-all duration-300",
+  "relative flex items-center gap-2 bg-white/5 px-5 py-4 text-base transition-all duration-300",
   {
     variants: {
       state: {
         error:
-          "border-error border border-opacity-100 hover:border-error hover:border-opacity-100 focus-within:border-error focus-within:border-opacity-100",
+          "border border-error border-opacity-100 focus-within:border-error focus-within:border-opacity-100 hover:border-error hover:border-opacity-100",
         success:
-          "border-success border border-opacity-100 hover:border-success hover:border-opacity-100 focus-within:border-success focus-within:border-opacity-100",
+          "border border-success border-opacity-100 focus-within:border-success focus-within:border-opacity-100 hover:border-success hover:border-opacity-100",
       },
     },
   },
@@ -48,7 +49,7 @@ const Checkbox = React.forwardRef<
       <div
         className={cn(
           checkboxContainerVariants({ state, className }),
-          disabled && "pointer-events-none bg-opacity-20 text-opacity-20",
+          disabled && "pointer-events-none opacity-20",
         )}
       >
         <CheckboxPrimitive.Root
@@ -64,7 +65,7 @@ const Checkbox = React.forwardRef<
         </CheckboxPrimitive.Root>
         <p
           className={cn(
-            "font-semibold text-base uppercase tracking-widest lg:tracking-normal",
+            "text-base font-semibold uppercase tracking-widest lg:tracking-normal",
             state === "error" && "text-error",
             state === "success" && "text-success",
           )}
@@ -73,12 +74,12 @@ const Checkbox = React.forwardRef<
         </p>
       </div>
       {successMessage && (
-        <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-success">
+        <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-success">
           <AiFillCheckCircle /> {successMessage}
         </p>
       )}
       {errorMessage && (
-        <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-error">
+        <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-error">
           <GiCancel /> {errorMessage}
         </p>
       )}

@@ -1,5 +1,6 @@
-import { DungeonTag } from "@/utils/dungeon-options";
 import { StylesConfig } from "react-select";
+
+import { DungeonTag } from "@/utils/dungeon-options";
 
 const tagsComboboxStyles: StylesConfig<{ label: DungeonTag; value: DungeonTag }> = {
   control: (baseStyles, state) => ({

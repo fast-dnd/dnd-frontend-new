@@ -1,5 +1,6 @@
-import { IPlayer } from "@/types/dnd";
 import Image from "next/image";
+
+import { IPlayer } from "@/types/dnd";
 
 const Player = ({ player }: { player: IPlayer }) => {
   return (
@@ -15,9 +16,9 @@ const Player = ({ player }: { player: IPlayer }) => {
       <div className="flex flex-col gap-1">
         <p className="text-lg lg:text-2xl">{player.name}</p>
         {player.champion && (
-          <p className="text-base lg:text-xl line-clamp-2">
+          <p className="line-clamp-2 text-base lg:text-xl">
             {player.champion.name} -{" "}
-            <span className="text-sm lg:text-base font-light">{player.champion.description}</span>
+            <span className="text-sm font-light lg:text-base">{player.champion.description}</span>
           </p>
         )}
       </div>

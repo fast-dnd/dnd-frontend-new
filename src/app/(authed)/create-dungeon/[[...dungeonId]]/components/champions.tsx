@@ -1,20 +1,22 @@
 "use client";
 
+import { useState } from "react";
+import { closestCenter, DndContext, DragEndEvent } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { useQueryClient } from "@tanstack/react-query";
+import { produce } from "immer";
+import { AiOutlineLeft } from "react-icons/ai";
+
+import { cn } from "@/utils/style-utils";
+import useStore from "@/hooks/use-store";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import useStore from "@/hooks/use-store";
-import { cn } from "@/utils/style-utils";
-import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { produce } from "immer";
-import { useState } from "react";
-import { AiOutlineLeft } from "react-icons/ai";
+
 import useCreateDungeon from "../hooks/use-create-dungeon";
 import useUpdateDungeon from "../hooks/use-update-dungeon";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
 import Champion from "./champion";
 import SortableItem from "./sortable-item";
-import { useQueryClient } from "@tanstack/react-query";
 
 const Champions = ({ dungeonId }: { dungeonId?: string }) => {
   const queryClient = useQueryClient();
@@ -84,24 +86,24 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
   };
 
   return (
-    <div className="h-full lg:flex w-full">
+    <div className="h-full w-full lg:flex">
       <Box
         title="CREATE DUNGEON"
-        className="flex flex-col min-h-0 flex-1 p-5 gap-5 lg:p-8 lg:gap-8 mb-4 lg:mb-0"
+        className="mb-4 flex min-h-0 flex-1 flex-col gap-5 p-5 lg:mb-0 lg:gap-8 lg:p-8"
         wrapperClassName="w-[95%] lg:w-[1200px] mx-auto"
       >
         <div
           className={cn(
-            "flex flex-row items-center gap-8 justify-between",
+            "flex flex-row items-center justify-between gap-8",
             status !== "LIST" && "hidden",
           )}
         >
-          <p className="text-lg text-[22px] leading-7 tracking-[0.15em] font-semibold w-full uppercase">
+          <p className="w-full text-lg font-semibold uppercase leading-7 tracking-[0.15em] lg:text-[22px]">
             3.
             {stepTitles[currentStep]}
           </p>
           <Button
-            className="hidden lg:flex gap-1 w-fit"
+            className="hidden w-fit gap-1 lg:flex"
             variant="ghost"
             onClick={() => setCurrentStep("LOCATIONS")}
           >
@@ -110,7 +112,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
           </Button>
           <Button
             isLoading={isCreating}
-            className="hidden lg:flex w-fit px-8 whitespace-nowrap"
+            className="hidden w-fit whitespace-nowrap px-8 lg:flex"
             onClick={onFinishForm}
             variant="primary"
             disabled={dungeonFormData.champions.length < 2}
@@ -118,12 +120,12 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
             FINISH
           </Button>
         </div>
-        <div className="w-full h-full">
+        <div className="h-full w-full">
           {status === "LIST" && (
-            <div className="flex flex-col gap-5 lg:gap-8 w-full h-full">
+            <div className="flex h-full w-full flex-col gap-5 lg:gap-8">
               {dungeonFormData.champions.length > 0 && (
                 <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                  <div className="flex flex-col gap-5 lg:gap-8 w-full ">
+                  <div className="flex w-full flex-col gap-5 lg:gap-8 ">
                     <SortableContext
                       items={dungeonFormData.champions.map((chmp) => JSON.stringify(chmp))}
                       strategy={verticalListSortingStrategy}
@@ -142,24 +144,24 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
                 </DndContext>
               )}
 
-              <p className="text-lg lg:text-xl tracking-[0.07em] text-white/50">
+              <p className="text-lg tracking-[0.07em] text-white/50 lg:text-xl">
                 Create between 2 and 4 champions
               </p>
 
               <Button
                 variant="outline"
                 disabled={dungeonFormData.champions.length >= 4}
-                className="text-base w-full lg:w-fit px-8"
+                className="w-full px-8 text-base lg:w-fit"
                 onClick={() => setStatus("CREATING")}
               >
                 ADD NEW CHAMPION
               </Button>
 
-              <div className="lg:hidden block w-full border-t border-white/20" />
+              <div className="block w-full border-t border-white/20 lg:hidden" />
 
-              <div className="flex flex-row items-center gap-8 justify-between lg:hidden">
+              <div className="flex flex-row items-center justify-between gap-8 lg:hidden">
                 <Button
-                  className="text-sm gap-1 w-fit"
+                  className="w-fit gap-1 text-sm"
                   variant="ghost"
                   onClick={() => setCurrentStep("LOCATIONS")}
                 >
@@ -168,7 +170,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
                 </Button>
                 <Button
                   isLoading={isCreating}
-                  className="text-sm w-fit px-8 whitespace-nowrap"
+                  className="w-fit whitespace-nowrap px-8 text-sm"
                   onClick={onFinishForm}
                   variant="primary"
                   disabled={dungeonFormData.champions.length < 2}

@@ -1,10 +1,11 @@
-import Skeleton from "@/components/ui/skeleton";
-import { cn } from "@/utils/style-utils";
+import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MdEdit } from "react-icons/md";
+
+import { cn } from "@/utils/style-utils";
 import { useGetKingdom } from "@/hooks/use-get-kingdom";
-import { useState } from "react";
+import Skeleton from "@/components/ui/skeleton";
 import Spinner from "@/components/ui/spinner";
 
 const Avatars = () => {
@@ -16,8 +17,8 @@ const Avatars = () => {
 
   if (!kingdom) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="text-white text-5xl">Something went wrong</div>
+      <div className="flex h-full w-full items-center justify-center">
+        <div className="text-5xl text-white">Something went wrong</div>
       </div>
     );
   }
@@ -26,26 +27,26 @@ const Avatars = () => {
 
   // TODO: avatar exp % (currently set at 80)
   return (
-    <div className="h-full flex flex-col gap-4 overflow-y-auto no-scrollbar">
+    <div className="no-scrollbar flex h-full flex-col gap-4 overflow-y-auto">
       {kingdom.avatars.map((avatar) => (
         <div
           key={avatar._id}
-          className="flex flex-row items-center gap-6 hover:bg-white/5 p-2 rounded-md transition-colors duration-300"
+          className="flex flex-row items-center gap-6 rounded-md p-2 transition-colors duration-300 hover:bg-white/5"
         >
           <Image
             src={avatar.imageUrl || "/images/default-avatar.png"}
             alt="avatar"
             width={96}
             height={96}
-            className="w-16 h-16 lg:h-24 lg:w-24"
+            className="h-16 w-16 lg:h-24 lg:w-24"
           />
           <div className="flex flex-col justify-center gap-1">
-            <p className="lg:text-2xl tracking-wider lg:tracking-[0.07em] uppercase">
+            <p className="uppercase tracking-wider lg:text-2xl lg:tracking-[0.07em]">
               {avatar.name}
             </p>
-            <div className="flex lg:flex-col gap-4 lg:gap-1 items-center justify-center lg:justify-start lg:items-start">
+            <div className="flex items-center justify-center gap-4 lg:flex-col lg:items-start lg:justify-start lg:gap-1">
               <div className="flex flex-row items-center gap-4">
-                <p className="text-sm lg:text-xl tracking-[0.15em] font-light whitespace-nowrap">
+                <p className="whitespace-nowrap text-sm font-light tracking-[0.15em] lg:text-xl">
                   Level {avatar.level}
                 </p>
                 <div className="h-2 w-2 rotate-45 bg-white/25" />
@@ -54,7 +55,7 @@ const Avatars = () => {
                     <div
                       key={i}
                       className={cn(
-                        "w-1.5 h-3 lg:w-2.5 lg:h-3.5 bg-tomato",
+                        "h-3 w-1.5 bg-tomato lg:h-3.5 lg:w-2.5",
                         (i + 1) * 20 > 80 && "opacity-20",
                       )}
                     />
@@ -64,7 +65,7 @@ const Avatars = () => {
               <div className="h-2 w-2 rotate-45 bg-white/25 lg:hidden" />
 
               <div
-                className="cursor-pointer px-2 py-1.5 lg:px-3 lg:py-2 items-center bg-white/10 w-fit flex gap-2"
+                className="flex w-fit cursor-pointer items-center gap-2 bg-white/10 px-2 py-1.5 lg:px-3 lg:py-2"
                 onClick={() => {
                   setLoadingEdit(avatar._id);
                   router.push(`/create-avatar/${avatar._id}`);

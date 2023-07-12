@@ -1,6 +1,7 @@
-import { cn } from "@/utils/style-utils";
 import Image from "next/image";
 import { FiUpload } from "react-icons/fi";
+
+import { cn } from "@/utils/style-utils";
 
 interface IUploadImageProps {
   image?: string;
@@ -11,17 +12,17 @@ interface IUploadImageProps {
 
 const UploadImage = ({ image, inputFile, onClick, defaultImage }: IUploadImageProps) => {
   return (
-    <div className={cn("relative lg:h-[250px] lg:w-[250px] h-[180px] w-[180px]")}>
+    <div className={cn("relative h-[180px] w-[180px] lg:h-[250px] lg:w-[250px]")}>
       <div
         className={cn(
-          "absolute h-[180px] w-[180px] lg:h-[250px] lg:w-[250px] bg-black/50 text-white/75 flex flex-col z-10 gap-4 items-center cursor-pointer justify-center hover:bg-black/30",
+          "absolute z-10 flex h-[180px] w-[180px] cursor-pointer flex-col items-center justify-center gap-4 bg-black/50 text-white/75 hover:bg-black/30 lg:h-[250px] lg:w-[250px]",
           image && "bg-black/20",
         )}
         onClick={onClick}
       >
         <input type="file" ref={inputFile} className="hidden" accept="image/*" />
-        <FiUpload className="w-12 h-12 lg:w-24 lg:h-24" />
-        <p className="text-xs font-medium tracking-wider lg:tracking-[0.07em] text-center indent-[0.07em] uppercase">
+        <FiUpload className="h-12 w-12 lg:h-24 lg:w-24" />
+        <p className="text-center indent-[0.07em] text-xs font-medium uppercase tracking-wider lg:tracking-[0.07em]">
           UPLOAD IMAGE
         </p>
       </div>

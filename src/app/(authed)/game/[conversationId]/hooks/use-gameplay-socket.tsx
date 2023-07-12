@@ -1,8 +1,10 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { IGameplaySocketEvent } from "../types/events";
-import { socketIO } from "@/lib/socket";
+import { useQueryClient } from "@tanstack/react-query";
+
 import { DefaultMove } from "@/types/dnd";
+import { socketIO } from "@/lib/socket";
+
+import { IGameplaySocketEvent } from "../types/events";
 
 const useGameplaySocket = (conversationId: string) => {
   const queryClient = useQueryClient();
@@ -10,7 +12,9 @@ const useGameplaySocket = (conversationId: string) => {
   const [lastStory, setLastStory] = useState<string>("");
   const [move, setMove] = useState<DefaultMove>();
   const [loadingText, setLoadingText] = useState(false);
-  const [rollButtonState, setRollButtonState] = useState<"ROLL" | "ROLLING" | "ROLLED">("ROLL");
+  const [rollButtonState, setRollButtonState] = useState<"CANPLAY" | "ROLLING" | "ROLLED">(
+    "CANPLAY",
+  );
 
   useEffect(() => {
     const onEvent = (event: IGameplaySocketEvent) => {
@@ -26,7 +30,7 @@ const useGameplaySocket = (conversationId: string) => {
           setLoadingText(true);
           break;
         case "ROUND_STORY":
-          setRollButtonState("ROLL");
+          setRollButtonState("CANPLAY");
           setCanPlay(true);
           setMove(undefined);
           queryClient.refetchQueries(["room", conversationId]).then(() => {

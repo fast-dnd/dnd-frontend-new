@@ -1,36 +1,53 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { AiFillHeart } from "react-icons/ai";
+import { BsFillArrowRightSquareFill } from "react-icons/bs";
+import { FaDice, FaRobot } from "react-icons/fa";
+import { GiNightSleep } from "react-icons/gi";
+import { GoPeople } from "react-icons/go";
+import { HiSparkles } from "react-icons/hi";
+
+import { IPlayer } from "@/types/dnd";
+import { IPlayMove, IPlayMoveResponse } from "@/services/game-service";
+import { cn } from "@/utils/style-utils";
+import useGetDungeon from "@/hooks/use-get-dungeon";
+import useGetRoomData from "@/hooks/use-get-room-data";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/modal";
 import Spinner from "@/components/ui/spinner";
 import { TextArea } from "@/components/ui/text-area";
-import useGetDungeon from "@/hooks/use-get-dungeon";
-import useGetRoomData from "@/hooks/use-get-room-data";
-import { IPlayMove, IPlayMoveResponse } from "@/services/game-service";
-import { IPlayer, defaultMoves } from "@/types/dnd";
-import { cn } from "@/utils/style-utils";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-import { FaDice, FaRobot } from "react-icons/fa";
-import { HiSparkles } from "react-icons/hi";
 import useGameplaySocket from "../hooks/use-gameplay-socket";
 import usePlayMove from "../hooks/use-play-move";
-import { useGameStore } from "../stores/game-store";
+import { PlayerChanges, useGameStore } from "../stores/game-store";
 import { randomDice } from "../utils/dice";
 import Die from "./die";
+import Player from "./player";
 import StyledAudio from "./styled-audio";
-import { BsFillArrowRightSquareFill } from "react-icons/bs";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
   const router = useRouter();
   const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
+  const [gaming, setGaming] = useState(true);
+  const [gameOverModal, setGameOverModal] = useState(false);
+  const [result, setResult] = useState<"GAMING" | "WON" | "LOST">("GAMING");
 
-  const { setDisplayHowToPlay, setDisplayFeedback } = useGameStore((store) => store);
+  const {
+    setDisplayHowToPlay,
+    setDisplayFeedback,
+    homeModal,
+    setHomeModal,
+    diedModal,
+    setDiedModal,
+    setChanges,
+  } = useGameStore((store) => store);
 
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [powerUp, setPowerUp] = useState(0);
@@ -39,7 +56,10 @@ const Gameplay = (props: { conversationId: string }) => {
   const [dice, setDice] = useState([0, 0]);
   const [rollInfo, setRollInfo] = useState<IPlayMoveResponse>();
   const [stories, setStories] = useState<string[]>([]);
+  const [dying, setDying] = useState(false);
+
   const [imageModal, setImageModal] = useState("");
+  const [goingHome, setGoingHome] = useState(false);
 
   const {
     canPlay,
@@ -58,6 +78,36 @@ const Gameplay = (props: { conversationId: string }) => {
       const player = roomData.playerState.find(
         (player) => player.accountId === localStorage.getItem("accountId"),
       );
+      if (currentPlayer && player) {
+        const changes: PlayerChanges = {};
+        if (player.health !== currentPlayer.health) {
+          if (currentPlayer.health > player.health) {
+            changes.lostHealth = true;
+          } else {
+            changes.gainedHealth = true;
+          }
+        }
+        if (player.mana !== currentPlayer.mana) {
+          changes.gainedMana = true;
+        }
+        if (player.bonusForNextRound !== currentPlayer.bonusForNextRound) {
+          changes.gainedBonus = true;
+        }
+        if (player.gold !== currentPlayer.gold) {
+          changes.gainedGold = true;
+        }
+        if (changes.lostHealth && player.health <= 0) setDying(true);
+        if (Object.keys(changes).length) {
+          setChanges(changes);
+          setTimeout(() => {
+            setChanges({});
+            if (changes.lostHealth && player.health <= 0) {
+              setDying(false);
+              setDiedModal(true);
+            }
+          }, 1500);
+        }
+      }
       setCurrentPlayer(player);
       if ((player?.mana || 0) < powerUp) {
         setPowerUp(0);
@@ -78,7 +128,7 @@ const Gameplay = (props: { conversationId: string }) => {
         }
       } else if (!lastStory && rollButtonState !== "ROLLING") {
         setCanPlay(true);
-        setRollButtonState("ROLL");
+        setRollButtonState("CANPLAY");
       }
       if (lastStory) {
         setStories([...roomData.chatGptResponses, lastStory]);
@@ -88,7 +138,16 @@ const Gameplay = (props: { conversationId: string }) => {
 
       //TODO setRollInfo of most recent move, when move format contains all required fields
 
-      if (roomData.state === "CLOSED") setCanPlay(false);
+      if (roomData.state === "CLOSED") {
+        setCanPlay(false);
+        if (roomData.playerState.every((player) => player.health > 0)) {
+          setResult("WON");
+        } else setResult("LOST");
+        if (gaming) {
+          setGaming(false);
+          setGameOverModal(true);
+        }
+      }
     }
   }, [
     canPlay,
@@ -99,6 +158,11 @@ const Gameplay = (props: { conversationId: string }) => {
     rollButtonState,
     setRollButtonState,
     submitting,
+    currentPlayer,
+    setChanges,
+    setDiedModal,
+    gaming,
+    setGameOverModal,
   ]);
 
   useEffect(() => {
@@ -128,22 +192,22 @@ const Gameplay = (props: { conversationId: string }) => {
 
   if (!roomData || !dungeonData || !currentPlayer)
     return (
-      <Box title="" className="flex h-full justify-center items-center">
+      <Box title="GAMEPLAY" className="flex h-full items-center justify-center">
         <Spinner className="h-40 w-40" />
       </Box>
     );
 
   const onPlay = () => {
     let moveToPlay: IPlayMove | undefined;
-    if (roomData.location.phase === "discovery" && move) {
+    if (move) {
       moveToPlay = {
         conversationId,
-        mana: 0,
+        mana: powerUp,
         moveType: move,
         playerId: currentPlayer.accountId,
         message: "",
       };
-    } else if (roomData.location.phase === "end") {
+    } else {
       moveToPlay = {
         conversationId,
         mana: powerUp,
@@ -163,7 +227,7 @@ const Gameplay = (props: { conversationId: string }) => {
           setTimeout(() => setDice(randomDice(res.data.diceAfterBonus)), 250);
         },
         onError: () => {
-          setRollButtonState("ROLL");
+          setRollButtonState("CANPLAY");
           setCanPlay(true);
         },
       });
@@ -178,39 +242,37 @@ const Gameplay = (props: { conversationId: string }) => {
       feedback
       onClickFeedback={() => setDisplayFeedback(true)}
       home
-      onClickHome={() => {
-        router.push("/home");
-      }}
+      onClickHome={() => setHomeModal(true)}
       loading={loadingText}
-      className="flex flex-col min-h-0 flex-1 gap-8 px-12 py-8"
+      className="flex min-h-0 flex-1 flex-col gap-8 p-5 lg:px-12 lg:py-8"
     >
-      <div className="w-full flex flex-col flex-1 gap-8 pr-6 overflow-y-auto">
+      <div className="flex  w-full flex-1 flex-col gap-8 pr-4 lg:max-h-full lg:overflow-y-auto lg:pr-6">
         {stories.map((story, i) => (
-          <div key={story} className="flex flex-col gap-8 w-full">
-            <div className="w-full flex gap-8 items-center">
-              <div className="font-semibold text-2xl tracking-[0.2em] uppercase">
-                <span className="text-tomato mr-2">TURN {i + 1}.</span>
-                {dungeonData.locations[Math.floor(i / 2)]?.name}
+          <div key={story} className="flex w-full flex-col gap-8">
+            <div className="flex w-full items-center gap-8">
+              <div className="flex flex-col text-lg font-semibold uppercase tracking-[0.2em] lg:flex-row lg:text-2xl">
+                <span className="mr-2 text-tomato">TURN {i + 1}.</span>
+                <span>{dungeonData.locations[Math.floor(i / 2)]?.name}</span>
               </div>
-              <div className="flex-1 border-t border-tomato" />
+              <div className="border-t border-tomato lg:flex-1" />
             </div>
             <div>
               {roomData.generatedImages[i] && roomData.generateImages && i % 2 === 0 && (
-                <div className="h-72 w-72 inline-block float-left mr-6 mb-4">
+                <div className="mb-4 flex aspect-square w-full justify-center lg:float-left lg:mr-6 lg:inline-block lg:h-72 lg:w-72">
                   {roomData.generatedImages[i].length > 0 ? (
                     <Image
                       src={roomData.generatedImages[i] || "/images/default-dungeon.png"}
                       alt="dungeon"
-                      height={280}
-                      width={280}
-                      className="h-72 w-72"
+                      height={2048}
+                      width={2048}
+                      className="w-full"
                       draggable={false}
                       onClick={() => setImageModal(roomData.generatedImages[i])}
                     />
                   ) : (
-                    <div className="flex items-center justify-center animate-pulse h-72 w-72 rounded  bg-gray-600">
+                    <div className="flex h-full w-full animate-pulse items-center justify-center rounded bg-gray-600">
                       <svg
-                        className="w-24 h-24 text-gray-200"
+                        className="h-24 w-24 text-gray-200"
                         xmlns="http://www.w3.org/2000/svg"
                         aria-hidden="true"
                         fill="currentColor"
@@ -223,7 +285,7 @@ const Gameplay = (props: { conversationId: string }) => {
                 </div>
               )}
 
-              <div className="text-[22px] leading-8 tracking-widest">
+              <div className="tracking-widest lg:text-[22px] lg:leading-8">
                 {roomData.generateAudio && (
                   <div className="mb-4">
                     <StyledAudio audio={roomData.generatedAudio[i]} />
@@ -236,145 +298,241 @@ const Gameplay = (props: { conversationId: string }) => {
         ))}
         <div ref={autoBottomScrollDiv} />
       </div>
-      <div className="flex gap-8 w-full">
-        {roomData.location.phase === "discovery" && (
-          <div className="flex flex-col flex-1 gap-4">
-            <div
-              className={cn(
-                "py-2.5 px-8 text-center bg-white/5 text-xl tracking-[0.07em] indent-[0.07em]",
-                !canPlay && "text-white/50",
-              )}
-            >
-              <span className="font-semibold">Choose an action</span> - {timeToDisplay()} Left
-            </div>
-            <div className="flex gap-4 w-full flex-wrap">
-              {defaultMoves.map((dMove) => (
+      <div
+        className={cn(
+          "flex w-full flex-col gap-8 lg:flex-row",
+          (roomData.state === "CLOSED" || currentPlayer.health <= 0) && "hidden",
+        )}
+      >
+        <div
+          className={cn(
+            "flex h-full flex-1 flex-col gap-6",
+            rollButtonState !== "CANPLAY" && "hidden lg:flex",
+          )}
+        >
+          <div
+            className={cn(
+              "bg-white/5 px-4 py-2.5 text-xl uppercase tracking-[0.07em] lg:px-8",
+              !canPlay && "text-white/50",
+            )}
+          >
+            <span className="font-semibold">
+              Type or select <span className="hidden lg:inline"> your move</span>
+            </span>
+            <span className="opacity-50"> - {timeToDisplay()} Left</span>
+          </div>
+          <div className="relative flex h-60 lg:h-full">
+            <TextArea
+              maxLength={300}
+              className="m-0 h-full border-white/50"
+              placeholder="I found a secret tunnel and escape through it..."
+              disabled={!canPlay}
+              onChange={(e) => {
+                setFreeWill(e.target.value);
+                setMove(undefined);
+              }}
+              value={move ? currentPlayer.champion.moveMapping[move] : freeWill}
+            />
+            <div className="pointer-events-none absolute bottom-4 flex w-full flex-col justify-between gap-2 px-4  lg:flex-row">
+              <div className="flex h-9 justify-between gap-2 lg:justify-start">
                 <Button
-                  key={dMove}
                   variant="ghost"
                   disabled={!canPlay}
                   className={cn(
-                    "border-white/25 flex-1 h-12 basis-1/3 normal-case text-white px-2",
-                    dMove === move && "border-tomato border-2",
-                    currentPlayer.champion.moveMapping[dMove].length > 24 && "text-sm",
-                    currentPlayer.champion.moveMapping[dMove].length > 48 && "text-xs",
+                    "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
+                    move === "discover_health" && "border-tomato",
                   )}
-                  onClick={() => setMove(dMove)}
+                  onClick={() => setMove("discover_health")}
                 >
-                  {currentPlayer.champion.moveMapping[dMove]}
+                  <AiFillHeart />
                 </Button>
-              ))}
-            </div>
-          </div>
-        )}
-        {roomData.location.phase === "end" && (
-          <div className="flex flex-col h-full flex-1 gap-4">
-            <div
-              className={cn(
-                "py-2.5 px-8 text-center bg-white/5 text-xl tracking-[0.07em] indent-[0.07em]",
-                !canPlay && "text-white/50",
-              )}
-            >
-              <span className="font-semibold">Type your move and select a power up</span> -{" "}
-              {timeToDisplay()} Left
-            </div>
-            <div className="flex gap-4 h-full">
-              <TextArea
-                className="m-0 h-full border-white/50"
-                placeholder="I found a secret tunnel and escape through it..."
+                <Button
+                  variant="ghost"
+                  disabled={!canPlay}
+                  className={cn(
+                    "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
+                    move === "discover_mana" && "border-tomato",
+                  )}
+                  onClick={() => setMove("discover_mana")}
+                >
+                  <HiSparkles />
+                </Button>
+                <Button
+                  variant="ghost"
+                  disabled={!canPlay}
+                  className={cn(
+                    "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
+                    move === "conversation_with_team" && "border-tomato",
+                  )}
+                  onClick={() => setMove("conversation_with_team")}
+                >
+                  <GoPeople />
+                </Button>
+                <Button
+                  variant="ghost"
+                  disabled={!canPlay}
+                  className={cn(
+                    "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
+                    move === "rest" && "border-tomato",
+                  )}
+                  onClick={() => setMove("rest")}
+                >
+                  <GiNightSleep />
+                </Button>
+              </div>
+              <Button
+                variant="ghost"
                 disabled={!canPlay}
-                onChange={(e) => setFreeWill(e.target.value)}
-                value={freeWill}
-              />
-              <div className="flex w-[72px] flex-col gap-2">
-                {Array.from({ length: 3 }, (_, i) => (
-                  <Button
-                    variant="ghost"
-                    key={i}
-                    disabled={!canPlay || currentPlayer.mana < i}
-                    className={cn(
-                      "font-semibold h-8 text-white bg-white/5 tracking-[0.2em]",
-                      powerUp === i && "border-tomato",
-                    )}
-                    onClick={() => setPowerUp(i)}
-                  >
-                    +{i}
-                  </Button>
-                ))}
-              </div>
+                className={cn(
+                  "pointer-events-auto h-9 bg-white/5 px-4 normal-case text-white lg:w-fit",
+                  !move && "border-tomato",
+                )}
+                onClick={() => setMove(undefined)}
+              >
+                Use free will
+              </Button>
             </div>
           </div>
-        )}
-        <div className="flex flex-col justify-between bg-white/5 w-[270px]">
-          <div className="flex items-center relative justify-center gap-4 h-32">
-            {((rollInfo?.diceAfterBonus || 0) >= 2 || submitting) && (
-              <>
-                {rollButtonState === "ROLLING" &&
-                  dice.map((roll, i) => <Die key={i} roll={roll} />)}
-
-                {!!rollInfo && rollButtonState !== "ROLLING" && (
-                  <div className="flex flex-col w-full px-4">
-                    <div className="flex w-full justify-between">
-                      <div className="flex items-center gap-2">
-                        <FaDice /> You rolled
-                      </div>
-                      <p>{rollInfo.diceBreakdown.dice}</p>
-                    </div>
-                    <div className="flex w-full justify-between opacity-50">
-                      <div className="flex items-center gap-2">
-                        <BsFillArrowRightSquareFill /> Round bonus
-                      </div>
-                      <p>
-                        {rollInfo.diceBreakdown.bonusApplied > 0 && "+"}
-                        {rollInfo.diceBreakdown.bonusApplied}
-                      </p>
-                    </div>
-                    <div className="flex w-full justify-between opacity-50">
-                      <div className="flex items-center gap-2">
-                        <FaRobot /> Bob gave
-                      </div>
-                      <p>
-                        {rollInfo.diceBreakdown.aiDiceBonus > 0 && "+"}
-                        {rollInfo.diceBreakdown.aiDiceBonus}
-                      </p>
-                    </div>
-                    <div className="flex w-full justify-between opacity-50">
-                      <div className="flex items-center gap-2">
-                        <HiSparkles /> Mana used
-                      </div>
-                      <p>
-                        {rollInfo.diceBreakdown.mana > 0 && "+"}
-                        {rollInfo.diceBreakdown.mana}
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-          <Button
-            disabled={
-              !canPlay ||
-              (!move && roomData.location.phase === "discovery") ||
-              (!freeWill && roomData.location.phase === "end")
-            }
+        </div>
+        <div className="flex flex-col gap-6">
+          <div
             className={cn(
-              "h-12 normal-case",
-              rollButtonState !== "ROLL" && "bg-white/5 text-white",
+              "flex h-12 w-full items-center justify-between bg-white/5",
+              rollButtonState !== "CANPLAY" && "hidden opacity-50 lg:flex",
             )}
-            onClick={onPlay}
           >
-            {rollButtonState === "ROLL" && <p className="text-center">Roll the dice</p>}
-            {rollButtonState === "ROLLING" && <p className="text-center">Rolling...</p>}
-            {rollButtonState === "ROLLED" && (
-              <div className="flex w-full justify-between px-4">
-                <p>Total</p>
-                <p>{rollInfo?.diceAfterBonus}</p>
-              </div>
-            )}
-          </Button>
+            <Button
+              variant="ghost"
+              disabled={powerUp === 0 || !canPlay}
+              onClick={() => setPowerUp(powerUp - 1)}
+              className="flex h-full w-12 items-center justify-center bg-white/10 text-4xl"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="17"
+                height="3"
+                viewBox="0 0 17 3"
+                fill="none"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M0.664062 1.47928C0.664062 1.17618 0.78447 0.885488 0.998798 0.671161C1.21312 0.456834 1.50382 0.336426 1.80692 0.336426H15.5212C15.8243 0.336426 16.115 0.456834 16.3293 0.671161C16.5437 0.885488 16.6641 1.17618 16.6641 1.47928C16.6641 1.78239 16.5437 2.07308 16.3293 2.2874C16.115 2.50173 15.8243 2.62214 15.5212 2.62214H1.80692C1.50382 2.62214 1.21312 2.50173 0.998798 2.2874C0.78447 2.07308 0.664063 1.78239 0.664062 1.47928Z"
+                  fill="white"
+                />
+              </svg>
+            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="flex cursor-default items-center gap-2.5 text-xl font-semibold">
+                  <span className="mt-0.5">{powerUp}</span> <HiSparkles />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div className="flex flex-col items-center p-4 text-center">
+                    <p className="text-lg font-semibold">Select mana boost</p>
+                    <p>This will power up your luck</p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <Button
+              variant="ghost"
+              disabled={powerUp === 2 || powerUp >= currentPlayer.mana || !canPlay}
+              onClick={() => setPowerUp(powerUp + 1)}
+              className="flex h-full w-12 items-center justify-center bg-white/10 text-4xl"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="17"
+                height="17"
+                viewBox="0 0 17 17"
+                fill="none"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M8.66406 0.479492C8.96717 0.479492 9.25786 0.5999 9.47219 0.814227C9.68651 1.02855 9.80692 1.31924 9.80692 1.62235V7.33664H15.5212C15.8243 7.33664 16.115 7.45704 16.3293 7.67137C16.5437 7.8857 16.6641 8.17639 16.6641 8.47949C16.6641 8.7826 16.5437 9.07329 16.3293 9.28761C16.115 9.50194 15.8243 9.62235 15.5212 9.62235H9.80692V15.3366C9.80692 15.6397 9.68651 15.9304 9.47219 16.1448C9.25786 16.3591 8.96717 16.4795 8.66406 16.4795C8.36096 16.4795 8.07027 16.3591 7.85594 16.1448C7.64161 15.9304 7.52121 15.6397 7.52121 15.3366V9.62235H1.80692C1.50382 9.62235 1.21312 9.50194 0.998798 9.28761C0.78447 9.07329 0.664063 8.7826 0.664062 8.47949C0.664062 8.17639 0.78447 7.8857 0.998798 7.67137C1.21312 7.45704 1.50382 7.33664 1.80692 7.33664H7.52121V1.62235C7.52121 1.31924 7.64161 1.02855 7.85594 0.814227C8.07027 0.5999 8.36096 0.479492 8.66406 0.479492Z"
+                  fill="white"
+                />
+              </svg>
+            </Button>
+          </div>
+          <div className="flex flex-col justify-between bg-white/5 lg:w-[270px]">
+            <div className="relative flex h-28 items-center justify-center gap-4">
+              {((rollInfo?.diceAfterBonus || 0) >= 2 || submitting) && (
+                <>
+                  {rollButtonState === "ROLLING" &&
+                    dice.map((roll, i) => <Die key={i} roll={roll} />)}
+
+                  {!!rollInfo && rollButtonState !== "ROLLING" && (
+                    <div className="flex w-full flex-col px-4">
+                      <div className="flex w-full justify-between">
+                        <div className="flex items-center gap-2">
+                          <FaDice /> You rolled
+                        </div>
+                        <p>{rollInfo.diceBreakdown.dice}</p>
+                      </div>
+                      <div className="flex w-full justify-between opacity-50">
+                        <div className="flex items-center gap-2">
+                          <BsFillArrowRightSquareFill /> Round bonus
+                        </div>
+                        <p>
+                          {rollInfo.diceBreakdown.bonusApplied > 0 && "+"}
+                          {rollInfo.diceBreakdown.bonusApplied}
+                        </p>
+                      </div>
+                      <div className="flex w-full justify-between opacity-50">
+                        <div className="flex items-center gap-2">
+                          <FaRobot /> Bob gave
+                        </div>
+                        <p>
+                          {rollInfo.diceBreakdown.aiDiceBonus > 0 && "+"}
+                          {rollInfo.diceBreakdown.aiDiceBonus}
+                        </p>
+                      </div>
+                      <div className="flex w-full justify-between opacity-50">
+                        <div className="flex items-center gap-2">
+                          <HiSparkles /> Mana used
+                        </div>
+                        <p>
+                          {rollInfo.diceBreakdown.mana > 0 && "+"}
+                          {rollInfo.diceBreakdown.mana}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+            <Button
+              disabled={!canPlay || (!move && !freeWill)}
+              className={cn(
+                "h-12 normal-case",
+                rollButtonState !== "CANPLAY" && "bg-white/5 text-white",
+              )}
+              onClick={onPlay}
+            >
+              {rollButtonState === "CANPLAY" && <p className="text-center">Roll the dice</p>}
+              {rollButtonState === "ROLLING" && <p className="text-center">Rolling...</p>}
+              {rollButtonState === "ROLLED" && (
+                <div className="flex w-full justify-between px-4">
+                  <p>Total</p>
+                  <p>{rollInfo?.diceAfterBonus}</p>
+                </div>
+              )}
+            </Button>
+          </div>
         </div>
       </div>
+
+      {currentPlayer.health <= 0 && roomData.state !== "CLOSED" && (
+        <div className="flex h-44 w-full flex-col items-center justify-center bg-white/5 lg:text-xl">
+          <p className="text-center font-semibold">Players are choosing their actions...</p>
+          <p>{timeToDisplay()} Left</p>
+        </div>
+      )}
+
       <Modal
         className="outline-none"
         tabIndex={0}
@@ -384,10 +542,110 @@ const Gameplay = (props: { conversationId: string }) => {
         <Image
           src={imageModal}
           alt="image-modal"
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
           height={280}
           width={280}
         />
+      </Modal>
+
+      <Modal
+        open={homeModal}
+        onClose={() => setHomeModal(false)}
+        className="flex h-fit w-fit flex-col items-center gap-8 bg-black/90 px-6 py-8 text-lg shadow-xl shadow-white/10 lg:px-12 lg:text-xl"
+      >
+        <p className="text-center font-medium uppercase leading-7 tracking-[3.3px]">
+          Leave the game?
+        </p>
+        <p className="text-center leading-7 tracking-[2.64px] text-white/60">
+          Stepping away? Remember, each game phase waits for 10 minutes. Miss it, and face a loss.
+        </p>
+        <div className="flex flex-row justify-center gap-8">
+          <Button
+            className="w-fit px-16 py-3"
+            variant="outline"
+            onClick={() => {
+              setGoingHome(true);
+              setHomeModal(false);
+              router.push("/home");
+            }}
+          >
+            {goingHome && <Spinner className="m-0 h-4 w-4" />}
+            EXIT GAME
+          </Button>
+          <Button className="w-fit whitespace-nowrap px-8 py-3" onClick={() => setHomeModal(false)}>
+            STAY AND PLAY
+          </Button>
+        </div>
+      </Modal>
+      <Modal
+        open={diedModal}
+        onClose={() => setDiedModal(false)}
+        className="mx-8 flex h-fit w-fit flex-col items-center gap-8 bg-black/90 px-6 py-8 text-lg shadow-xl shadow-white/10 lg:px-12 lg:text-xl"
+      >
+        <p className="text-center font-medium uppercase leading-7 tracking-[3.3px]">You are dead</p>
+        <p className="text-center leading-7 tracking-[2.64px] text-white/60">
+          You have tried with all your might, but you have been defeated.
+        </p>
+        <Button
+          className="whitespace-nowrap px-8 py-3 uppercase"
+          onClick={() => setDiedModal(false)}
+        >
+          spectate
+        </Button>
+      </Modal>
+      <Modal
+        open={gameOverModal && !diedModal && !dying}
+        onClose={() => setGameOverModal(false)}
+        className="mx-8 flex h-fit max-h-[700px] max-w-[375px] flex-col items-center gap-6 bg-black/90 px-6 py-8 text-lg shadow-xl shadow-white/10 lg:max-w-[535px] lg:gap-8 lg:px-12 lg:text-xl"
+      >
+        <div className="flex flex-col gap-3 lg:gap-4">
+          <p className="text-center font-medium uppercase leading-7 tracking-[3.3px]">
+            {result === "WON" && "Game finished"}
+            {result === "LOST" && "You failed"}
+          </p>
+          <p className="text-center leading-7 tracking-[2.64px] text-white/60">
+            {result === "WON" && (
+              <span>
+                You have completed <span className="font-semibold">{dungeonData.name}</span>
+              </span>
+            )}
+            {result === "LOST" && (
+              <span>
+                You and your teammates have died in the adventure.{" "}
+                <span className="font-semibold">Better luck next time!</span>
+              </span>
+            )}
+          </p>
+        </div>
+
+        <div className="w-full border-t border-white/25" />
+        <div className="flex min-h-0 w-full flex-1 flex-col gap-6 overflow-y-scroll lg:gap-8">
+          {roomData.playerState.map((player) => (
+            <Player key={player.accountId} player={player} />
+          ))}
+        </div>
+        <div className="flex w-full flex-wrap justify-between gap-6">
+          <Button
+            variant="outline"
+            className="flex w-fit flex-1 border-tomato px-8 text-base lg:text-xl"
+            onClick={() => {
+              setGameOverModal(false);
+            }}
+          >
+            CLOSE
+          </Button>
+          <Button
+            variant="primary"
+            className="flex w-fit flex-1 whitespace-nowrap px-8 text-base lg:text-xl"
+            onClick={() => {
+              setGoingHome(true);
+              setGameOverModal(false);
+              router.push("/home");
+            }}
+          >
+            GO HOME
+          </Button>
+        </div>
       </Modal>
     </Box>
   );

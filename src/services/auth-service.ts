@@ -1,4 +1,5 @@
 import { IAccount } from "@/types/dnd";
+
 import createApi from "./api-factory";
 
 const authApi = createApi({});

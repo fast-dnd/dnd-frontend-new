@@ -1,26 +1,25 @@
-import { cva, VariantProps } from "class-variance-authority";
 import React from "react";
-
-import { cn } from "@/utils/style-utils";
+import { cva, VariantProps } from "class-variance-authority";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 
+import { cn } from "@/utils/style-utils";
+
 export const inputVariants = cva(
-  "bg-transparent outline-none placeholder:text-white/30 w-full flex disabled:text-opacity-35 mr-1 overflow-auto",
+  "mr-1 flex w-full overflow-auto bg-transparent outline-none placeholder:text-white/30 disabled:text-white/30",
 );
 
 export const inputContainerVariants = cva(
   [
-    "relative mb-2 flex items-center bg-transparent py-2 pl-4 text-sm lg:text-base border border-white/50",
-    "focus-within:border-tomato hover:focus-within:border-opacity-100 transition-all duration-300",
+    "relative mb-2 flex items-center border border-white/50 bg-transparent py-2 pl-4 text-sm lg:text-base",
+    "transition-all duration-300 focus-within:border-tomato hover:focus-within:opacity-100",
   ],
   {
     variants: {
       state: {
-        error:
-          "border-error border border-opacity-100 hover:border-error hover:border-opacity-100 focus-within:border-error focus-within:border-opacity-100",
+        error: "border border-error/100 focus-within:border-error/100 hover:border-error/100",
         success:
-          "border-success border border-opacity-100 hover:border-success hover:border-opacity-100 focus-within:border-success focus-within:border-opacity-100",
+          "border border-success border-opacity-100 focus-within:border-success/100 hover:border-success/100",
       },
     },
   },
@@ -61,7 +60,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <div
             className={cn(
-              "bg-white/10 backdrop-blur-none text-sm tracking-[0.07em] px-4 py-1 w-fit",
+              "w-fit bg-white/10 px-4 py-1 text-sm tracking-[0.07em] backdrop-blur-none",
               state === "error" && "text-error",
               state === "success" && "text-success",
             )}
@@ -72,7 +71,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <div
           className={cn(
             inputContainerVariants({ state, className }),
-            disabled && "pointer-events-none bg-opacity-20 text-opacity-20",
+            disabled && "pointer-events-none opacity-20",
           )}
         >
           {StartIcon && (
@@ -90,12 +89,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
         </div>
         {successMessage && (
-          <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-success">
+          <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-success">
             <AiFillCheckCircle /> {successMessage}
           </p>
         )}
         {errorMessage && (
-          <p className="text-sm inline-flex flex-row items-center justify-start gap-2 text-error">
+          <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-error">
             <GiCancel /> {errorMessage}
           </p>
         )}
