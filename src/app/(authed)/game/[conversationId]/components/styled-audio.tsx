@@ -30,6 +30,7 @@ const StyledAudio = (props: { audio?: string }) => {
           onTimeUpdate={(e) => {
             setProgress(e.currentTarget.currentTime);
           }}
+          onEnded={() => setPlaying(false)}
         />
       )}
 
