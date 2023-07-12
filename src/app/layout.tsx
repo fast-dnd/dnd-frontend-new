@@ -13,7 +13,7 @@ export const metadata = {
   title: "v3RPG",
   description: "AI-powered D&D game",
   icons: {
-    icon: "/v3dnd-logo.png",
+    icon: "/v3dnd-logo.svg",
   },
 };
 
