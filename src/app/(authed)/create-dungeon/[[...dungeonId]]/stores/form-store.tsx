@@ -19,7 +19,7 @@ export interface IDungeonFormData {
   id?: string;
   name: string;
   maxPlayers: 3;
-  duration: DungeonDuration;
+  recommendedResponseDetailsDepth: DungeonDuration;
   description: string;
   style: string;
   tags: { label: DungeonTag; value: DungeonTag }[];
@@ -53,7 +53,7 @@ export const initialDungeonFormData: IDungeonFormData = {
   id: undefined,
   name: "",
   maxPlayers: 3,
-  duration: "blitz",
+  recommendedResponseDetailsDepth: "blitz",
   description: "",
   style: "",
   tags: [],

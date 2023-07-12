@@ -100,7 +100,7 @@ const Initial = () => {
                 <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8 ">
                   <Controller
                     control={control}
-                    name="duration"
+                    name="recommendedResponseDetailsDepth"
                     defaultValue="blitz"
                     render={({ field }) => (
                       <ToggleGroup
@@ -109,8 +109,8 @@ const Initial = () => {
                         label="Recommended Bob Verbal Engagement"
                         value={field.value}
                         onValueChange={field.onChange as any}
-                        state={errors?.duration ? "error" : undefined}
-                        errorMessage={errors?.duration?.message}
+                        state={errors?.recommendedResponseDetailsDepth ? "error" : undefined}
+                        errorMessage={errors?.recommendedResponseDetailsDepth?.message}
                       >
                         {dungeonDuration.map((duration) => (
                           <ToggleGroupItem

@@ -34,7 +34,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
         dungeonFormStore.updateDungeonFormData({
           id: dungeonId,
           name: dungeonQuery.data.name,
-          duration: dungeonQuery.data.duration,
+          recommendedResponseDetailsDepth: dungeonQuery.data.recommendedResponseDetailsDepth,
           description: dungeonQuery.data.description,
           style: dungeonQuery.data.style,
           tags: dungeonQuery.data.tags.map((tag) => ({

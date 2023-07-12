@@ -58,7 +58,6 @@ export interface ILocation {
 export interface IDungeon {
   _id: string;
   name: string;
-  duration: DungeonDuration;
   recommendedResponseDetailsDepth: DungeonDuration;
   description: string;
   style: string;
