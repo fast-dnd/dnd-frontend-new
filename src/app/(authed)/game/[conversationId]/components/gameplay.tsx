@@ -326,6 +326,7 @@ const Gameplay = (props: { conversationId: string }) => {
           <div className="relative flex h-60 lg:h-full">
             <TextArea
               maxLength={300}
+              center={!!move}
               className="m-0 h-full border-white/50"
               placeholder="I found a secret tunnel and escape through it..."
               disabled={!canPlay}
