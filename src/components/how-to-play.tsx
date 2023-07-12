@@ -12,7 +12,9 @@ interface IHowToPlayProps {
 const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
   return (
     <div className="mt-8 flex flex-col gap-8 overflow-x-hidden lg:mt-4 lg:items-center lg:justify-center">
-      <MobileNavbar goBackAction={onHideHowToPlay} goBackText={hideText} href="" />
+      {onHideHowToPlay && hideText && (
+        <MobileNavbar goBackAction={onHideHowToPlay} goBackText={hideText} href="" />
+      )}
       {onHideHowToPlay && hideText && (
         <div
           className="hidden cursor-pointer items-center gap-1 text-lg font-medium uppercase tracking-[0.08em] lg:flex"
