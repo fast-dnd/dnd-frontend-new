@@ -88,6 +88,8 @@ export interface IRoomData {
   conversationId: string;
   questions3History: IQuestion[];
   responseDetailsDepth: DungeonDuration;
+  maxPlayers: number;
+  maxRounds: number;
 }
 
 const getRoomData = async (conversationId: string) => {
