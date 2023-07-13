@@ -68,16 +68,20 @@ const JoinEditInfo = (props: { conversationId: string }) => {
       setAvatarId(currentPlayer?.avatarId);
       setRole(currentPlayer?.champion?._id);
     }
+    setDuration(roomData?.responseDetailsDepth);
   }, [roomData]);
 
   useEffect(() => {
-    updateRoom({
-      conversationId,
-      responseDetailsDepth: duration,
-      generateImages,
-      generateAudio,
-    });
-  }, [duration, generateImages, generateAudio, updateRoom, conversationId]);
+    if (duration || generateImages || generateAudio) {
+      updateRoom({
+        conversationId,
+        responseDetailsDepth: duration || roomData?.responseDetailsDepth,
+        generateImages,
+        generateAudio,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [duration, generateImages, generateAudio]);
 
   if (isError) redirect("/home");
 
@@ -165,7 +169,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
           <ToggleGroupItem
             key={duration.value}
             value={duration.value}
-            className="relative flex w-full items-center justify-center gap-2 border border-white/25 px-4 py-2 text-sm transition-all duration-300 data-[state=on]:border-tomato lg:px-10 lg:text-base"
+            className="relative flex w-full items-center justify-center gap-2 border border-white/25 px-4 py-2 text-sm transition-all duration-300 data-[state=on]:border-tomato lg:px-8 lg:text-base"
           >
             {duration.value === dungeonData.recommendedResponseDetailsDepth && (
               <div className="absolute right-1 top-1">
