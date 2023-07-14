@@ -4,7 +4,7 @@ import { HiSparkles } from "react-icons/hi";
 import { RiCopperCoinFill } from "react-icons/ri";
 import { VscHeartFilled } from "react-icons/vsc";
 
-import { IPlayer } from "@/types/dnd";
+import { IPlayer } from "@/types/game";
 import { cn } from "@/utils/style-utils";
 import useGetAvatar from "@/hooks/use-get-avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";

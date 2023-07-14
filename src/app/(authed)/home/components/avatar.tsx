@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MdEdit } from "react-icons/md";
 
-import { IAvatar } from "@/services/dnd-service";
+import { IAvatar } from "@/types/kingdom";
 import { cn } from "@/utils/style-utils";
 import Spinner from "@/components/ui/spinner";
 

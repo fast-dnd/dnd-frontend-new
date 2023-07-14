@@ -1,6 +1,6 @@
 import { MdCheck, MdEdit, MdOutlineContentCopy } from "react-icons/md";
 
-import { IDungeon } from "@/types/dnd";
+import { IDungeon } from "@/types/dungeon";
 import Spinner from "@/components/ui/spinner";
 
 import DeleteModal from "./delete-modal";

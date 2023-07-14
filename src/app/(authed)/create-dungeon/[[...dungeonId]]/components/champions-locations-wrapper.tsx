@@ -5,6 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { produce } from "immer";
 import { AiOutlineLeft } from "react-icons/ai";
 
+import { dungeonKey } from "@/services/dungeon-service";
 import { cn } from "@/utils/style-utils";
 import useStore from "@/hooks/use-store";
 import { Button } from "@/components/ui/button";
@@ -101,7 +102,7 @@ const ChampionsLocationsWrapper = ({
       updateDungeon(dungeonFormData, {
         onSuccess: (_data) => {
           setCurrentStep("FINAL");
-          queryClient.invalidateQueries(["kingdom", dungeonId]);
+          queryClient.invalidateQueries([dungeonKey, dungeonId]);
         },
       });
     } else {

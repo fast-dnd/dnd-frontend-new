@@ -1,4 +1,4 @@
-import { IQuestion } from "@/services/room-service";
+import { IQuestion } from "@/types/game";
 
 const Question = ({ question }: { question: Partial<IQuestion> }) => {
   return (

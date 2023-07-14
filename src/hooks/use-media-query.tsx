@@ -1,9 +1,4 @@
 import { useEffect, useState } from "react";
-import resolveConfig from "tailwindcss/resolveConfig";
-
-import tailwindConfig from "../../tailwind.config";
-
-const fullConfig = resolveConfig(tailwindConfig);
 
 const useMediaQuery = (query: string) => {
   const getMatches = (query: string): boolean => {

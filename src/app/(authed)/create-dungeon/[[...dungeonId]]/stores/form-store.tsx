@@ -2,8 +2,7 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-import { IDungeon } from "@/types/dnd";
-import { DungeonDuration, DungeonTag } from "@/utils/dungeon-options";
+import { IDungeon, IDungeonFormData } from "@/types/dungeon";
 
 export const steps = ["INITIAL", "LOCATIONS", "CHAMPIONS", "FINAL"] as const;
 
@@ -29,40 +28,6 @@ export const getNextStep = (currentStep: Step) => {
   const currentIndex = numberToStepArr.indexOf(currentStep);
   return numberToStepArr[currentIndex + 1];
 };
-
-export interface IDungeonFormData {
-  id?: string;
-  name: string;
-  maxPlayers: 3;
-  recommendedResponseDetailsDepth: DungeonDuration;
-  description: string;
-  style: string;
-  tags: { label: DungeonTag; value: DungeonTag }[];
-  imageUrl?: string;
-  image?: string;
-  locations: ILocationFormData[];
-  champions: IChampionFormData[];
-}
-
-interface ILocationFormData {
-  id?: string;
-  name: string;
-  description: string;
-  mission: string;
-  transition: string;
-}
-
-interface IChampionFormData {
-  id?: string;
-  name: string;
-  description: string;
-  moveMapping: {
-    discover_health: string;
-    discover_mana: string;
-    conversation_with_team: string;
-    rest: string;
-  };
-}
 
 export const initialDungeonFormData: IDungeonFormData = {
   id: undefined,

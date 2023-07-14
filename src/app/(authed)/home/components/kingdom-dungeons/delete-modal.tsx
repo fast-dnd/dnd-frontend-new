@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 
-import { IDungeon } from "@/types/dnd";
+import { IDungeon } from "@/types/dungeon";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

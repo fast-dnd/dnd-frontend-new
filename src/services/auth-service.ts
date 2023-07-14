@@ -1,4 +1,4 @@
-import { IAccount } from "@/types/dnd";
+import { IAccount } from "@/types/auth";
 
 import createApi from "./api-factory";
 
@@ -18,4 +18,7 @@ const authService = {
   login,
   account,
 };
+
 export default authService;
+
+export const authKey = "auth";

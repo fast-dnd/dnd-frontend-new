@@ -1,6 +1,6 @@
-import { IDungeon } from "@/types/dnd";
-import { IKingdom } from "@/services/dnd-service";
-import { IRoomData } from "@/services/room-service";
+import { IDungeon } from "@/types/dungeon";
+import { IKingdom } from "@/types/kingdom";
+import { IRoomData } from "@/types/room";
 import {
   Select,
   SelectContent,

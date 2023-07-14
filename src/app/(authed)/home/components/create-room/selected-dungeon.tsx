@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { IDungeon } from "@/types/dnd";
+import { IDungeon } from "@/types/dungeon";
 
 const SelectedDungeon = ({ selectedDungeon }: { selectedDungeon: IDungeon }) => {
   return (

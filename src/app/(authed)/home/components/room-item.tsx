@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { AiOutlineRight } from "react-icons/ai";
 
-import { IRoomArrayElement } from "@/services/room-service";
+import { IRoomArrayElement } from "@/types/room";
 import Spinner from "@/components/ui/spinner";
 
 const RoomItem = ({ room }: { room: IRoomArrayElement }) => {

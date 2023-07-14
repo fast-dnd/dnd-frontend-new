@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 
-import { IDungeon } from "@/types/dnd";
+import { IDungeon } from "@/types/dungeon";
 import Skeleton from "@/components/ui/skeleton";
 
 import {

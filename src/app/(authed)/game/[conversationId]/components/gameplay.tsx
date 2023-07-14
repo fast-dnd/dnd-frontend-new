@@ -10,8 +10,7 @@ import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
 
-import { IPlayer } from "@/types/dnd";
-import { IPlayMove, IPlayMoveResponse } from "@/services/game-service";
+import { IPlayer, IPlayMove, IPlayMoveResponse } from "@/types/game";
 import { cn } from "@/utils/style-utils";
 import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";

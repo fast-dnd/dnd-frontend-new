@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { IQuestion } from "@/services/room-service";
+import { IQuestion } from "@/types/game";
+import { roomKey } from "@/services/room-service";
 import { socketIO } from "@/lib/socket";
 
 import { IGeneralSocketEvent } from "../types/events";
@@ -31,15 +32,15 @@ const useGeneralSocket = (conversationId: string) => {
             question: event.data.question,
             bob3Answer: event.data.answer,
           });
-          queryClient.invalidateQueries(["room", conversationId]);
+          queryClient.invalidateQueries([roomKey, conversationId]);
           break;
 
         case "PLAYER_MOVE":
-          queryClient.refetchQueries(["room", conversationId]);
+          queryClient.refetchQueries([roomKey, conversationId]);
           break;
         case "ROUND_STORY":
           setCanAsk(true);
-          queryClient.invalidateQueries(["room", conversationId]);
+          queryClient.invalidateQueries([roomKey, conversationId]);
           break;
       }
     };

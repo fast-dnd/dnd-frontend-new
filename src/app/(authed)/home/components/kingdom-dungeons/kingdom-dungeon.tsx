@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { IDungeon } from "@/types/dnd";
+import { IDungeon } from "@/types/dungeon";
 import useCopy from "@/hooks/use-copy";
 
 import DesktopActions from "./desktop-actions";

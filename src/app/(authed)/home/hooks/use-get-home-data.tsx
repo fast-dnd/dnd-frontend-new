@@ -2,12 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import dungeonService from "@/services/dungeon-service";
-import roomService from "@/services/room-service";
+import dungeonService, { dungeonKey } from "@/services/dungeon-service";
+import roomService, { roomKey } from "@/services/room-service";
 
 export const useGetRecommendedDungeons = (enabled: boolean) => {
   return useQuery({
-    queryKey: ["recommendedDungeons"],
+    queryKey: [dungeonKey, "recommendedDungeons"],
     queryFn: dungeonService.getRecommendedDungeons,
     enabled,
   });
@@ -15,7 +15,7 @@ export const useGetRecommendedDungeons = (enabled: boolean) => {
 
 export const useGetMyDungeons = (enabled: boolean) => {
   return useQuery({
-    queryKey: ["myDungeons"],
+    queryKey: [dungeonKey, "myDungeons"],
     queryFn: dungeonService.getDungeons,
     enabled,
   });
@@ -23,14 +23,14 @@ export const useGetMyDungeons = (enabled: boolean) => {
 
 export const useGetRoomHistory = () => {
   return useQuery({
-    queryKey: ["roomHistory"],
+    queryKey: [roomKey, "roomHistory"],
     queryFn: roomService.getRooms,
   });
 };
 
 export const useGetFavoriteDungeons = (enabled: boolean) => {
   return useQuery({
-    queryKey: ["favorites"],
+    queryKey: [dungeonKey, "favorites"],
     queryFn: dungeonService.getFavorites,
     enabled,
   });

@@ -1,4 +1,4 @@
-import { IDungeon } from "@/types/dnd";
+import { IDungeon } from "@/types/dungeon";
 import {
   Select,
   SelectContent,

@@ -2,13 +2,13 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
-import dndService from "@/services/dnd-service";
+import kingdomService from "@/services/kingdom-service";
 
 const useCreateAvatar = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: dndService.createAvatar,
+    mutationFn: kingdomService.createAvatar,
     onSuccess: (_data) => {
       router.push("/home");
       toast.success("Avatar created successfully!");

@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import { isEqual } from "lodash";
 
-import { IDungeon } from "@/types/dnd";
+import { IDungeon } from "@/types/dungeon";
 import useStore from "@/hooks/use-store";
 
 import { initialDungeonFormData, useDungeonFormStore } from "../stores/form-store";

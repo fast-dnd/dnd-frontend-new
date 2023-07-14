@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { IPlayer } from "@/types/dnd";
+import { IPlayer } from "@/types/game";
 
 const Player = ({ player }: { player: IPlayer }) => {
   return (

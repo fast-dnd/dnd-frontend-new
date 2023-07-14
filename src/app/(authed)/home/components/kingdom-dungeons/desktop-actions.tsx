@@ -1,6 +1,6 @@
 import { MdCheck, MdEdit, MdOutlineContentCopy } from "react-icons/md";
 
-import { IDungeon } from "@/types/dnd";
+import { IDungeon } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 import Spinner from "@/components/ui/spinner";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";

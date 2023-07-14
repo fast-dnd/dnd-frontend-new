@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 
-import roomService from "@/services/room-service";
+import roomService, { roomKey } from "@/services/room-service";
 
 const useGetRoomData = (conversationId: string) => {
   return useQuery({
-    queryKey: ["room", conversationId],
+    queryKey: [roomKey, conversationId],
     queryFn: () => roomService.getRoomData(conversationId),
   });
 };

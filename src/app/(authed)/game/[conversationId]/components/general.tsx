@@ -5,8 +5,7 @@ import { zip } from "lodash";
 import { AiOutlineLeft } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
 
-import { IPlayer } from "@/types/dnd";
-import { IMove, IQuestion } from "@/services/room-service";
+import { IMove, IPlayer, IQuestion } from "@/types/game";
 import { cn } from "@/utils/style-utils";
 import useGetRoomData from "@/hooks/use-get-room-data";
 import { Box } from "@/components/ui/box";

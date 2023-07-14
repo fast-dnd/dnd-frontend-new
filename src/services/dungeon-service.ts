@@ -1,5 +1,11 @@
-import { IDungeon } from "@/types/dnd";
-import { IDungeonFormData } from "@/app/(authed)/create-dungeon/[[...dungeonId]]/stores/form-store";
+import {
+  IChampion,
+  IDungeon,
+  IDungeonFormData,
+  ILocation,
+  IPostChampion,
+  IPostLocation,
+} from "@/types/dungeon";
 
 import createApi from "./api-factory";
 
@@ -37,6 +43,14 @@ const getFavorites = async () => {
   return await dungeonApi.get<IDungeon[]>("favourite").then((res) => res.data);
 };
 
+const postLocations = async (data: { locations: IPostLocation[] }) => {
+  return await dungeonApi.post<ILocation[]>("locations", data);
+};
+
+const postChampions = async (data: { champions: IPostChampion[] }) => {
+  return await dungeonApi.post<IChampion[]>("champions", data);
+};
+
 const dungeonService = {
   createDungeon,
   updateDungeon,
@@ -46,6 +60,10 @@ const dungeonService = {
   deleteDungeon,
   addFavorite,
   getFavorites,
+  postLocations,
+  postChampions,
 };
 
 export default dungeonService;
+
+export const dungeonKey = "dungeons";

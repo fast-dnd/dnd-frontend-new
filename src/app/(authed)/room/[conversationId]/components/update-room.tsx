@@ -1,8 +1,8 @@
 import { AiFillSound, AiFillStar } from "react-icons/ai";
 import { BiImages } from "react-icons/bi";
 
-import { IDungeon } from "@/types/dnd";
-import { IRoomData } from "@/services/room-service";
+import { IDungeon } from "@/types/dungeon";
+import { IRoomData } from "@/types/room";
 import { DungeonDuration, dungeonDuration } from "@/utils/dungeon-options";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";

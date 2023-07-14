@@ -1,4 +1,4 @@
-import { IMove } from "@/services/room-service";
+import { IMove } from "@/types/game";
 
 const Moves = ({ moves }: { moves: IMove[] }) => {
   return (
