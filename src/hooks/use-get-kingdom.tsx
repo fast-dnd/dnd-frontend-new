@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 
-import dndService from "@/services/dnd-service";
+import kingdomService, { kingdomKey } from "@/services/kingdom-service";
 
 export const useGetKingdom = () => {
   return useQuery({
-    queryKey: ["kingdom"],
-    queryFn: dndService.getKingdom,
+    queryKey: [kingdomKey],
+    queryFn: kingdomService.getKingdom,
   });
 };

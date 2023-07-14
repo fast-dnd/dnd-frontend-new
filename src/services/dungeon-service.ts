@@ -1,5 +1,4 @@
-import { IDungeon } from "@/types/dnd";
-import { IDungeonFormData } from "@/app/(authed)/create-dungeon/[[...dungeonId]]/stores/form-store";
+import { IDungeon, IDungeonFormData } from "@/types/dungeon";
 
 import createApi from "./api-factory";
 
@@ -49,3 +48,5 @@ const dungeonService = {
 };
 
 export default dungeonService;
+
+export const dungeonKey = "dungeons";

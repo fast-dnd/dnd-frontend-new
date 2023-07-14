@@ -1,6 +1,8 @@
 import { AiFillHeart, AiOutlineLeft } from "react-icons/ai";
 import { BsFillLightningFill, BsStars } from "react-icons/bs";
 
+import { cn } from "@/utils/style-utils";
+
 import MobileNavbar from "./mobile-navbar";
 import { Box } from "./ui/box";
 
@@ -11,7 +13,12 @@ interface IHowToPlayProps {
 
 const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
   return (
-    <div className="mt-8 flex flex-col gap-8 overflow-x-hidden lg:mt-4 lg:items-center lg:justify-center">
+    <div
+      className={cn(
+        "flex flex-col gap-8 overflow-x-hidden lg:items-center lg:justify-center",
+        onHideHowToPlay && hideText && "mt-8 lg:mt-4",
+      )}
+    >
       {onHideHowToPlay && hideText && (
         <MobileNavbar goBackAction={onHideHowToPlay} goBackText={hideText} href="" />
       )}

@@ -1,83 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useEffect, useRef } from "react";
 import { redirect, useRouter } from "next/navigation";
-import { isEqual } from "lodash";
 import { AiOutlineLeft } from "react-icons/ai";
 
 import useGetDungeon from "@/hooks/use-get-dungeon";
-import useStore from "@/hooks/use-store";
 import BoxSkeleton from "@/components/BoxSkeleton";
 import MobileNavbar from "@/components/mobile-navbar";
 
-import Champions from "./components/champions";
+import ChampionsLocationsWrapper from "./components/champions-locations-wrapper";
 import Final from "./components/final";
 import Initial from "./components/initial";
-import Locations from "./components/locations";
-import { initialDungeonFormData, useDungeonFormStore } from "./stores/form-store";
+import useLoadDungeonData from "./hooks/use-load-dungeon-data";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const router = useRouter();
 
-  const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
-
-  const previousDungeonFormStore = useRef(dungeonFormStore);
-
   const dungeonId = params.dungeonId?.[0];
-  const dungeonQuery = useGetDungeon(dungeonId);
+  const { data: dungeonData, isInitialLoading, isError } = useGetDungeon(dungeonId);
 
-  const loadDungeonData = () => {
-    if (dungeonId) {
-      // editing...
-      if (dungeonQuery?.data && dungeonFormStore && !dungeonFormStore.dungeonFormData.id) {
-        dungeonFormStore.updateDungeonFormData({
-          id: dungeonId,
-          name: dungeonQuery.data.name,
-          recommendedResponseDetailsDepth: dungeonQuery.data.recommendedResponseDetailsDepth,
-          description: dungeonQuery.data.description,
-          style: dungeonQuery.data.style,
-          tags: dungeonQuery.data.tags.map((tag) => ({
-            label: tag,
-            value: tag,
-          })),
-          locations: dungeonQuery.data.locations,
-          champions: dungeonQuery.data.champions,
-          imageUrl: dungeonQuery.data.imageUrl,
-          image: dungeonQuery.data.imageUrl,
-        });
-      }
-    } else {
-      // creating...
-      if (dungeonFormStore) {
-        // if the user is not in creation process but just started it then reset the form
-        if (isEqual(dungeonFormStore.dungeonFormData, initialDungeonFormData))
-          dungeonFormStore?.resetDungeonFormData();
-      }
-    }
+  const dungeonFormStore = useLoadDungeonData({ dungeonId, dungeonData });
 
-    // Update previousDungeonFormStore two times to ensure it is always one step behind dungeonFormStore
-    previousDungeonFormStore.current = dungeonFormStore;
-  };
+  if (isError) return redirect("/home");
 
-  useEffect(() => {
-    loadDungeonData();
-  }, [dungeonQuery?.data, dungeonId]);
-
-  //! Hacky way to wait for dungeonFormStore to become defined (mounted) after nextjs hydration
-  useEffect(() => {
-    // Check if dungeonFormStore has become defined
-    if (dungeonFormStore && !previousDungeonFormStore.current) {
-      loadDungeonData();
-    }
-  }, [dungeonFormStore]);
-
-  if (dungeonQuery.isError) return redirect("/home");
-
-  if (dungeonQuery.isInitialLoading || !dungeonFormStore)
+  if (isInitialLoading || !dungeonFormStore)
     return <BoxSkeleton title={`${dungeonId ? "EDIT" : "CREATE"} DUNGEON`} />;
 
-  const { currentStep, setCurrentStep, resetDungeonFormData } = dungeonFormStore;
+  const { dungeonFormData, currentStep, setCurrentStep, resetDungeonFormData } = dungeonFormStore;
 
   const abortDungeonCreation = () => {
     router.push("/home");
@@ -97,9 +46,31 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
             <AiOutlineLeft className="inline-block" /> GO BACK
           </div>
 
-          {currentStep === "INITIAL" && <Initial />}
-          {currentStep === "LOCATIONS" && <Locations />}
-          {currentStep === "CHAMPIONS" && <Champions dungeonId={dungeonId} />}
+          {currentStep === "INITIAL" && <Initial dungeonId={dungeonId} />}
+          {currentStep === "LOCATIONS" && (
+            <ChampionsLocationsWrapper
+              dungeonId={dungeonId}
+              locationOrChampion="Location"
+              createDescription="Create between 3 and 4 locations"
+              stepIndex={2}
+              hasNextStep
+              hasPreviousStep
+              isDisabledNextButton={dungeonFormData.locations.length < 3}
+              isDisabledAddButton={dungeonFormData.locations.length >= 4}
+            />
+          )}
+          {currentStep === "CHAMPIONS" && (
+            <ChampionsLocationsWrapper
+              dungeonId={dungeonId}
+              locationOrChampion="Champion"
+              createDescription="Create between 2 and 4 champions"
+              stepIndex={3}
+              hasNextStep
+              hasPreviousStep
+              isDisabledNextButton={dungeonFormData.champions.length < 2}
+              isDisabledAddButton={dungeonFormData.champions.length >= 4}
+            />
+          )}
           {currentStep === "FINAL" && <Final />}
         </div>
       </div>

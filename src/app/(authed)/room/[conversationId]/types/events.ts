@@ -1,4 +1,4 @@
-import { IRoomData } from "@/services/room-service";
+import { IRoomData } from "@/types/room";
 
 export interface IRoomSocketEvent {
   event:

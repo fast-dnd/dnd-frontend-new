@@ -9,4 +9,3 @@
 # Deployed version:
 
 [https://v3rpg.fastdnd.net/](https://v3rpg.fastdnd.net/)
-

@@ -10,6 +10,7 @@ export interface ToggleGroupProps {
   successMessage?: string;
   errorMessage?: string;
   label?: string;
+  labelClassName?: string;
 }
 
 const ToggleGroup = React.forwardRef<
@@ -17,16 +18,27 @@ const ToggleGroup = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root> & ToggleGroupProps
 >(
   (
-    { state, label, successMessage, errorMessage, className, disabled, children, ...props },
+    {
+      state,
+      label,
+      labelClassName,
+      successMessage,
+      errorMessage,
+      className,
+      disabled,
+      children,
+      ...props
+    },
     ref,
   ) => (
-    <div className="">
+    <div>
       {label && (
         <div
           className={cn(
             "w-fit bg-white/10 px-4 py-1 text-sm tracking-[0.07em] backdrop-blur-none",
             state === "error" && "text-error",
             state === "success" && "text-success",
+            labelClassName,
           )}
         >
           {label}

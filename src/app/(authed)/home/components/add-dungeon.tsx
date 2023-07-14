@@ -10,16 +10,14 @@ const AddDungeon = () => {
 
   const [createLoading, setCreateLoading] = useState(false);
 
+  const onCreateDungeon = () => {
+    setCreateLoading(true);
+    router.push("/create-dungeon");
+  };
+
   return (
     <div className="flex flex-row justify-end gap-8">
-      <Button
-        isLoading={createLoading}
-        className="w-full px-8 lg:w-fit"
-        onClick={() => {
-          setCreateLoading(true);
-          router.push("/create-dungeon");
-        }}
-      >
+      <Button isLoading={createLoading} className="w-full px-8 lg:w-fit" onClick={onCreateDungeon}>
         CREATE DUNGEON
       </Button>
     </div>

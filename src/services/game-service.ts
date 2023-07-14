@@ -1,27 +1,8 @@
-import { MoveType } from "@/types/dnd";
+import { IPlayMove, IPlayMoveResponse } from "@/types/game";
 
 import createApi from "./api-factory";
 
-const gameApi = createApi({});
-
-export interface IPlayMove {
-  conversationId: string;
-  playerId: string;
-  mana: number;
-  moveType: MoveType;
-  message?: string;
-}
-
-export interface IPlayMoveResponse {
-  dice: number;
-  diceAfterBonus: number;
-  diceBreakdown: {
-    aiDiceBonus: number;
-    bonusApplied: number;
-    dice: number;
-    mana: number;
-  };
-}
+const gameApi = createApi({ commonPrefix: "game" });
 
 const playMove = async (data: IPlayMove) => {
   return await gameApi.post<IPlayMoveResponse>("play", data);
@@ -42,3 +23,5 @@ const gameService = {
 };
 
 export default gameService;
+
+export const gameKey = "game";

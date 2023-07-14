@@ -2,12 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import dndService from "@/services/dnd-service";
+import kingdomService, { kingdomKey } from "@/services/kingdom-service";
 
 const useGetAvatar = (avatarId?: string) => {
   return useQuery({
-    queryKey: ["kingdom", avatarId],
-    queryFn: () => dndService.getAvatar(avatarId || ""),
+    queryKey: [kingdomKey, avatarId],
+    queryFn: () => kingdomService.getAvatar(avatarId || ""),
     enabled: !!avatarId,
   });
 };

@@ -2,11 +2,13 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-import { DungeonDuration, DungeonTag } from "@/utils/dungeon-options";
+import { IDungeon, IDungeonFormData } from "@/types/dungeon";
 
 export const steps = ["INITIAL", "LOCATIONS", "CHAMPIONS", "FINAL"] as const;
 
 export type Step = (typeof steps)[number];
+
+export type StatusType = "LIST" | "CREATING" | "EDITING";
 
 export const stepTitles = {
   INITIAL: "Describe your dungeon",
@@ -15,39 +17,17 @@ export const stepTitles = {
   FINAL: "Dungeon Created",
 } as const;
 
-export interface IDungeonFormData {
-  id?: string;
-  name: string;
-  maxPlayers: 3;
-  recommendedResponseDetailsDepth: DungeonDuration;
-  description: string;
-  style: string;
-  tags: { label: DungeonTag; value: DungeonTag }[];
-  imageUrl?: string;
-  image?: string;
-  locations: ILocationFormData[];
-  champions: IChampionFormData[];
-}
+export const numberToStepArr = ["INITIAL", "LOCATIONS", "CHAMPIONS", "FINAL"] as Step[];
 
-interface ILocationFormData {
-  id?: string;
-  name: string;
-  description: string;
-  mission: string;
-  transition: string;
-}
+export const getPreviousStep = (currentStep: Step) => {
+  const currentIndex = numberToStepArr.indexOf(currentStep);
+  return numberToStepArr[currentIndex - 1];
+};
 
-interface IChampionFormData {
-  id?: string;
-  name: string;
-  description: string;
-  moveMapping: {
-    discover_health: string;
-    discover_mana: string;
-    conversation_with_team: string;
-    rest: string;
-  };
-}
+export const getNextStep = (currentStep: Step) => {
+  const currentIndex = numberToStepArr.indexOf(currentStep);
+  return numberToStepArr[currentIndex + 1];
+};
 
 export const initialDungeonFormData: IDungeonFormData = {
   id: undefined,
@@ -67,6 +47,7 @@ interface IDungeonFormStore {
   currentStep: Step;
   setCurrentStep: (currentStep: Step) => void;
   dungeonFormData: IDungeonFormData;
+  populateDataFromAPI: (dungeonId: string, dungeonData: IDungeon) => void;
   updateDungeonFormData: (dungeonFormData: Partial<IDungeonFormData>) => void;
   resetDungeonFormData: () => void;
 }
@@ -78,6 +59,19 @@ export const useDungeonFormStore = create<IDungeonFormStore>()(
         currentStep: "INITIAL",
         setCurrentStep: (currentStep: Step) => set({ currentStep }),
         dungeonFormData: initialDungeonFormData,
+        populateDataFromAPI: (dungeonId: string, dungeonData: IDungeon) => {
+          set((state) => {
+            state.dungeonFormData = {
+              ...state.dungeonFormData,
+              ...dungeonData,
+              id: dungeonId,
+              tags: dungeonData.tags.map((tag) => ({
+                label: tag,
+                value: tag,
+              })),
+            };
+          });
+        },
         updateDungeonFormData: (dungeonFormData: Partial<IDungeonFormData>) => {
           set((state) => {
             state.dungeonFormData = { ...state.dungeonFormData, ...dungeonFormData };

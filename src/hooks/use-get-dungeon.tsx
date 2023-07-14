@@ -2,11 +2,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import dungeonService from "@/services/dungeon-service";
+import dungeonService, { dungeonKey } from "@/services/dungeon-service";
 
 const useGetDungeon = (dungeonId?: string) => {
   return useQuery({
-    queryKey: ["kingdom", dungeonId],
+    queryKey: [dungeonKey, dungeonId],
     queryFn: () => dungeonService.getDungeon(dungeonId || ""),
     enabled: !!dungeonId,
   });

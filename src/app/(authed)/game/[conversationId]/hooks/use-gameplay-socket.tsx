@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { DefaultMove } from "@/types/dnd";
+import { DefaultMove } from "@/types/game";
+import { roomKey } from "@/services/room-service";
 import { socketIO } from "@/lib/socket";
 
 import { IGameplaySocketEvent } from "../types/events";
@@ -25,7 +26,7 @@ const useGameplaySocket = (conversationId: string) => {
           setLoadingText(true);
           break;
         case "REQUEST_SENT_TO_DM":
-          queryClient.setQueryData(["room", conversationId], event.data);
+          queryClient.setQueryData([roomKey, conversationId], event.data);
           setCanPlay(false);
           setLoadingText(true);
           break;
@@ -33,7 +34,7 @@ const useGameplaySocket = (conversationId: string) => {
           setRollButtonState("CANPLAY");
           setCanPlay(true);
           setMove(undefined);
-          queryClient.refetchQueries(["room", conversationId]).then(() => {
+          queryClient.refetchQueries([roomKey, conversationId]).then(() => {
             setLastStory("");
             setLoadingText(false);
           });
@@ -41,7 +42,7 @@ const useGameplaySocket = (conversationId: string) => {
         case "GAME_ENDED":
           setMove(undefined);
           setRollButtonState("ROLLED");
-          queryClient.refetchQueries(["room", conversationId]).then(() => {
+          queryClient.refetchQueries([roomKey, conversationId]).then(() => {
             setLastStory("");
             setLoadingText(false);
           });

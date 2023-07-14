@@ -1,122 +1,44 @@
-import { ILocation, IPlayer, IRoom, MoveType } from "@/types/dnd";
-import { DungeonDuration } from "@/utils/dungeon-options";
+import {
+  ICreateRoom,
+  IEditAvatar,
+  IEditChampion,
+  IEditRoom,
+  IRoom,
+  IRoomArrayElement,
+  IRoomData,
+} from "@/types/room";
 
 import createApi from "./api-factory";
 
-const roomApi = createApi({});
+const roomApi = createApi({ commonPrefix: "rooms" });
 
-const createRoom = async (data: {
-  generateImages: boolean;
-  generateAudio: boolean;
-  templateSentences?: string;
-  dungeon?: string;
-}) => {
-  return await roomApi.post<IRoom>("room", data);
+const createRoom = async (data: ICreateRoom) => {
+  return await roomApi.post<IRoom>("", data);
 };
 
 const joinRoom = async (data: { link: string }) => {
-  return await roomApi.post<IRoom>("room/join", data);
+  return await roomApi.post<IRoom>("join", data);
 };
-
-interface IEditRoom {
-  conversationId: string;
-  responseDetailsDepth?: DungeonDuration;
-  generateImages?: boolean;
-  generateAudio?: boolean;
-}
 
 const editRoom = async (data: IEditRoom) => {
-  return await roomApi.patch<IRoom>(`room/${data.conversationId}`, data);
+  return await roomApi.patch<IRoom>(data.conversationId, data);
 };
 
-//would work better if IQuestion and IMove had timestamps of some sort
-
-export interface IQuestion {
-  playerName: string;
-  playerChampion: string;
-  playerAccountId: string;
-  question: string;
-  bob3Answer?: string;
-}
-
-export interface IMove {
-  playerAccountId: string;
-  action: string;
-  aiDescription: string;
-  aiRating: number;
-  dice: number;
-  mana: number;
-  moveType: MoveType;
-  playerChampion: string;
-  playerName: string;
-}
-
-export interface IRoomArrayElement {
-  state: "CREATING" | "GAMING" | "CLOSED";
-  turn: number;
-  dungeon: {
-    id: string;
-    name: string;
-    imageUrl: string;
-  };
-  avatar: {
-    id: string;
-    name: string;
-    image: string;
-  };
-  conversationId: string;
-  generateAudio: boolean;
-  generateImages: boolean;
-}
-
-export interface IRoomData {
-  state: "CREATING" | "GAMING" | "CLOSED";
-  moves: IMove[][];
-  playerState: IPlayer[];
-  roundEndsAt: string | null;
-  dungeonId: string;
-  link: string;
-  queuedMoves: IMove[];
-  currentRound: number;
-  chatGptResponses: string[];
-  generatedImages: string[];
-  generateImages: boolean;
-  generatedAudio: string[];
-  generateAudio: string;
-  location: ILocation;
-  adventureMission: string;
-  conversationId: string;
-  questions3History: IQuestion[];
-  responseDetailsDepth: DungeonDuration;
-  maxPlayers: number;
-  maxRounds: number;
-}
-
 const getRoomData = async (conversationId: string) => {
-  return await roomApi.get<IRoomData>(`room/${conversationId}`).then((res) => res.data);
+  return await roomApi.get<IRoomData>(conversationId).then((res) => res.data);
 };
 
 const getRooms = async () => {
-  return await roomApi.get<{ rooms: IRoomArrayElement[] }>("rooms").then((res) => res.data);
+  return await roomApi.get<{ rooms: IRoomArrayElement[] }>("").then((res) => res.data);
 };
 
 const startGame = async (data: { conversationId: string }) => {
-  return await roomApi.post("room/start", data);
+  return await roomApi.post("start", data);
 };
-
-interface IEditChampion {
-  conversationId: string;
-  championId: string;
-}
 
 const editChampion = async (data: IEditChampion) => {
   return await roomApi.put("player/champion/edit", data);
 };
-
-interface IEditAvatar {
-  conversationId: string;
-  avatarId: string;
-}
 
 const editAvatar = async (data: IEditAvatar) => {
   return await roomApi.put("player/avatar/edit", data);
@@ -134,3 +56,5 @@ const roomService = {
 };
 
 export default roomService;
+
+export const roomKey = "rooms";
