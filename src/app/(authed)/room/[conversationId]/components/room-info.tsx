@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Image from "next/image";
 
 import useCopy from "@/hooks/use-copy";
@@ -8,28 +7,21 @@ import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import Spinner from "@/components/ui/spinner";
 
+import LoadingStateBox from "./loading-state-box";
 import Player from "./player";
 
 const RoomInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
 
-  const { data: roomData } = useGetRoomData(conversationId);
-  const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
+  const { data: roomData, isLoading: isLoadingRoomData } = useGetRoomData(conversationId);
+  const { data: dungeonData, isLoading: isLoadingDungeonData } = useGetDungeon(roomData?.dungeonId);
 
   const [copied, setCopied] = useCopy();
 
-  if (!roomData || !dungeonData) {
-    return (
-      <Box
-        title="ROOM"
-        className="flex min-h-0 w-full flex-col items-center justify-center gap-8 p-8 md:w-[490px]"
-      >
-        <Spinner className="h-40 w-40" />
-      </Box>
-    );
-  }
+  if (isLoadingRoomData || isLoadingDungeonData) return <LoadingStateBox />;
+
+  if (!roomData || !dungeonData) return <div>Something went wrong</div>;
 
   const onCopyRoomId = () => {
     navigator.clipboard.writeText(roomData.link);

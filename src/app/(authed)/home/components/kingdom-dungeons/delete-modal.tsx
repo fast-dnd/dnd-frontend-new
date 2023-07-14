@@ -13,6 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Spinner from "@/components/ui/spinner";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import useDeleteDungeon from "../../hooks/use-delete-dungeon";
 
@@ -27,16 +28,27 @@ const DeleteModal = ({ dungeon, isMobile }: { dungeon: IDungeon; isMobile?: bool
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="flex w-full">
-        {isMobile ? (
+      {isMobile ? (
+        <DialogTrigger className="flex w-full">
           <div className="flex w-full items-center justify-center gap-2 bg-white/10 px-3 py-2">
             <MdDelete />
             <p>Delete</p>
           </div>
-        ) : (
-          <MdDelete className="cursor-pointer text-2xl text-white/75 transition-colors duration-300 hover:text-error" />
-        )}
-      </DialogTrigger>
+        </DialogTrigger>
+      ) : (
+        <TooltipProvider>
+          <Tooltip>
+            <DialogTrigger asChild>
+              <TooltipTrigger className="flex items-center justify-center">
+                <MdDelete className="cursor-pointer text-2xl text-white/75 transition-colors duration-300 hover:text-error" />
+              </TooltipTrigger>
+            </DialogTrigger>
+            <TooltipContent className="border-error">
+              <p className="text-error">Delete</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete Dungeon</DialogTitle>

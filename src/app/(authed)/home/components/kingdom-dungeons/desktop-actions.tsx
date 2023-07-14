@@ -67,16 +67,7 @@ const DesktopActions = ({
         </Tooltip>
       </TooltipProvider>
 
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger className="flex items-center justify-center">
-            <DeleteModal dungeon={dungeon} />
-          </TooltipTrigger>
-          <TooltipContent className="border-error">
-            <p className="text-error">Delete</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <DeleteModal dungeon={dungeon} />
     </div>
   );
 };
