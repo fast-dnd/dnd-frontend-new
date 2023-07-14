@@ -11,14 +11,14 @@ import useStore from "@/hooks/use-store";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 
-import { stepTitles, useDungeonFormStore } from "../stores/form-store";
+import { StatusType, stepTitles, useDungeonFormStore } from "../stores/form-store";
 import Location from "./location";
 import SortableItem from "./sortable-item";
 
-const Locations = () => {
+const Locations = ({ dungeonId }: { dungeonId?: string }) => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
 
-  const [status, setStatus] = useState<"LIST" | "CREATING" | "EDITING">("LIST");
+  const [status, setStatus] = useState<StatusType>("LIST");
   const [editIndex, setEditIndex] = useState(-1);
 
   if (!dungeonFormStore) return null;
@@ -59,7 +59,7 @@ const Locations = () => {
     <div className="h-full w-full lg:flex">
       <Box
         title="CREATE DUNGEON"
-        className="mb-4 flex min-h-0 flex-1 flex-col gap-5 p-5 lg:mb-0 lg:gap-8 lg:p-8"
+        className="mb-4 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:mb-0 lg:gap-8 lg:p-8"
         wrapperClassName="w-[95%] lg:w-[1200px] mx-auto"
       >
         <div
@@ -90,7 +90,7 @@ const Locations = () => {
           </Button>
         </div>
         <div className="h-full w-full">
-          {status === "LIST" && (
+          {status === "LIST" ? (
             <div className="flex h-full w-full flex-col gap-5 lg:gap-8">
               {dungeonFormData.locations.length > 0 && (
                 <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -147,8 +147,7 @@ const Locations = () => {
                 </Button>
               </div>
             </div>
-          )}
-          {status !== "LIST" && (
+          ) : (
             <Location
               editIndex={editIndex}
               setEditIndex={setEditIndex}

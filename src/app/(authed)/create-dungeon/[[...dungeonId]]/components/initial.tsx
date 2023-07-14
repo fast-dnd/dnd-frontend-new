@@ -20,7 +20,7 @@ import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
 import tagsComboboxStyles from "../utils/tags-combobox-styles";
 
-const Initial = () => {
+const Initial = ({ dungeonId }: { dungeonId?: string }) => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
 
   const {
@@ -53,12 +53,6 @@ const Initial = () => {
       setValue("image", (await fileToBase64((e.target as HTMLInputElement).files?.[0])) as string);
     });
   };
-
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
 
   return (
     <form className="flex h-full w-full" onSubmit={handleSubmit(onSubmit)}>
@@ -104,6 +98,7 @@ const Initial = () => {
                     defaultValue="blitz"
                     render={({ field }) => (
                       <ToggleGroup
+                        labelClassName="-ml-1.5"
                         className="inline-flex w-full items-center justify-center"
                         type="single"
                         label="Recommended Bob Verbal Engagement"

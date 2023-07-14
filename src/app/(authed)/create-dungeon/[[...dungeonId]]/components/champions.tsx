@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 
 import useCreateDungeon from "../hooks/use-create-dungeon";
 import useUpdateDungeon from "../hooks/use-update-dungeon";
-import { stepTitles, useDungeonFormStore } from "../stores/form-store";
+import { StatusType, stepTitles, useDungeonFormStore } from "../stores/form-store";
 import Champion from "./champion";
 import SortableItem from "./sortable-item";
 
@@ -23,7 +23,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
 
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
 
-  const [status, setStatus] = useState<"LIST" | "CREATING" | "EDITING">("LIST");
+  const [status, setStatus] = useState<StatusType>("LIST");
   const [editIndex, setEditIndex] = useState(-1);
 
   const { mutate: createDungeon, isLoading: isCreating } = useCreateDungeon();
@@ -89,7 +89,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
     <div className="h-full w-full lg:flex">
       <Box
         title="CREATE DUNGEON"
-        className="mb-4 flex min-h-0 flex-1 flex-col gap-5 p-5 lg:mb-0 lg:gap-8 lg:p-8"
+        className="mb-4 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:mb-0 lg:gap-8 lg:p-8"
         wrapperClassName="w-[95%] lg:w-[1200px] mx-auto"
       >
         <div
