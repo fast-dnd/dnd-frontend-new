@@ -2,7 +2,7 @@ import { IPlayMove, IPlayMoveResponse } from "@/types/game";
 
 import createApi from "./api-factory";
 
-const gameApi = createApi({});
+const gameApi = createApi({ commonPrefix: "game" });
 
 const playMove = async (data: IPlayMove) => {
   return await gameApi.post<IPlayMoveResponse>("play", data);

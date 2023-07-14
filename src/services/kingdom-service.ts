@@ -3,10 +3,10 @@ import { IAvatarSchema } from "@/app/(authed)/create-avatar/[[...avatarId]]/sche
 
 import createApi from "./api-factory";
 
-const kingdomApi = createApi({});
+const kingdomApi = createApi({ commonPrefix: "kingdom" });
 
 const getKingdom = async () => {
-  return await kingdomApi.get<IKingdom>("kingdom").then((res) => res.data);
+  return await kingdomApi.get<IKingdom>("").then((res) => res.data);
 };
 
 const getAvatar = async (avatarId: string) => {

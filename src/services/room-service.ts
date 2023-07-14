@@ -10,30 +10,30 @@ import {
 
 import createApi from "./api-factory";
 
-const roomApi = createApi({});
+const roomApi = createApi({ commonPrefix: "rooms" });
 
 const createRoom = async (data: ICreateRoom) => {
-  return await roomApi.post<IRoom>("room", data);
+  return await roomApi.post<IRoom>("", data);
 };
 
 const joinRoom = async (data: { link: string }) => {
-  return await roomApi.post<IRoom>("room/join", data);
+  return await roomApi.post<IRoom>("join", data);
 };
 
 const editRoom = async (data: IEditRoom) => {
-  return await roomApi.patch<IRoom>(`room/${data.conversationId}`, data);
+  return await roomApi.patch<IRoom>(data.conversationId, data);
 };
 
 const getRoomData = async (conversationId: string) => {
-  return await roomApi.get<IRoomData>(`room/${conversationId}`).then((res) => res.data);
+  return await roomApi.get<IRoomData>(conversationId).then((res) => res.data);
 };
 
 const getRooms = async () => {
-  return await roomApi.get<{ rooms: IRoomArrayElement[] }>("rooms").then((res) => res.data);
+  return await roomApi.get<{ rooms: IRoomArrayElement[] }>("").then((res) => res.data);
 };
 
 const startGame = async (data: { conversationId: string }) => {
-  return await roomApi.post("room/start", data);
+  return await roomApi.post("start", data);
 };
 
 const editChampion = async (data: IEditChampion) => {

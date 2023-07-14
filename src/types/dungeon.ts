@@ -30,13 +30,6 @@ export interface IDungeon {
   publiclySeen: boolean;
 }
 
-export interface IPostLocation {
-  name: string;
-  description: string;
-  mission: string;
-  transition: string;
-}
-
 export interface ILocationFormData {
   id?: string;
   name: string;
@@ -55,13 +48,6 @@ export interface ILocation {
   allPlayersRollSum: number;
   neededRollSumPercent: number;
   missionCompleted: boolean;
-}
-
-export interface IPostChampion {
-  name: string;
-  description: string;
-  label: string;
-  moveMapping: { [key in DefaultMove]?: string };
 }
 
 export interface IChampionFormData {
