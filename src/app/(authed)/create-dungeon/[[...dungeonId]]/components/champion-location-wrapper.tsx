@@ -37,6 +37,8 @@ const ChampionLocationWrapper = ({
   editIndex,
   setEditIndex,
 }: IChampionLocationWrapperProps) => {
+  const dungeonFormField = locationOrChampion === "Location" ? "locations" : "champions";
+
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
 
   const {
@@ -48,7 +50,9 @@ const ChampionLocationWrapper = ({
   } = useForm<IChampionSchema | ILocationSchema>({
     resolver: zodResolver(locationOrChampion === "Champion" ? championSchema : locationSchema),
     values:
-      status === "EDITING" ? dungeonFormStore?.dungeonFormData.champions[editIndex] : undefined,
+      status === "EDITING"
+        ? dungeonFormStore?.dungeonFormData[dungeonFormField][editIndex]
+        : undefined,
   });
 
   if (!dungeonFormStore) return null;
@@ -56,17 +60,16 @@ const ChampionLocationWrapper = ({
   const { dungeonFormData, updateDungeonFormData } = dungeonFormStore;
 
   const onSubmit: SubmitHandler<ILocationSchema | IChampionSchema> = (data) => {
-    const updateField = locationOrChampion === "Location" ? "locations" : "champions";
     if (status === "CREATING") {
       updateDungeonFormData(
         produce(dungeonFormData, (draft) => {
-          draft[updateField].push(data as any);
+          draft[dungeonFormField].push(data as any);
         }),
       );
     } else if (status === "EDITING") {
       updateDungeonFormData(
         produce(dungeonFormData, (draft) => {
-          draft[updateField][editIndex] = data;
+          draft[dungeonFormField][editIndex] = data;
         }),
       );
     }

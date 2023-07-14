@@ -46,6 +46,23 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
     );
   };
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (!over) return;
+
+    if (active.id !== over.id) {
+      updateDungeonFormData(
+        produce(dungeonFormData, (draft) => {
+          const oldIndex = draft.champions.findIndex((chmp) => JSON.stringify(chmp) === active.id);
+          const newIndex = draft.champions.findIndex((chmp) => JSON.stringify(chmp) === over.id);
+          const [removed] = draft.champions.splice(oldIndex, 1);
+          draft.champions.splice(newIndex, 0, removed);
+        }),
+      );
+    }
+  };
+
   const onFinishForm = () => {
     if (dungeonId) {
       updateDungeon(dungeonFormData, {
@@ -65,23 +82,6 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
           );
         },
       });
-    }
-  };
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-
-    if (!over) return;
-
-    if (active.id !== over.id) {
-      updateDungeonFormData(
-        produce(dungeonFormData, (draft) => {
-          const oldIndex = draft.champions.findIndex((chmp) => JSON.stringify(chmp) === active.id);
-          const newIndex = draft.champions.findIndex((chmp) => JSON.stringify(chmp) === over.id);
-          const [removed] = draft.champions.splice(oldIndex, 1);
-          draft.champions.splice(newIndex, 0, removed);
-        }),
-      );
     }
   };
 
@@ -111,7 +111,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
             PREVIOUS
           </Button>
           <Button
-            isLoading={isCreating}
+            isLoading={isCreating || isUpdating}
             className="hidden w-fit whitespace-nowrap px-8 lg:flex"
             onClick={onFinishForm}
             variant="primary"
@@ -121,7 +121,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
           </Button>
         </div>
         <div className="h-full w-full">
-          {status === "LIST" && (
+          {status === "LIST" ? (
             <div className="flex h-full w-full flex-col gap-5 lg:gap-8">
               {dungeonFormData.champions.length > 0 && (
                 <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -179,8 +179,7 @@ const Champions = ({ dungeonId }: { dungeonId?: string }) => {
                 </Button>
               </div>
             </div>
-          )}
-          {status !== "LIST" && (
+          ) : (
             <Champion
               editIndex={editIndex}
               setEditIndex={setEditIndex}

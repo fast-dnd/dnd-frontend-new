@@ -8,10 +8,9 @@ import useGetDungeon from "@/hooks/use-get-dungeon";
 import BoxSkeleton from "@/components/BoxSkeleton";
 import MobileNavbar from "@/components/mobile-navbar";
 
-import Champions from "./components/champions";
 import Final from "./components/final";
+import FormStepWrapper from "./components/form-step-wrapper";
 import Initial from "./components/initial";
-import Locations from "./components/locations";
 import useLoadDungeonData from "./hooks/use-load-dungeon-data";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
@@ -27,7 +26,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   if (isInitialLoading || !dungeonFormStore)
     return <BoxSkeleton title={`${dungeonId ? "EDIT" : "CREATE"} DUNGEON`} />;
 
-  const { currentStep, setCurrentStep, resetDungeonFormData } = dungeonFormStore;
+  const { dungeonFormData, currentStep, setCurrentStep, resetDungeonFormData } = dungeonFormStore;
 
   const abortDungeonCreation = () => {
     router.push("/home");
@@ -48,8 +47,30 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
           </div>
 
           {currentStep === "INITIAL" && <Initial dungeonId={dungeonId} />}
-          {currentStep === "LOCATIONS" && <Locations dungeonId={dungeonId} />}
-          {currentStep === "CHAMPIONS" && <Champions dungeonId={dungeonId} />}
+          {currentStep === "LOCATIONS" && (
+            <FormStepWrapper
+              dungeonId={dungeonId}
+              locationOrChampion="Location"
+              createDescription="Create between 3 and 4 locations"
+              stepIndex={2}
+              hasNextStep
+              hasPreviousStep
+              isDisabledNextButton={dungeonFormData.locations.length < 3}
+              isDisabledAddButton={dungeonFormData.locations.length >= 4}
+            />
+          )}
+          {currentStep === "CHAMPIONS" && (
+            <FormStepWrapper
+              dungeonId={dungeonId}
+              locationOrChampion="Champion"
+              createDescription="Create between 2 and 4 champions"
+              stepIndex={3}
+              hasNextStep
+              hasPreviousStep
+              isDisabledNextButton={dungeonFormData.champions.length < 2}
+              isDisabledAddButton={dungeonFormData.champions.length >= 4}
+            />
+          )}
           {currentStep === "FINAL" && <Final />}
         </div>
       </div>
