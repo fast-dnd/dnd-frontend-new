@@ -8,8 +8,8 @@ import useGetDungeon from "@/hooks/use-get-dungeon";
 import BoxSkeleton from "@/components/BoxSkeleton";
 import MobileNavbar from "@/components/mobile-navbar";
 
+import ChampionsLocationsWrapper from "./components/champions-locations-wrapper";
 import Final from "./components/final";
-import FormStepWrapper from "./components/form-step-wrapper";
 import Initial from "./components/initial";
 import useLoadDungeonData from "./hooks/use-load-dungeon-data";
 
@@ -48,7 +48,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
 
           {currentStep === "INITIAL" && <Initial dungeonId={dungeonId} />}
           {currentStep === "LOCATIONS" && (
-            <FormStepWrapper
+            <ChampionsLocationsWrapper
               dungeonId={dungeonId}
               locationOrChampion="Location"
               createDescription="Create between 3 and 4 locations"
@@ -60,7 +60,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
             />
           )}
           {currentStep === "CHAMPIONS" && (
-            <FormStepWrapper
+            <ChampionsLocationsWrapper
               dungeonId={dungeonId}
               locationOrChampion="Champion"
               createDescription="Create between 2 and 4 champions"

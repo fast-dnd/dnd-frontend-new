@@ -63,13 +63,15 @@ const ChampionLocationWrapper = ({
     if (status === "CREATING") {
       updateDungeonFormData(
         produce(dungeonFormData, (draft) => {
-          draft[dungeonFormField].push(data as any);
+          if ("moveMapping" in data) draft.champions.push(data);
+          else draft.locations.push(data);
         }),
       );
     } else if (status === "EDITING") {
       updateDungeonFormData(
         produce(dungeonFormData, (draft) => {
-          draft[dungeonFormField][editIndex] = data;
+          if ("moveMapping" in data) draft.champions[editIndex] = data;
+          else draft.locations[editIndex] = data;
         }),
       );
     }

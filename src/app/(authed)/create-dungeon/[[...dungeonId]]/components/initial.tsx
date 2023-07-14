@@ -6,9 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 import { fileToBase64 } from "@/utils/b64";
-import { dungeonDuration, dungeonTags } from "@/utils/dungeon-options";
+import { DungeonDuration, dungeonDuration, DungeonTag, dungeonTags } from "@/utils/dungeon-options";
 import useStore from "@/hooks/use-store";
-import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
@@ -19,6 +18,7 @@ import UploadImage from "@/components/ui/upload-image";
 import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
 import { stepTitles, useDungeonFormStore } from "../stores/form-store";
 import tagsComboboxStyles from "../utils/tags-combobox-styles";
+import FormStepWrapper from "./form-step-wrapper";
 
 const Initial = ({ dungeonId }: { dungeonId?: string }) => {
   const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
@@ -56,11 +56,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
 
   return (
     <form className="flex h-full w-full" onSubmit={handleSubmit(onSubmit)}>
-      <Box
-        title="CREATE DUNGEON"
-        className="mb-4 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:mb-0 lg:gap-8 lg:p-8"
-        wrapperClassName="w-[95%] lg:w-[1200px] mx-auto"
-      >
+      <FormStepWrapper dungeonId={dungeonId}>
         <div className="flex flex-row items-center justify-between gap-8">
           <p className="w-full text-lg font-semibold uppercase leading-7 tracking-[0.15em] lg:text-[22px]">
             1.
@@ -103,7 +99,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                         type="single"
                         label="Recommended Bob Verbal Engagement"
                         value={field.value}
-                        onValueChange={field.onChange as any}
+                        onValueChange={(value) => field.onChange(value as DungeonDuration)}
                         state={errors?.recommendedResponseDetailsDepth ? "error" : undefined}
                         errorMessage={errors?.recommendedResponseDetailsDepth?.message}
                       >
@@ -144,7 +140,9 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                             {...field}
                             animate
                             label="Tags"
-                            onChange={field.onChange as any}
+                            onChange={(newValue, _actionMeta) =>
+                              field.onChange(newValue as { value: DungeonTag; label: DungeonTag }[])
+                            }
                             noOptionsMessage={() => "No tags found"}
                             // isOptionDisabled={(option) => field.value.length >= 3}
                             className="w-full"
@@ -180,7 +178,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
             </div>
           </div>
         </div>
-      </Box>
+      </FormStepWrapper>
       <DevTool control={control} id="initial-form" />
     </form>
   );
