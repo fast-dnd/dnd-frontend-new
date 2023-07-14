@@ -9,6 +9,7 @@ import { homeTabs } from "../types/home";
 
 const HomeMobileNavbar = () => {
   const { homeTab, setHomeTab, setDisplayHowToPlay } = useHomeStore((state) => state);
+
   return (
     <div className="flex justify-between px-5 py-8 lg:hidden">
       <Image src="/images/mobile-navbar-logo.svg" width={36} height={24} alt="mobile-navbar-logo" />
@@ -20,7 +21,7 @@ const HomeMobileNavbar = () => {
         </SheetTrigger>
         <SheetContent>
           <div className="mt-12 flex min-w-fit flex-col items-center gap-6">
-            {homeTabs.map<React.ReactNode>((tab, index) => (
+            {homeTabs.map<React.ReactNode>((tab) => (
               <div
                 key={tab}
                 className={cn(

@@ -10,8 +10,7 @@ const GameHistory = () => {
   if (isLoading) {
     return (
       <div className="no-scrollbar flex flex-1 flex-col gap-8 overflow-y-auto">
-        <Skeleton small />
-        <Skeleton small />
+        <Skeleton amount={2} small />
       </div>
     );
   }
@@ -46,7 +45,6 @@ const GameHistory = () => {
       {roomHistory.rooms.map((room) => (
         <RoomItem room={room} key={room.conversationId} />
       ))}
-      <div />
     </div>
   );
 };
