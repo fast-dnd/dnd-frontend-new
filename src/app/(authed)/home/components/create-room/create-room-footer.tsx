@@ -70,6 +70,12 @@ const CreateRoomFooter = ({
 
       {selectedDungeon !== undefined && (
         <div className="flex w-full flex-row justify-between lg:justify-end lg:gap-8">
+          <Input
+            placeholder="Template sentences..."
+            onChange={(e) => setTemplateSentences(e.target.value)}
+            value={templateSentences}
+            className="m-0 h-9 min-w-[200px] lg:h-14 lg:text-xl"
+          />
           <Button
             className="flex w-fit gap-2 text-sm lg:text-lg"
             variant="ghost"
