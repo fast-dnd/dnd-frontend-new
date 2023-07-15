@@ -63,6 +63,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               "w-fit bg-white/10 px-4 py-1 text-sm tracking-[0.07em] backdrop-blur-none",
               state === "error" && "text-error",
               state === "success" && "text-success",
+              disabled && "opacity-50",
             )}
           >
             {label}
