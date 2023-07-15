@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEventHandler, useEffect, useRef, useState } from "react";
-import { zip } from "lodash";
+import zip from "lodash/zip";
 import { AiOutlineLeft } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
 

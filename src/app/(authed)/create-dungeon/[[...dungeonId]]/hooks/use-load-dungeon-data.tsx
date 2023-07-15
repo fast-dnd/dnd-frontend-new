@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from "react";
-import { isEqual } from "lodash";
+import isEqual from "lodash/isEqual";
 
 import { IDungeon } from "@/types/dungeon";
 import useStore from "@/hooks/use-store";

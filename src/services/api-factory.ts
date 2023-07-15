@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { toast } from "react-toastify";
 
@@ -11,7 +10,7 @@ const handleInterceptors = (apiInstance: AxiosInstance) => {
       if (error.response && error.response.status === 401) {
         localStorage.removeItem("jwtToken");
         localStorage.removeItem("accountId");
-        redirect("/");
+        window.location.href = "/login";
       }
       if (error.response && error.response.data && error.response.data.message) {
         toast.error(error.response.data.message);
