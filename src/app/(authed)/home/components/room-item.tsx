@@ -1,21 +1,10 @@
-import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { AiOutlineRight } from "react-icons/ai";
 
 import { IRoomArrayElement } from "@/types/room";
-import Spinner from "@/components/ui/spinner";
 
 const RoomItem = ({ room }: { room: IRoomArrayElement }) => {
-  const router = useRouter();
-
-  const [loadingRoom, setLoadingRoom] = useState(false);
-
-  const onRoomClick = () => {
-    setLoadingRoom(true);
-    router.push(`/game/${room.conversationId}`);
-  };
-
   return (
     <div className="flex w-full flex-row items-center gap-4 rounded-md p-4 transition-colors duration-300 hover:bg-white/10">
       <Image
@@ -42,17 +31,12 @@ const RoomItem = ({ room }: { room: IRoomArrayElement }) => {
         )}
       </div>
       {room.state === "GAMING" && (
-        <>
-          {loadingRoom ? (
-            <Spinner className="m-0 h-8 w-8" />
-          ) : (
-            <AiOutlineRight
-              className="h-8 w-5 cursor-pointer text-tomato/50 transition-colors duration-300 hover:text-tomato"
-              preserveAspectRatio="none"
-              onClick={onRoomClick}
-            />
-          )}
-        </>
+        <Link href={`/game/${room.conversationId}`} aria-label="Resume game">
+          <AiOutlineRight
+            className="h-8 w-5 cursor-pointer text-tomato/50 transition-colors duration-300 hover:text-tomato"
+            preserveAspectRatio="none"
+          />
+        </Link>
       )}
     </div>
   );

@@ -43,7 +43,7 @@ const UpdatePlayer = ({
         value={avatarId}
         onValueChange={(value) => updateAvatar({ conversationId, avatarId: value })}
       >
-        <SelectTrigger label="Select an avatar" className="w-full">
+        <SelectTrigger label="Select an avatar" className="w-full" aria-label="Select an avatar">
           <SelectValue placeholder="Select an avatar" />
         </SelectTrigger>
         <SelectContent>
@@ -60,7 +60,7 @@ const UpdatePlayer = ({
         value={role}
         onValueChange={(value) => updateRole({ conversationId, championId: value })}
       >
-        <SelectTrigger label="Select a role" className="w-full">
+        <SelectTrigger label="Select a role" className="w-full" aria-label="Select a role">
           <SelectValue placeholder="Select a role" />
         </SelectTrigger>
         <SelectContent>

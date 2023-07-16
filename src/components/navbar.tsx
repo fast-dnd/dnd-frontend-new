@@ -8,10 +8,16 @@ const Navbar = () => {
     <div className="hidden items-center gap-12 lg:flex">
       <div className="mt-10 h-0.5 flex-1 border-t border-tomato" />
       <div className="mt-10 flex flex-col items-center justify-center gap-1">
-        <Image src="/images/logo-up.png" width={114} height={6} alt="logo-up" />
+        <Image src="/images/logo-up.png" width={114} height={6} alt="logo-up" priority />
         <div className="relative flex w-52 justify-center">
           <div className="absolute flex h-full w-full items-center justify-center">
-            <Image src="/images/logo-red-layer.png" width={204} height={35} alt="logo-red-layer" />
+            <Image
+              src="/images/logo-red-layer.png"
+              width={204}
+              height={35}
+              alt="logo-red-layer"
+              priority
+            />
           </div>
           <div className="absolute z-20 flex h-full w-full items-center justify-center">
             <p
@@ -27,9 +33,10 @@ const Navbar = () => {
             alt="logo-black-layer"
             width={199}
             height={42}
+            priority
           />
         </div>
-        <Image src="/images/logo-down.png" width={72} height={14} alt="logo-down" />
+        <Image src="/images/logo-down.png" width={72} height={14} alt="logo-down" priority />
       </div>
       <div className="mt-10 h-0.5 flex-1 border-t border-tomato" />
     </div>

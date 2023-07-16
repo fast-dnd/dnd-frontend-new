@@ -23,7 +23,14 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       <body className={cn("flex flex-col", jost.className)}>
         <Providers>
           <div className="absolute -z-10 h-full w-full">
-            <Image src="/images/bg-cover.png" fill quality={100} alt="bg-cover" />
+            <Image
+              src="/images/bg-cover.png"
+              fill
+              priority
+              quality={100}
+              alt="bg-cover"
+              style={{ objectFit: "cover" }}
+            />
           </div>
           <Navbar />
           {children}

@@ -137,6 +137,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                       render={({ field }) => {
                         return (
                           <ComboBox
+                            aria-label="Tags"
                             {...field}
                             animate
                             label="Tags"

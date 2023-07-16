@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 import { IDungeon } from "@/types/dungeon";
 import useCopy from "@/hooks/use-copy";
@@ -9,10 +8,6 @@ import DesktopActions from "./desktop-actions";
 import MobileActions from "./mobile-actions";
 
 const KingdomDungeon = ({ dungeon }: { dungeon: IDungeon }) => {
-  const router = useRouter();
-
-  const [loadingEdit, setLoadingEdit] = useState(false);
-
   const [copied, setCopied] = useCopy();
 
   const [showDesktopActions, setShowDesktopActions] = useState(false);
@@ -20,11 +15,6 @@ const KingdomDungeon = ({ dungeon }: { dungeon: IDungeon }) => {
   const onCopy = () => {
     navigator.clipboard.writeText(dungeon._id);
     setCopied(true);
-  };
-
-  const onEdit = () => {
-    setLoadingEdit(true);
-    router.push(`/create-dungeon/${dungeon._id}`);
   };
 
   return (
@@ -46,13 +36,10 @@ const KingdomDungeon = ({ dungeon }: { dungeon: IDungeon }) => {
             <p className="w-48 truncate text-lg font-normal uppercase tracking-wider lg:w-auto lg:text-[22px] lg:font-medium lg:leading-7 lg:tracking-[0.15em]">
               {dungeon.name}
             </p>
-
             <DesktopActions
               showDesktopActions={showDesktopActions}
-              loadingEdit={loadingEdit}
               copied={copied}
               onCopy={onCopy}
-              onEdit={onEdit}
               dungeon={dungeon}
             />
           </div>
@@ -63,13 +50,7 @@ const KingdomDungeon = ({ dungeon }: { dungeon: IDungeon }) => {
         </div>
       </div>
 
-      <MobileActions
-        copied={copied}
-        onCopy={onCopy}
-        onEdit={onEdit}
-        loadingEdit={loadingEdit}
-        dungeon={dungeon}
-      />
+      <MobileActions copied={copied} onCopy={onCopy} dungeon={dungeon} />
     </div>
   );
 };

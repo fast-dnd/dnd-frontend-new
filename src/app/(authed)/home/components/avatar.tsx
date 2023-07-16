@@ -1,16 +1,11 @@
-import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { MdEdit } from "react-icons/md";
 
 import { IAvatar } from "@/types/kingdom";
 import { cn } from "@/utils/style-utils";
-import Spinner from "@/components/ui/spinner";
 
 const Avatar = ({ avatar }: { avatar: IAvatar }) => {
-  const router = useRouter();
-  const [loadingEdit, setLoadingEdit] = useState("");
-
   return (
     <div className="flex flex-row items-center gap-6 rounded-md p-2 transition-colors duration-300 hover:bg-white/5">
       <Image
@@ -47,17 +42,14 @@ const Avatar = ({ avatar }: { avatar: IAvatar }) => {
           </div>
           <div className="h-2 w-2 rotate-45 bg-white/25 lg:hidden" />
 
-          <div
+          <Link
+            href={`/create-avatar/${avatar._id}`}
             className="flex w-fit cursor-pointer items-center gap-2 bg-white/10 px-2 py-1.5 lg:px-3 lg:py-2"
-            onClick={() => {
-              setLoadingEdit(avatar._id);
-              router.push(`/create-avatar/${avatar._id}`);
-            }}
+            aria-label="Edit avatar"
           >
-            {loadingEdit === avatar._id && <Spinner className="m-0" />}
-            {loadingEdit !== avatar._id && <MdEdit />}
+            <MdEdit />
             <p className="hidden lg:block">EDIT</p>
-          </div>
+          </Link>
         </div>
       </div>
     </div>
