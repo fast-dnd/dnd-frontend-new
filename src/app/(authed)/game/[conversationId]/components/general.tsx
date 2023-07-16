@@ -1,7 +1,6 @@
 "use client";
 
 import { FormEventHandler, useEffect, useRef, useState } from "react";
-import zip from "lodash/zip";
 import { AiOutlineLeft } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
 
@@ -97,12 +96,14 @@ const General = (props: { conversationId: string }) => {
         )}
         {/* TODO: update when BE updates requests and socket events */}
         <div className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto pr-6">
-          {zip(questionHistory, moveHistory).map((val, i) => (
-            <div key={i} className="flex flex-col gap-4">
-              {!!val[0] && !!val[0].question && <Question question={val[0]} />}
-              {Array.isArray(val[1]) && <Moves moves={val[1]} />}
-            </div>
-          ))}
+          {questionHistory
+            .map((question, index) => [question, moveHistory[index]] as const)
+            .map((val, i) => (
+              <div key={i} className="flex flex-col gap-4">
+                {!!val[0] && !!val[0].question && <Question question={val[0]} />}
+                {Array.isArray(val[1]) && <Moves moves={val[1]} />}
+              </div>
+            ))}
           <div ref={autoBottomScrollDiv} />
         </div>
 

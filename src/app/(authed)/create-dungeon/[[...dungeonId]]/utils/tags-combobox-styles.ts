@@ -1,12 +1,10 @@
 import { StylesConfig } from "react-select";
 
-import { DungeonTag } from "@/utils/dungeon-options";
-
-const tagsComboboxStyles: StylesConfig<{ label: DungeonTag; value: DungeonTag }> = {
-  control: (baseStyles, state) => ({
+const tagsComboboxStyles: (error: boolean) => StylesConfig = (error) => ({
+  control: (baseStyles, _state) => ({
     ...baseStyles,
     backgroundColor: "transparent",
-    border: "#ffffff50 1px solid",
+    border: `1px solid ${error ? "#fc0000" : "#ffffff50"}`,
     borderRadius: 0,
     paddingTop: 2,
     paddingBottom: 2,
@@ -14,7 +12,7 @@ const tagsComboboxStyles: StylesConfig<{ label: DungeonTag; value: DungeonTag }>
     boxShadow: "none",
     outline: "#ffffff50 1px solid",
     "&:hover": {
-      borderColor: "#ffffff50",
+      borderColor: error ? "#fc0000" : "#ffffff50",
     },
     ":focus-within": {
       borderColor: "#ff5a5a",
@@ -26,21 +24,21 @@ const tagsComboboxStyles: StylesConfig<{ label: DungeonTag; value: DungeonTag }>
   clearIndicator: () => ({
     display: "none",
   }),
-  multiValue: (baseStyles, state) => ({
+  multiValue: (baseStyles, _state) => ({
     ...baseStyles,
     backgroundColor: "#ffffff10",
     lineHeight: "28px",
     letterSpacing: "2.4px",
     paddingLeft: "8px",
   }),
-  multiValueLabel: (baseStyles, state) => ({
+  multiValueLabel: (baseStyles, _state) => ({
     ...baseStyles,
     color: "#ffffff",
     fontSize: "12px",
     padding: 0,
     textTransform: "capitalize",
   }),
-  multiValueRemove: (baseStyles, state) => ({
+  multiValueRemove: (baseStyles, _state) => ({
     ...baseStyles,
     paddingRight: "8px",
     color: "#ffffff",
@@ -49,18 +47,18 @@ const tagsComboboxStyles: StylesConfig<{ label: DungeonTag; value: DungeonTag }>
       color: "#ffffff",
     },
   }),
-  menu: (baseStyles, state) => ({
+  menu: (baseStyles, _state) => ({
     ...baseStyles,
     backgroundColor: "#606768",
   }),
-  menuList: (baseStyles, state) => ({
+  menuList: (baseStyles, _state) => ({
     ...baseStyles,
     display: "flex",
     flexWrap: "wrap",
     gap: "12px",
     padding: "16px",
   }),
-  option: (baseStyles, state) => ({
+  option: (baseStyles, _state) => ({
     ...baseStyles,
     backgroundColor: "#555b5c",
     color: "#ffffff",
@@ -74,16 +72,16 @@ const tagsComboboxStyles: StylesConfig<{ label: DungeonTag; value: DungeonTag }>
     duration: "0.2s",
     textTransform: "capitalize",
   }),
-  noOptionsMessage: (baseStyles, state) => ({
+  noOptionsMessage: (baseStyles, _state) => ({
     ...baseStyles,
     color: "#ffffff",
     textAlign: "center",
     width: "100%",
   }),
-  input: (baseStyles, state) => ({
+  input: (baseStyles, _state) => ({
     ...baseStyles,
     color: "#ffffff",
   }),
-};
+});
 
 export default tagsComboboxStyles;

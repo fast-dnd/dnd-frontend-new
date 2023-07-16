@@ -32,6 +32,7 @@ const UploadImage = ({ image, inputFile, onClick, defaultImage }: IUploadImagePr
         height={250}
         className={cn("h-[180px] w-[180px] lg:h-[250px] lg:w-[250px]", !image && "opacity-40")}
         alt="upload"
+        style={{ objectFit: "cover" }}
       />
     </div>
   );

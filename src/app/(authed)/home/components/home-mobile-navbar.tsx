@@ -16,7 +16,7 @@ const HomeMobileNavbar = () => {
 
       <p className="text-lg font-medium uppercase tracking-widest">{homeTab}</p>
       <Sheet>
-        <SheetTrigger>
+        <SheetTrigger aria-label="Mobile sidebar">
           <MdMenu className="h-6 w-6" />
         </SheetTrigger>
         <SheetContent>

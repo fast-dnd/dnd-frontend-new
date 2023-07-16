@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { cva, VariantProps } from "class-variance-authority";
 
 import { cn } from "@/utils/style-utils";
@@ -35,9 +36,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, disabled, href, isLoading, children, variant, ...props }, ref) => {
     if (href) {
       return (
-        <a href={href} className={cn(buttonVariants({ variant, className }))}>
+        <Link href={href} className={cn(buttonVariants({ variant, className }))}>
           {children}
-        </a>
+        </Link>
       );
     } else
       return (

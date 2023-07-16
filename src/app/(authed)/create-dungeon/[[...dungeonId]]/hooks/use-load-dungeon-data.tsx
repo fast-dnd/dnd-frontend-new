@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from "react";
-import isEqual from "lodash/isEqual";
 
 import { IDungeon } from "@/types/dungeon";
 import useStore from "@/hooks/use-store";
@@ -27,7 +26,10 @@ const useLoadDungeonData = ({ dungeonId, dungeonData }: IUseLoadDungeonDataProps
       // creating...
       if (dungeonFormStore) {
         // if the user is not in creation process but just started it then reset the form
-        if (isEqual(dungeonFormStore.dungeonFormData, initialDungeonFormData))
+        if (
+          JSON.stringify(dungeonFormStore.dungeonFormData) ===
+          JSON.stringify(initialDungeonFormData)
+        )
           dungeonFormStore?.resetDungeonFormData();
       }
     }

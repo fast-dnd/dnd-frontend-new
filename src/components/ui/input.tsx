@@ -58,15 +58,17 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="flex flex-col">
         {label && (
-          <div
+          <label
+            htmlFor={label}
             className={cn(
               "w-fit bg-white/10 px-4 py-1 text-sm tracking-[0.07em] backdrop-blur-none",
               state === "error" && "text-error",
               state === "success" && "text-success",
+              disabled && "opacity-50",
             )}
           >
             {label}
-          </div>
+          </label>
         )}
         <div
           className={cn(
@@ -80,7 +82,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
 
-          <input className={cn(inputVariants())} ref={ref} {...props} />
+          <input id={label} className={cn(inputVariants())} ref={ref} {...props} />
 
           {EndIcon && (
             <div className="mr-4 flex justify-center">

@@ -7,4 +7,6 @@ export interface IAccount {
     _id: string;
   };
   favouriteDungeons: string[];
+  coins: number;
+  dmCurrency: number;
 }

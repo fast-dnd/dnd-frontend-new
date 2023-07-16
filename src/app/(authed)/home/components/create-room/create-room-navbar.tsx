@@ -30,7 +30,7 @@ function CreateRoomNavbar({
           value={dungeonTab}
           onValueChange={(value) => setDungeonTab(value as DungeonTabType)}
         >
-          <SelectTrigger className="w-full capitalize">
+          <SelectTrigger className="w-full capitalize" aria-label="Select dungeon type">
             <SelectValue placeholder="Select dungeons type" />
           </SelectTrigger>
           <SelectContent>

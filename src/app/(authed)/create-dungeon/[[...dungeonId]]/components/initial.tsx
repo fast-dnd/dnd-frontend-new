@@ -137,6 +137,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                       render={({ field }) => {
                         return (
                           <ComboBox
+                            aria-label="Tags"
                             {...field}
                             animate
                             label="Tags"
@@ -153,7 +154,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                             isMulti
                             closeMenuOnSelect={false}
                             placeholder="Select 1 to 3 tags"
-                            styles={tagsComboboxStyles as any}
+                            styles={tagsComboboxStyles(Boolean(errors?.tags))}
                             state={errors?.tags ? "error" : undefined}
                             errorMessage={errors?.tags?.message}
                           />
