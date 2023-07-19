@@ -15,7 +15,7 @@ import Spinner from "@/components/ui/spinner";
 import useAskQuestion from "../hooks/use-ask-question";
 import useGeneralSocket from "../hooks/use-general-socket";
 import { useGameStore } from "../stores/game-store";
-import Moves from "./moves";
+import MoveList from "./move-list";
 import Player from "./player";
 import Question from "./question";
 
@@ -81,10 +81,10 @@ const General = (props: { conversationId: string }) => {
   }
 
   return (
-    <Box title="general" className="flex min-h-0 flex-1 flex-col gap-8 p-8">
+    <Box title="general" className="flex min-h-0 flex-1 flex-col gap-4 p-5 lg:gap-8 lg:p-8">
       <Player player={currentPlayer} currentPlayer changes={changes} />
       <div className="w-full border-t border-white/25" />
-      <div className={cn("flex min-h-0 flex-1 flex-col gap-8", statsOpened && "hidden")}>
+      <div className={cn("flex min-h-0 flex-1 flex-col gap-4 lg:gap-8", statsOpened && "hidden")}>
         {roomData.playerState.length > 1 && (
           <Button
             variant={"ghost"}
@@ -94,14 +94,13 @@ const General = (props: { conversationId: string }) => {
             Team stats
           </Button>
         )}
-        {/* TODO: update when BE updates requests and socket events */}
-        <div className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto pr-6">
+        <div className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto pr-2 lg:pr-6">
           {questionHistory
             .map((question, index) => [question, moveHistory[index]] as const)
             .map((val, i) => (
               <div key={i} className="flex flex-col gap-4">
                 {!!val[0] && !!val[0].question && <Question question={val[0]} />}
-                {Array.isArray(val[1]) && <Moves moves={val[1]} />}
+                {Array.isArray(val[1]) && <MoveList moves={val[1]} />}
               </div>
             ))}
           <div ref={autoBottomScrollDiv} />
