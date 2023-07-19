@@ -15,7 +15,7 @@ import Spinner from "@/components/ui/spinner";
 import useAskQuestion from "../hooks/use-ask-question";
 import useGeneralSocket from "../hooks/use-general-socket";
 import { useGameStore } from "../stores/game-store";
-import Moves from "./moves";
+import MoveList from "./move-list";
 import Player from "./player";
 import Question from "./question";
 
@@ -100,7 +100,7 @@ const General = (props: { conversationId: string }) => {
             .map((val, i) => (
               <div key={i} className="flex flex-col gap-4">
                 {!!val[0] && !!val[0].question && <Question question={val[0]} />}
-                {Array.isArray(val[1]) && <Moves moves={val[1]} />}
+                {Array.isArray(val[1]) && <MoveList moves={val[1]} />}
               </div>
             ))}
           <div ref={autoBottomScrollDiv} />

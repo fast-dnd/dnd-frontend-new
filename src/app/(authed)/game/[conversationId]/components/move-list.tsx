@@ -1,6 +1,6 @@
 import { IMove } from "@/types/game";
 
-const Moves = ({ moves }: { moves: IMove[] }) => {
+const MoveList = ({ moves }: { moves: IMove[] }) => {
   return (
     <>
       {moves.map((move) => (
@@ -23,4 +23,4 @@ const Moves = ({ moves }: { moves: IMove[] }) => {
   );
 };
 
-export default Moves;
+export default MoveList;
