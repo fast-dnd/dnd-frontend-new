@@ -8,6 +8,7 @@ import { IPlayer } from "@/types/game";
 import { cn } from "@/utils/style-utils";
 import useGetAvatar from "@/hooks/use-get-avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import SkullIcon from "@/components/icons/skull-icon";
 
 import { PlayerChanges } from "../stores/game-store";
 
@@ -29,35 +30,26 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
         />
         {player.health <= 0 && (
           <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black/75">
-            <svg
-              viewBox="0 0 65 64"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-[80%] w-[80%]"
-            >
-              <g id="Frame">
-                <path
-                  className={cn(
-                    "fill-white transition-colors duration-500",
-                    !!currentPlayer && !!changes && changes.lostHealth && "fill-tomato",
-                  )}
-                  id="Vector"
-                  d="M32.7305 2C18.3942 2 6.73047 13.6637 6.73047 28V47.3537L16.9805 51.455L19.0905 62H24.7305V54H28.7305V62H30.7305V54H34.7305V62H36.7305V54H40.7305V62H46.3705L48.4805 51.455L58.7305 47.3537V28C58.7305 13.6637 47.0667 2 32.7305 2ZM21.7305 42C20.346 42 18.9926 41.5895 17.8415 40.8203C16.6903 40.0511 15.7931 38.9579 15.2633 37.6788C14.7335 36.3997 14.5949 34.9922 14.865 33.6344C15.1351 32.2765 15.8018 31.0292 16.7807 30.0503C17.7597 29.0713 19.007 28.4046 20.3648 28.1345C21.7227 27.8644 23.1302 28.003 24.4093 28.5328C25.6883 29.0627 26.7816 29.9599 27.5508 31.111C28.3199 32.2622 28.7305 33.6155 28.7305 35C28.7285 36.8559 27.9903 38.6352 26.678 39.9476C25.3657 41.2599 23.5864 41.998 21.7305 42ZM28.1692 50L31.2305 40H34.2305L37.2917 50H28.1692ZM43.7305 42C42.346 42 40.9926 41.5895 39.8415 40.8203C38.6903 40.0511 37.7931 38.9579 37.2633 37.6788C36.7335 36.3997 36.5949 34.9922 36.865 33.6344C37.1351 32.2765 37.8018 31.0292 38.7807 30.0503C39.7597 29.0713 41.007 28.4046 42.3648 28.1345C43.7227 27.8644 45.1302 28.003 46.4093 28.5328C47.6883 29.0627 48.7816 29.9599 49.5508 31.111C50.3199 32.2622 50.7305 33.6155 50.7305 35C50.7285 36.8559 49.9903 38.6352 48.678 39.9476C47.3657 41.2599 45.5864 41.998 43.7305 42Z"
-                />
-              </g>
-            </svg>
+            <SkullIcon
+              className={cn(
+                "h-3/4 w-3/4",
+                !!currentPlayer && !!changes && changes.lostHealth && "fill-tomato",
+              )}
+            />
           </div>
         )}
       </div>
 
       <div
         className={cn(
-          "flex flex-col lg:gap-1.5",
+          "flex flex-col justify-between lg:gap-1.5",
           player.health <= 0 && "pointer-events-none opacity-50",
         )}
       >
         <p className="-mt-1 font-semibold uppercase tracking-[0.07em] lg:text-xl">{player.name}</p>
-        <p className="text-sm font-light tracking-[0.15em] lg:text-base">{player.champion.name}</p>
+        <p className="-mt-0.5 text-sm font-light tracking-[0.15em] lg:text-base">
+          {player.champion.name}
+        </p>
         <div className="flex lg:gap-4">
           <div>
             <TooltipProvider>

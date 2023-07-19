@@ -41,7 +41,7 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
       >
         {["bg-gradient-to-r", "bg-gradient-to-l", "bg-gradient-to-t", "bg-gradient-to-b"].map(
           (dir) => (
-            <>
+            <React.Fragment key={dir}>
               <div
                 className={cn(
                   "absolute h-full w-full from-red-500 to-5% opacity-0 transition-all duration-500",
@@ -56,7 +56,7 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
                   changes.gainedHealth && "opacity-100",
                 )}
               />
-            </>
+            </React.Fragment>
           ),
         )}
       </div>

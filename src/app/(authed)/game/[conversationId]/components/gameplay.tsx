@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillArrowRightSquareFill } from "react-icons/bs";
 import { FaDice, FaRobot } from "react-icons/fa";
+import { FiMinus, FiPlus } from "react-icons/fi";
 import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
@@ -20,6 +21,7 @@ import Modal from "@/components/ui/modal";
 import Spinner from "@/components/ui/spinner";
 import { TextArea } from "@/components/ui/text-area";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import SkeletonIcon from "@/components/icons/skeleton-icon";
 
 import useGameplaySocket from "../hooks/use-gameplay-socket";
 import usePlayMove from "../hooks/use-play-move";
@@ -247,7 +249,7 @@ const Gameplay = (props: { conversationId: string }) => {
     >
       <div className="flex  w-full flex-1 flex-col gap-8 pr-4 lg:max-h-full lg:overflow-y-auto lg:pr-6">
         {stories.map((story, i) => (
-          <div key={story} className="flex w-full flex-col gap-8">
+          <div key={i} className="flex w-full flex-col gap-8">
             <div className="flex w-full items-center gap-8">
               <div className="flex flex-col text-lg font-semibold uppercase tracking-[0.2em] lg:flex-row lg:text-2xl">
                 <span className="mr-2 text-tomato">
@@ -257,10 +259,10 @@ const Gameplay = (props: { conversationId: string }) => {
               </div>
               <div className="border-t border-tomato lg:flex-1" />
             </div>
-            <div>
-              {roomData.generatedImages[i] && roomData.generateImages && i % 2 === 0 && (
-                <div className="mb-4 flex aspect-square w-full justify-center lg:float-left lg:mr-6 lg:inline-block lg:h-72 lg:w-72">
-                  {roomData.generatedImages[i].length > 0 ? (
+            <div className="w-full">
+              {roomData.generateImages && i % 2 === 0 && (
+                <div className="mb-4 flex aspect-square w-full shrink-0 justify-center lg:float-left lg:mr-6 lg:inline-block lg:h-72 lg:w-72">
+                  {roomData.generatedImages[i] && roomData.generatedImages[i].length > 0 ? (
                     <Image
                       src={roomData.generatedImages[i] || "/images/default-dungeon.png"}
                       alt="dungeon"
@@ -272,15 +274,7 @@ const Gameplay = (props: { conversationId: string }) => {
                     />
                   ) : (
                     <div className="flex h-full w-full animate-pulse items-center justify-center rounded bg-gray-600">
-                      <svg
-                        className="h-24 w-24 text-gray-200"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        viewBox="0 0 640 512"
-                      >
-                        <path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z" />
-                      </svg>
+                      <SkeletonIcon className="h-24 w-24 text-gray-200" />
                     </div>
                   )}
                 </div>
@@ -407,22 +401,9 @@ const Gameplay = (props: { conversationId: string }) => {
               variant="ghost"
               disabled={powerUp === 0 || !canPlay}
               onClick={() => setPowerUp(powerUp - 1)}
-              className="flex h-full w-12 items-center justify-center bg-white/10 text-4xl"
+              className="flex h-full w-12 items-center justify-center bg-white/10 text-white"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="17"
-                height="3"
-                viewBox="0 0 17 3"
-                fill="none"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M0.664062 1.47928C0.664062 1.17618 0.78447 0.885488 0.998798 0.671161C1.21312 0.456834 1.50382 0.336426 1.80692 0.336426H15.5212C15.8243 0.336426 16.115 0.456834 16.3293 0.671161C16.5437 0.885488 16.6641 1.17618 16.6641 1.47928C16.6641 1.78239 16.5437 2.07308 16.3293 2.2874C16.115 2.50173 15.8243 2.62214 15.5212 2.62214H1.80692C1.50382 2.62214 1.21312 2.50173 0.998798 2.2874C0.78447 2.07308 0.664063 1.78239 0.664062 1.47928Z"
-                  fill="white"
-                />
-              </svg>
+              <FiMinus />
             </Button>
             <TooltipProvider>
               <Tooltip>
@@ -442,22 +423,9 @@ const Gameplay = (props: { conversationId: string }) => {
               variant="ghost"
               disabled={powerUp === 2 || powerUp >= currentPlayer.mana || !canPlay}
               onClick={() => setPowerUp(powerUp + 1)}
-              className="flex h-full w-12 items-center justify-center bg-white/10 text-4xl"
+              className="flex h-full w-12 items-center justify-center bg-white/10 text-white"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="17"
-                height="17"
-                viewBox="0 0 17 17"
-                fill="none"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M8.66406 0.479492C8.96717 0.479492 9.25786 0.5999 9.47219 0.814227C9.68651 1.02855 9.80692 1.31924 9.80692 1.62235V7.33664H15.5212C15.8243 7.33664 16.115 7.45704 16.3293 7.67137C16.5437 7.8857 16.6641 8.17639 16.6641 8.47949C16.6641 8.7826 16.5437 9.07329 16.3293 9.28761C16.115 9.50194 15.8243 9.62235 15.5212 9.62235H9.80692V15.3366C9.80692 15.6397 9.68651 15.9304 9.47219 16.1448C9.25786 16.3591 8.96717 16.4795 8.66406 16.4795C8.36096 16.4795 8.07027 16.3591 7.85594 16.1448C7.64161 15.9304 7.52121 15.6397 7.52121 15.3366V9.62235H1.80692C1.50382 9.62235 1.21312 9.50194 0.998798 9.28761C0.78447 9.07329 0.664063 8.7826 0.664062 8.47949C0.664062 8.17639 0.78447 7.8857 0.998798 7.67137C1.21312 7.45704 1.50382 7.33664 1.80692 7.33664H7.52121V1.62235C7.52121 1.31924 7.64161 1.02855 7.85594 0.814227C8.07027 0.5999 8.36096 0.479492 8.66406 0.479492Z"
-                  fill="white"
-                />
-              </svg>
+              <FiPlus />
             </Button>
           </div>
           <div className="flex flex-col justify-between bg-white/5 lg:w-[270px]">
@@ -601,7 +569,7 @@ const Gameplay = (props: { conversationId: string }) => {
       <Modal
         open={gameOverModal && !diedModal && !dying}
         onClose={() => setGameOverModal(false)}
-        className="mx-8 flex h-fit max-h-[700px] w-fit flex-col items-center gap-6 bg-black/90 px-6 py-8 text-lg shadow-xl shadow-white/10 lg:gap-8 lg:px-12 lg:text-xl"
+        className="mx-8 flex h-fit max-h-[700px] w-fit flex-col items-center gap-6 bg-black/90 px-6 py-8 text-lg shadow-xl shadow-white/10 lg:max-w-[550px] lg:gap-8 lg:px-12 lg:text-xl"
       >
         <div className="flex flex-col gap-3 lg:gap-4">
           <p className="text-center font-medium uppercase leading-7 tracking-[3.3px]">
