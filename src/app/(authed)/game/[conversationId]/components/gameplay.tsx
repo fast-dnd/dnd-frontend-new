@@ -561,9 +561,9 @@ const Gameplay = (props: { conversationId: string }) => {
         <p className="text-center leading-7 tracking-[2.64px] text-white/60">
           Stepping away? Remember, each game phase waits for 10 minutes. Miss it, and face a loss.
         </p>
-        <div className="flex flex-row justify-center gap-8">
+        <div className="flex flex-row justify-center gap-4 lg:gap-8">
           <Button
-            className="w-fit px-16 py-3"
+            className="w-fit whitespace-nowrap px-4 py-3 text-base lg:px-16 lg:text-xl"
             variant="outline"
             onClick={() => {
               setGoingHome(true);
@@ -574,7 +574,10 @@ const Gameplay = (props: { conversationId: string }) => {
             {goingHome && <Spinner className="m-0 h-4 w-4" />}
             EXIT GAME
           </Button>
-          <Button className="w-fit whitespace-nowrap px-8 py-3" onClick={() => setHomeModal(false)}>
+          <Button
+            className="w-fit whitespace-nowrap px-4 py-3 text-base lg:px-8 lg:text-xl"
+            onClick={() => setHomeModal(false)}
+          >
             STAY AND PLAY
           </Button>
         </div>
@@ -598,7 +601,7 @@ const Gameplay = (props: { conversationId: string }) => {
       <Modal
         open={gameOverModal && !diedModal && !dying}
         onClose={() => setGameOverModal(false)}
-        className="mx-8 flex h-fit max-h-[700px] max-w-[375px] flex-col items-center gap-6 bg-black/90 px-6 py-8 text-lg shadow-xl shadow-white/10 lg:max-w-[535px] lg:gap-8 lg:px-12 lg:text-xl"
+        className="mx-8 flex h-fit max-h-[700px] w-fit flex-col items-center gap-6 bg-black/90 px-6 py-8 text-lg shadow-xl shadow-white/10 lg:gap-8 lg:px-12 lg:text-xl"
       >
         <div className="flex flex-col gap-3 lg:gap-4">
           <p className="text-center font-medium uppercase leading-7 tracking-[3.3px]">
@@ -613,8 +616,8 @@ const Gameplay = (props: { conversationId: string }) => {
             )}
             {result === "LOST" && (
               <span>
-                You and your teammates have died in the adventure.{" "}
-                <span className="font-semibold">Better luck next time!</span>
+                You and your teammates have died in the adventure.
+                <span className="font-semibold"> Better luck next time!</span>
               </span>
             )}
           </p>
