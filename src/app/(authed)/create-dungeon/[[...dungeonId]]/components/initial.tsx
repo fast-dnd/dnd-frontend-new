@@ -18,7 +18,7 @@ import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
 import { dungeonFormStore } from "../stores/dungeon-form-store";
 import { stepTitles } from "../utils/step-utils";
 import tagsComboboxStyles from "../utils/tags-combobox-styles";
-import { TagsWithLabel } from "../utils/tags-utils";
+import { tagsAttachLabel, TagsWithLabel } from "../utils/tags-utils";
 import FormStepWrapper from "./form-step-wrapper";
 
 const Initial = ({ dungeonId }: { dungeonId?: string }) => {
@@ -143,10 +143,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                             noOptionsMessage={() => "No tags found"}
                             // isOptionDisabled={(option) => field.value.length >= 3}
                             className="w-full"
-                            options={dungeonTags.map((tag) => ({
-                              value: tag,
-                              label: tag,
-                            }))}
+                            options={tagsAttachLabel(dungeonTags)}
                             isMulti
                             closeMenuOnSelect={false}
                             placeholder="Select 1 to 3 tags"

@@ -1,6 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { useIsMounted } from "@legendapp/state/react";
 
 import { IDungeonDetail } from "@/types/dungeon";
 
@@ -14,8 +12,12 @@ interface IUseLoadDungeonDataProps {
 const useLoadDungeonData = ({ dungeonData }: IUseLoadDungeonDataProps) => {
   const dungeonFormData = dungeonFormStore.dungeonFormData.use();
 
-  const isMounted = useIsMounted();
+  const [isMounted, setIsMounted] = useState(false);
   const [aborting, setAborting] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     if (dungeonFormData._id !== dungeonData?._id) {
