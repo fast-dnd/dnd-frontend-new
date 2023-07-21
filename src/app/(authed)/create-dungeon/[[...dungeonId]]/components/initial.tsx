@@ -15,15 +15,15 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import UploadImage from "@/components/ui/upload-image";
 
 import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
-import { formStore } from "../stores/form-store";
+import { dungeonFormStore } from "../stores/dungeon-form-store";
 import { stepTitles } from "../utils/step-utils";
 import tagsComboboxStyles from "../utils/tags-combobox-styles";
 import { TagsWithLabel } from "../utils/tags-utils";
 import FormStepWrapper from "./form-step-wrapper";
 
 const Initial = ({ dungeonId }: { dungeonId?: string }) => {
-  const dungeonFormData = formStore.dungeonFormData.use();
-  const currentStep = formStore.currentStep.use();
+  const dungeonFormData = dungeonFormStore.dungeonFormData.use();
+  const currentStep = dungeonFormStore.currentStep.use();
 
   const {
     register,
@@ -41,8 +41,8 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
   const imageRef = useRef<HTMLInputElement>(null);
 
   const onSubmit: SubmitHandler<IInitialSchema> = (data) => {
-    formStore.dungeonFormData.set((prev) => ({ ...prev, ...data }));
-    formStore.currentStep.set("LOCATIONS");
+    dungeonFormStore.dungeonFormData.set((prev) => ({ ...prev, ...data }));
+    dungeonFormStore.currentStep.set("LOCATIONS");
   };
 
   const addImage = () => {

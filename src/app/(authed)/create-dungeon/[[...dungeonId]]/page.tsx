@@ -11,7 +11,7 @@ import MobileNavbar from "@/components/mobile-navbar";
 import ChampionsLocationsWrapper from "./components/champions-locations-wrapper";
 import Final from "./components/final";
 import Initial from "./components/initial";
-import { formStore, initialFormData } from "./stores/form-store";
+import { dungeonFormStore, initialDungeonFormData } from "./stores/dungeon-form-store";
 import { tagsAttachLabel } from "./utils/tags-utils";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
@@ -26,27 +26,31 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
     setMounted(true);
   }, []);
 
-  const currentStep = formStore.currentStep.use();
-  const dungeonFormData = formStore.dungeonFormData.use();
+  const currentStep = dungeonFormStore.currentStep.use();
+  const dungeonFormData = dungeonFormStore.dungeonFormData.use();
 
-  console.log(formStore.use());
+  console.log(dungeonFormStore.use());
 
   if (dungeonFormData._id !== dungeonData?._id) {
     if (dungeonData) {
       // editing...
-      formStore.dungeonFormData.set({
+      dungeonFormStore.dungeonFormData.set({
         ...dungeonData,
         tags: tagsAttachLabel(dungeonData.tags),
       });
     } else {
       // creating...
-      formStore.dungeonFormData.set(initialFormData);
+      if (
+        JSON.stringify(dungeonFormStore.dungeonFormData.get()) ===
+        JSON.stringify(initialDungeonFormData)
+      )
+        dungeonFormStore.dungeonFormData.set(initialDungeonFormData);
     }
   }
 
   const abortDungeonCreation = () => {
-    formStore.currentStep.set("INITIAL");
-    formStore.dungeonFormData.set(initialFormData);
+    dungeonFormStore.currentStep.set("INITIAL");
+    dungeonFormStore.dungeonFormData.set(initialDungeonFormData);
     router.push("/home");
   };
 

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 import { championSchema, IChampionSchema } from "../schemas/champion-schema";
 import { ILocationSchema, locationSchema } from "../schemas/location-schema";
-import { formStore } from "../stores/form-store";
+import { dungeonFormStore } from "../stores/dungeon-form-store";
 import { StatusType } from "../utils/step-utils";
 
 export interface IChampionLocationProps {
@@ -38,7 +38,7 @@ const ChampionLocationWrapper = ({
 }: IChampionLocationWrapperProps) => {
   const dungeonFormField = locationOrChampion === "Location" ? "locations" : "champions";
 
-  const dungeonFormData = formStore.dungeonFormData.use();
+  const dungeonFormData = dungeonFormStore.dungeonFormData.use();
 
   const {
     register,
@@ -55,13 +55,14 @@ const ChampionLocationWrapper = ({
     // TODO: replace this with backend call and then update with the returned id
     if (status === "CREATING") {
       if ("moveMapping" in data)
-        formStore.dungeonFormData.champions.set((prev) => [...prev, { ...data, _id: "" }]);
-      else formStore.dungeonFormData.locations.set((prev) => [...prev, { ...data, _id: "" }]);
+        dungeonFormStore.dungeonFormData.champions.set((prev) => [...prev, { ...data, _id: "" }]);
+      else
+        dungeonFormStore.dungeonFormData.locations.set((prev) => [...prev, { ...data, _id: "" }]);
     } else if (status === "EDITING") {
-      const _id = formStore.dungeonFormData[dungeonFormField][editIndex]._id.get();
+      const _id = dungeonFormStore.dungeonFormData[dungeonFormField][editIndex]._id.get();
       if ("moveMapping" in data)
-        formStore.dungeonFormData.champions[editIndex].set({ ...data, _id });
-      else formStore.dungeonFormData.locations[editIndex].set({ ...data, _id });
+        dungeonFormStore.dungeonFormData.champions[editIndex].set({ ...data, _id });
+      else dungeonFormStore.dungeonFormData.locations[editIndex].set({ ...data, _id });
     }
 
     setStatus("LIST");

@@ -4,11 +4,11 @@ import useCopy from "@/hooks/use-copy";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 
-import { formStore } from "../stores/form-store";
+import { dungeonFormStore } from "../stores/dungeon-form-store";
 import { stepTitles } from "../utils/step-utils";
 
 const Final = () => {
-  const dungeonFormData = formStore.dungeonFormData.use();
+  const dungeonFormData = dungeonFormStore.dungeonFormData.use();
 
   const [copied, setCopied] = useCopy();
 

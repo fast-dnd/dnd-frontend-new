@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 
 import useCreateDungeon from "../hooks/use-create-dungeon";
 import useUpdateDungeon from "../hooks/use-update-dungeon";
-import { formStore } from "../stores/form-store";
+import { dungeonFormStore } from "../stores/dungeon-form-store";
 import { getNextStep, getPreviousStep, StatusType, stepTitles } from "../utils/step-utils";
 import { tagsRemoveLabel } from "../utils/tags-utils";
 import Champion from "./champion";
@@ -43,8 +43,8 @@ const ChampionsLocationsWrapper = ({
 
   const queryClient = useQueryClient();
 
-  const dungeonFormData = formStore.dungeonFormData.use();
-  const currentStep = formStore.currentStep.use();
+  const dungeonFormData = dungeonFormStore.dungeonFormData.use();
+  const currentStep = dungeonFormStore.currentStep.use();
 
   const [status, setStatus] = useState<StatusType>("LIST");
   const [editIndex, setEditIndex] = useState(-1);
@@ -58,7 +58,7 @@ const ChampionsLocationsWrapper = ({
   };
 
   const onDelete = (index: number) => {
-    formStore.dungeonFormData[dungeonFormField].set((prev: any[]) => {
+    dungeonFormStore.dungeonFormData[dungeonFormField].set((prev: any[]) => {
       const newPrev = [...prev];
       newPrev.splice(index, 1);
 
@@ -72,7 +72,7 @@ const ChampionsLocationsWrapper = ({
     if (!over) return;
 
     if (active.id !== over.id) {
-      formStore.dungeonFormData[dungeonFormField].set((prev: any[]) => {
+      dungeonFormStore.dungeonFormData[dungeonFormField].set((prev: any[]) => {
         const newPrev = [...prev];
         const oldIndex = prev.findIndex((chmpLoc) => JSON.stringify(chmpLoc) === active.id);
         const newIndex = prev.findIndex((chmpLoc) => JSON.stringify(chmpLoc) === over.id);
@@ -93,15 +93,15 @@ const ChampionsLocationsWrapper = ({
     if (dungeonId) {
       updateDungeon(dungeonFormDataWithoutTags, {
         onSuccess: (_data) => {
-          formStore.currentStep.set("FINAL");
+          dungeonFormStore.currentStep.set("FINAL");
           queryClient.invalidateQueries([dungeonKey, dungeonId]);
         },
       });
     } else {
       createDungeon(dungeonFormDataWithoutTags, {
         onSuccess: (data) => {
-          formStore.currentStep.set("FINAL");
-          formStore.dungeonFormData.set((prev) => ({ ...prev, _id: data.data._id }));
+          dungeonFormStore.currentStep.set("FINAL");
+          dungeonFormStore.dungeonFormData.set((prev) => ({ ...prev, _id: data.data._id }));
         },
       });
     }
@@ -125,7 +125,7 @@ const ChampionsLocationsWrapper = ({
             <Button
               className="hidden w-fit gap-1 lg:flex"
               variant="ghost"
-              onClick={() => formStore.currentStep.set(getPreviousStep(currentStep))}
+              onClick={() => dungeonFormStore.currentStep.set(getPreviousStep(currentStep))}
             >
               <AiOutlineLeft className="inline-block" />
               PREVIOUS
@@ -138,7 +138,7 @@ const ChampionsLocationsWrapper = ({
               onClick={
                 locationOrChampion === "Champion"
                   ? onFinishForm
-                  : () => formStore.currentStep.set(getNextStep(currentStep))
+                  : () => dungeonFormStore.currentStep.set(getNextStep(currentStep))
               }
               variant={locationOrChampion === "Champion" ? "primary" : "outline"}
               disabled={isDisabledNextButton}
@@ -194,7 +194,7 @@ const ChampionsLocationsWrapper = ({
                   <Button
                     className="w-fit gap-1 text-sm"
                     variant="ghost"
-                    onClick={() => formStore.currentStep.set(getPreviousStep(currentStep))}
+                    onClick={() => dungeonFormStore.currentStep.set(getPreviousStep(currentStep))}
                   >
                     <AiOutlineLeft className="inline-block" />
                     PREVIOUS
@@ -207,7 +207,7 @@ const ChampionsLocationsWrapper = ({
                     onClick={
                       locationOrChampion === "Champion"
                         ? onFinishForm
-                        : () => formStore.currentStep.set(getNextStep(currentStep))
+                        : () => dungeonFormStore.currentStep.set(getNextStep(currentStep))
                     }
                     variant={locationOrChampion === "Champion" ? "primary" : "outline"}
                     disabled={isDisabledNextButton}
