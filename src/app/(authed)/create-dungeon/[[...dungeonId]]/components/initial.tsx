@@ -52,8 +52,6 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
     });
   };
 
-  console.log(errors);
-
   return (
     <form className="flex h-full w-full" onSubmit={handleSubmit(onSubmit)}>
       <FormStepWrapper dungeonId={dungeonId}>

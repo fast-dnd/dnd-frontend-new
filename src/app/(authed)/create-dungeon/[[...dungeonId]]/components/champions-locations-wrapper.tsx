@@ -107,8 +107,6 @@ const ChampionsLocationsWrapper = ({
     }
   };
 
-  console.log(dungeonFormData);
-
   return (
     <div className="h-full w-full lg:flex">
       <FormStepWrapper dungeonId={dungeonId}>

@@ -3,13 +3,13 @@
 import Skeleton from "@/components/ui/skeleton";
 
 import { useGetMyDungeons } from "../../hooks/use-get-home-data";
-import { useHomeStore } from "../../stores/tab-store";
+import { homeStore } from "../../stores/tab-store";
 import KingdomDungeon from "./kingdom-dungeon";
 
 const KingdomDungeons = () => {
-  const { homeTab } = useHomeStore((state) => state);
-
-  const { data: myDungeons, isLoading } = useGetMyDungeons(homeTab === "MY KINGDOM");
+  const { data: myDungeons, isLoading } = useGetMyDungeons(
+    homeStore.homeTab.get() === "MY KINGDOM",
+  );
 
   if (isLoading) return <Skeleton />;
 

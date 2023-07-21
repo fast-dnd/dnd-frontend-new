@@ -4,8 +4,7 @@ import { Fragment } from "react";
 
 import { cn } from "@/utils/style-utils";
 
-import { useHomeStore } from "../stores/tab-store";
-import { dungeonTabs, DungeonTabType, homeTabs, HomeTabType } from "../types/home";
+import { dungeonTabs, DungeonTabType, homeStore, homeTabs, HomeTabType } from "../stores/tab-store";
 
 interface ITabsProps {
   homeOrDungeons: "home" | "dungeon";
@@ -16,11 +15,9 @@ interface ITabsProps {
 const Tabs = ({ selectedTab, homeOrDungeons, onTabClick }: ITabsProps) => {
   const tabs = homeOrDungeons === "home" ? homeTabs : dungeonTabs;
 
-  const { setDungeonTab, setHomeTab } = useHomeStore((state) => state);
-
   const onTabClickHandler = (tab: HomeTabType | DungeonTabType) => {
-    if (homeOrDungeons === "home") setHomeTab(tab as HomeTabType);
-    else setDungeonTab(tab as DungeonTabType);
+    if (homeOrDungeons === "home") homeStore.homeTab.set(tab as HomeTabType);
+    else homeStore.dungeonTab.set(tab as DungeonTabType);
     onTabClick?.();
   };
 

@@ -1,21 +1,19 @@
-import { create } from "zustand";
+import { observable } from "@legendapp/state";
 
-import { DungeonTabType, HomeTabType } from "../types/home";
+export const homeTabs = ["PLAY", "MY KINGDOM", "SETTINGS", "HOW TO PLAY"] as const;
+
+export type HomeTabType = (typeof homeTabs)[number];
+
+export const dungeonTabs = ["top dungeons", "my dungeons", "favorite dungeons"] as const;
+
+export type DungeonTabType = (typeof dungeonTabs)[number];
 
 interface IHomeStore {
   homeTab: HomeTabType;
   dungeonTab: DungeonTabType;
-  setHomeTab: (homeTab: HomeTabType) => void;
-  setDungeonTab: (dungeonTab: DungeonTabType) => void;
-  displayHowToPlay: boolean;
-  setDisplayHowToPlay: (displayHowToPlay: boolean) => void;
 }
 
-export const useHomeStore = create<IHomeStore>()((set) => ({
+export const homeStore = observable<IHomeStore>({
   homeTab: "PLAY",
   dungeonTab: "top dungeons",
-  setHomeTab: (homeTab: HomeTabType) => set({ homeTab }),
-  setDungeonTab: (dungeonTab: DungeonTabType) => set({ dungeonTab }),
-  displayHowToPlay: false,
-  setDisplayHowToPlay: (displayHowToPlay: boolean) => set({ displayHowToPlay }),
-}));
+});

@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 
 import useAddFavorite from "../../hooks/use-add-favorite";
 import useCreateRoom from "../../hooks/use-create-room";
-import { useHomeStore } from "../../stores/tab-store";
+import { homeStore } from "../../stores/tab-store";
 
 const CreateRoomFooter = ({
   selectedDungeon,
@@ -18,7 +18,6 @@ const CreateRoomFooter = ({
   setSelectedDungeon: React.Dispatch<React.SetStateAction<IDungeon | undefined>>;
 }) => {
   const router = useRouter();
-  const { dungeonTab } = useHomeStore((state) => state);
 
   const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
 
@@ -49,7 +48,7 @@ const CreateRoomFooter = ({
 
   return (
     <div className="flex flex-row items-center justify-center gap-8">
-      {dungeonTab === "favorite dungeons" && selectedDungeon === undefined && (
+      {homeStore.dungeonTab.get() === "favorite dungeons" && selectedDungeon === undefined && (
         <div className="flex flex-1 flex-col justify-end gap-4 lg:flex-row lg:gap-8">
           <Input
             placeholder="Enter dungeon ID..."

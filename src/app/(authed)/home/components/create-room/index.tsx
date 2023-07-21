@@ -11,14 +11,14 @@ import {
   useGetMyDungeons,
   useGetRecommendedDungeons,
 } from "../../hooks/use-get-home-data";
-import { useHomeStore } from "../../stores/tab-store";
+import { homeStore } from "../../stores/tab-store";
 import CreateRoomDungeon from "./create-room-dungeon";
 import CreateRoomFooter from "./create-room-footer";
 import CreateRoomNavbar from "./create-room-navbar";
 import SelectedDungeon from "./selected-dungeon";
 
 const CreateRoom = () => {
-  const { dungeonTab, homeTab } = useHomeStore((state) => state);
+  const { dungeonTab, homeTab } = homeStore.use();
 
   const { data: dungeons, isLoading } =
     dungeonTab === "top dungeons"

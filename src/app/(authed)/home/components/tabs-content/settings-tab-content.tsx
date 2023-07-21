@@ -1,6 +1,6 @@
 import { cn } from "@/utils/style-utils";
 
-import { HomeTabType } from "../../types/home";
+import { HomeTabType } from "../../stores/tab-store";
 import Settings from "../settings";
 
 const SettingsTabContent = ({ homeTab }: { homeTab: HomeTabType }) => {

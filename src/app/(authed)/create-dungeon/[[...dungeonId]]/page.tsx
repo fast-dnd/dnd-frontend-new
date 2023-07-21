@@ -29,8 +29,6 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const currentStep = dungeonFormStore.currentStep.use();
   const dungeonFormData = dungeonFormStore.dungeonFormData.use();
 
-  console.log(dungeonFormStore.use());
-
   if (dungeonFormData._id !== dungeonData?._id) {
     if (dungeonData) {
       // editing...

@@ -7,10 +7,10 @@ import Tabs from "./components/tabs";
 import KingdomTabContent from "./components/tabs-content/kingdom-tab-content";
 import PlayTabContent from "./components/tabs-content/play-tab-content";
 import SettingsTabContent from "./components/tabs-content/settings-tab-content";
-import { useHomeStore } from "./stores/tab-store";
+import { homeStore } from "./stores/tab-store";
 
 const Home = () => {
-  const { homeTab } = useHomeStore((state) => state);
+  const homeTab = homeStore.homeTab.use();
 
   return (
     <div className="flex h-full min-h-0 w-full flex-col overflow-y-auto lg:px-16 lg:pb-12">
