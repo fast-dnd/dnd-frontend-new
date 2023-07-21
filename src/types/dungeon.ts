@@ -1,71 +1,56 @@
-import { DungeonDuration, DungeonTag } from "@/utils/dungeon-options";
+import { z } from "zod";
 
-import { DefaultMove } from "./game";
+import { dungeonDurationsArray, dungeonTags } from "@/utils/dungeon-options";
 
-export interface IDungeonFormData {
-  id?: string;
-  name: string;
-  maxPlayers: 3;
-  recommendedResponseDetailsDepth: DungeonDuration;
-  description: string;
-  style: string;
-  tags: { label: DungeonTag; value: DungeonTag }[];
-  imageUrl?: string;
-  image?: string;
-  locations: ILocationFormData[];
-  champions: IChampionFormData[];
-}
+export const locationSchema = z.object({
+  _id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  mission: z.string(),
+  transition: z.string(),
+});
 
-export interface IDungeon {
-  _id: string;
-  name: string;
-  recommendedResponseDetailsDepth: DungeonDuration;
-  description: string;
-  style: string;
-  tags: DungeonTag[];
-  locations: ILocation[];
-  champions: IChampion[];
-  imageUrl?: string;
-  recommended: boolean;
-  publiclySeen: boolean;
-}
+export const moveMappingSchema = z.object({
+  discover_health: z.string(),
+  discover_mana: z.string(),
+  conversation_with_team: z.string(),
+  rest: z.string(),
+});
 
-export interface ILocationFormData {
-  id?: string;
-  name: string;
-  description: string;
-  mission: string;
-  transition: string;
-}
+export const championSchema = z.object({
+  _id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  moveMapping: moveMappingSchema,
+});
 
-export interface ILocation {
-  _id: string;
-  name: string;
-  description: string;
-  mission: string;
-  transition: string;
-  phase: "discovery" | "end";
-  allPlayersRollSum: number;
-  neededRollSumPercent: number;
-  missionCompleted: boolean;
-}
+const baseDungeonSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  style: z.string(),
+  recommendedResponseDetailsDepth: z.enum(dungeonDurationsArray),
+  tags: z.array(z.enum(dungeonTags)),
+  maxPlayers: z.number(),
+  imageUrl: z.string(),
+});
 
-export interface IChampionFormData {
-  id?: string;
-  name: string;
-  description: string;
-  moveMapping: {
-    discover_health: string;
-    discover_mana: string;
-    conversation_with_team: string;
-    rest: string;
-  };
-}
+export const dungeonSchema = baseDungeonSchema.extend({
+  _id: z.string(),
+  locations: z.array(z.string()),
+  champions: z.array(z.string()),
+});
 
-export interface IChampion {
-  _id: string;
-  name: string;
-  description: string;
-  label: string;
-  moveMapping: { [key in DefaultMove]: string };
-}
+export const dungeonDetailSchema = baseDungeonSchema.extend({
+  locations: z.array(locationSchema),
+  champions: z.array(championSchema),
+});
+
+export const dungeonsSchema = z.array(dungeonSchema);
+
+export type ILocation = z.infer<typeof locationSchema>;
+
+export type IChampion = z.infer<typeof championSchema>;
+
+export type IDungeon = z.infer<typeof dungeonSchema>;
+
+export type IDungeonDetail = z.infer<typeof dungeonDetailSchema>;

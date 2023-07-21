@@ -6,7 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 import { fileToBase64 } from "@/utils/b64";
-import { DungeonDuration, dungeonDuration, DungeonTag, dungeonTags } from "@/utils/dungeon-options";
+import {
+  DungeonDuration,
+  dungeonDurations,
+  DungeonTag,
+  dungeonTags,
+} from "@/utils/dungeon-options";
 import useStore from "@/hooks/use-store";
 import { Button } from "@/components/ui/button";
 import { ComboBox } from "@/components/ui/combobox";
@@ -103,7 +108,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                         state={errors?.recommendedResponseDetailsDepth ? "error" : undefined}
                         errorMessage={errors?.recommendedResponseDetailsDepth?.message}
                       >
-                        {dungeonDuration.map((duration) => (
+                        {dungeonDurations.map((duration) => (
                           <ToggleGroupItem
                             key={duration.value}
                             value={duration.value}

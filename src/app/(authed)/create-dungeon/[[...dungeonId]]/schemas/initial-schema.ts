@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-import { dungeonTags } from "@/utils/dungeon-options";
+import { dungeonDurationsArray, dungeonTags } from "@/utils/dungeon-options";
 
 export const initialSchema = z.object({
   name: z.string().min(1, "Name is required").min(5, "Name must be at least 5 characters"),
-  recommendedResponseDetailsDepth: z.enum(["blitz", "standard", "long"], {
+  recommendedResponseDetailsDepth: z.enum(dungeonDurationsArray, {
     errorMap: (issue, ctx) => {
       return { message: "Bob verbal engagement is required" };
     },

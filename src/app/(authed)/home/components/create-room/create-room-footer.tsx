@@ -39,9 +39,9 @@ const CreateRoomFooter = ({
       },
       {
         onSuccess: (data) => {
-          if (data.data.admin) localStorage.setItem("accountId", data.data.admin.accountId);
+          if (data.admin) localStorage.setItem("accountId", data.admin.accountId);
           setLoadingRoom(true);
-          router.push(`room/${data.data.conversationId}`);
+          router.push(`room/${data.conversationId}`);
         },
       },
     );

@@ -11,7 +11,7 @@ const useAuthCheck = () => {
 
   useEffect(() => {
     if (pathname === "/login") {
-      if (checkJWT()) router.back();
+      if (checkJWT()) redirect("/home");
     } else {
       if (!checkJWT()) {
         localStorage.setItem("redirectURL", pathname);

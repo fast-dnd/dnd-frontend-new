@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-import { IDungeon } from "@/types/dungeon";
+import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomData } from "@/types/room";
 import Modal from "@/components/ui/modal";
 import SkeletonIcon from "@/components/icons/skeleton-icon";
@@ -12,7 +12,7 @@ import StyledAudio from "./styled-audio";
 
 export interface StoriesProps {
   roomData: IRoomData;
-  dungeonData: IDungeon;
+  dungeonData: IDungeonDetail;
   lastStory?: string;
 }
 

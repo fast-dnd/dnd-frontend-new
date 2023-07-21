@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from "react";
 
-import { IDungeon } from "@/types/dungeon";
+import { IDungeonDetail } from "@/types/dungeon";
 import useStore from "@/hooks/use-store";
 
 import { initialDungeonFormData, useDungeonFormStore } from "../stores/form-store";
 
 interface IUseLoadDungeonDataProps {
   dungeonId: string | undefined;
-  dungeonData: IDungeon | undefined;
+  dungeonData: IDungeonDetail | undefined;
 }
 
 const useLoadDungeonData = ({ dungeonId, dungeonData }: IUseLoadDungeonDataProps) => {

@@ -2,7 +2,8 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-import { IDungeon, IDungeonFormData } from "@/types/dungeon";
+import { IChampion, IDungeonDetail, ILocation } from "@/types/dungeon";
+import { DungeonDuration, DungeonTag } from "@/utils/dungeon-options";
 
 export const steps = ["INITIAL", "LOCATIONS", "CHAMPIONS", "FINAL"] as const;
 
@@ -29,6 +30,20 @@ export const getNextStep = (currentStep: Step) => {
   return numberToStepArr[currentIndex + 1];
 };
 
+export interface IDungeonFormData {
+  id?: string;
+  name: string;
+  maxPlayers: number;
+  recommendedResponseDetailsDepth: DungeonDuration;
+  description: string;
+  style: string;
+  tags: { label: DungeonTag; value: DungeonTag }[];
+  imageUrl?: string;
+  image?: string;
+  locations: ILocation[];
+  champions: IChampion[];
+}
+
 export const initialDungeonFormData: IDungeonFormData = {
   id: undefined,
   name: "",
@@ -47,7 +62,7 @@ interface IDungeonFormStore {
   currentStep: Step;
   setCurrentStep: (currentStep: Step) => void;
   dungeonFormData: IDungeonFormData;
-  populateDataFromAPI: (dungeonId: string, dungeonData: IDungeon) => void;
+  populateDataFromAPI: (dungeonId: string, dungeonData: IDungeonDetail) => void;
   updateDungeonFormData: (dungeonFormData: Partial<IDungeonFormData>) => void;
   resetDungeonFormData: () => void;
 }
@@ -59,7 +74,7 @@ export const useDungeonFormStore = create<IDungeonFormStore>()(
         currentStep: "INITIAL",
         setCurrentStep: (currentStep: Step) => set({ currentStep }),
         dungeonFormData: initialDungeonFormData,
-        populateDataFromAPI: (dungeonId: string, dungeonData: IDungeon) => {
+        populateDataFromAPI: (dungeonId: string, dungeonData: IDungeonDetail) => {
           set((state) => {
             state.dungeonFormData = {
               ...state.dungeonFormData,

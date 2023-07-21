@@ -1,4 +1,4 @@
-import { IAccount } from "@/types/auth";
+import { accountSchema } from "@/types/auth";
 
 import createApi from "./api-factory";
 
@@ -11,7 +11,7 @@ const login = async (data: { credential?: string }) => {
 };
 
 const account = async () => {
-  return await authApi.get<IAccount>("account").then((res) => res.data);
+  return await authApi.get("account").then((res) => accountSchema.parse(res.data));
 };
 
 const authService = {

@@ -1,12 +1,56 @@
-import { IChampion } from "./dungeon";
+import { z } from "zod";
 
-export interface IQuestion {
-  playerName: string;
-  playerChampion: string;
-  playerAccountId: string;
-  question: string;
-  bob3Answer?: string;
-}
+import { championSchema } from "./dungeon";
+
+export const defaultMoves = [
+  "discover_health",
+  "discover_mana",
+  "conversation_with_team",
+  "rest",
+] as const;
+
+export const questionSchema = z.object({
+  playerName: z.string(),
+  playerChampion: z.string(),
+  playerAccountId: z.string(),
+  question: z.string(),
+  bob3Answer: z.string().nullish(),
+});
+
+export const playerSchema = z.object({
+  accountId: z.string(),
+  avatarId: z.string(),
+  avatarImageUrl: z.string(),
+  name: z.string(),
+  champion: championSchema.extend({ label: z.string().optional() }).nullish(),
+  health: z.number(),
+  mana: z.number(),
+  gold: z.number(),
+});
+
+export const defaultMoveSchema = z.enum(defaultMoves);
+
+export const moveTypeSchema = z.enum([...defaultMoves, "no_input", "free_will"]);
+
+export const moveSchema = z.object({
+  playerAccountId: z.string(),
+  action: z.string(),
+  aiDescription: z.string(),
+  aiRating: z.number(),
+  dice: z.number(),
+  mana: z.number(),
+  moveType: moveTypeSchema,
+  playerChampion: z.string(),
+  playerName: z.string(),
+});
+
+export type IQuestion = z.infer<typeof questionSchema>;
+
+export type DefaultMove = z.infer<typeof defaultMoveSchema>;
+
+export type MoveType = z.infer<typeof moveTypeSchema>;
+
+export type IPlayer = z.infer<typeof playerSchema>;
 
 export interface IMove {
   playerAccountId: string;
@@ -47,26 +91,3 @@ export interface IPlayerMove {
   aiRating: number;
   aiDescriptionForRating: string;
 }
-
-export interface IPlayer {
-  name: string;
-  accountId: string;
-  avatarId: string;
-  champion: IChampion;
-  health: number;
-  mana: number;
-  gold: number;
-  bonusForNextRound: number;
-  played?: boolean;
-  avatarImageUrl: string;
-}
-
-export const defaultMoves = [
-  "discover_health",
-  "discover_mana",
-  "conversation_with_team",
-  "rest",
-] as const;
-export type DefaultMove = (typeof defaultMoves)[number];
-
-export type MoveType = "no_input" | "free_will" | DefaultMove;

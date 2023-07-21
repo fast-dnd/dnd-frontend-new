@@ -1,4 +1,4 @@
-import { IAvatar, IKingdom } from "@/types/kingdom";
+import { avatarSchema, kingdomSchema } from "@/types/kingdom";
 import { IAvatarSchema } from "@/app/(authed)/create-avatar/[[...avatarId]]/schemas/avatar-schema";
 
 import createApi from "./api-factory";
@@ -6,11 +6,11 @@ import createApi from "./api-factory";
 const kingdomApi = createApi({ commonPrefix: "kingdom" });
 
 const getKingdom = async () => {
-  return await kingdomApi.get<IKingdom>("").then((res) => res.data);
+  return await kingdomApi.get("").then((res) => kingdomSchema.parse(res.data));
 };
 
 const getAvatar = async (avatarId: string) => {
-  return await kingdomApi.get<IAvatar>(`avatar/${avatarId}`).then((res) => res.data);
+  return await kingdomApi.get(`avatar/${avatarId}`).then((res) => avatarSchema.parse(res.data));
 };
 
 const createAvatar = async (data: IAvatarSchema) => {

@@ -37,7 +37,7 @@ export const dungeonTags = [
 
 export type DungeonTag = (typeof dungeonTags)[number];
 
-export const dungeonDuration = [
+export const dungeonDurations = [
   {
     label: "Blitz",
     value: "blitz",
@@ -55,4 +55,6 @@ export const dungeonDuration = [
   },
 ] as const;
 
-export type DungeonDuration = (typeof dungeonDuration)[number]["value"];
+export const dungeonDurationsArray = ["blitz", "standard", "long"] as const;
+
+export type DungeonDuration = (typeof dungeonDurations)[number]["value"];

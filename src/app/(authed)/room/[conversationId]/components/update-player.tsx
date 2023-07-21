@@ -1,4 +1,4 @@
-import { IDungeon } from "@/types/dungeon";
+import { IDungeonDetail } from "@/types/dungeon";
 import { IKingdom } from "@/types/kingdom";
 import { IRoomData } from "@/types/room";
 import {
@@ -17,7 +17,7 @@ import useUpdateRole from "../hooks/use-update-role";
 interface IUpdatePlayerProps {
   roomData: IRoomData;
   kingdomData: IKingdom;
-  dungeonData: IDungeon;
+  dungeonData: IDungeonDetail;
   conversationId: string;
 }
 
