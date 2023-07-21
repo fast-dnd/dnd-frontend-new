@@ -8,6 +8,7 @@ import { homeStore, homeTabs } from "../stores/tab-store";
 
 const HomeMobileNavbar = () => {
   const homeTab = homeStore.homeTab;
+
   return (
     <div className="flex justify-between px-5 py-8 lg:hidden">
       <Image src="/images/mobile-navbar-logo.svg" width={36} height={24} alt="mobile-navbar-logo" />

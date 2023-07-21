@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 import { AiOutlineLeft } from "react-icons/ai";
 
@@ -11,8 +10,8 @@ import MobileNavbar from "@/components/mobile-navbar";
 import ChampionsLocationsWrapper from "./components/champions-locations-wrapper";
 import Final from "./components/final";
 import Initial from "./components/initial";
+import useLoadDungeonData from "./hooks/use-load-dungeon-data";
 import { dungeonFormStore, initialDungeonFormData } from "./stores/dungeon-form-store";
-import { tagsAttachLabel } from "./utils/tags-utils";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const router = useRouter();
@@ -20,41 +19,23 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const dungeonId = params.dungeonId?.[0];
   const { data: dungeonData, isInitialLoading, isError } = useGetDungeon(dungeonId);
 
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const currentStep = dungeonFormStore.currentStep.use();
   const dungeonFormData = dungeonFormStore.dungeonFormData.use();
 
-  if (dungeonFormData._id !== dungeonData?._id) {
-    if (dungeonData) {
-      // editing...
-      dungeonFormStore.dungeonFormData.set({
-        ...dungeonData,
-        tags: tagsAttachLabel(dungeonData.tags),
-      });
-    } else {
-      // creating...
-      if (
-        JSON.stringify(dungeonFormStore.dungeonFormData.get()) ===
-        JSON.stringify(initialDungeonFormData)
-      )
-        dungeonFormStore.dungeonFormData.set(initialDungeonFormData);
-    }
-  }
+  const { isMounted, setAborting } = useLoadDungeonData({ dungeonData });
 
   const abortDungeonCreation = () => {
-    dungeonFormStore.currentStep.set("INITIAL");
-    dungeonFormStore.dungeonFormData.set(initialDungeonFormData);
+    setAborting(true);
+    dungeonFormStore.set({
+      currentStep: "INITIAL",
+      dungeonFormData: { ...initialDungeonFormData },
+    });
     router.push("/home");
   };
 
   if (isError) return redirect("/home");
 
-  if (isInitialLoading || !mounted)
+  if (isInitialLoading || !isMounted)
     return <BoxSkeleton title={`${dungeonId ? "EDIT" : "CREATE"} DUNGEON`} />;
 
   return (

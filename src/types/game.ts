@@ -52,17 +52,7 @@ export type MoveType = z.infer<typeof moveTypeSchema>;
 
 export type IPlayer = z.infer<typeof playerSchema>;
 
-export interface IMove {
-  playerAccountId: string;
-  action: string;
-  aiDescription: string;
-  aiRating: number;
-  dice: number;
-  mana: number;
-  moveType: MoveType;
-  playerChampion: string;
-  playerName: string;
-}
+export type IMove = z.infer<typeof moveSchema>;
 
 export interface IPlayMove {
   conversationId: string;

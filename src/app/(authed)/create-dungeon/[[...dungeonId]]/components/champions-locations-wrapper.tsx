@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { closestCenter, DndContext, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { ObservableObject } from "@legendapp/state";
 import { useQueryClient } from "@tanstack/react-query";
 import { AiOutlineLeft } from "react-icons/ai";
 
+import { IChampion, ILocation } from "@/types/dungeon";
 import { dungeonKey } from "@/services/dungeon-service";
 import { cn } from "@/utils/style-utils";
 import { Button } from "@/components/ui/button";
@@ -40,6 +42,7 @@ const ChampionsLocationsWrapper = ({
   createDescription,
 }: IChampionsLocationsWrapperProps) => {
   const dungeonFormField = locationOrChampion === "Location" ? "locations" : "champions";
+  type ObservableChampionLocation = ObservableObject<(ILocation | IChampion)[]>;
 
   const queryClient = useQueryClient();
 
@@ -58,12 +61,14 @@ const ChampionsLocationsWrapper = ({
   };
 
   const onDelete = (index: number) => {
-    dungeonFormStore.dungeonFormData[dungeonFormField].set((prev: any[]) => {
-      const newPrev = [...prev];
-      newPrev.splice(index, 1);
+    (dungeonFormStore.dungeonFormData[dungeonFormField] as ObservableChampionLocation).set(
+      (prev) => {
+        const newPrev = [...prev];
+        newPrev.splice(index, 1);
 
-      return newPrev;
-    });
+        return newPrev;
+      },
+    );
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -72,15 +77,17 @@ const ChampionsLocationsWrapper = ({
     if (!over) return;
 
     if (active.id !== over.id) {
-      dungeonFormStore.dungeonFormData[dungeonFormField].set((prev: any[]) => {
-        const newPrev = [...prev];
-        const oldIndex = prev.findIndex((chmpLoc) => JSON.stringify(chmpLoc) === active.id);
-        const newIndex = prev.findIndex((chmpLoc) => JSON.stringify(chmpLoc) === over.id);
-        const [removed] = newPrev.splice(oldIndex, 1);
-        newPrev.splice(newIndex, 0, removed);
+      (dungeonFormStore.dungeonFormData[dungeonFormField] as ObservableChampionLocation).set(
+        (prev) => {
+          const newPrev = [...prev];
+          const oldIndex = prev.findIndex((chmpLoc) => JSON.stringify(chmpLoc) === active.id);
+          const newIndex = prev.findIndex((chmpLoc) => JSON.stringify(chmpLoc) === over.id);
+          const [removed] = newPrev.splice(oldIndex, 1);
+          newPrev.splice(newIndex, 0, removed);
 
-        return newPrev;
-      });
+          return newPrev;
+        },
+      );
     }
   };
 

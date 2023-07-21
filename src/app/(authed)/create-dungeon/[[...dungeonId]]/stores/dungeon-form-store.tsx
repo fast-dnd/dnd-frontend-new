@@ -25,7 +25,7 @@ export type IDungeonFormStore = {
 
 export const dungeonFormStore = observable<IDungeonFormStore>({
   currentStep: "INITIAL",
-  dungeonFormData: initialDungeonFormData,
+  dungeonFormData: { ...initialDungeonFormData },
 });
 
 persistObservable(dungeonFormStore, {
