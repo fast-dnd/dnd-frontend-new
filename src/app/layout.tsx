@@ -22,7 +22,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
     <html lang="en">
       <body className={cn("flex flex-col", jost.className)}>
         <Providers>
-          <div className="absolute -z-10 h-full w-full">
+          <div className="absolute -z-10 h-[105%] w-full lg:h-full">
             <Image
               src="/images/bg-cover.png"
               fill
