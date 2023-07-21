@@ -1,22 +1,16 @@
 "use client";
 
-import React from "react";
-
 import useCopy from "@/hooks/use-copy";
-import useStore from "@/hooks/use-store";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 
-import { stepTitles, useDungeonFormStore } from "../stores/form-store";
+import { formStore } from "../stores/form-store";
+import { stepTitles } from "../utils/step-utils";
 
 const Final = () => {
-  const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
+  const dungeonFormData = formStore.dungeonFormData.use();
 
   const [copied, setCopied] = useCopy();
-
-  if (!dungeonFormStore) return null;
-
-  const { dungeonFormData } = dungeonFormStore;
 
   return (
     <div className="flex h-fit w-full lg:h-full">
@@ -39,12 +33,12 @@ const Final = () => {
               </p>
               <div className="flex flex-col items-center gap-8 lg:flex-row">
                 <p className="w-full bg-white/5 px-4 py-2 text-center font-medium tracking-widest lg:text-2xl">
-                  {dungeonFormData.id}
+                  {dungeonFormData._id}
                 </p>
                 <Button
                   className="w-full px-8 lg:w-fit"
                   onClick={() => {
-                    navigator.clipboard.writeText(dungeonFormData.id ?? "");
+                    navigator.clipboard.writeText(dungeonFormData._id ?? "");
                     setCopied(true);
                   }}
                 >

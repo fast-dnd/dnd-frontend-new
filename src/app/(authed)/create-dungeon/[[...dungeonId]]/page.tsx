@@ -1,6 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
+import { useEffect, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 import { AiOutlineLeft } from "react-icons/ai";
 
@@ -11,7 +11,8 @@ import MobileNavbar from "@/components/mobile-navbar";
 import ChampionsLocationsWrapper from "./components/champions-locations-wrapper";
 import Final from "./components/final";
 import Initial from "./components/initial";
-import useLoadDungeonData from "./hooks/use-load-dungeon-data";
+import { formStore, initialFormData } from "./stores/form-store";
+import { tagsAttachLabel } from "./utils/tags-utils";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const router = useRouter();
@@ -19,20 +20,40 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const dungeonId = params.dungeonId?.[0];
   const { data: dungeonData, isInitialLoading, isError } = useGetDungeon(dungeonId);
 
-  const dungeonFormStore = useLoadDungeonData({ dungeonId, dungeonData });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const currentStep = formStore.currentStep.use();
+  const dungeonFormData = formStore.dungeonFormData.use();
+
+  console.log(formStore.use());
+
+  if (dungeonFormData._id !== dungeonData?._id) {
+    if (dungeonData) {
+      // editing...
+      formStore.dungeonFormData.set({
+        ...dungeonData,
+        tags: tagsAttachLabel(dungeonData.tags),
+      });
+    } else {
+      // creating...
+      formStore.dungeonFormData.set(initialFormData);
+    }
+  }
+
+  const abortDungeonCreation = () => {
+    formStore.currentStep.set("INITIAL");
+    formStore.dungeonFormData.set(initialFormData);
+    router.push("/home");
+  };
 
   if (isError) return redirect("/home");
 
-  if (isInitialLoading || !dungeonFormStore)
+  if (isInitialLoading || !mounted)
     return <BoxSkeleton title={`${dungeonId ? "EDIT" : "CREATE"} DUNGEON`} />;
-
-  const { dungeonFormData, currentStep, setCurrentStep, resetDungeonFormData } = dungeonFormStore;
-
-  const abortDungeonCreation = () => {
-    router.push("/home");
-    setCurrentStep("INITIAL");
-    resetDungeonFormData();
-  };
 
   return (
     <div className="mt-8 h-full w-full overflow-y-auto lg:mt-0">

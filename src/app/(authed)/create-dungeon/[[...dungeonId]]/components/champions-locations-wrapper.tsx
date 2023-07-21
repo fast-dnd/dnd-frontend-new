@@ -2,23 +2,17 @@ import { useState } from "react";
 import { closestCenter, DndContext, DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useQueryClient } from "@tanstack/react-query";
-import { produce } from "immer";
 import { AiOutlineLeft } from "react-icons/ai";
 
 import { dungeonKey } from "@/services/dungeon-service";
 import { cn } from "@/utils/style-utils";
-import useStore from "@/hooks/use-store";
 import { Button } from "@/components/ui/button";
 
 import useCreateDungeon from "../hooks/use-create-dungeon";
 import useUpdateDungeon from "../hooks/use-update-dungeon";
-import {
-  getNextStep,
-  getPreviousStep,
-  StatusType,
-  stepTitles,
-  useDungeonFormStore,
-} from "../stores/form-store";
+import { formStore } from "../stores/form-store";
+import { getNextStep, getPreviousStep, StatusType, stepTitles } from "../utils/step-utils";
+import { tagsRemoveLabel } from "../utils/tags-utils";
 import Champion from "./champion";
 import FormStepWrapper from "./form-step-wrapper";
 import Location from "./location";
@@ -49,7 +43,8 @@ const ChampionsLocationsWrapper = ({
 
   const queryClient = useQueryClient();
 
-  const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
+  const dungeonFormData = formStore.dungeonFormData.use();
+  const currentStep = formStore.currentStep.use();
 
   const [status, setStatus] = useState<StatusType>("LIST");
   const [editIndex, setEditIndex] = useState(-1);
@@ -57,21 +52,18 @@ const ChampionsLocationsWrapper = ({
   const { mutate: createDungeon, isLoading: isCreating } = useCreateDungeon();
   const { mutate: updateDungeon, isLoading: isUpdating } = useUpdateDungeon();
 
-  if (!dungeonFormStore) return null;
-
-  const { currentStep, setCurrentStep, dungeonFormData, updateDungeonFormData } = dungeonFormStore;
-
   const onEdit = (index: number) => {
     setEditIndex(index);
     setStatus("EDITING");
   };
 
   const onDelete = (index: number) => {
-    updateDungeonFormData(
-      produce(dungeonFormData, (draft) => {
-        draft[dungeonFormField].splice(index, 1);
-      }),
-    );
+    formStore.dungeonFormData[dungeonFormField].set((prev: any[]) => {
+      const newPrev = [...prev];
+      newPrev.splice(index, 1);
+
+      return newPrev;
+    });
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -80,44 +72,42 @@ const ChampionsLocationsWrapper = ({
     if (!over) return;
 
     if (active.id !== over.id) {
-      updateDungeonFormData(
-        produce(dungeonFormData, (draft) => {
-          const oldIndex = draft[dungeonFormField].findIndex(
-            (chmpLoc) => JSON.stringify(chmpLoc) === active.id,
-          );
-          const newIndex = draft[dungeonFormField].findIndex(
-            (chmpLoc) => JSON.stringify(chmpLoc) === over.id,
-          );
-          const [removed] = draft[dungeonFormField].splice(oldIndex, 1);
+      formStore.dungeonFormData[dungeonFormField].set((prev: any[]) => {
+        const newPrev = [...prev];
+        const oldIndex = prev.findIndex((chmpLoc) => JSON.stringify(chmpLoc) === active.id);
+        const newIndex = prev.findIndex((chmpLoc) => JSON.stringify(chmpLoc) === over.id);
+        const [removed] = newPrev.splice(oldIndex, 1);
+        newPrev.splice(newIndex, 0, removed);
 
-          if ("moveMapping" in removed) draft.champions.splice(newIndex, 0, removed);
-          else draft.locations.splice(newIndex, 0, removed);
-        }),
-      );
+        return newPrev;
+      });
     }
   };
 
   const onFinishForm = () => {
+    const dungeonFormDataWithoutTags = {
+      ...dungeonFormData,
+      tags: tagsRemoveLabel(dungeonFormData.tags),
+    };
+
     if (dungeonId) {
-      updateDungeon(dungeonFormData, {
+      updateDungeon(dungeonFormDataWithoutTags, {
         onSuccess: (_data) => {
-          setCurrentStep("FINAL");
+          formStore.currentStep.set("FINAL");
           queryClient.invalidateQueries([dungeonKey, dungeonId]);
         },
       });
     } else {
-      createDungeon(dungeonFormData, {
+      createDungeon(dungeonFormDataWithoutTags, {
         onSuccess: (data) => {
-          setCurrentStep("FINAL");
-          updateDungeonFormData(
-            produce(dungeonFormData, (draft) => {
-              draft.id = data.data._id;
-            }),
-          );
+          formStore.currentStep.set("FINAL");
+          formStore.dungeonFormData.set((prev) => ({ ...prev, _id: data.data._id }));
         },
       });
     }
   };
+
+  console.log(dungeonFormData);
 
   return (
     <div className="h-full w-full lg:flex">
@@ -135,7 +125,7 @@ const ChampionsLocationsWrapper = ({
             <Button
               className="hidden w-fit gap-1 lg:flex"
               variant="ghost"
-              onClick={() => setCurrentStep(getPreviousStep(currentStep))}
+              onClick={() => formStore.currentStep.set(getPreviousStep(currentStep))}
             >
               <AiOutlineLeft className="inline-block" />
               PREVIOUS
@@ -148,7 +138,7 @@ const ChampionsLocationsWrapper = ({
               onClick={
                 locationOrChampion === "Champion"
                   ? onFinishForm
-                  : () => setCurrentStep(getNextStep(currentStep))
+                  : () => formStore.currentStep.set(getNextStep(currentStep))
               }
               variant={locationOrChampion === "Champion" ? "primary" : "outline"}
               disabled={isDisabledNextButton}
@@ -170,10 +160,10 @@ const ChampionsLocationsWrapper = ({
                       )}
                       strategy={verticalListSortingStrategy}
                     >
-                      {dungeonFormData[dungeonFormField].map((loc, i) => (
+                      {dungeonFormData[dungeonFormField].map((chmpLoc, i) => (
                         <SortableItem
                           key={Math.random()}
-                          item={loc}
+                          item={chmpLoc}
                           i={i}
                           onEdit={onEdit}
                           onDelete={onDelete}
@@ -204,7 +194,7 @@ const ChampionsLocationsWrapper = ({
                   <Button
                     className="w-fit gap-1 text-sm"
                     variant="ghost"
-                    onClick={() => setCurrentStep(getPreviousStep(currentStep))}
+                    onClick={() => formStore.currentStep.set(getPreviousStep(currentStep))}
                   >
                     <AiOutlineLeft className="inline-block" />
                     PREVIOUS
@@ -217,7 +207,7 @@ const ChampionsLocationsWrapper = ({
                     onClick={
                       locationOrChampion === "Champion"
                         ? onFinishForm
-                        : () => setCurrentStep(getNextStep(currentStep))
+                        : () => formStore.currentStep.set(getNextStep(currentStep))
                     }
                     variant={locationOrChampion === "Champion" ? "primary" : "outline"}
                     disabled={isDisabledNextButton}

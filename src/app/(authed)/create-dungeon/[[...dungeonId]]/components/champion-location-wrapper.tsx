@@ -1,15 +1,14 @@
 import React from "react";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { produce } from "immer";
 import { FieldErrors, SubmitHandler, useForm, UseFormRegister } from "react-hook-form";
 
-import useStore from "@/hooks/use-store";
 import { Button } from "@/components/ui/button";
 
 import { championSchema, IChampionSchema } from "../schemas/champion-schema";
 import { ILocationSchema, locationSchema } from "../schemas/location-schema";
-import { StatusType, useDungeonFormStore } from "../stores/form-store";
+import { formStore } from "../stores/form-store";
+import { StatusType } from "../utils/step-utils";
 
 export interface IChampionLocationProps {
   status: StatusType;
@@ -39,7 +38,7 @@ const ChampionLocationWrapper = ({
 }: IChampionLocationWrapperProps) => {
   const dungeonFormField = locationOrChampion === "Location" ? "locations" : "champions";
 
-  const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
+  const dungeonFormData = formStore.dungeonFormData.use();
 
   const {
     register,
@@ -49,31 +48,20 @@ const ChampionLocationWrapper = ({
     formState: { errors },
   } = useForm<IChampionSchema | ILocationSchema>({
     resolver: zodResolver(locationOrChampion === "Champion" ? championSchema : locationSchema),
-    values:
-      status === "EDITING"
-        ? dungeonFormStore?.dungeonFormData[dungeonFormField][editIndex]
-        : undefined,
+    values: status === "EDITING" ? dungeonFormData[dungeonFormField][editIndex] : undefined,
   });
 
-  if (!dungeonFormStore) return null;
-
-  const { dungeonFormData, updateDungeonFormData } = dungeonFormStore;
-
   const onSubmit: SubmitHandler<ILocationSchema | IChampionSchema> = (data) => {
+    // TODO: replace this with backend call and then update with the returned id
     if (status === "CREATING") {
-      updateDungeonFormData(
-        produce(dungeonFormData, (draft) => {
-          if ("moveMapping" in data) draft.champions.push(data);
-          else draft.locations.push(data);
-        }),
-      );
+      if ("moveMapping" in data)
+        formStore.dungeonFormData.champions.set((prev) => [...prev, { ...data, _id: "" }]);
+      else formStore.dungeonFormData.locations.set((prev) => [...prev, { ...data, _id: "" }]);
     } else if (status === "EDITING") {
-      updateDungeonFormData(
-        produce(dungeonFormData, (draft) => {
-          if ("moveMapping" in data) draft.champions[editIndex] = data;
-          else draft.locations[editIndex] = data;
-        }),
-      );
+      const _id = formStore.dungeonFormData[dungeonFormField][editIndex]._id.get();
+      if ("moveMapping" in data)
+        formStore.dungeonFormData.champions[editIndex].set({ ...data, _id });
+      else formStore.dungeonFormData.locations[editIndex].set({ ...data, _id });
     }
 
     setStatus("LIST");

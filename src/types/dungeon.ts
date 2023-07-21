@@ -25,6 +25,7 @@ export const championSchema = z.object({
 });
 
 const baseDungeonSchema = z.object({
+  _id: z.string(),
   name: z.string(),
   description: z.string(),
   style: z.string(),
@@ -35,7 +36,6 @@ const baseDungeonSchema = z.object({
 });
 
 export const dungeonSchema = baseDungeonSchema.extend({
-  _id: z.string(),
   locations: z.array(z.string()),
   champions: z.array(z.string()),
 });

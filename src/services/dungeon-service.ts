@@ -1,4 +1,4 @@
-import { dungeonDetailSchema, dungeonsSchema, IDungeonFormData } from "@/types/dungeon";
+import { dungeonDetailSchema, dungeonsSchema, IDungeonDetail } from "@/types/dungeon";
 
 import createApi from "./api-factory";
 
@@ -16,12 +16,12 @@ const getDungeon = async (dungeonId: string) => {
   return await dungeonApi.get(dungeonId).then((res) => dungeonDetailSchema.parse(res.data));
 };
 
-const createDungeon = async (data: IDungeonFormData) => {
-  return await dungeonApi.post("", { ...data, tags: data.tags.map((tag) => tag.value) });
+const createDungeon = async (data: IDungeonDetail) => {
+  return await dungeonApi.post("", data);
 };
 
-const updateDungeon = async (data: IDungeonFormData) => {
-  return await dungeonApi.put("", { ...data, tags: data.tags.map((tag) => tag.value) });
+const updateDungeon = async (data: IDungeonDetail) => {
+  return await dungeonApi.put("", data);
 };
 
 const deleteDungeon = async (dungeonId: string) => {

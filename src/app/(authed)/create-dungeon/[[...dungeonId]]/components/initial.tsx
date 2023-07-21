@@ -6,13 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 import { fileToBase64 } from "@/utils/b64";
-import {
-  DungeonDuration,
-  dungeonDurations,
-  DungeonTag,
-  dungeonTags,
-} from "@/utils/dungeon-options";
-import useStore from "@/hooks/use-store";
+import { DungeonDuration, dungeonDurations, dungeonTags } from "@/utils/dungeon-options";
 import { Button } from "@/components/ui/button";
 import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
@@ -21,12 +15,15 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import UploadImage from "@/components/ui/upload-image";
 
 import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
-import { stepTitles, useDungeonFormStore } from "../stores/form-store";
+import { formStore } from "../stores/form-store";
+import { stepTitles } from "../utils/step-utils";
 import tagsComboboxStyles from "../utils/tags-combobox-styles";
+import { TagsWithLabel } from "../utils/tags-utils";
 import FormStepWrapper from "./form-step-wrapper";
 
 const Initial = ({ dungeonId }: { dungeonId?: string }) => {
-  const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
+  const dungeonFormData = formStore.dungeonFormData.use();
+  const currentStep = formStore.currentStep.use();
 
   const {
     register,
@@ -37,19 +34,15 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
     formState: { errors },
   } = useForm<IInitialSchema>({
     resolver: zodResolver(initialSchema),
-    values: dungeonFormStore?.dungeonFormData,
+    values: dungeonFormData,
   });
 
   const image = watch("image");
   const imageRef = useRef<HTMLInputElement>(null);
 
-  if (!dungeonFormStore) return null;
-
-  const { currentStep, setCurrentStep, dungeonFormData, updateDungeonFormData } = dungeonFormStore;
-
   const onSubmit: SubmitHandler<IInitialSchema> = (data) => {
-    updateDungeonFormData(data);
-    setCurrentStep("LOCATIONS");
+    formStore.dungeonFormData.set((prev) => ({ ...prev, ...data }));
+    formStore.currentStep.set("LOCATIONS");
   };
 
   const addImage = () => {
@@ -58,6 +51,8 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
       setValue("image", (await fileToBase64((e.target as HTMLInputElement).files?.[0])) as string);
     });
   };
+
+  console.log(errors);
 
   return (
     <form className="flex h-full w-full" onSubmit={handleSubmit(onSubmit)}>
@@ -142,13 +137,11 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                       render={({ field }) => {
                         return (
                           <ComboBox
-                            aria-label="Tags"
                             {...field}
+                            aria-label="Tags"
                             animate
                             label="Tags"
-                            onChange={(newValue, _actionMeta) =>
-                              field.onChange(newValue as { value: DungeonTag; label: DungeonTag }[])
-                            }
+                            onChange={(newValue) => field.onChange(newValue as TagsWithLabel)}
                             noOptionsMessage={() => "No tags found"}
                             // isOptionDisabled={(option) => field.value.length >= 3}
                             className="w-full"
