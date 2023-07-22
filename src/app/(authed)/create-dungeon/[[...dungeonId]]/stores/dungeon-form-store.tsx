@@ -18,6 +18,9 @@ export const initialDungeonFormData: IDungeonDetailWithTags = {
   champions: [],
 };
 
+export const getInitialDungeonFormData = () =>
+  JSON.parse(JSON.stringify(initialDungeonFormData)) as IDungeonDetailWithTags;
+
 export type IDungeonFormStore = {
   currentStep: Step;
   dungeonFormData: IDungeonDetailWithTags;
@@ -25,7 +28,7 @@ export type IDungeonFormStore = {
 
 export const dungeonFormStore = observable<IDungeonFormStore>({
   currentStep: "INITIAL",
-  dungeonFormData: { ...initialDungeonFormData },
+  dungeonFormData: getInitialDungeonFormData(),
 });
 
 persistObservable(dungeonFormStore, {

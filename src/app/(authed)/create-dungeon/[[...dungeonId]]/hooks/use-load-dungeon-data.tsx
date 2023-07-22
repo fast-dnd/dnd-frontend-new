@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 
 import { IDungeonDetail } from "@/types/dungeon";
 
-import { dungeonFormStore, initialDungeonFormData } from "../stores/dungeon-form-store";
+import {
+  dungeonFormStore,
+  getInitialDungeonFormData,
+  initialDungeonFormData,
+} from "../stores/dungeon-form-store";
 import { tagsAttachLabel } from "../utils/tags-utils";
 
 interface IUseLoadDungeonDataProps {
@@ -30,7 +34,7 @@ const useLoadDungeonData = ({ dungeonData }: IUseLoadDungeonDataProps) => {
       } else {
         // creating...
         if (JSON.stringify(dungeonFormData) === JSON.stringify(initialDungeonFormData)) {
-          dungeonFormStore.dungeonFormData.set({ ...initialDungeonFormData });
+          dungeonFormStore.dungeonFormData.set(getInitialDungeonFormData());
         }
       }
     }

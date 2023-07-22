@@ -11,7 +11,7 @@ import ChampionsLocationsWrapper from "./components/champions-locations-wrapper"
 import Final from "./components/final";
 import Initial from "./components/initial";
 import useLoadDungeonData from "./hooks/use-load-dungeon-data";
-import { dungeonFormStore, initialDungeonFormData } from "./stores/dungeon-form-store";
+import { dungeonFormStore, getInitialDungeonFormData } from "./stores/dungeon-form-store";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const router = useRouter();
@@ -28,7 +28,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
     setAborting(true);
     dungeonFormStore.set({
       currentStep: "INITIAL",
-      dungeonFormData: { ...initialDungeonFormData },
+      dungeonFormData: getInitialDungeonFormData(),
     });
     router.push("/home");
   };
