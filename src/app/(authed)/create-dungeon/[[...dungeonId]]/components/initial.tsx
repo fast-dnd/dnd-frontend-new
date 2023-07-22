@@ -22,8 +22,7 @@ import { tagsAttachLabel, TagsWithLabel } from "../utils/tags-utils";
 import FormStepWrapper from "./form-step-wrapper";
 
 const Initial = ({ dungeonId }: { dungeonId?: string }) => {
-  const dungeonFormData = dungeonFormStore.dungeonFormData.use();
-  const currentStep = dungeonFormStore.currentStep.use();
+  const { currentStep, dungeonFormData } = dungeonFormStore.use();
 
   const {
     register,

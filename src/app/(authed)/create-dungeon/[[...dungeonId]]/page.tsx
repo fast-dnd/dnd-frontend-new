@@ -19,8 +19,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const dungeonId = params.dungeonId?.[0];
   const { data: dungeonData, isInitialLoading, isError } = useGetDungeon(dungeonId);
 
-  const currentStep = dungeonFormStore.currentStep.use();
-  const dungeonFormData = dungeonFormStore.dungeonFormData.use();
+  const { currentStep, dungeonFormData } = dungeonFormStore.use();
 
   const { isMounted, setAborting } = useLoadDungeonData({ dungeonData });
 

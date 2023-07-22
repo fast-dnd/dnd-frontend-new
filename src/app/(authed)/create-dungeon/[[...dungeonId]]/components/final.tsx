@@ -8,7 +8,7 @@ import { dungeonFormStore } from "../stores/dungeon-form-store";
 import { stepTitles } from "../utils/step-utils";
 
 const Final = () => {
-  const dungeonFormData = dungeonFormStore.dungeonFormData.use();
+  const dungeonId = dungeonFormStore.dungeonFormData._id.use();
 
   const [copied, setCopied] = useCopy();
 
@@ -33,12 +33,12 @@ const Final = () => {
               </p>
               <div className="flex flex-col items-center gap-8 lg:flex-row">
                 <p className="w-full bg-white/5 px-4 py-2 text-center font-medium tracking-widest lg:text-2xl">
-                  {dungeonFormData._id}
+                  {dungeonId}
                 </p>
                 <Button
                   className="w-full px-8 lg:w-fit"
                   onClick={() => {
-                    navigator.clipboard.writeText(dungeonFormData._id ?? "");
+                    navigator.clipboard.writeText(dungeonId ?? "");
                     setCopied(true);
                   }}
                 >

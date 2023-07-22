@@ -38,7 +38,7 @@ const ChampionLocationWrapper = ({
 }: IChampionLocationWrapperProps) => {
   const dungeonFormField = locationOrChampion === "Location" ? "locations" : "champions";
 
-  const dungeonFormData = dungeonFormStore.dungeonFormData.use();
+  const chmpLocData = dungeonFormStore.dungeonFormData[dungeonFormField][editIndex].use();
 
   const {
     register,
@@ -48,7 +48,7 @@ const ChampionLocationWrapper = ({
     formState: { errors },
   } = useForm<IChampionSchema | ILocationSchema>({
     resolver: zodResolver(locationOrChampion === "Champion" ? championSchema : locationSchema),
-    values: status === "EDITING" ? dungeonFormData[dungeonFormField][editIndex] : undefined,
+    values: status === "EDITING" ? chmpLocData : undefined,
   });
 
   const onSubmit: SubmitHandler<ILocationSchema | IChampionSchema> = (data) => {
@@ -59,7 +59,7 @@ const ChampionLocationWrapper = ({
       else
         dungeonFormStore.dungeonFormData.locations.set((prev) => [...prev, { ...data, _id: "" }]);
     } else if (status === "EDITING") {
-      const _id = dungeonFormStore.dungeonFormData[dungeonFormField][editIndex]._id.get();
+      const _id = chmpLocData._id;
       if ("moveMapping" in data)
         dungeonFormStore.dungeonFormData.champions[editIndex].set({ ...data, _id });
       else dungeonFormStore.dungeonFormData.locations[editIndex].set({ ...data, _id });

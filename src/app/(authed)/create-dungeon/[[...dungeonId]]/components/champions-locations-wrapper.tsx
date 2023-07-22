@@ -46,8 +46,11 @@ const ChampionsLocationsWrapper = ({
 
   const queryClient = useQueryClient();
 
-  const dungeonFormData = dungeonFormStore.dungeonFormData.use();
-  const currentStep = dungeonFormStore.currentStep.use();
+  const { currentStep, dungeonFormData } = dungeonFormStore.use();
+
+  const chmpLocObservable = dungeonFormStore.dungeonFormData[
+    dungeonFormField
+  ] as ObservableChampionLocation;
 
   const [status, setStatus] = useState<StatusType>("LIST");
   const [editIndex, setEditIndex] = useState(-1);
@@ -61,14 +64,12 @@ const ChampionsLocationsWrapper = ({
   };
 
   const onDelete = (index: number) => {
-    (dungeonFormStore.dungeonFormData[dungeonFormField] as ObservableChampionLocation).set(
-      (prev) => {
-        const newPrev = [...prev];
-        newPrev.splice(index, 1);
+    chmpLocObservable.set((prev) => {
+      const newPrev = [...prev];
+      newPrev.splice(index, 1);
 
-        return newPrev;
-      },
-    );
+      return newPrev;
+    });
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -77,17 +78,15 @@ const ChampionsLocationsWrapper = ({
     if (!over) return;
 
     if (active.id !== over.id) {
-      (dungeonFormStore.dungeonFormData[dungeonFormField] as ObservableChampionLocation).set(
-        (prev) => {
-          const newPrev = [...prev];
-          const oldIndex = prev.findIndex((chmpLoc) => JSON.stringify(chmpLoc) === active.id);
-          const newIndex = prev.findIndex((chmpLoc) => JSON.stringify(chmpLoc) === over.id);
-          const [removed] = newPrev.splice(oldIndex, 1);
-          newPrev.splice(newIndex, 0, removed);
+      chmpLocObservable.set((prev) => {
+        const newPrev = [...prev];
+        const oldIndex = prev.findIndex((chmpLoc) => JSON.stringify(chmpLoc) === active.id);
+        const newIndex = prev.findIndex((chmpLoc) => JSON.stringify(chmpLoc) === over.id);
+        const [removed] = newPrev.splice(oldIndex, 1);
+        newPrev.splice(newIndex, 0, removed);
 
-          return newPrev;
-        },
-      );
+        return newPrev;
+      });
     }
   };
 
