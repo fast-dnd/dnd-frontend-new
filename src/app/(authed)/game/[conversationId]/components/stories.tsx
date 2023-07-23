@@ -21,7 +21,6 @@ const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
 
   useEffect(() => {
     if (roomData) {
-      console.log(roomData);
       if (lastStory) {
         setStories([...roomData.chatGptResponses, lastStory]);
       } else if (roomData.chatGptResponses.length >= roomData.currentRound + 1) {
