@@ -1,17 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 
 import { IDungeonDetail } from "@/types/dungeon";
-import { IRoomData } from "@/types/room";
-import Modal from "@/components/ui/modal";
+import { IGameRoomData } from "@/types/game";
 import SkeletonIcon from "@/components/icons/skeleton-icon";
 
+import ImageModal from "./image-modal";
 import StyledAudio from "./styled-audio";
 
 export interface StoriesProps {
-  roomData: IRoomData;
+  roomData: IGameRoomData;
   dungeonData: IDungeonDetail;
   lastStory?: string;
 }
@@ -19,10 +18,10 @@ export interface StoriesProps {
 const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
   const autoBottomScrollDiv = useRef<HTMLDivElement>(null);
   const [stories, setStories] = useState<string[]>([]);
-  const [imageModal, setImageModal] = useState<string>("");
 
   useEffect(() => {
     if (roomData) {
+      console.log(roomData);
       if (lastStory) {
         setStories([...roomData.chatGptResponses, lastStory]);
       } else if (roomData.chatGptResponses.length >= roomData.currentRound + 1) {
@@ -54,15 +53,14 @@ const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
             {roomData.generateImages && i % 2 === 0 && (
               <div className="mb-4 flex aspect-square w-full shrink-0 justify-center lg:float-left lg:mr-6 lg:inline-block lg:h-72 lg:w-72">
                 {roomData.generatedImages[i] && roomData.generatedImages[i].length > 0 ? (
-                  <Image
-                    src={roomData.generatedImages[i] || "/images/default-dungeon.png"}
-                    alt="dungeon"
-                    height={2048}
-                    width={2048}
-                    className="w-full"
-                    draggable={false}
-                    onClick={() => setImageModal(roomData.generatedImages[i])}
-                  />
+                  <>
+                    <ImageModal image={roomData.generatedImages[i]} className="hidden lg:block" />
+                    <ImageModal
+                      image={roomData.generatedImages[i]}
+                      isMobile={true}
+                      className="lg:hidden"
+                    />
+                  </>
                 ) : (
                   <div className="flex h-full w-full animate-pulse items-center justify-center rounded bg-gray-600">
                     <SkeletonIcon className="h-24 w-24 text-gray-200" />
@@ -83,21 +81,6 @@ const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
         </div>
       ))}
       <div ref={autoBottomScrollDiv} />
-
-      <Modal
-        className="outline-none"
-        tabIndex={0}
-        open={Boolean(imageModal)}
-        onClose={() => setImageModal("")}
-      >
-        <Image
-          src={imageModal}
-          alt="image-modal"
-          className="h-full w-full object-cover"
-          height={280}
-          width={280}
-        />
-      </Modal>
     </div>
   );
 };

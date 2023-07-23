@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-import { IPlayer } from "@/types/game";
+import { IGamePlayer } from "@/types/game";
 import useGetDungeon from "@/hooks/use-get-dungeon";
-import useGetRoomData from "@/hooks/use-get-room-data";
+import useGetGameData from "@/hooks/use-get-game-data";
 import { Box } from "@/components/ui/box";
 import Spinner from "@/components/ui/spinner";
 
@@ -18,13 +18,13 @@ import Stories from "./stories";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
-  const { data: roomData } = useGetRoomData(conversationId);
+  const { data: roomData } = useGetGameData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
   const [gaming, setGaming] = useState(true);
   const [gameOverModal, setGameOverModal] = useState(false);
   const [result, setResult] = useState<"GAMING" | "WON" | "LOST">("GAMING");
   const [dying, setDying] = useState(false);
-  const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
+  const [currentPlayer, setCurrentPlayer] = useState<IGamePlayer>();
 
   const {
     setDisplayHowToPlay,

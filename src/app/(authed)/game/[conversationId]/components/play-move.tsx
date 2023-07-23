@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi";
 
-import { IPlayer, IPlayMove, IPlayMoveResponse } from "@/types/game";
-import { IRoomData } from "@/types/room";
+import { IGamePlayer, IGameRoomData, IPlayMove, IPlayMoveResponse } from "@/types/game";
 import { cn } from "@/utils/style-utils";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -18,9 +17,9 @@ import Die from "./die";
 import MoveInput from "./move-input";
 
 export interface PlayMoveProps {
-  roomData: IRoomData;
+  roomData: IGameRoomData;
   conversationId: string;
-  currentPlayer: IPlayer;
+  currentPlayer: IGamePlayer;
   loadingText: boolean;
 }
 
@@ -112,9 +111,9 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
       playMove(moveToPlay, {
         onSuccess: (res) => {
           setFreeWill("");
-          setRollInfo(res.data);
+          setRollInfo(res);
           setTimeout(() => setRollButtonState("ROLLED"), 1500);
-          setTimeout(() => setDice(randomDice(res.data.diceAfterBonus)), 250);
+          setTimeout(() => setDice(randomDice(res.diceAfterBonus)), 250);
         },
         onError: () => {
           setRollButtonState("CANPLAY");

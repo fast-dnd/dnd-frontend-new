@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-import { championSchema } from "./dungeon";
+import { championSchema, locationSchema } from "./dungeon";
+import { playerSchema, roomDataSchema } from "./room";
 
 export const defaultMoves = [
   "discover_health",
@@ -17,15 +18,12 @@ export const questionSchema = z.object({
   bob3Answer: z.string().nullish(),
 });
 
-export const playerSchema = z.object({
-  accountId: z.string(),
-  avatarId: z.string(),
-  avatarImageUrl: z.string(),
-  name: z.string(),
-  champion: championSchema.extend({ label: z.string().optional() }).nullish(),
+export const gamePlayerSchema = playerSchema.extend({
+  champion: championSchema.extend({ label: z.string().optional() }),
   health: z.number(),
   mana: z.number(),
   gold: z.number(),
+  bonusForNextRound: z.number(),
 });
 
 export const defaultMoveSchema = z.enum(defaultMoves);
@@ -35,7 +33,7 @@ export const moveTypeSchema = z.enum([...defaultMoves, "no_input", "free_will"])
 export const moveSchema = z.object({
   playerAccountId: z.string(),
   action: z.string(),
-  aiDescription: z.string(),
+  aiDescription: z.string().nullable(),
   aiRating: z.number(),
   dice: z.number(),
   mana: z.number(),
@@ -44,15 +42,30 @@ export const moveSchema = z.object({
   playerName: z.string(),
 });
 
+export const gameRoomDataSchema = roomDataSchema.extend({
+  playerState: z.array(gamePlayerSchema),
+  moves: z.array(z.array(moveSchema)),
+  roundEndsAt: z.string().nullable(),
+  queuedMoves: z.array(moveSchema),
+  currentRound: z.number(),
+  chatGptResponses: z.array(z.string()),
+  generatedImages: z.array(z.string().nullable()),
+  generatedAudio: z.array(z.string()),
+  location: locationSchema,
+  questions3History: z.array(questionSchema.partial()),
+});
+
 export type IQuestion = z.infer<typeof questionSchema>;
 
 export type DefaultMove = z.infer<typeof defaultMoveSchema>;
 
 export type MoveType = z.infer<typeof moveTypeSchema>;
 
-export type IPlayer = z.infer<typeof playerSchema>;
-
 export type IMove = z.infer<typeof moveSchema>;
+
+export type IGamePlayer = z.infer<typeof gamePlayerSchema>;
+
+export type IGameRoomData = z.infer<typeof gameRoomDataSchema>;
 
 export interface IPlayMove {
   conversationId: string;
@@ -62,16 +75,20 @@ export interface IPlayMove {
   message?: string;
 }
 
-export interface IPlayMoveResponse {
-  dice: number;
-  diceAfterBonus: number;
-  diceBreakdown: {
-    aiDiceBonus: number;
-    bonusApplied: number;
-    dice: number;
-    mana: number;
-  };
-}
+export const diceBreakdownSchema = z.object({
+  aiDiceBonus: z.number(),
+  bonusApplied: z.number(),
+  dice: z.number(),
+  mana: z.number(),
+});
+
+export const playMoveResponseSchema = z.object({
+  dice: z.number(),
+  diceAfterBonus: z.number(),
+  diceBreakdown: diceBreakdownSchema,
+});
+
+export type IPlayMoveResponse = z.infer<typeof playMoveResponseSchema>;
 
 export interface IPlayerMove {
   accountId: string;
