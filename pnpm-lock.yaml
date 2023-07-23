@@ -77,6 +77,9 @@ dependencies:
   immer:
     specifier: ^10.0.2
     version: 10.0.2
+  lucide-react:
+    specifier: ^0.263.0
+    version: 0.263.0(react@18.2.0)
   next:
     specifier: 13.4.5
     version: 13.4.5(@babel/core@7.22.8)(react-dom@18.2.0)(react@18.2.0)
@@ -3373,6 +3376,14 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
+
+  /lucide-react@0.263.0(react@18.2.0):
+    resolution: {integrity: sha512-F+rHswbbI1xuDZ/OzofiJZJVlBPOIYVVST705cPdRLImJ5aOJNXYaFBPNo3qdUV0iEG/4nZeiUtLSHO2qU2ISw==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /memoize-one@6.0.0:
     resolution: {integrity: sha512-rkpe71W0N0c0Xz6QD0eJETuWAJGnJ9afsl1srmwPrI+yBCkge5EycXXbYRyvL29zZVUWQCY7InPRCv3GDXuZNw==}
