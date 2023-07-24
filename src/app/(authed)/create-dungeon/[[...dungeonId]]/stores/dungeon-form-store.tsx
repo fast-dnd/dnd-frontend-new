@@ -2,6 +2,8 @@ import { observable } from "@legendapp/state";
 import { persistObservable } from "@legendapp/state/persist";
 import { ObservablePersistLocalStorage } from "@legendapp/state/persist-plugins/local-storage";
 
+import { deepClone } from "@/utils/clone";
+
 import { Step } from "../utils/step-utils";
 import { IDungeonDetailWithTags } from "../utils/tags-utils";
 
@@ -18,8 +20,7 @@ export const initialDungeonFormData: IDungeonDetailWithTags = {
   champions: [],
 };
 
-export const getInitialDungeonFormData = () =>
-  JSON.parse(JSON.stringify(initialDungeonFormData)) as IDungeonDetailWithTags;
+export const getInitialDungeonFormData = () => deepClone(initialDungeonFormData);
 
 export type IDungeonFormStore = {
   currentStep: Step;
