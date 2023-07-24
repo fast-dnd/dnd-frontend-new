@@ -1,40 +1,28 @@
 import Image from "next/image";
 
-import { cn } from "@/utils/style-utils";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
-const ImageModal = ({
-  image,
-  isMobile,
-  className,
-}: {
-  image: string;
-  isMobile?: boolean;
-  className?: string;
-}) => {
+const ImageModal = ({ image }: { image: string }) => {
   return (
     <Dialog>
-      {isMobile ? (
+      <Image
+        src={image || "/images/default-dungeon.png"}
+        alt="dungeon"
+        height={2048}
+        width={2048}
+        className="w-full lg:hidden"
+        draggable={false}
+      />
+      <DialogTrigger className="hidden lg:block">
         <Image
           src={image || "/images/default-dungeon.png"}
           alt="dungeon"
           height={2048}
           width={2048}
-          className={cn("w-full", className)}
+          className="w-full"
           draggable={false}
         />
-      ) : (
-        <DialogTrigger>
-          <Image
-            src={image || "/images/default-dungeon.png"}
-            alt="dungeon"
-            height={2048}
-            width={2048}
-            className={cn("w-full", className)}
-            draggable={false}
-          />
-        </DialogTrigger>
-      )}
+      </DialogTrigger>
       <DialogContent>
         <Image
           src={image}

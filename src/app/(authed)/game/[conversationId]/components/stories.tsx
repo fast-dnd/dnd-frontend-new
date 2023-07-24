@@ -52,14 +52,7 @@ const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
             {roomData.generateImages && i % 2 === 0 && (
               <div className="mb-4 flex aspect-square w-full shrink-0 justify-center lg:float-left lg:mr-6 lg:inline-block lg:h-72 lg:w-72">
                 {roomData.generatedImages[i] && roomData.generatedImages[i].length > 0 ? (
-                  <>
-                    <ImageModal image={roomData.generatedImages[i]} className="hidden lg:block" />
-                    <ImageModal
-                      image={roomData.generatedImages[i]}
-                      isMobile={true}
-                      className="lg:hidden"
-                    />
-                  </>
+                  <ImageModal image={roomData.generatedImages[i]} />
                 ) : (
                   <div className="flex h-full w-full animate-pulse items-center justify-center rounded bg-gray-600">
                     <SkeletonIcon className="h-24 w-24 text-gray-200" />
