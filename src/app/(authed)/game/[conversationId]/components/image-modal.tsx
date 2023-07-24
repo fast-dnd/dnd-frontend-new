@@ -40,8 +40,8 @@ const ImageModal = ({
           src={image}
           alt="image-modal"
           className="h-screen w-full object-cover"
-          height={560}
-          width={560}
+          height={512}
+          width={512}
           quality={100}
         />
       </DialogContent>

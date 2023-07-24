@@ -14,7 +14,7 @@ import Spinner from "@/components/ui/spinner";
 
 import useAskQuestion from "../hooks/use-ask-question";
 import useGeneralSocket from "../hooks/use-general-socket";
-import { useGameStore } from "../stores/game-store";
+import { gameStore } from "../stores/game-store";
 import MoveList from "./move-list";
 import Player from "./player";
 import Question from "./question";
@@ -27,7 +27,7 @@ const General = (props: { conversationId: string }) => {
   const [question, setQuestion] = useState("");
   const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =
     useGeneralSocket(conversationId);
-  const { changes } = useGameStore((state) => state);
+  const { changes } = gameStore.use();
   const { mutate: askQuestion } = useAskQuestion();
   const [moveHistory, setMoveHistory] = useState<IMove[][]>([]);
   const [questionHistory, setQuestionHistory] = useState<Partial<IQuestion>[]>([]);

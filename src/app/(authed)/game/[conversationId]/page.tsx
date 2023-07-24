@@ -11,26 +11,23 @@ import MobileNavbar from "@/components/mobile-navbar";
 import Feedback from "./components/feedback";
 import Gameplay from "./components/gameplay";
 import General from "./components/general";
-import { useGameStore } from "./stores/game-store";
+import { gameStore } from "./stores/game-store";
 
 const Game = ({ params }: { params: { conversationId: string } }) => {
   const conversationId = params.conversationId;
   const [openedGameplay, setOpenedGameplay] = useState(true);
 
-  const {
-    displayHowToPlay,
-    setDisplayHowToPlay,
-    displayFeedback,
-    setDisplayFeedback,
-    setHomeModal,
-    changes,
-  } = useGameStore((state) => state);
+  const { displayHowToPlay, displayFeedback, changes } = gameStore.use();
 
-  if (displayFeedback) return <Feedback onHideFeedback={() => setDisplayFeedback(false)} />;
+  if (displayFeedback)
+    return <Feedback onHideFeedback={() => gameStore.displayFeedback.set(false)} />;
 
   if (displayHowToPlay)
     return (
-      <HowToPlay onHideHowToPlay={() => setDisplayHowToPlay(false)} hideText={"back to the game"} />
+      <HowToPlay
+        onHideHowToPlay={() => gameStore.displayHowToPlay.set(false)}
+        hideText={"back to the game"}
+      />
     );
   return (
     <div className="flex h-full min-h-0 flex-col gap-5 py-8 lg:pb-12">
@@ -61,13 +58,13 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
         )}
       </div>
       <MobileNavbar
-        goBackAction={() => setHomeModal(true)}
+        goBackAction={() => gameStore.homeModal.set(true)}
         goBackText="HOME"
         href=""
         howTo
-        onClickHowTo={() => setDisplayHowToPlay(true)}
+        onClickHowTo={() => gameStore.displayHowToPlay.set(true)}
         feedback
-        onClickFeedback={() => setDisplayFeedback(true)}
+        onClickFeedback={() => gameStore.displayFeedback.set(true)}
       />
       <div className="px-5 lg:hidden">
         <Button
