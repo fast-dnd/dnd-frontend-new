@@ -27,7 +27,7 @@ const General = (props: { conversationId: string }) => {
   const [question, setQuestion] = useState("");
   const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =
     useGeneralSocket(conversationId);
-  const { changes } = gameStore.use();
+  const changes = gameStore.changes.use();
   const { mutate: askQuestion } = useAskQuestion();
   const [moveHistory, setMoveHistory] = useState<IMove[][]>([]);
   const [questionHistory, setQuestionHistory] = useState<Partial<IQuestion>[]>([]);

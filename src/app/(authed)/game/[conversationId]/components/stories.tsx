@@ -56,8 +56,8 @@ const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
                 <div className="mb-4 flex aspect-square w-full shrink-0 justify-center lg:float-left lg:mr-6 lg:inline-block lg:h-72 lg:w-72">
                   {generatedImage && generatedImage.length > 0 ? (
                     <>
-                      <ImageModal image={generatedImage} className="hidden lg:block" />
-                      <ImageModal image={generatedImage} isMobile={true} className="lg:hidden" />
+                      <ImageModal image={generatedImage} />
+                      <ImageModal image={generatedImage} />
                     </>
                   ) : (
                     <div className="flex h-full w-full animate-pulse items-center justify-center rounded bg-gray-600">

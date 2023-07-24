@@ -17,7 +17,9 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
   const conversationId = params.conversationId;
   const [openedGameplay, setOpenedGameplay] = useState(true);
 
-  const { displayHowToPlay, displayFeedback, changes } = gameStore.use();
+  const displayHowToPlay = gameStore.displayHowToPlay.use();
+  const displayFeedback = gameStore.displayFeedback.use();
+  const changes = gameStore.changes.use();
 
   if (displayFeedback)
     return <Feedback onHideFeedback={() => gameStore.displayFeedback.set(false)} />;
