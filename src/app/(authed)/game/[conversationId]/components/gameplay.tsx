@@ -26,7 +26,8 @@ const Gameplay = (props: { conversationId: string }) => {
   const [dying, setDying] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState<IGamePlayer>();
 
-  const { homeModal, diedModal } = gameStore.use();
+  const homeModal = gameStore.homeModal.use();
+  const diedModal = gameStore.diedModal.use();
 
   const { lastStory, loadingText } = useGameplaySocket(conversationId);
 
