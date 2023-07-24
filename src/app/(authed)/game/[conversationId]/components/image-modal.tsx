@@ -13,14 +13,14 @@ const ImageModal = ({ image }: { image: string }) => {
       alt="dungeon"
       height={512}
       width={512}
-      className={cn("w-full", isModal && "p-2")}
+      className={cn("w-full", isModal && "w-[90vh] p-2")}
       draggable={false}
     />
   );
 
   return (
     <Dialog>
-      <DialogTrigger disabled={isMobileTablet} className="h-fit w-fit bg-red-500">
+      <DialogTrigger disabled={isMobileTablet} className="w-full">
         <DungeonImage />
       </DialogTrigger>
       <DialogContent showCloseIcon>
