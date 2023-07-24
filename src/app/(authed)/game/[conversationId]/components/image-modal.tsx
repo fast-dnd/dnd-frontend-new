@@ -1,37 +1,30 @@
 import Image from "next/image";
 
+import { cn } from "@/utils/style-utils";
+import useMediaQuery from "@/hooks/use-media-query";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 const ImageModal = ({ image }: { image: string }) => {
+  const isMobileTablet = useMediaQuery("(max-width: 1024px)");
+
+  const DungeonImage = ({ isModal }: { isModal?: boolean }) => (
+    <Image
+      src={image}
+      alt="dungeon"
+      height={512}
+      width={512}
+      className={cn("w-full", isModal && "p-2")}
+      draggable={false}
+    />
+  );
+
   return (
     <Dialog>
-      <Image
-        src={image || "/images/default-dungeon.png"}
-        alt="dungeon"
-        height={2048}
-        width={2048}
-        className="w-full lg:hidden"
-        draggable={false}
-      />
-      <DialogTrigger className="hidden lg:block">
-        <Image
-          src={image || "/images/default-dungeon.png"}
-          alt="dungeon"
-          height={2048}
-          width={2048}
-          className="w-full"
-          draggable={false}
-        />
+      <DialogTrigger disabled={isMobileTablet} className="h-fit w-fit bg-red-500">
+        <DungeonImage />
       </DialogTrigger>
-      <DialogContent>
-        <Image
-          src={image}
-          alt="image-modal"
-          className="h-screen w-full object-cover"
-          height={512}
-          width={512}
-          quality={100}
-        />
+      <DialogContent showCloseIcon>
+        <DungeonImage isModal />
       </DialogContent>
     </Dialog>
   );
