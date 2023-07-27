@@ -9,9 +9,11 @@ import { IGeneralSocketEvent } from "../types/events";
 
 const useGeneralSocket = (conversationId: string) => {
   const queryClient = useQueryClient();
+
   const [canAsk, setCanAsk] = useState(true);
   const [questionAsked, setQuestionAsked] = useState<Partial<IQuestion>>();
   const [asking, setAsking] = useState(false);
+
   useEffect(() => {
     const onEvent = (event: IGeneralSocketEvent) => {
       switch (event.event) {
@@ -45,6 +47,7 @@ const useGeneralSocket = (conversationId: string) => {
       }
     };
     socketIO.on(conversationId, onEvent);
+
     return () => {
       socketIO.off(conversationId, onEvent);
     };

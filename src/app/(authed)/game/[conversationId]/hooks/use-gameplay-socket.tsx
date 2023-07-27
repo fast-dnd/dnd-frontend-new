@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
+import { gameRoomDataSchema } from "@/types/game";
 import { gameKey } from "@/services/game-service";
 import { socketIO } from "@/lib/socket";
 
@@ -19,7 +20,12 @@ const useGameplaySocket = (conversationId: string) => {
           setLoadingText(true);
           break;
         case "REQUEST_SENT_TO_DM":
-          queryClient.setQueryData([gameKey, conversationId], event.data);
+          console.log(event.data);
+          if (event.data)
+            queryClient.setQueryData(
+              [gameKey, conversationId],
+              gameRoomDataSchema.parse(event.data),
+            );
           setLoadingText(true);
           break;
         case "ROUND_STORY":
@@ -32,6 +38,7 @@ const useGameplaySocket = (conversationId: string) => {
       }
     };
     socketIO.on(conversationId, onEvent);
+
     return () => {
       socketIO.off(conversationId, onEvent);
     };
