@@ -1,9 +1,9 @@
 import { AiFillSound, AiFillStar } from "react-icons/ai";
 import { BiImages } from "react-icons/bi";
 
-import { IDungeon } from "@/types/dungeon";
+import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomData } from "@/types/room";
-import { DungeonDuration, dungeonDuration } from "@/utils/dungeon-options";
+import { DungeonDuration, dungeonDurations } from "@/utils/dungeon-options";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -31,16 +31,19 @@ const UpdateRoom = ({
 }: {
   conversationId: string;
   roomData: IRoomData;
-  dungeonData: IDungeon;
+  dungeonData: IDungeonDetail;
 }) => {
   const { duration, setDuration } = usePlayerInfo(roomData);
 
   const { gameStarting } = useRoomSocket(conversationId);
 
+  const isAdmin = localStorage.getItem("accountId") === roomData.playerState[0].accountId;
+
   const { setGenerateImages, setGenerateAudio } = useOnRoomChange({
     conversationId,
     duration,
     roomData,
+    isAdmin,
   });
 
   const { mutate: startGame, isLoading: isGameStarting } = useStartGame();
@@ -62,8 +65,6 @@ const UpdateRoom = ({
 
   const canBegin = roomData.playerState.every((player) => player.champion) ?? false;
 
-  const isAdmin = localStorage.getItem("accountId") === roomData.playerState[0].accountId;
-
   return (
     <>
       <ToggleGroup
@@ -74,7 +75,7 @@ const UpdateRoom = ({
         value={roomData.responseDetailsDepth}
         disabled={!isAdmin}
       >
-        {dungeonDuration.map((duration) => (
+        {dungeonDurations.map((duration) => (
           <ToggleGroupItem
             key={duration.value}
             value={duration.value}

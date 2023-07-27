@@ -4,7 +4,7 @@ import { HiSparkles } from "react-icons/hi";
 import { RiCopperCoinFill } from "react-icons/ri";
 import { VscHeartFilled } from "react-icons/vsc";
 
-import { IPlayer } from "@/types/game";
+import { IGamePlayer } from "@/types/game";
 import { cn } from "@/utils/style-utils";
 import useGetAvatar from "@/hooks/use-get-avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -12,7 +12,11 @@ import SkullIcon from "@/components/icons/skull-icon";
 
 import { PlayerChanges } from "../stores/game-store";
 
-const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: PlayerChanges }) => {
+const Player = (props: {
+  player: IGamePlayer;
+  currentPlayer?: boolean;
+  changes?: PlayerChanges;
+}) => {
   const { player, currentPlayer, changes } = props;
 
   const { data: avatarData } = useGetAvatar(player.avatarId);

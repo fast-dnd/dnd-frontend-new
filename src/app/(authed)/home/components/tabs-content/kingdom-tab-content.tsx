@@ -2,7 +2,7 @@ import { cn } from "@/utils/style-utils";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 
-import { HomeTabType } from "../../types/home";
+import { HomeTabType } from "../../stores/tab-store";
 import AddDungeon from "../add-dungeon";
 import Avatars from "../avatars";
 import KingdomDungeons from "../kingdom-dungeons";

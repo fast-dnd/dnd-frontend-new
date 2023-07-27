@@ -9,16 +9,22 @@ interface IUseOnRoomChangeProps {
   conversationId: string;
   duration: DungeonDuration | undefined;
   roomData: IRoomData;
+  isAdmin: boolean;
 }
 
-const useOnRoomChange = ({ conversationId, duration, roomData }: IUseOnRoomChangeProps) => {
+const useOnRoomChange = ({
+  conversationId,
+  duration,
+  roomData,
+  isAdmin,
+}: IUseOnRoomChangeProps) => {
   const [generateImages, setGenerateImages] = useState<boolean>();
   const [generateAudio, setGenerateAudio] = useState<boolean>();
 
   const { mutate: updateRoom } = useUpdateRoom(conversationId);
 
   useEffect(() => {
-    if (duration || generateImages || generateAudio) {
+    if (isAdmin && (duration || generateImages || generateAudio)) {
       updateRoom({
         conversationId,
         responseDetailsDepth: duration || roomData?.responseDetailsDepth,

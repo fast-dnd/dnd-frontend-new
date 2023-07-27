@@ -16,7 +16,7 @@ export const useGetRecommendedDungeons = (enabled: boolean) => {
 export const useGetMyDungeons = (enabled: boolean) => {
   return useQuery({
     queryKey: [dungeonKey, "myDungeons"],
-    queryFn: dungeonService.getDungeons,
+    queryFn: dungeonService.getMyDungeons,
     enabled,
   });
 };

@@ -1,24 +1,71 @@
-import { IChampion } from "./dungeon";
+import { z } from "zod";
 
-export interface IQuestion {
-  playerName: string;
-  playerChampion: string;
-  playerAccountId: string;
-  question: string;
-  bob3Answer?: string;
-}
+import { championSchema, locationSchema } from "./dungeon";
+import { playerSchema, roomDataSchema } from "./room";
 
-export interface IMove {
-  playerAccountId: string;
-  action: string;
-  aiDescription: string;
-  aiRating: number;
-  dice: number;
-  mana: number;
-  moveType: MoveType;
-  playerChampion: string;
-  playerName: string;
-}
+export const defaultMoves = [
+  "discover_health",
+  "discover_mana",
+  "conversation_with_team",
+  "rest",
+] as const;
+
+export const questionSchema = z.object({
+  playerName: z.string(),
+  playerChampion: z.string(),
+  playerAccountId: z.string(),
+  question: z.string(),
+  bob3Answer: z.string().nullish(),
+});
+
+export const gamePlayerSchema = playerSchema.extend({
+  champion: championSchema.extend({ label: z.string().optional() }),
+  health: z.number(),
+  mana: z.number(),
+  gold: z.number(),
+  bonusForNextRound: z.number(),
+});
+
+export const defaultMoveSchema = z.enum(defaultMoves);
+
+export const moveTypeSchema = z.enum([...defaultMoves, "no_input", "free_will"]);
+
+export const moveSchema = z.object({
+  playerAccountId: z.string(),
+  action: z.string(),
+  aiDescription: z.string().nullable(),
+  aiRating: z.number(),
+  dice: z.number(),
+  mana: z.number(),
+  moveType: moveTypeSchema,
+  playerChampion: z.string(),
+  playerName: z.string(),
+});
+
+export const gameRoomDataSchema = roomDataSchema.extend({
+  playerState: z.array(gamePlayerSchema),
+  moves: z.array(z.array(moveSchema)),
+  roundEndsAt: z.string().nullable(),
+  queuedMoves: z.array(moveSchema),
+  currentRound: z.number(),
+  chatGptResponses: z.array(z.string()),
+  generatedImages: z.array(z.string().nullable()),
+  generatedAudio: z.array(z.string()),
+  location: locationSchema,
+  questions3History: z.array(questionSchema.partial()),
+});
+
+export type IQuestion = z.infer<typeof questionSchema>;
+
+export type DefaultMove = z.infer<typeof defaultMoveSchema>;
+
+export type MoveType = z.infer<typeof moveTypeSchema>;
+
+export type IMove = z.infer<typeof moveSchema>;
+
+export type IGamePlayer = z.infer<typeof gamePlayerSchema>;
+
+export type IGameRoomData = z.infer<typeof gameRoomDataSchema>;
 
 export interface IPlayMove {
   conversationId: string;
@@ -28,16 +75,20 @@ export interface IPlayMove {
   message?: string;
 }
 
-export interface IPlayMoveResponse {
-  dice: number;
-  diceAfterBonus: number;
-  diceBreakdown: {
-    aiDiceBonus: number;
-    bonusApplied: number;
-    dice: number;
-    mana: number;
-  };
-}
+export const diceBreakdownSchema = z.object({
+  aiDiceBonus: z.number(),
+  bonusApplied: z.number(),
+  dice: z.number(),
+  mana: z.number(),
+});
+
+export const playMoveResponseSchema = z.object({
+  dice: z.number(),
+  diceAfterBonus: z.number(),
+  diceBreakdown: diceBreakdownSchema,
+});
+
+export type IPlayMoveResponse = z.infer<typeof playMoveResponseSchema>;
 
 export interface IPlayerMove {
   accountId: string;
@@ -47,26 +98,3 @@ export interface IPlayerMove {
   aiRating: number;
   aiDescriptionForRating: string;
 }
-
-export interface IPlayer {
-  name: string;
-  accountId: string;
-  avatarId: string;
-  champion: IChampion;
-  health: number;
-  mana: number;
-  gold: number;
-  bonusForNextRound: number;
-  played?: boolean;
-  avatarImageUrl: string;
-}
-
-export const defaultMoves = [
-  "discover_health",
-  "discover_mana",
-  "conversation_with_team",
-  "rest",
-] as const;
-export type DefaultMove = (typeof defaultMoves)[number];
-
-export type MoveType = "no_input" | "free_will" | DefaultMove;

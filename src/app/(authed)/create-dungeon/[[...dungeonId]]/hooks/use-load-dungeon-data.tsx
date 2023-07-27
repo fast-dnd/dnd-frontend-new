@@ -1,56 +1,46 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
-import { IDungeon } from "@/types/dungeon";
-import useStore from "@/hooks/use-store";
+import { IDungeonDetail } from "@/types/dungeon";
 
-import { initialDungeonFormData, useDungeonFormStore } from "../stores/form-store";
+import {
+  dungeonFormStore,
+  getInitialDungeonFormData,
+  initialDungeonFormData,
+} from "../stores/dungeon-form-store";
+import { tagsAttachLabel } from "../utils/tags-utils";
 
 interface IUseLoadDungeonDataProps {
-  dungeonId: string | undefined;
-  dungeonData: IDungeon | undefined;
+  dungeonData: IDungeonDetail | undefined;
 }
 
-const useLoadDungeonData = ({ dungeonId, dungeonData }: IUseLoadDungeonDataProps) => {
-  const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
+const useLoadDungeonData = ({ dungeonData }: IUseLoadDungeonDataProps) => {
+  const dungeonFormData = dungeonFormStore.dungeonFormData.use();
 
-  const previousDungeonFormStore = useRef(dungeonFormStore);
-
-  const loadDungeonData = () => {
-    if (dungeonId) {
-      // editing...
-      if (dungeonData && dungeonFormStore && !dungeonFormStore.dungeonFormData.id) {
-        dungeonFormStore.populateDataFromAPI(dungeonId, dungeonData);
-      }
-    } else {
-      // creating...
-      if (dungeonFormStore) {
-        // if the user is not in creation process but just started it then reset the form
-        if (
-          JSON.stringify(dungeonFormStore.dungeonFormData) ===
-          JSON.stringify(initialDungeonFormData)
-        )
-          dungeonFormStore?.resetDungeonFormData();
-      }
-    }
-
-    // Update previousDungeonFormStore two times to ensure it is always one step behind dungeonFormStore
-    previousDungeonFormStore.current = dungeonFormStore;
-  };
+  const [isMounted, setIsMounted] = useState(false);
+  const [aborting, setAborting] = useState(false);
 
   useEffect(() => {
-    loadDungeonData();
-  }, [dungeonData, dungeonId]);
+    setIsMounted(true);
+  }, []);
 
-  //! Hacky way to wait for dungeonFormStore to become defined (mounted) after nextjs hydration
   useEffect(() => {
-    // Check if dungeonFormStore has become defined
-    if (dungeonFormStore && !previousDungeonFormStore.current) {
-      loadDungeonData();
+    if (dungeonFormData._id !== dungeonData?._id) {
+      if (dungeonData && !aborting) {
+        // editing...
+        dungeonFormStore.dungeonFormData.set({
+          ...dungeonData,
+          tags: tagsAttachLabel(dungeonData.tags),
+        });
+      } else {
+        // creating...
+        if (JSON.stringify(dungeonFormData) === JSON.stringify(initialDungeonFormData)) {
+          dungeonFormStore.dungeonFormData.set(getInitialDungeonFormData());
+        }
+      }
     }
-  }, [dungeonFormStore]);
+  }, [dungeonData, aborting, dungeonFormData]);
 
-  return dungeonFormStore;
+  return { isMounted, setAborting };
 };
 
 export default useLoadDungeonData;

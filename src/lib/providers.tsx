@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import { queryClientConfig } from "@/lib/query-client";
 import useAuthCheck from "@/hooks/use-auth-check";
 
+import "./legend-state";
 import "react-toastify/dist/ReactToastify.css";
 
 const Providers = ({ children }: React.PropsWithChildren) => {

@@ -6,8 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 import { fileToBase64 } from "@/utils/b64";
-import { DungeonDuration, dungeonDuration, DungeonTag, dungeonTags } from "@/utils/dungeon-options";
-import useStore from "@/hooks/use-store";
+import { DungeonDuration, dungeonDurations, dungeonTags } from "@/utils/dungeon-options";
 import { Button } from "@/components/ui/button";
 import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
@@ -16,12 +15,14 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import UploadImage from "@/components/ui/upload-image";
 
 import { IInitialSchema, initialSchema } from "../schemas/initial-schema";
-import { stepTitles, useDungeonFormStore } from "../stores/form-store";
+import { dungeonFormStore } from "../stores/dungeon-form-store";
+import { stepTitles } from "../utils/step-utils";
 import tagsComboboxStyles from "../utils/tags-combobox-styles";
+import { tagsAttachLabel, TagsWithLabel } from "../utils/tags-utils";
 import FormStepWrapper from "./form-step-wrapper";
 
 const Initial = ({ dungeonId }: { dungeonId?: string }) => {
-  const dungeonFormStore = useStore(useDungeonFormStore, (state) => state);
+  const { currentStep, dungeonFormData } = dungeonFormStore.use();
 
   const {
     register,
@@ -32,19 +33,15 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
     formState: { errors },
   } = useForm<IInitialSchema>({
     resolver: zodResolver(initialSchema),
-    values: dungeonFormStore?.dungeonFormData,
+    values: dungeonFormData,
   });
 
   const image = watch("image");
   const imageRef = useRef<HTMLInputElement>(null);
 
-  if (!dungeonFormStore) return null;
-
-  const { currentStep, setCurrentStep, dungeonFormData, updateDungeonFormData } = dungeonFormStore;
-
   const onSubmit: SubmitHandler<IInitialSchema> = (data) => {
-    updateDungeonFormData(data);
-    setCurrentStep("LOCATIONS");
+    dungeonFormStore.dungeonFormData.set((prev) => ({ ...prev, ...data }));
+    dungeonFormStore.currentStep.set("LOCATIONS");
   };
 
   const addImage = () => {
@@ -103,7 +100,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                         state={errors?.recommendedResponseDetailsDepth ? "error" : undefined}
                         errorMessage={errors?.recommendedResponseDetailsDepth?.message}
                       >
-                        {dungeonDuration.map((duration) => (
+                        {dungeonDurations.map((duration) => (
                           <ToggleGroupItem
                             key={duration.value}
                             value={duration.value}
@@ -137,20 +134,15 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                       render={({ field }) => {
                         return (
                           <ComboBox
-                            aria-label="Tags"
                             {...field}
+                            aria-label="Tags"
                             animate
                             label="Tags"
-                            onChange={(newValue, _actionMeta) =>
-                              field.onChange(newValue as { value: DungeonTag; label: DungeonTag }[])
-                            }
+                            onChange={(newValue) => field.onChange(newValue as TagsWithLabel)}
                             noOptionsMessage={() => "No tags found"}
                             // isOptionDisabled={(option) => field.value.length >= 3}
                             className="w-full"
-                            options={dungeonTags.map((tag) => ({
-                              value: tag,
-                              label: tag,
-                            }))}
+                            options={tagsAttachLabel(dungeonTags)}
                             isMulti
                             closeMenuOnSelect={false}
                             placeholder="Select 1 to 3 tags"

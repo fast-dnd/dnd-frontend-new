@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 
-import { IPlayer } from "@/types/game";
+import { IGamePlayer } from "@/types/game";
 import useGetDungeon from "@/hooks/use-get-dungeon";
-import useGetRoomData from "@/hooks/use-get-room-data";
+import useGetGameData from "@/hooks/use-get-game-data";
 import { Box } from "@/components/ui/box";
 import Spinner from "@/components/ui/spinner";
 
 import useGameplaySocket from "../hooks/use-gameplay-socket";
-import { PlayerChanges, useGameStore } from "../stores/game-store";
+import { gameStore, PlayerChanges } from "../stores/game-store";
 import DiedModal from "./died-modal";
 import GameOverModal from "./game-over-modal";
 import HomeModal from "./home-modal";
@@ -18,23 +18,16 @@ import Stories from "./stories";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
-  const { data: roomData } = useGetRoomData(conversationId);
+  const { data: roomData } = useGetGameData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
   const [gaming, setGaming] = useState(true);
   const [gameOverModal, setGameOverModal] = useState(false);
   const [result, setResult] = useState<"GAMING" | "WON" | "LOST">("GAMING");
   const [dying, setDying] = useState(false);
-  const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
+  const [currentPlayer, setCurrentPlayer] = useState<IGamePlayer>();
 
-  const {
-    setDisplayHowToPlay,
-    setDisplayFeedback,
-    homeModal,
-    setHomeModal,
-    diedModal,
-    setDiedModal,
-    setChanges,
-  } = useGameStore((state) => state);
+  const homeModal = gameStore.homeModal.use();
+  const diedModal = gameStore.diedModal.use();
 
   const { lastStory, loadingText } = useGameplaySocket(conversationId);
 
@@ -63,12 +56,12 @@ const Gameplay = (props: { conversationId: string }) => {
         }
         if (changes.lostHealth && player.health <= 0) setDying(true);
         if (Object.keys(changes).length) {
-          setChanges(changes);
+          gameStore.changes.set(changes);
           setTimeout(() => {
-            setChanges({});
+            gameStore.changes.set({});
             if (changes.lostHealth && player.health <= 0) {
               setDying(false);
-              setDiedModal(true);
+              gameStore.diedModal.set(true);
             }
           }, 1500);
         }
@@ -87,7 +80,7 @@ const Gameplay = (props: { conversationId: string }) => {
         }
       }
     }
-  }, [roomData, currentPlayer, setChanges, setDiedModal, gaming, setGameOverModal, loadingText]);
+  }, [currentPlayer, gaming, roomData]);
 
   if (!roomData || !dungeonData || !currentPlayer)
     return (
@@ -100,11 +93,11 @@ const Gameplay = (props: { conversationId: string }) => {
     <Box
       title={dungeonData.name}
       howTo
-      onClickHowTo={() => setDisplayHowToPlay(true)}
+      onClickHowTo={() => gameStore.displayHowToPlay.set(true)}
       feedback
-      onClickFeedback={() => setDisplayFeedback(true)}
+      onClickFeedback={() => gameStore.displayFeedback.set(true)}
       home
-      onClickHome={() => setHomeModal(true)}
+      onClickHome={() => gameStore.homeModal.set(true)}
       loading={loadingText}
       className="flex min-h-0 flex-1 flex-col gap-8 p-5 lg:px-12 lg:py-8"
     >
@@ -115,8 +108,8 @@ const Gameplay = (props: { conversationId: string }) => {
         currentPlayer={currentPlayer}
         loadingText={loadingText}
       />
-      <HomeModal open={homeModal} close={() => setHomeModal(false)} />
-      <DiedModal open={diedModal} close={() => setDiedModal(false)} />
+      <HomeModal open={homeModal} close={() => gameStore.homeModal.set(false)} />
+      <DiedModal open={diedModal} close={() => gameStore.diedModal.set(false)} />
       <GameOverModal
         open={gameOverModal && !diedModal && !dying}
         close={() => setGameOverModal(false)}

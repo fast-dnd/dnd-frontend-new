@@ -8,8 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { useHomeStore } from "../../stores/tab-store";
-import { dungeonTabs, DungeonTabType } from "../../types/home";
+import { dungeonTabs, DungeonTabType, homeStore } from "../../stores/tab-store";
 import Tabs from "../tabs";
 
 function CreateRoomNavbar({
@@ -17,7 +16,8 @@ function CreateRoomNavbar({
 }: {
   setSelectedDungeon: React.Dispatch<React.SetStateAction<IDungeon | undefined>>;
 }) {
-  const { dungeonTab, setDungeonTab } = useHomeStore((state) => state);
+  const dungeonTab = homeStore.dungeonTab.use();
+
   return (
     <>
       <Tabs
@@ -28,7 +28,7 @@ function CreateRoomNavbar({
       <div className="block lg:hidden">
         <Select
           value={dungeonTab}
-          onValueChange={(value) => setDungeonTab(value as DungeonTabType)}
+          onValueChange={(value) => homeStore.dungeonTab.set(value as DungeonTabType)}
         >
           <SelectTrigger className="w-full capitalize" aria-label="Select dungeon type">
             <SelectValue placeholder="Select dungeons type" />

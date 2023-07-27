@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { redirect, useRouter } from "next/navigation";
@@ -12,6 +11,7 @@ import ChampionsLocationsWrapper from "./components/champions-locations-wrapper"
 import Final from "./components/final";
 import Initial from "./components/initial";
 import useLoadDungeonData from "./hooks/use-load-dungeon-data";
+import { dungeonFormStore, getInitialDungeonFormData } from "./stores/dungeon-form-store";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const router = useRouter();
@@ -19,20 +19,23 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const dungeonId = params.dungeonId?.[0];
   const { data: dungeonData, isInitialLoading, isError } = useGetDungeon(dungeonId);
 
-  const dungeonFormStore = useLoadDungeonData({ dungeonId, dungeonData });
+  const { currentStep, dungeonFormData } = dungeonFormStore.use();
+
+  const { isMounted, setAborting } = useLoadDungeonData({ dungeonData });
+
+  const abortDungeonCreation = () => {
+    setAborting(true);
+    dungeonFormStore.set({
+      currentStep: "INITIAL",
+      dungeonFormData: getInitialDungeonFormData(),
+    });
+    router.push("/home");
+  };
 
   if (isError) return redirect("/home");
 
-  if (isInitialLoading || !dungeonFormStore)
+  if (isInitialLoading || !isMounted)
     return <BoxSkeleton title={`${dungeonId ? "EDIT" : "CREATE"} DUNGEON`} />;
-
-  const { dungeonFormData, currentStep, setCurrentStep, resetDungeonFormData } = dungeonFormStore;
-
-  const abortDungeonCreation = () => {
-    router.push("/home");
-    setCurrentStep("INITIAL");
-    resetDungeonFormData();
-  };
 
   return (
     <div className="mt-8 h-full w-full overflow-y-auto lg:mt-0">

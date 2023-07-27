@@ -1,7 +1,7 @@
 import { cn } from "@/utils/style-utils";
 import { Box } from "@/components/ui/box";
 
-import { HomeTabType } from "../../types/home";
+import { HomeTabType } from "../../stores/tab-store";
 import CreateRoom from "../create-room";
 import GameHistory from "../game-history";
 import JoinRoom from "../join-room";

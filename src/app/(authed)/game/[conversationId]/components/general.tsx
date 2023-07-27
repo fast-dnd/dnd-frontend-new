@@ -4,9 +4,9 @@ import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
 
-import { IMove, IPlayer, IQuestion } from "@/types/game";
+import { IGamePlayer, IMove, IQuestion } from "@/types/game";
 import { cn } from "@/utils/style-utils";
-import useGetRoomData from "@/hooks/use-get-room-data";
+import useGetGameData from "@/hooks/use-get-game-data";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,20 +14,20 @@ import Spinner from "@/components/ui/spinner";
 
 import useAskQuestion from "../hooks/use-ask-question";
 import useGeneralSocket from "../hooks/use-general-socket";
-import { useGameStore } from "../stores/game-store";
+import { gameStore } from "../stores/game-store";
 import MoveList from "./move-list";
 import Player from "./player";
 import Question from "./question";
 
 const General = (props: { conversationId: string }) => {
   const { conversationId } = props;
-  const { data: roomData } = useGetRoomData(conversationId);
-  const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
+  const { data: roomData } = useGetGameData(conversationId);
+  const [currentPlayer, setCurrentPlayer] = useState<IGamePlayer>();
   const [statsOpened, setStatsOpened] = useState(false);
   const [question, setQuestion] = useState("");
   const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =
     useGeneralSocket(conversationId);
-  const { changes } = useGameStore((state) => state);
+  const changes = gameStore.changes.use();
   const { mutate: askQuestion } = useAskQuestion();
   const [moveHistory, setMoveHistory] = useState<IMove[][]>([]);
   const [questionHistory, setQuestionHistory] = useState<Partial<IQuestion>[]>([]);
