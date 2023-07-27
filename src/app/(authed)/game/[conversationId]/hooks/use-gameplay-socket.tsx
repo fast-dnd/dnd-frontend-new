@@ -20,7 +20,6 @@ const useGameplaySocket = (conversationId: string) => {
           setLoadingText(true);
           break;
         case "REQUEST_SENT_TO_DM":
-          console.log(event.data);
           if (event.data)
             queryClient.setQueryData(
               [gameKey, conversationId],
