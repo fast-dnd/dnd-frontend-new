@@ -91,7 +91,11 @@ const CreateRoomCampaigns = () => {
         )}
       </div>
 
-      <CreateRoomFooter selectedDungeon={selectedDungeon} setSelectedDungeon={setSelectedDungeon} />
+      <CreateRoomFooter
+        selectedCampaign={selectedCampaign}
+        selectedDungeon={selectedDungeon}
+        setSelectedDungeon={setSelectedDungeon}
+      />
     </>
   );
 };

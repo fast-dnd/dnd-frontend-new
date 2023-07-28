@@ -33,7 +33,7 @@ const SelectedCampaign = ({ selectedCampaign, dungeon, setDungeon }: SelectedCam
 
   return (
     <div className="flex flex-col gap-4 pr-0 lg:gap-8 lg:pr-4">
-      <div className="flex cursor-pointer flex-row gap-8 rounded-md border border-white/10 p-4 pr-0  lg:border-0">
+      <div className="flex flex-row gap-8 rounded-md border border-white/10 p-4 pr-0  lg:border-0">
         <Image
           src={campaign.imageUrl || "/images/default-dungeon.png"}
           alt={campaign.name}
@@ -57,7 +57,7 @@ const SelectedCampaign = ({ selectedCampaign, dungeon, setDungeon }: SelectedCam
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 pl-2 pr-0 lg:gap-8 lg:pr-4">
+      <div className="flex flex-col gap-4 pl-4 pr-0 lg:gap-8 lg:pl-8 lg:pr-4">
         {campaign.dungeons.map((d) => (
           <CreateRoomDungeon
             dungeon={d as IDungeon}

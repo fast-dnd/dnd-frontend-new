@@ -20,6 +20,10 @@ const getCampaign = async (campaignId: string) => {
   return await campaignApi.get(campaignId).then((res) => campaignDetailSchema.parse(res.data));
 };
 
+const addFavorite = async (campaignId: string) => {
+  return await campaignApi.post("favourite", { campaignId });
+};
+
 //todo recent
 
 const campaignService = {
@@ -27,6 +31,7 @@ const campaignService = {
   getFavorites,
   getMyCampaigns,
   getCampaign,
+  addFavorite,
 };
 export default campaignService;
 
