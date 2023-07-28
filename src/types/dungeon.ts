@@ -45,7 +45,25 @@ export const dungeonDetailSchema = baseDungeonSchema.extend({
   champions: z.array(championSchema),
 });
 
+export const campaignSchema = z.object({
+  _id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  dungeons: z.array(z.string()),
+  imageUrl: z.string(),
+});
+
+export const campaignDetailSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  imageUrl: z.string(),
+  dungeons: z.array(baseDungeonSchema),
+});
+
 export const dungeonsSchema = z.array(dungeonSchema);
+
+export const campaignsSchema = z.array(campaignSchema);
 
 export type ILocation = z.infer<typeof locationSchema>;
 
@@ -54,3 +72,7 @@ export type IChampion = z.infer<typeof championSchema>;
 export type IDungeon = z.infer<typeof dungeonSchema>;
 
 export type IDungeonDetail = z.infer<typeof dungeonDetailSchema>;
+
+export type ICampaign = z.infer<typeof campaignSchema>;
+
+export type ICampaignDetail = z.infer<typeof campaignDetailSchema>;

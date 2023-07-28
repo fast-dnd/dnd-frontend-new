@@ -4,16 +4,22 @@ export const homeTabs = ["PLAY", "MY KINGDOM", "SETTINGS", "HOW TO PLAY"] as con
 
 export type HomeTabType = (typeof homeTabs)[number];
 
-export const dungeonTabs = ["top dungeons", "my dungeons", "favorite dungeons"] as const;
+export const baseTabs = ["ADVENTURES", "CAMPAIGNS"] as const;
 
-export type DungeonTabType = (typeof dungeonTabs)[number];
+export type BaseTabType = (typeof baseTabs)[number];
+
+export const subTabs = ["top", "recent", "favorite", "owned"] as const;
+
+export type SubTabType = (typeof subTabs)[number];
 
 interface IHomeStore {
   homeTab: HomeTabType;
-  dungeonTab: DungeonTabType;
+  baseTab: BaseTabType;
+  subTab: SubTabType;
 }
 
 export const homeStore = observable<IHomeStore>({
   homeTab: "PLAY",
-  dungeonTab: "top dungeons",
+  baseTab: "ADVENTURES",
+  subTab: "top",
 });

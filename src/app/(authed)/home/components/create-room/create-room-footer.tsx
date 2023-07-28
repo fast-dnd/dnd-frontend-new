@@ -48,7 +48,7 @@ const CreateRoomFooter = ({
 
   return (
     <div className="flex flex-row items-center justify-center gap-8">
-      {homeStore.dungeonTab.get() === "favorite dungeons" && selectedDungeon === undefined && (
+      {homeStore.subTab.get() === "favorite" && selectedDungeon === undefined && (
         <div className="flex flex-1 flex-col justify-end gap-4 lg:flex-row lg:gap-8">
           <Input
             placeholder="Enter dungeon ID..."

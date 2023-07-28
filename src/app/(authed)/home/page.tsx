@@ -16,7 +16,7 @@ const Home = () => {
     <div className="flex h-full min-h-0 w-full flex-col overflow-y-auto lg:px-16 lg:pb-12">
       <HomeMobileNavbar />
 
-      <Tabs homeOrDungeons="home" selectedTab={homeTab} />
+      <Tabs type="home" selectedTab={homeTab} />
 
       <PlayTabContent homeTab={homeTab} />
       <KingdomTabContent homeTab={homeTab} />
