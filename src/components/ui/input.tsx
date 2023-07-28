@@ -36,6 +36,7 @@ export interface InputProps
   successMessage?: string;
   errorMessage?: string;
   label?: string;
+  nowrap?: boolean;
 }
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -49,6 +50,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       successMessage,
       errorMessage,
       label,
+      nowrap,
       disabled,
       className,
       ...props
@@ -65,6 +67,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               state === "error" && "text-error",
               state === "success" && "text-success",
               disabled && "opacity-50",
+              nowrap && "whitespace-nowrap",
             )}
           >
             {label}

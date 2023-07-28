@@ -18,6 +18,9 @@ export const initialDungeonFormData: IDungeonDetailWithTags = {
   imageUrl: "",
   locations: [],
   champions: [],
+  realityLevel: 0,
+  actionLevel: 0,
+  misteryLevel: 0,
 };
 
 export const getInitialDungeonFormData = () => deepClone(initialDungeonFormData);

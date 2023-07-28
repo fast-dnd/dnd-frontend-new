@@ -25,6 +25,9 @@ export const initialSchema = z.object({
     .min(1, "Description is required")
     .min(5, "Description must be at least 5 characters"),
   image: z.string().optional(),
+  realityLevel: z.number().min(0).max(3),
+  actionLevel: z.number().min(0).max(3),
+  misteryLevel: z.number().min(0).max(3),
 });
 
 export type IInitialSchema = z.infer<typeof initialSchema>;

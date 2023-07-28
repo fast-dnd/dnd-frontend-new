@@ -156,14 +156,57 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                   </div>
                 </div>
               </div>
-              <TextArea
-                label="Description"
-                placeholder="Venture into the heart of an enchanted forest, where the ancient spirits..."
-                className="m-0 h-full"
-                {...register("description")}
-                state={errors?.description ? "error" : undefined}
-                errorMessage={errors?.description?.message}
-              />
+              <div className="flex gap-5">
+                <div className="flex flex-col gap-2">
+                  <Input
+                    type="number"
+                    label="Reality level"
+                    min={0}
+                    max={3}
+                    className="mb-0"
+                    nowrap
+                    {...register("realityLevel", {
+                      setValueAs: (v) => (v === "" ? undefined : parseInt(v)),
+                    })}
+                    state={errors?.realityLevel ? "error" : undefined}
+                    errorMessage={errors?.realityLevel?.message}
+                  />
+                  <Input
+                    type="number"
+                    label="Action level"
+                    min={0}
+                    max={3}
+                    className="mb-0"
+                    nowrap
+                    {...register("actionLevel", {
+                      setValueAs: (v) => (v === "" ? undefined : parseInt(v)),
+                    })}
+                    state={errors?.actionLevel ? "error" : undefined}
+                    errorMessage={errors?.actionLevel?.message}
+                  />
+                  <Input
+                    type="number"
+                    label="Mistery level"
+                    min={0}
+                    max={3}
+                    className="mb-0"
+                    nowrap
+                    {...register("misteryLevel", {
+                      setValueAs: (v) => (v === "" ? undefined : parseInt(v)),
+                    })}
+                    state={errors?.misteryLevel ? "error" : undefined}
+                    errorMessage={errors?.misteryLevel?.message}
+                  />
+                </div>
+                <TextArea
+                  label="Description"
+                  placeholder="Venture into the heart of an enchanted forest, where the ancient spirits..."
+                  className="m-0 h-full"
+                  {...register("description")}
+                  state={errors?.description ? "error" : undefined}
+                  errorMessage={errors?.description?.message}
+                />
+              </div>
               <div className="block w-full border-t border-white/20 lg:hidden" />
               <Button className="mb-4 block w-full whitespace-nowrap lg:hidden" variant="outline">
                 NEXT STEP
