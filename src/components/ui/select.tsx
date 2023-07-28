@@ -11,10 +11,11 @@ import { cn } from "@/utils/style-utils";
 
 export const selectContainerVariants = cva(
   [
-    "relative mb-2 flex items-center justify-between border border-white/50 bg-transparent py-2 pl-4 pr-2 text-base placeholder:text-white/30",
+    "relative mb-2 flex items-center justify-between rounded-md border border-white/50 bg-transparent py-2 pl-4 pr-2 text-base placeholder:text-white/30",
     "transition-all duration-300 focus:outline-none",
     "disabled:pointer-events-none disabled:opacity-20",
-    "ring-offset-selectSelected focus:ring-2 focus:ring-selectSelected focus:ring-offset-2",
+    "ring-offset-primary-200 focus:ring-2 focus:ring-primary-200 focus:ring-offset-2",
+    "active:bg-red-500",
   ],
   {
     variants: {
@@ -46,41 +47,47 @@ const SelectValue = SelectPrimitive.Value;
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & SelectProps
->(({ state, label, successMessage, errorMessage, className, children, ...props }, ref) => (
-  <div className="">
-    {label && (
-      <div
-        className={cn(
-          "w-fit bg-white/10 px-4 py-1 text-sm tracking-[0.07em] backdrop-blur-none",
-          state === "error" && "text-error",
-          state === "success" && "text-success",
-        )}
+>(
+  (
+    { state, label, successMessage, errorMessage, className, disabled, children, ...props },
+    ref,
+  ) => (
+    <div className="">
+      {label && (
+        <div
+          className={cn(
+            "w-fit pb-2 text-sm tracking-[0.07em] backdrop-blur-none",
+            state === "error" && "text-error",
+            state === "success" && "text-success",
+            disabled && "opacity-50",
+          )}
+        >
+          {label}
+        </div>
+      )}
+      <SelectPrimitive.Trigger
+        ref={ref}
+        className={cn(selectContainerVariants({ state, className }), "")}
+        {...props}
       >
-        {label}
-      </div>
-    )}
-    <SelectPrimitive.Trigger
-      ref={ref}
-      className={cn(selectContainerVariants({ state, className }), "")}
-      {...props}
-    >
-      {children}
-      <SelectPrimitive.Icon asChild>
-        <FiChevronDown className="" />
-      </SelectPrimitive.Icon>
-    </SelectPrimitive.Trigger>
-    {successMessage && (
-      <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-success">
-        <AiFillCheckCircle /> {successMessage}
-      </p>
-    )}
-    {errorMessage && (
-      <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-error">
-        <GiCancel /> {errorMessage}
-      </p>
-    )}
-  </div>
-));
+        {children}
+        <SelectPrimitive.Icon asChild>
+          <FiChevronDown className="" />
+        </SelectPrimitive.Icon>
+      </SelectPrimitive.Trigger>
+      {successMessage && (
+        <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-success">
+          <AiFillCheckCircle /> {successMessage}
+        </p>
+      )}
+      {errorMessage && (
+        <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-error">
+          <GiCancel /> {errorMessage}
+        </p>
+      )}
+    </div>
+  ),
+);
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
 const SelectContent = React.forwardRef<
@@ -91,7 +98,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        "relative z-50 min-w-[8rem] overflow-hidden border bg-select text-white shadow-md animate-in fade-in-80 duration-300",
+        "relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-select text-white shadow-md animate-in fade-in-80 duration-300",
         position === "popper" && "translate-y-1",
         className,
       )}
@@ -138,7 +145,7 @@ const SelectItem = React.forwardRef<
   >
     <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <div className="h-2 w-2 rotate-45 bg-tomato" />
+        <div className="h-2 w-2 rotate-45 bg-primary" />
       </SelectPrimitive.ItemIndicator>
     </span>
 

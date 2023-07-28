@@ -34,7 +34,7 @@ const Tabs = ({ selectedTab, homeOrDungeons, onTabClick }: ITabsProps) => {
             <div
               className={cn(
                 "cursor-pointer",
-                tab === selectedTab && "border-b-2 border-tomato font-extrabold",
+                tab === selectedTab && "border-b-2 border-primary font-extrabold",
               )}
               onClick={() => onTabClickHandler(tab)}
             >

@@ -17,15 +17,19 @@ export interface ComboBoxProps extends ReactSelectProps {
 const animatedComponents = makeAnimated();
 
 const ComboBox = React.forwardRef<HTMLSelectElement, ComboBoxProps>(
-  ({ animate, state, label, successMessage, errorMessage, className, ...props }, ref) => {
+  (
+    { animate, state, label, successMessage, errorMessage, isDisabled, className, ...props },
+    ref,
+  ) => {
     return (
       <div className="">
         {label && (
           <div
             className={cn(
-              "w-fit bg-white/10 px-4 py-1 text-sm tracking-[0.07em] backdrop-blur-none",
+              "w-fit pb-2 text-sm tracking-[0.07em] backdrop-blur-none",
               state === "error" && "text-error",
               state === "success" && "text-success",
+              isDisabled && "opacity-50",
             )}
           >
             {label}

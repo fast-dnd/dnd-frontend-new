@@ -8,7 +8,7 @@ import { cn } from "@/utils/style-utils";
 import Spinner from "./spinner";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
-export const boxVariants = cva("bg-glass backdrop-blur-2xl");
+export const boxVariants = cva("rounded-b-md bg-glass backdrop-blur-2xl");
 
 export interface BoxProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -44,15 +44,15 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
   ) => {
     return (
       <div className={cn("flex w-full flex-col", wrapperClassName)}>
-        <div className="relative flex items-center justify-center gap-4 border-t-2 border-tomato/90 bg-black px-4 py-6">
-          <div className="h-2 w-2 rotate-45 bg-tomato" />
+        <div className="relative flex items-center justify-center gap-4 rounded-t-md bg-black px-4 py-6">
+          <div className="h-2 w-2 rotate-45 bg-primary" />
           <p
             className="mt-1 truncate leading-none tracking-widest lg:text-xl lg:leading-7 lg:tracking-[0.2em]"
             style={jibril.style}
           >
             {title}
           </p>
-          <div className="h-2 w-2 rotate-45 bg-tomato" />
+          <div className="h-2 w-2 rotate-45 bg-primary" />
           <div className="absolute left-12 hidden h-full items-center gap-4 lg:flex">
             {home && (
               <TooltipProvider>

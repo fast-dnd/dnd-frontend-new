@@ -11,15 +11,15 @@ export const inputVariants = cva(
 
 export const inputContainerVariants = cva(
   [
-    "relative mb-2 flex items-center border border-white/50 bg-transparent py-2 pl-4 text-sm lg:text-base",
-    "transition-all duration-300 focus-within:border-tomato hover:focus-within:opacity-100",
+    "relative mb-2 flex items-center rounded-md border border-white/50 bg-transparent p-4 text-sm lg:text-base",
+    "transition-all duration-300 focus-within:border-primary hover:focus-within:opacity-100",
   ],
   {
     variants: {
       state: {
-        error: "border border-error/100 focus-within:border-error/100 hover:border-error/100",
+        error: "border-2 border-error/100 focus-within:border-error/100 hover:border-error/100",
         success:
-          "border border-success border-opacity-100 focus-within:border-success/100 hover:border-success/100",
+          "border-2 border-success border-opacity-100 focus-within:border-success/100 hover:border-success/100",
       },
     },
   },
@@ -61,7 +61,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <label
             htmlFor={label}
             className={cn(
-              "w-fit bg-white/10 px-4 py-1 text-sm tracking-[0.07em] backdrop-blur-none",
+              "w-fit pb-2 text-sm tracking-[0.07em] backdrop-blur-none",
               state === "error" && "text-error",
               state === "success" && "text-success",
               disabled && "opacity-50",

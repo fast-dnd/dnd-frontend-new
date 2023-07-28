@@ -25,7 +25,7 @@ const HomeMobileNavbar = () => {
                 key={tab}
                 className={cn(
                   "self-end",
-                  tab === homeTab.get() && "border-b-2 border-tomato font-extrabold",
+                  tab === homeTab.get() && "border-b-2 border-primary font-extrabold",
                 )}
                 onClick={() => homeTab.set(tab)}
               >

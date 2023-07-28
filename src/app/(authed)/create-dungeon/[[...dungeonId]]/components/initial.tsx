@@ -91,7 +91,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                     defaultValue="blitz"
                     render={({ field }) => (
                       <ToggleGroup
-                        labelClassName="-ml-1.5"
+                        labelClassName="-ml-3"
                         className="inline-flex w-full items-center justify-center"
                         type="single"
                         label="Recommended Bob Verbal Engagement"
@@ -104,7 +104,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                           <ToggleGroupItem
                             key={duration.value}
                             value={duration.value}
-                            className="flex w-full items-center justify-center gap-2 border border-white/25 px-6 py-2 text-sm transition-all duration-300 data-[state=on]:border-tomato lg:px-10 lg:text-base"
+                            className="py-4"
                           >
                             {duration.icon({})}
                             {duration.label}
@@ -126,7 +126,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                     errorMessage={errors?.style?.message}
                   />
                 </div>
-                <div className="flex w-full flex-col gap-5 lg:-ml-1 lg:w-1/2 lg:gap-8">
+                <div className="flex w-full flex-col gap-5 lg:-ml-3 lg:w-1/2 lg:gap-8">
                   <div>
                     <Controller
                       control={control}

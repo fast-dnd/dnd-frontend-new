@@ -66,7 +66,7 @@ const GameOverModal = ({ open, close, result, dungeonName, players }: GameOverMo
         <DialogFooter>
           <Button
             variant="outline"
-            className="flex w-fit flex-1 border-tomato px-8 text-base lg:text-xl"
+            className="flex w-fit flex-1 border-primary px-8 text-base lg:text-xl"
             onClick={close}
           >
             CLOSE

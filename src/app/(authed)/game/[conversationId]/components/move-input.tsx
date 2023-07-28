@@ -40,7 +40,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
             disabled={!canPlay}
             className={cn(
               "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
-              move === "discover_health" && "border-tomato",
+              move === "discover_health" && "border-primary",
             )}
             onClick={() => setMove("discover_health")}
           >
@@ -51,7 +51,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
             disabled={!canPlay}
             className={cn(
               "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
-              move === "discover_mana" && "border-tomato",
+              move === "discover_mana" && "border-primary",
             )}
             onClick={() => setMove("discover_mana")}
           >
@@ -62,7 +62,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
             disabled={!canPlay}
             className={cn(
               "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
-              move === "conversation_with_team" && "border-tomato",
+              move === "conversation_with_team" && "border-primary",
             )}
             onClick={() => setMove("conversation_with_team")}
           >
@@ -73,7 +73,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
             disabled={!canPlay}
             className={cn(
               "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
-              move === "rest" && "border-tomato",
+              move === "rest" && "border-primary",
             )}
             onClick={() => setMove("rest")}
           >
@@ -85,7 +85,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
           disabled={!canPlay}
           className={cn(
             "pointer-events-auto h-9 bg-white/5 px-4 normal-case text-white lg:w-fit",
-            !move && "border-tomato",
+            !move && "border-primary",
           )}
           onClick={() => setMove(undefined)}
         >

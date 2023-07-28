@@ -6,10 +6,9 @@ const tagsComboboxStyles: (error: boolean) => StylesConfig = (error) => ({
     backgroundColor: "transparent",
     border: `1px solid ${error ? "#fc0000" : "#ffffff50"}`,
     borderRadius: 0,
-    paddingTop: 2,
-    paddingBottom: 2,
-    paddingLeft: 4,
+    padding: "10px",
     boxShadow: "none",
+    WebkitBorderRadius: 5,
     outline: "#ffffff50 1px solid",
     "&:hover": {
       borderColor: error ? "#fc0000" : "#ffffff50",

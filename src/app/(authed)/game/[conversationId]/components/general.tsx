@@ -122,7 +122,7 @@ const General = (props: { conversationId: string }) => {
             disabled={!canAsk}
             type="submit"
             variant="ghost"
-            className="w-fit text-2xl text-tomato"
+            className="w-fit text-2xl text-primary"
           >
             {!asking && <IoMdSend />}
             {asking && <Spinner className="m-0 h-6 w-6 opacity-50" />}

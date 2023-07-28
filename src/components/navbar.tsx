@@ -6,7 +6,7 @@ import { jibril } from "@/utils/fonts";
 const Navbar = () => {
   return (
     <div className="hidden items-center gap-12 lg:flex">
-      <div className="mt-10 h-0.5 flex-1 border-t border-tomato" />
+      <div className="mt-10 h-0.5 flex-1 border-t border-primary" />
       <div className="mt-10 flex flex-col items-center justify-center gap-1">
         <Image src="/images/logo-up.png" width={114} height={6} alt="logo-up" priority />
         <div className="relative flex w-52 justify-center">
@@ -38,7 +38,7 @@ const Navbar = () => {
         </div>
         <Image src="/images/logo-down.png" width={72} height={14} alt="logo-down" priority />
       </div>
-      <div className="mt-10 h-0.5 flex-1 border-t border-tomato" />
+      <div className="mt-10 h-0.5 flex-1 border-t border-primary" />
     </div>
   );
 };
