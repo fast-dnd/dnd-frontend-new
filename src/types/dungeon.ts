@@ -41,17 +41,8 @@ export const dungeonSchema = baseDungeonSchema.extend({
 });
 
 export const dungeonDetailSchema = baseDungeonSchema.extend({
-  realityLevel: z.number().min(0).max(3).default(0),
-  actionLevel: z.number().min(0).max(3).default(0),
-  misteryLevel: z.number().min(0).max(3).default(0),
   locations: z.array(locationSchema),
   champions: z.array(championSchema),
-});
-
-export const dungeonGetDetailSchema = dungeonDetailSchema.extend({
-  rating: z.number().optional(),
-  numOfRatings: z.number().optional(),
-  timesPlayed: z.number().optional(),
 });
 
 export const dungeonsSchema = z.array(dungeonSchema);
@@ -63,5 +54,3 @@ export type IChampion = z.infer<typeof championSchema>;
 export type IDungeon = z.infer<typeof dungeonSchema>;
 
 export type IDungeonDetail = z.infer<typeof dungeonDetailSchema>;
-
-export type IDungeonGetDetail = z.infer<typeof dungeonGetDetailSchema>;

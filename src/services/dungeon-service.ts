@@ -1,4 +1,4 @@
-import { dungeonGetDetailSchema, dungeonsSchema, IDungeonDetail } from "@/types/dungeon";
+import { dungeonDetailSchema, dungeonsSchema, IDungeonDetail } from "@/types/dungeon";
 
 import createApi from "./api-factory";
 
@@ -13,7 +13,7 @@ const getRecommendedDungeons = async () => {
 };
 
 const getDungeon = async (dungeonId: string) => {
-  return await dungeonApi.get(dungeonId).then((res) => dungeonGetDetailSchema.parse(res.data));
+  return await dungeonApi.get(dungeonId).then((res) => dungeonDetailSchema.parse(res.data));
 };
 
 const createDungeon = async (data: IDungeonDetail) => {
