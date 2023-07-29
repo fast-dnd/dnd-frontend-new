@@ -49,19 +49,18 @@ export const dungeonDetailSchema = baseDungeonSchema.extend({
   misteryLevel: z.number().min(0).max(100),
 });
 
-export const campaignSchema = z.object({
+export const campaignBaseSchema = z.object({
   _id: z.string(),
   name: z.string(),
-  description: z.string(),
-  dungeons: z.array(z.string()),
   imageUrl: z.string(),
 });
 
-export const campaignDetailSchema = z.object({
-  id: z.string(),
-  name: z.string(),
+export const campaignSchema = campaignBaseSchema.extend({
   description: z.string(),
-  imageUrl: z.string(),
+  dungeons: z.array(z.string()),
+});
+
+export const campaignDetailSchema = campaignBaseSchema.extend({
   dungeons: z.array(baseDungeonSchema),
 });
 

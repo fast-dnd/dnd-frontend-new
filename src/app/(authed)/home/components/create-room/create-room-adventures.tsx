@@ -9,6 +9,7 @@ import Skeleton from "@/components/ui/skeleton";
 import {
   useGetFavoriteDungeons,
   useGetMyDungeons,
+  useGetRecentDungeons,
   useGetRecommendedDungeons,
 } from "../../hooks/use-get-home-data";
 import { homeStore } from "../../stores/tab-store";
@@ -27,7 +28,7 @@ const CreateRoomAdventures = () => {
       ? useGetMyDungeons(homeTab == "PLAY" && baseTab === "ADVENTURES")
       : subTab === "favorite"
       ? useGetFavoriteDungeons(homeTab == "PLAY" && baseTab === "ADVENTURES")
-      : useGetFavoriteDungeons(homeTab == "PLAY" && baseTab === "ADVENTURES"); //todo useGetRecentDungeons(homeTab == "PLAY" && baseTab === "ADVENTURES");
+      : useGetRecentDungeons(homeTab == "PLAY" && baseTab === "ADVENTURES");
 
   const [selectedDungeon, setSelectedDungeon] = useState<IDungeon>();
 
@@ -60,6 +61,10 @@ const CreateRoomAdventures = () => {
             </p>
           )}
         </div>
+        <CreateRoomFooter
+          selectedDungeon={selectedDungeon}
+          setSelectedDungeon={setSelectedDungeon}
+        />
       </>
     );
   return (

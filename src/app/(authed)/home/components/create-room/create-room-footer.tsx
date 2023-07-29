@@ -15,12 +15,16 @@ const CreateRoomFooter = ({
   selectedDungeon,
   selectedCampaign,
   setSelectedDungeon,
+  setSelectedCampaign,
 }: {
   selectedDungeon: IDungeon | undefined;
   selectedCampaign?: ICampaign;
   setSelectedDungeon: React.Dispatch<React.SetStateAction<IDungeon | undefined>>;
+  setSelectedCampaign?: React.Dispatch<React.SetStateAction<ICampaign | undefined>>;
 }) => {
   const router = useRouter();
+  const baseTab = homeStore.baseTab.use();
+  const subTab = homeStore.subTab.use();
 
   const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
 
@@ -55,49 +59,57 @@ const CreateRoomFooter = ({
 
   return (
     <div className="flex flex-row items-center justify-center gap-8">
-      {homeStore.subTab.get() === "favorite" &&
-        selectedDungeon === undefined &&
-        selectedCampaign === undefined && (
-          <div className="flex flex-1 flex-col justify-end gap-4 lg:flex-row lg:gap-8">
-            {homeStore.baseTab.get() === "ADVENTURES" && (
-              <>
-                <Input
-                  placeholder="Enter dungeon ID..."
-                  onChange={(e) => setDungeonId(e.target.value)}
-                  className="m-0 h-9 min-w-[200px] lg:h-14 lg:text-xl"
-                />
-                <Button
-                  isLoading={isAddingFavoriteDungeon}
-                  disabled={!dungeonId}
-                  variant={dungeonId ? "primary" : "outline"}
-                  className="h-9 w-full px-8 lg:h-14 lg:w-fit"
-                  onClick={() => addFavoriteDungeon(dungeonId)}
-                >
-                  ADD FAVORITE
-                </Button>
-              </>
-            )}
-            {homeStore.baseTab.get() === "CAMPAIGNS" && (
-              <>
-                <Input
-                  placeholder="Enter campaign ID..."
-                  onChange={(e) => setCampaignId(e.target.value)}
-                  className="m-0 h-9 min-w-[200px] lg:h-14 lg:text-xl"
-                />
-                <Button
-                  isLoading={isAddingFavoriteCampaign}
-                  disabled={!campaignId}
-                  variant={campaignId ? "primary" : "outline"}
-                  className="h-9 w-full px-8 lg:h-14 lg:w-fit"
-                  onClick={() => addFavoriteCampaign(campaignId)}
-                >
-                  ADD FAVORITE
-                </Button>
-              </>
-            )}
-          </div>
-        )}
-
+      {subTab === "favorite" && selectedDungeon === undefined && selectedCampaign === undefined && (
+        <div className="flex flex-1 flex-col justify-end gap-4 lg:flex-row lg:gap-8">
+          {baseTab === "ADVENTURES" && (
+            <>
+              <Input
+                placeholder="Enter dungeon ID..."
+                onChange={(e) => setDungeonId(e.target.value)}
+                className="m-0 h-9 min-w-[200px] lg:h-14 lg:text-xl"
+              />
+              <Button
+                isLoading={isAddingFavoriteDungeon}
+                disabled={!dungeonId}
+                variant={dungeonId ? "primary" : "outline"}
+                className="h-9 w-full px-8 lg:h-14 lg:w-fit"
+                onClick={() => addFavoriteDungeon(dungeonId)}
+              >
+                ADD FAVORITE
+              </Button>
+            </>
+          )}
+          {baseTab === "CAMPAIGNS" && (
+            <>
+              <Input
+                placeholder="Enter campaign ID..."
+                onChange={(e) => setCampaignId(e.target.value)}
+                className="m-0 h-9 min-w-[200px] lg:h-14 lg:text-xl"
+              />
+              <Button
+                isLoading={isAddingFavoriteCampaign}
+                disabled={!campaignId}
+                variant={campaignId ? "primary" : "outline"}
+                className="h-9 w-full px-8 lg:h-14 lg:w-fit"
+                onClick={() => addFavoriteCampaign(campaignId)}
+              >
+                ADD FAVORITE
+              </Button>
+            </>
+          )}
+        </div>
+      )}
+      {selectedDungeon === undefined && selectedCampaign !== undefined && (
+        <div className="flex w-full flex-row justify-between lg:justify-end lg:gap-8">
+          <Button
+            className="flex w-fit gap-2 text-sm lg:text-lg"
+            variant="ghost"
+            onClick={() => setSelectedCampaign?.(undefined)}
+          >
+            <AiOutlineLeft className="inline-block" /> GO BACK
+          </Button>
+        </div>
+      )}
       {selectedDungeon !== undefined && (
         <div className="flex w-full flex-row justify-between lg:justify-end lg:gap-8">
           <Input

@@ -69,4 +69,10 @@ export const useGetMyCampaigns = (enabled: boolean) => {
   });
 };
 
-// todo recent campaigns
+export const useGetRecentCampaigns = (enabled: boolean) => {
+  return useQuery({
+    queryKey: [campaignKey, "owned"],
+    queryFn: campaignService.getRecent,
+    enabled,
+  });
+};

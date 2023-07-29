@@ -62,6 +62,12 @@ const CreateRoomCampaigns = () => {
             </p>
           )}
         </div>
+        <CreateRoomFooter
+          selectedCampaign={selectedCampaign}
+          selectedDungeon={selectedDungeon}
+          setSelectedDungeon={setSelectedDungeon}
+          setSelectedCampaign={setSelectedCampaign}
+        />
       </>
     );
   return (
@@ -81,8 +87,8 @@ const CreateRoomCampaigns = () => {
             ))
           ) : (
             <SelectedCampaign
-              dungeon={selectedDungeon}
               selectedCampaign={selectedCampaign}
+              dungeon={selectedDungeon}
               setDungeon={setSelectedDungeon}
             />
           )
@@ -95,6 +101,7 @@ const CreateRoomCampaigns = () => {
         selectedCampaign={selectedCampaign}
         selectedDungeon={selectedDungeon}
         setSelectedDungeon={setSelectedDungeon}
+        setSelectedCampaign={setSelectedCampaign}
       />
     </>
   );

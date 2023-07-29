@@ -16,6 +16,10 @@ const getMyCampaigns = async () => {
   return await campaignApi.get("").then((res) => campaignsSchema.parse(res.data));
 };
 
+const getRecent = async () => {
+  return await campaignApi.get("recent").then((res) => campaignsSchema.parse(res.data));
+};
+
 const getCampaign = async (campaignId: string) => {
   return await campaignApi.get(campaignId).then((res) => campaignDetailSchema.parse(res.data));
 };
@@ -24,12 +28,11 @@ const addFavorite = async (campaignId: string) => {
   return await campaignApi.post("favourite", { campaignId });
 };
 
-//todo recent
-
 const campaignService = {
   getRecommended,
   getFavorites,
   getMyCampaigns,
+  getRecent,
   getCampaign,
   addFavorite,
 };

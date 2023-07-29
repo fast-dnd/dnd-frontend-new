@@ -24,13 +24,10 @@ const Tabs = ({ selectedTab, type, onTabClick }: ITabsProps) => {
   const tabs = type === "home" ? homeTabs : type === "base" ? baseTabs : subTabs;
 
   const onTabClickHandler = (tab: HomeTabType | BaseTabType | SubTabType) => {
-    if (type !== "base") {
-      if (type === "home") homeStore.homeTab.set(tab as HomeTabType);
-      // todo add clause when EPs are enabled
-      // else if (type === "base") homeStore.baseTab.set(tab as BaseTabType);
-      else homeStore.subTab.set(tab as SubTabType);
-      onTabClick?.();
-    }
+    if (type === "home") homeStore.homeTab.set(tab as HomeTabType);
+    else if (type === "base") homeStore.baseTab.set(tab as BaseTabType);
+    else homeStore.subTab.set(tab as SubTabType);
+    onTabClick?.();
   };
 
   return (
