@@ -10,6 +10,7 @@ import { DungeonDuration, dungeonDurations, dungeonTags } from "@/utils/dungeon-
 import { Button } from "@/components/ui/button";
 import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
 import { TextArea } from "@/components/ui/text-area";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import UploadImage from "@/components/ui/upload-image";
@@ -164,6 +165,55 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                 state={errors?.description ? "error" : undefined}
                 errorMessage={errors?.description?.message}
               />
+
+              <Controller
+                control={control}
+                name="realityLevel"
+                render={({ field }) => {
+                  return (
+                    <Slider
+                      label="Reality level"
+                      value={[field.value]}
+                      onValueChange={(newValue) => field.onChange(newValue[0])}
+                      state={errors?.realityLevel ? "error" : undefined}
+                      // errorMessage={errors?.realityLevel?.message}
+                    />
+                  );
+                }}
+              />
+
+              <Controller
+                control={control}
+                name="misteryLevel"
+                render={({ field }) => {
+                  return (
+                    <Slider
+                      label="Mistery level"
+                      value={[field.value]}
+                      onValueChange={(newValue) => field.onChange(newValue[0])}
+                      state={errors?.misteryLevel ? "error" : undefined}
+                      // errorMessage={errors?.realityLevel?.message}
+                    />
+                  );
+                }}
+              />
+
+              <Controller
+                control={control}
+                name="actionLevel"
+                render={({ field }) => {
+                  return (
+                    <Slider
+                      label="Action level"
+                      value={[field.value]}
+                      onValueChange={(newValue) => field.onChange(newValue[0])}
+                      state={errors?.actionLevel ? "error" : undefined}
+                      // errorMessage={errors?.realityLevel?.message}
+                    />
+                  );
+                }}
+              />
+
               <div className="block w-full border-t border-white/20 lg:hidden" />
               <Button className="mb-4 block w-full whitespace-nowrap lg:hidden" variant="outline">
                 NEXT STEP

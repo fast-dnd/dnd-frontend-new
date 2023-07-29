@@ -22,6 +22,7 @@ export const championSchema = z.object({
   name: z.string(),
   description: z.string(),
   moveMapping: moveMappingSchema,
+  label: z.string().optional(),
 });
 
 const baseDungeonSchema = z.object({
@@ -43,6 +44,9 @@ export const dungeonSchema = baseDungeonSchema.extend({
 export const dungeonDetailSchema = baseDungeonSchema.extend({
   locations: z.array(locationSchema),
   champions: z.array(championSchema),
+  realityLevel: z.number().min(0).max(100),
+  actionLevel: z.number().min(0).max(100),
+  misteryLevel: z.number().min(0).max(100),
 });
 
 export const campaignSchema = z.object({

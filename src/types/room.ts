@@ -11,7 +11,7 @@ export const playerSchema = z.object({
   avatarId: z.string(),
   avatarImageUrl: z.string(),
   name: z.string(),
-  champion: championSchema.extend({ label: z.string().optional() }).nullish(),
+  champion: championSchema.nullish(),
 });
 
 export const roomSchema = z.object({

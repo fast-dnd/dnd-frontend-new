@@ -29,6 +29,7 @@ const tagsComboboxStyles: (error: boolean) => StylesConfig = (error) => ({
     lineHeight: "28px",
     letterSpacing: "2.4px",
     paddingLeft: "8px",
+    borderRadius: "5px",
   }),
   multiValueLabel: (baseStyles, _state) => ({
     ...baseStyles,
@@ -70,6 +71,7 @@ const tagsComboboxStyles: (error: boolean) => StylesConfig = (error) => ({
     transition: "all 0.2s ease",
     duration: "0.2s",
     textTransform: "capitalize",
+    borderRadius: "5px",
   }),
   noOptionsMessage: (baseStyles, _state) => ({
     ...baseStyles,
