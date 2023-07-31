@@ -25,7 +25,7 @@ const RoomItem = ({ room }: { room: IRoomArrayElement }) => {
           <p className="text-sm uppercase tracking-[0.15em] text-white/50">FINISHED</p>
         )}
         {room.state === "GAMING" && (
-          <p className="text-sm uppercase tracking-[0.15em] text-tomato/50">
+          <p className="text-sm uppercase tracking-[0.15em] text-primary/50">
             RESUME (TURN {room.turn + 1})
           </p>
         )}
@@ -33,7 +33,7 @@ const RoomItem = ({ room }: { room: IRoomArrayElement }) => {
       {room.state === "GAMING" && (
         <Link href={`/game/${room.conversationId}`} aria-label="Resume game">
           <AiOutlineRight
-            className="h-8 w-5 cursor-pointer text-tomato/50 transition-colors duration-300 hover:text-tomato"
+            className="h-8 w-5 cursor-pointer text-primary/50 transition-colors duration-300 hover:text-primary"
             preserveAspectRatio="none"
           />
         </Link>

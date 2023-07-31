@@ -37,7 +37,7 @@ const Player = (props: {
             <SkullIcon
               className={cn(
                 "h-3/4 w-3/4",
-                !!currentPlayer && !!changes && changes.lostHealth && "fill-tomato",
+                !!currentPlayer && !!changes && changes.lostHealth && "fill-primary",
               )}
             />
           </div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import NextTopLoader from "nextjs-toploader";
 
 import Providers from "@/lib/providers";
 import { jost } from "@/utils/fonts";
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
     <html lang="en">
       <body className={cn("flex flex-col", jost.className)}>
         <Providers>
+          <NextTopLoader />
           <div className="absolute -z-10 h-[110%] w-full lg:h-full">
             <Image
               src="/images/bg-cover.png"

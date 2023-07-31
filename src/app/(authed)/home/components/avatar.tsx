@@ -32,7 +32,7 @@ const Avatar = ({ avatar }: { avatar: IAvatar }) => {
                   <div
                     key={i}
                     className={cn(
-                      "h-3 w-1.5 bg-tomato lg:h-3.5 lg:w-2.5",
+                      "h-3 w-1.5 bg-primary lg:h-3.5 lg:w-2.5",
                       (i + 1) * 20 > 80 && "opacity-20",
                     )}
                   />

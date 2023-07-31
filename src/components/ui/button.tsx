@@ -7,20 +7,28 @@ import { cn } from "@/utils/style-utils";
 import Spinner from "./spinner";
 
 export const buttonVariants = cva(
-  "inline-flex w-full flex-row items-center justify-center py-2 text-center text-xl font-semibold uppercase tracking-wider transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 lg:tracking-normal",
+  "inline-flex w-full flex-row items-center justify-center rounded-md py-2 text-center text-xl font-bold uppercase tracking-wider transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 lg:tracking-normal",
   {
     variants: {
       variant: {
         primary:
-          "border border-tomato bg-tomato text-black hover:shadow-basic active:bg-tomato/90 active:shadow-none disabled:border-transparent",
+          "border border-primary bg-primary text-black hover:shadow-basic focus:ring-2 focus:ring-primary-200 focus:ring-offset-2 active:bg-primary-600 active:shadow-none disabled:border-transparent",
         outline:
-          "border border-tomato bg-transparent text-white hover:bg-tomato hover:text-black active:bg-tomato/90",
+          "border-2 border-primary bg-transparent text-white hover:bg-primary focus:ring-2 focus:ring-primary-200 focus:ring-offset-2 active:border-primary-600 active:bg-transparent active:shadow-basic",
         ghost:
           "border border-transparent bg-transparent font-normal tracking-[0.08em] text-white/50 hover:text-white active:text-white/75",
+      },
+      size: {
+        xs: "px-6 py-2 text-xs",
+        sm: "px-6 py-2 text-sm",
+        base: "px-6 py-3",
+        lg: "px-8 py-4 text-lg",
+        xl: "px-10 py-5 text-xl",
       },
     },
     defaultVariants: {
       variant: "primary",
+      size: "base",
     },
   },
 );

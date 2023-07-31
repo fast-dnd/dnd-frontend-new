@@ -68,8 +68,6 @@ const Gameplay = (props: { conversationId: string }) => {
       }
       setCurrentPlayer(player);
 
-      //TODO setRollInfo of most recent move, when move format contains all required fields
-
       if (roomData.state === "CLOSED") {
         if (roomData.playerState.every((player) => player.health > 0)) {
           setResult("WON");

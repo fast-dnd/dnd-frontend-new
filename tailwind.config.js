@@ -16,14 +16,36 @@ module.exports = {
     },
     extend: {
       boxShadow: {
-        basic: "0px 0px 60px rgba(255, 90, 90, 0.4)",
+        basic: "0px 0px 20px 0px rgba(255, 90, 90, 0.4)",
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
+
       colors: {
-        tomato: "#ff5a5a",
+        primary: {
+          50: "#FFEAEA",
+          100: "#FFD6D6",
+          200: "#FFACAC",
+          300: "#FF9898",
+          400: "#FF8383",
+          500: "#FF5A5A",
+          DEFAULT: "#FF5A5A",
+          600: "#DB414F",
+          700: "#B72D45",
+          800: "#931C3B",
+          900: "#171716",
+        },
+        dark: {
+          50: "#F0F0EF",
+          100: "#E1E1E0",
+          200: "#C7C7C7",
+          300: "#ACACAA",
+          400: "#919191",
+          500: "#757575",
+          DEFAULT: "#757575",
+          600: "#5E5E5E",
+          700: "#484847",
+          800: "#303030",
+          900: "#171716",
+        },
         success: "#51DA88",
         error: "#DA5151",
         warning: "#F5AF45",

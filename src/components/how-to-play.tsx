@@ -36,7 +36,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
           className="mb-4 flex min-h-0 flex-1 flex-col items-start justify-center gap-5 p-5 tracking-wider lg:flex-row lg:gap-12 lg:px-12 lg:py-8"
         >
           <div className="flex flex-col gap-5 lg:w-[444px]">
-            <p className="w-fit border-b border-b-tomato text-lg font-semibold uppercase tracking-widest lg:text-2xl">
+            <p className="w-fit border-b border-b-primary text-lg font-semibold uppercase tracking-widest lg:text-2xl">
               Quick guide
             </p>
             <p className="leading-6 lg:text-lg">
@@ -66,7 +66,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
           <div className="block w-full border-t border-t-white/20 lg:hidden" />
 
           <div className="flex flex-col lg:w-[770px]">
-            <p className="w-fit border-b border-b-tomato text-lg font-semibold uppercase tracking-widest lg:text-2xl">
+            <p className="w-fit border-b border-b-primary text-lg font-semibold uppercase tracking-widest lg:text-2xl">
               Movement probabilities
             </p>
             <p className="mt-4 font-semibold lg:text-lg">PREPARATION TURNS</p>

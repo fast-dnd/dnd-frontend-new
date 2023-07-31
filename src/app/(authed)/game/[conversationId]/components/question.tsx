@@ -12,7 +12,7 @@ const Question = ({ question }: { question: Partial<IQuestion> }) => {
       {!!question.bob3Answer && (
         <div className="flex flex-col gap-2 bg-white/10 px-4 py-2">
           <p>
-            <span className="font-semibold text-tomato">Bob</span> answered{" "}
+            <span className="font-semibold text-primary">Bob</span> answered{" "}
             <span className="font-semibold">{question.playerName}</span>:
           </p>
           <p>{question.bob3Answer}</p>

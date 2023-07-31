@@ -19,7 +19,7 @@ export const questionSchema = z.object({
 });
 
 export const gamePlayerSchema = playerSchema.extend({
-  champion: championSchema.extend({ label: z.string().optional() }),
+  champion: championSchema,
   health: z.number(),
   mana: z.number(),
   gold: z.number(),

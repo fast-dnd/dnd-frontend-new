@@ -36,6 +36,10 @@ const getFavorites = async () => {
   return await dungeonApi.get("favourite").then((res) => dungeonsSchema.parse(res.data));
 };
 
+const getRecent = async () => {
+  return await dungeonApi.get("recent").then((res) => dungeonsSchema.parse(res.data));
+};
+
 const dungeonService = {
   createDungeon,
   updateDungeon,
@@ -45,6 +49,7 @@ const dungeonService = {
   deleteDungeon,
   addFavorite,
   getFavorites,
+  getRecent,
 };
 
 export default dungeonService;

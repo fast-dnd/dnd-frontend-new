@@ -79,11 +79,11 @@ const UpdateRoom = ({
           <ToggleGroupItem
             key={duration.value}
             value={duration.value}
-            className="relative flex w-full items-center justify-center gap-2 border border-white/25 px-4 py-2 text-sm transition-all duration-300 data-[state=on]:border-tomato lg:px-8 lg:text-base"
+            className="relative px-4 lg:px-8"
           >
             {duration.value === dungeonData.recommendedResponseDetailsDepth && (
               <div className="absolute right-1 top-1">
-                <AiFillStar className="h-3 w-3 text-tomato" />
+                <AiFillStar className="h-3 w-3 text-primary" />
               </div>
             )}
             {duration.icon({})}
@@ -100,11 +100,7 @@ const UpdateRoom = ({
         disabled={!isAdmin}
       >
         {imagesAudio.map((type) => (
-          <ToggleGroupItem
-            key={type.value}
-            value={type.value}
-            className="flex w-full items-center justify-center gap-2 border border-white/25 px-6 py-2 text-sm capitalize transition-all duration-300 data-[state=on]:border-tomato lg:px-10 lg:text-base"
-          >
+          <ToggleGroupItem key={type.value} value={type.value}>
             {type.icon}
             {type.value}
           </ToggleGroupItem>

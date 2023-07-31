@@ -35,9 +35,10 @@ const ToggleGroup = React.forwardRef<
       {label && (
         <div
           className={cn(
-            "w-fit bg-white/10 px-4 py-1 text-sm tracking-[0.07em] backdrop-blur-none",
+            "w-fit pb-2 text-sm tracking-[0.07em] backdrop-blur-none",
             state === "error" && "text-error",
             state === "success" && "text-success",
+            disabled && "opacity-50",
             labelClassName,
           )}
         >
@@ -47,7 +48,7 @@ const ToggleGroup = React.forwardRef<
       <ToggleGroupPrimitive.Root
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-center",
+          "inline-flex items-center justify-center gap-2",
           disabled && "pointer-events-none opacity-50",
           className,
         )}
@@ -71,6 +72,22 @@ const ToggleGroup = React.forwardRef<
 
 ToggleGroup.displayName = ToggleGroupPrimitive.Root.displayName;
 
-const ToggleGroupItem = ToggleGroupPrimitive.Item;
+const ToggleGroupItem = React.forwardRef<
+  React.ElementRef<typeof ToggleGroupPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Item>
+>(({ className, ...props }, ref) => {
+  return (
+    <ToggleGroupPrimitive.Item
+      className={cn(
+        "flex w-full items-center justify-center gap-2 rounded-md border border-white/25 px-6 py-2 text-sm transition-all duration-300 data-[state=on]:border-primary lg:px-10 lg:text-base",
+        className,
+      )}
+      ref={ref}
+      {...props}
+    />
+  );
+});
+
+ToggleGroupItem.displayName = ToggleGroupPrimitive.Item.displayName;
 
 export { ToggleGroup, ToggleGroupItem };

@@ -6,10 +6,9 @@ const tagsComboboxStyles: (error: boolean) => StylesConfig = (error) => ({
     backgroundColor: "transparent",
     border: `1px solid ${error ? "#fc0000" : "#ffffff50"}`,
     borderRadius: 0,
-    paddingTop: 2,
-    paddingBottom: 2,
-    paddingLeft: 4,
+    padding: "10px",
     boxShadow: "none",
+    WebkitBorderRadius: 5,
     outline: "#ffffff50 1px solid",
     "&:hover": {
       borderColor: error ? "#fc0000" : "#ffffff50",
@@ -30,6 +29,7 @@ const tagsComboboxStyles: (error: boolean) => StylesConfig = (error) => ({
     lineHeight: "28px",
     letterSpacing: "2.4px",
     paddingLeft: "8px",
+    borderRadius: "5px",
   }),
   multiValueLabel: (baseStyles, _state) => ({
     ...baseStyles,
@@ -71,6 +71,7 @@ const tagsComboboxStyles: (error: boolean) => StylesConfig = (error) => ({
     transition: "all 0.2s ease",
     duration: "0.2s",
     textTransform: "capitalize",
+    borderRadius: "5px",
   }),
   noOptionsMessage: (baseStyles, _state) => ({
     ...baseStyles,

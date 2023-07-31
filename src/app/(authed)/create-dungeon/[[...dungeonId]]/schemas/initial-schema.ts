@@ -25,6 +25,18 @@ export const initialSchema = z.object({
     .min(1, "Description is required")
     .min(5, "Description must be at least 5 characters"),
   image: z.string().optional(),
+  realityLevel: z
+    .number()
+    .min(0, "Reality level is required")
+    .max(100, "Reality level must be 100 or less"),
+  actionLevel: z
+    .number()
+    .min(0, "Action level is required")
+    .max(100, "Action level must be 100 or less"),
+  misteryLevel: z
+    .number()
+    .min(0, "Mistery level is required")
+    .max(100, "Mistery level must be 100 or less"),
 });
 
 export type IInitialSchema = z.infer<typeof initialSchema>;

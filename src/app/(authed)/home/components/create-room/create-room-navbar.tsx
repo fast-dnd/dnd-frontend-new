@@ -1,4 +1,3 @@
-import { IDungeon } from "@/types/dungeon";
 import {
   Select,
   SelectContent,
@@ -8,36 +7,53 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { dungeonTabs, DungeonTabType, homeStore } from "../../stores/tab-store";
+import { baseTabs, BaseTabType, homeStore, subTabs, SubTabType } from "../../stores/tab-store";
 import Tabs from "../tabs";
 
-function CreateRoomNavbar({
-  setSelectedDungeon,
-}: {
-  setSelectedDungeon: React.Dispatch<React.SetStateAction<IDungeon | undefined>>;
-}) {
-  const dungeonTab = homeStore.dungeonTab.use();
+function CreateRoomNavbar() {
+  const baseTab = homeStore.baseTab.use();
+  const subTab = homeStore.subTab.use();
 
   return (
     <>
-      <Tabs
-        homeOrDungeons="dungeon"
-        selectedTab={dungeonTab}
-        onTabClick={() => setSelectedDungeon(undefined)}
-      />
+      <div className="hidden min-w-fit justify-between lg:flex">
+        <Tabs
+          type="base"
+          selectedTab={baseTab}
+          onTabClick={(prevTab) => {
+            if (prevTab !== homeStore.baseTab.get()) homeStore.subTab.set("top");
+          }}
+        />
+        <Tabs type="sub" selectedTab={subTab} />
+      </div>
       <div className="block lg:hidden">
         <Select
-          value={dungeonTab}
-          onValueChange={(value) => homeStore.dungeonTab.set(value as DungeonTabType)}
+          value={baseTab}
+          onValueChange={(value) => homeStore.baseTab.set(value as BaseTabType)}
         >
           <SelectTrigger className="w-full capitalize" aria-label="Select dungeon type">
-            <SelectValue placeholder="Select dungeons type" />
+            <SelectValue placeholder="Choose between adventures and campaigns" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {dungeonTabs.map((dungeonTab) => (
-                <SelectItem key={dungeonTab} value={dungeonTab} className="capitalize">
-                  {dungeonTab}
+              {baseTabs.map((baseTab) => (
+                <SelectItem key={baseTab} value={baseTab} className="capitalize">
+                  {baseTab}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
+        <Select value={subTab} onValueChange={(value) => homeStore.subTab.set(value as SubTabType)}>
+          <SelectTrigger className="w-full capitalize" aria-label="Select dungeon type">
+            <SelectValue placeholder="Select adventure type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {subTabs.map((subTab) => (
+                <SelectItem key={subTab} value={subTab} className="capitalize">
+                  {subTab}
                 </SelectItem>
               ))}
             </SelectGroup>

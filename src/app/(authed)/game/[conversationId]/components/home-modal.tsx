@@ -48,6 +48,7 @@ const HomeModal = ({ open, close }: { open: boolean; close: () => void }) => {
           <Button
             className="w-fit whitespace-nowrap px-4 py-3 text-base lg:px-8 lg:text-xl"
             onClick={close}
+            autoFocus
           >
             STAY AND PLAY
           </Button>

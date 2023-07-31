@@ -10,6 +10,7 @@ import { DungeonDuration, dungeonDurations, dungeonTags } from "@/utils/dungeon-
 import { Button } from "@/components/ui/button";
 import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
 import { TextArea } from "@/components/ui/text-area";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import UploadImage from "@/components/ui/upload-image";
@@ -91,7 +92,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                     defaultValue="blitz"
                     render={({ field }) => (
                       <ToggleGroup
-                        labelClassName="-ml-1.5"
+                        labelClassName="-ml-3"
                         className="inline-flex w-full items-center justify-center"
                         type="single"
                         label="Recommended Bob Verbal Engagement"
@@ -104,7 +105,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                           <ToggleGroupItem
                             key={duration.value}
                             value={duration.value}
-                            className="flex w-full items-center justify-center gap-2 border border-white/25 px-6 py-2 text-sm transition-all duration-300 data-[state=on]:border-tomato lg:px-10 lg:text-base"
+                            className="py-4"
                           >
                             {duration.icon({})}
                             {duration.label}
@@ -126,7 +127,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                     errorMessage={errors?.style?.message}
                   />
                 </div>
-                <div className="flex w-full flex-col gap-5 lg:-ml-1 lg:w-1/2 lg:gap-8">
+                <div className="flex w-full flex-col gap-5 lg:-ml-3 lg:w-1/2 lg:gap-8">
                   <div>
                     <Controller
                       control={control}
@@ -164,6 +165,55 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                 state={errors?.description ? "error" : undefined}
                 errorMessage={errors?.description?.message}
               />
+
+              <Controller
+                control={control}
+                name="realityLevel"
+                render={({ field }) => {
+                  return (
+                    <Slider
+                      label="Reality level"
+                      value={[field.value]}
+                      onValueChange={(newValue) => field.onChange(newValue[0])}
+                      state={errors?.realityLevel ? "error" : undefined}
+                      // errorMessage={errors?.realityLevel?.message}
+                    />
+                  );
+                }}
+              />
+
+              <Controller
+                control={control}
+                name="misteryLevel"
+                render={({ field }) => {
+                  return (
+                    <Slider
+                      label="Mistery level"
+                      value={[field.value]}
+                      onValueChange={(newValue) => field.onChange(newValue[0])}
+                      state={errors?.misteryLevel ? "error" : undefined}
+                      // errorMessage={errors?.realityLevel?.message}
+                    />
+                  );
+                }}
+              />
+
+              <Controller
+                control={control}
+                name="actionLevel"
+                render={({ field }) => {
+                  return (
+                    <Slider
+                      label="Action level"
+                      value={[field.value]}
+                      onValueChange={(newValue) => field.onChange(newValue[0])}
+                      state={errors?.actionLevel ? "error" : undefined}
+                      // errorMessage={errors?.realityLevel?.message}
+                    />
+                  );
+                }}
+              />
+
               <div className="block w-full border-t border-white/20 lg:hidden" />
               <Button className="mb-4 block w-full whitespace-nowrap lg:hidden" variant="outline">
                 NEXT STEP
