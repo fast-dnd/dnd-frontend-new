@@ -20,8 +20,8 @@ function CreateRoomNavbar() {
         <Tabs
           type="base"
           selectedTab={baseTab}
-          onTabClick={() => {
-            homeStore.subTab.set("top");
+          onTabClick={(prevTab) => {
+            if (prevTab !== homeStore.baseTab.get()) homeStore.subTab.set("top");
           }}
         />
         <Tabs type="sub" selectedTab={subTab} />

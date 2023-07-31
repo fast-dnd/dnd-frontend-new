@@ -17,17 +17,23 @@ import {
 interface ITabsProps {
   type: "home" | "base" | "sub";
   selectedTab?: string;
-  onTabClick?: () => void;
+  onTabClick?: (prevTab?: HomeTabType | BaseTabType | SubTabType) => void;
 }
 
 const Tabs = ({ selectedTab, type, onTabClick }: ITabsProps) => {
   const tabs = type === "home" ? homeTabs : type === "base" ? baseTabs : subTabs;
 
   const onTabClickHandler = (tab: HomeTabType | BaseTabType | SubTabType) => {
+    const prevTab =
+      type === "home"
+        ? homeStore.homeTab.get()
+        : type === "base"
+        ? homeStore.baseTab.get()
+        : homeStore.subTab.get();
     if (type === "home") homeStore.homeTab.set(tab as HomeTabType);
     else if (type === "base") homeStore.baseTab.set(tab as BaseTabType);
     else homeStore.subTab.set(tab as SubTabType);
-    onTabClick?.();
+    onTabClick?.(prevTab);
   };
 
   return (
