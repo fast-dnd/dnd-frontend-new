@@ -31,6 +31,7 @@ export const roomDataSchema = z.object({
   responseDetailsDepth: z.enum(dungeonDurationsArray),
   maxPlayers: z.number(),
   maxRounds: z.number(),
+  price: z.number(),
 });
 
 export const roomArrayElementSchema = z.object({
