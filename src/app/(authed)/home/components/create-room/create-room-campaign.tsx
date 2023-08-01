@@ -23,7 +23,7 @@ const CreateRoomCampaign = ({
     >
       <Image
         src={campaign.imageUrl || "/images/default-dungeon.png"}
-        alt={campaign.name}
+        alt={campaign.name ?? "campaign"}
         width={180}
         height={180}
         className="hidden lg:block lg:h-[180px] lg:w-[180px]"
