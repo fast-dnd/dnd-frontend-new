@@ -1,8 +1,8 @@
 "use client";
 
+import useGetMyDungeons from "@/hooks/use-get-my-dungeons";
 import Skeleton from "@/components/ui/skeleton";
 
-import { useGetMyDungeons } from "../../hooks/use-get-home-data";
 import { homeStore } from "../../stores/tab-store";
 import KingdomDungeon from "./kingdom-dungeon";
 

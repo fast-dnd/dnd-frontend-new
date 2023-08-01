@@ -4,11 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 
 import { IDungeon } from "@/types/dungeon";
+import useGetMyDungeons from "@/hooks/use-get-my-dungeons";
 import Skeleton from "@/components/ui/skeleton";
 
 import {
   useGetFavoriteDungeons,
-  useGetMyDungeons,
   useGetRecentDungeons,
   useGetRecommendedDungeons,
 } from "../../hooks/use-get-home-data";

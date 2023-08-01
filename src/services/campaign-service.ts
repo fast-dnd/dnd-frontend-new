@@ -1,5 +1,4 @@
-import { campaignDetailSchema, campaignsSchema } from "@/types/dungeon";
-import { ICampaignSchema } from "@/app/(authed)/create-campaign/[[...campaignId]]/schemas/campaign-schema";
+import { campaignDetailSchema, campaignsSchema, ICampaignForBackend } from "@/types/dungeon";
 
 import createApi from "./api-factory";
 
@@ -29,11 +28,11 @@ const addFavorite = async (campaignId: string) => {
   return await campaignApi.post("favourite", { campaignId });
 };
 
-const createCampaign = async (data: ICampaignSchema) => {
+const createCampaign = async (data: ICampaignForBackend) => {
   return await campaignApi.post("", data);
 };
 
-const updateCampaign = async (data: ICampaignSchema & { campaignId: string }) => {
+const updateCampaign = async (data: ICampaignForBackend & { campaignId: string }) => {
   return await campaignApi.put(data.campaignId, data);
 };
 

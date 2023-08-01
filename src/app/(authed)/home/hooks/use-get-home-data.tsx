@@ -14,14 +14,6 @@ export const useGetRecommendedDungeons = (enabled: boolean) => {
   });
 };
 
-export const useGetMyDungeons = (enabled: boolean) => {
-  return useQuery({
-    queryKey: [dungeonKey, "myDungeons"],
-    queryFn: dungeonService.getMyDungeons,
-    enabled,
-  });
-};
-
 export const useGetRoomHistory = () => {
   return useQuery({
     queryKey: [roomKey, "roomHistory"],
