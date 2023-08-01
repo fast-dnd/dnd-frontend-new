@@ -30,7 +30,7 @@ const addFavorite = async (campaignId: string) => {
 };
 
 const createCampaign = async (data: ICampaignSchema) => {
-  return await campaignApi.post("", { data });
+  return await campaignApi.post("", data);
 };
 
 const updateCampaign = async (data: ICampaignSchema & { campaignId: string }) => {
