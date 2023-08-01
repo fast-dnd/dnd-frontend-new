@@ -9,7 +9,6 @@ export const initialSchema = z.object({
       return { message: "Bob verbal engagement is required" };
     },
   }),
-  style: z.string().min(1, "Style is required").min(5, "Style must be at least 5 characters"),
   tags: z
     .array(
       z.object({

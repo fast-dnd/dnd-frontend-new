@@ -36,6 +36,7 @@ const CreateRoomCampaigns = () => {
   if (campaignsLoading) {
     return (
       <div className="flex max-h-[350px] flex-1 flex-col gap-4 overflow-y-auto lg:max-h-full lg:pr-8">
+        <CreateRoomNavbar />
         <Skeleton amount={3} />
       </div>
     );
@@ -43,6 +44,7 @@ const CreateRoomCampaigns = () => {
   if (!campaigns) {
     return (
       <div className="flex h-full w-full items-center justify-center">
+        <CreateRoomNavbar />
         <div className="text-5xl text-white">Something went wrong</div>
       </div>
     );

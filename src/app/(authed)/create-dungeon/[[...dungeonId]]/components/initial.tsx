@@ -117,17 +117,7 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
                 </div>
               </div>
               <div className="flex flex-col gap-5 lg:flex-row lg:gap-0">
-                <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8 lg:pr-8">
-                  <Input
-                    label="Style"
-                    placeholder="The Enchanted Grove"
-                    className="m-0"
-                    {...register("style")}
-                    state={errors?.style ? "error" : undefined}
-                    errorMessage={errors?.style?.message}
-                  />
-                </div>
-                <div className="flex w-full flex-col gap-5 lg:-ml-3 lg:w-1/2 lg:gap-8">
+                <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8">
                   <div>
                     <Controller
                       control={control}

@@ -116,7 +116,7 @@ const UpdateRoom = ({
               isLoading={isGameStarting || gameStarting}
               onClick={() => startGame({ conversationId })}
             >
-              START
+              START ({roomData.price} coins)
             </Button>
           </TooltipTrigger>
           {!canBegin && (

@@ -17,13 +17,7 @@ function CreateRoomNavbar() {
   return (
     <>
       <div className="hidden min-w-fit justify-between lg:flex">
-        <Tabs
-          type="base"
-          selectedTab={baseTab}
-          onTabClick={(prevTab) => {
-            if (prevTab !== homeStore.baseTab.get()) homeStore.subTab.set("top");
-          }}
-        />
+        <Tabs type="base" selectedTab={baseTab} />
         <Tabs type="sub" selectedTab={subTab} />
       </div>
       <div className="block lg:hidden">

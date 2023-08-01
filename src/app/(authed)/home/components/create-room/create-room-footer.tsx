@@ -39,6 +39,8 @@ const CreateRoomFooter = ({
   const [loadingRoom, setLoadingRoom] = useState(false);
   const [templateSentences, setTemplateSentences] = useState("");
 
+  const [loadingCreateCampaign, setLoadingCreateCampaign] = useState(false);
+
   const onCreateRoom = () => {
     createRoom(
       {
@@ -99,6 +101,24 @@ const CreateRoomFooter = ({
           )}
         </div>
       )}
+      {baseTab === "CAMPAIGNS" &&
+        subTab === "owned" &&
+        selectedDungeon === undefined &&
+        selectedCampaign === undefined && (
+          <div className="flex flex-1 flex-col justify-end gap-4 lg:flex-row lg:gap-8">
+            <Button
+              isLoading={loadingCreateCampaign}
+              variant="primary"
+              className="h-9 w-full px-8 lg:h-14 lg:w-fit"
+              onClick={() => {
+                setLoadingCreateCampaign(true);
+                router.push("/create-campaign");
+              }}
+            >
+              CREATE CAMPAIGN
+            </Button>
+          </div>
+        )}
       {selectedDungeon === undefined && selectedCampaign !== undefined && (
         <div className="flex w-full flex-row justify-between lg:justify-end lg:gap-8">
           <Button
