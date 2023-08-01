@@ -1,31 +1,35 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineLeft } from "react-icons/ai";
-import { toast } from "react-toastify";
 
-import { ICampaignDetail } from "@/types/dungeon";
+import { ICampaignDetail, IDungeon } from "@/types/dungeon";
 import { fileToBase64 } from "@/utils/b64";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
+import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 import UploadImage from "@/components/ui/upload-image";
 import MobileNavbar from "@/components/mobile-navbar";
+import tagsComboboxStyles from "@/app/(authed)/create-dungeon/[[...dungeonId]]/utils/tags-combobox-styles";
 
 import useCreateCampaign from "../hooks/use-create-campaign";
 import useUpdateCampaign from "../hooks/use-update-campaign";
 import { campaignSchema, ICampaignSchema } from "../schemas/campaign-schema";
-import CreateCampaignDungeon from ".//create-campaign-dungeon";
 
-const CreateCampaignForm = ({ campaign }: { campaign?: ICampaignDetail }) => {
+const CreateCampaignForm = ({
+  campaign,
+  myDungeons,
+}: {
+  campaign?: ICampaignDetail;
+  myDungeons: IDungeon[];
+}) => {
   const campaignId = campaign?._id;
-
-  const [dungeonId, setDungeonId] = useState("");
 
   const {
     register,
@@ -36,40 +40,26 @@ const CreateCampaignForm = ({ campaign }: { campaign?: ICampaignDetail }) => {
     formState: { errors },
   } = useForm<ICampaignSchema>({
     resolver: zodResolver(campaignSchema),
-    defaultValues: campaign
-      ? {
-          ...campaign,
-          dungeons: campaign.dungeons.map((dungeon) => dungeon._id),
-        }
-      : { description: "", dungeons: [], name: "" },
+    defaultValues: {
+      ...campaign,
+      dungeons: campaign?.dungeons.map((dungeon) => ({ value: dungeon._id, label: dungeon.name })),
+    },
   });
 
   const image = watch("image");
   const imageRef = useRef<HTMLInputElement>(null);
 
-  const dungeons = watch("dungeons");
-
-  const addDungeon = (dungeonId: string) => {
-    if (!dungeons.includes(dungeonId)) {
-      setValue("dungeons", [...dungeons, dungeonId]);
-    } else {
-      toast.error("Adventure already in campaign");
-    }
-  };
-
-  const removeDungeon = (dungeonId: string) => {
-    const newDungeons = [...dungeons];
-    const index = newDungeons.indexOf(dungeonId);
-    if (index > -1) newDungeons.splice(index, 1);
-    setValue("dungeons", newDungeons);
-  };
-
   const { mutate: createCampaign, isLoading: isCreating } = useCreateCampaign();
   const { mutate: updateCampaign, isLoading: isUpdating } = useUpdateCampaign();
 
   const onSubmit: SubmitHandler<ICampaignSchema> = (data) => {
-    if (campaignId) updateCampaign({ ...data, campaignId });
-    else createCampaign(data);
+    const dataForBackend = {
+      ...data,
+      dungeons: data.dungeons.map((dungeon) => dungeon.value),
+    };
+
+    if (campaignId) updateCampaign({ ...dataForBackend, campaignId });
+    else createCampaign(dataForBackend);
   };
 
   const addImage = () => {
@@ -79,7 +69,7 @@ const CreateCampaignForm = ({ campaign }: { campaign?: ICampaignDetail }) => {
       if (newImage) setValue("image", newImage);
     });
   };
-
+  console.log(errors);
   return (
     <div className="flex justify-center overflow-y-auto pb-8">
       <div className="mt-4 flex flex-col items-center gap-4">
@@ -122,35 +112,35 @@ const CreateCampaignForm = ({ campaign }: { campaign?: ICampaignDetail }) => {
             </div>
 
             <div className="flex w-full flex-col gap-5 lg:gap-8">
-              {!!campaignId && (
-                <>
-                  <div className="flex max-h-[250px] w-full flex-col gap-1 overflow-y-auto">
-                    {dungeons?.map((dungeon) => (
-                      <CreateCampaignDungeon
-                        onDelete={() => removeDungeon(dungeon)}
-                        dungeonId={dungeon}
-                        key={dungeon}
-                      />
-                    ))}
-                  </div>
-                  <div className="flex flex-wrap justify-end gap-5 lg:gap-8">
-                    <Input
-                      placeholder="Enter dungeon ID..."
-                      onChange={(e) => setDungeonId(e.target.value)}
-                      className="m-0 h-9 min-w-[200px] lg:h-14 lg:text-xl"
+              <Controller
+                control={control}
+                name="dungeons"
+                render={({ field }) => {
+                  return (
+                    <ComboBox
+                      {...field}
+                      aria-label="Dungeons"
+                      animate
+                      label="Dungeons"
+                      onChange={(newValue) =>
+                        field.onChange(newValue as { value: string; label: string }[])
+                      }
+                      noOptionsMessage={() => "No dungeons found"}
+                      // isOptionDisabled={(option) => field.value.length >= 3}
+                      className="w-full"
+                      options={myDungeons.map((dungeon) => ({
+                        value: dungeon._id,
+                        label: dungeon.name,
+                      }))}
+                      isMulti
+                      closeMenuOnSelect={false}
+                      styles={tagsComboboxStyles(Boolean(errors?.dungeons))}
+                      state={errors?.dungeons ? "error" : undefined}
+                      errorMessage={errors?.dungeons?.message}
                     />
-                    <Button
-                      type="button"
-                      disabled={!dungeonId}
-                      variant={dungeonId ? "primary" : "outline"}
-                      className="h-9 w-full px-8 lg:h-14 lg:w-fit"
-                      onClick={() => addDungeon(dungeonId)}
-                    >
-                      ADD ADVENTURE
-                    </Button>
-                  </div>
-                </>
-              )}
+                  );
+                }}
+              />
 
               <Button type="submit" isLoading={isCreating || isUpdating}>
                 {campaignId ? "UPDATE" : "CREATE"}

@@ -60,6 +60,10 @@ export const campaignDetailSchema = campaignSchema.extend({
   dungeons: z.array(baseDungeonSchema),
 });
 
+export const campaignForBackendSchema = campaignSchema.omit({ _id: true, imageUrl: true }).extend({
+  image: z.string().optional(),
+});
+
 export const dungeonsSchema = z.array(dungeonSchema);
 
 export const campaignsSchema = z.array(campaignSchema);
@@ -73,5 +77,7 @@ export type IDungeon = z.infer<typeof dungeonSchema>;
 export type IDungeonDetail = z.infer<typeof dungeonDetailSchema>;
 
 export type ICampaign = z.infer<typeof campaignSchema>;
+
+export type ICampaignForBackend = z.infer<typeof campaignForBackendSchema>;
 
 export type ICampaignDetail = z.infer<typeof campaignDetailSchema>;

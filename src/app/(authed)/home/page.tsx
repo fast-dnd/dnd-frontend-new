@@ -11,6 +11,7 @@ import { homeStore } from "./stores/tab-store";
 
 const Home = () => {
   const homeTab = homeStore.homeTab.use();
+  const kingdomTab = homeStore.kingdomTab.use();
 
   return (
     <div className="flex h-full min-h-0 w-full flex-col overflow-y-auto lg:px-16 lg:pb-12">
@@ -19,7 +20,7 @@ const Home = () => {
       <Tabs type="home" selectedTab={homeTab} />
 
       <PlayTabContent homeTab={homeTab} />
-      <KingdomTabContent homeTab={homeTab} />
+      <KingdomTabContent homeTab={homeTab} kingdomTab={kingdomTab} />
       <SettingsTabContent homeTab={homeTab} />
 
       {homeTab === "HOW TO PLAY" && <HowToPlay />}

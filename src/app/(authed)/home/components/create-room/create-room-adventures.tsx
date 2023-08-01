@@ -4,11 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 
 import { IDungeon } from "@/types/dungeon";
+import useGetMyDungeons from "@/hooks/use-get-my-dungeons";
 import Skeleton from "@/components/ui/skeleton";
 
 import {
   useGetFavoriteDungeons,
-  useGetMyDungeons,
   useGetRecentDungeons,
   useGetRecommendedDungeons,
 } from "../../hooks/use-get-home-data";
@@ -23,12 +23,12 @@ const CreateRoomAdventures = () => {
 
   const { data: dungeons, isLoading: dungeonsLoading } =
     subTab === "top"
-      ? useGetRecommendedDungeons(homeTab == "PLAY" && baseTab === "ADVENTURES")
+      ? useGetRecommendedDungeons(homeTab == "PLAY" && baseTab === "adventures")
       : subTab === "owned"
-      ? useGetMyDungeons(homeTab == "PLAY" && baseTab === "ADVENTURES")
+      ? useGetMyDungeons(homeTab == "PLAY" && baseTab === "adventures")
       : subTab === "favorite"
-      ? useGetFavoriteDungeons(homeTab == "PLAY" && baseTab === "ADVENTURES")
-      : useGetRecentDungeons(homeTab == "PLAY" && baseTab === "ADVENTURES");
+      ? useGetFavoriteDungeons(homeTab == "PLAY" && baseTab === "adventures")
+      : useGetRecentDungeons(homeTab == "PLAY" && baseTab === "adventures");
 
   const [selectedDungeon, setSelectedDungeon] = useState<IDungeon>();
 

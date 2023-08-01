@@ -1,19 +1,19 @@
 "use client";
 
-import useGetMyDungeons from "@/hooks/use-get-my-dungeons";
 import Skeleton from "@/components/ui/skeleton";
 
+import { useGetMyCampaigns } from "../../hooks/use-get-home-data";
 import { homeStore } from "../../stores/tab-store";
-import KingdomDungeon from "./kingdom-dungeon";
+import KingdomCampaign from "./kingdom-campaign";
 
-const KingdomDungeons = () => {
-  const { data: myDungeons, isLoading } = useGetMyDungeons(
-    homeStore.homeTab.get() === "MY KINGDOM" && homeStore.kingdomTab.get() === "dungeons",
+const KingdomCampaigns = () => {
+  const { data: myCampaigns, isLoading } = useGetMyCampaigns(
+    homeStore.homeTab.get() === "MY KINGDOM" && homeStore.kingdomTab.get() === "campaigns",
   );
 
   if (isLoading) return <Skeleton />;
 
-  if (!myDungeons) {
+  if (!myCampaigns) {
     return (
       <div className="flex h-full w-full items-center justify-center">
         <div className="text-5xl text-white">Something went wrong</div>
@@ -23,11 +23,11 @@ const KingdomDungeons = () => {
 
   return (
     <div className="flex max-h-[350px] flex-1 flex-col gap-4 overflow-y-auto lg:max-h-full lg:pr-8">
-      {myDungeons.map((dungeon) => (
-        <KingdomDungeon key={dungeon._id} dungeon={dungeon} />
+      {myCampaigns.map((campaign) => (
+        <KingdomCampaign key={campaign._id} campaign={campaign} />
       ))}
     </div>
   );
 };
 
-export default KingdomDungeons;
+export default KingdomCampaigns;

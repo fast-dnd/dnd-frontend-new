@@ -5,7 +5,7 @@ import CreateRoomCampaigns from "./create-room-campaigns";
 const CreateRoom = () => {
   const baseTab = homeStore.baseTab.use();
 
-  if (baseTab === "ADVENTURES") return <CreateRoomAdventures />;
+  if (baseTab === "adventures") return <CreateRoomAdventures />;
   else return <CreateRoomCampaigns />;
 };
 
