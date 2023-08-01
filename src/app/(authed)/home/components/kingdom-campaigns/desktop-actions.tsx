@@ -5,6 +5,8 @@ import { ICampaign } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
+import DeleteModal from "./delete-modal";
+
 interface IDesktopActionsProps {
   showDesktopActions: boolean;
   copied: boolean;
@@ -53,6 +55,8 @@ const DesktopActions = ({ showDesktopActions, copied, onCopy, campaign }: IDeskt
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
+
+      <DeleteModal campaign={campaign} />
     </div>
   );
 };

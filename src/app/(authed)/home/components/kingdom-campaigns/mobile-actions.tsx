@@ -3,6 +3,8 @@ import { MdCheck, MdEdit, MdOutlineContentCopy } from "react-icons/md";
 
 import { ICampaign } from "@/types/dungeon";
 
+import DeleteModal from "./delete-modal";
+
 interface IMobileActionsProps {
   onCopy: () => void;
   copied: boolean;
@@ -27,6 +29,7 @@ const MobileActions = ({ onCopy, copied, campaign }: IMobileActionsProps) => {
         <MdEdit />
         <p>Edit</p>
       </Link>
+      <DeleteModal campaign={campaign} isMobile />
     </div>
   );
 };

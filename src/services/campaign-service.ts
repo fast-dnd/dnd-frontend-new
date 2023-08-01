@@ -37,6 +37,10 @@ const updateCampaign = async (data: ICampaignSchema & { campaignId: string }) =>
   return await campaignApi.put(data.campaignId, data);
 };
 
+const deleteCampaign = async (campaignId: string) => {
+  return await campaignApi.delete(campaignId);
+};
+
 const campaignService = {
   getRecommended,
   getFavorites,
@@ -46,6 +50,7 @@ const campaignService = {
   addFavorite,
   createCampaign,
   updateCampaign,
+  deleteCampaign,
 };
 export default campaignService;
 
