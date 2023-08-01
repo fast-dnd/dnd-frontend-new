@@ -167,7 +167,7 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
               variant="ghost"
               disabled={powerUp === 0 || !canPlay}
               onClick={() => setPowerUp(powerUp - 1)}
-              className="flex h-full w-12 items-center justify-center bg-white/10 text-white"
+              className="flex h-full w-12 items-center justify-center bg-white/10 px-0 text-white"
             >
               <FiMinus />
             </Button>
@@ -189,7 +189,7 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
               variant="ghost"
               disabled={powerUp === 2 || powerUp >= currentPlayer.mana || !canPlay}
               onClick={() => setPowerUp(powerUp + 1)}
-              className="flex h-full w-12 items-center justify-center bg-white/10 text-white"
+              className="flex h-full w-12 items-center justify-center bg-white/10 px-0 text-white"
             >
               <FiPlus />
             </Button>

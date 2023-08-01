@@ -39,7 +39,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
             variant="ghost"
             disabled={!canPlay}
             className={cn(
-              "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
+              "pointer-events-auto h-9 w-9 shrink grow bg-white/5 px-0 text-white lg:shrink-0 lg:grow-0",
               move === "discover_health" && "border-primary",
             )}
             onClick={() => setMove("discover_health")}
@@ -50,7 +50,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
             variant="ghost"
             disabled={!canPlay}
             className={cn(
-              "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
+              "pointer-events-auto h-9 w-9 shrink grow bg-white/5 px-0 text-white lg:shrink-0 lg:grow-0",
               move === "discover_mana" && "border-primary",
             )}
             onClick={() => setMove("discover_mana")}
@@ -61,7 +61,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
             variant="ghost"
             disabled={!canPlay}
             className={cn(
-              "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
+              "pointer-events-auto h-9 w-9 shrink grow bg-white/5 px-0 text-white lg:shrink-0 lg:grow-0",
               move === "conversation_with_team" && "border-primary",
             )}
             onClick={() => setMove("conversation_with_team")}
@@ -72,7 +72,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
             variant="ghost"
             disabled={!canPlay}
             className={cn(
-              "pointer-events-auto h-9 w-9 shrink grow bg-white/5 text-white lg:shrink-0 lg:grow-0",
+              "pointer-events-auto h-9 w-9 shrink grow bg-white/5 px-0 text-white lg:shrink-0 lg:grow-0",
               move === "rest" && "border-primary",
             )}
             onClick={() => setMove("rest")}
