@@ -13,14 +13,13 @@ export const initialDungeonFormData: IDungeonDetailWithTags = {
   maxPlayers: 3,
   recommendedResponseDetailsDepth: "blitz",
   description: "",
-  style: "",
   tags: [],
   imageUrl: "",
   locations: [],
   champions: [],
   actionLevel: 0,
   misteryLevel: 0,
-  realityLevel: 0,
+  realityLevel: 50,
 };
 
 export const getInitialDungeonFormData = () => deepClone(initialDungeonFormData);

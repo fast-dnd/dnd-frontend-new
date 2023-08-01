@@ -29,7 +29,6 @@ const baseDungeonSchema = z.object({
   _id: z.string(),
   name: z.string(),
   description: z.string(),
-  style: z.string(),
   recommendedResponseDetailsDepth: z.enum(dungeonDurationsArray),
   tags: z.array(z.enum(dungeonTags)),
   maxPlayers: z.number(),
