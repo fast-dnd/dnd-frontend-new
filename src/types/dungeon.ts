@@ -33,6 +33,8 @@ const baseDungeonSchema = z.object({
   tags: z.array(z.enum(dungeonTags)),
   maxPlayers: z.number(),
   imageUrl: z.string(),
+  rating: z.number(),
+  numOfRatings: z.number(),
 });
 
 export const dungeonSchema = baseDungeonSchema.extend({

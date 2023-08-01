@@ -34,6 +34,11 @@ const Settings = () => {
         <p className="inline-flex items-center justify-center text-lg leading-7">
           DM coin ballance:
           <Image src="/images/dm-coin.png" alt="dm-coin" height={30} width={30} className="" />
+          <span className="font-medium"> {account.coins}</span>
+        </p>
+        <p className="inline-flex items-center justify-center text-lg leading-7">
+          DM currency ballance:
+          <Image src="/images/dm-coin.png" alt="dm-coin" height={30} width={30} className="" />
           <span className="font-medium"> {account.dmCurrency}</span>
         </p>
         <p className="break-all text-center text-xl text-white/60">{account.properties.email}</p>
