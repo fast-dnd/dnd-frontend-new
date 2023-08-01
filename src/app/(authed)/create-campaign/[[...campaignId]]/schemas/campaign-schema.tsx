@@ -6,7 +6,12 @@ export const campaignSchema = z.object({
     .string()
     .min(1, "This field is required")
     .min(5, "Description must be at least 5 characters"),
-  dungeons: z.array(z.string()),
+  dungeons: z.array(
+    z.object({
+      label: z.string(),
+      value: z.string(),
+    }),
+  ),
   image: z.string().optional(),
 });
 
