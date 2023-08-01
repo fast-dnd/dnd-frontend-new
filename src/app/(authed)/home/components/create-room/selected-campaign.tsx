@@ -1,9 +1,13 @@
+import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { ICampaign, IDungeon } from "@/types/dungeon";
 import useGetCampaign from "@/hooks/use-get-campaign";
+import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 
+import { homeStore } from "../../stores/tab-store";
 import CreateRoomDungeon from "./create-room-dungeon";
 
 interface SelectedCampaignProps {
@@ -13,7 +17,9 @@ interface SelectedCampaignProps {
 }
 
 const SelectedCampaign = ({ selectedCampaign, dungeon, setDungeon }: SelectedCampaignProps) => {
+  const router = useRouter();
   const { data: campaign, isLoading } = useGetCampaign(selectedCampaign._id);
+  const [loadingEdit, setLoadingEdit] = useState(false);
 
   if (isLoading) {
     return (
@@ -36,7 +42,7 @@ const SelectedCampaign = ({ selectedCampaign, dungeon, setDungeon }: SelectedCam
       <div className="flex flex-row gap-8 rounded-md border border-white/10 lg:border-0">
         <Image
           src={selectedCampaign.imageUrl || "/images/default-dungeon.png"}
-          alt={selectedCampaign.name}
+          alt={selectedCampaign.name ?? "campaign"}
           width={180}
           height={180}
           className="hidden lg:block lg:h-[180px] lg:w-[180px]"
@@ -55,6 +61,19 @@ const SelectedCampaign = ({ selectedCampaign, dungeon, setDungeon }: SelectedCam
             {selectedCampaign.description}
           </p>
         </div>
+        {homeStore.subTab.get() === "owned" && (
+          <Button
+            isLoading={loadingEdit}
+            variant="primary"
+            className="h-9 w-full px-8 lg:h-14 lg:w-fit"
+            onClick={() => {
+              setLoadingEdit(true);
+              router.push(`/create-campaign/${selectedCampaign._id}`);
+            }}
+          >
+            EDIT
+          </Button>
+        )}
       </div>
 
       <div className="flex flex-col gap-4 pl-4 pr-0 lg:gap-8 lg:pl-8 lg:pr-4">
