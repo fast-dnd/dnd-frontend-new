@@ -23,12 +23,12 @@ const CreateRoomCampaigns = () => {
 
   const { data: campaigns, isLoading: campaignsLoading } =
     subTab === "top"
-      ? useGetRecommendedCampaigns(homeTab == "PLAY" && baseTab === "CAMPAIGNS")
+      ? useGetRecommendedCampaigns(homeTab == "PLAY" && baseTab === "campaigns")
       : subTab === "owned"
-      ? useGetMyCampaigns(homeTab == "PLAY" && baseTab === "CAMPAIGNS")
+      ? useGetMyCampaigns(homeTab == "PLAY" && baseTab === "campaigns")
       : subTab === "favorite"
-      ? useGetFavoriteCampaigns(homeTab == "PLAY" && baseTab === "CAMPAIGNS")
-      : useGetFavoriteCampaigns(homeTab == "PLAY" && baseTab === "CAMPAIGNS"); // todo recent campaigns
+      ? useGetFavoriteCampaigns(homeTab == "PLAY" && baseTab === "campaigns")
+      : useGetFavoriteCampaigns(homeTab == "PLAY" && baseTab === "campaigns"); // todo recent campaigns
 
   const [selectedDungeon, setSelectedDungeon] = useState<IDungeon>();
   const [selectedCampaign, setSelectedCampaign] = useState<ICampaign>();

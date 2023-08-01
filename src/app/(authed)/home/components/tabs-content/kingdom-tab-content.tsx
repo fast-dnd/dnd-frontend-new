@@ -2,12 +2,21 @@ import { cn } from "@/utils/style-utils";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 
-import { HomeTabType } from "../../stores/tab-store";
+import { HomeTabType, KingdomTabType } from "../../stores/tab-store";
+import AddCampaign from "../add-campaign";
 import AddDungeon from "../add-dungeon";
 import Avatars from "../avatars";
+import KingdomCampaigns from "../kingdom-campaigns";
 import KingdomDungeons from "../kingdom-dungeons";
+import KingdomNavbar from "../kingdom-dungeons/kingdom-navbar";
 
-const KingdomTabContent = ({ homeTab }: { homeTab: HomeTabType }) => {
+const KingdomTabContent = ({
+  homeTab,
+  kingdomTab,
+}: {
+  homeTab: HomeTabType;
+  kingdomTab: KingdomTabType;
+}) => {
   return (
     <div
       className={cn(
@@ -23,11 +32,28 @@ const KingdomTabContent = ({ homeTab }: { homeTab: HomeTabType }) => {
       </div>
       <div className="flex flex-1 basis-2/3">
         <Box
-          title="MY DUNGEONS"
+          title="MY COLLECTION"
           className="mb-4 flex min-h-0 flex-1 flex-col gap-4 p-4 lg:mb-0 lg:gap-8 lg:p-8"
         >
-          <KingdomDungeons />
-          <AddDungeon />
+          <KingdomNavbar kingdomTab={kingdomTab} />
+          <div
+            className={cn(
+              "flex min-h-0 flex-1 flex-col gap-4 lg:gap-8",
+              kingdomTab !== "dungeons" && "hidden",
+            )}
+          >
+            <KingdomDungeons />
+            <AddDungeon />
+          </div>
+          <div
+            className={cn(
+              "flex min-h-0 flex-1 flex-col gap-4 lg:gap-8",
+              kingdomTab !== "campaigns" && "hidden",
+            )}
+          >
+            <KingdomCampaigns />
+            <AddCampaign />
+          </div>
         </Box>
       </div>
     </div>

@@ -10,7 +10,7 @@ const useCreateCampaign = () => {
   return useMutation({
     mutationFn: campaignService.createCampaign,
     onSuccess: (_data) => {
-      if (_data._id) router.push(`/create-campaign/${_data._id}`);
+      router.push("/home");
       toast.success("Campaign created successfully!");
     },
   });
