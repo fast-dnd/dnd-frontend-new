@@ -4,10 +4,12 @@ import { useRef } from "react";
 import Link from "next/link";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineLeft } from "react-icons/ai";
 
 import { ICampaignDetail, IDungeon } from "@/types/dungeon";
+import { campaignKey } from "@/services/campaign-service";
 import { fileToBase64 } from "@/utils/b64";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
@@ -29,6 +31,8 @@ const CreateCampaignForm = ({
   campaign?: ICampaignDetail;
   myDungeons: IDungeon[];
 }) => {
+  const queryClient = useQueryClient();
+
   const campaignId = campaign?._id;
 
   const {
@@ -58,7 +62,11 @@ const CreateCampaignForm = ({
       dungeons: data.dungeons.map((dungeon) => dungeon.value),
     };
 
-    if (campaignId) updateCampaign({ ...dataForBackend, campaignId });
+    if (campaignId)
+      updateCampaign(
+        { ...dataForBackend, campaignId },
+        { onSuccess: () => queryClient.invalidateQueries([campaignKey, campaignId]) },
+      );
     else createCampaign(dataForBackend);
   };
 
