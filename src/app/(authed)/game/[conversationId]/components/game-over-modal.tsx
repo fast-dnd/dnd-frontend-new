@@ -37,7 +37,7 @@ const GameOverModal = ({ open, close, result, dungeonName, players }: GameOverMo
       }}
     >
       <DialogContent className="max-h-[700px] w-fit lg:max-w-[550px]">
-        <DialogHeader className="lg:px-0">
+        <DialogHeader>
           <DialogTitle>
             {result === "WON" && "Game finished"}
             {result === "LOST" && "You failed"}

@@ -1,9 +1,10 @@
-import { avatarSchema, kingdomSchema } from "@/types/kingdom";
+import { avatarSchema, kingdomSchema, rewardsSchema } from "@/types/kingdom";
 import { IAvatarSchema } from "@/app/(authed)/create-avatar/[[...avatarId]]/schemas/avatar-schema";
 
 import createApi from "./api-factory";
 
 const kingdomApi = createApi({ commonPrefix: "kingdom" });
+const rewardApi = createApi({ commonPrefix: "rewards" });
 
 const getKingdom = async () => {
   return await kingdomApi.get("").then((res) => kingdomSchema.parse(res.data));
@@ -21,11 +22,16 @@ const updateAvatar = async (data: IAvatarSchema & { avatarId: string }) => {
   return await kingdomApi.put("avatar", data);
 };
 
+const getRewards = async () => {
+  return await rewardApi.get("").then((res) => rewardsSchema.parse(res.data));
+};
+
 const kingdomService = {
   getKingdom,
   getAvatar,
   createAvatar,
   updateAvatar,
+  getRewards,
 };
 
 export default kingdomService;

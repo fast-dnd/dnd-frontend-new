@@ -22,7 +22,7 @@ const KingdomDungeons = () => {
   }
 
   return (
-    <div className="flex max-h-[350px] flex-1 flex-col gap-4 overflow-y-auto lg:max-h-full lg:pr-8">
+    <div className="flex h-[400px] flex-col gap-4 overflow-y-auto lg:max-h-full lg:flex-1 lg:pr-8">
       {myDungeons.map((dungeon) => (
         <KingdomDungeon key={dungeon._id} dungeon={dungeon} />
       ))}
