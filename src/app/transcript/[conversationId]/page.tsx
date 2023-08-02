@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 
 import useGetTranscript from "./hooks/use-get-transcript";
@@ -11,13 +10,21 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
 
   if (isLoading) {
     return (
-      <div className="no-scrollbar flex flex-1 flex-col gap-8 overflow-y-auto">Loading...</div>
+      <div className="no-scrollbar flex flex-1 flex-col gap-8 overflow-y-auto">
+        <Link href="/home" className="text-center text-6xl underline">
+          Go home
+        </Link>
+        Loading...
+      </div>
     );
   }
 
   if (!transcripts) {
     return (
       <div className="flex h-full w-full items-center justify-center">
+        <Link href="/home" className="text-center text-6xl underline">
+          Go home
+        </Link>
         <div className="text-5xl text-white">Something went wrong</div>
       </div>
     );
@@ -25,7 +32,7 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
 
   return (
     <div className="flex flex-col gap-10">
-      <Link href="/home" className="text-center text-6xl">
+      <Link href="/home" className="text-center text-6xl underline">
         Go home
       </Link>
       <div className="flex flex-col gap-10">
