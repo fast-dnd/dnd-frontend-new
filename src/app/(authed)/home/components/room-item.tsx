@@ -38,6 +38,11 @@ const RoomItem = ({ room }: { room: IRoomArrayElement }) => {
           />
         </Link>
       )}
+      {room.state === "CLOSED" && (
+        <Link href={`/transcript/${room.conversationId}`} aria-label="Transcript">
+          Transcript
+        </Link>
+      )}
     </div>
   );
 };
