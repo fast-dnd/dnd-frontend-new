@@ -119,7 +119,8 @@ const Gameplay = (props: { conversationId: string }) => {
           setRewardModal(true);
         }}
         result={result}
-        dungeonName={dungeonData.name}
+        dungeon={dungeonData}
+        conversationId={conversationId}
         players={roomData.playerState}
       />
       <RewardModal
