@@ -210,7 +210,7 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
             <Button
               disabled={!canPlay || (!move && !freeWill)}
               className={cn(
-                "h-12 normal-case",
+                "h-12 px-0 normal-case",
                 rollButtonState !== "CANPLAY" && "bg-white/5 text-white",
               )}
               onClick={onPlay}

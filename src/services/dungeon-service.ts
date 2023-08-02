@@ -1,4 +1,4 @@
-import { dungeonDetailSchema, dungeonsSchema, IDungeonDetail } from "@/types/dungeon";
+import { dungeonDetailSchema, dungeonsSchema, IDungeonDetail, IRateDungeon } from "@/types/dungeon";
 
 import createApi from "./api-factory";
 
@@ -40,6 +40,10 @@ const getRecent = async () => {
   return await dungeonApi.get("recent").then((res) => dungeonsSchema.parse(res.data));
 };
 
+const rateDungeon = async (data: IRateDungeon) => {
+  return await dungeonApi.post("rate", data);
+};
+
 const dungeonService = {
   createDungeon,
   updateDungeon,
@@ -50,6 +54,7 @@ const dungeonService = {
   addFavorite,
   getFavorites,
   getRecent,
+  rateDungeon,
 };
 
 export default dungeonService;
