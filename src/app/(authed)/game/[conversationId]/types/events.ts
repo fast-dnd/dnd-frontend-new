@@ -1,4 +1,5 @@
 import { IGameRoomData, IPlayerMove } from "@/types/game";
+import { IReward } from "@/types/kingdom";
 import { IPlayer } from "@/types/room";
 
 export type IGameplaySocketEvent = ISocketEvent | IChunkEvent;
@@ -27,6 +28,11 @@ export interface IAskEvent {
 export interface IAnswerEvent {
   event: "DM_ANSWERED_QUESTION";
   data: { question: string; answer: string };
+}
+
+export interface IRewardEvent {
+  event: "REWARD_EARNED";
+  data: { accountId: string; player: IPlayer; reward: IReward };
 }
 
 export type IQuestionEvent = IAskEvent | IAnswerEvent;

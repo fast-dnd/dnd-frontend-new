@@ -16,18 +16,37 @@ import {
 import Spinner from "@/components/ui/spinner";
 
 import Player from "./player";
+import { Rating } from "@smastrom/react-rating";
+import useRateDungeon from "@/hooks/use-rate-dungeon";
+import { IDungeonDetail } from "@/types/dungeon";
 
 interface GameOverModalProps {
   open: boolean;
   close: () => void;
   result: "GAMING" | "WON" | "LOST";
-  dungeonName: string;
+  dungeon: IDungeonDetail;
+  conversationId: string;
   players: IGamePlayer[];
 }
 
-const GameOverModal = ({ open, close, result, dungeonName, players }: GameOverModalProps) => {
+const GameOverModal = ({
+  open,
+  close,
+  result,
+  dungeon,
+  conversationId,
+  players,
+}: GameOverModalProps) => {
   const router = useRouter();
   const [goingHome, setGoingHome] = useState(false);
+  const [rating, setRating] = useState(3);
+  const [rated, setRated] = useState(false);
+  const { mutate } = useRateDungeon();
+
+  const rateDungeon = () => {
+    setRated(true);
+    mutate({ dungeonId: dungeon._id, rating, roomId: conversationId });
+  };
 
   return (
     <Dialog
@@ -37,7 +56,7 @@ const GameOverModal = ({ open, close, result, dungeonName, players }: GameOverMo
       }}
     >
       <DialogContent className="max-h-[700px] w-fit lg:max-w-[550px]">
-        <DialogHeader className="lg:px-0">
+        <DialogHeader>
           <DialogTitle>
             {result === "WON" && "Game finished"}
             {result === "LOST" && "You failed"}
@@ -45,7 +64,7 @@ const GameOverModal = ({ open, close, result, dungeonName, players }: GameOverMo
           <DialogDescription className="text-center">
             {result === "WON" && (
               <span>
-                You have completed <span className="font-semibold">{dungeonName}</span>
+                You have completed <span className="font-semibold">{dungeon.name}</span>
               </span>
             )}
             {result === "LOST" && (
@@ -63,11 +82,27 @@ const GameOverModal = ({ open, close, result, dungeonName, players }: GameOverMo
             <Player key={player.accountId} player={player} />
           ))}
         </div>
+        <div className="mt-6 flex w-full flex-col gap-3">
+          <div className="w-full border-t border-white/25" />
+          <p>Rate this adventure</p>
+          <div className="flex items-center gap-4">
+            <Rating className="grow" value={rating} onChange={setRating} isDisabled={rated} />
+            <Button
+              variant={rated ? "outline" : "primary"}
+              className="h-fit w-fit"
+              onClick={rateDungeon}
+              disabled={rated}
+            >
+              Rate
+            </Button>
+          </div>
+        </div>
         <DialogFooter>
           <Button
             variant="outline"
             className="flex w-fit flex-1 border-primary px-8 text-base lg:text-xl"
             onClick={close}
+            autoFocus
           >
             CLOSE
           </Button>

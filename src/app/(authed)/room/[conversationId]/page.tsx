@@ -9,7 +9,7 @@ import RoomInfo from "./components/room-info";
 
 const Room = ({ params }: { params: { conversationId: string } }) => {
   const conversationId = params.conversationId;
-
+  // todo add backgroundUrl
   return (
     <div className="mt-8 h-full min-h-0 w-full overflow-y-auto lg:mt-0">
       <MobileNavbar />

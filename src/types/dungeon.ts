@@ -38,6 +38,8 @@ const baseDungeonSchema = z.object({
 export const dungeonSchema = baseDungeonSchema.extend({
   locations: z.array(z.string()),
   champions: z.array(z.string()),
+  rating: z.number(),
+  numOfRatings: z.number(),
 });
 
 export const dungeonDetailSchema = baseDungeonSchema.extend({
@@ -46,6 +48,12 @@ export const dungeonDetailSchema = baseDungeonSchema.extend({
   realityLevel: z.number().min(0).max(100),
   actionLevel: z.number().min(0).max(100),
   misteryLevel: z.number().min(0).max(100),
+});
+
+export const rateDungeonSchema = z.object({
+  dungeonId: z.string(),
+  rating: z.number().min(0).max(5),
+  roomId: z.string(),
 });
 
 export const campaignSchema = z.object({
@@ -75,6 +83,8 @@ export type IChampion = z.infer<typeof championSchema>;
 export type IDungeon = z.infer<typeof dungeonSchema>;
 
 export type IDungeonDetail = z.infer<typeof dungeonDetailSchema>;
+
+export type IRateDungeon = z.infer<typeof rateDungeonSchema>;
 
 export type ICampaign = z.infer<typeof campaignSchema>;
 

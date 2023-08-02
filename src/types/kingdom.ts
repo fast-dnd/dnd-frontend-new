@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+const rarities = ["bronze", "silver", "gold", "diamond"] as const;
+
 export const avatarSchema = z.object({
   _id: z.string(),
   name: z.string(),
@@ -15,6 +17,17 @@ export const kingdomSchema = z.object({
   gold: z.number(),
 });
 
+export const rewardSchema = z.object({
+  _id: z.string(),
+  name: z.string(),
+  rarity: z.enum(rarities),
+  url: z.string(),
+});
+
+export const rewardsSchema = z.array(rewardSchema);
+
 export type IAvatar = z.infer<typeof avatarSchema>;
 
 export type IKingdom = z.infer<typeof kingdomSchema>;
+
+export type IReward = z.infer<typeof rewardSchema>;

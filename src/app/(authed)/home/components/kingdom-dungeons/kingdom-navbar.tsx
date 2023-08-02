@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { baseTabs, homeStore, KingdomTabType } from "../../stores/tab-store";
+import { homeStore, kingdomTabs, KingdomTabType } from "../../stores/tab-store";
 import Tabs from "../tabs";
 
 const KingdomNavbar = ({ kingdomTab }: { kingdomTab: KingdomTabType }) => {
@@ -27,7 +27,7 @@ const KingdomNavbar = ({ kingdomTab }: { kingdomTab: KingdomTabType }) => {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {baseTabs.map((kingdomTab) => (
+              {kingdomTabs.map((kingdomTab) => (
                 <SelectItem key={kingdomTab} value={kingdomTab} className="capitalize">
                   {kingdomTab}
                 </SelectItem>

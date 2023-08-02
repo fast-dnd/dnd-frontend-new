@@ -9,6 +9,7 @@ import Avatars from "../avatars";
 import KingdomCampaigns from "../kingdom-campaigns";
 import KingdomDungeons from "../kingdom-dungeons";
 import KingdomNavbar from "../kingdom-dungeons/kingdom-navbar";
+import KingdomRewards from "../kingdom-rewards";
 
 const KingdomTabContent = ({
   homeTab,
@@ -33,7 +34,7 @@ const KingdomTabContent = ({
       <div className="flex flex-1 basis-2/3">
         <Box
           title="MY COLLECTION"
-          className="mb-4 flex min-h-0 flex-1 flex-col gap-4 p-4 lg:mb-0 lg:gap-8 lg:p-8"
+          className="mb-4 flex min-h-0 flex-col gap-4 p-4 lg:mb-0 lg:flex-1 lg:gap-8 lg:p-8"
         >
           <KingdomNavbar kingdomTab={kingdomTab} />
           <div
@@ -53,6 +54,14 @@ const KingdomTabContent = ({
           >
             <KingdomCampaigns />
             <AddCampaign />
+          </div>
+          <div
+            className={cn(
+              "flex min-h-0 flex-1 flex-col gap-4 lg:gap-8",
+              kingdomTab !== "rewards" && "hidden",
+            )}
+          >
+            <KingdomRewards />
           </div>
         </Box>
       </div>

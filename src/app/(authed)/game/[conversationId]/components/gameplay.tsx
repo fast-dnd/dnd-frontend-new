@@ -9,11 +9,13 @@ import { Box } from "@/components/ui/box";
 import Spinner from "@/components/ui/spinner";
 
 import useGameplaySocket from "../hooks/use-gameplay-socket";
+import useRewardSocket from "../hooks/use-reward-socket";
 import { gameStore, PlayerChanges } from "../stores/game-store";
 import DiedModal from "./died-modal";
 import GameOverModal from "./game-over-modal";
 import HomeModal from "./home-modal";
 import PlayMove from "./play-move";
+import RewardModal from "./reward-modal";
 import Stories from "./stories";
 
 const Gameplay = (props: { conversationId: string }) => {
@@ -22,6 +24,7 @@ const Gameplay = (props: { conversationId: string }) => {
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
   const [gaming, setGaming] = useState(true);
   const [gameOverModal, setGameOverModal] = useState(false);
+  const [rewardModal, setRewardModal] = useState(false);
   const [result, setResult] = useState<"GAMING" | "WON" | "LOST">("GAMING");
   const [dying, setDying] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState<IGamePlayer>();
@@ -30,6 +33,7 @@ const Gameplay = (props: { conversationId: string }) => {
   const diedModal = gameStore.diedModal.use();
 
   const { lastStory, loadingText } = useGameplaySocket(conversationId);
+  const { reward } = useRewardSocket(conversationId);
 
   useEffect(() => {
     if (roomData) {
@@ -110,10 +114,19 @@ const Gameplay = (props: { conversationId: string }) => {
       <DiedModal open={diedModal} close={() => gameStore.diedModal.set(false)} />
       <GameOverModal
         open={gameOverModal && !diedModal && !dying}
-        close={() => setGameOverModal(false)}
+        close={() => {
+          setGameOverModal(false);
+          setRewardModal(true);
+        }}
         result={result}
-        dungeonName={dungeonData.name}
+        dungeon={dungeonData}
+        conversationId={conversationId}
         players={roomData.playerState}
+      />
+      <RewardModal
+        reward={reward}
+        open={rewardModal && !!reward}
+        close={() => setRewardModal(false)}
       />
     </Box>
   );

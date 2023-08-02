@@ -12,7 +12,7 @@ export const subTabs = ["top", "recent", "favorite", "owned"] as const;
 
 export type SubTabType = (typeof subTabs)[number];
 
-export const kingdomTabs = ["dungeons", "campaigns"] as const;
+export const kingdomTabs = ["dungeons", "campaigns", "rewards"] as const;
 
 export type KingdomTabType = (typeof kingdomTabs)[number];
 

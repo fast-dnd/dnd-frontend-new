@@ -50,6 +50,10 @@ const CreateRoomDungeon = ({
           ))}
         </div>
       </div>
+      <div className="flex flex-col justify-center gap-2">
+        <p className="whitespace-nowrap">Played {dungeon.numOfRatings} times</p>
+        <p>Rating: {dungeon.rating}</p>
+      </div>
     </div>
   );
 };

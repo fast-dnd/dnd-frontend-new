@@ -9,7 +9,7 @@ import Navbar from "@/components/navbar";
 import "@/styles/globals.css";
 import "@/styles/scrollbar.css";
 import "@/styles/zoom.css";
-
+import "@smastrom/react-rating/style.css";
 export const metadata = {
   title: "v3RPG",
   description: "AI-powered D&D game",
