@@ -1,15 +1,25 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
+import { IReward } from "@/types/kingdom";
 import { fileToBase64 } from "@/utils/b64";
 import { DungeonDuration, dungeonDurations, dungeonTags } from "@/utils/dungeon-options";
 import { Button } from "@/components/ui/button";
 import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { TextArea } from "@/components/ui/text-area";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -22,7 +32,7 @@ import tagsComboboxStyles from "../utils/tags-combobox-styles";
 import { tagsAttachLabel, TagsWithLabel } from "../utils/tags-utils";
 import FormStepWrapper from "./form-step-wrapper";
 
-const Initial = ({ dungeonId }: { dungeonId?: string }) => {
+const Initial = ({ dungeonId, rewards }: { dungeonId?: string; rewards: IReward[] }) => {
   const { currentStep, dungeonFormData } = dungeonFormStore.use();
 
   const {
@@ -39,6 +49,8 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
 
   const image = watch("image");
   const imageRef = useRef<HTMLInputElement>(null);
+
+  const bgUrl = watch("backgroundUrl");
 
   const onSubmit: SubmitHandler<IInitialSchema> = (data) => {
     dungeonFormStore.dungeonFormData.set((prev) => ({ ...prev, ...data }));
@@ -67,12 +79,29 @@ const Initial = ({ dungeonId }: { dungeonId?: string }) => {
         <div className="hidden w-full border-t border-white/20 lg:block" />
         <div className="flex min-h-0 flex-1 basis-0">
           <div className="flex h-full w-full flex-col items-center gap-5 lg:flex-row lg:items-start lg:gap-8">
-            <UploadImage
-              image={image}
-              inputFile={imageRef}
-              onClick={addImage}
-              defaultImage={dungeonFormData.imageUrl}
-            />
+            <div className="flex flex-col gap-5 lg:gap-8">
+              <UploadImage
+                image={image}
+                inputFile={imageRef}
+                onClick={addImage}
+                defaultImage={dungeonFormData.imageUrl}
+              />
+              <Select value={bgUrl} onValueChange={(value) => setValue("backgroundUrl", value)}>
+                <SelectTrigger className="w-full" aria-label="Select background">
+                  <SelectValue placeholder="Choose a background" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {rewards.map((reward) => (
+                      <SelectItem key={reward._id} value={reward.url} className="pl-8">
+                        <Image alt={reward.name} src={reward.url} width={96} height={96} />
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+
             <div className="flex h-full w-full flex-1 flex-col gap-5 lg:gap-8">
               <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
                 <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8">

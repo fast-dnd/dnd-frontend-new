@@ -1,4 +1,3 @@
-import Image from "next/image";
 import NextTopLoader from "nextjs-toploader";
 
 import Providers from "@/lib/providers";
@@ -10,6 +9,9 @@ import "@/styles/globals.css";
 import "@/styles/scrollbar.css";
 import "@/styles/zoom.css";
 import "@smastrom/react-rating/style.css";
+
+import Background from "./background";
+
 export const metadata = {
   title: "v3RPG",
   description: "AI-powered D&D game",
@@ -24,16 +26,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       <body className={cn("flex flex-col", jost.className)}>
         <Providers>
           <NextTopLoader />
-          <div className="absolute -z-10 h-[110%] w-full lg:h-full">
-            <Image
-              src="/images/bg-cover.png"
-              fill
-              priority
-              quality={100}
-              alt="bg-cover"
-              style={{ objectFit: "cover" }}
-            />
-          </div>
+          <Background />
           <Navbar />
           {children}
         </Providers>

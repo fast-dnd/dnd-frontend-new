@@ -28,6 +28,7 @@ const Gameplay = (props: { conversationId: string }) => {
   const [result, setResult] = useState<"GAMING" | "WON" | "LOST">("GAMING");
   const [dying, setDying] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState<IGamePlayer>();
+  const [bgSet, setBgSet] = useState(false);
 
   const homeModal = gameStore.homeModal.use();
   const diedModal = gameStore.diedModal.use();
@@ -82,7 +83,12 @@ const Gameplay = (props: { conversationId: string }) => {
         }
       }
     }
-  }, [currentPlayer, gaming, roomData]);
+    if (dungeonData && !bgSet) {
+      setBgSet(true);
+      localStorage.setItem("backgroundUrl", dungeonData.backgroundUrl);
+      window.dispatchEvent(new Event("bgUpdate"));
+    }
+  }, [bgSet, currentPlayer, dungeonData, gaming, roomData]);
 
   if (!roomData || !dungeonData || !currentPlayer)
     return (
