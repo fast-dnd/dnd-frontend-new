@@ -13,7 +13,7 @@ import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UploadImage from "@/components/ui/upload-image";
-import BoxSkeleton from "@/components/BoxSkeleton";
+import BoxSkeleton from "@/components/box-skeleton";
 import MobileNavbar from "@/components/mobile-navbar";
 
 import useCreateAvatar from "./hooks/use-create-avatar";

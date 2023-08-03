@@ -19,7 +19,7 @@ const Avatars = () => {
     );
   }
 
-  if (!kingdom.avatars || kingdom.avatars.length === 0) router.push("/create-avatar");
+  // if (!kingdom.avatars || kingdom.avatars.length === 0) router.push("/create-avatar");
 
   return (
     <div className="no-scrollbar flex h-full flex-col gap-4 overflow-y-auto">
