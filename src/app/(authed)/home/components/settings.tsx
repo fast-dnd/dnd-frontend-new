@@ -32,12 +32,12 @@ const Settings = () => {
     <div className="flex h-fit justify-center lg:w-[450px]">
       <Box title="ACCOUNT" className="flex h-fit min-h-0 flex-1 flex-col gap-4 p-8 lg:w-[450px]">
         <p className="inline-flex items-center justify-center text-lg leading-7">
-          DM coin ballance:
+          Game coins:
           <Image src="/images/dm-coin.png" alt="dm-coin" height={30} width={30} className="" />
           <span className="font-medium"> {account.coins}</span>
         </p>
         <p className="inline-flex items-center justify-center text-lg leading-7">
-          DM currency ballance:
+          DM coins:
           <Image src="/images/dm-coin.png" alt="dm-coin" height={30} width={30} className="" />
           <span className="font-medium"> {account.dmCurrency}</span>
         </p>
