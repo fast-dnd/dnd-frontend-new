@@ -1,6 +1,5 @@
 import { cn } from "@/utils/style-utils";
 import { Box } from "@/components/ui/box";
-import { Button } from "@/components/ui/button";
 
 import { HomeTabType, KingdomTabType } from "../../stores/tab-store";
 import AddCampaign from "../add-campaign";
@@ -28,7 +27,7 @@ const KingdomTabContent = ({
       <div className="flex h-full flex-1 basis-1/4">
         <Box title="MY AVATARS" className="flex min-h-0 flex-1 flex-col gap-4 p-4 lg:gap-8 lg:p-8">
           <Avatars />
-          <Button href="/create-avatar">GET MORE</Button>
+          {/* <Button href="/create-avatar">GET MORE</Button> */}
         </Box>
       </div>
       <div className="flex flex-1 basis-2/3">

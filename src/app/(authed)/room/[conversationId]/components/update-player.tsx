@@ -38,7 +38,7 @@ const UpdatePlayer = ({
 
   return (
     <>
-      <Select
+      {/* <Select
         defaultValue={currentPlayer?.avatarId}
         value={avatarId}
         onValueChange={(value) => updateAvatar({ conversationId, avatarId: value })}
@@ -55,7 +55,7 @@ const UpdatePlayer = ({
             ))}
           </SelectGroup>
         </SelectContent>
-      </Select>
+      </Select> */}
       <Select
         value={role}
         onValueChange={(value) => updateRole({ conversationId, championId: value })}
