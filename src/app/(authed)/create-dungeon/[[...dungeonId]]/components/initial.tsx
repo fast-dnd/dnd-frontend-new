@@ -50,8 +50,6 @@ const Initial = ({ dungeonId, rewards }: { dungeonId?: string; rewards: IReward[
   const image = watch("image");
   const imageRef = useRef<HTMLInputElement>(null);
 
-  const bgUrl = watch("backgroundUrl");
-
   const onSubmit: SubmitHandler<IInitialSchema> = (data) => {
     dungeonFormStore.dungeonFormData.set((prev) => ({ ...prev, ...data }));
     dungeonFormStore.currentStep.set("LOCATIONS");
@@ -86,24 +84,40 @@ const Initial = ({ dungeonId, rewards }: { dungeonId?: string; rewards: IReward[
                 onClick={addImage}
                 defaultImage={dungeonFormData.imageUrl}
               />
-              <Select value={bgUrl} onValueChange={(value) => setValue("backgroundUrl", value)}>
-                <SelectTrigger
-                  className="w-full"
-                  label="Select background"
-                  aria-label="Select background"
-                >
-                  <SelectValue placeholder="Choose a background" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {rewards.map((reward) => (
-                      <SelectItem key={reward._id} value={reward.url} className="pl-8">
-                        <Image alt={reward.name} src={reward.url} width={96} height={96} />
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <Controller
+                control={control}
+                name="backgroundUrl"
+                render={({ field }) => {
+                  return (
+                    <Select {...field} value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger
+                        className="w-full"
+                        label="Select background"
+                        aria-label="Select background"
+                      >
+                        <SelectValue placeholder="Choose a background" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <p
+                            onClick={() => field.onChange("")}
+                            className="w-full cursor-pointer p-4 text-center"
+                          >
+                            Clear options
+                          </p>
+                        </SelectGroup>
+                        <SelectGroup>
+                          {rewards.map((reward) => (
+                            <SelectItem key={reward._id} value={reward.url} className="pl-8">
+                              <Image alt={reward.name} src={reward.url} width={96} height={96} />
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  );
+                }}
+              />
             </div>
 
             <div className="flex h-full w-full flex-1 flex-col gap-5 lg:gap-8">
