@@ -10,7 +10,7 @@ import "@/styles/scrollbar.css";
 import "@/styles/zoom.css";
 import "@smastrom/react-rating/style.css";
 
-import Background from "./background";
+import Background from "../components/background";
 
 export const metadata = {
   title: "v3RPG",

@@ -4,7 +4,7 @@ import { redirect, useRouter } from "next/navigation";
 import { AiOutlineLeft } from "react-icons/ai";
 
 import useGetDungeon from "@/hooks/use-get-dungeon";
-import BoxSkeleton from "@/components/BoxSkeleton";
+import BoxSkeleton from "@/components/box-skeleton";
 import MobileNavbar from "@/components/mobile-navbar";
 
 import useGetRewards from "../../home/hooks/use-get-rewards";

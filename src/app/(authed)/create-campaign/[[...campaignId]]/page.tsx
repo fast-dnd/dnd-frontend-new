@@ -2,7 +2,7 @@
 
 import useGetCampaign from "@/hooks/use-get-campaign";
 import useGetMyDungeons from "@/hooks/use-get-my-dungeons";
-import BoxSkeleton from "@/components/BoxSkeleton";
+import BoxSkeleton from "@/components/box-skeleton";
 
 import CreateCampaignForm from "./components/create-campaign-form";
 

@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import BoxSkeleton from "@/components/BoxSkeleton";
+import BoxSkeleton from "@/components/box-skeleton";
 
 import useGetAccount from "../hooks/use-get-account";
 

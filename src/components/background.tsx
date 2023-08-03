@@ -6,15 +6,16 @@ import { usePathname } from "next/navigation";
 
 const Background = () => {
   const pathname = usePathname();
-  const [bgUrl, setBgUrl] = useState(localStorage.getItem("backgroundUrl"));
+  const [bgUrl, setBgUrl] = useState<string | null>(null);
   const showBg = bgUrl && (pathname.startsWith("/room") || pathname.startsWith("/game"));
 
   useEffect(() => {
     const handleBgUpdate = () => {
-      setBgUrl(localStorage.getItem("backgroundUrl"));
+      setBgUrl(typeof window !== undefined ? localStorage.getItem("backgroundUrl") : null);
     };
 
     window.addEventListener("bgUpdate", handleBgUpdate);
+
     return () => window.removeEventListener("bgUpdate", handleBgUpdate);
   });
 
