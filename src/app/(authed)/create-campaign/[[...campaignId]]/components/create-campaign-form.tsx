@@ -77,7 +77,6 @@ const CreateCampaignForm = ({
       if (newImage) setValue("image", newImage);
     });
   };
-  console.log(errors);
   return (
     <div className="flex justify-center overflow-y-auto pb-8">
       <div className="mt-4 flex flex-col items-center gap-4">

@@ -7,6 +7,7 @@ import useGetDungeon from "@/hooks/use-get-dungeon";
 import BoxSkeleton from "@/components/BoxSkeleton";
 import MobileNavbar from "@/components/mobile-navbar";
 
+import useGetRewards from "../../home/hooks/use-get-rewards";
 import ChampionsLocationsWrapper from "./components/champions-locations-wrapper";
 import Final from "./components/final";
 import Initial from "./components/initial";
@@ -15,7 +16,7 @@ import { dungeonFormStore, getInitialDungeonFormData } from "./stores/dungeon-fo
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const router = useRouter();
-  // todo add backgroundUrl
+  const { data: rewards, isLoading: isLoadingRewards } = useGetRewards();
 
   const dungeonId = params.dungeonId?.[0];
   const { data: dungeonData, isInitialLoading, isError } = useGetDungeon(dungeonId);
@@ -35,8 +36,10 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
 
   if (isError) return redirect("/home");
 
-  if (isInitialLoading || !isMounted)
+  if (isInitialLoading || !isMounted || isLoadingRewards)
     return <BoxSkeleton title={`${dungeonId ? "EDIT" : "CREATE"} DUNGEON`} />;
+
+  if (!rewards) return redirect("/home");
 
   return (
     <div className="mt-8 h-full w-full overflow-y-auto lg:mt-0">
@@ -50,7 +53,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
             <AiOutlineLeft className="inline-block" /> GO BACK
           </div>
 
-          {currentStep === "INITIAL" && <Initial dungeonId={dungeonId} />}
+          {currentStep === "INITIAL" && <Initial rewards={rewards} dungeonId={dungeonId} />}
           {currentStep === "LOCATIONS" && (
             <ChampionsLocationsWrapper
               dungeonId={dungeonId}

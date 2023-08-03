@@ -12,7 +12,6 @@ const useRewardSocket = (conversationId: string) => {
       if (event.event === "REWARD_EARNED")
         if (event.data.accountId === localStorage.getItem("accountId")) {
           setReward(event.data.reward);
-          console.log(event.data);
         }
     };
     socketIO.on(conversationId, onEvent);

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import useCopy from "@/hooks/use-copy";
@@ -17,7 +18,16 @@ const RoomInfo = (props: { conversationId: string }) => {
   const { data: roomData, isLoading: isLoadingRoomData } = useGetRoomData(conversationId);
   const { data: dungeonData, isLoading: isLoadingDungeonData } = useGetDungeon(roomData?.dungeonId);
 
+  const [bgSet, setBgSet] = useState(false);
   const [copied, setCopied] = useCopy();
+
+  useEffect(() => {
+    if (dungeonData && !bgSet) {
+      setBgSet(true);
+      localStorage.setItem("backgroundUrl", dungeonData.backgroundUrl);
+      window.dispatchEvent(new Event("bgUpdate"));
+    }
+  }, [bgSet, dungeonData]);
 
   if (isLoadingRoomData || isLoadingDungeonData) return <LoadingStateBox />;
 

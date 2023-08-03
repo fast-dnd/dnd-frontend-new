@@ -48,6 +48,7 @@ export const dungeonDetailSchema = baseDungeonSchema.extend({
   realityLevel: z.number().min(0).max(100),
   actionLevel: z.number().min(0).max(100),
   misteryLevel: z.number().min(0).max(100),
+  backgroundUrl: z.string(),
 });
 
 export const rateDungeonSchema = z.object({

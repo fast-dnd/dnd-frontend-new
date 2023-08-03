@@ -16,7 +16,6 @@ import { gameStore } from "./stores/game-store";
 const Game = ({ params }: { params: { conversationId: string } }) => {
   const conversationId = params.conversationId;
   const [openedGameplay, setOpenedGameplay] = useState(true);
-  // todo add backgroundUrl
   const displayHowToPlay = gameStore.displayHowToPlay.use();
   const displayFeedback = gameStore.displayFeedback.use();
   const changes = gameStore.changes.use();

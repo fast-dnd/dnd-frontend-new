@@ -36,6 +36,7 @@ export const initialSchema = z.object({
     .number()
     .min(0, "Mistery level is required")
     .max(100, "Mistery level must be 100 or less"),
+  backgroundUrl: z.string(),
 });
 
 export type IInitialSchema = z.infer<typeof initialSchema>;
