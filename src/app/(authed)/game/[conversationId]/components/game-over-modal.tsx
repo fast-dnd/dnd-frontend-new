@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Rating } from "@smastrom/react-rating";
 
+import { IDungeonDetail } from "@/types/dungeon";
 import { IGamePlayer } from "@/types/game";
+import useRateDungeon from "@/hooks/use-rate-dungeon";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,9 +19,6 @@ import {
 import Spinner from "@/components/ui/spinner";
 
 import Player from "./player";
-import { Rating } from "@smastrom/react-rating";
-import useRateDungeon from "@/hooks/use-rate-dungeon";
-import { IDungeonDetail } from "@/types/dungeon";
 
 interface GameOverModalProps {
   open: boolean;

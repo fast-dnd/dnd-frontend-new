@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 import dungeonService from "@/services/dungeon-service";
-import { toast } from "react-toastify";
 
 const useRateDungeon = () => {
   return useMutation({

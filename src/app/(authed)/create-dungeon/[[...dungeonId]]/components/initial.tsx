@@ -87,7 +87,11 @@ const Initial = ({ dungeonId, rewards }: { dungeonId?: string; rewards: IReward[
                 defaultImage={dungeonFormData.imageUrl}
               />
               <Select value={bgUrl} onValueChange={(value) => setValue("backgroundUrl", value)}>
-                <SelectTrigger className="w-full" aria-label="Select background">
+                <SelectTrigger
+                  className="w-full"
+                  label="Select background"
+                  aria-label="Select background"
+                >
                   <SelectValue placeholder="Choose a background" />
                 </SelectTrigger>
                 <SelectContent>
