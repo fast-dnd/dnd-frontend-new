@@ -1,11 +1,11 @@
-import { transcriptsSchema } from "@/types/transcript";
+import { transcriptSchema } from "@/types/transcript";
 
 import createApi from "./api-factory";
 
 const transcriptApi = createApi({ commonPrefix: "transcript" });
 
 const getTranscript = async (conversationId: string) => {
-  return await transcriptApi.get(conversationId).then((res) => transcriptsSchema.parse(res.data));
+  return await transcriptApi.get(conversationId).then((res) => transcriptSchema.parse(res.data));
 };
 
 const transcriptService = {
