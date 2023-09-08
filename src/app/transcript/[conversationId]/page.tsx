@@ -70,7 +70,7 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
         </div>
         <div className="rounded-b-md bg-glass p-12 backdrop-blur-2xl">
           <div className="flex flex-col gap-7">
-            <p className="text-xl uppercase">Players</p>
+            <p className="text-xl uppercase tracking-[2px]">Players</p>
             <div className="flex gap-6 border-b border-b-white/20 py-4">
               {transcripts.players.map((player) => (
                 <div key={player.accountId} className="flex items-center gap-2 text-xl">
