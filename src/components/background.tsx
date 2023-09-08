@@ -1,23 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { backgroundStore } from "@/stores/background-store";
 
 const Background = () => {
   const pathname = usePathname();
-  const [bgUrl, setBgUrl] = useState<string | null>(null);
+  const bgUrl = backgroundStore.bgUrl.use();
   const showBg = bgUrl && (pathname.startsWith("/room") || pathname.startsWith("/game"));
-
-  useEffect(() => {
-    const handleBgUpdate = () => {
-      setBgUrl(typeof window !== undefined ? localStorage.getItem("backgroundUrl") : null);
-    };
-
-    window.addEventListener("bgUpdate", handleBgUpdate);
-
-    return () => window.removeEventListener("bgUpdate", handleBgUpdate);
-  });
 
   return (
     <div className="absolute -z-10 h-[110%] w-full lg:h-full">

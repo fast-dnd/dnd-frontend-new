@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { backgroundStore } from "@/stores/background-store";
 
 import { IGamePlayer } from "@/types/game";
 import useGetDungeon from "@/hooks/use-get-dungeon";
@@ -20,6 +21,9 @@ import Stories from "./stories";
 
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
+
+  const bgUrl = backgroundStore.bgUrl;
+
   const { data: roomData } = useGetGameData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
   const [gaming, setGaming] = useState(true);
@@ -83,12 +87,12 @@ const Gameplay = (props: { conversationId: string }) => {
         }
       }
     }
+    if (!dungeonData) bgUrl.set("");
     if (dungeonData && !bgSet) {
       setBgSet(true);
-      localStorage.setItem("backgroundUrl", dungeonData.backgroundUrl);
-      window.dispatchEvent(new Event("bgUpdate"));
+      bgUrl.set(dungeonData.backgroundUrl);
     }
-  }, [bgSet, currentPlayer, dungeonData, gaming, roomData]);
+  }, [bgSet, bgUrl, currentPlayer, dungeonData, gaming, roomData]);
 
   if (!roomData || !dungeonData || !currentPlayer)
     return (

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { backgroundStore } from "@/stores/background-store";
 
 import useCopy from "@/hooks/use-copy";
 import useGetDungeon from "@/hooks/use-get-dungeon";
@@ -15,6 +16,8 @@ import Player from "./player";
 const RoomInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
 
+  const bgUrl = backgroundStore.bgUrl;
+
   const { data: roomData, isLoading: isLoadingRoomData } = useGetRoomData(conversationId);
   const { data: dungeonData, isLoading: isLoadingDungeonData } = useGetDungeon(roomData?.dungeonId);
 
@@ -22,12 +25,12 @@ const RoomInfo = (props: { conversationId: string }) => {
   const [copied, setCopied] = useCopy();
 
   useEffect(() => {
+    if (!dungeonData) bgUrl.set("");
     if (dungeonData && !bgSet) {
       setBgSet(true);
-      localStorage.setItem("backgroundUrl", dungeonData.backgroundUrl);
-      window.dispatchEvent(new Event("bgUpdate"));
+      bgUrl.set(dungeonData.backgroundUrl);
     }
-  }, [bgSet, dungeonData]);
+  }, [bgSet, bgUrl, dungeonData]);
 
   if (isLoadingRoomData || isLoadingDungeonData) return <LoadingStateBox />;
 
