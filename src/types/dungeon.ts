@@ -33,13 +33,13 @@ const baseDungeonSchema = z.object({
   tags: z.array(z.enum(dungeonTags)),
   maxPlayers: z.number(),
   imageUrl: z.string(),
+  rating: z.number(),
+  numOfRatings: z.number(),
 });
 
 export const dungeonSchema = baseDungeonSchema.extend({
   locations: z.array(z.string()),
   champions: z.array(z.string()),
-  rating: z.number(),
-  numOfRatings: z.number(),
 });
 
 export const dungeonDetailSchema = baseDungeonSchema.extend({
@@ -92,3 +92,5 @@ export type ICampaign = z.infer<typeof campaignSchema>;
 export type ICampaignForBackend = z.infer<typeof campaignForBackendSchema>;
 
 export type ICampaignDetail = z.infer<typeof campaignDetailSchema>;
+
+export type IMoveMapping = z.infer<typeof moveMappingSchema>;

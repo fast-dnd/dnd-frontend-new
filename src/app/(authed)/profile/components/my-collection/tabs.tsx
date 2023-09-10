@@ -1,4 +1,5 @@
 import { cn } from "@/utils/style-utils";
+import { Button } from "@/components/ui/button";
 
 import { tabsStore } from "./stores/tab-store";
 
@@ -6,21 +7,26 @@ const Tabs = () => {
   const activeTab = tabsStore.use();
 
   return (
-    <div className="mb-8 flex gap-6">
-      {tabsWithIcons.map((tab) => (
-        <div
-          onClick={() => tabsStore.set(tab.name)}
-          key={tab.name}
-          className={cn(
-            "flex cursor-pointer items-center gap-2 fill-white/50 text-xl text-white/50 transition-all duration-200 hover:fill-white hover:text-white",
-            activeTab === tab.name &&
-              "fill-primary font-bold text-primary hover:fill-primary hover:text-primary",
-          )}
-        >
-          {tab.icon}
-          {tab.name}
-        </div>
-      ))}
+    <div className="mb-8 flex justify-between gap-6">
+      <div className="flex gap-6">
+        {tabsWithIcons.map((tab) => (
+          <div
+            onClick={() => tabsStore.set(tab.name)}
+            key={tab.name}
+            className={cn(
+              "flex cursor-pointer items-center gap-2 fill-white/50 text-xl text-white/50 transition-all duration-200 hover:fill-white hover:text-white",
+              activeTab === tab.name &&
+                "fill-primary font-bold text-primary hover:fill-primary hover:text-primary",
+            )}
+          >
+            {tab.icon}
+            {tab.name}
+          </div>
+        ))}
+      </div>
+      {(activeTab === "ADVENTURES" || activeTab === "CAMPAIGNS") && (
+        <Button className="w-fit uppercase">CREATE NEW {activeTab.slice(0, -1)}</Button>
+      )}
     </div>
   );
 };

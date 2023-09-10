@@ -4,6 +4,8 @@ import { Game, Star1 } from "iconsax-react";
 import useGetMyDungeons from "@/hooks/use-get-my-dungeons";
 import { Button } from "@/components/ui/button";
 
+import { dungeonDetailIdStore } from "./stores/dungeon-detail-store";
+
 const Adventures = () => {
   const { data: myDungeons, isLoading } = useGetMyDungeons(true);
 
@@ -16,7 +18,11 @@ const Adventures = () => {
   ) : (
     <div className="flex h-[500px] flex-col gap-8 overflow-y-auto">
       {myDungeons.map((dungeon) => (
-        <div key={dungeon._id} className="flex gap-8 rounded-md hover:bg-white/5">
+        <div
+          key={dungeon._id}
+          className="flex cursor-pointer gap-8 rounded-md hover:bg-white/5"
+          onClick={() => dungeonDetailIdStore.set(dungeon._id)}
+        >
           <Image
             src={dungeon.imageUrl || "/images/default-dungeon.png"}
             alt={dungeon.name}
