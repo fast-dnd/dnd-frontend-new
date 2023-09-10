@@ -28,7 +28,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
           <NextTopLoader />
           <Background />
           <Navbar />
-          {children}
+          <div className="flex-1 px-16">{children}</div>
         </Providers>
       </body>
     </html>
