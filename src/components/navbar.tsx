@@ -1,44 +1,38 @@
-import React from "react";
+"use client";
+
 import Image from "next/image";
 
-import { jibril } from "@/utils/fonts";
+import useGetAccount from "@/hooks/use-get-account";
 
 const Navbar = () => {
+  const { data: account, isLoading } = useGetAccount();
+
   return (
-    <div className="hidden items-center gap-12 lg:flex">
-      <div className="mt-10 h-0.5 flex-1 border-t border-primary" />
-      <div className="mt-10 flex flex-col items-center justify-center gap-1">
-        <Image src="/images/logo-up.png" width={114} height={6} alt="logo-up" priority />
-        <div className="relative flex w-52 justify-center">
-          <div className="absolute flex h-full w-full items-center justify-center">
-            <Image
-              src="/images/logo-red-layer.png"
-              width={204}
-              height={35}
-              alt="logo-red-layer"
-              priority
-            />
+    <div className="hidden items-center justify-between gap-12 pl-2 pr-8 lg:flex">
+      <Image src="/images/logo.png" width={300} height={100} alt="logo" />
+      <div className="flex items-center gap-6 text-2xl leading-7 tracking-[3.3px]">
+        <p>PLAY</p>
+        <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+        <p>HOW TO PLAY</p>
+        <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+        <Image
+          src="/images/default-avatar.png"
+          width={50}
+          height={50}
+          alt="avatar"
+          className="rounded-md"
+        />
+        <div className="flex gap-6 rounded-md bg-white/10 px-4 py-3 backdrop-blur-sm">
+          <div className="flex items-center gap-1">
+            <Image src="/images/dm-coin.png" alt="dm-coin" height={40} width={40} />
+            {account?.coins ?? 0}
           </div>
-          <div className="absolute z-20 flex h-full w-full items-center justify-center">
-            <p
-              style={jibril.style}
-              className="absolute top-0 translate-y-1/4 text-center indent-[0.415em] text-2xl uppercase tracking-[0.415em]"
-            >
-              v3rpg
-            </p>
+          <div className="flex items-center gap-1">
+            <Image src="/images/dm-coin.png" alt="dm-coin" height={40} width={40} />
+            {account?.dmCurrency ?? 0}
           </div>
-          <Image
-            className="z-10"
-            src="/images/logo-black-layer.png"
-            alt="logo-black-layer"
-            width={199}
-            height={42}
-            priority
-          />
         </div>
-        <Image src="/images/logo-down.png" width={72} height={14} alt="logo-down" priority />
       </div>
-      <div className="mt-10 h-0.5 flex-1 border-t border-primary" />
     </div>
   );
 };

@@ -1,11 +1,10 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import useGetAccount from "@/hooks/use-get-account";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import BoxSkeleton from "@/components/box-skeleton";
-
-import useGetAccount from "../hooks/use-get-account";
 
 const Settings = () => {
   const router = useRouter();
