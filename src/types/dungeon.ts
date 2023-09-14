@@ -11,9 +11,11 @@ export const locationSchema = z.object({
 });
 
 export const moveMappingSchema = z.object({
+  conversation_with_team: z.string(),
   discover_health: z.string(),
   discover_mana: z.string(),
-  conversation_with_team: z.string(),
+  free_will: z.string(),
+  no_input: z.string(),
   rest: z.string(),
 });
 
@@ -66,7 +68,7 @@ export const campaignSchema = z.object({
 });
 
 export const campaignDetailSchema = campaignSchema.extend({
-  dungeons: z.array(baseDungeonSchema),
+  dungeons: z.array(dungeonSchema),
 });
 
 export const campaignForBackendSchema = campaignSchema.omit({ _id: true, imageUrl: true }).extend({

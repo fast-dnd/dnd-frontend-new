@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { roomDataSchema } from "@/types/room";
+import { roomDetailSchema } from "@/types/room";
 import { roomKey } from "@/services/room-service";
 import { socketIO } from "@/lib/socket";
 
@@ -21,7 +21,7 @@ const useRoomSocket = (conversationId: string) => {
         case "PLAYER_JOINED_ROOM":
         case "PLAYER_EDIT":
         case "ROOM_SETTINGS_CHANGED":
-          queryClient.setQueryData([roomKey, conversationId], roomDataSchema.parse(event.data));
+          queryClient.setQueryData([roomKey, conversationId], roomDetailSchema.parse(event.data));
           break;
         case "REQUEST_SENT_TO_DM":
           setGameStarting(true);
