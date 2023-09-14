@@ -4,9 +4,11 @@ import { Game, Star1 } from "iconsax-react";
 import useGetDungeons from "@/hooks/use-get-dungeons";
 import { Button } from "@/components/ui/button";
 
-import { dungeonDetailIdStore } from "./stores/dungeon-detail-store";
-
-const Adventures = () => {
+const Adventures = ({
+  setDungeonDetailId,
+}: {
+  setDungeonDetailId: React.Dispatch<React.SetStateAction<string | null>>;
+}) => {
   const { data: dungeons, isLoading } = useGetDungeons();
 
   if (isLoading) return <div>Loading...</div>;
@@ -21,7 +23,7 @@ const Adventures = () => {
         <div
           key={dungeon._id}
           className="flex cursor-pointer gap-8 rounded-md hover:bg-white/5"
-          onClick={() => dungeonDetailIdStore.set(dungeon._id)}
+          onClick={() => setDungeonDetailId(dungeon._id)}
         >
           <Image
             src={dungeon.imageUrl || "/images/default-dungeon.png"}

@@ -16,7 +16,7 @@ const Navbar = () => {
         <p>HOW TO PLAY</p>
         <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
         <Image
-          src="/images/default-avatar.png"
+          src={account?.account.imageUrl || "/images/default-avatar.png"}
           width={60}
           height={60}
           alt="avatar"

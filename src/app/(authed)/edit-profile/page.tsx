@@ -59,7 +59,7 @@ const EditProfile = () => {
       <MobileNavbar />
       <Link
         className="hidden items-center gap-1 text-lg font-medium uppercase tracking-[0.08em] lg:flex"
-        href="/home"
+        href="/profile"
       >
         <AiOutlineLeft className="inline-block" /> GO BACK
       </Link>
@@ -77,7 +77,7 @@ const EditProfile = () => {
           />
           <div className="flex w-80 flex-col justify-center gap-6 lg:w-96 lg:gap-12">
             <Input
-              label="Your avatar's name"
+              label="Your profile's username"
               placeholder="Thorian Blackthorn"
               className="text-xl tracking-[0.07em]"
               {...register("username")}
@@ -88,7 +88,7 @@ const EditProfile = () => {
           </div>
         </Box>
       </form>
-      <DevTool control={control} id="avatar-form" />
+      <DevTool control={control} id="edit-profile-form" />
     </div>
   );
 };

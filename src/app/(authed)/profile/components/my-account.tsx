@@ -21,7 +21,7 @@ const MyAccount = () => {
       <div className="flex flex-col gap-8">
         <div className="flex gap-4">
           <Image
-            src="/images/default-avatar.png"
+            src={account.account.imageUrl || "/images/default-avatar.png"}
             width={120}
             height={120}
             alt="avatar"

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 
 import { cn } from "@/utils/style-utils";
@@ -11,12 +12,11 @@ import Campaigns from "./campaigns";
 import DungeonDetail from "./dungeon-detail";
 import GameHistory from "./game-history";
 import Rewards from "./rewards";
-import { dungeonDetailIdStore } from "./stores/dungeon-detail-store";
 import Tabs from "./tabs";
 import { Tab } from "./types/tab";
 
 const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
-  const dungeonDetailId = dungeonDetailIdStore.use();
+  const [dungeonDetailId, setDungeonDetailId] = useState<string | null>(null);
 
   return (
     <Box
@@ -27,11 +27,11 @@ const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
     >
       {dungeonDetailId ? (
         <>
-          <DungeonDetail />
+          <DungeonDetail dungeonDetailId={dungeonDetailId} />
           <div className="absolute bottom-8 right-8 flex items-center gap-8">
             <div
               className="cursor-pointer items-center gap-1 uppercase"
-              onClick={() => dungeonDetailIdStore.set(null)}
+              onClick={() => setDungeonDetailId(null)}
             >
               <AiOutlineLeft className="inline-block" /> GO BACK
             </div>
@@ -42,7 +42,7 @@ const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
         <>
           <Tabs activeTab={activeTab} />
 
-          {activeTab === "ADVENTURES" && <Adventures />}
+          {activeTab === "ADVENTURES" && <Adventures setDungeonDetailId={setDungeonDetailId} />}
           {activeTab === "CAMPAIGNS" && <Campaigns />}
           {activeTab === "GAME HISTORY" && <GameHistory />}
           {activeTab === "REWARDS" && <Rewards />}

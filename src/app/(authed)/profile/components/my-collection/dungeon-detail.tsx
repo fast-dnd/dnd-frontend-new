@@ -9,10 +9,7 @@ import { HiSparkles } from "react-icons/hi";
 import { IMoveMapping } from "@/types/dungeon";
 import useGetDungeon from "@/hooks/use-get-dungeon";
 
-import { dungeonDetailIdStore } from "./stores/dungeon-detail-store";
-
-const DungeonDetail = () => {
-  const dungeonDetailId = dungeonDetailIdStore.use();
+const DungeonDetail = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
   const { data: dungeon, isLoading } = useGetDungeon(dungeonDetailId ?? "");
 
   if (isLoading) return <div>Loading...</div>;

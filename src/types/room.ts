@@ -4,7 +4,7 @@ import { DungeonDuration, dungeonDurationsArray } from "@/utils/dungeon-options"
 
 import { locationSchema, moveMappingSchema } from "./dungeon";
 
-export const gameStateSchema = z.enum(["CREATING", "GAMING", "CLOSED"]);
+export const gameStateSchema = z.enum(["CREATING", "GAMING", "WIN", "LOSE"]);
 
 export const defaultMoves = [
   "discover_health",
