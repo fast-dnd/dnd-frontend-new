@@ -1,20 +1,20 @@
 import Image from "next/image";
 
+import useGetCampaigns from "@/hooks/use-get-campaigns";
 import { Button } from "@/components/ui/button";
-import { useGetMyCampaigns } from "@/app/(authed)/home/hooks/use-get-home-data";
 
 const Campaigns = () => {
-  const { data: myCampaigns, isLoading } = useGetMyCampaigns(true);
+  const { data: campaigns, isLoading } = useGetCampaigns();
 
   if (isLoading) return <div>Loading...</div>;
 
-  if (!myCampaigns) return <div>Something went wrong</div>;
+  if (!campaigns) return <div>Something went wrong</div>;
 
-  return myCampaigns.length === 0 ? (
+  return campaigns.campaigns.length === 0 ? (
     <NoCampaigns />
   ) : (
     <div className="flex h-[500px] flex-col gap-8 overflow-y-auto">
-      {myCampaigns.map((campaign) => (
+      {campaigns.campaigns.map((campaign) => (
         <div key={campaign._id} className="flex gap-8 rounded-md hover:bg-white/5">
           <Image
             src={campaign.imageUrl || "/images/default-dungeon.png"}

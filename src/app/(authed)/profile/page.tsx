@@ -1,21 +1,18 @@
-"use client";
-
-import { useGetKingdom } from "@/hooks/use-get-kingdom";
-
 import MyAccount from "./components/my-account";
 import MyCollection from "./components/my-collection";
+import { Tab } from "./components/my-collection/types/tab";
 
-const Profile = () => {
-  const { data: kingdomData, isLoading: isLoadingKingdomData } = useGetKingdom();
-
-  if (isLoadingKingdomData) return <div>Loading...</div>;
-
-  if (!kingdomData) return <div>Something went wrong</div>;
+const Profile = ({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) => {
+  const activeTab = (searchParams?.activeTab ?? "ADVENTURES") as Tab;
 
   return (
     <div className="flex gap-12">
-      <MyAccount statistics={kingdomData.statistics} />
-      <MyCollection />
+      <MyAccount />
+      <MyCollection activeTab={activeTab} />
     </div>
   );
 };

@@ -50,7 +50,6 @@ const Rewards = () => {
               height={150}
               className="h-full w-full rounded-md blur-lg"
             />
-            {/* lock icon in center of div */}
             <div className="absolute inset-0 flex items-center justify-center">
               <Lock variant="Bold" size={60} className="opacity-50" />
             </div>

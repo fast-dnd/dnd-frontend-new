@@ -1,17 +1,40 @@
+"use client";
+
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 import { cn } from "@/utils/style-utils";
 import { Button } from "@/components/ui/button";
 
-import { tabsStore } from "./stores/tab-store";
+import { Tab } from "./types/tab";
 
-const Tabs = () => {
-  const activeTab = tabsStore.use();
+const Tabs = ({ activeTab }: { activeTab: Tab }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const onChangeTab = (tabName: string) => {
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+
+    const value = tabName;
+
+    if (!value) {
+      current.delete("activeTab");
+    } else {
+      current.set("activeTab", tabName);
+    }
+
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+
+    router.push(`${pathname}${query}`);
+  };
 
   return (
     <div className="mb-8 flex justify-between gap-6">
       <div className="flex gap-6">
         {tabsWithIcons.map((tab) => (
           <div
-            onClick={() => tabsStore.set(tab.name)}
+            onClick={() => onChangeTab(tab.name)}
             key={tab.name}
             className={cn(
               "flex cursor-pointer items-center gap-2 fill-white/50 text-xl text-white/50 transition-all duration-200 hover:fill-white hover:text-white",
@@ -46,24 +69,24 @@ const tabsWithIcons = [
         className="fill-inherit"
       >
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M13.5 16V22L20.5 20L19 17C19 17 20.8605 12.778 19.481 9.0445C18.4451 6.24206 15.6353 4.88692 13.7003 3.95372C12.9512 3.59239 12.3331 3.29433 12 3V14.5L13.4535 11.9565C13.7915 11.365 14.4205 11 15.1015 11C16.15 11 17 11.8495 17 12.898V12.8985C17 13.5795 16.635 14.2085 16.0435 14.5465L13.5 16ZM14.1464 8.64645C14.2402 8.55268 14.3674 8.5 14.5 8.5C14.6326 8.5 14.7598 8.55268 14.8536 8.64645C14.9473 8.74021 15 8.86739 15 9C15 9.13261 14.9473 9.25979 14.8536 9.35355C14.7598 9.44732 14.6326 9.5 14.5 9.5C14.3674 9.5 14.2402 9.44732 14.1464 9.35355C14.0527 9.25979 14 9.13261 14 9C14 8.86739 14.0527 8.74021 14.1464 8.64645ZM16.1464 8.64645C16.2402 8.55268 16.3674 8.5 16.5 8.5C16.6326 8.5 16.7598 8.55268 16.8536 8.64645C16.9473 8.74021 17 8.86739 17 9C17 9.13261 16.9473 9.25979 16.8536 9.35355C16.7598 9.44732 16.6326 9.5 16.5 9.5C16.3674 9.5 16.2402 9.44732 16.1464 9.35355C16.0527 9.25979 16 9.13261 16 9C16 8.86739 16.0527 8.74021 16.1464 8.64645ZM18.1464 8.64645C18.2402 8.55268 18.3674 8.5 18.5 8.5C18.6326 8.5 18.7598 8.55268 18.8536 8.64645C18.9473 8.74021 19 8.86739 19 9C19 9.13261 18.9473 9.25979 18.8536 9.35355C18.7598 9.44732 18.6326 9.5 18.5 9.5C18.3674 9.5 18.2402 9.44732 18.1464 9.35355C18.0527 9.25979 18 9.13261 18 9C18 8.86739 18.0527 8.74021 18.1464 8.64645Z"
           fill="inherit"
-          fill-opacity="0.7"
+          fillOpacity="0.7"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M10.5 16V22L3.5 20L5 17C5 17 3.1395 12.778 4.519 9.0445C5.55491 6.24206 8.36473 4.88692 10.2997 3.95372C11.0489 3.59239 11.6669 3.29433 12 3V14.5L10.5465 11.9565C10.2085 11.365 9.5795 11 8.8985 11C7.85 11 7 11.8495 7 12.898V12.8985C7 13.5795 7.365 14.2085 7.9565 14.5465L10.5 16ZM5.14645 8.64645C5.24021 8.55268 5.36739 8.5 5.5 8.5C5.63261 8.5 5.75978 8.55268 5.85355 8.64645C5.94732 8.74021 6 8.86739 6 9C6 9.13261 5.94732 9.25979 5.85355 9.35355C5.75978 9.44732 5.63261 9.5 5.5 9.5C5.36739 9.5 5.24021 9.44732 5.14645 9.35355C5.05268 9.25979 5 9.13261 5 9C5 8.86739 5.05268 8.74021 5.14645 8.64645ZM7.14645 8.64645C7.24021 8.55268 7.36739 8.5 7.5 8.5C7.63261 8.5 7.75978 8.55268 7.85355 8.64645C7.94732 8.74021 8 8.86739 8 9C8 9.13261 7.94732 9.25979 7.85355 9.35355C7.75978 9.44732 7.63261 9.5 7.5 9.5C7.36739 9.5 7.24021 9.44732 7.14645 9.35355C7.05268 9.25979 7 9.13261 7 9C7 8.86739 7.05268 8.74021 7.14645 8.64645ZM9.14645 8.64645C9.24021 8.55268 9.36739 8.5 9.5 8.5C9.63261 8.5 9.75979 8.55268 9.85355 8.64645C9.94732 8.74021 10 8.86739 10 9C10 9.13261 9.94732 9.25979 9.85355 9.35355C9.75979 9.44732 9.63261 9.5 9.5 9.5C9.36739 9.5 9.24021 9.44732 9.14645 9.35355C9.05268 9.25979 9 9.13261 9 9C9 8.86739 9.05268 8.74021 9.14645 8.64645Z"
           fill="inherit"
-          fill-opacity="0.7"
+          fillOpacity="0.7"
         />
         <path d="M13.4535 11.9565L12 14.5V2C12 2 13.7915 11.365 13.4535 11.9565Z" fill="inherit" />
         <path
           d="M10.5464 11.9565L11.9999 14.5V2C11.9999 2 10.2084 11.365 10.5464 11.9565Z"
           fill="inherit"
-          fill-opacity="0.5"
+          fillOpacity="0.5"
         />
       </svg>
     ),

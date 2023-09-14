@@ -14,8 +14,8 @@ export const moveMappingSchema = z.object({
   conversation_with_team: z.string(),
   discover_health: z.string(),
   discover_mana: z.string(),
-  free_will: z.string(),
-  no_input: z.string(),
+  // free_will: z.string(),
+  // no_input: z.string(),
   rest: z.string(),
 });
 
@@ -34,7 +34,7 @@ const baseDungeonSchema = z.object({
   recommendedResponseDetailsDepth: z.enum(dungeonDurationsArray),
   tags: z.array(z.enum(dungeonTags)),
   maxPlayers: z.number(),
-  imageUrl: z.string(),
+  imageUrl: z.string().optional(),
   rating: z.number(),
   numOfRatings: z.number(),
 });
@@ -59,25 +59,10 @@ export const rateDungeonSchema = z.object({
   roomId: z.string(),
 });
 
-export const campaignSchema = z.object({
-  _id: z.string(),
-  name: z.string().optional(),
-  imageUrl: z.string(),
-  description: z.string().optional(),
-  dungeons: z.array(z.string()),
-});
-
-export const campaignDetailSchema = campaignSchema.extend({
+export const dungeonsSchema = z.object({
   dungeons: z.array(dungeonSchema),
+  total: z.number(),
 });
-
-export const campaignForBackendSchema = campaignSchema.omit({ _id: true, imageUrl: true }).extend({
-  image: z.string().optional(),
-});
-
-export const dungeonsSchema = z.array(dungeonSchema);
-
-export const campaignsSchema = z.array(campaignSchema);
 
 export type ILocation = z.infer<typeof locationSchema>;
 
@@ -88,11 +73,5 @@ export type IDungeon = z.infer<typeof dungeonSchema>;
 export type IDungeonDetail = z.infer<typeof dungeonDetailSchema>;
 
 export type IRateDungeon = z.infer<typeof rateDungeonSchema>;
-
-export type ICampaign = z.infer<typeof campaignSchema>;
-
-export type ICampaignForBackend = z.infer<typeof campaignForBackendSchema>;
-
-export type ICampaignDetail = z.infer<typeof campaignDetailSchema>;
 
 export type IMoveMapping = z.infer<typeof moveMappingSchema>;

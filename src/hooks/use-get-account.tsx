@@ -2,12 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import authService, { authKey } from "@/services/auth-service";
+import accountService, { accountKey } from "@/services/account-service";
 
 const useGetAccount = () => {
   return useQuery({
-    queryKey: [authKey],
-    queryFn: authService.account,
+    queryKey: [accountKey],
+    queryFn: accountService.getAccount,
   });
 };
 

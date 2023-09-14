@@ -1,3 +1,5 @@
+"use client";
+
 import { AiOutlineLeft } from "react-icons/ai";
 
 import { cn } from "@/utils/style-utils";
@@ -10,11 +12,10 @@ import DungeonDetail from "./dungeon-detail";
 import GameHistory from "./game-history";
 import Rewards from "./rewards";
 import { dungeonDetailIdStore } from "./stores/dungeon-detail-store";
-import { tabsStore } from "./stores/tab-store";
 import Tabs from "./tabs";
+import { Tab } from "./types/tab";
 
-const MyCollection = () => {
-  const activeTab = tabsStore.use();
+const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
   const dungeonDetailId = dungeonDetailIdStore.use();
 
   return (
@@ -39,7 +40,7 @@ const MyCollection = () => {
         </>
       ) : (
         <>
-          <Tabs />
+          <Tabs activeTab={activeTab} />
 
           {activeTab === "ADVENTURES" && <Adventures />}
           {activeTab === "CAMPAIGNS" && <Campaigns />}

@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 
-import kingdomService, { kingdomKey } from "@/services/kingdom-service";
+import rewardService, { rewardKey } from "@/services/reward-service";
 
 const useGetRewards = () => {
   return useQuery({
-    queryKey: [kingdomKey, "rewards"],
-    queryFn: kingdomService.getRewards,
+    queryKey: [rewardKey],
+    queryFn: rewardService.getRewards,
   });
 };
 

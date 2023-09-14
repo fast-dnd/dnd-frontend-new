@@ -1,4 +1,4 @@
-import { campaignDetailSchema, campaignsSchema, ICampaignForBackend } from "@/types/dungeon";
+import { campaignDetailSchema, campaignsSchema, ICampaignForBackend } from "@/types/campaign";
 
 import createApi from "./api-factory";
 

@@ -69,7 +69,7 @@ export const baseRoomSchema = z.object({
   price: z.number(),
 });
 
-export const roomDetailSchema = z.object({
+export const roomDetailSchema = baseRoomSchema.extend({
   moves: z.array(moveSchema),
   questions3History: z.array(questionSchema),
   players: z.array(playerSchema),
@@ -85,7 +85,7 @@ export const roomDetailSchema = z.object({
   maxRounds: z.number(),
 });
 
-export const roomSchema = z.object({
+export const roomSchema = baseRoomSchema.extend({
   dungeon: z.object({
     id: z.string(),
     name: z.string(),
@@ -96,7 +96,7 @@ export const roomSchema = z.object({
 });
 
 export const roomHistorySchema = z.object({
-  rooms: z.array(roomSummarySchema),
+  rooms: z.array(roomSchema),
   total: z.number(),
 });
 

@@ -25,11 +25,11 @@ const Navbar = () => {
         <div className="flex gap-6 rounded-md bg-white/10 px-4 py-3 backdrop-blur-sm">
           <div className="flex items-center gap-1">
             <Image src="/images/dm-coin.png" alt="dm-coin" height={40} width={40} />
-            {account?.coins ?? "-"}
+            {account?.account.coins ?? "-"}
           </div>
           <div className="flex items-center gap-1">
             <Image src="/images/dm-coin.png" alt="dm-coin" height={40} width={40} />
-            {account?.dmCurrency ?? "-"}
+            {account?.account.dmCurrency ?? "-"}
           </div>
         </div>
       </div>
