@@ -17,7 +17,7 @@ const DungeonDetail = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
   if (!dungeon) return <div>Something went wrong</div>;
 
   return (
-    <div className="h-[600px] overflow-y-auto">
+    <div className="h-[600px] overflow-y-auto border-b-2 border-b-white/20">
       <div className="flex cursor-pointer gap-8 rounded-md hover:bg-white/5">
         <Image
           src={dungeon.imageUrl || "/images/default-dungeon.png"}

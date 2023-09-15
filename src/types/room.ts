@@ -104,9 +104,11 @@ export type IMoveType = z.infer<typeof moveTypeSchema>;
 
 export type IPlayer = z.infer<typeof playerSchema>;
 
-export type IRoom = z.infer<typeof roomSummarySchema>;
+export type IRoomSummary = z.infer<typeof roomSummarySchema>;
 
-export type IRoomData = z.infer<typeof roomDetailSchema>;
+export type IRoom = z.infer<typeof roomSchema>;
+
+export type IRoomDetail = z.infer<typeof roomDetailSchema>;
 
 export type IRoomArrayElement = z.infer<typeof roomSummarySchema>;
 

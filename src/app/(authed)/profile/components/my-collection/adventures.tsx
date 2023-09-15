@@ -1,68 +1,66 @@
-import Image from "next/image";
-import { Game, Star1 } from "iconsax-react";
+import React from "react";
 
 import useGetDungeons from "@/hooks/use-get-dungeons";
+import useIntersectionObserver from "@/hooks/use-intersection-observer";
 import { Button } from "@/components/ui/button";
+import Skeleton from "@/components/ui/skeleton";
+import { Dungeon } from "@/components/dungeon";
 
 const Adventures = ({
   setDungeonDetailId,
+  filter,
 }: {
-  setDungeonDetailId: React.Dispatch<React.SetStateAction<string | null>>;
+  setDungeonDetailId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  filter?: string;
 }) => {
-  const { data: dungeons, isLoading } = useGetDungeons();
+  const {
+    data: dungeonsData,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isError,
+    isLoading,
+  } = useGetDungeons({ filter: filter || "owned" });
 
-  if (isLoading) return <div>Loading...</div>;
+  const { lastObjectRef: lastDungeonRef } = useIntersectionObserver({
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  });
 
-  if (!dungeons) return <div>Something went wrong</div>;
+  if (isError) return <div>Something went wrong</div>;
 
-  return dungeons.dungeons.length === 0 ? (
+  if (isLoading) {
+    return (
+      <div className="no-scrollbar flex flex-1 flex-col gap-8 overflow-y-auto">
+        <Skeleton amount={2} />
+      </div>
+    );
+  }
+
+  const content = dungeonsData.pages.map((page) =>
+    page.dungeons.map((dungeon, i) => {
+      if (page.dungeons.length === i + 1) {
+        return (
+          <Dungeon
+            key={dungeon._id}
+            dungeon={dungeon}
+            setDungeonDetailId={setDungeonDetailId}
+            ref={lastDungeonRef}
+          />
+        );
+      }
+      return (
+        <Dungeon key={dungeon._id} dungeon={dungeon} setDungeonDetailId={setDungeonDetailId} />
+      );
+    }),
+  );
+  return dungeonsData.pages[0].dungeons.length === 0 ? (
     <NoAdventures />
   ) : (
     <div className="flex h-[500px] flex-col gap-8 overflow-y-auto">
-      {dungeons.dungeons.map((dungeon) => (
-        <div
-          key={dungeon._id}
-          className="flex cursor-pointer gap-8 rounded-md hover:bg-white/5"
-          onClick={() => setDungeonDetailId(dungeon._id)}
-        >
-          <Image
-            src={dungeon.imageUrl || "/images/default-dungeon.png"}
-            alt={dungeon.name}
-            width={200}
-            height={200}
-            className="h-16 w-16 rounded-md lg:h-[180px] lg:w-[180px]"
-          />
-          <div className="flex w-full flex-col gap-4">
-            <p className="text-2xl font-bold uppercase">{dungeon.name}</p>
-            <p className="text-xl">{dungeon.description}</p>
-            <div className="mb-1 mt-auto flex w-full justify-between">
-              <div className="flex flex-wrap gap-2 lg:gap-4">
-                {dungeon.tags.map((tag) => (
-                  <div key={tag} className="rounded-md border border-white/25">
-                    <p className="px-1.5 py-1 text-sm capitalize tracking-[2.1px] lg:px-3">{tag}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mr-8 flex items-center gap-8">
-                <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
-                    <Game variant="Bold" color="#FF5A5A" />
-                  </div>
-                  <p className="text-xl font-bold">{dungeon.maxPlayers}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
-                    <Star1 variant="Bold" color="#FF5A5A" />
-                  </div>
-                  <p className="text-xl font-bold">
-                    {dungeon.rating + "(" + dungeon.numOfRatings + ")"}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
+      {content}
+      {isFetchingNextPage && <div className="flex w-full text-center text-2xl">Loading...</div>}
     </div>
   );
 };

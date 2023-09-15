@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineLeft } from "react-icons/ai";
 
-import { ICampaign, IDungeon } from "@/types/dungeon";
+import { IDungeon } from "@/types/dungeon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 

@@ -1,11 +1,17 @@
 import { dungeonDetailSchema, dungeonsSchema, IDungeonDetail, IRateDungeon } from "@/types/dungeon";
 
 import createApi from "./api-factory";
+import { constructPaginationParams, constructQueryParams } from "./query-helper";
 
 const dungeonApi = createApi({ commonPrefix: "dungeons" });
 
-const getDungeons = async () => {
-  return await dungeonApi.get("").then((res) => dungeonsSchema.parse(res.data));
+const getDungeons = async ({ filter, pageParam }: { filter: string; pageParam: number }) => {
+  const queryParams = constructQueryParams({ filter });
+  const paginationParams = constructPaginationParams(pageParam);
+
+  return await dungeonApi
+    .get(queryParams + paginationParams)
+    .then((res) => dungeonsSchema.parse(res.data));
 };
 
 const getDungeon = async (dungeonId: string) => {

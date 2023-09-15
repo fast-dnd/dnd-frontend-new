@@ -1,6 +1,6 @@
 import { IDungeonDetail } from "@/types/dungeon";
 import { IKingdom } from "@/types/kingdom";
-import { IRoomData } from "@/types/room";
+import { IRoomDetail } from "@/types/room";
 import {
   Select,
   SelectContent,
@@ -15,7 +15,7 @@ import useUpdateAvatar from "../hooks/use-update-avatar";
 import useUpdateRole from "../hooks/use-update-role";
 
 interface IUpdatePlayerProps {
-  roomData: IRoomData;
+  roomData: IRoomDetail;
   kingdomData: IKingdom;
   dungeonData: IDungeonDetail;
   conversationId: string;

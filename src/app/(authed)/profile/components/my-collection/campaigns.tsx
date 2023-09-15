@@ -1,35 +1,50 @@
-import Image from "next/image";
-
 import useGetCampaigns from "@/hooks/use-get-campaigns";
+import useIntersectionObserver from "@/hooks/use-intersection-observer";
 import { Button } from "@/components/ui/button";
+import Skeleton from "@/components/ui/skeleton";
+import { Campaign } from "@/components/campaign";
 
-const Campaigns = () => {
-  const { data: campaigns, isLoading } = useGetCampaigns();
+const Campaigns = ({ filter }: { filter?: string }) => {
+  const {
+    data: campaignsData,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isError,
+    isLoading,
+  } = useGetCampaigns({ filter: filter || "owned" });
 
-  if (isLoading) return <div>Loading...</div>;
+  const { lastObjectRef: lastCampaignRef } = useIntersectionObserver({
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  });
 
-  if (!campaigns) return <div>Something went wrong</div>;
+  if (isError) return <div>Something went wrong</div>;
 
-  return campaigns.campaigns.length === 0 ? (
+  if (isLoading) {
+    return (
+      <div className="no-scrollbar flex flex-1 flex-col gap-8 overflow-y-auto">
+        <Skeleton amount={2} />
+      </div>
+    );
+  }
+
+  const content = campaignsData.pages.map((page) =>
+    page.campaigns.map((campaign, i) => {
+      if (page.campaigns.length === i + 1) {
+        return <Campaign key={campaign._id} campaign={campaign} ref={lastCampaignRef} />;
+      }
+      return <Campaign key={campaign._id} campaign={campaign} />;
+    }),
+  );
+
+  return campaignsData.pages[0].campaigns.length === 0 ? (
     <NoCampaigns />
   ) : (
     <div className="flex h-[500px] flex-col gap-8 overflow-y-auto">
-      {campaigns.campaigns.map((campaign) => (
-        <div key={campaign._id} className="flex gap-8 rounded-md hover:bg-white/5">
-          <Image
-            src={campaign.imageUrl || "/images/default-dungeon.png"}
-            alt={campaign.name ?? ""}
-            width={200}
-            height={200}
-            className="h-16 w-16 rounded-md lg:h-[180px] lg:w-[180px]"
-          />
-          <div className="flex w-full flex-col gap-4">
-            <p className="text-2xl font-bold uppercase">{campaign.name}</p>
-            <p className="text-xl">{campaign.description}</p>
-            <div className="mb-1 mt-auto flex w-full justify-between"></div>
-          </div>
-        </div>
-      ))}
+      {content}
+      {isFetchingNextPage && <div className="flex w-full text-center text-2xl">Loading...</div>}
     </div>
   );
 };

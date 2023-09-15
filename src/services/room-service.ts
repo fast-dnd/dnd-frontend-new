@@ -9,11 +9,16 @@ import {
 } from "@/types/room";
 
 import createApi from "./api-factory";
+import { constructPaginationParams } from "./query-helper";
 
 const roomApi = createApi({ commonPrefix: "rooms" });
 
-const getRoomHistory = async () => {
-  return await roomApi.get("history").then((res) => roomHistorySchema.parse(res.data));
+const getRoomHistory = async ({ pageParam }: { pageParam: number }) => {
+  const paginationParams = constructPaginationParams(pageParam);
+
+  return await roomApi
+    .get("history" + paginationParams)
+    .then((res) => roomHistorySchema.parse(res.data));
 };
 
 const getRoomData = async (conversationId: string) => {
@@ -45,11 +50,11 @@ const editAvatar = async (data: IEditAvatar) => {
 };
 
 const roomService = {
+  getRoomHistory,
+  getRoomData,
   createRoom,
   joinRoom,
   editRoom,
-  getRoomData,
-  getRoomHistory,
   startGame,
   editChampion,
   editAvatar,

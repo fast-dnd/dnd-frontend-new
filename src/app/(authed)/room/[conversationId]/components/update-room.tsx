@@ -2,7 +2,7 @@ import { AiFillSound, AiFillStar } from "react-icons/ai";
 import { BiImages } from "react-icons/bi";
 
 import { IDungeonDetail } from "@/types/dungeon";
-import { IRoomData } from "@/types/room";
+import { IRoomDetail } from "@/types/room";
 import { DungeonDuration, dungeonDurations } from "@/utils/dungeon-options";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -30,7 +30,7 @@ const UpdateRoom = ({
   dungeonData,
 }: {
   conversationId: string;
-  roomData: IRoomData;
+  roomData: IRoomDetail;
   dungeonData: IDungeonDetail;
 }) => {
   const { duration, setDuration } = usePlayerInfo(roomData);

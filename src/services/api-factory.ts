@@ -55,6 +55,6 @@ const createApi = (options: IApiOptions) => {
 
 export default createApi;
 
-export const BACKEND_URL = "http://localhost:8080/";
+export const BACKEND_URL = "http://192.168.0.17:8080/";
 
 // export const BACKEND_URL = "https://api-dev.v3rpg.com/";

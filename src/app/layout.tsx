@@ -3,7 +3,6 @@ import NextTopLoader from "nextjs-toploader";
 import Providers from "@/lib/providers";
 import { jost } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
-import Navbar from "@/components/navbar";
 
 import "@/styles/globals.css";
 import "@/styles/scrollbar.css";
@@ -27,7 +26,6 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         <Providers>
           <NextTopLoader />
           <Background />
-          <Navbar />
           <div className="flex-1 px-16">{children}</div>
         </Providers>
       </body>

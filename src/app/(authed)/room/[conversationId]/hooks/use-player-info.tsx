@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { IRoomData } from "@/types/room";
+import { IRoomDetail } from "@/types/room";
 import { DungeonDuration } from "@/utils/dungeon-options";
 
-const usePlayerInfo = (roomData: IRoomData | undefined) => {
+const usePlayerInfo = (roomData: IRoomDetail | undefined) => {
   const [avatarId, setAvatarId] = useState<string>();
   const [role, setRole] = useState<string>();
 
