@@ -21,6 +21,11 @@ export const queryClientConfig: QueryClientConfig = {
       }
     },
   }),
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
 };
 
 export const getQueryClient = cache(() => new QueryClient(queryClientConfig));

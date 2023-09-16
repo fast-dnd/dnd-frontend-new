@@ -75,7 +75,7 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
               {transcripts.players.map((player) => (
                 <div key={player.accountId} className="flex items-center gap-2 text-xl">
                   <Image
-                    src={player.avatarImageUrl}
+                    src={player.imageUrl}
                     width={32}
                     height={32}
                     alt={`${player.name}'s avatar`}
@@ -115,7 +115,7 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
                     return (
                       <>
                         <Image
-                          src={player.avatarImageUrl}
+                          src={player.imageUrl}
                           width={32}
                           height={32}
                           alt={`${player.name}'s avatar`}

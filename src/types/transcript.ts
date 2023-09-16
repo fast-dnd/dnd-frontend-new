@@ -5,14 +5,12 @@ export const transcriptSchema = z.object({
     z.object({
       accountId: z.string(),
       name: z.string(),
-      avatarImageUrl: z.string(),
+      imageUrl: z.string(),
     }),
   ),
   story: z.array(
     z.object({
-      title: z.string(),
       storyChunk: z.string(),
-      image: z.string().nullish(),
       movesInRound: z
         .array(
           z.object({
@@ -21,6 +19,8 @@ export const transcriptSchema = z.object({
           }),
         )
         .nullish(),
+      image: z.string().nullish(),
+      title: z.string(),
     }),
   ),
 });
