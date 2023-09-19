@@ -66,12 +66,13 @@ const UpdateRoom = ({
   const canBegin = roomData.playerState.every((player) => player.champion) ?? false;
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
+      <p className="text-lg font-semibold">GAME SETTINGS</p>
       <ToggleGroup
         className="inline-flex w-full items-center justify-center"
         type="single"
         onValueChange={(value) => setDuration(value as DungeonDuration)}
-        label="Bob Verbal Engagement"
+        label="Game mode"
         value={roomData.responseDetailsDepth}
         disabled={!isAdmin}
       >
@@ -98,6 +99,7 @@ const UpdateRoom = ({
         onValueChange={onChangeImagesAudio}
         value={generateAudioImagesArray()}
         disabled={!isAdmin}
+        label="Media options"
       >
         {imagesAudio.map((type) => (
           <ToggleGroupItem key={type.value} value={type.value}>
@@ -126,7 +128,7 @@ const UpdateRoom = ({
           )}
         </Tooltip>
       </TooltipProvider>
-    </>
+    </div>
   );
 };
 

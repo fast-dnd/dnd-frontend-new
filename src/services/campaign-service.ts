@@ -1,17 +1,19 @@
+import queryString from "query-string";
+
 import { campaignDetailSchema, campaignsSchema, ICampaignForBackend } from "@/types/campaign";
 
-import createApi from "./api-factory";
-import { constructPaginationParams, constructQueryParams } from "./query-helper";
+import createApi, { PAGINATION_LIMIT } from "./api-factory";
 
 const campaignApi = createApi({ commonPrefix: "campaigns" });
 
 const getCampaigns = async ({ filter, pageParam }: { filter: string; pageParam: number }) => {
-  const queryParams = constructQueryParams({ filter });
-  const paginationParams = constructPaginationParams(pageParam);
+  const queryParams = queryString.stringify({
+    filter,
+    skip: (pageParam - 1) * PAGINATION_LIMIT,
+    limit: PAGINATION_LIMIT,
+  });
 
-  return await campaignApi
-    .get(queryParams + paginationParams)
-    .then((res) => campaignsSchema.parse(res.data));
+  return await campaignApi.get("?" + queryParams).then((res) => campaignsSchema.parse(res.data));
 };
 
 const getCampaign = async (campaignId: string) => {

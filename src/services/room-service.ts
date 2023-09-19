@@ -1,3 +1,5 @@
+import queryString from "query-string";
+
 import {
   ICreateRoom,
   IEditAvatar,
@@ -8,16 +10,18 @@ import {
   roomSummarySchema,
 } from "@/types/room";
 
-import createApi from "./api-factory";
-import { constructPaginationParams } from "./query-helper";
+import createApi, { PAGINATION_LIMIT } from "./api-factory";
 
 const roomApi = createApi({ commonPrefix: "rooms" });
 
 const getRoomHistory = async ({ pageParam }: { pageParam: number }) => {
-  const paginationParams = constructPaginationParams(pageParam);
+  const queryParams = queryString.stringify({
+    skip: (pageParam - 1) * PAGINATION_LIMIT,
+    limit: PAGINATION_LIMIT,
+  });
 
   return await roomApi
-    .get("history" + paginationParams)
+    .get("history?" + queryParams)
     .then((res) => roomHistorySchema.parse(res.data));
 };
 

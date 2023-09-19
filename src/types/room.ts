@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { DungeonDuration, dungeonDurationsArray } from "@/utils/dungeon-options";
 
-import { locationSchema, moveMappingSchema } from "./dungeon";
+import { moveMappingSchema } from "./dungeon";
 
 export const gameStateSchema = z.enum(["CREATING", "GAMING", "WIN", "LOSE"]);
 
@@ -40,11 +40,13 @@ export const questionSchema = z.object({
 export const playerSchema = z.object({
   accountId: z.string(),
   imageUrl: z.string(),
-  champion: z.object({
-    name: z.string(),
-    description: z.string(),
-    moveMapping: moveMappingSchema,
-  }),
+  champion: z
+    .object({
+      name: z.string(),
+      description: z.string(),
+      moveMapping: moveMappingSchema,
+    })
+    .nullish(),
   bonusForNextRound: z.number(),
   name: z.string(),
   accountLevel: z.number(),
@@ -56,13 +58,13 @@ export const playerSchema = z.object({
 export const roomSummarySchema = z.object({
   conversationId: z.string(),
   link: z.string(),
-  player: playerSchema.nullish(),
-  admin: playerSchema.nullish(),
+  player: playerSchema.optional(),
+  admin: playerSchema.optional(),
 });
 
 export const baseRoomSchema = z.object({
   state: gameStateSchema,
-  roundEndsAt: z.string(),
+  roundEndsAt: z.string().nullish(),
   generateImages: z.boolean(),
   generateAudio: z.boolean(),
   responseDetailsDepth: z.enum(dungeonDurationsArray),
@@ -72,14 +74,13 @@ export const baseRoomSchema = z.object({
 export const roomDetailSchema = baseRoomSchema.extend({
   moves: z.array(moveSchema),
   questions3History: z.array(questionSchema),
-  players: z.array(playerSchema),
+  playerState: z.array(playerSchema),
   link: z.string(),
   queuedMoves: z.array(moveSchema),
   currentRound: z.number(),
   chatGptResponses: z.array(z.string()),
   generatedImages: z.array(z.string().nullable()),
   generatedAudio: z.array(z.string()),
-  location: locationSchema,
   dungeonId: z.string(),
   maxPlayers: z.number(),
   maxRounds: z.number(),

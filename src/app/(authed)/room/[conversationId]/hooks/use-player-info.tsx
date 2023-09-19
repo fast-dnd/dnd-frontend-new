@@ -14,8 +14,8 @@ const usePlayerInfo = (roomData: IRoomDetail | undefined) => {
       const currentPlayer = roomData.playerState.find(
         (player) => player.accountId === localStorage.getItem("accountId"),
       );
-      setAvatarId(currentPlayer?.avatarId);
-      setRole(currentPlayer?.champion?._id);
+      setAvatarId(currentPlayer?.accountId);
+      setRole(currentPlayer?.champion?.name);
     }
     setDuration(roomData?.responseDetailsDepth);
   }, [roomData]);

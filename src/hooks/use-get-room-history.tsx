@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { LIMIT } from "@/services/query-helper";
+import { PAGINATION_LIMIT } from "@/services/api-factory";
 import roomService, { roomKey } from "@/services/room-service";
 
 const useGetRoomHistory = () => {
@@ -8,7 +8,7 @@ const useGetRoomHistory = () => {
     queryKey: [roomKey],
     queryFn: ({ pageParam = 1 }) => roomService.getRoomHistory({ pageParam }),
     getNextPageParam: (lastPage, allPages) => {
-      const nextPage = lastPage.rooms.length === LIMIT ? allPages.length + 1 : undefined;
+      const nextPage = lastPage.rooms.length === PAGINATION_LIMIT ? allPages.length + 1 : undefined;
       return nextPage;
     },
   });

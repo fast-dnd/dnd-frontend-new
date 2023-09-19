@@ -14,8 +14,6 @@ export const moveMappingSchema = z.object({
   conversation_with_team: z.string(),
   discover_health: z.string(),
   discover_mana: z.string(),
-  // free_will: z.string(),
-  // no_input: z.string(),
   rest: z.string(),
 });
 
@@ -67,6 +65,8 @@ export const dungeonsSchema = z.object({
 export type ILocation = z.infer<typeof locationSchema>;
 
 export type IChampion = z.infer<typeof championSchema>;
+
+export type IBaseDungeon = z.infer<typeof baseDungeonSchema>;
 
 export type IDungeon = z.infer<typeof dungeonSchema>;
 

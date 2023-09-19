@@ -2,19 +2,19 @@ import React from "react";
 import Image from "next/image";
 import { Game, Star1 } from "iconsax-react";
 
-import { IDungeon } from "@/types/dungeon";
+import { IBaseDungeon } from "@/types/dungeon";
 
 export const Dungeon = React.forwardRef<
   HTMLDivElement,
   {
-    dungeon: IDungeon;
-    setDungeonDetailId: React.Dispatch<React.SetStateAction<string | undefined>>;
+    dungeon: IBaseDungeon;
+    setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   }
 >(({ dungeon, setDungeonDetailId }, ref) => {
   return (
     <div
       className="flex cursor-pointer gap-8 rounded-md hover:bg-white/5"
-      onClick={() => setDungeonDetailId(dungeon._id)}
+      onClick={() => setDungeonDetailId && setDungeonDetailId(dungeon._id)}
       ref={ref}
     >
       <Image

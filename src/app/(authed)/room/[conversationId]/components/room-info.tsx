@@ -1,17 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useState } from "react";
 import { backgroundStore } from "@/stores/background-store";
 
-import useCopy from "@/hooks/use-copy";
-import useGetDungeon from "@/hooks/use-get-dungeon";
+import { IChampion } from "@/types/dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
 import { Box } from "@/components/ui/box";
-import { Button } from "@/components/ui/button";
+import DungeonDetail from "@/app/(authed)/profile/components/my-collection/dungeon-detail";
 
+import useUpdateRole from "../hooks/use-update-role";
 import LoadingStateBox from "./loading-state-box";
-import Player from "./player";
 
 const RoomInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
@@ -19,71 +17,42 @@ const RoomInfo = (props: { conversationId: string }) => {
   const bgUrl = backgroundStore.bgUrl;
 
   const { data: roomData, isLoading: isLoadingRoomData } = useGetRoomData(conversationId);
-  const { data: dungeonData, isLoading: isLoadingDungeonData } = useGetDungeon(roomData?.dungeonId);
+
+  const { mutate: updateRole } = useUpdateRole();
 
   const [bgSet, setBgSet] = useState(false);
-  const [copied, setCopied] = useCopy();
 
-  useEffect(() => {
-    if (!dungeonData) bgUrl.set("");
-    if (dungeonData && !bgSet) {
-      setBgSet(true);
-      bgUrl.set(dungeonData.backgroundUrl);
-    }
-  }, [bgSet, bgUrl, dungeonData]);
+  const [selectedChampion, setSelectedChampion] = useState<IChampion>();
 
-  if (isLoadingRoomData || isLoadingDungeonData) return <LoadingStateBox />;
+  // useEffect(() => {
+  //   if (!dungeonData) bgUrl.set("");
+  //   if (dungeonData && !bgSet) {
+  //     setBgSet(true);
+  //     bgUrl.set(dungeonData.backgroundUrl);
+  //   }
+  // }, [bgSet, bgUrl, dungeonData]);
 
-  if (!roomData || !dungeonData) return <div>Something went wrong</div>;
+  if (isLoadingRoomData) return <LoadingStateBox />;
 
-  const onCopyRoomId = () => {
-    navigator.clipboard.writeText(roomData.link);
-    setCopied(true);
+  if (!roomData) return <div>Something went wrong</div>;
+
+  const onChangeChampion = (champion: IChampion) => {
+    setSelectedChampion(champion);
+    updateRole({ conversationId, championId: champion._id });
   };
 
   return (
     <Box
-      title="ROOM"
-      className="flex min-h-0 flex-col gap-5 p-5 lg:max-h-[85%] lg:w-[490px] lg:gap-8 lg:p-8"
-      wrapperClassName="block w-[90%] md:w-[490px] mx-auto"
+      title="LOBBY"
+      className="flex min-h-0 flex-col gap-5 p-5 lg:gap-8 lg:p-8"
+      wrapperClassName="block mx-auto basis-3/4"
     >
-      <div className="flex flex-col justify-between gap-4 text-center lg:flex-row">
-        <p className="mt-2 flex-1 whitespace-nowrap text-xl">{roomData.link}</p>
-        <Button
-          onClick={onCopyRoomId}
-          variant={copied ? "primary" : "outline"}
-          className="w-full whitespace-nowrap px-8 text-lg uppercase lg:w-fit"
-        >
-          {copied ? "Copied" : "Copy ID"}
-        </Button>
-      </div>
-
-      <div className="w-full border-t border-white/20" />
-
       <div className="flex min-h-0 w-full flex-1 flex-col gap-5 lg:gap-8 lg:overflow-y-auto">
-        <p className="text-lg font-semibold uppercase leading-7 tracking-[3.3px] lg:text-2xl">
-          {dungeonData.name}
-        </p>
-        <div className="flex flex-row gap-6 pr-0">
-          <Image
-            src={dungeonData.imageUrl || "/images/default-dungeon.png"}
-            alt={dungeonData.name}
-            width={100}
-            height={100}
-            className="h-[70px] w-[70px] lg:h-[100px] lg:w-[100px]"
-          />
-          <p className="line-clamp-3 text-sm font-light leading-7 tracking-widest lg:text-lg">
-            {dungeonData.description}
-          </p>
-        </div>
-        <p className="text-lg font-semibold uppercase leading-7 tracking-[3.3px] lg:text-2xl">
-          PLAYERS
-        </p>
-        <div className="flex flex-col gap-4">
-          {roomData.playerState.map((player) => (
-            <Player key={player.accountId} player={player} />
-          ))}
-        </div>
+        <DungeonDetail
+          dungeonDetailId={roomData.dungeonId}
+          selectedChampion={selectedChampion}
+          onChangeChampion={onChangeChampion}
+        />
       </div>
     </Box>
   );
