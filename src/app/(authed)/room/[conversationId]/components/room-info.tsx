@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { backgroundStore } from "@/stores/background-store";
 
 import { IChampion } from "@/types/dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
 import { Box } from "@/components/ui/box";
+import GoBackButton from "@/components/go-back-button";
 import DungeonDetail from "@/app/(authed)/profile/components/my-collection/dungeon-detail";
 
 import useUpdateRole from "../hooks/use-update-role";
@@ -13,6 +15,7 @@ import LoadingStateBox from "./loading-state-box";
 
 const RoomInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
+  const router = useRouter();
 
   const bgUrl = backgroundStore.bgUrl;
 
@@ -47,6 +50,7 @@ const RoomInfo = (props: { conversationId: string }) => {
       className="flex min-h-0 flex-col gap-5 p-5 lg:gap-8 lg:p-8"
       wrapperClassName="block mx-auto basis-3/4"
     >
+      <GoBackButton className="mb-0" onClick={() => router.push("/home")} />
       <div className="flex min-h-0 w-full flex-1 flex-col gap-5 lg:gap-8 lg:overflow-y-auto">
         <DungeonDetail
           dungeonDetailId={roomData.dungeonId}
