@@ -8,6 +8,7 @@ import { MdEdit } from "react-icons/md";
 
 import useGetAccount from "@/hooks/use-get-account";
 import { Box } from "@/components/ui/box";
+import Coin from "@/components/coin";
 
 const MyAccount = () => {
   const { data: account, isLoading } = useGetAccount();
@@ -41,12 +42,12 @@ const MyAccount = () => {
         </div>
         <div className="grid grid-cols-2 grid-rows-4 gap-4">
           <StatisticsCard
-            icon={<Image src="/images/dm-coin.png" alt="dm-coin" height={30} width={30} />}
+            icon={<Coin silver />}
             value={account.statistics.totalCoins}
             name="Coins"
           />
           <StatisticsCard
-            icon={<Image src="/images/dm-coin.png" alt="dm-coin" height={30} width={30} />}
+            icon={<Coin />}
             value={account.statistics.totalDmCoinsEarned}
             name="DM Coins"
           />

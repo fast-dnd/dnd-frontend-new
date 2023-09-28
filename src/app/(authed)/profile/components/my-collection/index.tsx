@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { AiOutlineLeft } from "react-icons/ai";
 
 import { cn } from "@/utils/style-utils";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
+import GoBackButton from "@/components/go-back-button";
 
 import Adventures from "./adventures";
 import Campaigns from "./campaigns";
@@ -19,22 +19,12 @@ const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
   const [dungeonDetailId, setDungeonDetailId] = useState<string>();
 
   return (
-    <Box
-      title="MY COLLECTION"
-      wrapperClassName="flex basis-2/3 pb-12"
-      className={cn("h-full p-8", dungeonDetailId && "rounded-t-md")}
-      titleClassName={dungeonDetailId ? "hidden" : "flex"}
-    >
+    <Box title="MY COLLECTION" wrapperClassName="flex basis-2/3 pb-12" className={cn("h-full p-8")}>
       {dungeonDetailId ? (
         <>
+          <GoBackButton onClick={() => setDungeonDetailId(undefined)} />
           <DungeonDetail dungeonDetailId={dungeonDetailId} />
           <div className="absolute bottom-8 right-8 flex items-center gap-8">
-            <div
-              className="cursor-pointer items-center gap-1 uppercase"
-              onClick={() => setDungeonDetailId(undefined)}
-            >
-              <AiOutlineLeft className="inline-block" /> GO BACK
-            </div>
             <Button className="w-fit whitespace-nowrap">EDIT ADVENTURE</Button>
           </div>
         </>

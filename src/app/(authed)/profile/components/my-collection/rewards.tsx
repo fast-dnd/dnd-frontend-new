@@ -29,13 +29,6 @@ const Rewards = () => {
             <div className="flex items-center justify-between">
               <p className="text-xl uppercase">{reward.name}</p>
               <div className="flex items-center gap-2 rounded-md border border-white/25 px-2 py-1">
-                <Image
-                  src={rarityIconMap[reward.rarity]}
-                  alt={reward.rarity}
-                  width={20}
-                  height={20}
-                  className="h-4 w-4"
-                />
                 <p className="text-xl">{reward.rarity}</p>
               </div>
             </div>
@@ -61,10 +54,3 @@ const Rewards = () => {
 };
 
 export default Rewards;
-
-const rarityIconMap = {
-  bronze: "/images/reward-bronze.png",
-  silver: "/images/reward-bronze.png",
-  gold: "/images/reward-gold.png",
-  diamond: "/images/reward-diamond.png",
-};

@@ -4,6 +4,8 @@ import Image from "next/image";
 
 import useGetAccount from "@/hooks/use-get-account";
 
+import Coin from "./coin";
+
 const Navbar = () => {
   const { data: account } = useGetAccount();
 
@@ -24,11 +26,12 @@ const Navbar = () => {
         />
         <div className="flex gap-6 rounded-md bg-white/10 px-4 py-3 backdrop-blur-sm">
           <div className="flex items-center gap-1">
-            <Image src="/images/dm-coin.png" alt="dm-coin" height={40} width={40} />
+            <Coin silver />
             {account?.account.coins ?? "-"}
           </div>
           <div className="flex items-center gap-1">
-            <Image src="/images/dm-coin.png" alt="dm-coin" height={40} width={40} />
+            <Coin />
+
             {account?.account.dmCurrency ?? "-"}
           </div>
         </div>

@@ -26,7 +26,7 @@ const DungeonDetail = ({
   if (!dungeon) return <div>Something went wrong</div>;
 
   return (
-    <div className="h-[600px] overflow-y-auto border-b-2 border-b-white/20">
+    <div className="h-[500px] overflow-y-auto border-b-2 border-b-white/20">
       <Dungeon dungeon={dungeon} />
 
       <div className="my-8">

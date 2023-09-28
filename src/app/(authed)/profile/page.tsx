@@ -11,8 +11,8 @@ const Profile = ({
 
   return (
     <div className="flex gap-12">
-      <MyAccount />
       <MyCollection activeTab={activeTab} />
+      <MyAccount />
     </div>
   );
 };
