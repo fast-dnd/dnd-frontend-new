@@ -3,7 +3,8 @@ import { DungeonTag } from "@/utils/dungeon-options";
 
 export type TagsWithLabel = { label: DungeonTag; value: DungeonTag }[];
 
-export interface IDungeonDetailWithTags extends Omit<IDungeonDetail, "tags"> {
+export interface IDungeonDetailWithTags
+  extends Omit<IDungeonDetail, "tags" | "rating" | "numOfRatings"> {
   tags: TagsWithLabel;
 }
 

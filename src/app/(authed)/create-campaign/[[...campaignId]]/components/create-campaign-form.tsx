@@ -8,7 +8,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineLeft } from "react-icons/ai";
 
-import { ICampaignDetail, IDungeon } from "@/types/dungeon";
+import { ICampaignDetail } from "@/types/campaign";
+import { IDungeon } from "@/types/dungeon";
 import { campaignKey } from "@/services/campaign-service";
 import { fileToBase64 } from "@/utils/b64";
 import { Box } from "@/components/ui/box";
