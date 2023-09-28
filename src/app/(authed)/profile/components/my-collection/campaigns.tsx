@@ -4,7 +4,13 @@ import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 import { Campaign } from "@/components/campaign";
 
-const Campaigns = ({ filter }: { filter?: string }) => {
+const Campaigns = ({
+  setCampaignDetailId,
+  filter,
+}: {
+  setCampaignDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  filter?: string;
+}) => {
   const {
     data: campaignsData,
     hasNextPage,
@@ -33,9 +39,22 @@ const Campaigns = ({ filter }: { filter?: string }) => {
   const content = campaignsData.pages.map((page) =>
     page.campaigns.map((campaign, i) => {
       if (page.campaigns.length === i + 1) {
-        return <Campaign key={campaign._id} campaign={campaign} ref={lastCampaignRef} />;
+        return (
+          <Campaign
+            key={campaign._id}
+            campaign={campaign}
+            ref={lastCampaignRef}
+            setCampaignDetailId={setCampaignDetailId}
+          />
+        );
       }
-      return <Campaign key={campaign._id} campaign={campaign} />;
+      return (
+        <Campaign
+          key={campaign._id}
+          campaign={campaign}
+          setCampaignDetailId={setCampaignDetailId}
+        />
+      );
     }),
   );
 

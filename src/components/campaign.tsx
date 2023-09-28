@@ -7,10 +7,15 @@ export const Campaign = React.forwardRef<
   HTMLDivElement,
   {
     campaign: ICampaign;
+    setCampaignDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   }
->(({ campaign }, ref) => {
+>(({ campaign, setCampaignDetailId }, ref) => {
   return (
-    <div className="flex gap-8 rounded-md hover:bg-white/5" ref={ref}>
+    <div
+      className="flex cursor-pointer gap-8 rounded-md hover:bg-white/5"
+      ref={ref}
+      onClick={() => setCampaignDetailId && setCampaignDetailId(campaign._id)}
+    >
       <Image
         src={campaign.imageUrl || "/images/default-dungeon.png"}
         alt={campaign.name ?? ""}

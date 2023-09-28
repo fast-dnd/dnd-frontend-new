@@ -10,8 +10,8 @@ import { Dungeon } from "@/components/dungeon";
 
 interface IDungeonDetailProps {
   dungeonDetailId: string;
-  selectedChampion: IChampion | undefined;
-  onChangeChampion: (champion: IChampion) => void;
+  selectedChampion?: IChampion | undefined;
+  onChangeChampion?: (champion: IChampion) => void;
 }
 
 const DungeonDetail = ({
@@ -39,7 +39,7 @@ const DungeonDetail = ({
                 "flex flex-col gap-4 transition-all duration-200 hover:bg-white/10",
                 champion._id === selectedChampion?._id && "border-2 border-primary bg-white/10",
               )}
-              onClick={() => onChangeChampion(champion)}
+              onClick={() => onChangeChampion && onChangeChampion(champion)}
             >
               <p className="text-xl font-semibold">{champion.name}</p>
               <p className="font-light">{champion.description}</p>

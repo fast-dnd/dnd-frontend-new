@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 
 import { Box } from "@/components/ui/box";
@@ -19,7 +17,11 @@ const JoinRoom = () => {
 
   return (
     <Box title="JOIN ROOM" className="flex flex-col gap-8 p-8">
-      <Input label="Room ID" onChange={(e) => setRoomLink(e.target.value)} />
+      <Input
+        label="Room ID"
+        placeholder="ex. clean-thoughtless-evening"
+        onChange={(e) => setRoomLink(e.target.value)}
+      />
       <Button
         isLoading={isLoading}
         disabled={roomLink.length === 0}

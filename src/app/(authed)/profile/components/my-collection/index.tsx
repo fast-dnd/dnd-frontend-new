@@ -16,7 +16,7 @@ import Tabs from "./tabs";
 import { Tab } from "./types/tab";
 
 const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
-  const [dungeonDetailId, setDungeonDetailId] = useState<string | null>(null);
+  const [dungeonDetailId, setDungeonDetailId] = useState<string>();
 
   return (
     <Box
@@ -31,7 +31,7 @@ const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
           <div className="absolute bottom-8 right-8 flex items-center gap-8">
             <div
               className="cursor-pointer items-center gap-1 uppercase"
-              onClick={() => setDungeonDetailId(null)}
+              onClick={() => setDungeonDetailId(undefined)}
             >
               <AiOutlineLeft className="inline-block" /> GO BACK
             </div>

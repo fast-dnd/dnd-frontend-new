@@ -7,7 +7,7 @@ import useGetDungeon from "@/hooks/use-get-dungeon";
 import BoxSkeleton from "@/components/box-skeleton";
 import MobileNavbar from "@/components/mobile-navbar";
 
-import useGetRewards from "../../home/hooks/use-get-rewards";
+import useGetRewards from "../../../../hooks/use-get-rewards";
 import ChampionsLocationsWrapper from "./components/champions-locations-wrapper";
 import Final from "./components/final";
 import Initial from "./components/initial";

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { Lock } from "iconsax-react";
 
-import useGetRewards from "@/app/(authed)/home/hooks/use-get-rewards";
+import useGetRewards from "@/hooks/use-get-rewards";
 
 const Rewards = () => {
   const { data: rewards, isLoading } = useGetRewards();
