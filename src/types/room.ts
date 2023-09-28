@@ -72,7 +72,7 @@ export const baseRoomSchema = z.object({
 });
 
 export const roomDetailSchema = baseRoomSchema.extend({
-  moves: z.array(moveSchema),
+  moves: z.array(moveSchema).optional(),
   questions3History: z.array(questionSchema),
   playerState: z.array(playerSchema),
   link: z.string(),

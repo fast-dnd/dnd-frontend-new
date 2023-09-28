@@ -42,7 +42,7 @@ const Rewards = () => {
           </div>
         ))}
         {Array.from({ length: 50 - rewards.length }).map((_, index) => (
-          <div key={index} className="relative h-[170px] w-[290px]">
+          <div key={index} className="relative h-[170px] w-[290px] overflow-hidden">
             <Image
               src="/images/reward-locked.png"
               alt={`Locked reward ${index + 1}`}
