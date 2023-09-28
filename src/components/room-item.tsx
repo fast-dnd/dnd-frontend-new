@@ -31,13 +31,15 @@ const RoomItem = React.forwardRef<
         <p className={`text-sm uppercase ${roomState.color}`}>{roomState.text}</p>
       </div>
 
-      <Link href={`/transcript/${room.conversationId}`} aria-label="Transcript">
-        {roomState.text.includes("IN PROGRESS") ? (
+      {roomState.text.includes("IN PROGRESS") ? (
+        <Link href={`/game/${room.conversationId}`} aria-label="Transcript">
           <Play variant="Bold" size={40} color="#FF5A5A" />
-        ) : (
+        </Link>
+      ) : (
+        <Link href={`/transcript/${room.conversationId}`} aria-label="Transcript">
           <Book variant="Bold" size={40} />
-        )}
-      </Link>
+        </Link>
+      )}
     </div>
   );
 });
@@ -52,26 +54,26 @@ const roomStateMap = (roomState: string, turn: number) => {
       return {
         text: "IN PROGRESS (CREATING)",
         color: "text-primary",
-      };
+      } as const;
     case "GAMING":
       return {
         text: `IN PROGRESS (TURN ${turn})`,
         color: "text-primary",
-      };
+      } as const;
     case "WIN":
       return {
         text: "VICTORY",
         color: "text-info",
-      };
+      } as const;
     case "LOSE":
       return {
         text: "DEFEAT",
         color: "text-white/50",
-      };
+      } as const;
     default:
       return {
         text: "IN PROGRESS",
         color: "text-primary",
-      };
+      } as const;
   }
 };

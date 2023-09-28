@@ -7,7 +7,7 @@ const GoBackButton = ({ onClick, className }: { onClick: () => void; className?:
   return (
     <div
       className={cn(
-        "mb-8 flex w-fit cursor-pointer items-center justify-center gap-2 rounded-md border-2 border-dark-500 bg-dark-800 px-3 py-2 text-white",
+        "mb-8 flex w-fit cursor-pointer items-center justify-center gap-2 rounded-md border-2 border-dark-500 bg-dark-800 px-3 py-2 text-xs text-white",
         className,
       )}
       onClick={onClick}
