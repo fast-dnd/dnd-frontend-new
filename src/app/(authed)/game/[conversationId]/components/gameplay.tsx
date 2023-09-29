@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { backgroundStore } from "@/stores/background-store";
 
-import { IGamePlayer } from "@/types/game";
+import { IPlayer } from "@/types/room";
 import useGetDungeon from "@/hooks/use-get-dungeon";
-import useGetGameData from "@/hooks/use-get-game-data";
+import useGetRoomData from "@/hooks/use-get-room-data";
 import { Box } from "@/components/ui/box";
 import Spinner from "@/components/ui/spinner";
 
@@ -24,14 +24,13 @@ const Gameplay = (props: { conversationId: string }) => {
 
   const bgUrl = backgroundStore.bgUrl;
 
-  const { data: roomData } = useGetGameData(conversationId);
+  const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
   const [gaming, setGaming] = useState(true);
   const [gameOverModal, setGameOverModal] = useState(false);
   const [rewardModal, setRewardModal] = useState(false);
-  const [result, setResult] = useState<"GAMING" | "WON" | "LOST">("GAMING");
   const [dying, setDying] = useState(false);
-  const [currentPlayer, setCurrentPlayer] = useState<IGamePlayer>();
+  const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [bgSet, setBgSet] = useState(false);
 
   const homeModal = gameStore.homeModal.use();
@@ -77,10 +76,7 @@ const Gameplay = (props: { conversationId: string }) => {
       }
       setCurrentPlayer(player);
 
-      if (roomData.state === "CLOSED") {
-        if (roomData.playerState.every((player) => player.health > 0)) {
-          setResult("WON");
-        } else setResult("LOST");
+      if (roomData.state === "WIN" || roomData.state === "LOSE") {
         if (gaming) {
           setGaming(false);
           setGameOverModal(true);
@@ -128,7 +124,7 @@ const Gameplay = (props: { conversationId: string }) => {
           setGameOverModal(false);
           setRewardModal(true);
         }}
-        result={result}
+        result={roomData.state}
         dungeon={dungeonData}
         conversationId={conversationId}
         players={roomData.playerState}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { IQuestion } from "@/types/game";
+import { IQuestion } from "@/types/room";
 import { gameKey } from "@/services/game-service";
 import { socketIO } from "@/lib/socket";
 

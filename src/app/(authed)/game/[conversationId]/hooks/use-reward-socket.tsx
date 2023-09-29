@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { IReward } from "@/types/kingdom";
+import { IReward } from "@/types/reward";
 import { socketIO } from "@/lib/socket";
 
 import { IRewardEvent } from "../types/events";

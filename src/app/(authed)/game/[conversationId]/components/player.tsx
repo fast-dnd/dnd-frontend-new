@@ -4,28 +4,21 @@ import { HiSparkles } from "react-icons/hi";
 import { RiCopperCoinFill } from "react-icons/ri";
 import { VscHeartFilled } from "react-icons/vsc";
 
-import { IGamePlayer } from "@/types/game";
+import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
-import useGetAvatar from "@/hooks/use-get-avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import SkullIcon from "@/components/icons/skull-icon";
 
 import { PlayerChanges } from "../stores/game-store";
 
-const Player = (props: {
-  player: IGamePlayer;
-  currentPlayer?: boolean;
-  changes?: PlayerChanges;
-}) => {
+const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: PlayerChanges }) => {
   const { player, currentPlayer, changes } = props;
-
-  const { data: avatarData } = useGetAvatar(player.avatarId);
 
   return (
     <div className="relative flex gap-4 lg:gap-6">
       <div className="relative h-16 w-16 shrink-0 lg:h-[90px] lg:w-[90px]">
         <Image
-          src={avatarData?.imageUrl || "/images/default-avatar.png"}
+          src={player.imageUrl || "/images/default-avatar.png"}
           alt={player.name}
           draggable={false}
           width={90}
@@ -52,7 +45,7 @@ const Player = (props: {
       >
         <p className="-mt-1 font-semibold uppercase tracking-[0.07em] lg:text-xl">{player.name}</p>
         <p className="-mt-0.5 text-sm font-light tracking-[0.15em] lg:text-base">
-          {player.champion.name}
+          {player.champion?.name}
         </p>
         <div className="flex lg:gap-4">
           <div>

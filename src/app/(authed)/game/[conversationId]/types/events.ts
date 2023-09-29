@@ -1,13 +1,13 @@
-import { IGameRoomData, IPlayerMove } from "@/types/game";
-import { IReward } from "@/types/kingdom";
-import { IPlayer } from "@/types/room";
+import { IPlayerMove } from "@/types/game";
+import { IReward } from "@/types/reward";
+import { IPlayer, IRoomDetail } from "@/types/room";
 
 export type IGameplaySocketEvent = ISocketEvent | IChunkEvent;
 export type IGeneralSocketEvent = ISocketEvent | IPlayerMoveEvent | IQuestionEvent;
 
 export interface ISocketEvent {
   event: "REQUEST_SENT_TO_DM" | "ROUND_STORY" | "GAME_ENDED";
-  data: IGameRoomData;
+  data: IRoomDetail;
 }
 
 export interface IPlayerMoveEvent {

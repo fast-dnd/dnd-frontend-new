@@ -4,9 +4,9 @@ import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
 
-import { IGamePlayer, IMove, IQuestion } from "@/types/game";
+import { IMove, IPlayer, IQuestion } from "@/types/room";
 import { cn } from "@/utils/style-utils";
-import useGetGameData from "@/hooks/use-get-game-data";
+import useGetRoomData from "@/hooks/use-get-room-data";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,8 +21,8 @@ import Question from "./question";
 
 const General = (props: { conversationId: string }) => {
   const { conversationId } = props;
-  const { data: roomData } = useGetGameData(conversationId);
-  const [currentPlayer, setCurrentPlayer] = useState<IGamePlayer>();
+  const { data: roomData } = useGetRoomData(conversationId);
+  const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [statsOpened, setStatsOpened] = useState(false);
   const [question, setQuestion] = useState("");
   const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =

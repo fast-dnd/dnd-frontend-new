@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Rating } from "@smastrom/react-rating";
 
 import { IDungeonDetail } from "@/types/dungeon";
-import { IGamePlayer } from "@/types/game";
+import { IGameState, IPlayer } from "@/types/room";
 import useRateDungeon from "@/hooks/use-rate-dungeon";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,10 +23,10 @@ import Player from "./player";
 interface GameOverModalProps {
   open: boolean;
   close: () => void;
-  result: "GAMING" | "WON" | "LOST";
+  result: IGameState;
   dungeon: IDungeonDetail;
   conversationId: string;
-  players: IGamePlayer[];
+  players: IPlayer[];
 }
 
 const GameOverModal = ({
@@ -58,16 +58,16 @@ const GameOverModal = ({
       <DialogContent className="max-h-[700px] w-fit lg:max-w-[550px]">
         <DialogHeader>
           <DialogTitle>
-            {result === "WON" && "Game finished"}
-            {result === "LOST" && "You failed"}
+            {result === "WIN" && "Game finished"}
+            {result === "LOSE" && "You failed"}
           </DialogTitle>
           <DialogDescription className="text-center">
-            {result === "WON" && (
+            {result === "WIN" && (
               <span>
                 You have completed <span className="font-semibold">{dungeon.name}</span>
               </span>
             )}
-            {result === "LOST" && (
+            {result === "LOSE" && (
               <span>
                 You and your teammates have died in the adventure.
                 <span className="font-semibold"> Better luck next time!</span>

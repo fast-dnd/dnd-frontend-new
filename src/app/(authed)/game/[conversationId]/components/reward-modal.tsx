@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { IReward } from "@/types/kingdom";
+import { IReward } from "@/types/reward";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

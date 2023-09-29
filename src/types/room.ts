@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { DungeonDuration, dungeonDurationsArray } from "@/utils/dungeon-options";
 
-import { moveMappingSchema } from "./dungeon";
+import { championSchema } from "./dungeon";
 
 export const gameStateSchema = z.enum(["CREATING", "GAMING", "WIN", "LOSE"]);
 
@@ -40,13 +40,7 @@ export const questionSchema = z.object({
 export const playerSchema = z.object({
   accountId: z.string(),
   imageUrl: z.string(),
-  champion: z
-    .object({
-      name: z.string(),
-      description: z.string(),
-      moveMapping: moveMappingSchema,
-    })
-    .nullish(),
+  champion: championSchema.nullish(),
   bonusForNextRound: z.number(),
   name: z.string(),
   accountLevel: z.number(),
@@ -72,8 +66,8 @@ export const baseRoomSchema = z.object({
 });
 
 export const roomDetailSchema = baseRoomSchema.extend({
-  moves: z.array(moveSchema).optional(),
-  questions3History: z.array(questionSchema),
+  moves: z.array(z.array(moveSchema)).optional(),
+  questions3History: z.array(questionSchema.partial()),
   playerState: z.array(playerSchema),
   link: z.string(),
   queuedMoves: z.array(moveSchema),
@@ -101,7 +95,15 @@ export const roomHistorySchema = z.object({
   total: z.number(),
 });
 
+export type IGameState = z.infer<typeof gameStateSchema>;
+
+export type IDefaultMove = z.infer<typeof defaultMoveSchema>;
+
 export type IMoveType = z.infer<typeof moveTypeSchema>;
+
+export type IMove = z.infer<typeof moveSchema>;
+
+export type IQuestion = z.infer<typeof questionSchema>;
 
 export type IPlayer = z.infer<typeof playerSchema>;
 
