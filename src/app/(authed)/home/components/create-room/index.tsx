@@ -54,7 +54,7 @@ const CreateRoom = () => {
       {dungeonDetailId ? (
         <>
           <DungeonDetail dungeonDetailId={dungeonDetailId} />
-          <div className="absolute bottom-8 right-8 flex items-center gap-8">
+          <div className="flex justify-end">
             <Button
               className="w-fit whitespace-nowrap"
               isLoading={isCreatingRoom || loadingRoom}

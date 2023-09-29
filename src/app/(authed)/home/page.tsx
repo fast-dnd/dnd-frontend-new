@@ -8,10 +8,10 @@ import JoinRoom from "./components/join-room";
 
 const Page = () => {
   return (
-    <div className="flex h-full min-h-0 flex-1 flex-col gap-12 overflow-y-auto px-5 lg:min-w-fit lg:flex-row lg:px-0">
+    <div className="flex min-h-0 flex-1 flex-col gap-12 overflow-y-auto px-5 pb-12 lg:min-w-fit lg:flex-row lg:px-0">
       <Box
         title="CREATE ROOM"
-        className="flex max-h-[850px] min-h-0 flex-1 flex-col overflow-y-auto p-4 lg:p-8"
+        className="flex min-h-0 flex-1 flex-col gap-8 overflow-y-auto p-4 lg:p-8"
       >
         <CreateRoom />
       </Box>
@@ -20,7 +20,7 @@ const Page = () => {
         <div className="flex min-h-0 flex-1 overflow-y-auto">
           <Box
             title="GAME HISTORY"
-            className="mb-4 flex max-h-[480px] min-h-0 flex-1 flex-col items-start gap-4 p-4 lg:mb-0 lg:gap-8 lg:p-8"
+            className="mb-4 flex min-h-0 flex-1 flex-col items-start gap-4 p-4 lg:mb-0 lg:gap-8 lg:p-8"
           >
             <GameHistory />
           </Box>

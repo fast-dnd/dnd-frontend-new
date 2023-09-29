@@ -18,7 +18,7 @@ const MyAccount = () => {
   if (!account) return <div>Something went wrong</div>;
 
   return (
-    <Box title="MY ACCOUNT" wrapperClassName="flex basis-1/3 pb-12" className="p-8">
+    <Box title="MY ACCOUNT" wrapperClassName="flex basis-1/3" className="p-8">
       <div className="flex flex-col gap-8">
         <div className="flex gap-4">
           <Image

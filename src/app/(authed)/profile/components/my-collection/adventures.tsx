@@ -58,7 +58,7 @@ const Adventures = ({
   return dungeonsData.pages[0].dungeons.length === 0 ? (
     <NoAdventures />
   ) : (
-    <div className="flex h-[500px] flex-col gap-8 overflow-y-auto">
+    <div className="flex flex-col gap-8 overflow-y-auto">
       {content}
       {isFetchingNextPage && <div className="flex w-full text-center text-2xl">Loading...</div>}
     </div>

@@ -26,7 +26,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         <Providers>
           <NextTopLoader />
           <Background />
-          <div className="flex-1 px-16">{children}</div>
+          <div className="flex flex-1 flex-col px-16 lg:max-h-full">{children}</div>
         </Providers>
       </body>
     </html>

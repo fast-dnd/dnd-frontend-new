@@ -19,7 +19,11 @@ const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
   const [dungeonDetailId, setDungeonDetailId] = useState<string>();
 
   return (
-    <Box title="MY COLLECTION" wrapperClassName="flex basis-2/3 pb-12" className={cn("h-full p-8")}>
+    <Box
+      title="MY COLLECTION"
+      wrapperClassName="flex basis-2/3"
+      className={cn("flex min-h-0 flex-1 flex-col lg:p-8")}
+    >
       {dungeonDetailId ? (
         <>
           <GoBackButton onClick={() => setDungeonDetailId(undefined)} />

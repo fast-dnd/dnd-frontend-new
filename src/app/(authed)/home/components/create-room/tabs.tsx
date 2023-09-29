@@ -18,7 +18,7 @@ const Tabs = () => {
   const activeSubTab = tabStore.subTab.use();
 
   return (
-    <div className="mb-8 flex justify-between gap-6">
+    <div className="flex justify-between gap-6">
       <div className="flex gap-6">
         {tabsWithIcons.slice(0, 2).map((tab) => (
           <div

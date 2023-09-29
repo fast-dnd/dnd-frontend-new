@@ -12,7 +12,7 @@ const Rewards = () => {
   if (!rewards) return <div>Something went wrong</div>;
 
   return (
-    <div className="flex h-[500px] flex-col gap-4 overflow-y-auto overflow-x-hidden">
+    <div className="flex flex-col gap-4 overflow-y-auto overflow-x-hidden">
       <p>Unlocked {rewards.length}/50</p>
       <div className="grid grid-cols-4 gap-7">
         {rewards.map((reward) => (
