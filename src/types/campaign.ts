@@ -4,9 +4,9 @@ import { dungeonSchema } from "./dungeon";
 
 export const campaignSchema = z.object({
   _id: z.string(),
-  name: z.string().optional(),
+  name: z.string(),
   imageUrl: z.string(),
-  description: z.string().optional(),
+  description: z.string(),
   dungeons: z.array(z.string()),
 });
 

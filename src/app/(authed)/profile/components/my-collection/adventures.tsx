@@ -1,5 +1,6 @@
 import React from "react";
 
+import { IBaseDungeon } from "@/types/dungeon";
 import useGetDungeons from "@/hooks/use-get-dungeons";
 import useIntersectionObserver from "@/hooks/use-intersection-observer";
 import { Button } from "@/components/ui/button";
@@ -9,9 +10,13 @@ import { Dungeon } from "@/components/dungeon";
 const Adventures = ({
   setDungeonDetailId,
   filter,
+  addToCampaign,
+  addedToCampaign,
 }: {
-  setDungeonDetailId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   filter?: string;
+  addToCampaign?: (dungeonName: IBaseDungeon) => void;
+  addedToCampaign?: IBaseDungeon[];
 }) => {
   const {
     data: dungeonsData,
@@ -47,11 +52,19 @@ const Adventures = ({
             dungeon={dungeon}
             setDungeonDetailId={setDungeonDetailId}
             ref={lastDungeonRef}
+            addToCampaign={addToCampaign}
+            isAddedToCampaign={addedToCampaign?.includes(dungeon)}
           />
         );
       }
       return (
-        <Dungeon key={dungeon._id} dungeon={dungeon} setDungeonDetailId={setDungeonDetailId} />
+        <Dungeon
+          key={dungeon._id}
+          dungeon={dungeon}
+          setDungeonDetailId={setDungeonDetailId}
+          addToCampaign={addToCampaign}
+          isAddedToCampaign={addedToCampaign?.includes(dungeon)}
+        />
       );
     }),
   );

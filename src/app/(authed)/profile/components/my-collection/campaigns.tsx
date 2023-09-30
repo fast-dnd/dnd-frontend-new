@@ -93,7 +93,7 @@ const NoCampaigns = () => (
         adventures ready to be explored. Start by creating your first campaign, weave multiple
         adventures together, and lead adventurers on a journey they&apos;ll never forget!
       </p>
-      <Button>CREATE NEW CAMPAIGN</Button>
-    </div>{" "}
+      <Button href="/create-campaign">CREATE NEW CAMPAIGN</Button>
+    </div>
   </div>
 );

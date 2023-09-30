@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Game, Star1 } from "iconsax-react";
+import { FaCheck } from "react-icons/fa";
 
 import { IBaseDungeon } from "@/types/dungeon";
 
@@ -9,23 +10,51 @@ export const Dungeon = React.forwardRef<
   {
     dungeon: IBaseDungeon;
     setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+    addToCampaign?: (dungeon: IBaseDungeon) => void;
+    isAddedToCampaign?: boolean;
   }
->(({ dungeon, setDungeonDetailId }, ref) => {
+>(({ dungeon, setDungeonDetailId, addToCampaign, isAddedToCampaign }, ref) => {
+  const onClick = () => {
+    if (addToCampaign) {
+      addToCampaign(dungeon);
+    }
+    if (setDungeonDetailId) {
+      setDungeonDetailId(dungeon._id);
+    }
+  };
+
   return (
     <div
       className="flex cursor-pointer gap-8 rounded-md hover:bg-white/5"
-      onClick={() => setDungeonDetailId && setDungeonDetailId(dungeon._id)}
+      onClick={onClick}
       ref={ref}
     >
-      <Image
-        src={dungeon.imageUrl || "/images/default-dungeon.png"}
-        alt={dungeon.name}
-        width={200}
-        height={200}
-        className="h-16 w-16 rounded-md lg:h-[180px] lg:w-[180px]"
-      />
+      <div className="relative h-[200px] w-[250px] rounded-md">
+        {isAddedToCampaign && (
+          <>
+            <div className="absolute left-0 top-0 h-full w-full rounded-md bg-black/50" />
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              <FaCheck className="h-12 w-12 fill-primary" />
+            </div>
+          </>
+        )}
+        <Image
+          src={dungeon.imageUrl || "/images/default-dungeon.png"}
+          alt={dungeon.name}
+          width={200}
+          height={200}
+          className="h-16 w-16 rounded-md lg:h-[200px] lg:w-[200px]"
+        />
+      </div>
       <div className="flex w-full flex-col gap-4">
-        <p className="text-2xl font-bold uppercase">{dungeon.name}</p>
+        <p className="inline-flex items-center gap-8 text-2xl font-bold uppercase">
+          {dungeon.name}
+          {isAddedToCampaign && (
+            <span className="rounded-md border border-primary px-3 py-1.5 text-sm font-normal normal-case tracking-wider text-primary">
+              Selected
+            </span>
+          )}
+        </p>
         <p className="text-xl">{dungeon.description}</p>
         <div className="mb-1 mt-auto flex w-full justify-between">
           <div className="flex flex-wrap gap-2 lg:gap-4">
