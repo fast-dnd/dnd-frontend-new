@@ -49,7 +49,12 @@ const Tabs = ({ activeTab }: { activeTab: Tab }) => {
         ))}
       </div>
       {(activeTab === "ADVENTURES" || activeTab === "CAMPAIGNS") && (
-        <Button className="w-fit uppercase">CREATE NEW {activeTab.slice(0, -1)}</Button>
+        <Button
+          className="w-fit uppercase"
+          href={`/create-${activeTab.slice(0, -1).toLowerCase()}`}
+        >
+          CREATE NEW {activeTab.slice(0, -1)}
+        </Button>
       )}
     </div>
   );

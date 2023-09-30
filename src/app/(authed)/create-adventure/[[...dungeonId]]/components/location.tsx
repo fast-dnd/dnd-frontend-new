@@ -30,39 +30,35 @@ const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps
 
         return (
           <>
-            <div className="flex min-h-0 flex-col gap-5 lg:h-full lg:basis-1/3 lg:gap-8">
+            <div className="w-full">
               <Input
-                label="Name"
-                placeholder="Misty Forest"
-                className="m-0"
+                label="Location name"
+                placeholder="Enter a memorable name for this location... e.g., 'The Enchanted Forest'"
+                className="m-0 w-full"
                 {...register("name")}
                 state={locationErrors?.name ? "error" : undefined}
                 errorMessage={locationErrors?.name?.message}
               />
-              <div className="flex min-h-0 lg:h-full">
-                <TextArea
-                  label="Mission"
-                  placeholder="The goal is to find the secret treasure hidden somewhere in the old castle..."
-                  className="m-0 h-full"
-                  {...register("mission")}
-                  state={locationErrors?.mission ? "error" : undefined}
-                  errorMessage={locationErrors?.mission?.message}
-                />
-              </div>
             </div>
-            <div className="flex min-h-0 lg:h-full lg:basis-1/3">
+            <div className="flex h-full flex-row gap-6">
               <TextArea
-                label="Description"
+                label="Location mission"
+                placeholder="The goal is to find the secret treasure hidden somewhere in the old castle..."
+                className="m-0 h-full"
+                {...register("mission")}
+                state={locationErrors?.mission ? "error" : undefined}
+                errorMessage={locationErrors?.mission?.message}
+              />
+              <TextArea
+                label="Location description"
                 placeholder="Venture into the heart of an enchanted forest..."
                 className="m-0 h-full"
                 {...register("description")}
                 state={locationErrors?.description ? "error" : undefined}
                 errorMessage={locationErrors?.description?.message}
               />
-            </div>
-            <div className="flex min-h-0 lg:h-full lg:basis-1/3">
               <TextArea
-                label="Transition"
+                label="Location transition"
                 placeholder="You leave this place to enter the dark swamp..."
                 className="m-0 h-full"
                 {...register("transition")}

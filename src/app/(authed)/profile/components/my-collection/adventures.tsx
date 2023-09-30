@@ -109,7 +109,7 @@ const NoAdventures = () => (
         your first adventure. Fill its corridors with challenges, secrets, and tales that
         adventurers yearn to explore!
       </p>
-      <Button>CREATE NEW ADVENTURE</Button>
-    </div>{" "}
+      <Button href="/create-dungeon">CREATE NEW ADVENTURE</Button>
+    </div>
   </div>
 );

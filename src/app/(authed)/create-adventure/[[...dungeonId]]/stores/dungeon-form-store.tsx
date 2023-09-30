@@ -31,7 +31,7 @@ export type IDungeonFormStore = {
 };
 
 export const dungeonFormStore = observable<IDungeonFormStore>({
-  currentStep: "INITIAL",
+  currentStep: "General information",
   dungeonFormData: getInitialDungeonFormData(),
 });
 

@@ -1,6 +1,6 @@
 import { StylesConfig } from "react-select";
 
-const tagsComboboxStyles: (error: boolean) => StylesConfig = (error) => ({
+const tagsComboboxStyles: (error?: boolean) => StylesConfig = (error) => ({
   control: (baseStyles, _state) => ({
     ...baseStyles,
     backgroundColor: "transparent",

@@ -12,25 +12,25 @@ interface IUploadImageProps {
 
 const UploadImage = ({ image, inputFile, onClick, defaultImage }: IUploadImageProps) => {
   return (
-    <div className={cn("relative h-[180px] w-[180px] lg:h-[250px] lg:w-[250px]")}>
+    <div className={cn("relative h-[170px] w-[170px]")}>
       <div
         className={cn(
-          "absolute z-10 flex h-[180px] w-[180px] cursor-pointer flex-col items-center justify-center gap-4 bg-black/50 text-white/75 hover:bg-black/30 lg:h-[250px] lg:w-[250px]",
+          "absolute z-10 flex h-[170px] w-[170px] cursor-pointer flex-col items-center justify-center gap-4 bg-black/50 text-white/75 hover:bg-black/30",
           image && "bg-black/20",
         )}
         onClick={onClick}
       >
         <input type="file" ref={inputFile} className="hidden" accept="image/*" />
-        <FiUpload className="h-12 w-12 lg:h-24 lg:w-24" />
+        <FiUpload className="h-8 w-8" />
         <p className="text-center indent-[0.07em] text-xs font-medium uppercase tracking-wider lg:tracking-[0.07em]">
-          UPLOAD IMAGE
+          UPLOAD THUMBNAIL
         </p>
       </div>
       <Image
         src={image || defaultImage || "/images/bg-cover.png"}
-        width={250}
-        height={250}
-        className={cn("h-[180px] w-[180px] lg:h-[250px] lg:w-[250px]", !image && "opacity-40")}
+        width={170}
+        height={170}
+        className={cn("h-[170px] w-[170px]", !image && "opacity-40")}
         alt="upload"
         style={{ objectFit: "cover" }}
       />

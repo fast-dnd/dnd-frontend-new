@@ -17,7 +17,6 @@ export interface IChampionLocationProps {
   setEditIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 interface IChampionLocationWrapperProps extends IChampionLocationProps {
-  description?: string;
   locationOrChampion: "Location" | "Champion";
   children: React.ReactNode | ((props: IChildrenProps) => React.ReactNode);
 }
@@ -28,7 +27,6 @@ interface IChildrenProps {
 }
 
 const ChampionLocationWrapper = ({
-  description,
   children,
   locationOrChampion,
   status,
@@ -77,14 +75,7 @@ const ChampionLocationWrapper = ({
 
   return (
     <form className="flex h-full flex-col gap-8 lg:w-full" onSubmit={handleSubmit(onSubmit)}>
-      <p className="-my-1 text-xl font-semibold uppercase tracking-[0.07em] text-white/50">
-        {status === "CREATING" ? `Create ${locationOrChampion}` : `Edit ${locationOrChampion}`}
-      </p>
-      {description && (
-        <p className="-my-1 text-lg tracking-[0.07em] text-white/50">{description}</p>
-      )}
-
-      <div className="flex h-full flex-col gap-5 lg:flex-row lg:gap-8">
+      <div className="flex h-full flex-col gap-5 lg:gap-8">
         {typeof children === "function" ? children({ register, errors }) : children}
       </div>
 

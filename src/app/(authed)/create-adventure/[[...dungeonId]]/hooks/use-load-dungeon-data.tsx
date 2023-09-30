@@ -16,12 +16,7 @@ interface IUseLoadDungeonDataProps {
 const useLoadDungeonData = ({ dungeonData }: IUseLoadDungeonDataProps) => {
   const dungeonFormData = dungeonFormStore.dungeonFormData.use();
 
-  const [isMounted, setIsMounted] = useState(false);
   const [aborting, setAborting] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   useEffect(() => {
     if (dungeonFormData._id !== dungeonData?._id) {
@@ -40,7 +35,7 @@ const useLoadDungeonData = ({ dungeonData }: IUseLoadDungeonDataProps) => {
     }
   }, [dungeonData, aborting, dungeonFormData]);
 
-  return { isMounted, setAborting };
+  return { setAborting };
 };
 
 export default useLoadDungeonData;

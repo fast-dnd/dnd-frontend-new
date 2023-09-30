@@ -15,7 +15,6 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionLocat
       setStatus={setStatus}
       editIndex={editIndex}
       setEditIndex={setEditIndex}
-      description="Describe the champion and define custom names for its actions"
       locationOrChampion="Champion"
     >
       {({ register, errors }) => {
@@ -23,27 +22,17 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionLocat
 
         return (
           <>
-            <div className="flex min-h-0 flex-col gap-5 lg:h-full lg:basis-1/3 lg:gap-8">
+            <div className="w-full">
               <Input
-                label="Name"
+                label="Champion name"
                 placeholder="Warrior"
                 className="m-0"
                 {...register("name")}
                 state={championErrors?.name ? "error" : undefined}
                 errorMessage={championErrors?.name?.message}
               />
-              <div className="flex min-h-0 lg:h-full">
-                <TextArea
-                  label="Description"
-                  placeholder="You are a brave warrior ready to fight..."
-                  className="m-0 h-full"
-                  {...register("description")}
-                  state={championErrors?.description ? "error" : undefined}
-                  errorMessage={championErrors?.description?.message}
-                />
-              </div>
             </div>
-            <div className="flex min-h-0 flex-col gap-5 lg:h-full lg:basis-1/3 lg:gap-8">
+            <div className="grid grid-cols-2 gap-6">
               <Input
                 label="Heal action text"
                 placeholder="Try to heal yourself"
@@ -58,8 +47,6 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionLocat
                 state={championErrors?.moveMapping?.conversation_with_team ? "error" : undefined}
                 errorMessage={championErrors?.moveMapping?.conversation_with_team?.message}
               />
-            </div>
-            <div className="flex min-h-0 flex-col gap-5 lg:h-full lg:basis-1/3 lg:gap-8">
               <Input
                 label="Mana action text"
                 placeholder="Try to find something useful"
@@ -73,6 +60,17 @@ const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionLocat
                 {...register("moveMapping.rest")}
                 state={championErrors?.moveMapping?.rest ? "error" : undefined}
                 errorMessage={championErrors?.moveMapping?.rest?.message}
+              />
+            </div>
+
+            <div className="flex min-h-0 lg:h-full">
+              <TextArea
+                label="Champion description"
+                placeholder="You are a brave warrior ready to fight..."
+                className="m-0 h-full"
+                {...register("description")}
+                state={championErrors?.description ? "error" : undefined}
+                errorMessage={championErrors?.description?.message}
               />
             </div>
           </>

@@ -29,7 +29,12 @@ const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
           <GoBackButton onClick={() => setDungeonDetailId(undefined)} />
           <DungeonDetail dungeonDetailId={dungeonDetailId} />
           <div className="absolute bottom-8 right-8 flex items-center gap-8">
-            <Button className="w-fit whitespace-nowrap">EDIT ADVENTURE</Button>
+            <Button
+              className="w-fit whitespace-nowrap"
+              href={`/create-adventure/${dungeonDetailId}`}
+            >
+              EDIT ADVENTURE
+            </Button>
           </div>
         </>
       ) : (
