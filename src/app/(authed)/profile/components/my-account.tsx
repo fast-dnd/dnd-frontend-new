@@ -85,7 +85,7 @@ const MyAccount = () => {
           />
           <StatisticsCard
             icon={<Timer color="#FF5A5A" variant="Bold" />}
-            value={account.statistics.totalGameplayHours}
+            value={account.statistics.totalGameplayHours.toFixed(2)}
             name="Hours played"
           />
         </div>

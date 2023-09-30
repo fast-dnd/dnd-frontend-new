@@ -20,13 +20,13 @@ export const moveTypeSchema = z.enum([...defaultMoves, "no_input", "free_will"])
 export const moveSchema = z.object({
   playerAccountId: z.string(),
   playerName: z.string(),
-  playerChampion: z.string(),
+  playerChampion: z.string().nullish(),
   moveType: moveTypeSchema,
   action: z.string(),
   dice: z.number(),
   mana: z.number(),
   aiRating: z.number(),
-  aiDescription: z.string(),
+  aiDescription: z.string().nullable(),
 });
 
 export const questionSchema = z.object({
@@ -34,7 +34,7 @@ export const questionSchema = z.object({
   bob3Answer: z.string(),
   playerAccountId: z.string(),
   playerName: z.string(),
-  playerChampion: z.string(),
+  playerChampion: z.string().nullish(),
 });
 
 export const playerSchema = z.object({

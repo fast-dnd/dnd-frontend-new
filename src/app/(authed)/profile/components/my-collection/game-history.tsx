@@ -40,9 +40,9 @@ const GameHistory = () => {
   );
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex min-h-0 flex-1 flex-col gap-6">
       <p className="uppercase">Games played: {roomsData?.pages[0].total ?? "--"}</p>
-      <div className="flex flex-col gap-4">
+      <div className="flex h-full flex-col gap-4 overflow-y-auto">
         {roomsData.pages[0].rooms.length === 0 ? (
           <div className="flex w-full items-center justify-center">
             <div className="flex h-full w-[490px] flex-col items-center justify-start gap-5 p-5 lg:gap-8 lg:p-8">
