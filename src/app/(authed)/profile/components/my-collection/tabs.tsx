@@ -31,7 +31,7 @@ const Tabs = ({ activeTab }: { activeTab: Tab }) => {
   };
 
   return (
-    <div className="mb-8 flex justify-between gap-6">
+    <div className="flex justify-between gap-6">
       <div className="flex gap-6">
         {tabsWithIcons.map((tab) => (
           <div

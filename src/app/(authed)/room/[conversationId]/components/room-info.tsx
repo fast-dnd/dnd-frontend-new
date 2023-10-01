@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { backgroundStore } from "@/stores/background-store";
 
 import { IChampion } from "@/types/dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
@@ -17,23 +16,11 @@ const RoomInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
   const router = useRouter();
 
-  const bgUrl = backgroundStore.bgUrl;
-
   const { data: roomData, isLoading: isLoadingRoomData } = useGetRoomData(conversationId);
 
   const { mutate: updateRole } = useUpdateRole();
 
-  const [bgSet, setBgSet] = useState(false);
-
   const [selectedChampion, setSelectedChampion] = useState<IChampion>();
-
-  // useEffect(() => {
-  //   if (!dungeonData) bgUrl.set("");
-  //   if (dungeonData && !bgSet) {
-  //     setBgSet(true);
-  //     bgUrl.set(dungeonData.backgroundUrl);
-  //   }
-  // }, [bgSet, bgUrl, dungeonData]);
 
   if (isLoadingRoomData) return <LoadingStateBox />;
 
@@ -47,8 +34,8 @@ const RoomInfo = (props: { conversationId: string }) => {
   return (
     <Box
       title="LOBBY"
-      className="flex min-h-0 flex-col gap-5 p-5 lg:gap-8 lg:p-8"
-      wrapperClassName="block mx-auto basis-3/4"
+      className="flex min-h-0 shrink flex-col gap-5 p-5 lg:gap-8 lg:p-8"
+      wrapperClassName="max-h-full mx-auto basis-3/4"
     >
       <GoBackButton className="mb-0" onClick={() => router.push("/home")} />
       <div className="flex min-h-0 w-full flex-1 flex-col gap-5 lg:gap-8 lg:overflow-y-auto">

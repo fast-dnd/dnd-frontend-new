@@ -17,11 +17,13 @@ const Navbar = ({ authed = true }: { authed?: boolean }) => {
     <div className="hidden w-full items-center justify-between gap-12 pl-2 pr-8 lg:flex">
       <Image src="/images/logo.png" width={300} height={100} alt="logo" />
       <div className="flex items-center gap-6 text-2xl leading-7 tracking-[3.3px]">
-        <Link href={account ? "/home" : "/login"}>{account ? "PLAY" : "LOG IN"}</Link>
+        <Link href={authed || account ? "/home" : "/login"}>
+          {authed || account ? "PLAY" : "LOG IN"}
+        </Link>
         <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
         <Link href="/guide">HOW TO PLAY</Link>
         <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
-        {!!account && (
+        {loggedIn && (
           <>
             <Link href="/profile">
               <Image

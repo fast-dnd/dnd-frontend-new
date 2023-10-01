@@ -39,7 +39,7 @@ const Tabs = () => {
         value={activeSubTab}
         onValueChange={(value) => tabStore.subTab.set(value as SubTabType)}
       >
-        <SelectTrigger className="w-52 capitalize" aria-label="Select dungeon type">
+        <SelectTrigger className="mb-0 w-52 capitalize" aria-label="Select dungeon type">
           <SelectValue placeholder="Select adventure type" />
         </SelectTrigger>
         <SelectContent>

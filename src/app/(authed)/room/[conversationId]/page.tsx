@@ -4,13 +4,9 @@ import RoomInfo from "./components/room-info";
 const Room = ({ params }: { params: { conversationId: string } }) => {
   const conversationId = params.conversationId;
   return (
-    <div className="mt-8 h-full min-h-0 w-full overflow-y-auto lg:mt-0">
-      <div className="flex h-full justify-center lg:overflow-y-hidden">
-        <div className="flex min-h-0 w-full flex-1 flex-col gap-12 lg:flex-row">
-          <RoomInfo conversationId={conversationId} />
-          <JoinEditInfo conversationId={conversationId} />
-        </div>
-      </div>
+    <div className="flex h-full flex-col justify-center gap-12 pb-12 lg:flex-row lg:overflow-y-hidden">
+      <RoomInfo conversationId={conversationId} />
+      <JoinEditInfo conversationId={conversationId} />
     </div>
   );
 };
