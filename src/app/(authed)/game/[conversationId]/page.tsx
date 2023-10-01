@@ -31,7 +31,7 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
       />
     );
   return (
-    <div className="flex h-full min-h-0 flex-col gap-5 py-8 lg:pb-12">
+    <div className="flex h-full min-h-0 flex-col gap-5 lg:pb-12">
       <div
         className={cn(
           "pointer-events-none absolute bottom-0 h-full min-h-0 w-full overflow-hidden",
@@ -86,7 +86,7 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
         </Button>
       </div>
 
-      <div className="flex h-full min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:min-w-fit lg:flex-row lg:gap-12 lg:px-16 lg:py-0">
+      <div className="flex h-full min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:min-w-fit lg:flex-row lg:gap-12 lg:py-0">
         <div className={cn("flex flex-1 lg:basis-[70%]", !openedGameplay && "hidden", "lg:flex")}>
           <Gameplay conversationId={conversationId} />
         </div>
