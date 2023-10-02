@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { redirect } from "next/navigation";
 
 import useGetDungeon from "@/hooks/use-get-dungeon";
@@ -11,11 +12,14 @@ import FormStepWrapper from "./components/form-step-wrapper";
 import GeneralInfo from "./components/general-info";
 import StepsCard from "./components/steps-card";
 import { dungeonFormStore } from "./stores/dungeon-form-store";
+import { StatusType } from "./utils/step-utils";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const dungeonId = params.dungeonId?.[0];
 
   const { data: dungeonData, isInitialLoading, isError } = useGetDungeon(dungeonId);
+
+  const [status, setStatus] = useState<StatusType>("LIST");
 
   const { currentStep } = dungeonFormStore.use();
 
@@ -31,13 +35,26 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
       <div className="flex h-full w-full justify-between gap-12 pb-12 lg:overflow-y-hidden">
         <div className="flex w-full">
           <div className="flex h-full w-full">
-            <FormStepWrapper isEditing={dungeonId !== undefined} dungeonData={dungeonData}>
+            <FormStepWrapper
+              isEditing={dungeonId !== undefined}
+              dungeonData={dungeonData}
+              status={status}
+              setStatus={setStatus}
+            >
               {currentStep === "General information" && <GeneralInfo dungeonId={dungeonId} />}
               {currentStep === "Locations" && (
-                <ChampionsLocationsWrapper locationOrChampion="Location" />
+                <ChampionsLocationsWrapper
+                  locationOrChampion="Location"
+                  status={status}
+                  setStatus={setStatus}
+                />
               )}
               {currentStep === "Champions" && (
-                <ChampionsLocationsWrapper locationOrChampion="Champion" />
+                <ChampionsLocationsWrapper
+                  locationOrChampion="Champion"
+                  status={status}
+                  setStatus={setStatus}
+                />
               )}
             </FormStepWrapper>
           </div>

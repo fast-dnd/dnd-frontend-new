@@ -3,7 +3,15 @@ import { AiOutlineLeft } from "react-icons/ai";
 
 import { cn } from "@/utils/style-utils";
 
-const GoBackButton = ({ onClick, className }: { onClick: () => void; className?: string }) => {
+const GoBackButton = ({
+  onClick,
+  className,
+  text,
+}: {
+  onClick: () => void;
+  className?: string;
+  text?: string;
+}) => {
   return (
     <div
       className={cn(
@@ -13,7 +21,7 @@ const GoBackButton = ({ onClick, className }: { onClick: () => void; className?:
       onClick={onClick}
     >
       <AiOutlineLeft />
-      <span>BACK</span>
+      <span>{text ?? "BACK"}</span>
     </div>
   );
 };

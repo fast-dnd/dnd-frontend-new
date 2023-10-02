@@ -13,35 +13,45 @@ import {
 import GoBackButton from "@/components/go-back-button";
 
 import useLoadDungeonData from "../hooks/use-load-dungeon-data";
-import { dungeonFormStore, getInitialDungeonFormData } from "../stores/dungeon-form-store";
+import { dungeonFormStore } from "../stores/dungeon-form-store";
+import { StatusType } from "../utils/step-utils";
 
 interface IFormStepWrapperProps {
   isEditing?: boolean;
   children: React.ReactNode;
   dungeonData: IDungeonDetail | undefined;
+  status: StatusType;
+  setStatus: React.Dispatch<React.SetStateAction<StatusType>>;
 }
 
-const FormStepWrapper = ({ isEditing, children, dungeonData }: IFormStepWrapperProps) => {
+const FormStepWrapper = ({
+  isEditing,
+  children,
+  dungeonData,
+  status,
+  setStatus,
+}: IFormStepWrapperProps) => {
   const router = useRouter();
 
   const { setAborting } = useLoadDungeonData({ dungeonData });
 
+  const onClickBack = () => {
+    if (status === "LIST") abortDungeonCreation();
+    else setStatus("LIST");
+  };
+
   const abortDungeonCreation = () => {
     setAborting(true);
-    dungeonFormStore.set({
-      currentStep: "General information",
-      dungeonFormData: getInitialDungeonFormData(),
-    });
     router.push("/profile");
   };
 
   return (
     <Box
       title={isEditing ? "EDIT ADVENTURE" : "CREATE ADVENTURE"}
-      className="mb-4 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:mb-0 lg:gap-6 lg:p-8"
+      className="mb-4 flex min-h-0 flex-1 flex-col gap-5 overflow-hidden p-5 lg:mb-0 lg:gap-6 lg:p-8"
       wrapperClassName="w-[95%] lg:w-[1200px] mx-auto"
     >
-      <GoBackButton onClick={abortDungeonCreation} />
+      <GoBackButton text={status === "LIST" ? "PROFILE" : "BACK"} onClick={onClickBack} />
 
       <div className="flex flex-row items-center justify-between gap-8">
         <p className="w-full text-lg font-semibold uppercase leading-7 tracking-[0.15em] lg:text-[22px]">
