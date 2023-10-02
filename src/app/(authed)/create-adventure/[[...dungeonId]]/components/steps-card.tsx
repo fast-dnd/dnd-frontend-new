@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { MdEdit } from "react-icons/md";
 
@@ -6,6 +6,7 @@ import { dungeonKey } from "@/services/dungeon-service";
 import { cn } from "@/utils/style-utils";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
+import StatusModal, { IStatusModalContent } from "@/components/status-modal";
 
 import useCreateDungeon from "../hooks/use-create-dungeon";
 import useUpdateDungeon from "../hooks/use-update-dungeon";
@@ -17,6 +18,14 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
   const queryClient = useQueryClient();
 
   const { currentStep, dungeonFormData } = dungeonFormStore.use();
+
+  const [openModal, setOpenModal] = useState(false);
+  const [modalContent, setModalContent] = useState<IStatusModalContent>({
+    actionText: "",
+    title: "",
+    description: "",
+    href: "",
+  });
 
   const { mutate: createDungeon, isLoading: isCreating } = useCreateDungeon();
   const { mutate: updateDungeon, isLoading: isUpdating } = useUpdateDungeon();
@@ -31,12 +40,44 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
       updateDungeon(dungeonFormDataWithoutTags, {
         onSuccess: (_data) => {
           queryClient.invalidateQueries([dungeonKey, dungeonId]);
+          setModalContent({
+            title: "ADVENTURE EDITED SUCCESSFULLY",
+            description: "You can start your story with your new adventure now!",
+            actionText: "GO TO PROFILE",
+            href: "/profile",
+          });
+          setOpenModal(true);
+        },
+        onError: () => {
+          setModalContent({
+            title: "ERROR EDITING ADVENTURE",
+            description: "",
+            actionText: "GO TO PROFILE",
+            href: "/profile",
+          });
+          setOpenModal(true);
         },
       });
     } else {
       createDungeon(dungeonFormDataWithoutTags, {
         onSuccess: (data) => {
           dungeonFormStore.dungeonFormData.set((prev) => ({ ...prev, _id: data.data._id }));
+          setModalContent({
+            title: "ADVENTURE CREATED SUCCESSFULLY",
+            description: "You can start your story with your new adventure now!",
+            actionText: "GO TO PROFILE",
+            href: "/profile",
+          });
+          setOpenModal(true);
+        },
+        onError: () => {
+          setModalContent({
+            title: "ERROR CREATING ADVENTURE",
+            description: "",
+            actionText: "GO TO PROFILE",
+            href: "/profile",
+          });
+          setOpenModal(true);
         },
       });
     }
@@ -66,6 +107,7 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
       <Button className="w-fit" onClick={onFinishForm} isLoading={isCreating || isUpdating}>
         {dungeonId ? "SAVE CHANGES" : "PUBLISH"}
       </Button>
+      <StatusModal open={openModal} content={modalContent} />
     </Box>
   );
 };

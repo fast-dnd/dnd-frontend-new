@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 import UploadImage from "@/components/ui/upload-image";
+import StatusModal, { IStatusModalContent } from "@/components/status-modal";
 
 import useCreateCampaign from "../hooks/use-create-campaign";
 import useUpdateCampaign from "../hooks/use-update-campaign";
@@ -18,6 +19,14 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
   const queryClient = useQueryClient();
 
   const { name, description, dungeons, image } = campaignFormStore.use();
+
+  const [openModal, setOpenModal] = useState(false);
+  const [modalContent, setModalContent] = useState<IStatusModalContent>({
+    actionText: "",
+    title: "",
+    description: "",
+    href: "",
+  });
 
   const imageRef = useRef<HTMLInputElement>(null);
 
@@ -47,9 +56,50 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
           ...dataForBackend,
           campaignId,
         },
-        { onSuccess: () => queryClient.invalidateQueries([campaignKey, campaignId]) },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries([campaignKey, campaignId]);
+            setModalContent({
+              title: "CAMPAIGN EDITED SUCCESSFULLY",
+              description: "You can start your story with your new campaign now!",
+              actionText: "GO TO PROFILE",
+              href: "/profile",
+            });
+            setOpenModal(true);
+          },
+          onError: () => {
+            setModalContent({
+              title: "ERROR EDITING CAMPAIGN",
+              description: "",
+              actionText: "GO TO PROFILE",
+              href: "/profile",
+            });
+            setOpenModal(true);
+          },
+        },
       );
-    else createCampaign(dataForBackend);
+    else
+      createCampaign(dataForBackend, {
+        onSuccess: () => {
+          queryClient.invalidateQueries([campaignKey, campaignId]);
+          setModalContent({
+            title: "CAMPAIGN CREATED SUCCESSFULLY",
+            description: "You can start your story with your new campaign now!",
+            actionText: "GO TO PROFILE",
+            href: "/profile",
+          });
+          setOpenModal(true);
+        },
+        onError: () => {
+          setModalContent({
+            title: "ERROR CREATING CAMPAIGN",
+            description: "",
+            actionText: "GO TO PROFILE",
+            href: "/profile",
+          });
+          setOpenModal(true);
+        },
+      });
   };
 
   return (
@@ -93,6 +143,7 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
       <Button className="w-fit" onClick={onComplete} isLoading={isCreating || isUpdating}>
         {campaignId ? "SAVE CHANGES" : "CREATE CAMPAIGN"}
       </Button>
+      <StatusModal open={openModal} content={modalContent} />
     </Box>
   );
 };
