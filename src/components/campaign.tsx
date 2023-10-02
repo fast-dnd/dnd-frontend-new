@@ -21,7 +21,7 @@ export const Campaign = React.forwardRef<
         alt={campaign.name ?? ""}
         width={200}
         height={200}
-        className="h-16 w-16 rounded-md lg:h-[180px] lg:w-[180px]"
+        className="h-16 w-16 rounded-md lg:h-[200px] lg:w-[200px]"
       />
       <div className="flex w-full flex-col gap-4">
         <p className="text-2xl font-bold uppercase">{campaign.name}</p>

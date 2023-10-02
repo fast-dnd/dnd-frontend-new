@@ -37,7 +37,7 @@ const StatusModal = ({
       }}
     >
       <DialogContent className="max-h-[700px] w-fit lg:max-w-[550px]">
-        <DialogHeader>
+        <DialogHeader className="lg:m-0">
           <DialogTitle className="whitespace-nowrap">{title}</DialogTitle>
           <DialogDescription className="text-center">{description}</DialogDescription>
         </DialogHeader>

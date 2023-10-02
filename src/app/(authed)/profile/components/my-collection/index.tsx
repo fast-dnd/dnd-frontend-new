@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import GoBackButton from "@/components/go-back-button";
 
 import Adventures from "./adventures";
+import CampaignDetail from "./campaign-detail";
 import Campaigns from "./campaigns";
 import DungeonDetail from "./dungeon-detail";
 import GameHistory from "./game-history";
@@ -17,6 +18,7 @@ import { Tab } from "./types/tab";
 
 const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
   const [dungeonDetailId, setDungeonDetailId] = useState<string>();
+  const [campaignDetailId, setCampaignDetailId] = useState<string>();
 
   return (
     <Box
@@ -24,7 +26,7 @@ const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
       wrapperClassName="flex basis-2/3"
       className={cn("flex min-h-0 flex-1 flex-col gap-8 lg:p-8")}
     >
-      {dungeonDetailId ? (
+      {!!dungeonDetailId && (
         <>
           <GoBackButton onClick={() => setDungeonDetailId(undefined)} />
           <DungeonDetail dungeonDetailId={dungeonDetailId} />
@@ -37,12 +39,27 @@ const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
             </Button>
           </div>
         </>
-      ) : (
+      )}
+      {!!campaignDetailId && (
+        <>
+          <GoBackButton onClick={() => setCampaignDetailId(undefined)} />
+          <CampaignDetail campaignDetailId={campaignDetailId} setDungeonDetailId={() => {}} />
+          <div className="flex justify-end">
+            <Button
+              className="w-fit whitespace-nowrap"
+              href={`/create-campaign/${campaignDetailId}`}
+            >
+              EDIT CAMPAIGN
+            </Button>
+          </div>
+        </>
+      )}
+      {!dungeonDetailId && !campaignDetailId && (
         <>
           <Tabs activeTab={activeTab} />
 
           {activeTab === "ADVENTURES" && <Adventures setDungeonDetailId={setDungeonDetailId} />}
-          {activeTab === "CAMPAIGNS" && <Campaigns />}
+          {activeTab === "CAMPAIGNS" && <Campaigns setCampaignDetailId={setCampaignDetailId} />}
           {activeTab === "GAME HISTORY" && <GameHistory />}
           {activeTab === "REWARDS" && <Rewards />}
         </>
