@@ -7,8 +7,8 @@ import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
+import Spinner from "@/components/ui/spinner";
 
-import LoadingStateBox from "./loading-state-box";
 import Player from "./player";
 import UpdateRoom from "./update-room";
 
@@ -22,7 +22,17 @@ const JoinEditInfo = (props: { conversationId: string }) => {
 
   if (isError) redirect("/home");
 
-  if (isLoadingRoomData || isLoadingDungeonData) return <LoadingStateBox />;
+  if (isLoadingRoomData || isLoadingDungeonData)
+    return (
+      <Box
+        title=""
+        className="mb-4 flex h-full min-h-0 flex-1 flex-col items-center justify-center rounded-t-md p-8 lg:mb-0 lg:gap-8"
+        wrapperClassName="max-h-[745px] basis-1/4"
+        titleClassName="hidden"
+      >
+        <Spinner className="h-40 w-40" />
+      </Box>
+    );
 
   if (!roomData || !dungeonData) return <div>Something went wrong</div>;
 
@@ -34,8 +44,8 @@ const JoinEditInfo = (props: { conversationId: string }) => {
   return (
     <Box
       title=""
-      className="mb-4 flex h-[745px] min-h-0 flex-1 flex-col justify-between gap-5 rounded-t-md p-8 text-sm lg:mb-0 lg:gap-8"
-      wrapperClassName="block mx-auto basis-1/4"
+      className="mb-4 flex h-full min-h-0 flex-1 flex-col justify-between gap-5 overflow-y-auto rounded-t-md p-8 text-sm lg:mb-0 lg:gap-8"
+      wrapperClassName="max-h-[745px] basis-1/4"
       titleClassName="hidden"
     >
       <div className="flex flex-col gap-6">
