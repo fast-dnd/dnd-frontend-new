@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { backgroundStore } from "@/stores/background-store";
 import { AiFillHeart } from "react-icons/ai";
 import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
@@ -23,16 +21,16 @@ const DungeonDetail = ({
 }: IDungeonDetailProps) => {
   const { data: dungeon, isLoading } = useGetDungeon(dungeonDetailId ?? "");
 
-  const bgUrl = backgroundStore.bgUrl;
-  const [bgSet, setBgSet] = useState(false);
+  // const bgUrl = backgroundStore.bgUrl;
+  // const [bgSet, setBgSet] = useState(false);
 
-  useEffect(() => {
-    if (!dungeon) bgUrl.set("");
-    if (dungeon && !bgSet) {
-      setBgSet(true);
-      bgUrl.set(dungeon.backgroundUrl);
-    }
-  }, [bgSet, bgUrl, dungeon]);
+  // useEffect(() => {
+  //   if (!dungeon) bgUrl.set("");
+  //   if (dungeon && !bgSet) {
+  //     setBgSet(true);
+  //     bgUrl.set(dungeon.backgroundUrl);
+  //   }
+  // }, [bgSet, bgUrl, dungeon]);
 
   if (isLoading) return <div>Loading...</div>;
 

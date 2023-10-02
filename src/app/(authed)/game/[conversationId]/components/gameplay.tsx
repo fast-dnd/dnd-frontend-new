@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { backgroundStore } from "@/stores/background-store";
 
 import { IPlayer } from "@/types/room";
 import useGetDungeon from "@/hooks/use-get-dungeon";
@@ -22,7 +21,7 @@ import Stories from "./stories";
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
 
-  const bgUrl = backgroundStore.bgUrl;
+  // const bgUrl = backgroundStore.bgUrl;
 
   const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
@@ -83,12 +82,12 @@ const Gameplay = (props: { conversationId: string }) => {
         }
       }
     }
-    if (!dungeonData) bgUrl.set("");
-    if (dungeonData && !bgSet) {
-      setBgSet(true);
-      bgUrl.set(dungeonData.backgroundUrl);
-    }
-  }, [bgSet, bgUrl, currentPlayer, dungeonData, gaming, roomData]);
+    // if (!dungeonData) bgUrl.set("");
+    // if (dungeonData && !bgSet) {
+    //   setBgSet(true);
+    //   bgUrl.set(dungeonData.backgroundUrl);
+    // }
+  }, [currentPlayer, dungeonData, gaming, roomData]);
 
   if (!roomData || !dungeonData || !currentPlayer)
     return (
