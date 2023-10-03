@@ -65,7 +65,7 @@ const Campaigns = ({
   return campaignsData.pages[0].campaigns.length === 0 ? (
     <NoCampaigns />
   ) : (
-    <div className="flex flex-col gap-8 overflow-y-auto">
+    <div className="flex flex-col gap-8 overflow-y-auto pr-4">
       {content}
       {isFetchingNextPage && <div className="flex w-full text-center text-2xl">Loading...</div>}
     </div>

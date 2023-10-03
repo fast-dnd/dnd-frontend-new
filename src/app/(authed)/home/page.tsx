@@ -18,10 +18,7 @@ const Page = () => {
       <div className="flex h-full flex-1 basis-1/3 flex-col gap-12 lg:min-w-fit">
         <JoinRoom />
         <div className="flex min-h-0 flex-1 overflow-y-auto">
-          <Box
-            title="GAME HISTORY"
-            className="mb-4 flex min-h-0 flex-1 flex-col items-start gap-4 overflow-y-auto p-4 lg:mb-0 lg:gap-8 lg:p-8"
-          >
+          <Box title="GAME HISTORY" className="mb-4 flex min-h-0 flex-1 lg:mb-0 lg:gap-8 lg:p-8">
             <GameHistory />
           </Box>
         </div>

@@ -64,14 +64,14 @@ const GameHistory = () => {
   }
 
   return (
-    <>
+    <div className="flex w-full flex-col gap-4 overflow-y-auto pr-4">
       {content}
       {isFetchingNextPage && <div className="flex w-full text-center text-2xl">Loading...</div>}
 
       <Button href="/profile?activeTab=GAME+HISTORY" variant="outline">
         SHOW ENTIRE GAME HISTORY
       </Button>
-    </>
+    </div>
   );
 };
 
