@@ -70,6 +70,7 @@ const General = (props: { conversationId: string }) => {
     if (autoBottomScrollDiv.current) {
       autoBottomScrollDiv.current.scrollIntoView({ behavior: "instant" });
     }
+    console.log(moveHistory);
   }, [moveHistory, questionHistory]);
 
   if (!roomData || !currentPlayer) {
@@ -95,14 +96,15 @@ const General = (props: { conversationId: string }) => {
           </Button>
         )}
         <div className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto pr-2 lg:pr-6">
-          {questionHistory
-            .map((question, index) => [question, moveHistory[index]] as const)
-            .map((val, i) => (
-              <div key={i} className="flex flex-col gap-4">
-                {!!val[0] && !!val[0].question && <Question question={val[0]} />}
-                {Array.isArray(val[1]) && <MoveList moves={val[1]} />}
-              </div>
-            ))}
+          {Array.from(
+            { length: Math.max(questionHistory.length, moveHistory.length) },
+            (_, i) => [questionHistory.at(i), moveHistory.at(i)] as const,
+          ).map((val, i) => (
+            <div key={i} className="flex flex-col gap-4">
+              {!!val[0] && !!val[0].question && <Question question={val[0]} />}
+              {Array.isArray(val[1]) && <MoveList moves={val[1]} />}
+            </div>
+          ))}
           <div ref={autoBottomScrollDiv} />
         </div>
 

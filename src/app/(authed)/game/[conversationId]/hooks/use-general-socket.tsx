@@ -42,7 +42,6 @@ const useGeneralSocket = (conversationId: string) => {
           break;
         case "ROUND_STORY":
           setCanAsk(true);
-          queryClient.invalidateQueries([roomKey, conversationId]);
           break;
       }
     };
