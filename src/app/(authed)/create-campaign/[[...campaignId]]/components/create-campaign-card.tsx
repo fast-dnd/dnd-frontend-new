@@ -103,8 +103,12 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
   };
 
   return (
-    <Box title="CAMPAIGN" className="flex h-full w-full flex-col items-center justify-between p-8">
-      <div className="flex h-fit w-full flex-col justify-between gap-6">
+    <Box
+      title="CAMPAIGN"
+      wrapperClassName="h-full"
+      className="flex h-full min-h-0 w-full flex-col items-center justify-between overflow-y-auto p-8"
+    >
+      <div className="flex h-full w-full flex-col justify-between gap-6">
         <div className="flex items-center justify-between">
           <div className="flex h-fit">
             <Input
@@ -126,7 +130,7 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
         />
         <div className="hidden w-full border-t border-white/20 lg:block" />
         <p>SELECTED ADVENTURES</p>
-        <div className="flex flex-col gap-4">
+        <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto">
           {dungeons.map((dungeon) => (
             <div className="flex gap-4" key={dungeon._id}>
               <Image
@@ -139,10 +143,13 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
             </div>
           ))}
         </div>
+        <div className="flex justify-center">
+          <Button className="w-fit" onClick={onComplete} isLoading={isCreating || isUpdating}>
+            {campaignId ? "SAVE CHANGES" : "CREATE CAMPAIGN"}
+          </Button>
+        </div>
       </div>
-      <Button className="w-fit" onClick={onComplete} isLoading={isCreating || isUpdating}>
-        {campaignId ? "SAVE CHANGES" : "CREATE CAMPAIGN"}
-      </Button>
+
       <StatusModal open={openModal} content={modalContent} />
     </Box>
   );
