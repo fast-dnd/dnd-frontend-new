@@ -2,6 +2,7 @@ import useGetCampaigns from "@/hooks/use-get-campaigns";
 import useIntersectionObserver from "@/hooks/use-intersection-observer";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
+import Spinner from "@/components/ui/spinner";
 import { Campaign } from "@/components/campaign";
 
 const Campaigns = ({
@@ -65,9 +66,13 @@ const Campaigns = ({
   return campaignsData.pages[0].campaigns.length === 0 ? (
     <NoCampaigns />
   ) : (
-    <div className="flex flex-col gap-8 overflow-y-auto pr-4">
+    <div className="flex flex-1 flex-col gap-8 overflow-y-auto pr-4">
       {content}
-      {isFetchingNextPage && <div className="flex w-full text-center text-2xl">Loading...</div>}
+      {isFetchingNextPage && (
+        <div className="flex h-10 justify-center">
+          <Spinner className="m-0 h-8 w-8" />
+        </div>
+      )}
     </div>
   );
 };

@@ -2,6 +2,7 @@ import useGetRoomHistory from "@/hooks/use-get-room-history";
 import useIntersectionObserver from "@/hooks/use-intersection-observer";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
+import Spinner from "@/components/ui/spinner";
 import QuillIcon from "@/components/icons/quill-icon";
 import RoomItem from "@/components/room-item";
 
@@ -66,7 +67,11 @@ const GameHistory = () => {
   return (
     <div className="flex w-full flex-col gap-4 overflow-y-auto pr-4">
       {content}
-      {isFetchingNextPage && <div className="flex w-full text-center text-2xl">Loading...</div>}
+      {isFetchingNextPage && (
+        <div className="flex h-10 justify-center">
+          <Spinner className="m-0 h-8 w-8" />
+        </div>
+      )}
 
       <Button href="/profile?activeTab=GAME+HISTORY" variant="outline">
         SHOW ENTIRE GAME HISTORY
