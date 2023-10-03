@@ -48,7 +48,7 @@ const MyAccount = () => {
             <div className="flex flex-1 flex-col gap-6">
               <div className="h-5 w-64 rounded-full bg-gray-600" />
               <div className="h-[18px] w-16 rounded-full bg-gray-600" />
-              <div className="h-8 w-20 rounded bg-gray-600" />
+              <div className="h-7 w-20 rounded-md bg-gray-600" />
             </div>
           </div>
         )}

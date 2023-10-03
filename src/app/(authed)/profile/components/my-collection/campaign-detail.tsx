@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 import useGetCampaign from "@/hooks/use-get-campaign";
+import Skeleton from "@/components/ui/skeleton";
 import { Dungeon } from "@/components/dungeon";
 
 const CampaignDetail = ({
@@ -13,7 +14,20 @@ const CampaignDetail = ({
 }) => {
   const { data: campaign, isLoading } = useGetCampaign(campaignDetailId ?? "");
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex min-h-0 w-full flex-1 flex-col gap-6 overflow-y-auto">
+        <p>CAMPAIGN</p>
+        <Skeleton />
+
+        <p>ADVENTURES</p>
+        <div className="flex flex-col gap-8">
+          {Array.from({ length: 2 }, (_, i) => (
+            <Skeleton key={i} />
+          ))}
+        </div>
+      </div>
+    );
 
   if (!campaign) return <div>Something went wrong</div>;
 
