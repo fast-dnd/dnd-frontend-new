@@ -26,8 +26,8 @@ const Rewards = ({ selectedReward, onSelectReward }: IRewardProps) => {
       <p>Unlocked {rewards?.length ?? "~"}/50</p>
       <div className="grid grid-cols-4 gap-7">
         {rewards?.map((reward) => (
-          <div key={reward._id} className="flex w-fit flex-col gap-2">
-            <div className="relative h-[170px] w-[290px]">
+          <div key={reward._id} className="flex flex-col gap-2">
+            <div className="relative aspect-[1.7] w-[500px] max-w-full">
               <Image
                 src={reward.url}
                 alt={reward.name ?? ""}
@@ -52,7 +52,7 @@ const Rewards = ({ selectedReward, onSelectReward }: IRewardProps) => {
           </div>
         ))}
         {Array.from({ length: 50 - (rewards?.length ?? 0) }).map((_, index) => (
-          <div key={index} className="relative h-[170px] w-[290px] overflow-hidden">
+          <div key={index} className="relative aspect-[1.7] w-[500px] max-w-full overflow-hidden">
             <Image
               src="/images/reward-locked.png"
               alt={`Locked reward ${index + 1}`}
