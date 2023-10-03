@@ -159,9 +159,11 @@ const GeneralInfo = () => {
                     onValueChange={(newValue) => dungeonFormData.actionLevel.set(newValue[0])}
                   />
                 </div>
-                <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8">
+                <div className="flex h-full w-full flex-col gap-5 lg:w-1/2 lg:gap-8">
                   <TextArea
                     label="Description"
+                    fullHeight
+                    className="m-0"
                     placeholder="Venture into the heart of an enchanted forest, where the ancient spirits..."
                     value={description}
                     onChange={(e) => dungeonFormData.description.set(e.target.value)}

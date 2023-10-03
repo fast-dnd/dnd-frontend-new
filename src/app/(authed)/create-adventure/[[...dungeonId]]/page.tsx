@@ -30,28 +30,28 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   if (isInitialLoading || !isMounted)
     return (
       <div className="flex h-full w-full justify-between gap-12 pb-12">
-        <div className="flex h-full w-full">
+        <div className="flex h-full basis-2/3">
           <Box
             title="EDIT ADVENTURE"
             className="mb-4 flex min-h-0 flex-1 flex-col gap-5 overflow-y-hidden p-5 lg:mb-0 lg:gap-6 lg:p-8"
-            wrapperClassName="w-[95%] lg:w-[1200px] mx-auto"
+            wrapperClassName="w-[95%] lg:w-full mx-auto"
           >
             <div className="flex w-full animate-pulse flex-col gap-6">
               <div className="h-8 w-20 rounded-lg bg-gray-600" />
-              <div className="h-7 w-72 rounded-lg bg-gray-600" />
+              <div className="h-8 w-72 rounded-lg bg-gray-600" />
               <div className="hidden w-full border-t border-white/20 lg:block" />
 
-              <div className="flex flex-col gap-5 overflow-hidden lg:flex-row lg:gap-8">
+              <div className="flex flex-col gap-5 overflow-hidden lg:flex-1 lg:flex-row lg:gap-8">
                 <div className="h-[170px] w-[170px] rounded-lg bg-gray-600" />
-                <div className="flex flex-col gap-5 lg:gap-8">
-                  <div className="h-20 w-[440px] rounded-lg bg-gray-600" />
-                  <div className="h-20 w-[440px] rounded-lg bg-gray-600" />
-                  <div className="h-44 w-[440px] rounded-lg bg-gray-600" />
+                <div className="flex flex-col gap-5 lg:basis-1/2 lg:gap-8">
+                  <div className="h-20 w-full rounded-lg bg-gray-600" />
+                  <div className="h-20 w-full rounded-lg bg-gray-600" />
+                  <div className="h-44 w-full rounded-lg bg-gray-600" />
                 </div>
-                <div className="flex flex-col gap-5 lg:gap-8">
-                  <div className="h-20 w-[440px] rounded-lg bg-gray-600" />
-                  <div className="h-20 w-[440px] rounded-lg bg-gray-600" />
-                  <div className="h-32 w-[440px] rounded-lg bg-gray-600" />
+                <div className="flex flex-col gap-5 lg:basis-1/2 lg:gap-8">
+                  <div className="h-20 w-full rounded-lg bg-gray-600" />
+                  <div className="h-20 w-full rounded-lg bg-gray-600" />
+                  <div className="h-44 w-full rounded-lg bg-gray-600" />
                 </div>
               </div>
             </div>
@@ -61,6 +61,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
         <Box
           titleClassName="hidden"
           title=""
+          wrapperClassName="basis-1/3"
           className="flex h-full w-full flex-col items-center justify-between rounded-t-md p-8"
         >
           <div className="flex w-full animate-pulse flex-col gap-6">
