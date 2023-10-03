@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Game, People, Star1, Timer } from "iconsax-react";
 import { MdEdit } from "react-icons/md";
 
@@ -12,11 +13,19 @@ import { Button } from "@/components/ui/button";
 import Coin from "@/components/coin";
 
 const MyAccount = () => {
+  const router = useRouter();
+
   const { data: account, isLoading } = useGetAccount();
 
   if (isLoading) return <div>Loading...</div>;
 
   if (!account) return <div>Something went wrong</div>;
+
+  const onSignOut = () => {
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("accountId");
+    router.push("/login");
+  };
 
   return (
     <Box title="MY ACCOUNT" wrapperClassName="flex basis-1/3 flex-1" className="flex-1 p-8">
@@ -124,7 +133,9 @@ const MyAccount = () => {
         </div>
 
         <div className="flex items-center justify-center">
-          <Button className="w-fit">SIGN OUT</Button>
+          <Button className="w-fit" onClick={onSignOut}>
+            SIGN OUT
+          </Button>
         </div>
       </div>
     </Box>
