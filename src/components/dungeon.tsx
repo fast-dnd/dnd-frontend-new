@@ -4,6 +4,7 @@ import { Game, Star1 } from "iconsax-react";
 import { FaCheck } from "react-icons/fa";
 
 import { IBaseDungeon } from "@/types/dungeon";
+import { cn } from "@/utils/style-utils";
 
 export const Dungeon = React.forwardRef<
   HTMLDivElement,
@@ -26,7 +27,10 @@ export const Dungeon = React.forwardRef<
 
   return (
     <div
-      className="flex cursor-pointer gap-8 rounded-md hover:bg-white/5"
+      className={cn(
+        "flex cursor-pointer gap-8 rounded-md p-4 hover:bg-white/5",
+        isAddedToCampaign && "border-2 border-primary",
+      )}
       onClick={onClick}
       ref={ref}
     >
