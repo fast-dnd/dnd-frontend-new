@@ -13,7 +13,7 @@ export const Campaign = React.forwardRef<
 >(({ campaign, setCampaignDetailId, isOwned }, ref) => {
   return (
     <div
-      className="flex cursor-pointer gap-8 rounded-md hover:bg-white/5"
+      className="flex cursor-pointer gap-8 rounded-md p-4 hover:bg-white/5"
       ref={ref}
       onClick={() => setCampaignDetailId && setCampaignDetailId(campaign._id)}
     >

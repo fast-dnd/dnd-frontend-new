@@ -74,7 +74,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
 
   return (
     <div className="flex h-full w-full justify-between gap-12 pb-12">
-      <div className="flex h-full w-full">
+      <div className="flex h-full basis-2/3">
         <FormStepWrapper
           isEditing={dungeonId !== undefined}
           dungeonData={dungeonData}

@@ -14,15 +14,18 @@ interface IRewardProps {
 const Rewards = ({ selectedReward, onSelectReward }: IRewardProps) => {
   const { data: rewards, isLoading } = useGetRewards();
 
-  if (isLoading) return <div>Loading...</div>;
-
-  if (!rewards) return <div>Something went wrong</div>;
+  if (!isLoading && !rewards) return <div>Something went wrong</div>;
 
   return (
-    <div className="flex flex-col gap-4 overflow-y-auto overflow-x-hidden">
-      <p>Unlocked {rewards.length}/50</p>
+    <div
+      className={cn(
+        "flex flex-col gap-4 overflow-y-auto overflow-x-hidden pr-4",
+        !rewards && "animate-pulse",
+      )}
+    >
+      <p>Unlocked {rewards?.length ?? "~"}/50</p>
       <div className="grid grid-cols-4 gap-7">
-        {rewards.map((reward) => (
+        {rewards?.map((reward) => (
           <div key={reward._id} className="flex w-fit flex-col gap-2">
             <div className="relative h-[170px] w-[290px]">
               <Image
@@ -48,7 +51,7 @@ const Rewards = ({ selectedReward, onSelectReward }: IRewardProps) => {
             </div>
           </div>
         ))}
-        {Array.from({ length: 50 - rewards.length }).map((_, index) => (
+        {Array.from({ length: 50 - (rewards?.length ?? 0) }).map((_, index) => (
           <div key={index} className="relative h-[170px] w-[290px] overflow-hidden">
             <Image
               src="/images/reward-locked.png"

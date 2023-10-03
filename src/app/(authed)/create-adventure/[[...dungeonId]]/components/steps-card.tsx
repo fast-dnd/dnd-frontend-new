@@ -87,6 +87,7 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
     <Box
       titleClassName="hidden"
       title=""
+      wrapperClassName="basis-1/3"
       className="flex h-full w-full flex-col items-center justify-between rounded-t-md p-8"
     >
       <div className="flex h-fit w-full flex-col justify-between gap-6">

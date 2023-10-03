@@ -24,8 +24,9 @@ const GameHistory = () => {
 
   if (isLoading) {
     return (
-      <div className="no-scrollbar flex flex-1 flex-col gap-8 overflow-y-auto">
-        <Skeleton amount={2} />
+      <div className="no-scrollbar flex flex-1 flex-col gap-4 overflow-y-auto">
+        <div className="mb-2 h-6 w-32 animate-pulse rounded-full bg-gray-600 " />
+        <Skeleton small amount={2} />
       </div>
     );
   }
