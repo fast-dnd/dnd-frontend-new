@@ -4,6 +4,7 @@ import { Game, Star1 } from "iconsax-react";
 import { FaCheck } from "react-icons/fa";
 
 import { IBaseDungeon } from "@/types/dungeon";
+import { cn } from "@/utils/style-utils";
 
 export const Dungeon = React.forwardRef<
   HTMLDivElement,
@@ -12,8 +13,9 @@ export const Dungeon = React.forwardRef<
     setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
     addToCampaign?: (dungeon: IBaseDungeon) => void;
     isAddedToCampaign?: boolean;
+    isOwned?: boolean;
   }
->(({ dungeon, setDungeonDetailId, addToCampaign, isAddedToCampaign }, ref) => {
+>(({ dungeon, setDungeonDetailId, addToCampaign, isAddedToCampaign, isOwned }, ref) => {
   const onClick = () => {
     if (addToCampaign) {
       addToCampaign(dungeon);
@@ -25,7 +27,10 @@ export const Dungeon = React.forwardRef<
 
   return (
     <div
-      className="flex cursor-pointer gap-8 rounded-md hover:bg-white/5"
+      className={cn(
+        "flex cursor-pointer gap-8 rounded-md p-4 hover:bg-white/5",
+        isAddedToCampaign && "border-2 border-primary",
+      )}
       onClick={onClick}
       ref={ref}
     >
@@ -55,6 +60,18 @@ export const Dungeon = React.forwardRef<
             </span>
           )}
         </p>
+        {!isOwned && dungeon.createdBy && (
+          <div className="flex gap-2">
+            <Image
+              src={dungeon.createdBy.imageUrl || "/images/default-avatar.png"}
+              alt={dungeon.createdBy.username}
+              width={20}
+              height={20}
+              className="rounded-md lg:h-[20px] lg:w-[20px]"
+            />
+            {dungeon.createdBy.username}
+          </div>
+        )}
         <p className="text-xl">{dungeon.description}</p>
         <div className="mb-1 mt-auto flex w-full justify-between">
           <div className="flex flex-wrap gap-2 lg:gap-4">

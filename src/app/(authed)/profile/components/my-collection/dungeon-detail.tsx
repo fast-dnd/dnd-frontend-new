@@ -73,7 +73,7 @@ const DungeonDetail = ({
             <div
               key={champion._id}
               className={cn(
-                "flex flex-col gap-4 p-6 transition-all duration-200 hover:bg-white/10",
+                "flex flex-col gap-4 rounded-md p-6 transition-all duration-200 hover:bg-white/10",
                 champion._id === selectedChampion?._id && "border-2 border-primary bg-white/10",
               )}
               onClick={() => onChangeChampion && onChangeChampion(champion)}

@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { BsFillImageFill } from "react-icons/bs";
 
+import { IReward } from "@/types/reward";
 import { fileToBase64 } from "@/utils/b64";
 import { DungeonDuration, dungeonDurations, dungeonTags } from "@/utils/dungeon-options";
 import { Button } from "@/components/ui/button";
@@ -18,8 +19,10 @@ import { dungeonFormStore } from "../stores/dungeon-form-store";
 import tagsComboboxStyles from "../utils/tags-combobox-styles";
 import { tagsAttachLabel, TagsWithLabel } from "../utils/tags-utils";
 
-const GeneralInfo = ({ dungeonId }: { dungeonId?: string }) => {
+const GeneralInfo = () => {
   const [isSelectingBg, setSelectingBg] = useState(false);
+
+  const [selectedReward, setSelectedReward] = useState<IReward>();
 
   const dungeonFormData = dungeonFormStore.dungeonFormData;
   const { name, description } = dungeonFormData.use();
@@ -42,7 +45,10 @@ const GeneralInfo = ({ dungeonId }: { dungeonId?: string }) => {
           <div className="flex flex-1 flex-col">
             <Rewards
               selectedReward={dungeonFormData.backgroundUrl.get()}
-              onSelectReward={(reward) => dungeonFormData.backgroundUrl.set(reward.url)}
+              onSelectReward={(reward) => {
+                setSelectedReward(reward);
+                dungeonFormData.backgroundUrl.set(reward.url);
+              }}
             />
             <div className="mt-8 flex justify-end">
               <Button className="w-fit" onClick={() => setSelectingBg(false)}>
@@ -109,14 +115,20 @@ const GeneralInfo = ({ dungeonId }: { dungeonId?: string }) => {
                       styles={tagsComboboxStyles()}
                     />
                   </div>
-                  <div className="flex w-full flex-col justify-between gap-5 lg:w-1/2 lg:gap-8">
+                  <div className="flex w-full flex-col justify-between gap-5 lg:w-1/2">
                     <p>Background</p>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between ">
                       <div className="flex items-center gap-2">
                         <BsFillImageFill />
-                        <p>awd</p>
-                        <div className="h-2 w-2 rotate-45 bg-white/25" />
-                        diamond
+                        {selectedReward ? (
+                          <>
+                            <p>{selectedReward.name}</p>
+                            <div className="h-2 w-2 rotate-45 bg-white/25" />
+                            <p>{selectedReward.rarity}</p>
+                          </>
+                        ) : (
+                          <></>
+                        )}
                       </div>
                       <Button
                         variant="outline"
@@ -147,11 +159,10 @@ const GeneralInfo = ({ dungeonId }: { dungeonId?: string }) => {
                     onValueChange={(newValue) => dungeonFormData.actionLevel.set(newValue[0])}
                   />
                 </div>
-                <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8 ">
+                <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8">
                   <TextArea
                     label="Description"
                     placeholder="Venture into the heart of an enchanted forest, where the ancient spirits..."
-                    className="m-0 h-full"
                     value={description}
                     onChange={(e) => dungeonFormData.description.set(e.target.value)}
                   />

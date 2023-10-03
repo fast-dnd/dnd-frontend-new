@@ -12,11 +12,13 @@ const Adventures = ({
   filter,
   addToCampaign,
   addedToCampaign,
+  isOwned,
 }: {
   setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   filter?: string;
   addToCampaign?: (dungeonName: IBaseDungeon) => void;
   addedToCampaign?: IBaseDungeon[];
+  isOwned?: boolean;
 }) => {
   const {
     data: dungeonsData,
@@ -54,6 +56,7 @@ const Adventures = ({
             ref={lastDungeonRef}
             addToCampaign={addToCampaign}
             isAddedToCampaign={addedToCampaign?.includes(dungeon)}
+            isOwned={isOwned}
           />
         );
       }
@@ -64,6 +67,7 @@ const Adventures = ({
           setDungeonDetailId={setDungeonDetailId}
           addToCampaign={addToCampaign}
           isAddedToCampaign={addedToCampaign?.includes(dungeon)}
+          isOwned={isOwned}
         />
       );
     }),
@@ -81,7 +85,7 @@ const Adventures = ({
 export default Adventures;
 
 const NoAdventures = () => (
-  <div className="flex w-full items-center justify-center">
+  <div className="flex w-full flex-1 items-center justify-center">
     <div className="flex h-full w-[490px] flex-col items-center justify-start gap-5 p-5 lg:gap-3 lg:p-8">
       <svg
         xmlns="http://www.w3.org/2000/svg"

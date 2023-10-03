@@ -18,6 +18,7 @@ const Navbar = ({ authed = true }: { authed?: boolean }) => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
   const { data: account } = useGetAccount(!loggedIn);
 
   return (
@@ -28,7 +29,7 @@ const Navbar = ({ authed = true }: { authed?: boolean }) => {
           href={authed || account ? "/home" : "/login"}
           className={cn(
             "border-b-4 border-transparent transition-all duration-300",
-            pathname.endsWith("home") && mounted && "border-primary-600",
+            pathname === "/home" && "border-b-4 border-primary-500",
           )}
         >
           {authed || account ? "PLAY" : "LOG IN"}
@@ -38,12 +39,23 @@ const Navbar = ({ authed = true }: { authed?: boolean }) => {
           href="/guide"
           className={cn(
             "border-b-4 border-transparent transition-all duration-300",
-            pathname.endsWith("guide") && mounted && "border-primary-600",
+            pathname === "/guide" && "border-b-4 border-primary-500",
           )}
         >
           HOW TO PLAY
         </Link>
         <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+        <div className="flex gap-6 rounded-md bg-white/10 px-4 py-3 backdrop-blur-sm">
+          <div className="flex items-center gap-1">
+            <Coin silver />
+            {account?.account.coins ?? "-"}
+          </div>
+          <div className="flex items-center gap-1">
+            <Coin />
+
+            {account?.account.dmCurrency ?? "-"}
+          </div>
+        </div>
         {loggedIn && (
           <>
             <Link href="/profile">
@@ -55,18 +67,6 @@ const Navbar = ({ authed = true }: { authed?: boolean }) => {
                 className="rounded-md"
               />
             </Link>
-
-            <div className="flex gap-6 rounded-md bg-white/10 px-4 py-3 backdrop-blur-sm">
-              <div className="flex items-center gap-1">
-                <Coin silver />
-                {account?.account.coins ?? "-"}
-              </div>
-              <div className="flex items-center gap-1">
-                <Coin />
-
-                {account?.account.dmCurrency ?? "-"}
-              </div>
-            </div>
           </>
         )}
       </div>

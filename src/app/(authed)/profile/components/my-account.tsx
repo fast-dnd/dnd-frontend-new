@@ -3,41 +3,58 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Game, People, Star1, Timer } from "iconsax-react";
 import { MdEdit } from "react-icons/md";
 
 import useGetAccount from "@/hooks/use-get-account";
 import { Box } from "@/components/ui/box";
+import { Button } from "@/components/ui/button";
 import Coin from "@/components/coin";
 import SkeletonIcon from "@/components/icons/skeleton-icon";
 
 const MyAccount = () => {
+  const router = useRouter();
+
   const { data: account, isLoading } = useGetAccount();
 
   if (!isLoading && !account) return <div>Something went wrong</div>;
+
+  const onSignOut = () => {
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("accountId");
+    router.push("/login");
+  };
 
   return (
     <Box title="MY ACCOUNT" wrapperClassName="flex basis-1/3" className="overflow-y-auto p-8">
       <div className="flex flex-col gap-8">
         {account ? (
           <div className="flex gap-4">
-            <Image
-              src={account.account.imageUrl || "/images/default-avatar.png"}
-              width={120}
-              height={120}
-              alt="avatar"
-              className="h-[120px] w-[120px] rounded-md"
-            />
+            <div className="my-auto h-fit w-fit">
+              <Image
+                src={account.account.imageUrl || "/images/default-avatar.png"}
+                width={90}
+                height={90}
+                alt="avatar"
+                className="rounded-md"
+              />
+            </div>
             <div className="flex flex-col gap-4">
-              <p className="text-xl font-bold">{account.account.username}</p>
-              <p>Level {account.account.level}</p>
-              <Link
-                className="flex w-fit items-center gap-2 rounded-md bg-white/5 px-3 py-1"
-                href="/edit-profile"
-              >
-                <MdEdit />
-                EDIT
-              </Link>
+              <div className="flex flex-col gap-2">
+                <p className="text-xl font-bold">{account.account.username}</p>
+                <p>Level {account.account.level}</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <p>{account.account.properties.email}</p>
+                <Link
+                  className="flex w-fit items-center gap-2 rounded-md bg-white/5 px-3 py-1"
+                  href="/edit-profile"
+                >
+                  <MdEdit />
+                  EDIT
+                </Link>
+              </div>
             </div>
           </div>
         ) : (
@@ -52,8 +69,10 @@ const MyAccount = () => {
             </div>
           </div>
         )}
-
-        <div className="grid grid-cols-2 grid-rows-4 gap-4">
+      </div>
+      <div className="flex w-full flex-col gap-2">
+        <p className="text-lg font-bold">COINS</p>
+        <div className="flex w-full gap-4">
           <StatisticsCard
             icon={<Coin silver />}
             value={account?.statistics.totalCoins ?? 0}
@@ -64,6 +83,38 @@ const MyAccount = () => {
             value={account?.statistics.totalDmCoinsEarned ?? 0}
             name="DM Coins"
           />
+        </div>
+      </div>
+
+      <div className="flex w-full flex-col gap-2">
+        <p className="text-lg font-bold">PLAYER STATS</p>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+          <StatisticsCard
+            icon={icons.helmet}
+            value={account?.statistics.createdAdventuresCount ?? 0}
+            name="Created adventures"
+          />
+          <StatisticsCard
+            icon={icons.swords}
+            value={account?.statistics.createdCampaignsCount ?? 0}
+            name="Created campaigns"
+          />
+          <StatisticsCard
+            icon={<Game color="#FF5A5A" variant="Bold" />}
+            value={account?.statistics.totalGamesPlayed ?? 0}
+            name="Games played"
+          />
+          <StatisticsCard
+            icon={<Timer color="#FF5A5A" variant="Bold" />}
+            value={account?.statistics.totalGameplayHours.toFixed(2) ?? 0}
+            name="Hours played"
+          />
+        </div>
+      </div>
+
+      <div className="flex w-full flex-col gap-2">
+        <p className="text-lg font-bold">MASTER STATS</p>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2">
           <StatisticsCard
             icon={icons.helmet}
             value={account?.statistics.createdAdventuresCount ?? 0}
@@ -79,9 +130,9 @@ const MyAccount = () => {
             value={
               !account?.statistics.totalAdventureRatings
                 ? 0
-                : account?.statistics.averageAdventureRating +
+                : account.statistics.averageAdventureRating +
                   "(" +
-                  account?.statistics.totalAdventureRatings +
+                  account.statistics.totalAdventureRatings +
                   ")"
             }
             name="Avg. adventure rating"
@@ -91,17 +142,13 @@ const MyAccount = () => {
             value={account?.statistics.totalAdventurePlayers ?? 0}
             name="Adventure players"
           />
-          <StatisticsCard
-            icon={<Game color="#FF5A5A" variant="Bold" />}
-            value={account?.statistics.totalGamesPlayed ?? 0}
-            name="Games played"
-          />
-          <StatisticsCard
-            icon={<Timer color="#FF5A5A" variant="Bold" />}
-            value={account?.statistics.totalGameplayHours.toFixed(2) ?? 0}
-            name="Hours played"
-          />
         </div>
+      </div>
+
+      <div className="flex items-center justify-center">
+        <Button className="w-fit" onClick={onSignOut}>
+          SIGN OUT
+        </Button>
       </div>
     </Box>
   );
@@ -119,11 +166,11 @@ const StatisticsCard = ({
   name: string;
 }) => {
   return (
-    <div className="flex items-center gap-5 rounded-md bg-primary-900 px-4 py-6">
+    <div className="flex w-full items-center gap-5 rounded-md bg-primary-900 px-3 py-4">
       <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
         {icon}
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col">
         <p className="text-xl font-bold">{value || "-- --"}</p>
         <p className="text-sm text-white/50">{name}</p>
       </div>

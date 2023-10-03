@@ -41,7 +41,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
               status={status}
               setStatus={setStatus}
             >
-              {currentStep === "General information" && <GeneralInfo dungeonId={dungeonId} />}
+              {currentStep === "General information" && <GeneralInfo />}
               {currentStep === "Locations" && (
                 <ChampionsLocationsWrapper
                   locationOrChampion="Location"

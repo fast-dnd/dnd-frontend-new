@@ -8,8 +8,9 @@ export const Campaign = React.forwardRef<
   {
     campaign: ICampaign;
     setCampaignDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+    isOwned?: boolean;
   }
->(({ campaign, setCampaignDetailId }, ref) => {
+>(({ campaign, setCampaignDetailId, isOwned }, ref) => {
   return (
     <div
       className="flex cursor-pointer gap-8 rounded-md hover:bg-white/5"
@@ -25,6 +26,18 @@ export const Campaign = React.forwardRef<
       />
       <div className="flex w-full flex-col gap-4">
         <p className="text-2xl font-bold uppercase">{campaign.name}</p>
+        {!isOwned && campaign.createdBy && (
+          <div className="flex gap-2">
+            <Image
+              src={campaign.createdBy.imageUrl || "/images/default-avatar.png"}
+              alt={campaign.createdBy.username}
+              width={20}
+              height={20}
+              className="rounded-md lg:h-[20px] lg:w-[20px]"
+            />
+            {campaign.createdBy.username}
+          </div>
+        )}
         <p className="text-xl">{campaign.description}</p>
         <div className="mb-1 mt-auto flex w-full justify-between"></div>
       </div>
