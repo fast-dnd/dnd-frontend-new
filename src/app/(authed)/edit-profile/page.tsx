@@ -13,7 +13,6 @@ import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UploadImage from "@/components/ui/upload-image";
-import BoxSkeleton from "@/components/box-skeleton";
 import MobileNavbar from "@/components/mobile-navbar";
 
 import useEditProfile from "./hooks/use-edit-profile";
@@ -50,7 +49,29 @@ const EditProfile = () => {
     });
   };
 
-  if (isLoading) return <BoxSkeleton title="EDIT PROFILE" />;
+  if (isLoading)
+    return (
+      <div className="mt-8 flex flex-col items-center gap-8">
+        <div className="h-7 w-28 animate-pulse rounded-lg bg-gray-600" />
+        <div className="lg:min-w-fit">
+          <Box
+            title="EDIT PROFILE"
+            className="flex flex-col items-center gap-5 p-5 lg:flex-row lg:gap-8 lg:p-8"
+          >
+            <div className="flex animate-pulse gap-5 lg:gap-8">
+              <div className="h-[170px] w-[170px] rounded-lg bg-gray-600" />
+              <div className="flex flex-col gap-6 lg:gap-12">
+                <div className="flex flex-col gap-2">
+                  <div className="h-7 w-40 rounded-lg bg-gray-600" />
+                  <div className="h-14 w-96 rounded-lg bg-gray-600" />
+                </div>
+                <div className="h-14 w-96 rounded-lg bg-gray-600" />
+              </div>
+            </div>
+          </Box>
+        </div>
+      </div>
+    );
 
   if (!account) return <div>Something went wrong</div>;
 
