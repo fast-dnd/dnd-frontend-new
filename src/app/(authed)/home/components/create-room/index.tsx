@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import useAddFavoriteDungeon from "@/hooks/use-add-favorite-dungeon";
 import useCreateRoom from "@/hooks/use-create-room";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import GoBackButton from "@/components/go-back-button";
 import Adventures from "@/app/(authed)/profile/components/my-collection/adventures";
 import CampaignDetail from "@/app/(authed)/profile/components/my-collection/campaign-detail";
@@ -22,6 +24,10 @@ const CreateRoom = () => {
   const [campaignDetailId, setCampaignDetailId] = useState<string>();
 
   const [loadingRoom, setLoadingRoom] = useState(false);
+
+  const [favDungeonId, setFavDungeonId] = useState("");
+
+  const { mutate: addFavorite, isLoading: isAddingFavorite } = useAddFavoriteDungeon();
 
   const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
 
@@ -72,7 +78,22 @@ const CreateRoom = () => {
       ) : (
         <>
           {activeBaseTab === "adventures" && (
-            <Adventures filter={subTab} setDungeonDetailId={setDungeonDetailId} />
+            <>
+              <Adventures filter={subTab} setDungeonDetailId={setDungeonDetailId} />
+              {subTab === "favourite" && (
+                <div className="flex justify-end gap-8">
+                  <Input placeholder="Dungeon ID" className="w-64" />
+                  <Button
+                    className="mb-1 w-fit whitespace-nowrap"
+                    variant="outline"
+                    isLoading={isAddingFavorite}
+                    onClick={() => addFavorite(favDungeonId)}
+                  >
+                    ADD FAVORITE
+                  </Button>
+                </div>
+              )}
+            </>
           )}
           {activeBaseTab === "campaigns" && (
             <Campaigns filter={subTab} setCampaignDetailId={setCampaignDetailId} />

@@ -81,7 +81,7 @@ const Adventures = ({
 export default Adventures;
 
 const NoAdventures = () => (
-  <div className="flex w-full items-center justify-center">
+  <div className="flex w-full flex-1 items-center justify-center">
     <div className="flex h-full w-[490px] flex-col items-center justify-start gap-5 p-5 lg:gap-3 lg:p-8">
       <svg
         xmlns="http://www.w3.org/2000/svg"
