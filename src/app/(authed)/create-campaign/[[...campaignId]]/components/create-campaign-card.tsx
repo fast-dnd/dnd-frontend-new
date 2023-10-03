@@ -109,8 +109,8 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
       className="flex h-full min-h-0 w-full flex-col items-center justify-between overflow-y-auto p-8"
     >
       <div className="flex h-full w-full flex-col justify-between gap-6">
-        <div className="flex items-center justify-between">
-          <div className="flex h-fit">
+        <div className="flex items-center gap-8">
+          <div className="flex h-fit flex-1">
             <Input
               label="Name"
               placeholder="The Crimson Abyss"

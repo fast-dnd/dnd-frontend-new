@@ -51,8 +51,11 @@ const CreateCampaign = ({ params }: { params: { campaignId?: [string] } }) => {
             className="flex h-full min-h-0 w-full flex-col items-center justify-between overflow-y-auto p-8"
           >
             <div className="flex h-full min-h-0 w-full animate-pulse flex-col gap-6 overflow-y-hidden">
-              <div className="flex items-center justify-between">
-                <div className="h-20 w-52 rounded-lg bg-gray-600" />
+              <div className="flex items-center gap-8">
+                <div className="flex flex-1 flex-col gap-2">
+                  <div className="h-6 w-32 rounded-lg bg-gray-600" />
+                  <div className="h-12 w-full rounded-lg bg-gray-600" />
+                </div>
                 <div className="h-[170px] w-[170px] rounded-lg bg-gray-600" />
               </div>
               <div className="h-28 w-full rounded-lg bg-gray-600" />
