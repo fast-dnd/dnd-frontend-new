@@ -35,7 +35,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
     <Box
       title=""
       className="mb-4 flex h-[745px] min-h-0 flex-1 flex-col justify-between gap-5 rounded-t-md p-8 text-sm lg:mb-0 lg:gap-8"
-      wrapperClassName="block mx-auto basis-1/4"
+      wrapperClassName="flex mx-auto basis-1/4 h-full"
       titleClassName="hidden"
     >
       <div className="flex flex-col gap-6">
