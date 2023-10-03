@@ -22,9 +22,7 @@ const CampaignDetail = ({
 
         <p>ADVENTURES</p>
         <div className="flex flex-col gap-8">
-          {Array.from({ length: 2 }, (_, i) => (
-            <Skeleton key={i} />
-          ))}
+          <Skeleton amount={2} />
         </div>
       </div>
     );

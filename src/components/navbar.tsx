@@ -29,7 +29,7 @@ const Navbar = ({ authed = true }: { authed?: boolean }) => {
           href={authed || account ? "/home" : "/login"}
           className={cn(
             "border-b-4 border-transparent transition-all duration-300",
-            pathname === "/home" && "border-b-4 border-primary-500",
+            mounted && pathname === "/home" && "border-primary-500",
           )}
         >
           {authed || account ? "PLAY" : "LOG IN"}
@@ -39,7 +39,7 @@ const Navbar = ({ authed = true }: { authed?: boolean }) => {
           href="/guide"
           className={cn(
             "border-b-4 border-transparent transition-all duration-300",
-            pathname === "/guide" && "border-b-4 border-primary-500",
+            mounted && pathname === "/guide" && "border-primary-500",
           )}
         >
           HOW TO PLAY

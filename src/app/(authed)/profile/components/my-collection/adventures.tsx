@@ -37,13 +37,12 @@ const Adventures = ({
 
   if (isError) return <div>Something went wrong</div>;
 
-  if (isLoading) {
+  if (isLoading)
     return (
       <div className="no-scrollbar flex flex-1 flex-col gap-8 overflow-y-auto">
         <Skeleton amount={2} />
       </div>
     );
-  }
 
   const content = dungeonsData.pages.map((page) =>
     page.dungeons.map((dungeon, i) => {
