@@ -23,7 +23,7 @@ const Rewards = ({ selectedReward, onSelectReward }: IRewardProps) => {
       <p>Unlocked {rewards.length}/50</p>
       <div className="grid grid-cols-4 gap-7">
         {rewards.map((reward) => (
-          <div key={reward._id} className="flex flex-col gap-2">
+          <div key={reward._id} className="flex w-fit flex-col gap-2">
             <div className="relative h-[170px] w-[290px]">
               <Image
                 src={reward.url}
@@ -37,10 +37,10 @@ const Rewards = ({ selectedReward, onSelectReward }: IRewardProps) => {
                 onClick={() => onSelectReward?.(reward)}
               />
               {selectedReward === reward.url && (
-                <div className="absolute right-10 top-10 bg-primary px-2 py-1">Equipped</div>
+                <div className="absolute right-2 top-2 bg-primary px-2 py-1">Equipped</div>
               )}
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex w-full items-center justify-between">
               <p className="text-xl uppercase">{reward.name}</p>
               <div className="flex items-center gap-2 rounded-md border border-white/25 px-2 py-1">
                 <p className="text-xl">{reward.rarity}</p>

@@ -109,9 +109,9 @@ const GeneralInfo = ({ dungeonId }: { dungeonId?: string }) => {
                       styles={tagsComboboxStyles()}
                     />
                   </div>
-                  <div className="flex w-full flex-col justify-between gap-5 lg:w-1/2 lg:gap-8">
+                  <div className="flex w-full flex-col justify-between gap-5 lg:w-1/2">
                     <p>Background</p>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between ">
                       <div className="flex items-center gap-2">
                         <BsFillImageFill />
                         <p>awd</p>

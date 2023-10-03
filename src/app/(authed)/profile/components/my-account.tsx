@@ -8,6 +8,7 @@ import { MdEdit } from "react-icons/md";
 
 import useGetAccount from "@/hooks/use-get-account";
 import { Box } from "@/components/ui/box";
+import { Button } from "@/components/ui/button";
 import Coin from "@/components/coin";
 
 const MyAccount = () => {
@@ -18,76 +19,112 @@ const MyAccount = () => {
   if (!account) return <div>Something went wrong</div>;
 
   return (
-    <Box title="MY ACCOUNT" wrapperClassName="flex basis-1/3" className="p-8">
+    <Box title="MY ACCOUNT" wrapperClassName="flex basis-1/3 flex-1" className="flex-1 p-8">
       <div className="flex flex-col gap-8">
         <div className="flex gap-4">
-          <Image
-            src={account.account.imageUrl || "/images/default-avatar.png"}
-            width={120}
-            height={120}
-            alt="avatar"
-            className="rounded-md"
-          />
+          <div className="my-auto h-fit w-fit">
+            <Image
+              src={account.account.imageUrl || "/images/default-avatar.png"}
+              width={90}
+              height={90}
+              alt="avatar"
+              className="rounded-md"
+            />
+          </div>
           <div className="flex flex-col gap-4">
-            <p className="text-xl font-bold">{account.account.username}</p>
-            <p>Level {account.account.level}</p>
-            <Link
-              className="flex w-fit items-center gap-2 rounded-md bg-white/5 px-3 py-2"
-              href="/edit-profile"
-            >
-              <MdEdit />
-              EDIT
-            </Link>
+            <div className="flex flex-col gap-2">
+              <p className="text-xl font-bold">{account.account.username}</p>
+              <p>Level {account.account.level}</p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p>{account.account.properties.email}</p>
+              <Link
+                className="flex w-fit items-center gap-2 rounded-md bg-white/5 px-3 py-1"
+                href="/edit-profile"
+              >
+                <MdEdit />
+                EDIT
+              </Link>
+            </div>
           </div>
         </div>
-        <div className="grid grid-cols-2 grid-rows-4 gap-4">
-          <StatisticsCard
-            icon={<Coin silver />}
-            value={account.statistics.totalCoins}
-            name="Coins"
-          />
-          <StatisticsCard
-            icon={<Coin />}
-            value={account.statistics.totalDmCoinsEarned}
-            name="DM Coins"
-          />
-          <StatisticsCard
-            icon={icons.helmet}
-            value={account.statistics.createdAdventuresCount}
-            name="Created adventures"
-          />
-          <StatisticsCard
-            icon={icons.swords}
-            value={account.statistics.createdCampaignsCount}
-            name="Created campaigns"
-          />
-          <StatisticsCard
-            icon={<Star1 color="#FF5A5A" variant="Bold" />}
-            value={
-              account.statistics.totalAdventureRatings === 0
-                ? 0
-                : account.statistics.averageAdventureRating +
-                  "(" +
-                  account.statistics.totalAdventureRatings +
-                  ")"
-            }
-            name="Avg. adventure rating"
-          />
-          <StatisticsCard
-            icon={<People color="#FF5A5A" variant="Bold" />}
-            value={account.statistics.totalAdventurePlayers}
-            name="Adventure players"
-          />
-          <StatisticsCard
-            icon={<Game color="#FF5A5A" variant="Bold" />}
-            value={account.statistics.totalGamesPlayed}
-            name="Games played"
-          />
-          <StatisticsCard
-            icon={<Timer color="#FF5A5A" variant="Bold" />}
-            value={account.statistics.totalGameplayHours.toFixed(2)}
-            name="Hours played"
-          />
+        <div className="flex w-full flex-col gap-2">
+          <p className="text-lg font-bold">COINS</p>
+          <div className="flex w-full gap-4">
+            <StatisticsCard
+              icon={<Coin silver />}
+              value={account.statistics.totalCoins}
+              name="Coins"
+            />
+            <StatisticsCard
+              icon={<Coin />}
+              value={account.statistics.totalDmCoinsEarned}
+              name="DM Coins"
+            />
+          </div>
+        </div>
+
+        <div className="flex w-full flex-col gap-2">
+          <p className="text-lg font-bold">PLAYER STATS</p>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            <StatisticsCard
+              icon={icons.helmet}
+              value={account.statistics.createdAdventuresCount}
+              name="Created adventures"
+            />
+            <StatisticsCard
+              icon={icons.swords}
+              value={account.statistics.createdCampaignsCount}
+              name="Created campaigns"
+            />
+            <StatisticsCard
+              icon={<Game color="#FF5A5A" variant="Bold" />}
+              value={account.statistics.totalGamesPlayed}
+              name="Games played"
+            />
+            <StatisticsCard
+              icon={<Timer color="#FF5A5A" variant="Bold" />}
+              value={account.statistics.totalGameplayHours.toFixed(2)}
+              name="Hours played"
+            />
+          </div>
+        </div>
+
+        <div className="flex w-full flex-col gap-2">
+          <p className="text-lg font-bold">MASTER STATS</p>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            <StatisticsCard
+              icon={icons.helmet}
+              value={account.statistics.createdAdventuresCount}
+              name="Created adventures"
+            />
+            <StatisticsCard
+              icon={icons.swords}
+              value={account.statistics.createdCampaignsCount}
+              name="Created campaigns"
+            />
+            <StatisticsCard
+              icon={<Star1 color="#FF5A5A" variant="Bold" />}
+              value={
+                account.statistics.totalAdventureRatings === 0
+                  ? 0
+                  : account.statistics.averageAdventureRating +
+                    "(" +
+                    account.statistics.totalAdventureRatings +
+                    ")"
+              }
+              name="Avg. adventure rating"
+            />
+            <StatisticsCard
+              icon={<People color="#FF5A5A" variant="Bold" />}
+              value={account.statistics.totalAdventurePlayers}
+              name="Adventure players"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center">
+          <Button className="w-fit">SIGN OUT</Button>
         </div>
       </div>
     </Box>
@@ -106,11 +143,11 @@ const StatisticsCard = ({
   name: string;
 }) => {
   return (
-    <div className="flex items-center gap-5 rounded-md bg-primary-900 px-4 py-6">
+    <div className="flex w-full items-center gap-5 rounded-md bg-primary-900 px-3 py-4">
       <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
         {icon}
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col">
         <p className="text-xl font-bold">{value || "-- --"}</p>
         <p className="text-sm text-white/50">{name}</p>
       </div>
