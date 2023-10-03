@@ -79,7 +79,11 @@ const CreateRoom = () => {
         <>
           {activeBaseTab === "adventures" && (
             <>
-              <Adventures filter={subTab} setDungeonDetailId={setDungeonDetailId} />
+              <Adventures
+                filter={subTab}
+                setDungeonDetailId={setDungeonDetailId}
+                isOwned={subTab === "owned"}
+              />
               {subTab === "favourite" && (
                 <div className="flex justify-end gap-8">
                   <Input placeholder="Dungeon ID" className="w-64" />
@@ -96,7 +100,11 @@ const CreateRoom = () => {
             </>
           )}
           {activeBaseTab === "campaigns" && (
-            <Campaigns filter={subTab} setCampaignDetailId={setCampaignDetailId} />
+            <Campaigns
+              filter={subTab}
+              setCampaignDetailId={setCampaignDetailId}
+              isOwned={subTab === "owned"}
+            />
           )}
         </>
       )}

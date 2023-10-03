@@ -8,6 +8,12 @@ export const campaignSchema = z.object({
   imageUrl: z.string(),
   description: z.string(),
   dungeons: z.array(z.string()),
+  createdBy: z
+    .object({
+      username: z.string(),
+      imageUrl: z.string(),
+    })
+    .nullish(),
 });
 
 export const campaignDetailSchema = campaignSchema.extend({

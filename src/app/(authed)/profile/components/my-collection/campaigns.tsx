@@ -7,9 +7,11 @@ import { Campaign } from "@/components/campaign";
 const Campaigns = ({
   setCampaignDetailId,
   filter,
+  isOwned,
 }: {
   setCampaignDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   filter?: string;
+  isOwned?: boolean;
 }) => {
   const {
     data: campaignsData,
@@ -45,6 +47,7 @@ const Campaigns = ({
             campaign={campaign}
             ref={lastCampaignRef}
             setCampaignDetailId={setCampaignDetailId}
+            isOwned={isOwned}
           />
         );
       }
@@ -53,6 +56,7 @@ const Campaigns = ({
           key={campaign._id}
           campaign={campaign}
           setCampaignDetailId={setCampaignDetailId}
+          isOwned={isOwned}
         />
       );
     }),

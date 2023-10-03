@@ -58,8 +58,12 @@ const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
         <>
           <Tabs activeTab={activeTab} />
 
-          {activeTab === "ADVENTURES" && <Adventures setDungeonDetailId={setDungeonDetailId} />}
-          {activeTab === "CAMPAIGNS" && <Campaigns setCampaignDetailId={setCampaignDetailId} />}
+          {activeTab === "ADVENTURES" && (
+            <Adventures setDungeonDetailId={setDungeonDetailId} isOwned />
+          )}
+          {activeTab === "CAMPAIGNS" && (
+            <Campaigns setCampaignDetailId={setCampaignDetailId} isOwned />
+          )}
           {activeTab === "GAME HISTORY" && <GameHistory />}
           {activeTab === "REWARDS" && <Rewards />}
         </>

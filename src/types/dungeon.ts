@@ -35,6 +35,12 @@ const baseDungeonSchema = z.object({
   imageUrl: z.string().optional(),
   rating: z.number(),
   numOfRatings: z.number(),
+  createdBy: z
+    .object({
+      username: z.string(),
+      imageUrl: z.string(),
+    })
+    .nullish(),
 });
 
 export const dungeonSchema = baseDungeonSchema.extend({

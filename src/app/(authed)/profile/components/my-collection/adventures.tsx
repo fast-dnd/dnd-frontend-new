@@ -12,11 +12,13 @@ const Adventures = ({
   filter,
   addToCampaign,
   addedToCampaign,
+  isOwned,
 }: {
   setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   filter?: string;
   addToCampaign?: (dungeonName: IBaseDungeon) => void;
   addedToCampaign?: IBaseDungeon[];
+  isOwned?: boolean;
 }) => {
   const {
     data: dungeonsData,
@@ -54,6 +56,7 @@ const Adventures = ({
             ref={lastDungeonRef}
             addToCampaign={addToCampaign}
             isAddedToCampaign={addedToCampaign?.includes(dungeon)}
+            isOwned={isOwned}
           />
         );
       }
@@ -64,6 +67,7 @@ const Adventures = ({
           setDungeonDetailId={setDungeonDetailId}
           addToCampaign={addToCampaign}
           isAddedToCampaign={addedToCampaign?.includes(dungeon)}
+          isOwned={isOwned}
         />
       );
     }),
