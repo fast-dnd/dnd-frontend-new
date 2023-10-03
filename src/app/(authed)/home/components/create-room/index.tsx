@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import useAddFavoriteCampaign from "@/hooks/use-add-favorite-campaign";
 import useAddFavoriteDungeon from "@/hooks/use-add-favorite-dungeon";
 import useCreateRoom from "@/hooks/use-create-room";
 import { Button } from "@/components/ui/button";
@@ -25,11 +26,18 @@ const CreateRoom = () => {
 
   const [loadingRoom, setLoadingRoom] = useState(false);
 
-  const [favDungeonId, setFavDungeonId] = useState("");
+  const [favId, setFavId] = useState("");
 
-  const { mutate: addFavorite, isLoading: isAddingFavorite } = useAddFavoriteDungeon();
+  const { mutate: addFavoriteDungeon, isLoading: isAddingFavoriteDungeon } =
+    useAddFavoriteDungeon();
+  const { mutate: addFavoriteCampaign, isLoading: isAddingFavoriteCampaign } =
+    useAddFavoriteCampaign();
 
   const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
+
+  useEffect(() => {
+    setFavId("");
+  }, [activeBaseTab]);
 
   const onCreateRoom = () => {
     createRoom(
@@ -84,19 +92,6 @@ const CreateRoom = () => {
                 setDungeonDetailId={setDungeonDetailId}
                 isOwned={subTab === "owned"}
               />
-              {subTab === "favourite" && (
-                <div className="flex justify-end gap-8">
-                  <Input placeholder="Dungeon ID" className="w-64" />
-                  <Button
-                    className="mb-1 w-fit whitespace-nowrap"
-                    variant="outline"
-                    isLoading={isAddingFavorite}
-                    onClick={() => addFavorite(favDungeonId)}
-                  >
-                    ADD FAVORITE
-                  </Button>
-                </div>
-              )}
             </>
           )}
           {activeBaseTab === "campaigns" && (
@@ -105,6 +100,31 @@ const CreateRoom = () => {
               setCampaignDetailId={setCampaignDetailId}
               isOwned={subTab === "owned"}
             />
+          )}
+          {subTab === "favourite" && (
+            <div className="flex justify-end gap-8">
+              <Input
+                placeholder={`${activeBaseTab === "adventures" ? "Adventure" : "Campaign"} ID`}
+                className="w-64"
+                onChange={(e) => setFavId(e.target.value)}
+              />
+              <Button
+                className="mb-1 w-fit whitespace-nowrap"
+                variant="outline"
+                isLoading={
+                  activeBaseTab === "adventures"
+                    ? isAddingFavoriteDungeon
+                    : isAddingFavoriteCampaign
+                }
+                onClick={() =>
+                  activeBaseTab === "adventures"
+                    ? addFavoriteDungeon(favId)
+                    : addFavoriteDungeon(favId)
+                }
+              >
+                ADD FAVORITE
+              </Button>
+            </div>
           )}
         </>
       )}
