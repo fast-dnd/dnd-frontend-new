@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
 
-import useGetCampaign from "@/hooks/use-get-campaign";
-import Skeleton from "@/components/ui/skeleton";
 import { Dungeon } from "@/components/dungeon";
+import Skeleton from "@/components/ui/skeleton";
+import useGetCampaign from "@/hooks/use-get-campaign";
 
 const CampaignDetail = ({
   setDungeonDetailId,

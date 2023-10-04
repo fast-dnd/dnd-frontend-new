@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { roomDetailSchema } from "@/types/room";
-import { roomKey } from "@/services/room-service";
 import { socketIO } from "@/lib/socket";
+import { roomKey } from "@/services/room-service";
+import { roomDetailSchema } from "@/validations/room";
 
 import { IRoomSocketEvent } from "../types/events";
 

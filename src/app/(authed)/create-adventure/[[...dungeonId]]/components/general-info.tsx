@@ -3,9 +3,6 @@
 import { useRef, useState } from "react";
 import { BsFillImageFill } from "react-icons/bs";
 
-import { IReward } from "@/types/reward";
-import { fileToBase64 } from "@/utils/b64";
-import { DungeonDuration, dungeonDurations, dungeonTags } from "@/utils/dungeon-options";
 import { Button } from "@/components/ui/button";
 import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
@@ -13,6 +10,10 @@ import { Slider } from "@/components/ui/slider";
 import { TextArea } from "@/components/ui/text-area";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import UploadImage from "@/components/ui/upload-image";
+import { IReward } from "@/types/reward";
+import { fileToBase64 } from "@/utils/b64";
+import { DungeonDuration, dungeonDurations, dungeonTags } from "@/utils/dungeon-options";
+
 import Rewards from "@/app/(authed)/profile/components/my-collection/rewards";
 
 import { dungeonFormStore } from "../stores/dungeon-form-store";

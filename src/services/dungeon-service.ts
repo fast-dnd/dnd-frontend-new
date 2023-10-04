@@ -1,6 +1,7 @@
 import queryString from "query-string";
 
-import { dungeonDetailSchema, dungeonsSchema, IDungeonDetail, IRateDungeon } from "@/types/dungeon";
+import { IDungeonDetail, IRateDungeon } from "@/types/dungeon";
+import { dungeonDetailSchema, dungeonsSchema } from "@/validations/dungeon";
 
 import createApi, { PAGINATION_LIMIT } from "./api-factory";
 

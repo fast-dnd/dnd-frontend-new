@@ -1,4 +1,5 @@
-import { IPlayMove, playMoveResponseSchema } from "@/types/game";
+import { IPlayMove } from "@/types/game";
+import { playMoveResponseSchema } from "@/validations/game";
 
 import createApi from "./api-factory";
 

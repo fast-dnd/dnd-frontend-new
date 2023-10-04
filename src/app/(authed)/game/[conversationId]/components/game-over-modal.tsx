@@ -4,9 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Rating } from "@smastrom/react-rating";
 
-import { IDungeonDetail } from "@/types/dungeon";
-import { IGameState, IPlayer } from "@/types/room";
-import useRateDungeon from "@/hooks/use-rate-dungeon";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,6 +14,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import Spinner from "@/components/ui/spinner";
+import useRateDungeon from "@/hooks/use-rate-dungeon";
+import { IDungeonDetail } from "@/types/dungeon";
+import { IGameState, IPlayer } from "@/types/room";
 
 import Player from "./player";
 

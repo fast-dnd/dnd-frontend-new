@@ -3,11 +3,11 @@ import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
 
+import { Dungeon } from "@/components/dungeon";
+import Skeleton from "@/components/ui/skeleton";
+import useGetDungeon from "@/hooks/use-get-dungeon";
 import { IChampion, IMoveMapping } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
-import useGetDungeon from "@/hooks/use-get-dungeon";
-import Skeleton from "@/components/ui/skeleton";
-import { Dungeon } from "@/components/dungeon";
 
 interface IDungeonDetailProps {
   dungeonDetailId: string;

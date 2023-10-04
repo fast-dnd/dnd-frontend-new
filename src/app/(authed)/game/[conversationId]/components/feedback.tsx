@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 
+import MobileNavbar from "@/components/mobile-navbar";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/text-area";
-import MobileNavbar from "@/components/mobile-navbar";
 
 interface IFeedbackProps {
   onHideFeedback?: () => void;

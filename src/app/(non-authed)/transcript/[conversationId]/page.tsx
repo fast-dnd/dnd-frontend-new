@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation";
 import { Copy } from "iconsax-react";
 import { ChevronLeft } from "lucide-react";
 
-import { jibril } from "@/utils/fonts";
-import useCopy from "@/hooks/use-copy";
-import { Box } from "@/components/ui/box";
 import GoBackButton from "@/components/go-back-button";
+import { Box } from "@/components/ui/box";
+import useCopy from "@/hooks/use-copy";
+import { jibril } from "@/utils/fonts";
 
 import useGetTranscript from "./hooks/use-get-transcript";
 

@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import SkeletonIcon from "@/components/icons/skeleton-icon";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
-import SkeletonIcon from "@/components/icons/skeleton-icon";
 
 import ImageModal from "./image-modal";
 import StyledAudio from "./styled-audio";

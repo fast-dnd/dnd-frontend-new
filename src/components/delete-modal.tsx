@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Trash } from "iconsax-react";
 
-import useDeleteCampaign from "@/hooks/use-delete-campaign";
-import useDeleteDungeon from "@/hooks/use-delete-dungeon";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,6 +11,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import useDeleteCampaign from "@/hooks/use-delete-campaign";
+import useDeleteDungeon from "@/hooks/use-delete-dungeon";
 
 const DeleteModal = ({ id, type }: { id: string; type: "adventure" | "campaign" }) => {
   const [open, setOpen] = useState(false);

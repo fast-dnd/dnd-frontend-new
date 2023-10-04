@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi";
 
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { IPlayMove, IPlayMoveResponse } from "@/types/game";
 import { IPlayer, IRoomDetail } from "@/types/room";
 import { cn } from "@/utils/style-utils";
-import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 import usePlayMove from "../hooks/use-play-move";
 import usePlayMoveSocket from "../hooks/use-play-move-socket";

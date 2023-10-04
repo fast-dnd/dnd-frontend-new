@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 
-import { cn } from "@/utils/style-utils";
+import GoBackButton from "@/components/go-back-button";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import GoBackButton from "@/components/go-back-button";
+import { cn } from "@/utils/style-utils";
 
 import Adventures from "./adventures";
 import CampaignDetail from "./campaign-detail";

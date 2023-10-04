@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import useAuthCheck from "@/hooks/use-auth-check";
 import Navbar from "@/components/navbar";
+import useAuthCheck from "@/hooks/use-auth-check";
 
 const AuthedLayout = ({ children }: React.PropsWithChildren) => {
   useAuthCheck();

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import GoBackButton from "@/components/go-back-button";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import useAddFavoriteCampaign from "@/hooks/use-add-favorite-campaign";
 import useAddFavoriteDungeon from "@/hooks/use-add-favorite-dungeon";
 import useCreateRoom from "@/hooks/use-create-room";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import GoBackButton from "@/components/go-back-button";
+
 import Adventures from "@/app/(authed)/profile/components/my-collection/adventures";
 import CampaignDetail from "@/app/(authed)/profile/components/my-collection/campaign-detail";
 import Campaigns from "@/app/(authed)/profile/components/my-collection/campaigns";

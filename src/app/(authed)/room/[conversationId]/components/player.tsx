@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import { IPlayer } from "@/types/room";
 import Spinner from "@/components/ui/spinner";
+import { IPlayer } from "@/types/room";
 
 const Player = ({ player }: { player: IPlayer }) => {
   return (

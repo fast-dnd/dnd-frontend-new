@@ -1,6 +1,6 @@
 import React from "react";
 
-import { cn } from "@/utils/style-utils";
+import { tabsWithIcons } from "@/components/tabs-with-icons";
 import {
   Select,
   SelectContent,
@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { tabsWithIcons } from "@/components/tabs-with-icons";
+import { cn } from "@/utils/style-utils";
 
 import { BaseTabType, subTabs, SubTabType, tabStore } from "./store/tab-store";
 

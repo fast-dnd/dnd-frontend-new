@@ -4,10 +4,10 @@ import { HiSparkles } from "react-icons/hi";
 import { RiCopperCoinFill } from "react-icons/ri";
 import { VscHeartFilled } from "react-icons/vsc";
 
+import SkullIcon from "@/components/icons/skull-icon";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import SkullIcon from "@/components/icons/skull-icon";
 
 import { PlayerChanges } from "../stores/game-store";
 

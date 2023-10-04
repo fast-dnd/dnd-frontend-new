@@ -7,13 +7,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineLeft } from "react-icons/ai";
 
-import { fileToBase64 } from "@/utils/b64";
-import useGetAccount from "@/hooks/use-get-account";
+import MobileNavbar from "@/components/mobile-navbar";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UploadImage from "@/components/ui/upload-image";
-import MobileNavbar from "@/components/mobile-navbar";
+import useGetAccount from "@/hooks/use-get-account";
+import { fileToBase64 } from "@/utils/b64";
 
 import useEditProfile from "./hooks/use-edit-profile";
 import { editProfileSchema, IEditProfileSchema } from "./schemas/edit-profile-schema";

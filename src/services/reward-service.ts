@@ -1,4 +1,4 @@
-import { rewardsSchema } from "@/types/reward";
+import { rewardsSchema } from "@/validations/reward";
 
 import createApi from "./api-factory";
 

@@ -3,11 +3,11 @@ import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
 
+import { Button } from "@/components/ui/button";
+import { TextArea } from "@/components/ui/text-area";
 import { IChampion } from "@/types/dungeon";
 import { IDefaultMove } from "@/types/room";
 import { cn } from "@/utils/style-utils";
-import { Button } from "@/components/ui/button";
-import { TextArea } from "@/components/ui/text-area";
 
 export interface MoveInputProps {
   move: IDefaultMove | undefined;

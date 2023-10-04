@@ -1,6 +1,7 @@
 import queryString from "query-string";
 
-import { campaignDetailSchema, campaignsSchema, ICampaignForBackend } from "@/types/campaign";
+import { ICampaignForBackend } from "@/types/campaign";
+import { campaignDetailSchema, campaignsSchema } from "@/validations/campaign";
 
 import createApi, { PAGINATION_LIMIT } from "./api-factory";
 

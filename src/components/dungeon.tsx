@@ -4,9 +4,9 @@ import { Copy, Game, Star1 } from "iconsax-react";
 import { FaCheck } from "react-icons/fa";
 import { GiCheckMark } from "react-icons/gi";
 
+import useCopy from "@/hooks/use-copy";
 import { IBaseDungeon } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
-import useCopy from "@/hooks/use-copy";
 
 import DeleteModal from "./delete-modal";
 

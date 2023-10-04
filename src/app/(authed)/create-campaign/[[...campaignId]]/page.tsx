@@ -2,9 +2,9 @@
 
 import { useEffect } from "react";
 
-import useGetCampaign from "@/hooks/use-get-campaign";
 import { Box } from "@/components/ui/box";
 import Skeleton from "@/components/ui/skeleton";
+import useGetCampaign from "@/hooks/use-get-campaign";
 
 import RightCard from "./components/create-campaign-card";
 import SelectAdventuresCard from "./components/select-adventures-card";

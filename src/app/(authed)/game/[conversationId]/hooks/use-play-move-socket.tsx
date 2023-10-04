@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { IDefaultMove } from "@/types/room";
 import { socketIO } from "@/lib/socket";
+import { IDefaultMove } from "@/types/room";
 
 import { IGameplaySocketEvent } from "../types/events";
 

@@ -4,9 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import useGetAccount from "@/hooks/use-get-account";
 import checkJWT from "@/utils/check-jwt";
 import { cn } from "@/utils/style-utils";
-import useGetAccount from "@/hooks/use-get-account";
 
 import Coin from "./coin";
 

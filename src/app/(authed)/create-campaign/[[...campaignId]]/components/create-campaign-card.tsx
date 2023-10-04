@@ -1,13 +1,13 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 
-import { fileToBase64 } from "@/utils/b64";
+import StatusModal, { IStatusModalContent } from "@/components/status-modal";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 import UploadImage from "@/components/ui/upload-image";
-import StatusModal, { IStatusModalContent } from "@/components/status-modal";
+import { fileToBase64 } from "@/utils/b64";
 
 import useCreateCampaign from "../hooks/use-create-campaign";
 import useUpdateCampaign from "../hooks/use-update-campaign";

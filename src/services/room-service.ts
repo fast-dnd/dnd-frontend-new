@@ -1,14 +1,7 @@
 import queryString from "query-string";
 
-import {
-  ICreateRoom,
-  IEditAvatar,
-  IEditChampion,
-  IEditRoom,
-  roomDetailSchema,
-  roomHistorySchema,
-  roomSummarySchema,
-} from "@/types/room";
+import { ICreateRoom, IEditAvatar, IEditChampion, IEditRoom } from "@/types/room";
+import { roomDetailSchema, roomHistorySchema, roomSummarySchema } from "@/validations/room";
 
 import createApi, { PAGINATION_LIMIT } from "./api-factory";
 

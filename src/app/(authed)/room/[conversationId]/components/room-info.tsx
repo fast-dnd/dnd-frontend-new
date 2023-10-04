@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { IChampion } from "@/types/dungeon";
-import useGetRoomData from "@/hooks/use-get-room-data";
+import GoBackButton from "@/components/go-back-button";
 import { Box } from "@/components/ui/box";
 import Spinner from "@/components/ui/spinner";
-import GoBackButton from "@/components/go-back-button";
+import useGetRoomData from "@/hooks/use-get-room-data";
+import { IChampion } from "@/types/dungeon";
+
 import DungeonDetail from "@/app/(authed)/profile/components/my-collection/dungeon-detail";
 
 import useUpdateRole from "../hooks/use-update-role";

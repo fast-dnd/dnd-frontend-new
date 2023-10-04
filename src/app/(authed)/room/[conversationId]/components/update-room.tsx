@@ -1,12 +1,12 @@
 import { AiFillSound, AiFillStar } from "react-icons/ai";
 import { BiImages } from "react-icons/bi";
 
-import { IDungeonDetail } from "@/types/dungeon";
-import { IRoomDetail } from "@/types/room";
-import { DungeonDuration, dungeonDurations } from "@/utils/dungeon-options";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { IDungeonDetail } from "@/types/dungeon";
+import { IRoomDetail } from "@/types/room";
+import { DungeonDuration, dungeonDurations } from "@/utils/dungeon-options";
 
 import useOnRoomChange from "../hooks/use-on-room-change";
 import usePlayerInfo from "../hooks/use-player-info";

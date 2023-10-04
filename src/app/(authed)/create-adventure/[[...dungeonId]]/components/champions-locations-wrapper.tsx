@@ -4,8 +4,8 @@ import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import { ObservableObject } from "@legendapp/state";
 import { AddCircle } from "iconsax-react";
 
-import { IChampion, ILocation } from "@/types/dungeon";
 import { Button } from "@/components/ui/button";
+import { IChampion, ILocation } from "@/types/dungeon";
 
 import { dungeonFormStore } from "../stores/dungeon-form-store";
 import { StatusType } from "../utils/step-utils";

@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
-import { cn } from "@/utils/style-utils";
-import { Button } from "@/components/ui/button";
 import HowToPlay from "@/components/how-to-play";
 import MobileNavbar from "@/components/mobile-navbar";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/utils/style-utils";
 
 import Feedback from "./components/feedback";
 import Gameplay from "./components/gameplay";

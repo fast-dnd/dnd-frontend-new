@@ -1,4 +1,4 @@
-import { accountSchema } from "@/types/account";
+import { accountSchema } from "@/validations/account";
 
 import createApi from "./api-factory";
 

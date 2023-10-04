@@ -8,11 +8,11 @@ import { Game, People, Star1, Timer } from "iconsax-react";
 import { MdEdit } from "react-icons/md";
 import { toast } from "sonner";
 
-import useGetAccount from "@/hooks/use-get-account";
-import { Box } from "@/components/ui/box";
-import { Button } from "@/components/ui/button";
 import Coin from "@/components/coin";
 import SkeletonIcon from "@/components/icons/skeleton-icon";
+import { Box } from "@/components/ui/box";
+import { Button } from "@/components/ui/button";
+import useGetAccount from "@/hooks/use-get-account";
 
 const MyAccount = () => {
   const router = useRouter();

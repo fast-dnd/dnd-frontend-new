@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-import { IPlayer } from "@/types/room";
-import useGetDungeon from "@/hooks/use-get-dungeon";
-import useGetRoomData from "@/hooks/use-get-room-data";
 import { Box } from "@/components/ui/box";
 import Spinner from "@/components/ui/spinner";
+import useGetDungeon from "@/hooks/use-get-dungeon";
+import useGetRoomData from "@/hooks/use-get-room-data";
+import { IPlayer } from "@/types/room";
 
 import useGameplaySocket from "../hooks/use-gameplay-socket";
 import useRewardSocket from "../hooks/use-reward-socket";

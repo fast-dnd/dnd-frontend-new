@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { IQuestion } from "@/types/room";
-import { roomKey } from "@/services/room-service";
 import { socketIO } from "@/lib/socket";
+import { roomKey } from "@/services/room-service";
+import { IQuestion } from "@/types/room";
 
 import { IGeneralSocketEvent } from "../types/events";
 

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { MdEdit } from "react-icons/md";
 
-import { cn } from "@/utils/style-utils";
+import StatusModal, { IStatusModalContent } from "@/components/status-modal";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import StatusModal, { IStatusModalContent } from "@/components/status-modal";
+import { cn } from "@/utils/style-utils";
 
 import useCreateDungeon from "../hooks/use-create-dungeon";
 import useUpdateDungeon from "../hooks/use-update-dungeon";

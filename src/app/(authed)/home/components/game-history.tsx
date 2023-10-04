@@ -1,10 +1,10 @@
-import useGetRoomHistory from "@/hooks/use-get-room-history";
-import useIntersectionObserver from "@/hooks/use-intersection-observer";
+import QuillIcon from "@/components/icons/quill-icon";
+import RoomItem from "@/components/room-item";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 import Spinner from "@/components/ui/spinner";
-import QuillIcon from "@/components/icons/quill-icon";
-import RoomItem from "@/components/room-item";
+import useGetRoomHistory from "@/hooks/use-get-room-history";
+import useIntersectionObserver from "@/hooks/use-intersection-observer";
 
 const GameHistory = () => {
   const {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-import { IDungeonDetail } from "@/types/dungeon";
+import GoBackButton from "@/components/go-back-button";
 import { Box } from "@/components/ui/box";
 import {
   Tooltip,
@@ -10,7 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import GoBackButton from "@/components/go-back-button";
+import { IDungeonDetail } from "@/types/dungeon";
 
 import useLoadDungeonData from "../hooks/use-load-dungeon-data";
 import { dungeonFormStore } from "../stores/dungeon-form-store";

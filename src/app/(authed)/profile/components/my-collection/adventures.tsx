@@ -1,12 +1,12 @@
 import React from "react";
 
-import { IBaseDungeon } from "@/types/dungeon";
-import useGetDungeons from "@/hooks/use-get-dungeons";
-import useIntersectionObserver from "@/hooks/use-intersection-observer";
+import { Dungeon } from "@/components/dungeon";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 import Spinner from "@/components/ui/spinner";
-import { Dungeon } from "@/components/dungeon";
+import useGetDungeons from "@/hooks/use-get-dungeons";
+import useIntersectionObserver from "@/hooks/use-intersection-observer";
+import { IBaseDungeon } from "@/types/dungeon";
 
 const Adventures = ({
   setDungeonDetailId,

@@ -2,9 +2,9 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { cn } from "@/utils/style-utils";
-import { Button } from "@/components/ui/button";
 import { tabsWithIcons } from "@/components/tabs-with-icons";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/utils/style-utils";
 
 import { Tab } from "./types/tab";
 
