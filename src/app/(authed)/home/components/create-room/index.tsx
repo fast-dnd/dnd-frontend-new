@@ -103,11 +103,14 @@ const CreateRoom = () => {
           )}
           {subTab === "favourite" && (
             <div className="flex justify-end gap-8">
-              <Input
-                placeholder={`${activeBaseTab === "adventures" ? "Adventure" : "Campaign"} ID`}
-                className="w-64"
-                onChange={(e) => setFavId(e.target.value)}
-              />
+              <div>
+                <Input
+                  placeholder={`${activeBaseTab === "adventures" ? "Adventure" : "Campaign"} ID`}
+                  className="w-64"
+                  onChange={(e) => setFavId(e.target.value)}
+                />
+              </div>
+
               <Button
                 className="mb-1 w-fit whitespace-nowrap"
                 variant="outline"
