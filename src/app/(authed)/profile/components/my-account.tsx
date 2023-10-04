@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Game, People, Star1, Timer } from "iconsax-react";
 import { MdEdit } from "react-icons/md";
+import { toast } from "sonner";
 
 import useGetAccount from "@/hooks/use-get-account";
 import { Box } from "@/components/ui/box";
@@ -24,6 +25,7 @@ const MyAccount = () => {
     localStorage.removeItem("jwtToken");
     localStorage.removeItem("accountId");
     router.push("/login");
+    toast.success("Signed out successfully!");
   };
 
   return (

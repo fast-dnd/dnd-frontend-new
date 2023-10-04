@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import campaignService, { campaignKey } from "@/services/campaign-service";
 
@@ -11,6 +12,7 @@ const useDeleteCampaign = () => {
     mutationFn: campaignService.deleteCampaign,
     onSuccess: () => {
       queryClient.invalidateQueries([campaignKey, "owned"]);
+      toast.success("Campaign deleted successfully!");
     },
   });
 };
