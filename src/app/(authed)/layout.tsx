@@ -7,6 +7,7 @@ import Navbar from "@/components/navbar";
 
 const AuthedLayout = ({ children }: React.PropsWithChildren) => {
   useAuthCheck();
+
   return (
     <>
       <Navbar />
