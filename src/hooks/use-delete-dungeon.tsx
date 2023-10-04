@@ -10,7 +10,7 @@ const useDeleteDungeon = () => {
   return useMutation({
     mutationFn: dungeonService.deleteDungeon,
     onSuccess: () => {
-      queryClient.invalidateQueries([dungeonKey, "myDungeons"]);
+      queryClient.invalidateQueries([dungeonKey, "owned"]);
     },
   });
 };

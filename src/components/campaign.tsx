@@ -1,7 +1,12 @@
 import React from "react";
 import Image from "next/image";
+import { Copy } from "iconsax-react";
+import { GiCheckMark } from "react-icons/gi";
 
 import { ICampaign } from "@/types/campaign";
+import useCopy from "@/hooks/use-copy";
+
+import DeleteModal from "./delete-modal";
 
 export const Campaign = React.forwardRef<
   HTMLDivElement,
@@ -9,8 +14,11 @@ export const Campaign = React.forwardRef<
     campaign: ICampaign;
     setCampaignDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
     isOwned?: boolean;
+    showActions?: boolean;
   }
->(({ campaign, setCampaignDetailId, isOwned }, ref) => {
+>(({ campaign, setCampaignDetailId, isOwned, showActions }, ref) => {
+  const { copied, onCopy } = useCopy();
+
   return (
     <div
       className="flex cursor-pointer gap-8 rounded-md p-4 hover:bg-white/5"
@@ -25,7 +33,24 @@ export const Campaign = React.forwardRef<
         className="h-16 w-16 rounded-md lg:h-[200px] lg:w-[200px]"
       />
       <div className="flex w-full flex-col gap-4">
-        <p className="text-2xl font-bold uppercase">{campaign.name}</p>
+        <div className="flex items-center justify-between">
+          <p className="text-2xl font-bold uppercase">{campaign.name}</p>
+          {showActions && (
+            <div className="flex gap-4" onClick={(e) => e.stopPropagation()}>
+              <div
+                className="flex items-center gap-2 text-white/50 transition-all duration-200 hover:text-info"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onCopy(campaign._id);
+                }}
+              >
+                <p>{copied ? "Copied" : "Copy ID"}</p>{" "}
+                {copied ? <GiCheckMark /> : <Copy variant="Bold" />}
+              </div>
+              <DeleteModal id={campaign._id} type="campaign" />
+            </div>
+          )}
+        </div>
         {!isOwned && campaign.createdBy && (
           <div className="flex gap-2">
             <Image

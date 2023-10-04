@@ -9,10 +9,12 @@ const Campaigns = ({
   setCampaignDetailId,
   filter,
   isOwned,
+  showActions,
 }: {
   setCampaignDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   filter?: string;
   isOwned?: boolean;
+  showActions?: boolean;
 }) => {
   const {
     data: campaignsData,
@@ -49,6 +51,7 @@ const Campaigns = ({
             ref={lastCampaignRef}
             setCampaignDetailId={setCampaignDetailId}
             isOwned={isOwned}
+            showActions={showActions}
           />
         );
       }
@@ -58,6 +61,7 @@ const Campaigns = ({
           campaign={campaign}
           setCampaignDetailId={setCampaignDetailId}
           isOwned={isOwned}
+          showActions={showActions}
         />
       );
     }),
