@@ -18,7 +18,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
   const { data: roomData, isLoading: isLoadingRoomData, isError } = useGetRoomData(conversationId);
   const { data: dungeonData, isLoading: isLoadingDungeonData } = useGetDungeon(roomData?.dungeonId);
 
-  const [copied, setCopied] = useCopy();
+  const { copied, onCopy } = useCopy();
 
   if (isError) redirect("/home");
 
@@ -35,11 +35,6 @@ const JoinEditInfo = (props: { conversationId: string }) => {
     );
 
   if (!roomData || !dungeonData) return <div>Something went wrong</div>;
-
-  const onCopyRoomId = () => {
-    navigator.clipboard.writeText(roomData.link);
-    setCopied(true);
-  };
 
   return (
     <Box
@@ -58,9 +53,9 @@ const JoinEditInfo = (props: { conversationId: string }) => {
         <div className="flex flex-col justify-between gap-4 text-center lg:flex-row">
           <p className="mt-2 flex-1 whitespace-nowrap text-xl">{roomData.link}</p>
           <Button
-            onClick={onCopyRoomId}
+            onClick={() => onCopy(roomData.link)}
             variant={copied ? "primary" : "outline"}
-            className="w-full whitespace-nowrap px-8 text-lg uppercase lg:w-fit"
+            className="w-full flex-1 whitespace-nowrap px-8 text-lg uppercase lg:w-fit"
           >
             {copied ? "Copied" : "Copy ID"}
           </Button>

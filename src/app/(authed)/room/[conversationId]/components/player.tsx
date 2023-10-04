@@ -11,10 +11,10 @@ const Player = ({ player }: { player: IPlayer }) => {
         width={83}
         height={83}
         alt={`player-${player.accountId}-avatar`}
-        className="h-[70px] w-[70px] lg:h-[83px] lg:w-[83px]"
+        className="h-[70px] w-[70px] rounded-md lg:h-[83px] lg:w-[83px]"
       />
 
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col justify-between">
         <p className="text-lg lg:text-2xl">{player.name}</p>
         {player.champion ? (
           <p className="line-clamp-2 text-base lg:text-xl">

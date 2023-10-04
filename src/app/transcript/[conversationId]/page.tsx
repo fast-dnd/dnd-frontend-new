@@ -18,12 +18,7 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
   const { conversationId } = params;
   const { data: transcripts, isLoading } = useGetTranscript(conversationId);
 
-  const [copied, setCopied] = useCopy();
-
-  const onCopy = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-  };
+  const { copied, onCopy } = useCopy();
 
   if (isLoading) {
     return (
@@ -66,14 +61,14 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
           </div>
           <div
             className="flex cursor-pointer gap-2 rounded-md bg-white/5 px-4 py-3 font-semibold uppercase text-white/50"
-            onClick={onCopy}
+            onClick={() => onCopy(window.location.href)}
           >
             {copied ? "Copied!" : "Copy share link"}
             <Copy variant="Bold" />
           </div>
         </div>
         <div className="rounded-b-md bg-glass p-12 backdrop-blur-2xl">
-          <GoBackButton onClick={() => router.push("/home")} />
+          <GoBackButton className="mb-8" onClick={() => router.push("/home")} />
           <div className="flex flex-col gap-7">
             <p className="text-xl uppercase tracking-[2px]">Players</p>
             <div className="flex gap-6 border-b border-b-white/20 pb-4">
@@ -94,9 +89,6 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
           <div className="mt-8 flex flex-col gap-10">
             {transcripts.story.map((story, index) => (
               <div key={story.storyChunk} className="flex flex-col gap-4 text-xl ">
-                <p className="text-2xl font-semibold uppercase tracking-[4.8px]">
-                  <span className="text-primary">CHAPTER {index + 1}:</span> {story.title}
-                </p>
                 {story.image && (
                   <div className="flex items-center justify-center">
                     <Image
