@@ -70,7 +70,6 @@ const General = (props: { conversationId: string }) => {
     if (autoBottomScrollDiv.current) {
       autoBottomScrollDiv.current.scrollIntoView({ behavior: "instant" });
     }
-    console.log(moveHistory);
   }, [moveHistory, questionHistory]);
 
   if (!roomData || !currentPlayer) {

@@ -21,7 +21,6 @@ const useRoomSocket = (conversationId: string) => {
         case "PLAYER_JOINED_ROOM":
         case "PLAYER_EDIT":
         case "ROOM_SETTINGS_CHANGED":
-          console.log("here");
           queryClient.setQueryData([roomKey, conversationId], roomDetailSchema.parse(event.data));
           break;
         case "REQUEST_SENT_TO_DM":
