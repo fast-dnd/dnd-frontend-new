@@ -57,7 +57,7 @@ const Adventures = ({
             setDungeonDetailId={setDungeonDetailId}
             ref={lastDungeonRef}
             addToCampaign={addToCampaign}
-            isAddedToCampaign={addedToCampaign?.includes(dungeon)}
+            isAddedToCampaign={addedToCampaign?.some((added) => added._id === dungeon._id)}
             isOwned={isOwned}
             showActions={showActions}
           />
@@ -69,7 +69,7 @@ const Adventures = ({
           dungeon={dungeon}
           setDungeonDetailId={setDungeonDetailId}
           addToCampaign={addToCampaign}
-          isAddedToCampaign={addedToCampaign?.includes(dungeon)}
+          isAddedToCampaign={addedToCampaign?.some((added) => added._id === dungeon._id)}
           isOwned={isOwned}
           showActions={showActions}
         />

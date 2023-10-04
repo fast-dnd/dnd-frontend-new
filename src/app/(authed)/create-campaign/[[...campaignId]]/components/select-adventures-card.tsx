@@ -13,8 +13,8 @@ const SelectAdventuresCard = ({ isEditing }: { isEditing: boolean }) => {
   const addedToCampaign = campaignFormStore.dungeons.use();
 
   const addToCampaign = (dungeon: IBaseDungeon) => {
-    if (addedToCampaign.includes(dungeon)) {
-      campaignFormStore.dungeons.set((dungeons) => dungeons.filter((d) => d !== dungeon));
+    if (addedToCampaign.some((added) => added._id === dungeon._id)) {
+      campaignFormStore.dungeons.set((dungeons) => dungeons.filter((d) => d._id !== dungeon._id));
     } else campaignFormStore.dungeons.set((dungeons) => [...dungeons, dungeon]);
   };
 
