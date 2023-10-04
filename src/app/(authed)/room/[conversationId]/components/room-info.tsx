@@ -26,8 +26,8 @@ const RoomInfo = (props: { conversationId: string }) => {
     return (
       <Box
         title="LOBBY"
-        className="flex h-[750px] min-h-0 shrink flex-col items-center justify-center gap-5 p-5 lg:gap-8 lg:p-8"
-        wrapperClassName="max-h-full mx-auto basis-3/4"
+        className="flex h-full min-h-0 shrink flex-col items-center justify-center gap-5 p-5 lg:gap-8 lg:p-8"
+        wrapperClassName="h-full mx-auto basis-3/4"
       >
         <Spinner className="h-40 w-40" />
       </Box>
@@ -43,8 +43,8 @@ const RoomInfo = (props: { conversationId: string }) => {
   return (
     <Box
       title="LOBBY"
-      className="flex min-h-0 shrink flex-col gap-5 p-5 lg:gap-8 lg:p-8"
-      wrapperClassName="max-h-full mx-auto basis-3/4"
+      className="flex h-full min-h-0 shrink flex-col gap-5 p-5 lg:gap-8 lg:p-8"
+      wrapperClassName="h-full mx-auto basis-3/4"
     >
       <GoBackButton className="mb-0" onClick={() => router.push("/home")} />
       <div className="flex min-h-0 w-full flex-1 flex-col gap-5 lg:gap-8 lg:overflow-y-auto">

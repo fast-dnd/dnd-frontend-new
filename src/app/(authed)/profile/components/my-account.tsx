@@ -31,8 +31,8 @@ const MyAccount = () => {
   return (
     <Box
       title="MY ACCOUNT"
-      wrapperClassName="flex basis-1/3"
-      className="flex flex-col gap-8 overflow-y-auto p-8"
+      wrapperClassName="flex h-full basis-1/3"
+      className="flex h-full flex-col gap-8 overflow-y-auto p-8"
     >
       <div className="flex flex-col gap-8">
         {account ? (
@@ -157,7 +157,7 @@ const MyAccount = () => {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center">
+      <div className="flex flex-1 items-end justify-center">
         <Button className="w-fit" onClick={onSignOut}>
           SIGN OUT
         </Button>
