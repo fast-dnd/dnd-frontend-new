@@ -73,7 +73,7 @@ export const Dungeon = React.forwardRef<
               )}
             </p>
             {showActions && (
-              <div className="flex gap-4" onClick={(e) => e.stopPropagation()}>
+              <div className="mr-8 flex gap-4" onClick={(e) => e.stopPropagation()}>
                 <div
                   className="flex items-center gap-2 text-white/50 transition-all duration-200 hover:text-info"
                   onClick={(e) => {

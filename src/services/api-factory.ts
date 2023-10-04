@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 const handleInterceptors = (apiInstance: AxiosInstance) => {
   apiInstance.defaults.headers.common["Content-Type"] = "application/json";

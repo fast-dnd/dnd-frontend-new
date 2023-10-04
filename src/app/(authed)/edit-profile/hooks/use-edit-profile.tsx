@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 import accountService from "@/services/account-service";
 
