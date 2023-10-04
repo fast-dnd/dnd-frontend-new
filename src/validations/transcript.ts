@@ -21,6 +21,14 @@ export const transcriptSchema = z.object({
         .nullish(),
       image: z.string().nullish(),
       title: z.string(),
+      question: z.string().nullish(),
+      answer: z.string().nullish(),
+      playerAsking: z
+        .object({
+          name: z.string(),
+          imageUrl: z.string(),
+        })
+        .nullish(),
     }),
   ),
 });

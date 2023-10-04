@@ -83,8 +83,8 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
   }
 
   return (
-    <div className="mb-10 flex overflow-y-auto">
-      <div className="mx-auto mt-12 flex w-3/5 flex-col">
+    <div className="mb-10 flex">
+      <div className="mx-auto mt-12 flex h-full w-3/5 flex-col">
         <div className="relative flex w-full items-center justify-between rounded-t-md bg-dark-900 px-12 py-6">
           <Link href="/home" className="invisible flex gap-2 font-bold uppercase">
             <ChevronLeft /> Go back
@@ -107,7 +107,7 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
             <Copy variant="Bold" />
           </div>
         </div>
-        <div className="rounded-b-md bg-glass p-12 backdrop-blur-2xl">
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto rounded-b-md bg-glass p-12 backdrop-blur-2xl">
           <GoBackButton className="mb-8" onClick={() => router.push("/home")} />
           <div className="flex flex-col gap-7">
             <p className="text-xl uppercase tracking-[2px]">Players</p>
@@ -163,6 +163,34 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
                     );
                   })}
                 </div>
+                {story.question && story.answer && story.playerAsking && (
+                  <div className="mt-8 flex flex-col gap-4">
+                    <p className="text-xl font-medium">CHAT WITH MASTER</p>
+                    <p className="inline-flex gap-4">
+                      <Image
+                        src={story.playerAsking?.imageUrl || "/images/default-avatar.png"}
+                        width={32}
+                        height={32}
+                        alt={`avatar`}
+                        className="rounded-md"
+                      />
+                      <span className="font-semibold text-primary">
+                        {story.playerAsking?.name}:
+                      </span>{" "}
+                      {story.question}
+                    </p>
+                    <p className="inline-flex gap-4">
+                      <Image
+                        src={"/images/master-avatar.jpg"}
+                        width={32}
+                        height={32}
+                        alt={`master avatar`}
+                        className="rounded-md"
+                      />
+                      <span className="font-semibold">MASTER:</span> {story.answer}
+                    </p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
