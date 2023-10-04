@@ -1,8 +1,6 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { useQueryClient } from "@tanstack/react-query";
 
-import { campaignKey } from "@/services/campaign-service";
 import { fileToBase64 } from "@/utils/b64";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
@@ -16,8 +14,6 @@ import useUpdateCampaign from "../hooks/use-update-campaign";
 import { campaignFormStore } from "../stores/campaign-form-store";
 
 const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
-  const queryClient = useQueryClient();
-
   const { name, description, dungeons, image } = campaignFormStore.use();
 
   const [openModal, setOpenModal] = useState(false);
@@ -58,12 +54,11 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
         },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries([campaignKey, campaignId]);
             setModalContent({
               title: "CAMPAIGN EDITED SUCCESSFULLY",
               description: "You can start your story with your new campaign now!",
               actionText: "GO TO PROFILE",
-              href: "/profile",
+              href: "/profile?activeTab=CAMPAIGNS",
             });
             setOpenModal(true);
           },
@@ -72,7 +67,7 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
               title: "ERROR EDITING CAMPAIGN",
               description: "",
               actionText: "GO TO PROFILE",
-              href: "/profile",
+              href: "/profile?activeTab=CAMPAIGNS",
             });
             setOpenModal(true);
           },
@@ -81,12 +76,11 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
     else
       createCampaign(dataForBackend, {
         onSuccess: () => {
-          queryClient.invalidateQueries([campaignKey, campaignId]);
           setModalContent({
             title: "CAMPAIGN CREATED SUCCESSFULLY",
             description: "You can start your story with your new campaign now!",
             actionText: "GO TO PROFILE",
-            href: "/profile",
+            href: "/profile?activeTab=CAMPAIGNS",
           });
           setOpenModal(true);
         },
@@ -95,7 +89,7 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
             title: "ERROR CREATING CAMPAIGN",
             description: "",
             actionText: "GO TO PROFILE",
-            href: "/profile",
+            href: "/profile?activeTab=CAMPAIGNS",
           });
           setOpenModal(true);
         },

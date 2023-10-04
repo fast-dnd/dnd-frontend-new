@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { MdEdit } from "react-icons/md";
 
-import { dungeonKey } from "@/services/dungeon-service";
 import { cn } from "@/utils/style-utils";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
@@ -15,8 +13,6 @@ import { steps } from "../utils/step-utils";
 import { tagsRemoveLabel } from "../utils/tags-utils";
 
 const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
-  const queryClient = useQueryClient();
-
   const { currentStep, dungeonFormData } = dungeonFormStore.use();
 
   const [openModal, setOpenModal] = useState(false);
@@ -39,7 +35,6 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
     if (dungeonId) {
       updateDungeon(dungeonFormDataWithoutTags, {
         onSuccess: (_data) => {
-          queryClient.invalidateQueries([dungeonKey, dungeonId]);
           setModalContent({
             title: "ADVENTURE EDITED SUCCESSFULLY",
             description: "You can start your story with your new adventure now!",

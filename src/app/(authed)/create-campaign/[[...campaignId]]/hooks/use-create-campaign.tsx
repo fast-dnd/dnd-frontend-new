@@ -1,10 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import campaignService from "@/services/campaign-service";
+import campaignService, { campaignKey } from "@/services/campaign-service";
 
 const useCreateCampaign = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: campaignService.createCampaign,
+    onSuccess: () => {
+      queryClient.invalidateQueries([campaignKey]);
+    },
   });
 };
 

@@ -1,10 +1,12 @@
 import { useRouter } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import accountService from "@/services/account-service";
+import accountService, { accountKey } from "@/services/account-service";
 
 const useEditProfile = () => {
+  const queryClient = useQueryClient();
+
   const router = useRouter();
 
   return useMutation({
@@ -12,6 +14,7 @@ const useEditProfile = () => {
     onSuccess: (_data) => {
       router.push("/profile");
       toast.success("Profile updated successfully!");
+      queryClient.invalidateQueries([accountKey]);
     },
   });
 };
