@@ -1,26 +1,16 @@
 "use client";
 
-import { Dispatch, SetStateAction } from "react";
 import { FieldErrors } from "react-hook-form";
 
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 
 import { ILocationSchema } from "../schemas/location-schema";
-import ChampionLocationWrapper from "./champion-location-wrapper";
+import ChampionLocationWrapper, { IChampionLocationProps } from "./champion-location-wrapper";
 
-interface ILocationProps {
-  status: "LIST" | "CREATING" | "EDITING";
-  setStatus: Dispatch<SetStateAction<"LIST" | "CREATING" | "EDITING">>;
-  editIndex: number;
-  setEditIndex: Dispatch<SetStateAction<number>>;
-}
-
-const Location = ({ status, setStatus, editIndex, setEditIndex }: ILocationProps) => {
+const Location = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
   return (
     <ChampionLocationWrapper
-      status={status}
-      setStatus={setStatus}
       editIndex={editIndex}
       setEditIndex={setEditIndex}
       locationOrChampion="Location"

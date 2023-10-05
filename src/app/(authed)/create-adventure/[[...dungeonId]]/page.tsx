@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { redirect } from "next/navigation";
 
 import { Box } from "@/components/ui/box";
@@ -12,14 +11,11 @@ import FormStepWrapper from "./components/form-step-wrapper";
 import GeneralInfo from "./components/general-info";
 import StepsCard from "./components/steps-card";
 import { dungeonFormStore } from "./stores/dungeon-form-store";
-import { StatusType } from "./utils/step-utils";
 
 const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   const dungeonId = params.dungeonId?.[0];
 
   const { data: dungeonData, isInitialLoading, isError } = useGetDungeon(dungeonId);
-
-  const [status, setStatus] = useState<StatusType>("LIST");
 
   const { currentStep } = dungeonFormStore.use();
 
@@ -32,26 +28,13 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   return (
     <div className="flex h-full min-h-0 w-full justify-between gap-12 pb-12">
       <div className="flex h-full basis-2/3">
-        <FormStepWrapper
-          isEditing={!!dungeonId}
-          dungeonData={dungeonData}
-          status={status}
-          setStatus={setStatus}
-        >
+        <FormStepWrapper isEditing={!!dungeonId} dungeonData={dungeonData}>
           {currentStep === "General information" && <GeneralInfo />}
           {currentStep === "Locations" && (
-            <ChampionsLocationsWrapper
-              locationOrChampion="Location"
-              status={status}
-              setStatus={setStatus}
-            />
+            <ChampionsLocationsWrapper locationOrChampion="Location" />
           )}
           {currentStep === "Champions" && (
-            <ChampionsLocationsWrapper
-              locationOrChampion="Champion"
-              status={status}
-              setStatus={setStatus}
-            />
+            <ChampionsLocationsWrapper locationOrChampion="Champion" />
           )}
         </FormStepWrapper>
       </div>

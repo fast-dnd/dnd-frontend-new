@@ -4,7 +4,7 @@ import { ObservablePersistLocalStorage } from "@legendapp/state/persist-plugins/
 
 import { deepClone } from "@/utils/clone";
 
-import { Step } from "../utils/step-utils";
+import { StatusType, Step } from "../utils/step-utils";
 import { IDungeonDetailWithTags } from "../utils/tags-utils";
 
 export const initialDungeonFormData: IDungeonDetailWithTags = {
@@ -27,11 +27,13 @@ export const getInitialDungeonFormData = () => deepClone(initialDungeonFormData)
 
 export type IDungeonFormStore = {
   currentStep: Step;
+  status: StatusType;
   dungeonFormData: IDungeonDetailWithTags;
 };
 
 export const dungeonFormStore = observable<IDungeonFormStore>({
   currentStep: "General information",
+  status: "LIST",
   dungeonFormData: getInitialDungeonFormData(),
 });
 

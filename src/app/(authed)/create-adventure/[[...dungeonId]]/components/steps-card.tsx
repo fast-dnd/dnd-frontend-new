@@ -93,7 +93,10 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
               "flex cursor-pointer items-center justify-between rounded-md px-6 py-4 text-xl transition-all duration-200 hover:bg-white/5",
               currentStep === step && "bg-white/5",
             )}
-            onClick={() => dungeonFormStore.currentStep.set(step)}
+            onClick={() => {
+              dungeonFormStore.status.set("LIST");
+              dungeonFormStore.currentStep.set(step);
+            }}
           >
             {step}
             <MdEdit />

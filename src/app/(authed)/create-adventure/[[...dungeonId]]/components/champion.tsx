@@ -8,11 +8,9 @@ import { TextArea } from "@/components/ui/text-area";
 import { IChampionSchema } from "../schemas/champion-schema";
 import ChampionLocationWrapper, { IChampionLocationProps } from "./champion-location-wrapper";
 
-const Champion = ({ status, setStatus, editIndex, setEditIndex }: IChampionLocationProps) => {
+const Champion = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
   return (
     <ChampionLocationWrapper
-      status={status}
-      setStatus={setStatus}
       editIndex={editIndex}
       setEditIndex={setEditIndex}
       locationOrChampion="Champion"

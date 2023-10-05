@@ -22,43 +22,7 @@ const DungeonDetail = ({
 }: IDungeonDetailProps) => {
   const { data: dungeon, isLoading } = useGetDungeon(dungeonDetailId ?? "");
 
-  // const bgUrl = backgroundStore.bgUrl;
-  // const [bgSet, setBgSet] = useState(false);
-
-  // useEffect(() => {
-  //   if (!dungeon) bgUrl.set("");
-  //   if (dungeon && !bgSet) {
-  //     setBgSet(true);
-  //     bgUrl.set(dungeon.backgroundUrl);
-  //   }
-  // }, [bgSet, bgUrl, dungeon]);
-
-  if (isLoading)
-    return (
-      <div className="flex flex-1 flex-col overflow-y-auto border-b-2 border-b-white/20 pr-4">
-        <Skeleton />
-        <div className="my-8">
-          <p>HEROES</p>
-          <div className="mt-8 flex flex-col gap-12 px-6">
-            {Array.from({ length: 2 }, (_, i) => (
-              <div key={i} className={cn("flex animate-pulse flex-col gap-4 p-6")}>
-                <div className="h-6 w-64 rounded-full bg-gray-600" />
-                <div className="h-5 w-48 rounded-full bg-gray-600" />
-
-                <div className="flex flex-col gap-4">
-                  <div className="h-4 w-32 rounded-full bg-gray-600" />
-                  <div className="grid grid-cols-2 gap-4">
-                    {Array.from({ length: 4 }, (_, i) => (
-                      <div key={i} className="h-4 w-64 rounded-full bg-gray-600" />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
+  if (isLoading) return <DungeonDetailSkeleton />;
 
   if (!dungeon) return <div>Something went wrong</div>;
 
@@ -83,8 +47,8 @@ const DungeonDetail = ({
               <div className="flex flex-col gap-4">
                 <p>ACTIONS</p>
                 <div className="grid grid-cols-2 gap-4">
-                  {moveMappingWithIcons(champion.moveMapping).map((move) => (
-                    <div key={move.text} className="flex items-center gap-2">
+                  {moveMappingWithIcons(champion.moveMapping).map((move, index) => (
+                    <div key={index} className="flex items-center gap-2">
                       <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
                         {move.icon}
                       </div>
@@ -122,4 +86,42 @@ const moveMappingWithIcons = (moveMapping: IMoveMapping) => {
       icon: <GiNightSleep className="h-5 w-5" />,
     },
   ];
+};
+
+const DungeonDetailSkeleton = () => {
+  return (
+    <div className="flex flex-1 flex-col overflow-y-auto border-b-2 border-b-white/20 pr-4">
+      <Skeleton />
+      <div className="my-8">
+        <p>HEROES</p>
+        <div className="mt-8 flex flex-col gap-12 px-6">
+          {Array.from(
+            {
+              length: 2,
+            },
+            (_, i) => (
+              <div key={i} className={cn("flex animate-pulse flex-col gap-4 p-6")}>
+                <div className="h-6 w-64 rounded-full bg-gray-600" />
+                <div className="h-5 w-48 rounded-full bg-gray-600" />
+
+                <div className="flex flex-col gap-4">
+                  <div className="h-4 w-32 rounded-full bg-gray-600" />
+                  <div className="grid grid-cols-2 gap-4">
+                    {Array.from(
+                      {
+                        length: 4,
+                      },
+                      (_, i) => (
+                        <div key={i} className="h-4 w-64 rounded-full bg-gray-600" />
+                      ),
+                    )}
+                  </div>
+                </div>
+              </div>
+            ),
+          )}
+        </div>
+      </div>
+    </div>
+  );
 };

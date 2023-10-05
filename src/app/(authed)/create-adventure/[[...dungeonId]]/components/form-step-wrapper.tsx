@@ -14,30 +14,24 @@ import { IDungeonDetail } from "@/types/dungeon";
 
 import useLoadDungeonData from "../hooks/use-load-dungeon-data";
 import { dungeonFormStore } from "../stores/dungeon-form-store";
-import { StatusType } from "../utils/step-utils";
 
 interface IFormStepWrapperProps {
   isEditing?: boolean;
   children: React.ReactNode;
   dungeonData: IDungeonDetail | undefined;
-  status: StatusType;
-  setStatus: React.Dispatch<React.SetStateAction<StatusType>>;
 }
 
-const FormStepWrapper = ({
-  isEditing,
-  children,
-  dungeonData,
-  status,
-  setStatus,
-}: IFormStepWrapperProps) => {
+const FormStepWrapper = ({ isEditing, children, dungeonData }: IFormStepWrapperProps) => {
+  const statusObs = dungeonFormStore.status;
+  const status = statusObs.use();
+
   const router = useRouter();
 
   const { setAborting } = useLoadDungeonData({ dungeonData });
 
   const onClickBack = () => {
     if (status === "LIST") abortDungeonCreation();
-    else setStatus("LIST");
+    else statusObs.set("LIST");
   };
 
   const abortDungeonCreation = () => {

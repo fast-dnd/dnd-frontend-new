@@ -10,22 +10,18 @@ import { Button } from "@/components/ui/button";
 import { IChampion, ILocation } from "@/types/dungeon";
 
 import { dungeonFormStore } from "../stores/dungeon-form-store";
-import { StatusType } from "../utils/step-utils";
 import Champion from "./champion";
 import Location from "./location";
 import SortableItem from "./sortable-item";
 
 interface IChampionsLocationsWrapperProps {
   locationOrChampion: "Location" | "Champion";
-  status: StatusType;
-  setStatus: React.Dispatch<React.SetStateAction<StatusType>>;
 }
 
-const ChampionsLocationsWrapper = ({
-  locationOrChampion,
-  status,
-  setStatus,
-}: IChampionsLocationsWrapperProps) => {
+const ChampionsLocationsWrapper = ({ locationOrChampion }: IChampionsLocationsWrapperProps) => {
+  const statusObs = dungeonFormStore.status;
+  const status = statusObs.use();
+
   const dungeonFormField = locationOrChampion === "Location" ? "locations" : "champions";
   type ObservableChampionLocation = ObservableObject<(ILocation | IChampion)[]>;
 
@@ -41,7 +37,7 @@ const ChampionsLocationsWrapper = ({
 
   const onEdit = (index: number) => {
     setEditIndex(index);
-    setStatus("EDITING");
+    statusObs.set("EDITING");
   };
 
   const onDelete = (index: number) => {
@@ -107,7 +103,7 @@ const ChampionsLocationsWrapper = ({
               variant="outline"
               disabled={isDisabledAddButton}
               className="flex w-full items-center gap-2 px-8 text-base uppercase"
-              onClick={() => setStatus("CREATING")}
+              onClick={() => statusObs.set("CREATING")}
             >
               <AddCircle variant="Bold" />
               ADD NEW {locationOrChampion}
@@ -118,19 +114,9 @@ const ChampionsLocationsWrapper = ({
             <div className="flex flex-row items-center justify-between gap-8 lg:hidden" />
           </div>
         ) : locationOrChampion === "Location" ? (
-          <Location
-            editIndex={editIndex}
-            setEditIndex={setEditIndex}
-            status={status}
-            setStatus={setStatus}
-          />
+          <Location editIndex={editIndex} setEditIndex={setEditIndex} />
         ) : (
-          <Champion
-            editIndex={editIndex}
-            setEditIndex={setEditIndex}
-            status={status}
-            setStatus={setStatus}
-          />
+          <Champion editIndex={editIndex} setEditIndex={setEditIndex} />
         )}
       </div>
     </>

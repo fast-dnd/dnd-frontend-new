@@ -8,32 +8,30 @@ import { Button } from "@/components/ui/button";
 import { championSchema, IChampionSchema } from "../schemas/champion-schema";
 import { ILocationSchema, locationSchema } from "../schemas/location-schema";
 import { dungeonFormStore } from "../stores/dungeon-form-store";
-import { StatusType } from "../utils/step-utils";
 
 export interface IChampionLocationProps {
-  status: StatusType;
-  setStatus: React.Dispatch<React.SetStateAction<StatusType>>;
   editIndex: number;
   setEditIndex: React.Dispatch<React.SetStateAction<number>>;
-}
-interface IChampionLocationWrapperProps extends IChampionLocationProps {
-  locationOrChampion: "Location" | "Champion";
-  children: React.ReactNode | ((props: IChildrenProps) => React.ReactNode);
 }
 
 interface IChildrenProps {
   register: UseFormRegister<ILocationSchema | IChampionSchema>;
   errors: FieldErrors<ILocationSchema | IChampionSchema>;
 }
+interface IChampionLocationWrapperProps extends IChampionLocationProps {
+  locationOrChampion: "Location" | "Champion";
+  children: React.ReactNode | ((props: IChildrenProps) => React.ReactNode);
+}
 
 const ChampionLocationWrapper = ({
   children,
   locationOrChampion,
-  status,
-  setStatus,
   editIndex,
   setEditIndex,
 }: IChampionLocationWrapperProps) => {
+  const statusObs = dungeonFormStore.status;
+  const status = statusObs.use();
+
   const dungeonFormField = locationOrChampion === "Location" ? "locations" : "champions";
 
   const chmpLocData = dungeonFormStore.dungeonFormData[dungeonFormField][editIndex].use();
@@ -63,13 +61,13 @@ const ChampionLocationWrapper = ({
       else dungeonFormStore.dungeonFormData.locations[editIndex].set({ ...data, _id });
     }
 
-    setStatus("LIST");
+    statusObs.set("LIST");
     setEditIndex(-1);
   };
 
   const onCancel = () => {
     reset();
-    setStatus("LIST");
+    statusObs.set("LIST");
     setEditIndex(-1);
   };
 

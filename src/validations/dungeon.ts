@@ -57,6 +57,11 @@ export const dungeonDetailSchema = baseDungeonSchema.extend({
   backgroundUrl: z.string(),
 });
 
+export const dungeonForBackendSchema = dungeonDetailSchema.omit({
+  numOfRatings: true,
+  rating: true,
+});
+
 export const rateDungeonSchema = z.object({
   dungeonId: z.string(),
   rating: z.number().min(0).max(5),

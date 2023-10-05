@@ -28,10 +28,10 @@ const SortableItem = ({ i, item, onEdit, onDelete }: ISortableItemProps) => {
       ref={setNodeRef}
       style={style}
     >
-      <p className="w-[90%] truncate text-lg font-medium tracking-widest lg:w-full lg:text-2xl">
+      <p className="truncate text-lg font-medium tracking-widest lg:w-96 lg:text-2xl">
         {i + 1}. {item.name}
       </p>
-
+      <div className="flex-1" />
       <MdDragIndicator
         className="h-6 w-6 cursor-pointer text-white/75 transition-colors duration-300 hover:text-info lg:h-8 lg:w-8"
         {...attributes}
