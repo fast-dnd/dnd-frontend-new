@@ -2,9 +2,11 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { MdDelete, MdDragIndicator, MdEdit } from "react-icons/md";
 
+import { IChampion, ILocation } from "@/types/dungeon";
+
 interface ISortableItemProps {
   i: number;
-  item: { name: string };
+  item: ILocation | IChampion;
   onEdit: (index: number) => void;
   onDelete: (index: number) => void;
 }

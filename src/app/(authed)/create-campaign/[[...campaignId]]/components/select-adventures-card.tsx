@@ -1,10 +1,9 @@
 import { useRouter } from "next/navigation";
 
+import Adventures from "@/components/adventures";
 import GoBackButton from "@/components/go-back-button";
 import { Box } from "@/components/ui/box";
 import { IBaseDungeon } from "@/types/dungeon";
-
-import Adventures from "@/app/(authed)/profile/components/my-collection/adventures";
 
 import { campaignFormStore } from "../stores/campaign-form-store";
 

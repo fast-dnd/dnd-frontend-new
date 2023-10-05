@@ -7,12 +7,12 @@ import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 
-import Adventures from "./adventures";
-import CampaignDetail from "./campaign-detail";
-import Campaigns from "./campaigns";
-import DungeonDetail from "./dungeon-detail";
+import Adventures from "../../../../../components/adventures";
+import CampaignDetail from "../../../../../components/campaign-detail";
+import Campaigns from "../../../../../components/campaigns";
+import DungeonDetail from "../../../../../components/dungeon-detail";
+import Rewards from "../../../../../components/rewards";
 import GameHistory from "./game-history";
-import Rewards from "./rewards";
 import Tabs from "./tabs";
 import { Tab } from "./types/tab";
 

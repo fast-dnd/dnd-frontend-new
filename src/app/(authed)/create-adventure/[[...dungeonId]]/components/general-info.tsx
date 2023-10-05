@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { BsFillImageFill } from "react-icons/bs";
 
+import Rewards from "@/components/rewards";
 import { Button } from "@/components/ui/button";
 import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
@@ -12,8 +13,6 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import UploadImage from "@/components/ui/upload-image";
 import { IReward } from "@/types/reward";
 import { DungeonDuration, dungeonDurations, dungeonTags } from "@/utils/dungeon-options";
-
-import Rewards from "@/app/(authed)/profile/components/my-collection/rewards";
 
 import { dungeonFormStore } from "../stores/dungeon-form-store";
 import tagsComboboxStyles from "../utils/tags-combobox-styles";
@@ -31,20 +30,7 @@ const GeneralInfo = () => {
     <>
       <div className="flex min-h-0 flex-1 basis-0">
         {isSelectingBg ? (
-          <div className="flex flex-1 flex-col">
-            <Rewards
-              selectedReward={dungeonFormData.backgroundUrl.get()}
-              onSelectReward={(reward) => {
-                setSelectedReward(reward);
-                dungeonFormData.backgroundUrl.set(reward.url);
-              }}
-            />
-            <div className="mt-8 flex justify-end">
-              <Button className="w-fit" onClick={() => setSelectingBg(false)}>
-                CHOOSE BACKGROUND
-              </Button>
-            </div>
-          </div>
+          <SelectBgScreen setSelectedReward={setSelectedReward} setSelectingBg={setSelectingBg} />
         ) : (
           <div className="flex h-full w-full flex-col items-center gap-5 lg:flex-row lg:items-start lg:gap-8">
             <div className="flex flex-col gap-5 lg:gap-8">
@@ -169,3 +155,30 @@ const GeneralInfo = () => {
 };
 
 export default GeneralInfo;
+
+const SelectBgScreen = ({
+  setSelectedReward,
+  setSelectingBg,
+}: {
+  setSelectedReward: (reward: IReward) => void;
+  setSelectingBg: (selecting: boolean) => void;
+}) => {
+  const bgUrlObs = dungeonFormStore.dungeonFormData.backgroundUrl;
+
+  return (
+    <div className="flex flex-1 flex-col">
+      <Rewards
+        selectedReward={bgUrlObs.get()}
+        onSelectReward={(reward) => {
+          setSelectedReward(reward);
+          bgUrlObs.set(reward.url);
+        }}
+      />
+      <div className="mt-8 flex justify-end">
+        <Button className="w-fit" onClick={() => setSelectingBg(false)}>
+          CHOOSE BACKGROUND
+        </Button>
+      </div>
+    </div>
+  );
+};
