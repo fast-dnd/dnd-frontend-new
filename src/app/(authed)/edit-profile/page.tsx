@@ -1,12 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { AiOutlineLeft } from "react-icons/ai";
 
-import MobileNavbar from "@/components/mobile-navbar";
+import GoBackButton from "@/components/go-back-button";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,47 +37,18 @@ const EditProfile = () => {
     editProfile(data);
   };
 
-  if (isLoading)
-    return (
-      <div className="mt-8 flex flex-col items-center gap-8">
-        <div className="h-7 w-28 animate-pulse rounded-lg bg-gray-600" />
-        <div className="lg:min-w-fit">
-          <Box
-            title="EDIT PROFILE"
-            className="flex flex-col items-center gap-5 p-5 lg:flex-row lg:gap-8 lg:p-8"
-          >
-            <div className="flex animate-pulse gap-5 lg:gap-8">
-              <div className="h-[170px] w-[170px] rounded-lg bg-gray-600" />
-              <div className="flex flex-col gap-6 lg:gap-12">
-                <div className="flex flex-col gap-2">
-                  <div className="h-7 w-40 rounded-lg bg-gray-600" />
-                  <div className="h-14 w-96 rounded-lg bg-gray-600" />
-                </div>
-                <div className="h-14 w-96 rounded-lg bg-gray-600" />
-              </div>
-            </div>
-          </Box>
-        </div>
-      </div>
-    );
+  if (isLoading) return <EditProfileSkeleton />;
 
   if (!account) return <div>Something went wrong</div>;
 
   return (
     <div className="mt-8 flex flex-col items-center gap-8">
-      <MobileNavbar />
-      <Link
-        className="hidden items-center gap-1 text-lg font-medium uppercase tracking-[0.08em] lg:flex"
-        href="/profile"
-      >
-        <AiOutlineLeft className="inline-block" /> GO BACK
-      </Link>
-
       <form onSubmit={handleSubmit(onSubmit)} className="px-5 lg:min-w-fit lg:px-0">
         <Box
           title="EDIT PROFILE"
           className="flex flex-col items-center gap-5 p-5 lg:flex-row lg:gap-8 lg:p-8"
         >
+          <GoBackButton href="/profile" />
           <UploadImage
             image={image}
             defaultImage={account.account.imageUrl || "/images/default-avatar.png"}
@@ -104,3 +73,28 @@ const EditProfile = () => {
 };
 
 export default EditProfile;
+
+const EditProfileSkeleton = () => {
+  return (
+    <div className="mt-8 flex flex-col items-center gap-8">
+      <div className="h-7 w-28 animate-pulse rounded-lg bg-gray-600" />
+      <div className="lg:min-w-fit">
+        <Box
+          title="EDIT PROFILE"
+          className="flex flex-col items-center gap-5 p-5 lg:flex-row lg:gap-8 lg:p-8"
+        >
+          <div className="flex animate-pulse gap-5 lg:gap-8">
+            <div className="h-[170px] w-[170px] rounded-lg bg-gray-600" />
+            <div className="flex flex-col gap-6 lg:gap-12">
+              <div className="flex flex-col gap-2">
+                <div className="h-7 w-40 rounded-lg bg-gray-600" />
+                <div className="h-14 w-96 rounded-lg bg-gray-600" />
+              </div>
+              <div className="h-14 w-96 rounded-lg bg-gray-600" />
+            </div>
+          </div>
+        </Box>
+      </div>
+    </div>
+  );
+};

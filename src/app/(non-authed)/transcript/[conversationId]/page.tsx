@@ -60,7 +60,7 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
           </div>
         </div>
         <div className="flex min-h-0 flex-1 flex-col overflow-y-auto rounded-b-md bg-glass p-12 backdrop-blur-2xl">
-          <GoBackButton className="mb-8" onClick={() => router.push("/home")} />
+          <GoBackButton className="mb-8" href="/home" />
           <div className="flex h-full flex-col overflow-y-auto pr-4">
             <div className="flex flex-col gap-7">
               <p className="text-xl uppercase tracking-[2px]">Players</p>
