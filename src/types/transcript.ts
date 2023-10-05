@@ -1,5 +1,13 @@
 import { z } from "zod";
 
-import { transcriptSchema } from "@/validations/transcript";
+import {
+  transcriptPlayerSchema,
+  transcriptSchema,
+  transcriptStorySchema,
+} from "@/validations/transcript";
+
+export type ITranscriptPlayer = z.infer<typeof transcriptPlayerSchema>;
+
+export type ITranscriptStory = z.infer<typeof transcriptStorySchema>;
 
 export type ITranscript = z.infer<typeof transcriptSchema>;
