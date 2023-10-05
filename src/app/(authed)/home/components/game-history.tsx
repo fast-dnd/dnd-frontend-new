@@ -22,18 +22,18 @@ const GameHistory = () => {
     hasNextPage,
   });
 
-  if (isError) {
-    return (
-      <div className="flex h-full w-full items-center justify-center">
-        <div className="text-5xl text-white">Something went wrong</div>
-      </div>
-    );
-  }
-
   if (isLoading) {
     return (
       <div className="no-scrollbar flex flex-1 flex-col gap-8 overflow-y-auto">
         <Skeleton amount={2} small />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <div className="text-5xl text-white">Something went wrong</div>
       </div>
     );
   }

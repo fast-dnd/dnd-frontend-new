@@ -2,16 +2,16 @@
 
 import { useState } from "react";
 
+import Adventures from "@/components/adventures";
+import CampaignDetail from "@/components/campaign-detail";
+import Campaigns from "@/components/campaigns";
+import DungeonDetail from "@/components/dungeon-detail";
 import GoBackButton from "@/components/go-back-button";
+import Rewards from "@/components/rewards";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 
-import Adventures from "../../../../../components/adventures";
-import CampaignDetail from "../../../../../components/campaign-detail";
-import Campaigns from "../../../../../components/campaigns";
-import DungeonDetail from "../../../../../components/dungeon-detail";
-import Rewards from "../../../../../components/rewards";
 import GameHistory from "./game-history";
 import Tabs from "./tabs";
 import { Tab } from "./types/tab";
@@ -43,7 +43,7 @@ const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
       {!!campaignDetailId && (
         <>
           <GoBackButton onClick={() => setCampaignDetailId(undefined)} />
-          <CampaignDetail campaignDetailId={campaignDetailId} setDungeonDetailId={() => {}} />
+          <CampaignDetail campaignDetailId={campaignDetailId} />
           <div className="flex justify-end">
             <Button
               className="w-fit whitespace-nowrap"

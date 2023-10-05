@@ -1,6 +1,7 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import queryString from "query-string";
 
 import { tabsWithIcons } from "@/components/tabs-with-icons";
 import { Button } from "@/components/ui/button";
@@ -11,23 +12,10 @@ import { Tab } from "./types/tab";
 const Tabs = ({ activeTab }: { activeTab: Tab }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const onChangeTab = (tabName: string) => {
-    const current = new URLSearchParams(Array.from(searchParams.entries()));
-
-    const value = tabName;
-
-    if (!value) {
-      current.delete("activeTab");
-    } else {
-      current.set("activeTab", tabName);
-    }
-
-    const search = current.toString();
-    const query = search ? `?${search}` : "";
-
-    router.push(`${pathname}${query}`);
+    const query = queryString.stringify({ activeTab: tabName });
+    router.push(`${pathname}?${query}`);
   };
 
   return (

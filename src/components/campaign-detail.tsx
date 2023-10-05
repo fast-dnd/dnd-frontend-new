@@ -10,7 +10,7 @@ const CampaignDetail = ({
   campaignDetailId,
 }: {
   campaignDetailId: string;
-  setDungeonDetailId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
 }) => {
   const { data: campaign, isLoading } = useGetCampaign(campaignDetailId ?? "");
 

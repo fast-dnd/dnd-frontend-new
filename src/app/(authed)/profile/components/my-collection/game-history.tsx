@@ -5,7 +5,7 @@ import Spinner from "@/components/ui/spinner";
 import useGetRoomHistory from "@/hooks/use-get-room-history";
 import useIntersectionObserver from "@/hooks/use-intersection-observer";
 
-const GameHistory = () => {
+const GameHistory = ({ showFull }: { showFull?: boolean }) => {
   const {
     data: roomsData,
     hasNextPage,
@@ -21,13 +21,19 @@ const GameHistory = () => {
     hasNextPage,
   });
 
-  if (isError) return <div>Something went wrong</div>;
-
   if (isLoading) {
     return (
       <div className="no-scrollbar flex flex-1 flex-col gap-4 overflow-y-auto">
-        <div className="mb-2 h-6 w-32 animate-pulse rounded-full bg-gray-600 " />
+        {/* <div className="mb-2 h-6 w-32 animate-pulse rounded-full bg-gray-600 " /> */}
         <Skeleton small amount={2} />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <div className="text-5xl text-white">Something went wrong</div>
       </div>
     );
   }
@@ -46,18 +52,7 @@ const GameHistory = () => {
       <p className="uppercase">Games played: {roomsData?.pages[0].total ?? "--"}</p>
       <div className="flex h-full flex-col gap-4 overflow-y-auto pr-4">
         {roomsData.pages[0].rooms.length === 0 ? (
-          <div className="flex w-full items-center justify-center">
-            <div className="flex h-full w-[490px] flex-col items-center justify-start gap-5 p-5 lg:gap-8 lg:p-8">
-              <QuillIcon />
-              <p className="text-center text-lg font-semibold uppercase leading-7 tracking-[3.30px] lg:text-xl">
-                No Games in Your History... FOR NOW
-              </p>
-              <p className="text-center text-sm font-normal leading-7 tracking-widest text-white/50 lg:text-base">
-                Your tale is yet to be written, adventurer. Set forth and embark on your first epic
-                journey.
-              </p>
-            </div>
-          </div>
+          <ZeroGames />
         ) : (
           <>
             {content}
@@ -74,3 +69,20 @@ const GameHistory = () => {
 };
 
 export default GameHistory;
+
+const ZeroGames = () => {
+  return (
+    <div className="flex w-full items-center justify-center">
+      <div className="flex h-full w-[490px] flex-col items-center justify-start gap-5 p-5 lg:gap-8 lg:p-8">
+        <QuillIcon />
+        <p className="text-center text-lg font-semibold uppercase leading-7 tracking-[3.30px] lg:text-xl">
+          No Games in Your History... FOR NOW
+        </p>
+        <p className="text-center text-sm font-normal leading-7 tracking-widest text-white/50 lg:text-base">
+          Your tale is yet to be written, adventurer. Set forth and embark on your first epic
+          journey.
+        </p>
+      </div>
+    </div>
+  );
+};
