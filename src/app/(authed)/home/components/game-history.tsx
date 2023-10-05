@@ -47,22 +47,7 @@ const GameHistory = () => {
     }),
   );
 
-  if (roomsData.pages[0].rooms.length === 0) {
-    return (
-      <div className="flex w-full items-center justify-center">
-        <div className="flex h-full w-[490px] flex-col items-center justify-start gap-5 p-5 lg:gap-8 lg:p-8">
-          <QuillIcon />
-          <p className="text-center text-lg font-semibold uppercase leading-7 tracking-[3.30px] lg:text-xl">
-            No Games in Your History... FOR NOW
-          </p>
-          <p className="text-center text-sm font-normal leading-7 tracking-widest text-white/50 lg:text-base">
-            Your tale is yet to be written, adventurer. Set forth and embark on your first epic
-            journey.
-          </p>
-        </div>
-      </div>
-    );
-  }
+  if (roomsData.pages[0].rooms.length === 0) return <ZeroGames />;
 
   return (
     <div className="flex w-full flex-col gap-4 overflow-y-auto pr-4">
@@ -81,3 +66,20 @@ const GameHistory = () => {
 };
 
 export default GameHistory;
+
+const ZeroGames = () => {
+  return (
+    <div className="flex w-full items-center justify-center">
+      <div className="flex h-full w-[490px] flex-col items-center justify-start gap-5 p-5 lg:gap-8 lg:p-8">
+        <QuillIcon />
+        <p className="text-center text-lg font-semibold uppercase leading-7 tracking-[3.30px] lg:text-xl">
+          No Games in Your History... FOR NOW
+        </p>
+        <p className="text-center text-sm font-normal leading-7 tracking-widest text-white/50 lg:text-base">
+          Your tale is yet to be written, adventurer. Set forth and embark on your first epic
+          journey.
+        </p>
+      </div>
+    </div>
+  );
+};

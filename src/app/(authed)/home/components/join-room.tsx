@@ -11,9 +11,7 @@ const JoinRoom = () => {
 
   const { mutate: joinRoom, isLoading } = useJoinRoom();
 
-  const onJoinRoom = () => {
-    joinRoom({ link: roomLink });
-  };
+  const onJoinRoom = () => joinRoom({ link: roomLink });
 
   return (
     <Box title="JOIN ROOM" className="flex flex-col gap-8 p-8">
