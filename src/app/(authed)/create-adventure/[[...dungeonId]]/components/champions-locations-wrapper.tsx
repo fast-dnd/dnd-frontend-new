@@ -73,7 +73,7 @@ const ChampionsLocationsWrapper = ({
 
   return (
     <>
-      <div className="flex min-h-0 w-full flex-1">
+      <div className="flex min-h-0 w-full flex-1 overflow-y-auto">
         {status === "LIST" ? (
           <div className="flex h-full w-full flex-col gap-5 overflow-y-auto lg:gap-8">
             {dungeonFormData[dungeonFormField].length > 0 ? (

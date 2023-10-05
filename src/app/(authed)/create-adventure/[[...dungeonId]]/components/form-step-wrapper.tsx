@@ -48,7 +48,7 @@ const FormStepWrapper = ({
   return (
     <Box
       title={isEditing ? "EDIT ADVENTURE" : "CREATE ADVENTURE"}
-      className="mb-4 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:mb-0 lg:gap-6 lg:p-8"
+      className="mb-4 flex min-h-0 flex-1 flex-col gap-5 p-5 lg:mb-0 lg:gap-6 lg:p-8"
       wrapperClassName="w-[95%] lg:w-full mx-auto"
     >
       <GoBackButton text={status === "LIST" ? "PROFILE" : "BACK"} onClick={onClickBack} />
