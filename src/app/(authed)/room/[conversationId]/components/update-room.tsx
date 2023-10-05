@@ -1,5 +1,6 @@
 import { AiFillSound, AiFillStar } from "react-icons/ai";
 import { BiImages } from "react-icons/bi";
+import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -37,7 +38,9 @@ const UpdateRoom = ({
 
   const { gameStarting } = useRoomSocket(conversationId);
 
-  const isAdmin = localStorage.getItem("accountId") === roomData.playerState[0].accountId;
+  const accountId = useReadLocalStorage<string>("accountId");
+
+  const isAdmin = accountId === roomData.playerState[0].accountId;
 
   const { setGenerateImages, setGenerateAudio } = useOnRoomChange({
     conversationId,

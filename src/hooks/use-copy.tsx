@@ -4,6 +4,11 @@ const useCopy = () => {
   const [copied, setCopied] = useState(false);
 
   const onCopy = (text: string) => {
+    if (!navigator?.clipboard) {
+      console.warn("Clipboard not supported");
+      return;
+    }
+
     setCopied(true);
     navigator.clipboard.writeText(text);
   };

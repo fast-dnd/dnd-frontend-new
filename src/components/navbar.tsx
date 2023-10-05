@@ -5,13 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import useGetAccount from "@/hooks/use-get-account";
-import checkJWT from "@/utils/check-jwt";
+import useCheckJWT from "@/utils/check-jwt";
 import { cn } from "@/utils/style-utils";
 
 import Coin from "./coin";
 
 const Navbar = () => {
-  const tokenExists = checkJWT();
+  const tokenExists = useCheckJWT();
   const pathname = usePathname();
 
   const { data: account } = useGetAccount(!tokenExists);

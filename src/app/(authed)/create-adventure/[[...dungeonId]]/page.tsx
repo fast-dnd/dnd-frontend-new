@@ -1,10 +1,10 @@
 "use client";
 
 import { redirect } from "next/navigation";
+import { useIsClient } from "usehooks-ts";
 
 import { Box } from "@/components/ui/box";
 import useGetDungeon from "@/hooks/use-get-dungeon";
-import useIsMounted from "@/hooks/use-is-mounted";
 
 import ChampionsLocationsWrapper from "./components/champions-locations-wrapper";
 import FormStepWrapper from "./components/form-step-wrapper";
@@ -19,11 +19,11 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
 
   const { currentStep } = dungeonFormStore.use();
 
-  const { isMounted } = useIsMounted();
+  const isClient = useIsClient();
 
   if (isError) return redirect("/home");
 
-  if (isInitialLoading || !isMounted) return <AdventureSkeletonLoading isEditing={!!dungeonId} />;
+  if (isInitialLoading || !isClient) return <AdventureSkeletonLoading isEditing={!!dungeonId} />;
 
   return (
     <div className="flex h-full min-h-0 w-full justify-between gap-12 pb-12">

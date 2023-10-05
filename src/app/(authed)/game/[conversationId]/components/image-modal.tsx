@@ -1,7 +1,7 @@
 import Image from "next/image";
+import { useMediaQuery } from "usehooks-ts";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import useMediaQuery from "@/hooks/use-media-query";
 import { cn } from "@/utils/style-utils";
 
 const ImageModal = ({ image }: { image: string }) => {

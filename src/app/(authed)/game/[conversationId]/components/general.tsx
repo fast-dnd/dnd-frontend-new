@@ -3,6 +3,7 @@
 import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
+import { useReadLocalStorage } from "usehooks-ts";
 
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
@@ -21,23 +22,28 @@ import Question from "./question";
 
 const General = (props: { conversationId: string }) => {
   const { conversationId } = props;
+
   const { data: roomData } = useGetRoomData(conversationId);
+
+  const { mutate: askQuestion } = useAskQuestion();
+
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [statsOpened, setStatsOpened] = useState(false);
   const [question, setQuestion] = useState("");
-  const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =
-    useGeneralSocket(conversationId);
-  const changes = gameStore.changes.use();
-  const { mutate: askQuestion } = useAskQuestion();
+
   const [moveHistory, setMoveHistory] = useState<IMove[][]>([]);
   const [questionHistory, setQuestionHistory] = useState<Partial<IQuestion>[]>([]);
+
+  const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =
+    useGeneralSocket(conversationId);
+
+  const changes = gameStore.changes.use();
+
+  const accountId = useReadLocalStorage<string>("accountId");
+
   useEffect(() => {
     if (roomData) {
-      setCurrentPlayer(
-        roomData.playerState.find(
-          (player) => player.accountId === localStorage.getItem("accountId"),
-        ),
-      );
+      setCurrentPlayer(roomData.playerState.find((player) => player.accountId === accountId));
       const questionsLength = roomData.questions3History.length;
       if (roomData.state !== "GAMING") {
         setCanAsk(false);
@@ -55,7 +61,7 @@ const General = (props: { conversationId: string }) => {
       const moves = roomData.moves || [];
       setMoveHistory(roomData.queuedMoves ? [...moves, roomData.queuedMoves] : moves);
     }
-  }, [questionAsked, roomData, setCanAsk, setQuestionAsked]);
+  }, [accountId, questionAsked, roomData, setCanAsk, setQuestionAsked]);
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (ev) => {
     ev.preventDefault();

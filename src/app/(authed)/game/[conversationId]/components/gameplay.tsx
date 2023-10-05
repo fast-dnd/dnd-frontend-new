@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useReadLocalStorage } from "usehooks-ts";
 
 import { Box } from "@/components/ui/box";
 import Spinner from "@/components/ui/spinner";
@@ -38,11 +39,11 @@ const Gameplay = (props: { conversationId: string }) => {
   const { lastStory, loadingText } = useGameplaySocket(conversationId);
   const { reward } = useRewardSocket(conversationId);
 
+  const accountId = useReadLocalStorage<string>("accountId");
+
   useEffect(() => {
     if (roomData) {
-      const player = roomData.playerState.find(
-        (player) => player.accountId === localStorage.getItem("accountId"),
-      );
+      const player = roomData.playerState.find((player) => player.accountId === accountId);
       if (currentPlayer && player) {
         const changes: PlayerChanges = {};
         if (player.health !== currentPlayer.health) {
@@ -87,7 +88,7 @@ const Gameplay = (props: { conversationId: string }) => {
     //   setBgSet(true);
     //   bgUrl.set(dungeonData.backgroundUrl);
     // }
-  }, [currentPlayer, dungeonData, gaming, roomData]);
+  }, [accountId, currentPlayer, dungeonData, gaming, roomData]);
 
   if (!roomData || !dungeonData || !currentPlayer)
     return (

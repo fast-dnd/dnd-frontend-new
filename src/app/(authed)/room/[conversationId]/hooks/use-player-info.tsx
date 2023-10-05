@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useReadLocalStorage } from "usehooks-ts";
 
 import { IRoomDetail } from "@/types/room";
 import { DungeonDuration } from "@/utils/dungeon-options";
@@ -9,16 +10,16 @@ const usePlayerInfo = (roomData: IRoomDetail | undefined) => {
 
   const [duration, setDuration] = useState<DungeonDuration>();
 
+  const accountId = useReadLocalStorage<string>("accountId");
+
   useEffect(() => {
     if (roomData) {
-      const currentPlayer = roomData.playerState.find(
-        (player) => player.accountId === localStorage.getItem("accountId"),
-      );
+      const currentPlayer = roomData.playerState.find((player) => player.accountId === accountId);
       setAvatarId(currentPlayer?.accountId);
       setRole(currentPlayer?.champion?.name);
     }
     setDuration(roomData?.responseDetailsDepth);
-  }, [roomData]);
+  }, [accountId, roomData]);
 
   return { avatarId, setAvatarId, role, setRole, duration, setDuration };
 };
