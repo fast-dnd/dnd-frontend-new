@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { BsFillImageFill } from "react-icons/bs";
 
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,6 @@ import { TextArea } from "@/components/ui/text-area";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import UploadImage from "@/components/ui/upload-image";
 import { IReward } from "@/types/reward";
-import { fileToBase64 } from "@/utils/b64";
 import { DungeonDuration, dungeonDurations, dungeonTags } from "@/utils/dungeon-options";
 
 import Rewards from "@/app/(authed)/profile/components/my-collection/rewards";
@@ -27,17 +26,6 @@ const GeneralInfo = () => {
 
   const dungeonFormData = dungeonFormStore.dungeonFormData;
   const { name, description } = dungeonFormData.use();
-
-  const imageRef = useRef<HTMLInputElement>(null);
-
-  const addImage = () => {
-    imageRef.current?.click();
-    imageRef.current?.addEventListener("change", async (e) => {
-      dungeonFormData.imageUrl.set(
-        (await fileToBase64((e.target as HTMLInputElement).files?.[0])) as string,
-      );
-    });
-  };
 
   return (
     <>
@@ -62,8 +50,7 @@ const GeneralInfo = () => {
             <div className="flex flex-col gap-5 lg:gap-8">
               <UploadImage
                 image={dungeonFormData.imageUrl.get()}
-                inputFile={imageRef}
-                onClick={addImage}
+                setImage={(image) => dungeonFormData.imageUrl.set(image)}
                 defaultImage={dungeonFormData.imageUrl.get()}
               />
             </div>

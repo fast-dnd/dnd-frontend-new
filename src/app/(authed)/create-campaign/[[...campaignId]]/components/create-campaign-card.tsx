@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 
 import StatusModal, { IStatusModalContent } from "@/components/status-modal";
@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 import UploadImage from "@/components/ui/upload-image";
-import { fileToBase64 } from "@/utils/b64";
 
 import useCreateCampaign from "../hooks/use-create-campaign";
 import useUpdateCampaign from "../hooks/use-update-campaign";
@@ -23,17 +22,6 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
     description: "",
     href: "",
   });
-
-  const imageRef = useRef<HTMLInputElement>(null);
-
-  const addImage = () => {
-    imageRef.current?.click();
-    imageRef.current?.addEventListener("change", async (e) => {
-      campaignFormStore.image.set(
-        (await fileToBase64((e.target as HTMLInputElement).files?.[0])) as string,
-      );
-    });
-  };
 
   const { mutate: createCampaign, isLoading: isCreating } = useCreateCampaign();
   const { mutate: updateCampaign, isLoading: isUpdating } = useUpdateCampaign();
@@ -113,7 +101,11 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
               onChange={(e) => campaignFormStore.name.set(e.target.value)}
             />
           </div>
-          <UploadImage image={image} inputFile={imageRef} onClick={addImage} defaultImage={image} />
+          <UploadImage
+            image={image}
+            defaultImage={image}
+            setImage={(image) => campaignFormStore.image.set(image)}
+          />
         </div>
         <TextArea
           label="Description"

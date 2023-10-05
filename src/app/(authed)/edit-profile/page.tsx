@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef } from "react";
 import Link from "next/link";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UploadImage from "@/components/ui/upload-image";
 import useGetAccount from "@/hooks/use-get-account";
-import { fileToBase64 } from "@/utils/b64";
 
 import useEditProfile from "./hooks/use-edit-profile";
 import { editProfileSchema, IEditProfileSchema } from "./schemas/edit-profile-schema";
@@ -34,19 +32,11 @@ const EditProfile = () => {
   });
 
   const image = watch("image");
-  const imageRef = useRef<HTMLInputElement>(null);
 
   const { mutate: editProfile, isLoading: isEditing } = useEditProfile();
 
   const onSubmit: SubmitHandler<IEditProfileSchema> = (data) => {
     editProfile(data);
-  };
-
-  const addImage = () => {
-    imageRef.current?.click();
-    imageRef.current?.addEventListener("change", async (e) => {
-      setValue("image", (await fileToBase64((e.target as HTMLInputElement).files?.[0])) as string);
-    });
   };
 
   if (isLoading)
@@ -92,9 +82,8 @@ const EditProfile = () => {
         >
           <UploadImage
             image={image}
-            inputFile={imageRef}
-            onClick={addImage}
             defaultImage={account.account.imageUrl || "/images/default-avatar.png"}
+            setImage={(image) => setValue("image", image)}
           />
           <div className="flex w-80 flex-col justify-center gap-6 lg:w-96 lg:gap-12">
             <Input
