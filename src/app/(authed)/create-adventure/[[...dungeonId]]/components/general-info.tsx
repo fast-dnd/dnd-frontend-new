@@ -28,7 +28,7 @@ const GeneralInfo = () => {
 
   return (
     <>
-      <div className="flex min-h-0 flex-1 basis-0">
+      <div className="flex min-h-0 flex-1 basis-0 overflow-y-auto">
         {isSelectingBg ? (
           <SelectBgScreen setSelectedReward={setSelectedReward} setSelectingBg={setSelectingBg} />
         ) : (
