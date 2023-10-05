@@ -1,11 +1,12 @@
 import QuillIcon from "@/components/icons/quill-icon";
 import RoomItem from "@/components/room-item";
+import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 import Spinner from "@/components/ui/spinner";
 import useGetRoomHistory from "@/hooks/use-get-room-history";
 import useIntersectionObserver from "@/hooks/use-intersection-observer";
 
-const GameHistory = ({ showFull }: { showFull?: boolean }) => {
+const GameHistory = ({ showFull = false }: { showFull?: boolean }) => {
   const {
     data: roomsData,
     hasNextPage,
@@ -24,7 +25,7 @@ const GameHistory = ({ showFull }: { showFull?: boolean }) => {
   if (isLoading) {
     return (
       <div className="no-scrollbar flex flex-1 flex-col gap-4 overflow-y-auto">
-        {/* <div className="mb-2 h-6 w-32 animate-pulse rounded-full bg-gray-600 " /> */}
+        {showFull && <div className="mb-3 h-5 w-32 animate-pulse rounded-xl bg-gray-600" />}
         <Skeleton small amount={2} />
       </div>
     );
@@ -49,8 +50,9 @@ const GameHistory = ({ showFull }: { showFull?: boolean }) => {
 
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-6">
-      <p className="uppercase">Games played: {roomsData?.pages[0].total ?? "--"}</p>
-      <div className="flex h-full flex-col gap-4 overflow-y-auto pr-4">
+      {showFull && <p className="uppercase">Games played: {roomsData?.pages[0].total ?? "--"}</p>}
+
+      <div className="flex h-full flex-col gap-4 overflow-y-auto pb-2 pr-4">
         {roomsData.pages[0].rooms.length === 0 ? (
           <ZeroGames />
         ) : (
@@ -60,6 +62,11 @@ const GameHistory = ({ showFull }: { showFull?: boolean }) => {
               <div className="flex h-10 justify-center">
                 <Spinner className="m-0 h-8 w-8" />
               </div>
+            )}
+            {!showFull && (
+              <Button href="/profile?activeTab=GAME+HISTORY" variant="outline">
+                SHOW ENTIRE GAME HISTORY
+              </Button>
             )}
           </>
         )}

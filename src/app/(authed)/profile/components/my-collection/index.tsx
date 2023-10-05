@@ -6,13 +6,13 @@ import Adventures from "@/components/adventures";
 import CampaignDetail from "@/components/campaign-detail";
 import Campaigns from "@/components/campaigns";
 import DungeonDetail from "@/components/dungeon-detail";
+import GameHistory from "@/components/game-history";
 import GoBackButton from "@/components/go-back-button";
 import Rewards from "@/components/rewards";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 
-import GameHistory from "./game-history";
 import Tabs from "./tabs";
 import { Tab } from "./types/tab";
 
@@ -64,7 +64,7 @@ const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
           {activeTab === "CAMPAIGNS" && (
             <Campaigns setCampaignDetailId={setCampaignDetailId} isOwned showActions />
           )}
-          {activeTab === "GAME HISTORY" && <GameHistory />}
+          {activeTab === "GAME HISTORY" && <GameHistory showFull />}
           {activeTab === "REWARDS" && <Rewards />}
         </>
       )}

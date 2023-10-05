@@ -1,9 +1,9 @@
 "use client";
 
+import GameHistory from "@/components/game-history";
 import { Box } from "@/components/ui/box";
 
 import CreateRoom from "./components/create-room";
-import GameHistory from "./components/game-history";
 import JoinRoom from "./components/join-room";
 
 const Page = () => {
