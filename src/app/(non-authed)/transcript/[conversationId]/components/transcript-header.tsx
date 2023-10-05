@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Copy } from "iconsax-react";
-import { ChevronLeft } from "lucide-react";
+import { BsChevronLeft } from "react-icons/bs";
 
 import useCopy from "@/hooks/use-copy";
 import { jibril } from "@/utils/fonts";
@@ -13,7 +13,7 @@ const TranscriptHeader = () => {
   return (
     <div className="relative flex w-full items-center justify-between rounded-t-md bg-dark-900 px-12 py-6">
       <Link href="/home" className="invisible flex gap-2 font-bold uppercase">
-        <ChevronLeft /> Go back
+        <BsChevronLeft /> Go back
       </Link>
       <div className="relative flex items-center justify-center gap-4">
         <div className="h-2 w-2 rotate-45 bg-primary" />

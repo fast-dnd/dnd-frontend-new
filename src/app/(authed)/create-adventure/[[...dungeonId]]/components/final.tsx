@@ -5,12 +5,11 @@ import { Button } from "@/components/ui/button";
 import useCopy from "@/hooks/use-copy";
 
 import { dungeonFormStore } from "../stores/dungeon-form-store";
-import { stepTitles } from "../utils/step-utils";
 
 const Final = () => {
   const dungeonId = dungeonFormStore.dungeonFormData._id.use();
 
-  const [copied, setCopied] = useCopy();
+  const { copied, onCopy } = useCopy();
 
   return (
     <div className="flex h-fit w-full lg:h-full">
@@ -21,7 +20,7 @@ const Final = () => {
       >
         <div className="flex flex-row items-center justify-between gap-8">
           <p className="w-full text-lg font-semibold uppercase leading-7 tracking-[0.15em] lg:text-[22px]">
-            {stepTitles["FINAL"]}
+            final
           </p>
         </div>
         <div className="w-full border-t border-white/20" />
@@ -35,13 +34,7 @@ const Final = () => {
                 <p className="w-full bg-white/5 px-4 py-2 text-center font-medium tracking-widest lg:text-2xl">
                   {dungeonId}
                 </p>
-                <Button
-                  className="w-full px-8 lg:w-fit"
-                  onClick={() => {
-                    navigator.clipboard.writeText(dungeonId ?? "");
-                    setCopied(true);
-                  }}
-                >
+                <Button className="w-full px-8 lg:w-fit" onClick={() => onCopy(dungeonId ?? "")}>
                   {copied ? "COPIED" : "COPY"}
                 </Button>
               </div>
