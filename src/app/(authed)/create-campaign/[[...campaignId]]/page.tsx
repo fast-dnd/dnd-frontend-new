@@ -1,30 +1,19 @@
 "use client";
 
-import { useEffect } from "react";
-
 import { Box } from "@/components/ui/box";
 import Skeleton from "@/components/ui/skeleton";
 import useGetCampaign from "@/hooks/use-get-campaign";
 
 import RightCard from "./components/create-campaign-card";
 import SelectAdventuresCard from "./components/select-adventures-card";
-import { campaignFormStore } from "./stores/campaign-form-store";
+import useLoadCampaignData from "./hooks/use-load-campaign-data";
 
 const CreateCampaign = ({ params }: { params: { campaignId?: [string] } }) => {
   const campaignId = params.campaignId?.[0];
 
   const campaignQuery = useGetCampaign(campaignId);
 
-  useEffect(() => {
-    if (campaignQuery.data) {
-      campaignFormStore.set({
-        name: campaignQuery.data.name,
-        description: campaignQuery.data.description,
-        image: campaignQuery.data.imageUrl,
-        dungeons: campaignQuery.data.dungeons,
-      });
-    }
-  }, [campaignQuery.data]);
+  useLoadCampaignData({ data: campaignQuery.data });
 
   if (campaignQuery?.isInitialLoading) return <CreateCampaignSkeleton />;
 
@@ -34,9 +23,7 @@ const CreateCampaign = ({ params }: { params: { campaignId?: [string] } }) => {
   return (
     <div className="h-full w-full overflow-y-auto">
       <div className="flex h-full w-full justify-between gap-12 pb-12 lg:overflow-y-hidden">
-        <div className="flex h-full w-full">
-          <SelectAdventuresCard isEditing={!!campaignId} />
-        </div>
+        <SelectAdventuresCard isEditing={!!campaignId} />
 
         <RightCard campaignId={campaignId} />
       </div>
