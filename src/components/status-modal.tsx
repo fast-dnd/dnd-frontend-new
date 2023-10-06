@@ -65,11 +65,11 @@ const StatusModal = ({ open, type, content, onClose }: IStatusModalProps) => {
                 <HelmetIcon />
                 <span className="text-2xl font-semibold">Congratulations, Dungeon Master!</span>
                 <span className="text-center text-xl">
-                  Your dungeon is complete and awaiting adventurers! Your Dungeon ID is{" "}
-                  <span className="text-primary">{content.id}</span>. Be sure to copy it and share
-                  with your friends so they can join in on the epic journey! You can also access
-                  your newly created dungeon anytime under &apos;My Adventures&apos; for future
-                  edits or to view its progress. Happy adventuring!
+                  Your {type.toLowerCase()} is complete and awaiting adventurers! Your{" "}
+                  {type.toLowerCase()} ID is <span className="text-primary">{content.id}</span>. Be
+                  sure to copy it and share with your friends so they can join in on the epic
+                  journey! You can also access your newly created {type.toLowerCase()} anytime under{" "}
+                  {type} Tab for future edits or to view its progress. Happy adventuring!
                 </span>
               </p>
             )}
