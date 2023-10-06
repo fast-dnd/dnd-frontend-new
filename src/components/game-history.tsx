@@ -39,14 +39,18 @@ const GameHistory = ({ showFull = false }: { showFull?: boolean }) => {
     );
   }
 
-  const content = roomsData.pages.map((page) =>
-    page.rooms.map((room, i) => {
-      if (page.rooms.length === i + 1) {
-        return <RoomItem key={room.conversationId} room={room} ref={lastRoomItemRef} />;
-      }
-      return <RoomItem key={room.conversationId} room={room} />;
-    }),
-  );
+  const content = showFull
+    ? roomsData.pages.map((page) =>
+        page.rooms.map((room, i) => {
+          if (page.rooms.length === i + 1) {
+            return <RoomItem key={room.conversationId} room={room} ref={lastRoomItemRef} />;
+          }
+          return <RoomItem key={room.conversationId} room={room} />;
+        }),
+      )
+    : roomsData.pages[0].rooms
+        .slice(0, 2)
+        .map((room) => <RoomItem key={room.conversationId} room={room} />);
 
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-6">
