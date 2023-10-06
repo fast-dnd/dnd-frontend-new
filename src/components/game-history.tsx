@@ -49,7 +49,7 @@ const GameHistory = ({ showFull = false }: { showFull?: boolean }) => {
         }),
       )
     : roomsData.pages[0].rooms
-        .slice(0, 2)
+        .slice(0, 3)
         .map((room) => <RoomItem key={room.conversationId} room={room} />);
 
   return (
