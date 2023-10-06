@@ -1,4 +1,4 @@
-import { transcriptSchema } from "@/types/transcript";
+import { transcriptSchema } from "@/validations/transcript";
 
 import createApi from "./api-factory";
 

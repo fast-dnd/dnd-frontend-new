@@ -1,22 +1,13 @@
-import { accountSchema } from "@/types/auth";
-
 import createApi from "./api-factory";
 
 const authApi = createApi({ commonPrefix: "auth" });
 
 const login = async (data: { credential?: string }) => {
-  return await authApi.post<{ jwtToken: string }>("google/login", data).then((res) => {
-    localStorage.setItem("jwtToken", res.data.jwtToken);
-  });
-};
-
-const account = async () => {
-  return await authApi.get("account").then((res) => accountSchema.parse(res.data));
+  return await authApi.post<{ jwtToken: string }>("google/login", data).then();
 };
 
 const authService = {
   login,
-  account,
 };
 
 export default authService;

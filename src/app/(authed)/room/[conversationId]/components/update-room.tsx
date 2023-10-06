@@ -1,12 +1,13 @@
 import { AiFillSound, AiFillStar } from "react-icons/ai";
 import { BiImages } from "react-icons/bi";
+import { useReadLocalStorage } from "usehooks-ts";
 
-import { IDungeonDetail } from "@/types/dungeon";
-import { IRoomData } from "@/types/room";
-import { DungeonDuration, dungeonDurations } from "@/utils/dungeon-options";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { IDungeonDetail } from "@/types/dungeon";
+import { IRoomDetail } from "@/types/room";
+import { DungeonDuration, dungeonDurations } from "@/utils/dungeon-options";
 
 import useOnRoomChange from "../hooks/use-on-room-change";
 import usePlayerInfo from "../hooks/use-player-info";
@@ -30,14 +31,16 @@ const UpdateRoom = ({
   dungeonData,
 }: {
   conversationId: string;
-  roomData: IRoomData;
+  roomData: IRoomDetail;
   dungeonData: IDungeonDetail;
 }) => {
   const { duration, setDuration } = usePlayerInfo(roomData);
 
   const { gameStarting } = useRoomSocket(conversationId);
 
-  const isAdmin = localStorage.getItem("accountId") === roomData.playerState[0].accountId;
+  const accountId = useReadLocalStorage<string>("accountId");
+
+  const isAdmin = accountId === roomData.playerState[0].accountId;
 
   const { setGenerateImages, setGenerateAudio } = useOnRoomChange({
     conversationId,
@@ -66,12 +69,13 @@ const UpdateRoom = ({
   const canBegin = roomData.playerState.every((player) => player.champion) ?? false;
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
+      <p className="text-lg font-semibold">GAME SETTINGS</p>
       <ToggleGroup
         className="inline-flex w-full items-center justify-center"
         type="single"
         onValueChange={(value) => setDuration(value as DungeonDuration)}
-        label="Bob Verbal Engagement"
+        label="Game mode"
         value={roomData.responseDetailsDepth}
         disabled={!isAdmin}
       >
@@ -98,6 +102,7 @@ const UpdateRoom = ({
         onValueChange={onChangeImagesAudio}
         value={generateAudioImagesArray()}
         disabled={!isAdmin}
+        label="Media options"
       >
         {imagesAudio.map((type) => (
           <ToggleGroupItem key={type.value} value={type.value}>
@@ -126,7 +131,7 @@ const UpdateRoom = ({
           )}
         </Tooltip>
       </TooltipProvider>
-    </>
+    </div>
   );
 };
 

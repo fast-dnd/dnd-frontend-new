@@ -1,25 +1,33 @@
 "use client";
 
 import useGetCampaign from "@/hooks/use-get-campaign";
-import useGetMyDungeons from "@/hooks/use-get-my-dungeons";
-import BoxSkeleton from "@/components/box-skeleton";
 
-import CreateCampaignForm from "./components/create-campaign-form";
+import RightCard from "./components/create-campaign-card";
+import CreateCampaignSkeleton from "./components/create-campaign-skeleton";
+import SelectAdventuresCard from "./components/select-adventures-card";
+import useLoadCampaignData from "./hooks/use-load-campaign-data";
 
 const CreateCampaign = ({ params }: { params: { campaignId?: [string] } }) => {
   const campaignId = params.campaignId?.[0];
 
-  const { data: myDungeons, isLoading, isError } = useGetMyDungeons(true);
-
   const campaignQuery = useGetCampaign(campaignId);
 
-  if (campaignQuery?.isInitialLoading || isLoading)
-    return <BoxSkeleton title={`${campaignId ? "EDIT" : "CREATE"} CAMPAIGN`} />;
+  useLoadCampaignData({ data: campaignQuery.data });
 
-  if ((!!campaignId && !campaignQuery.data) || !myDungeons || isError)
+  if (campaignQuery?.isInitialLoading) return <CreateCampaignSkeleton />;
+
+  if (!!campaignId && !campaignQuery.data)
     return <div className="flex justify-center overflow-y-auto pb-8"> Something went wrong. </div>;
 
-  return <CreateCampaignForm campaign={campaignQuery.data} myDungeons={myDungeons} />;
+  return (
+    <div className="h-full w-full overflow-y-auto">
+      <div className="flex h-full w-full justify-between gap-12 pb-12 lg:overflow-y-hidden">
+        <SelectAdventuresCard isEditing={!!campaignId} />
+
+        <RightCard campaignId={campaignId} />
+      </div>
+    </div>
+  );
 };
 
 export default CreateCampaign;

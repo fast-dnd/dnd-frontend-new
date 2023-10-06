@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { MutationCache, QueryCache, QueryClient, QueryClientConfig } from "@tanstack/react-query";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
 
@@ -21,6 +21,11 @@ export const queryClientConfig: QueryClientConfig = {
       }
     },
   }),
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
 };
 
 export const getQueryClient = cache(() => new QueryClient(queryClientConfig));

@@ -1,4 +1,4 @@
-import { IRoomData } from "@/types/room";
+import { IRoomDetail } from "@/types/room";
 
 export interface IRoomSocketEvent {
   event:
@@ -7,5 +7,5 @@ export interface IRoomSocketEvent {
     | "REQUEST_SENT_TO_DM"
     | "GAME_STARTED"
     | "ROOM_SETTINGS_CHANGED";
-  data: IRoomData;
+  data: IRoomDetail;
 }

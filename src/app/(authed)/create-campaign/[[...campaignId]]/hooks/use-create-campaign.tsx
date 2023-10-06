@@ -1,17 +1,13 @@
-import { useRouter } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import campaignService from "@/services/campaign-service";
+import campaignService, { campaignKey } from "@/services/campaign-service";
 
 const useCreateCampaign = () => {
-  const router = useRouter();
-
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: campaignService.createCampaign,
-    onSuccess: (_data) => {
-      router.push("/home");
-      toast.success("Campaign created successfully!");
+    onSuccess: () => {
+      queryClient.invalidateQueries([campaignKey]);
     },
   });
 };

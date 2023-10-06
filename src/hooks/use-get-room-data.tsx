@@ -6,6 +6,7 @@ const useGetRoomData = (conversationId: string) => {
   return useQuery({
     queryKey: [roomKey, conversationId],
     queryFn: () => roomService.getRoomData(conversationId),
+    staleTime: 10000,
   });
 };
 

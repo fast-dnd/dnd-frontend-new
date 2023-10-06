@@ -1,27 +1,32 @@
-import { dungeonDetailSchema, dungeonsSchema, IDungeonDetail, IRateDungeon } from "@/types/dungeon";
+import queryString from "query-string";
 
-import createApi from "./api-factory";
+import { IDungeonForBackend, IRateDungeon } from "@/types/dungeon";
+import { dungeonDetailSchema, dungeonResponseSchema, dungeonsSchema } from "@/validations/dungeon";
 
-const dungeonApi = createApi({ commonPrefix: "dungeons/" });
+import createApi, { PAGINATION_LIMIT } from "./api-factory";
 
-const getMyDungeons = async () => {
-  return await dungeonApi.get("").then((res) => dungeonsSchema.parse(res.data));
-};
+const dungeonApi = createApi({ commonPrefix: "dungeons" });
 
-const getRecommendedDungeons = async () => {
-  return await dungeonApi.get("recommended").then((res) => dungeonsSchema.parse(res.data));
+const getDungeons = async ({ filter, pageParam }: { filter: string; pageParam: number }) => {
+  const queryParams = queryString.stringify({
+    filter,
+    skip: (pageParam - 1) * PAGINATION_LIMIT,
+    limit: PAGINATION_LIMIT,
+  });
+
+  return await dungeonApi.get("?" + queryParams).then((res) => dungeonsSchema.parse(res.data));
 };
 
 const getDungeon = async (dungeonId: string) => {
   return await dungeonApi.get(dungeonId).then((res) => dungeonDetailSchema.parse(res.data));
 };
 
-const createDungeon = async (data: IDungeonDetail) => {
-  return await dungeonApi.post("", data);
+const createDungeon = async (data: IDungeonForBackend) => {
+  return await dungeonApi.post("", data).then((res) => dungeonResponseSchema.parse(res.data));
 };
 
-const updateDungeon = async (data: IDungeonDetail) => {
-  return await dungeonApi.put("", data);
+const updateDungeon = async (data: IDungeonForBackend) => {
+  return await dungeonApi.put("", data).then((res) => dungeonResponseSchema.parse(res.data));
 };
 
 const deleteDungeon = async (dungeonId: string) => {
@@ -32,28 +37,17 @@ const addFavorite = async (dungeonId: string) => {
   return await dungeonApi.post("favourite", { dungeonId });
 };
 
-const getFavorites = async () => {
-  return await dungeonApi.get("favourite").then((res) => dungeonsSchema.parse(res.data));
-};
-
-const getRecent = async () => {
-  return await dungeonApi.get("recent").then((res) => dungeonsSchema.parse(res.data));
-};
-
 const rateDungeon = async (data: IRateDungeon) => {
   return await dungeonApi.post("rate", data);
 };
 
 const dungeonService = {
+  getDungeons,
+  getDungeon,
   createDungeon,
   updateDungeon,
-  getDungeon,
-  getMyDungeons,
-  getRecommendedDungeons,
   deleteDungeon,
   addFavorite,
-  getFavorites,
-  getRecent,
   rateDungeon,
 };
 

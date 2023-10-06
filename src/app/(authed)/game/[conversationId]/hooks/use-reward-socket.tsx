@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
+import { useReadLocalStorage } from "usehooks-ts";
 
-import { IReward } from "@/types/kingdom";
 import { socketIO } from "@/lib/socket";
+import { IReward } from "@/types/reward";
 
 import { IRewardEvent } from "../types/events";
 
 const useRewardSocket = (conversationId: string) => {
+  const accountId = useReadLocalStorage<string>("accountId");
+
   const [reward, setReward] = useState<IReward>();
   useEffect(() => {
     const onEvent = (event: IRewardEvent) => {
       if (event.event === "REWARD_EARNED")
-        if (event.data.accountId === localStorage.getItem("accountId")) {
+        if (event.data.accountId === accountId) {
           setReward(event.data.reward);
         }
     };
@@ -18,7 +21,7 @@ const useRewardSocket = (conversationId: string) => {
     return () => {
       socketIO.off(conversationId, onEvent);
     };
-  }, [conversationId]);
+  }, [accountId, conversationId]);
 
   return { reward };
 };

@@ -38,6 +38,7 @@ export interface TextAreaProps
   label?: string;
   canResize?: boolean;
   center?: boolean;
+  fullHeight?: boolean;
 }
 
 export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
@@ -53,6 +54,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
       label,
       canResize,
       center = false,
+      fullHeight = false,
       disabled,
       className,
       ...props
@@ -60,7 +62,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
     ref,
   ) => {
     return (
-      <div className="flex w-full flex-col">
+      <div className={cn("flex w-full flex-col", fullHeight && "h-full")}>
         {label && (
           <label
             htmlFor={label}
@@ -77,6 +79,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
         <div
           className={cn(
             textAreaContainerVariants({ state, className }),
+            fullHeight && "h-full",
             disabled && "pointer-events-none opacity-20",
           )}
         >

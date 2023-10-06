@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { IRoomData } from "@/types/room";
+import { IRoomDetail } from "@/types/room";
 import { DungeonDuration } from "@/utils/dungeon-options";
 
 import useUpdateRoom from "../hooks/use-update-room";
@@ -8,7 +8,7 @@ import useUpdateRoom from "../hooks/use-update-room";
 interface IUseOnRoomChangeProps {
   conversationId: string;
   duration: DungeonDuration | undefined;
-  roomData: IRoomData;
+  roomData: IRoomDetail;
   isAdmin: boolean;
 }
 

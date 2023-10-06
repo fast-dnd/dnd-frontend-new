@@ -1,13 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import campaignService from "@/services/campaign-service";
+import campaignService, { campaignKey } from "@/services/campaign-service";
 
 const useUpdateCampaign = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: campaignService.updateCampaign,
-    onSuccess: (_data) => {
-      toast.success("Campaign updated successfully!");
+    onSuccess: () => {
+      queryClient.invalidateQueries([campaignKey]);
     },
   });
 };

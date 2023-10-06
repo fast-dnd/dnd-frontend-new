@@ -1,8 +1,8 @@
-import { gameRoomDataSchema, IPlayMove, playMoveResponseSchema } from "@/types/game";
+import { IPlayMove } from "@/types/game";
+import { playMoveResponseSchema } from "@/validations/game";
 
 import createApi from "./api-factory";
 
-const roomApi = createApi({ commonPrefix: "rooms" });
 const gameApi = createApi({ commonPrefix: "game" });
 
 const playMove = async (data: IPlayMove) => {
@@ -17,15 +17,10 @@ const postQuestion = async (data: { question: string; conversationId: string }) 
   return await gameApi.post("ask", data);
 };
 
-const getGameData = async (conversationId: string) => {
-  return await roomApi.get(conversationId).then((res) => gameRoomDataSchema.parse(res.data));
-};
-
 const gameService = {
   playMove,
   postComplaint,
   postQuestion,
-  getGameData,
 };
 
 export default gameService;

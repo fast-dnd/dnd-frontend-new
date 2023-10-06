@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { DefaultMove } from "@/types/game";
 import { socketIO } from "@/lib/socket";
+import { IDefaultMove } from "@/types/room";
 
 import { IGameplaySocketEvent } from "../types/events";
 
 const useGameplaySocket = (conversationId: string) => {
   const [canPlay, setCanPlay] = useState(true);
-  const [move, setMove] = useState<DefaultMove>();
+  const [move, setMove] = useState<IDefaultMove>();
   const [rollButtonState, setRollButtonState] = useState<"CANPLAY" | "ROLLING" | "ROLLED">(
     "CANPLAY",
   );

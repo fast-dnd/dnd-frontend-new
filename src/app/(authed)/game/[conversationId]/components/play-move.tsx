@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi";
 
-import { IGamePlayer, IGameRoomData, IPlayMove, IPlayMoveResponse } from "@/types/game";
-import { cn } from "@/utils/style-utils";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { IPlayMove, IPlayMoveResponse } from "@/types/game";
+import { IPlayer, IRoomDetail } from "@/types/room";
+import { cn } from "@/utils/style-utils";
 
 import usePlayMove from "../hooks/use-play-move";
 import usePlayMoveSocket from "../hooks/use-play-move-socket";
@@ -17,9 +18,9 @@ import Die from "./die";
 import MoveInput from "./move-input";
 
 export interface PlayMoveProps {
-  roomData: IGameRoomData;
+  roomData: IRoomDetail;
   conversationId: string;
-  currentPlayer: IGamePlayer;
+  currentPlayer: IPlayer;
   loadingText: boolean;
 }
 
@@ -57,7 +58,7 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
       setCanPlay(true);
       setRollButtonState("CANPLAY");
     }
-    if (roomData.state === "CLOSED") setCanPlay(false);
+    if (roomData.state === "WIN" || roomData.state === "LOSE") setCanPlay(false);
     //TODO setRollInfo of most recent move, when move format contains all required fields
   }, [
     currentPlayer,
@@ -127,7 +128,8 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
       <div
         className={cn(
           "flex w-full flex-col gap-8 lg:flex-row",
-          (roomData.state === "CLOSED" || currentPlayer.health <= 0) && "hidden",
+          (roomData.state === "WIN" || roomData.state === "LOSE" || currentPlayer.health <= 0) &&
+            "hidden",
         )}
       >
         <div
@@ -228,7 +230,7 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
         </div>
       </div>
 
-      {currentPlayer.health <= 0 && roomData.state !== "CLOSED" && (
+      {currentPlayer.health <= 0 && roomData.state === "GAMING" && (
         <div className="flex h-44 w-full flex-col items-center justify-center bg-white/5 lg:text-xl">
           <p className="text-center font-semibold">Players are choosing their actions...</p>
           <p>{timeToDisplay()} Left</p>

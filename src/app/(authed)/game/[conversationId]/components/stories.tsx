@@ -2,15 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { IDungeonDetail } from "@/types/dungeon";
-import { IGameRoomData } from "@/types/game";
 import SkeletonIcon from "@/components/icons/skeleton-icon";
+import { IDungeonDetail } from "@/types/dungeon";
+import { IRoomDetail } from "@/types/room";
 
 import ImageModal from "./image-modal";
 import StyledAudio from "./styled-audio";
 
 export interface StoriesProps {
-  roomData: IGameRoomData;
+  roomData: IRoomDetail;
   dungeonData: IDungeonDetail;
   lastStory?: string;
 }

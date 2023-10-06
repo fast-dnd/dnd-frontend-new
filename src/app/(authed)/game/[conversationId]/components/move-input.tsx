@@ -3,22 +3,23 @@ import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
 
-import { IChampion } from "@/types/dungeon";
-import { DefaultMove } from "@/types/game";
-import { cn } from "@/utils/style-utils";
 import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/text-area";
+import { IChampion } from "@/types/dungeon";
+import { IDefaultMove } from "@/types/room";
+import { cn } from "@/utils/style-utils";
 
 export interface MoveInputProps {
-  move: DefaultMove | undefined;
+  move: IDefaultMove | undefined;
   freeWill: string;
-  champion: IChampion;
+  champion: IChampion | null | undefined;
   canPlay: boolean;
-  setMove: (move: DefaultMove | undefined) => void;
+  setMove: (move: IDefaultMove | undefined) => void;
   setFreeWill: (freeWill: string) => void;
 }
 
 const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: MoveInputProps) => {
+  if (!champion) return <div>Something went wrong</div>;
   return (
     <div className="relative flex h-60 lg:h-full">
       <TextArea

@@ -1,44 +1,75 @@
-import React from "react";
-import Image from "next/image";
+"use client";
 
-import { jibril } from "@/utils/fonts";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import useGetAccount from "@/hooks/use-get-account";
+import useCheckJWT from "@/utils/check-jwt";
+import { cn } from "@/utils/style-utils";
+
+import Coin from "./coin";
 
 const Navbar = () => {
+  const tokenExists = useCheckJWT();
+  const pathname = usePathname();
+
+  const { data: account } = useGetAccount(!tokenExists);
+
+  const loggedIn = tokenExists && account;
+
   return (
-    <div className="hidden items-center gap-12 lg:flex">
-      <div className="mt-10 h-0.5 flex-1 border-t border-primary" />
-      <div className="mt-10 flex flex-col items-center justify-center gap-1">
-        <Image src="/images/logo-up.png" width={114} height={6} alt="logo-up" priority />
-        <div className="relative flex w-52 justify-center">
-          <div className="absolute flex h-full w-full items-center justify-center">
-            <Image
-              src="/images/logo-red-layer.png"
-              width={204}
-              height={35}
-              alt="logo-red-layer"
-              priority
-            />
-          </div>
-          <div className="absolute z-20 flex h-full w-full items-center justify-center">
-            <p
-              style={jibril.style}
-              className="absolute top-0 translate-y-1/4 text-center indent-[0.415em] text-2xl uppercase tracking-[0.415em]"
-            >
-              v3rpg
-            </p>
-          </div>
-          <Image
-            className="z-10"
-            src="/images/logo-black-layer.png"
-            alt="logo-black-layer"
-            width={199}
-            height={42}
-            priority
-          />
-        </div>
-        <Image src="/images/logo-down.png" width={72} height={14} alt="logo-down" priority />
+    <div className="hidden w-full items-center justify-between gap-12 pl-2 pr-8 lg:flex">
+      <Image src="/images/logo.png" width={300} height={100} alt="logo" />
+      <div className="flex items-center gap-6 text-2xl leading-7 tracking-[3.3px]">
+        <Link
+          href={loggedIn ? "/home" : "/login"}
+          className={cn(
+            "border-b-4 border-transparent transition-all duration-300 hover:border-primary-500/50",
+            pathname === "/home" && "border-primary-500",
+          )}
+        >
+          {loggedIn ? "PLAY" : "LOG IN"}
+        </Link>
+        <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+        <Link
+          href="/guide"
+          className={cn(
+            "border-b-4 border-transparent transition-all duration-300 hover:border-primary-500/50",
+            pathname === "/guide" && "border-primary-500",
+          )}
+        >
+          HOW TO PLAY
+        </Link>
+        {loggedIn && (
+          <>
+            <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+            <div className="flex gap-6 rounded-md bg-white/10 px-4 py-3 backdrop-blur-sm">
+              <div className="flex items-center gap-1">
+                <Coin silver />
+                {account?.account.coins ?? "-"}
+              </div>
+              <div className="flex items-center gap-1">
+                <Coin />
+
+                {account?.account.dmCurrency ?? "-"}
+              </div>
+            </div>
+
+            <div className="rounded-md p-2 transition-all duration-300 hover:bg-white/10">
+              <Link href="/profile">
+                <Image
+                  src={account?.account.imageUrl || "/images/default-avatar.png"}
+                  width={60}
+                  height={60}
+                  alt="avatar"
+                  className="h-full w-full rounded-md transition-all duration-300"
+                />
+              </Link>
+            </div>
+          </>
+        )}
       </div>
-      <div className="mt-10 h-0.5 flex-1 border-t border-primary" />
     </div>
   );
 };

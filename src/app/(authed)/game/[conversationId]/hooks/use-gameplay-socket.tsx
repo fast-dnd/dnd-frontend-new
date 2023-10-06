@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { gameRoomDataSchema } from "@/types/game";
-import { gameKey } from "@/services/game-service";
 import { socketIO } from "@/lib/socket";
+import { roomKey } from "@/services/room-service";
+import { roomDetailSchema } from "@/validations/room";
 
 import { IGameplaySocketEvent } from "../types/events";
 
@@ -21,15 +21,12 @@ const useGameplaySocket = (conversationId: string) => {
           break;
         case "REQUEST_SENT_TO_DM":
           if (event.data)
-            queryClient.setQueryData(
-              [gameKey, conversationId],
-              gameRoomDataSchema.parse(event.data),
-            );
+            queryClient.setQueryData([roomKey, conversationId], roomDetailSchema.parse(event.data));
           setLoadingText(true);
           break;
         case "ROUND_STORY":
         case "GAME_ENDED":
-          queryClient.refetchQueries([gameKey, conversationId]).then(() => {
+          queryClient.refetchQueries([roomKey, conversationId]).then(() => {
             setLastStory("");
             setLoadingText(false);
           });

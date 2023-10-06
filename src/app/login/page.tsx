@@ -1,9 +1,15 @@
+"use client";
+
 import React from "react";
 
 import { Box } from "@/components/ui/box";
-import GoogleLoginButton from "@/components/google-login-button";
+import useAuthCheck from "@/hooks/use-auth-check";
+
+import GoogleLoginButton from "./components/google-login-button";
 
 const Login = () => {
+  useAuthCheck();
+
   return (
     <div className="mt-24 flex items-center justify-center">
       <div>

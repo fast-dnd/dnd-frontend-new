@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { backgroundStore } from "@/stores/background-store";
+import { useReadLocalStorage } from "usehooks-ts";
 
-import { IGamePlayer } from "@/types/game";
-import useGetDungeon from "@/hooks/use-get-dungeon";
-import useGetGameData from "@/hooks/use-get-game-data";
 import { Box } from "@/components/ui/box";
 import Spinner from "@/components/ui/spinner";
+import useGetDungeon from "@/hooks/use-get-dungeon";
+import useGetRoomData from "@/hooks/use-get-room-data";
+import { IPlayer } from "@/types/room";
 
 import useGameplaySocket from "../hooks/use-gameplay-socket";
 import useRewardSocket from "../hooks/use-reward-socket";
@@ -22,16 +22,15 @@ import Stories from "./stories";
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
 
-  const bgUrl = backgroundStore.bgUrl;
+  // const bgUrl = backgroundStore.bgUrl;
 
-  const { data: roomData } = useGetGameData(conversationId);
+  const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
   const [gaming, setGaming] = useState(true);
   const [gameOverModal, setGameOverModal] = useState(false);
   const [rewardModal, setRewardModal] = useState(false);
-  const [result, setResult] = useState<"GAMING" | "WON" | "LOST">("GAMING");
   const [dying, setDying] = useState(false);
-  const [currentPlayer, setCurrentPlayer] = useState<IGamePlayer>();
+  const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [bgSet, setBgSet] = useState(false);
 
   const homeModal = gameStore.homeModal.use();
@@ -40,11 +39,11 @@ const Gameplay = (props: { conversationId: string }) => {
   const { lastStory, loadingText } = useGameplaySocket(conversationId);
   const { reward } = useRewardSocket(conversationId);
 
+  const accountId = useReadLocalStorage<string>("accountId");
+
   useEffect(() => {
     if (roomData) {
-      const player = roomData.playerState.find(
-        (player) => player.accountId === localStorage.getItem("accountId"),
-      );
+      const player = roomData.playerState.find((player) => player.accountId === accountId);
       if (currentPlayer && player) {
         const changes: PlayerChanges = {};
         if (player.health !== currentPlayer.health) {
@@ -77,22 +76,19 @@ const Gameplay = (props: { conversationId: string }) => {
       }
       setCurrentPlayer(player);
 
-      if (roomData.state === "CLOSED") {
-        if (roomData.playerState.every((player) => player.health > 0)) {
-          setResult("WON");
-        } else setResult("LOST");
+      if (roomData.state === "WIN" || roomData.state === "LOSE") {
         if (gaming) {
           setGaming(false);
           setGameOverModal(true);
         }
       }
     }
-    if (!dungeonData) bgUrl.set("");
-    if (dungeonData && !bgSet) {
-      setBgSet(true);
-      bgUrl.set(dungeonData.backgroundUrl);
-    }
-  }, [bgSet, bgUrl, currentPlayer, dungeonData, gaming, roomData]);
+    // if (!dungeonData) bgUrl.set("");
+    // if (dungeonData && !bgSet) {
+    //   setBgSet(true);
+    //   bgUrl.set(dungeonData.backgroundUrl);
+    // }
+  }, [accountId, currentPlayer, dungeonData, gaming, roomData]);
 
   if (!roomData || !dungeonData || !currentPlayer)
     return (
@@ -128,7 +124,7 @@ const Gameplay = (props: { conversationId: string }) => {
           setGameOverModal(false);
           setRewardModal(true);
         }}
-        result={result}
+        result={roomData.state}
         dungeon={dungeonData}
         conversationId={conversationId}
         players={roomData.playerState}

@@ -1,8 +1,8 @@
 import Image from "next/image";
+import { useMediaQuery } from "usehooks-ts";
 
-import { cn } from "@/utils/style-utils";
-import useMediaQuery from "@/hooks/use-media-query";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { cn } from "@/utils/style-utils";
 
 const ImageModal = ({ image }: { image: string }) => {
   const isMobileTablet = useMediaQuery("(max-width: 1024px)");

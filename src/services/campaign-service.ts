@@ -1,55 +1,60 @@
-import { campaignDetailSchema, campaignsSchema, ICampaignForBackend } from "@/types/dungeon";
+import queryString from "query-string";
 
-import createApi from "./api-factory";
+import { ICampaignForBackend } from "@/types/campaign";
+import {
+  campaignDetailSchema,
+  campaignResponseSchema,
+  campaignsSchema,
+} from "@/validations/campaign";
 
-const campaignApi = createApi({ commonPrefix: "campaigns/" });
+import createApi, { PAGINATION_LIMIT } from "./api-factory";
 
-const getRecommended = async () => {
-  return await campaignApi.get("recommended").then((res) => campaignsSchema.parse(res.data));
-};
+const campaignApi = createApi({ commonPrefix: "campaigns" });
 
-const getFavorites = async () => {
-  return await campaignApi.get("favourite").then((res) => campaignsSchema.parse(res.data));
-};
+const getCampaigns = async ({ filter, pageParam }: { filter: string; pageParam: number }) => {
+  const queryParams = queryString.stringify({
+    filter,
+    skip: (pageParam - 1) * PAGINATION_LIMIT,
+    limit: PAGINATION_LIMIT,
+  });
 
-const getMyCampaigns = async () => {
-  return await campaignApi.get("").then((res) => campaignsSchema.parse(res.data));
-};
-
-const getRecent = async () => {
-  return await campaignApi.get("recent").then((res) => campaignsSchema.parse(res.data));
+  return await campaignApi.get("?" + queryParams).then((res) => campaignsSchema.parse(res.data));
 };
 
 const getCampaign = async (campaignId: string) => {
   return await campaignApi.get(campaignId).then((res) => campaignDetailSchema.parse(res.data));
 };
 
-const addFavorite = async (campaignId: string) => {
-  return await campaignApi.post("favourite", { campaignId });
-};
-
 const createCampaign = async (data: ICampaignForBackend) => {
-  return await campaignApi.post("", data);
+  return await campaignApi.post("", data).then((res) => campaignResponseSchema.parse(res.data));
 };
 
 const updateCampaign = async (data: ICampaignForBackend & { campaignId: string }) => {
-  return await campaignApi.put(data.campaignId, data);
+  return await campaignApi
+    .put(data.campaignId, data)
+    .then((res) => campaignResponseSchema.parse(res.data));
 };
 
 const deleteCampaign = async (campaignId: string) => {
   return await campaignApi.delete(campaignId);
 };
 
+const addFavorite = async (campaignId: string) => {
+  return await campaignApi.post("favourite", { campaignId });
+};
+
+const addDungeonToCampaign = async (data: { campaignId: string; dungeonId: string }) => {
+  return await campaignApi.post(`${data.campaignId}/add-dungeon`, { dungeonId: data.dungeonId });
+};
+
 const campaignService = {
-  getRecommended,
-  getFavorites,
-  getMyCampaigns,
-  getRecent,
+  getCampaigns,
   getCampaign,
-  addFavorite,
   createCampaign,
   updateCampaign,
   deleteCampaign,
+  addFavorite,
+  addDungeonToCampaign,
 };
 export default campaignService;
 

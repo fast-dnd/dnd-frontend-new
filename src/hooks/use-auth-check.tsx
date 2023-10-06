@@ -2,23 +2,27 @@
 
 import { useEffect } from "react";
 import { redirect, usePathname, useRouter } from "next/navigation";
+import { useLocalStorage } from "usehooks-ts";
 
-import checkJWT from "@/utils/check-jwt";
+import useCheckJWT from "@/utils/check-jwt";
 
 const useAuthCheck = () => {
+  const tokenExists = useCheckJWT();
   const pathname = usePathname();
   const router = useRouter();
 
+  const [_, setRedirectURL] = useLocalStorage("redirectURL", pathname);
+
   useEffect(() => {
     if (pathname === "/login") {
-      if (checkJWT()) redirect("/home");
+      if (tokenExists) redirect("/home");
     } else {
-      if (!checkJWT()) {
-        localStorage.setItem("redirectURL", pathname);
+      if (!tokenExists) {
+        setRedirectURL(pathname);
         redirect("/login");
       }
     }
-  }, [pathname, router]);
+  }, [pathname, router, setRedirectURL, tokenExists]);
 
   return;
 };

@@ -1,68 +1,40 @@
 import { z } from "zod";
 
-import { DungeonDuration, dungeonDurationsArray } from "@/utils/dungeon-options";
+import { DungeonDuration } from "@/utils/dungeon-options";
+import {
+  defaultMoveSchema,
+  gameStateSchema,
+  moveSchema,
+  moveTypeSchema,
+  playerSchema,
+  questionSchema,
+  roomDetailSchema,
+  roomHistorySchema,
+  roomSchema,
+  roomSummarySchema,
+} from "@/validations/room";
 
-import { championSchema } from "./dungeon";
+export type IGameState = z.infer<typeof gameStateSchema>;
 
-export const gameStateSchema = z.enum(["CREATING", "GAMING", "CLOSED"]);
+export type IDefaultMove = z.infer<typeof defaultMoveSchema>;
 
-export const playerSchema = z.object({
-  accountId: z.string(),
-  avatarId: z.string(),
-  avatarImageUrl: z.string(),
-  name: z.string(),
-  champion: championSchema.nullish(),
-});
+export type IMoveType = z.infer<typeof moveTypeSchema>;
 
-export const roomSchema = z.object({
-  conversationId: z.string(),
-  link: z.string(),
-  player: playerSchema.nullish(),
-  admin: playerSchema.nullish(),
-});
+export type IMove = z.infer<typeof moveSchema>;
 
-export const roomDataSchema = z.object({
-  state: gameStateSchema,
-  playerState: z.array(playerSchema),
-  dungeonId: z.string(),
-  link: z.string(),
-  generateImages: z.boolean(),
-  generateAudio: z.boolean(),
-  responseDetailsDepth: z.enum(dungeonDurationsArray),
-  maxPlayers: z.number(),
-  maxRounds: z.number(),
-  price: z.number(),
-});
-
-export const roomArrayElementSchema = z.object({
-  state: gameStateSchema,
-  turn: z.number(),
-  dungeon: z.object({
-    id: z.string(),
-    name: z.string(),
-    imageUrl: z.string(),
-  }),
-  avatar: z.object({
-    id: z.string(),
-    name: z.string(),
-    image: z.string(),
-  }),
-  conversationId: z.string(),
-});
-
-export const roomArraySchema = z.object({
-  rooms: z.array(roomArrayElementSchema),
-});
+export type IQuestion = z.infer<typeof questionSchema>;
 
 export type IPlayer = z.infer<typeof playerSchema>;
 
+export type IRoomSummary = z.infer<typeof roomSummarySchema>;
+
 export type IRoom = z.infer<typeof roomSchema>;
 
-export type IRoomData = z.infer<typeof roomDataSchema>;
+export type IRoomDetail = z.infer<typeof roomDetailSchema>;
 
-export type IRoomArrayElement = z.infer<typeof roomArrayElementSchema>;
+export type IRoomArrayElement = z.infer<typeof roomSummarySchema>;
 
-export type IRoomArray = z.infer<typeof roomArraySchema>;
+export type IRoomArray = z.infer<typeof roomHistorySchema>;
 
 export interface ICreateRoom {
   generateImages: boolean;

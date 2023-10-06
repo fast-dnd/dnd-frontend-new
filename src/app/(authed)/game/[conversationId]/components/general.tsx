@@ -3,14 +3,15 @@
 import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
+import { useReadLocalStorage } from "usehooks-ts";
 
-import { IGamePlayer, IMove, IQuestion } from "@/types/game";
-import { cn } from "@/utils/style-utils";
-import useGetGameData from "@/hooks/use-get-game-data";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Spinner from "@/components/ui/spinner";
+import useGetRoomData from "@/hooks/use-get-room-data";
+import { IMove, IPlayer, IQuestion } from "@/types/room";
+import { cn } from "@/utils/style-utils";
 
 import useAskQuestion from "../hooks/use-ask-question";
 import useGeneralSocket from "../hooks/use-general-socket";
@@ -21,23 +22,28 @@ import Question from "./question";
 
 const General = (props: { conversationId: string }) => {
   const { conversationId } = props;
-  const { data: roomData } = useGetGameData(conversationId);
-  const [currentPlayer, setCurrentPlayer] = useState<IGamePlayer>();
+
+  const { data: roomData } = useGetRoomData(conversationId);
+
+  const { mutate: askQuestion } = useAskQuestion();
+
+  const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [statsOpened, setStatsOpened] = useState(false);
   const [question, setQuestion] = useState("");
-  const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =
-    useGeneralSocket(conversationId);
-  const changes = gameStore.changes.use();
-  const { mutate: askQuestion } = useAskQuestion();
+
   const [moveHistory, setMoveHistory] = useState<IMove[][]>([]);
   const [questionHistory, setQuestionHistory] = useState<Partial<IQuestion>[]>([]);
+
+  const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =
+    useGeneralSocket(conversationId);
+
+  const changes = gameStore.changes.use();
+
+  const accountId = useReadLocalStorage<string>("accountId");
+
   useEffect(() => {
     if (roomData) {
-      setCurrentPlayer(
-        roomData.playerState.find(
-          (player) => player.accountId === localStorage.getItem("accountId"),
-        ),
-      );
+      setCurrentPlayer(roomData.playerState.find((player) => player.accountId === accountId));
       const questionsLength = roomData.questions3History.length;
       if (roomData.state !== "GAMING") {
         setCanAsk(false);
@@ -55,7 +61,7 @@ const General = (props: { conversationId: string }) => {
       const moves = roomData.moves || [];
       setMoveHistory(roomData.queuedMoves ? [...moves, roomData.queuedMoves] : moves);
     }
-  }, [questionAsked, roomData, setCanAsk, setQuestionAsked]);
+  }, [accountId, questionAsked, roomData, setCanAsk, setQuestionAsked]);
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (ev) => {
     ev.preventDefault();
@@ -95,14 +101,14 @@ const General = (props: { conversationId: string }) => {
           </Button>
         )}
         <div className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto pr-2 lg:pr-6">
-          {questionHistory
-            .map((question, index) => [question, moveHistory[index]] as const)
-            .map((val, i) => (
-              <div key={i} className="flex flex-col gap-4">
-                {!!val[0] && !!val[0].question && <Question question={val[0]} />}
-                {Array.isArray(val[1]) && <MoveList moves={val[1]} />}
-              </div>
-            ))}
+          {Array.from({ length: Math.max(questionHistory.length, moveHistory.length) }, (_, i) => (
+            <div key={i} className="flex flex-col gap-4">
+              {!!questionHistory[i] && !!questionHistory[i].question && (
+                <Question question={questionHistory[i]} />
+              )}
+              {Array.isArray(moveHistory[i]) && <MoveList moves={moveHistory[i]} />}
+            </div>
+          ))}
           <div ref={autoBottomScrollDiv} />
         </div>
 

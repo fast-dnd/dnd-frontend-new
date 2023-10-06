@@ -1,35 +1,37 @@
-import {
-  ICreateRoom,
-  IEditAvatar,
-  IEditChampion,
-  IEditRoom,
-  roomArraySchema,
-  roomDataSchema,
-  roomSchema,
-} from "@/types/room";
+import queryString from "query-string";
 
-import createApi from "./api-factory";
+import { ICreateRoom, IEditAvatar, IEditChampion, IEditRoom } from "@/types/room";
+import { roomDetailSchema, roomHistorySchema, roomSummarySchema } from "@/validations/room";
+
+import createApi, { PAGINATION_LIMIT } from "./api-factory";
 
 const roomApi = createApi({ commonPrefix: "rooms" });
 
+const getRoomHistory = async ({ pageParam }: { pageParam: number }) => {
+  const queryParams = queryString.stringify({
+    skip: (pageParam - 1) * PAGINATION_LIMIT,
+    limit: PAGINATION_LIMIT,
+  });
+
+  return await roomApi
+    .get("history?" + queryParams)
+    .then((res) => roomHistorySchema.parse(res.data));
+};
+
+const getRoomData = async (conversationId: string) => {
+  return await roomApi.get(conversationId).then((res) => roomDetailSchema.parse(res.data));
+};
+
 const createRoom = async (data: ICreateRoom) => {
-  return await roomApi.post("", data).then((res) => roomSchema.parse(res.data));
+  return await roomApi.post("", data).then((res) => roomSummarySchema.parse(res.data));
 };
 
 const joinRoom = async (data: { link: string }) => {
-  return await roomApi.post("join", data).then((res) => roomSchema.parse(res.data));
+  return await roomApi.post("join", data).then((res) => roomSummarySchema.parse(res.data));
 };
 
 const editRoom = async (data: IEditRoom) => {
   return await roomApi.patch(data.conversationId, data);
-};
-
-const getRoomData = async (conversationId: string) => {
-  return await roomApi.get(conversationId).then((res) => roomDataSchema.parse(res.data));
-};
-
-const getRooms = async () => {
-  return await roomApi.get("").then((res) => roomArraySchema.parse(res.data));
 };
 
 const startGame = async (data: { conversationId: string }) => {
@@ -45,11 +47,11 @@ const editAvatar = async (data: IEditAvatar) => {
 };
 
 const roomService = {
+  getRoomHistory,
+  getRoomData,
   createRoom,
   joinRoom,
   editRoom,
-  getRoomData,
-  getRooms,
   startGame,
   editChampion,
   editAvatar,

@@ -56,7 +56,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) => {
     return (
-      <div className="flex flex-col">
+      <div className="flex w-full flex-col">
         {label && (
           <label
             htmlFor={label}
