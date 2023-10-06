@@ -21,7 +21,7 @@ const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
       },
       {
         onSuccess: (data) => {
-          if (data.admin) localStorage.setItem("accountId", data.admin.accountId);
+          if (data.admin) localStorage.setItem("accountId", JSON.stringify(data.admin.accountId));
           setLoadingRoom(true);
           router.push(`room/${data.conversationId}`);
         },

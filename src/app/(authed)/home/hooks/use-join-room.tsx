@@ -9,7 +9,7 @@ const useJoinRoom = () => {
   return useMutation({
     mutationFn: roomService.joinRoom,
     onSuccess: (data) => {
-      if (data.player) localStorage.setItem("accountId", data.player.accountId);
+      if (data.player) localStorage.setItem("accountId", JSON.stringify(data.player.accountId));
       router.push(`room/${data.conversationId}`);
     },
   });
