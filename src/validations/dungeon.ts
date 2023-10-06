@@ -62,6 +62,10 @@ export const dungeonForBackendSchema = dungeonDetailSchema.omit({
   rating: true,
 });
 
+export const dungeonResponseSchema = z.object({
+  id: z.string(),
+});
+
 export const rateDungeonSchema = z.object({
   dungeonId: z.string(),
   rating: z.number().min(0).max(5),

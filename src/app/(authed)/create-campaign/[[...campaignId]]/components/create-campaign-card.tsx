@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Image from "next/image";
+import { AxiosError } from "axios";
+import { z } from "zod";
 
-import StatusModal, { IStatusModalContent } from "@/components/status-modal";
+import StatusModal, { StatusModalContent } from "@/components/status-modal";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,13 +17,7 @@ import { campaignFormStore } from "../stores/campaign-form-store";
 const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
   const { name, description, dungeons, image } = campaignFormStore.use();
 
-  const [openModal, setOpenModal] = useState(false);
-  const [modalContent, setModalContent] = useState<IStatusModalContent>({
-    actionText: "",
-    title: "",
-    description: "",
-    href: "",
-  });
+  const [modalContent, setModalContent] = useState<StatusModalContent>();
 
   const { mutate: createCampaign, isLoading: isCreating } = useCreateCampaign();
   const { mutate: updateCampaign, isLoading: isUpdating } = useUpdateCampaign();
@@ -41,45 +37,27 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
           campaignId,
         },
         {
-          onSuccess: () => {
-            setModalContent({
-              title: "CAMPAIGN EDITED SUCCESSFULLY",
-              description: "You can start your story with your new campaign now!",
-              actionText: "GO TO PROFILE",
-              href: "/profile?activeTab=CAMPAIGNS",
-            });
-            setOpenModal(true);
+          onSuccess: ({ id }) => {
+            setModalContent({ state: "EDITED", id });
           },
-          onError: () => {
-            setModalContent({
-              title: "ERROR EDITING CAMPAIGN",
-              description: "",
-              actionText: "GO TO PROFILE",
-              href: "/profile?activeTab=CAMPAIGNS",
-            });
-            setOpenModal(true);
+          onError: (data) => {
+            if (data instanceof AxiosError) {
+              const errorMessages = z.array(z.string()).parse(data?.response?.data);
+              setModalContent({ errorMessages, state: "ERRORED" });
+            }
           },
         },
       );
     else
       createCampaign(dataForBackend, {
-        onSuccess: () => {
-          setModalContent({
-            title: "CAMPAIGN CREATED SUCCESSFULLY",
-            description: "You can start your story with your new campaign now!",
-            actionText: "GO TO PROFILE",
-            href: "/profile?activeTab=CAMPAIGNS",
-          });
-          setOpenModal(true);
+        onSuccess: ({ id }) => {
+          setModalContent({ state: "CREATED", id });
         },
-        onError: () => {
-          setModalContent({
-            title: "ERROR CREATING CAMPAIGN",
-            description: "",
-            actionText: "GO TO PROFILE",
-            href: "/profile?activeTab=CAMPAIGNS",
-          });
-          setOpenModal(true);
+        onError: (data) => {
+          if (data instanceof AxiosError) {
+            const errorMessages = z.array(z.string()).parse(data?.response?.data);
+            setModalContent({ errorMessages, state: "ERRORED" });
+          }
         },
       });
   };
@@ -136,7 +114,12 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
         </div>
       </div>
 
-      <StatusModal open={openModal} content={modalContent} />
+      <StatusModal
+        type="CAMPAIGN"
+        open={!!modalContent}
+        content={modalContent}
+        onClose={() => setModalContent(undefined)}
+      />
     </Box>
   );
 };

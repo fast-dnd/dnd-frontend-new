@@ -1,7 +1,11 @@
 import queryString from "query-string";
 
 import { ICampaignForBackend } from "@/types/campaign";
-import { campaignDetailSchema, campaignsSchema } from "@/validations/campaign";
+import {
+  campaignDetailSchema,
+  campaignResponseSchema,
+  campaignsSchema,
+} from "@/validations/campaign";
 
 import createApi, { PAGINATION_LIMIT } from "./api-factory";
 
@@ -22,11 +26,13 @@ const getCampaign = async (campaignId: string) => {
 };
 
 const createCampaign = async (data: ICampaignForBackend) => {
-  return await campaignApi.post("", data);
+  return await campaignApi.post("", data).then((res) => campaignResponseSchema.parse(res.data));
 };
 
 const updateCampaign = async (data: ICampaignForBackend & { campaignId: string }) => {
-  return await campaignApi.put(data.campaignId, data);
+  return await campaignApi
+    .put(data.campaignId, data)
+    .then((res) => campaignResponseSchema.parse(res.data));
 };
 
 const deleteCampaign = async (campaignId: string) => {

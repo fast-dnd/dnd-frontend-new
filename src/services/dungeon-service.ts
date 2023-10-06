@@ -1,7 +1,7 @@
 import queryString from "query-string";
 
 import { IDungeonForBackend, IRateDungeon } from "@/types/dungeon";
-import { dungeonDetailSchema, dungeonsSchema } from "@/validations/dungeon";
+import { dungeonDetailSchema, dungeonResponseSchema, dungeonsSchema } from "@/validations/dungeon";
 
 import createApi, { PAGINATION_LIMIT } from "./api-factory";
 
@@ -22,11 +22,11 @@ const getDungeon = async (dungeonId: string) => {
 };
 
 const createDungeon = async (data: IDungeonForBackend) => {
-  return await dungeonApi.post("", data);
+  return await dungeonApi.post("", data).then((res) => dungeonResponseSchema.parse(res.data));
 };
 
 const updateDungeon = async (data: IDungeonForBackend) => {
-  return await dungeonApi.put("", data);
+  return await dungeonApi.put("", data).then((res) => dungeonResponseSchema.parse(res.data));
 };
 
 const deleteDungeon = async (dungeonId: string) => {

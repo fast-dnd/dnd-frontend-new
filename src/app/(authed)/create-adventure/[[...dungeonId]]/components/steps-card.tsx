@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { AxiosError } from "axios";
 import { MdEdit } from "react-icons/md";
+import { z } from "zod";
 
-import StatusModal, { IStatusModalContent } from "@/components/status-modal";
+import StatusModal, { StatusModalContent } from "@/components/status-modal";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
@@ -15,13 +17,7 @@ import { tagsRemoveLabel } from "../utils/tags-utils";
 const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
   const { currentStep, dungeonFormData } = dungeonFormStore.use();
 
-  const [openModal, setOpenModal] = useState(false);
-  const [modalContent, setModalContent] = useState<IStatusModalContent>({
-    actionText: "",
-    title: "",
-    description: "",
-    href: "",
-  });
+  const [modalContent, setModalContent] = useState<StatusModalContent>();
 
   const { mutate: createDungeon, isLoading: isCreating } = useCreateDungeon();
   const { mutate: updateDungeon, isLoading: isUpdating } = useUpdateDungeon();
@@ -34,45 +30,27 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
 
     if (dungeonId) {
       updateDungeon(dungeonFormDataWithoutTags, {
-        onSuccess: (_data) => {
-          setModalContent({
-            title: "ADVENTURE EDITED SUCCESSFULLY",
-            description: "You can start your story with your new adventure now!",
-            actionText: "GO TO PROFILE",
-            href: "/profile",
-          });
-          setOpenModal(true);
+        onSuccess: ({ id }) => {
+          setModalContent({ state: "EDITED", id });
         },
-        onError: () => {
-          setModalContent({
-            title: "ERROR EDITING ADVENTURE",
-            description: "",
-            actionText: "GO TO PROFILE",
-            href: "/profile",
-          });
-          setOpenModal(true);
+        onError: (data) => {
+          if (data instanceof AxiosError) {
+            const errorMessages = z.array(z.string()).parse(data?.response?.data);
+            setModalContent({ errorMessages, state: "ERRORED" });
+          }
         },
       });
     } else {
       createDungeon(dungeonFormDataWithoutTags, {
-        onSuccess: (data) => {
-          dungeonFormStore.dungeonFormData.set((prev) => ({ ...prev, _id: data.data._id }));
-          setModalContent({
-            title: "ADVENTURE CREATED SUCCESSFULLY",
-            description: "You can start your story with your new adventure now!",
-            actionText: "GO TO PROFILE",
-            href: "/profile",
-          });
-          setOpenModal(true);
+        onSuccess: ({ id }) => {
+          dungeonFormStore.dungeonFormData.set((prev) => ({ ...prev, id }));
+          setModalContent({ state: "CREATED", id });
         },
-        onError: () => {
-          setModalContent({
-            title: "ERROR CREATING ADVENTURE",
-            description: "",
-            actionText: "GO TO PROFILE",
-            href: "/profile",
-          });
-          setOpenModal(true);
+        onError: (data) => {
+          if (data instanceof AxiosError) {
+            const errorMessages = z.array(z.string()).parse(data?.response?.data);
+            setModalContent({ errorMessages, state: "ERRORED" });
+          }
         },
       });
     }
@@ -106,7 +84,12 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
       <Button className="w-fit" onClick={onFinishForm} isLoading={isCreating || isUpdating}>
         {dungeonId ? "SAVE CHANGES" : "PUBLISH"}
       </Button>
-      <StatusModal open={openModal} content={modalContent} />
+      <StatusModal
+        type="ADVENTURE"
+        open={!!modalContent}
+        content={modalContent}
+        onClose={() => setModalContent(undefined)}
+      />
     </Box>
   );
 };

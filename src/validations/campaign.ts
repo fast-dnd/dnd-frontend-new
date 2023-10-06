@@ -24,6 +24,10 @@ export const campaignForBackendSchema = campaignSchema.omit({ _id: true, imageUr
   image: z.string().optional(),
 });
 
+export const campaignResponseSchema = z.object({
+  id: z.string(),
+});
+
 export const campaignsSchema = z.object({
   campaigns: z.array(campaignSchema),
   total: z.number(),
