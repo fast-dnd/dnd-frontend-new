@@ -5,7 +5,7 @@ import { IPlayer } from "@/types/room";
 
 const Player = ({ player }: { player: IPlayer }) => {
   return (
-    <div key={player.accountId} className="flex flex-row gap-6">
+    <div key={player.accountId} className="flex w-full flex-row gap-6">
       <Image
         src={player.imageUrl || "/images/default-avatar.png"}
         width={83}
@@ -14,8 +14,8 @@ const Player = ({ player }: { player: IPlayer }) => {
         className="h-[70px] w-[70px] rounded-md lg:h-[83px] lg:w-[83px]"
       />
 
-      <div className="flex flex-col justify-between">
-        <p className="text-lg lg:text-2xl">{player.name}</p>
+      <div className="flex w-full min-w-0 flex-col justify-between">
+        <p className="truncate text-lg lg:text-2xl">{player.name}</p>
         {player.champion ? (
           <p className="line-clamp-2 text-base lg:text-xl">
             {player.champion.name} -{" "}

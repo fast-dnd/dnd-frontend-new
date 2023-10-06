@@ -23,8 +23,8 @@ const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
   return (
     <Box
       title="MY COLLECTION"
-      wrapperClassName="flex basis-2/3"
-      className={cn("flex min-h-0 flex-1 flex-col gap-8 lg:p-8")}
+      wrapperClassName="w-2/3"
+      className={cn("flex min-h-0 w-full flex-1 flex-col gap-8 lg:p-8")}
     >
       {!!dungeonDetailId && (
         <>

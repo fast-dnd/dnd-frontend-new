@@ -34,7 +34,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
         }}
         value={move ? champion.moveMapping[move] : freeWill}
       />
-      <div className="pointer-events-none absolute bottom-4 flex w-full flex-col justify-between gap-2 px-4  lg:flex-row">
+      <div className="pointer-events-none absolute bottom-4 flex w-full flex-col justify-between gap-2 px-4 lg:flex-row">
         <div className="flex h-9 justify-between gap-2 lg:justify-start">
           <Button
             variant="ghost"

@@ -53,10 +53,10 @@ const GameHistory = ({ showFull = false }: { showFull?: boolean }) => {
         .map((room) => <RoomItem key={room.conversationId} room={room} />);
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-6">
+    <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-6">
       {showFull && <p className="uppercase">Games played: {roomsData?.pages[0].total ?? "--"}</p>}
 
-      <div className="flex h-full flex-col gap-4 overflow-y-auto pb-2 pr-4">
+      <div className="flex h-full w-full flex-col gap-4 overflow-y-auto pb-2 pr-4">
         {roomsData.pages[0].rooms.length === 0 ? (
           <ZeroGames />
         ) : (

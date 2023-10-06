@@ -15,11 +15,11 @@ const SelectAdventuresCard = ({ isEditing }: { isEditing: boolean }) => {
   };
 
   return (
-    <div className="flex h-full w-full">
+    <div className="flex h-full w-[65%]">
       <Box
         title={isEditing ? "EDIT Campaign" : "CREATE Campaign"}
         className="mb-4 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:mb-0 lg:gap-6 lg:p-8"
-        wrapperClassName="w-[95%] lg:w-[1200px] mx-auto"
+        wrapperClassName="w-[95%] lg:w-full mx-auto"
       >
         <GoBackButton href="/profile" />
         <div className="flex flex-row items-center justify-between gap-8">

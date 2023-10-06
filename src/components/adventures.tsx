@@ -79,7 +79,7 @@ const Adventures = ({
   return dungeonsData.pages[0].dungeons.length === 0 ? (
     <NoAdventures />
   ) : (
-    <div className="flex flex-1 flex-col gap-8 overflow-y-auto pr-4">
+    <div className="flex w-full flex-1 flex-col gap-8 overflow-y-auto pr-4">
       {content}
       {isFetchingNextPage && (
         <div className="flex h-10 justify-center">
@@ -134,7 +134,7 @@ const NoAdventures = () => (
         your first adventure. Fill its corridors with challenges, secrets, and tales that
         adventurers yearn to explore!
       </p>
-      <Button href="/create-dungeon">CREATE NEW ADVENTURE</Button>
+      <Button href="/create-adventure">CREATE NEW ADVENTURE</Button>
     </div>
   </div>
 );

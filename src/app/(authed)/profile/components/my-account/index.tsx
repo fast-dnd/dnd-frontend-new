@@ -25,12 +25,12 @@ const MyAccount = () => {
   return (
     <Box
       title="MY ACCOUNT"
-      wrapperClassName="flex h-full basis-1/3"
-      className="flex h-full flex-col gap-8 overflow-y-auto p-8"
+      wrapperClassName="flex h-full w-[30%]"
+      className="flex h-full w-full flex-col gap-8 overflow-y-auto p-8"
     >
-      <div className="flex flex-col gap-8">
-        <div className="flex gap-4">
-          <div className="my-auto h-fit w-fit">
+      <div className="flex w-full flex-col gap-8">
+        <div className="flex items-center gap-4">
+          <div className="h-[100px] w-[100px] shrink-0">
             <Image
               src={account.account.imageUrl || "/images/default-avatar.png"}
               width={100}
@@ -39,9 +39,9 @@ const MyAccount = () => {
               className="h-[100px] w-[100px] rounded-md"
             />
           </div>
-          <div className="flex flex-col gap-2.5">
-            <div className="flex flex-col gap-1">
-              <p className="text-xl font-bold uppercase">{account.account.username}</p>
+          <div className="flex w-full min-w-0 flex-col gap-2.5">
+            <div className="flex w-full flex-col gap-1">
+              <p className="truncate text-xl font-bold uppercase">{account.account.username}</p>
               <p>Level {account.account.level}</p>
             </div>
             <p>{account.account.properties.email}</p>

@@ -30,7 +30,7 @@ const CampaignDetail = ({
   if (!campaign) return <div>Something went wrong</div>;
 
   return (
-    <div className="flex min-h-0 w-full flex-1 flex-col gap-6 overflow-y-auto">
+    <div className="flex min-h-0 w-full flex-1 flex-col gap-6 overflow-y-auto pr-4">
       <p>CAMPAIGN</p>
       <div className="flex gap-8 rounded-md ">
         <Image
@@ -40,8 +40,8 @@ const CampaignDetail = ({
           height={200}
           className="h-16 w-16 rounded-md lg:h-[200px] lg:w-[200px]"
         />
-        <div className="flex w-full flex-col gap-4">
-          <p className="text-2xl font-bold uppercase">{campaign.name}</p>
+        <div className="flex w-full min-w-0 flex-col gap-4">
+          <p className="truncate text-2xl font-bold uppercase">{campaign.name}</p>
           <p className="text-xl">{campaign.description}</p>
           <div className="mb-1 mt-auto flex w-full justify-between"></div>
         </div>

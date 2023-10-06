@@ -39,13 +39,13 @@ export const Dungeon = React.forwardRef<
     return (
       <div
         className={cn(
-          "flex cursor-pointer gap-8 rounded-md p-4 hover:bg-white/5",
+          "flex w-full cursor-pointer gap-8 rounded-md p-4 hover:bg-white/5",
           isAddedToCampaign && "border-2 border-primary",
         )}
         onClick={onClick}
         ref={ref}
       >
-        <div className="relative h-[200px] w-[250px] rounded-md">
+        <div className="relative h-[200px] w-[200px] shrink-0 rounded-md">
           {isAddedToCampaign && (
             <>
               <div className="absolute left-0 top-0 h-full w-full rounded-md bg-black/50" />
@@ -62,9 +62,9 @@ export const Dungeon = React.forwardRef<
             className="h-16 w-16 rounded-md lg:h-[200px] lg:w-[200px]"
           />
         </div>
-        <div className="flex w-full flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <p className="inline-flex items-center gap-8 text-2xl font-bold uppercase">
+        <div className="flex w-full min-w-0 flex-col gap-4">
+          <div className="flex w-full items-center justify-between gap-4">
+            <p className="inline-flex min-w-0 flex-1 items-center gap-8 truncate text-2xl font-bold uppercase">
               {dungeon.name}
               {isAddedToCampaign && (
                 <span className="rounded-md border border-primary px-3 py-1.5 text-sm font-normal normal-case tracking-wider text-primary">
@@ -73,7 +73,7 @@ export const Dungeon = React.forwardRef<
               )}
             </p>
             {showActions && (
-              <div className="mr-8 flex gap-4" onClick={(e) => e.stopPropagation()}>
+              <div className="mr-8 flex shrink-0 gap-4" onClick={(e) => e.stopPropagation()}>
                 <div
                   className="flex items-center gap-2 text-white/50 transition-all duration-200 hover:text-info"
                   onClick={(e) => {
@@ -97,7 +97,7 @@ export const Dungeon = React.forwardRef<
                 height={20}
                 className="rounded-md lg:h-[20px] lg:w-[20px]"
               />
-              {dungeon.createdBy.username}
+              <span className="truncate">{dungeon.createdBy.username}</span>
             </div>
           )}
           <p className="text-xl">{dungeon.description}</p>

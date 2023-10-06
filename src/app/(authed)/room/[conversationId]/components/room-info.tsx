@@ -25,7 +25,7 @@ const RoomInfo = (props: { conversationId: string }) => {
       <Box
         title="LOBBY"
         className="flex h-full min-h-0 shrink flex-col items-center justify-center gap-5 p-5 lg:gap-8 lg:p-8"
-        wrapperClassName="h-full mx-auto basis-3/4"
+        wrapperClassName="h-full w-[70%]"
       >
         <Spinner className="h-40 w-40" />
       </Box>
@@ -42,7 +42,7 @@ const RoomInfo = (props: { conversationId: string }) => {
     <Box
       title="LOBBY"
       className="flex h-full min-h-0 shrink flex-col gap-5 p-5 lg:gap-8 lg:p-8"
-      wrapperClassName="h-full mx-auto basis-3/4"
+      wrapperClassName="h-full w-[70%]"
     >
       <GoBackButton className="mb-0" href="/home" />
       <div className="flex min-h-0 w-full flex-1 flex-col gap-5 lg:gap-8 lg:overflow-y-auto">

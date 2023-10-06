@@ -42,17 +42,17 @@ const DungeonDetail = ({
               )}
               onClick={() => onChangeChampion && onChangeChampion(champion)}
             >
-              <p className="text-xl font-semibold">{champion.name}</p>
-              <p className="font-light">{champion.description}</p>
+              <p className="truncate text-xl font-semibold">{champion.name}</p>
+              <p className="truncate font-light">{champion.description}</p>
               <div className="flex flex-col gap-4">
                 <p>ACTIONS</p>
                 <div className="grid grid-cols-2 gap-4">
                   {moveMappingWithIcons(champion.moveMapping).map((move, index) => (
                     <div key={index} className="flex items-center gap-2">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary/10">
                         {move.icon}
                       </div>
-                      <p>{move.text}</p>
+                      <p className="truncate">{move.text}</p>
                     </div>
                   ))}
                 </div>

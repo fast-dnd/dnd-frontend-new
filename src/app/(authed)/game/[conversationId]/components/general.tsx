@@ -100,7 +100,7 @@ const General = (props: { conversationId: string }) => {
             Team stats
           </Button>
         )}
-        <div className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto pr-2 lg:pr-6">
+        <div className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto overflow-x-hidden pr-2 lg:pr-6">
           {Array.from({ length: Math.max(questionHistory.length, moveHistory.length) }, (_, i) => (
             <div key={i} className="flex flex-col gap-4">
               {!!questionHistory[i] && !!questionHistory[i].question && (

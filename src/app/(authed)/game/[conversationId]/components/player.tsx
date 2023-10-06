@@ -39,12 +39,14 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
 
       <div
         className={cn(
-          "flex flex-col justify-between lg:gap-1.5",
+          "flex w-full min-w-0 flex-col justify-between lg:gap-1.5",
           player.health <= 0 && "pointer-events-none opacity-50",
         )}
       >
-        <p className="-mt-1 font-semibold uppercase tracking-[0.07em] lg:text-xl">{player.name}</p>
-        <p className="-mt-0.5 text-sm font-light tracking-[0.15em] lg:text-base">
+        <p className="-mt-1 truncate font-semibold uppercase tracking-[0.07em] lg:text-xl">
+          {player.name}
+        </p>
+        <p className="-mt-0.5 truncate text-sm font-light tracking-[0.15em] lg:text-base">
           {player.champion?.name}
         </p>
         <div className="flex lg:gap-4">

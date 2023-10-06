@@ -26,8 +26,8 @@ const RoomItem = React.forwardRef<
         height={80}
         className="h-20"
       />
-      <div className="flex flex-1 flex-col justify-center gap-3">
-        <p className="font-bold">{room.dungeon.name}</p>
+      <div className="flex min-w-0 flex-1 flex-col justify-center gap-3">
+        <p className="truncate font-bold">{room.dungeon.name}</p>
         <p className={`text-sm uppercase ${roomState.color}`}>{roomState.text}</p>
       </div>
 

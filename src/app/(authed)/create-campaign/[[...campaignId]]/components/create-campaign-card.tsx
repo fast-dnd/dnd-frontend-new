@@ -65,7 +65,7 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
   return (
     <Box
       title="CAMPAIGN"
-      wrapperClassName="h-full"
+      wrapperClassName="h-full w-[30%]"
       className="flex h-full min-h-0 w-full flex-col items-center justify-between overflow-y-auto p-8"
     >
       <div className="flex h-full w-full flex-col justify-between gap-6">
@@ -94,7 +94,7 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
         />
         <div className="hidden w-full border-t border-white/20 lg:block" />
         <p>SELECTED ADVENTURES</p>
-        <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto">
+        <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-4 overflow-y-auto">
           {dungeons.map((dungeon) => (
             <div className="flex gap-4" key={dungeon._id}>
               <Image
@@ -102,8 +102,9 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
                 alt={dungeon.name}
                 width={48}
                 height={48}
+                className="h-12 w-12"
               />
-              {dungeon.name}
+              <p className="truncate">{dungeon.name}</p>
             </div>
           ))}
         </div>
