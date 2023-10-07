@@ -12,7 +12,7 @@ const ChatWithMaster = ({ story }: { story: ITranscriptStory }) => {
           width={32}
           height={32}
           alt={`avatar`}
-          className="rounded-md"
+          className="h-8 w-8 rounded-md"
         />
         <span className="font-semibold text-primary">{story.playerAsking?.name}:</span>{" "}
         {story.question}
@@ -23,7 +23,7 @@ const ChatWithMaster = ({ story }: { story: ITranscriptStory }) => {
           width={32}
           height={32}
           alt={`master avatar`}
-          className="rounded-md"
+          className="h-8 w-8 rounded-md"
         />
         <span className="font-semibold">MASTER:</span> {story.answer}
       </p>

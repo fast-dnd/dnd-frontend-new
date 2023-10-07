@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Image from "next/image";
 
 import { ITranscript } from "@/types/transcript";
@@ -28,7 +28,7 @@ const Story = ({ transcripts }: { transcripts: ITranscript }) => {
               );
               if (!player) return null;
               return (
-                <>
+                <Fragment key={move.action}>
                   <Image
                     src={player.imageUrl || "/images/default-avatar.png"}
                     width={32}
@@ -37,7 +37,7 @@ const Story = ({ transcripts }: { transcripts: ITranscript }) => {
                     className="rounded-md"
                   />
                   <span className="font-semibold text-primary">{player.name}:</span> {move.action}
-                </>
+                </Fragment>
               );
             })}
           </div>
