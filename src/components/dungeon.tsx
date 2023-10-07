@@ -9,6 +9,13 @@ import { IBaseDungeon } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
 import DeleteModal from "./delete-modal";
+import {
+  Tooltip,
+  TooltipArrow,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 export const Dungeon = React.forwardRef<
   HTMLDivElement,
@@ -110,20 +117,41 @@ export const Dungeon = React.forwardRef<
               ))}
             </div>
             <div className="mr-8 flex items-center gap-8">
-              <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
-                  <Game variant="Bold" color="#FF5A5A" />
-                </div>
-                <p className="text-xl font-bold">{dungeon.maxPlayers}</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
-                  <Star1 variant="Bold" color="#FF5A5A" />
-                </div>
-                <p className="text-xl font-bold">
-                  {dungeon.rating + "(" + dungeon.numOfRatings + ")"}
-                </p>
-              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <div className="flex items-center gap-2">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
+                        <Game variant="Bold" color="#FF5A5A" />
+                      </div>
+                      <p className="text-xl font-bold">{dungeon.maxPlayers}</p>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent className="border-transparent">
+                    Max players in room
+                    <TooltipArrow className=" fill-select text-select" />
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <div className="flex items-center gap-2">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
+                        <Star1 variant="Bold" color="#FF5A5A" />
+                      </div>
+                      <p className="text-xl font-bold">
+                        {dungeon.rating + " (" + dungeon.numOfRatings + ")"}
+                      </p>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent className="border-transparent">
+                    Rating (Number of reviews)
+                    <TooltipArrow className=" fill-select text-select" />
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           </div>
         </div>
