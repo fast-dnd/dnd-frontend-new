@@ -129,9 +129,9 @@ const General = (props: { conversationId: string }) => {
             type="submit"
             variant="ghost"
             className="w-fit text-2xl text-primary"
+            isLoading={asking}
           >
             {!asking && <IoMdSend />}
-            {asking && <Spinner className="m-0 h-6 w-6 opacity-50" />}
           </Button>
         </form>
       </div>

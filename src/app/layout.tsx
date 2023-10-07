@@ -9,11 +9,13 @@ import "@/styles/scrollbar.css";
 import "@/styles/zoom.css";
 import "@smastrom/react-rating/style.css";
 
+import { Metadata } from "next";
+
 import Background from "../components/background";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "v3RPG",
-  description: "AI-powered D&D game",
+  description: "Bringing gamification to storytelling. Powered by AI.",
   icons: {
     icon: "/v3dnd-logo.svg",
   },

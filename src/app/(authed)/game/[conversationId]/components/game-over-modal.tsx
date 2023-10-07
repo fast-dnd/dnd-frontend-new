@@ -13,7 +13,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import Spinner from "@/components/ui/spinner";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IGameState, IPlayer } from "@/types/room";
 
@@ -114,8 +113,8 @@ const GameOverModal = ({
               close();
               router.push("/home");
             }}
+            isLoading={goingHome}
           >
-            {goingHome && <Spinner className="m-0 h-4 w-4" />}
             GO HOME
           </Button>
         </DialogFooter>

@@ -12,7 +12,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import Spinner from "@/components/ui/spinner";
 
 const HomeModal = ({ open, close }: { open: boolean; close: () => void }) => {
   const router = useRouter();
@@ -41,8 +40,8 @@ const HomeModal = ({ open, close }: { open: boolean; close: () => void }) => {
               close();
               router.push("/home");
             }}
+            isLoading={goingHome}
           >
-            {goingHome && <Spinner className="m-0 h-4 w-4" />}
             EXIT GAME
           </Button>
           <Button
