@@ -1,8 +1,6 @@
 "use client";
 
-import Link from "next/link";
 import { Copy } from "iconsax-react";
-import { BsChevronLeft } from "react-icons/bs";
 
 import useCopy from "@/hooks/use-copy";
 import { jibril } from "@/utils/fonts";
@@ -11,10 +9,7 @@ const TranscriptHeader = () => {
   const { copied, onCopy } = useCopy();
 
   return (
-    <div className="relative flex w-full items-center justify-between rounded-t-md bg-dark-900 px-12 py-6">
-      <Link href="/home" className="invisible flex gap-2 font-bold uppercase">
-        <BsChevronLeft /> Go back
-      </Link>
+    <div className="relative flex w-full items-center justify-center rounded-t-md bg-dark-900 px-12 py-6">
       <div className="relative flex items-center justify-center gap-4">
         <div className="h-2 w-2 rotate-45 bg-primary" />
         <p
@@ -26,7 +21,7 @@ const TranscriptHeader = () => {
         <div className="h-2 w-2 rotate-45 bg-primary" />
       </div>
       <div
-        className="flex cursor-pointer gap-2 rounded-md bg-white/5 px-4 py-3 font-semibold uppercase text-white/50"
+        className="absolute right-10 flex cursor-pointer gap-2 rounded-md bg-white/5 px-4 py-3 font-semibold uppercase text-white/50 transition-all duration-200 hover:opacity-80"
         onClick={() => onCopy(window.location.href)}
       >
         {copied ? "Copied!" : "Copy share link"}

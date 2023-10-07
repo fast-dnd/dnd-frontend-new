@@ -20,7 +20,7 @@ const GoBackButton = ({
   return (
     <Comp
       className={cn(
-        "flex w-fit cursor-pointer items-center justify-center gap-2 rounded-md border-2 border-dark-500 bg-dark-800 px-3 py-2 text-xs text-white",
+        "flex w-fit cursor-pointer items-center justify-center gap-2 rounded-md border-2 border-dark-500 bg-dark-800 px-3 py-2 text-xs text-white transition-all duration-200 hover:opacity-80",
         className,
       )}
       onClick={onClick}
