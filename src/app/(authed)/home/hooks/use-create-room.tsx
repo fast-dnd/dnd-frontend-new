@@ -1,10 +1,15 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import roomService from "@/services/room-service";
+import roomService, { roomKey } from "@/services/room-service";
 
 const useCreateRoom = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: roomService.createRoom,
+    onSuccess: () => {
+      queryClient.invalidateQueries([roomKey]);
+    },
   });
 };
 
