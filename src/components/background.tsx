@@ -7,8 +7,8 @@ import { backgroundStore } from "@/stores/background-store";
 
 const Background = () => {
   const pathname = usePathname();
-  const bgUrl = backgroundStore.bgUrl.use();
-  const showBg = bgUrl && (pathname.startsWith("/room") || pathname.startsWith("/game"));
+  const bgUrl = backgroundStore.use();
+  const showBg = bgUrl && pathname.startsWith("/game");
 
   return (
     <div className="absolute -z-10 h-[110%] w-full lg:h-full">

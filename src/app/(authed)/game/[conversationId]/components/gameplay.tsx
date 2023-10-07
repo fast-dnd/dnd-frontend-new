@@ -7,6 +7,7 @@ import { Box } from "@/components/ui/box";
 import Spinner from "@/components/ui/spinner";
 import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
+import { backgroundStore } from "@/stores/background-store";
 import { IPlayer } from "@/types/room";
 
 import useGameplaySocket from "../hooks/use-gameplay-socket";
@@ -22,8 +23,6 @@ import Stories from "./stories";
 const Gameplay = (props: { conversationId: string }) => {
   const { conversationId } = props;
 
-  // const bgUrl = backgroundStore.bgUrl;
-
   const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
   const [gaming, setGaming] = useState(true);
@@ -31,7 +30,6 @@ const Gameplay = (props: { conversationId: string }) => {
   const [rewardModal, setRewardModal] = useState(false);
   const [dying, setDying] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
-  const [bgSet, setBgSet] = useState(false);
 
   const homeModal = gameStore.homeModal.use();
   const diedModal = gameStore.diedModal.use();
@@ -96,6 +94,8 @@ const Gameplay = (props: { conversationId: string }) => {
         <Spinner className="h-40 w-40" />
       </Box>
     );
+
+  backgroundStore.set(dungeonData.backgroundUrl);
 
   return (
     <Box
