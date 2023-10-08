@@ -1,21 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FiMinus, FiPlus } from "react-icons/fi";
-import { HiSparkles } from "react-icons/hi";
 
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { IPlayMove, IPlayMoveResponse } from "@/types/game";
+import { IPlayMove } from "@/types/game";
 import { IPlayer, IRoomDetail } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
 import usePlayMove from "../../hooks/use-play-move";
 import usePlayMoveSocket from "../../hooks/use-play-move-socket";
-import { randomDice } from "../../utils/dice";
+import { moveStore } from "../../stores/move-store";
+import { generateDice, generateRandomDice } from "../../utils/dice";
 import DiceBreakdown from "../dice-breakdown";
 import Die from "../die";
 import MoveInput from "./move-input";
+import PickPowerup from "./pick-powerup";
 
 export interface PlayMoveProps {
   roomData: IRoomDetail;
@@ -26,22 +25,19 @@ export interface PlayMoveProps {
 
 const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: PlayMoveProps) => {
   // TODO: separate state and effects into custom hooks (or custom components if the state is localized)
-  const [rollInfo, setRollInfo] = useState<IPlayMoveResponse>();
-  const [freeWill, setFreeWill] = useState<string>("");
   const [timer, setTimer] = useState(0);
-  const [dice, setDice] = useState([0, 0]);
-  const [powerUp, setPowerUp] = useState(0);
 
-  const { canPlay, move, rollButtonState, setCanPlay, setMove, setRollButtonState } =
-    usePlayMoveSocket(conversationId);
+  usePlayMoveSocket(conversationId);
+
+  const store = moveStore.use();
 
   const { mutate: playMove, isLoading: submitting } = usePlayMove();
 
   useEffect(() => {
-    if ((currentPlayer.mana || 0) < powerUp) {
-      setPowerUp(0);
+    if ((currentPlayer.mana || 0) < store.powerup) {
+      moveStore.powerup.set(0);
     }
-    if ((currentPlayer.health || 0) <= 0) setCanPlay(false);
+    if ((currentPlayer.health || 0) <= 0) moveStore.canPlay.set(false);
     if (loadingText) {
       setTimer(0);
     } else if (roomData.roundEndsAt) {
@@ -53,30 +49,22 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
         (move) => move.playerAccountId === currentPlayer.accountId,
       );
       if (currentPlayerMove) {
-        setCanPlay(false);
+        moveStore.canPlay.set(false);
       }
-    } else if (!loadingText && rollButtonState !== "ROLLING") {
-      setCanPlay(true);
-      setRollButtonState("CANPLAY");
+    } else if (!loadingText && store.buttonState !== "ROLLING") {
+      moveStore.canPlay.set(true);
+      moveStore.buttonState.set("CANPLAY");
     }
-    if (roomData.state === "WIN" || roomData.state === "LOSE") setCanPlay(false);
-  }, [
-    currentPlayer,
-    loadingText,
-    powerUp,
-    rollButtonState,
-    roomData,
-    setCanPlay,
-    setRollButtonState,
-  ]);
+    if (roomData.state === "WIN" || roomData.state === "LOSE") moveStore.canPlay.set(false);
+  }, [currentPlayer, loadingText, roomData, store.buttonState, store.powerup]);
 
   useEffect(() => {
     if (submitting) {
-      const timeout = setTimeout(() => setDice(randomDice()), 200);
+      const timeout = setTimeout(() => moveStore.dice.set(generateRandomDice()), 200);
 
       return () => clearTimeout(timeout);
     }
-  }, [dice, submitting]);
+  }, [submitting]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -92,33 +80,26 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
   };
 
   const onPlay = () => {
-    let moveToPlay: IPlayMove | undefined;
-    if (move) {
-      moveToPlay = {
-        conversationId,
-        mana: powerUp,
-        moveType: move,
-        message: "",
-        playerId: currentPlayer.accountId,
-      };
-    } else {
-      moveToPlay = {
-        conversationId,
-        mana: powerUp,
-        moveType: "free_will",
-        message: freeWill,
-        playerId: currentPlayer.accountId,
-      };
-    }
+    const moveToPlay: IPlayMove = {
+      conversationId,
+      mana: store.powerup,
+      moveType: store.move ?? "free_will",
+      message: store.move ? "" : store.freeWill,
+      playerId: currentPlayer.accountId,
+    };
+
     if (moveToPlay) {
-      setRollButtonState("ROLLING");
-      setCanPlay(false);
+      moveStore.buttonState.set("ROLLING");
+      moveStore.canPlay.set(false);
       playMove(moveToPlay, {
         onSuccess: (res) => {
-          setFreeWill("");
-          setRollInfo(res);
-          const rollTimeout = setTimeout(() => setRollButtonState("ROLLED"), 1500);
-          const diceTimeout = setTimeout(() => setDice(randomDice(res.diceAfterBonus)), 250);
+          moveStore.freeWill.set("");
+          moveStore.roll.set(res);
+          const rollTimeout = setTimeout(() => moveStore.buttonState.set("ROLLED"), 1500);
+          const diceTimeout = setTimeout(
+            () => moveStore.dice.set(generateDice(res.diceAfterBonus)),
+            250,
+          );
 
           return () => {
             clearTimeout(rollTimeout);
@@ -126,8 +107,8 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
           };
         },
         onError: () => {
-          setRollButtonState("CANPLAY");
-          setCanPlay(true);
+          moveStore.buttonState.set("CANPLAY");
+          moveStore.canPlay.set(true);
         },
       });
     }
@@ -144,13 +125,13 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
         <div
           className={cn(
             "flex h-full flex-1 flex-col gap-6",
-            rollButtonState !== "CANPLAY" && "hidden lg:flex",
+            store.buttonState !== "CANPLAY" && "hidden lg:flex",
           )}
         >
           <div
             className={cn(
               "bg-white/5 px-4 py-2.5 text-xl uppercase tracking-[0.07em] lg:px-8",
-              !canPlay && "text-white/50",
+              !store.canPlay && "text-white/50",
             )}
           >
             <span className="font-semibold">
@@ -158,80 +139,37 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
             </span>
             <span className="opacity-50"> - {timeToDisplay()} Left</span>
           </div>
-          <MoveInput
-            move={move}
-            freeWill={freeWill}
-            champion={currentPlayer.champion}
-            canPlay={canPlay}
-            setMove={setMove}
-            setFreeWill={setFreeWill}
-          />
+          <MoveInput champion={currentPlayer.champion} />
         </div>
         <div className="flex flex-col gap-6">
-          <div
-            className={cn(
-              "flex h-12 w-full items-center justify-between bg-white/5",
-              rollButtonState !== "CANPLAY" && "hidden opacity-50 lg:flex",
-            )}
-          >
-            <Button
-              variant="ghost"
-              disabled={powerUp === 0 || !canPlay}
-              onClick={() => setPowerUp(powerUp - 1)}
-              className="flex h-full w-12 items-center justify-center bg-white/10 px-0 text-white"
-            >
-              <FiMinus />
-            </Button>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger className="flex cursor-default items-center gap-2.5 text-xl font-semibold">
-                  <span className="mt-0.5">{powerUp}</span> <HiSparkles />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <div className="flex flex-col items-center p-4 text-center">
-                    <p className="text-lg font-semibold">Select mana boost</p>
-                    <p>This will power up your luck</p>
-                  </div>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-
-            <Button
-              variant="ghost"
-              disabled={powerUp === 2 || powerUp >= currentPlayer.mana || !canPlay}
-              onClick={() => setPowerUp(powerUp + 1)}
-              className="flex h-full w-12 items-center justify-center bg-white/10 px-0 text-white"
-            >
-              <FiPlus />
-            </Button>
-          </div>
+          <PickPowerup currentMana={currentPlayer.mana} />
           <div className="flex flex-col justify-between bg-white/5 lg:w-[270px]">
             <div className="relative flex h-28 items-center justify-center gap-4">
-              {((rollInfo?.diceAfterBonus || 0) >= 2 || submitting) && (
+              {((store.roll?.diceAfterBonus || 0) >= 2 || submitting) && (
                 <>
-                  {rollButtonState === "ROLLING" &&
-                    dice.map((roll, i) => <Die key={i} roll={roll} />)}
+                  {store.buttonState === "ROLLING" &&
+                    store.dice.map((roll, i) => <Die key={i} roll={roll} />)}
 
-                  {!!rollInfo && rollButtonState !== "ROLLING" && (
-                    <DiceBreakdown rollInfo={rollInfo} />
+                  {!!store.roll && store.buttonState !== "ROLLING" && (
+                    <DiceBreakdown rollInfo={store.roll} />
                   )}
                 </>
               )}
             </div>
             <Button
-              disabled={!canPlay || (!move && !freeWill)}
+              disabled={!store.canPlay || (!store.move && !store.freeWill)}
               className={cn(
                 "h-12 px-0 normal-case",
-                rollButtonState !== "CANPLAY" && "bg-white/5 text-white",
+                store.buttonState !== "CANPLAY" && "bg-white/5 text-white",
               )}
               onClick={onPlay}
             >
-              {rollButtonState === "CANPLAY" && <p className="text-center">Roll the dice</p>}
-              {rollButtonState === "ROLLING" && <p className="text-center">Rolling...</p>}
-              {rollButtonState === "ROLLED" && (
+              {store.buttonState === "CANPLAY" && <p className="text-center">Roll the dice</p>}
+              {store.buttonState === "ROLLING" && <p className="text-center">Rolling...</p>}
+              {store.buttonState === "ROLLED" && (
                 <div className="flex w-full justify-between px-4">
                   <p>Total</p>
-                  <p>{rollInfo?.diceAfterBonus}</p>
+                  <p>{store.roll?.diceAfterBonus}</p>
                 </div>
               )}
             </Button>

@@ -6,19 +6,15 @@ import { HiSparkles } from "react-icons/hi";
 import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/text-area";
 import { IChampion } from "@/types/dungeon";
-import { IDefaultMove } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
-export interface MoveInputProps {
-  move: IDefaultMove | undefined;
-  freeWill: string;
-  champion: IChampion | null | undefined;
-  canPlay: boolean;
-  setMove: (move: IDefaultMove | undefined) => void;
-  setFreeWill: (freeWill: string) => void;
-}
+import { moveStore } from "../../stores/move-store";
 
-const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: MoveInputProps) => {
+const MoveInput = ({ champion }: { champion: IChampion | null | undefined }) => {
+  const move = moveStore.move.use();
+  const canPlay = moveStore.canPlay.use();
+  const freeWill = moveStore.freeWill.use();
+
   if (!champion) return <div>Something went wrong</div>;
   return (
     <div className="relative flex h-60 lg:h-full">
@@ -29,8 +25,8 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
         placeholder="I found a secret tunnel and escape through it..."
         disabled={!canPlay}
         onChange={(e) => {
-          setFreeWill(e.target.value);
-          setMove(undefined);
+          moveStore.freeWill.set(e.target.value);
+          moveStore.move.set(undefined);
         }}
         value={move ? champion.moveMapping[move] : freeWill}
       />
@@ -43,7 +39,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
               "pointer-events-auto h-9 w-9 shrink grow bg-white/5 px-0 text-white lg:shrink-0 lg:grow-0",
               move === "discover_health" && "border-primary",
             )}
-            onClick={() => setMove("discover_health")}
+            onClick={() => moveStore.move.set("discover_health")}
           >
             <AiFillHeart />
           </Button>
@@ -54,7 +50,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
               "pointer-events-auto h-9 w-9 shrink grow bg-white/5 px-0 text-white lg:shrink-0 lg:grow-0",
               move === "discover_mana" && "border-primary",
             )}
-            onClick={() => setMove("discover_mana")}
+            onClick={() => moveStore.move.set("discover_mana")}
           >
             <HiSparkles />
           </Button>
@@ -65,7 +61,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
               "pointer-events-auto h-9 w-9 shrink grow bg-white/5 px-0 text-white lg:shrink-0 lg:grow-0",
               move === "conversation_with_team" && "border-primary",
             )}
-            onClick={() => setMove("conversation_with_team")}
+            onClick={() => moveStore.move.set("conversation_with_team")}
           >
             <GoPeople />
           </Button>
@@ -76,7 +72,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
               "pointer-events-auto h-9 w-9 shrink grow bg-white/5 px-0 text-white lg:shrink-0 lg:grow-0",
               move === "rest" && "border-primary",
             )}
-            onClick={() => setMove("rest")}
+            onClick={() => moveStore.move.set("rest")}
           >
             <GiNightSleep />
           </Button>
@@ -88,7 +84,7 @@ const MoveInput = ({ move, freeWill, champion, canPlay, setMove, setFreeWill }: 
             "pointer-events-auto h-9 bg-white/5 px-4 normal-case text-white lg:w-fit",
             !move && "border-primary",
           )}
-          onClick={() => setMove(undefined)}
+          onClick={() => moveStore.move.set(undefined)}
         >
           Use free will
         </Button>

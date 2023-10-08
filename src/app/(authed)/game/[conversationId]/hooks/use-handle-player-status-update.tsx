@@ -10,32 +10,30 @@ const useHandlePlayerStatusUpdate = ({ roomData }: { roomData?: IRoomDetail }) =
 
   const accountId = useReadLocalStorage<string>("accountId");
 
-  const getStatusUpdate = (prev: IPlayer, curr: IPlayer) => {
+  const getStatusUpdate = (prev: IPlayer, updated: IPlayer) => {
     const update: PlayerStatusUpdate = {};
 
-    if (curr.health < prev.health) update.lostHealth = true;
-    if (curr.health > prev.health) update.gainedHealth = true;
-    if (curr.mana !== prev.mana) update.mana = true;
-    if (curr.bonusForNextRound !== prev.bonusForNextRound) update.bonus = true;
-    if (curr.gold !== prev.gold) update.gold = true;
+    if (updated.health < prev.health) update.lostHealth = true;
+    if (updated.health > prev.health) update.gainedHealth = true;
+    if (updated.mana !== prev.mana) update.mana = true;
+    if (updated.bonusForNextRound !== prev.bonusForNextRound) update.bonus = true;
+    if (updated.gold !== prev.gold) update.gold = true;
 
     return update;
   };
 
-  const displayStatusUpdate = (update: PlayerStatusUpdate, curr: IPlayer) => {
+  const displayStatusUpdate = (update: PlayerStatusUpdate, updated: IPlayer) => {
     if (Object.keys(update).length) {
       gameStore.statusUpdate.set(update);
-      if (update.lostHealth && curr.health <= 0) gameStore.dying.set(true);
+      if (update.lostHealth && updated.health <= 0) gameStore.dying.set(true);
 
-      const updateTimeout = setTimeout(() => {
+      setTimeout(() => {
         gameStore.statusUpdate.set({});
-        if (update.lostHealth && curr.health <= 0) {
+        if (update.lostHealth && updated.health <= 0) {
           gameStore.dying.set(false);
           gameStore.diedModal.set(true);
         }
       }, 1500);
-
-      return updateTimeout;
     }
   };
 
@@ -43,13 +41,8 @@ const useHandlePlayerStatusUpdate = ({ roomData }: { roomData?: IRoomDetail }) =
     if (roomData) {
       const updatedPlayer = roomData.playerState.find((player) => player.accountId === accountId);
       if (updatedPlayer && currentPlayer) {
-        const update = getStatusUpdate(updatedPlayer, currentPlayer);
-
-        const timeout = displayStatusUpdate(update, currentPlayer);
-
-        return () => {
-          if (timeout) clearTimeout(timeout);
-        };
+        const update = getStatusUpdate(currentPlayer, updatedPlayer);
+        displayStatusUpdate(update, updatedPlayer);
       }
 
       setCurrentPlayer(updatedPlayer);
