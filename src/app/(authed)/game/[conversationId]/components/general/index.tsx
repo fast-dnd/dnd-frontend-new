@@ -1,69 +1,32 @@
 "use client";
 
-import { FormEventHandler, useEffect, useState } from "react";
+import { FormEventHandler, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
-import { useReadLocalStorage } from "usehooks-ts";
 
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Spinner from "@/components/ui/spinner";
-import useAutoScrollToBottom from "@/hooks/use-auto-scroll-to-bottom";
-import useGetRoomData from "@/hooks/use-get-room-data";
-import { IMove, IPlayer, IQuestion } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
 import useAskQuestion from "../../hooks/use-ask-question";
-import useGeneralSocket from "../../hooks/use-general-socket";
+import useGeneral from "../../hooks/use-general";
 import { gameStore } from "../../stores/game-store";
-import MoveList from "./move-list";
+import MoveQuestionHistory from "./move-question-history";
 import Player from "./player";
-import Question from "./question";
 
 const General = (props: { conversationId: string }) => {
   const { conversationId } = props;
 
-  const { data: roomData } = useGetRoomData(conversationId);
-
+  const { roomData, currentPlayer, moveHistory, questionHistory, canAsk, asking, setAsking } =
+    useGeneral(conversationId);
   const { mutate: askQuestion } = useAskQuestion();
 
-  const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
   const [statsOpened, setStatsOpened] = useState(false);
   const [question, setQuestion] = useState("");
 
-  const [moveHistory, setMoveHistory] = useState<IMove[][]>([]);
-  const [questionHistory, setQuestionHistory] = useState<Partial<IQuestion>[]>([]);
-
-  const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =
-    useGeneralSocket(conversationId);
-
   const statusUpdate = gameStore.statusUpdate.use();
-
-  const accountId = useReadLocalStorage<string>("accountId");
-
-  useEffect(() => {
-    // TODO: refactor this to a custom hook (or custom component if logic is localized)
-    if (roomData) {
-      setCurrentPlayer(roomData.playerState.find((player) => player.accountId === accountId));
-      const questionsLength = roomData.questions3History.length;
-      if (roomData.state !== "GAMING") {
-        setCanAsk(false);
-      }
-      if (questionsLength === roomData.currentRound + 1) {
-        if (roomData.questions3History[questionsLength - 1].question) {
-          setQuestionAsked(undefined);
-          setCanAsk(false);
-        }
-      } else if (questionAsked && questionAsked.playerAccountId) {
-        setCanAsk(false);
-      }
-      const questions = roomData.questions3History || [];
-      setQuestionHistory(questionAsked ? [...questions, questionAsked] : questions);
-      const moves = roomData.moves || [];
-      setMoveHistory(roomData.queuedMoves ? [...moves, roomData.queuedMoves] : moves);
-    }
-  }, [accountId, questionAsked, roomData, setCanAsk, setQuestionAsked]);
 
   const onSubmit: FormEventHandler<HTMLFormElement> = (ev) => {
     ev.preventDefault();
@@ -71,8 +34,6 @@ const General = (props: { conversationId: string }) => {
     setQuestion("");
     askQuestion({ conversationId, question }, { onError: () => setAsking(false) });
   };
-
-  const { autoBottomScrollDiv } = useAutoScrollToBottom([moveHistory, questionHistory]);
 
   if (!roomData || !currentPlayer) {
     return (
@@ -96,17 +57,7 @@ const General = (props: { conversationId: string }) => {
             Team stats
           </Button>
         )}
-        <div className="flex h-full min-h-0 flex-col gap-4 overflow-y-auto overflow-x-hidden pr-2 lg:pr-6">
-          {Array.from({ length: Math.max(questionHistory.length, moveHistory.length) }, (_, i) => (
-            <div key={i} className="flex flex-col gap-4">
-              {!!questionHistory[i] && !!questionHistory[i].question && (
-                <Question question={questionHistory[i]} />
-              )}
-              {Array.isArray(moveHistory[i]) && <MoveList moves={moveHistory[i]} />}
-            </div>
-          ))}
-          <div ref={autoBottomScrollDiv} />
-        </div>
+        <MoveQuestionHistory moveHistory={moveHistory} questionHistory={questionHistory} />
 
         <form onSubmit={onSubmit} className="flex w-full items-end">
           <div className="flex flex-1">
