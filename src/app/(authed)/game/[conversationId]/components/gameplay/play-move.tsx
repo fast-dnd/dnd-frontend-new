@@ -11,8 +11,8 @@ import usePlayMove from "../../hooks/use-play-move";
 import usePlayMoveSocket from "../../hooks/use-play-move-socket";
 import { moveStore } from "../../stores/move-store";
 import { generateDice, generateRandomDice } from "../../utils/dice";
-import DiceBreakdown from "../dice-breakdown";
-import Die from "../die";
+import DiceBreakdown from "./dice-breakdown";
+import Die from "./die";
 import MoveInput from "./move-input";
 import PickPowerup from "./pick-powerup";
 
