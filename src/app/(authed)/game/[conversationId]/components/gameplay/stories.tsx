@@ -20,7 +20,7 @@ const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
   const { autoBottomScrollDiv } = useAutoScrollToBottom([roomData, stories, lastStory]);
 
   return (
-    <div className="flex w-full flex-1 flex-col gap-8 pr-4 lg:max-h-full lg:overflow-y-auto lg:pr-6">
+    <div className="flex w-full flex-1 flex-col gap-8 pr-4 lg:overflow-y-auto lg:pr-6">
       {stories.map((story, i) => {
         const generatedImage = roomData.generatedImages[i];
 

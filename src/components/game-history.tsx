@@ -68,7 +68,11 @@ const GameHistory = ({ showFull = false }: { showFull?: boolean }) => {
               </div>
             )}
             {!showFull && (
-              <Button href="/profile?activeTab=GAME+HISTORY" variant="outline">
+              <Button
+                className="whitespace-nowrap"
+                href="/profile?activeTab=GAME+HISTORY"
+                variant="outline"
+              >
                 SHOW ENTIRE GAME HISTORY
               </Button>
             )}

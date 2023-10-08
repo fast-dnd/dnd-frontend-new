@@ -5,7 +5,10 @@ const useAutoScrollToBottom = (deps?: DependencyList) => {
 
   useEffect(() => {
     if (autoBottomScrollDiv.current) {
-      autoBottomScrollDiv.current.scrollIntoView({ behavior: "smooth" });
+      autoBottomScrollDiv.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
     }
   }, [deps]);
 
