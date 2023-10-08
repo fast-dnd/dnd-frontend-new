@@ -45,7 +45,7 @@ const MyAccount = () => {
               <p>Level {account.account.level}</p>
             </div>
             <p>{account.account.properties.email}</p>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 transition-all duration-200 hover:opacity-80">
               <Link
                 className="flex w-fit items-center gap-2 rounded-md bg-white/5 px-3 py-1"
                 href="/edit-profile"
