@@ -15,7 +15,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
   return (
     <div
       className={cn(
-        "flex flex-col gap-8 overflow-x-hidden lg:items-center lg:justify-center",
+        "flex min-h-0 flex-col gap-8 overflow-hidden lg:max-h-full lg:items-center lg:justify-center",
         onHideHowToPlay && hideText && "mt-8 lg:mt-4",
       )}
     >
@@ -30,10 +30,11 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
           <AiOutlineLeft className="inline-block" /> {hideText}
         </div>
       )}
-      <div className="w-fit px-5 lg:px-0">
+      <div className="h-full w-fit px-5 lg:px-0">
         <Box
           title="HOW TO PLAY"
-          className="mb-4 flex min-h-0 flex-1 flex-col items-start justify-center gap-5 p-5 tracking-wider lg:flex-row lg:gap-12 lg:px-12 lg:py-8"
+          className="mb-4 flex h-full flex-col items-start justify-center gap-5 overflow-y-auto p-5 tracking-wider lg:flex-row lg:gap-12 lg:px-12 lg:py-8"
+          wrapperClassName="h-full min-h-0"
         >
           <div className="flex flex-col gap-5 lg:w-[444px]">
             <p className="w-fit border-b border-b-primary text-lg font-semibold uppercase tracking-widest lg:text-2xl">
