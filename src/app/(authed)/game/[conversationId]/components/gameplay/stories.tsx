@@ -1,13 +1,13 @@
 "use client";
 
 import SkeletonIcon from "@/components/icons/skeleton-icon";
+import useAutoScrollToBottom from "@/hooks/use-auto-scroll-to-bottom";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
 
-import useAutoScrollToBottom from "../../hooks/use-auto-scroll-to-bottom";
 import useUpdateStories from "../../hooks/use-update-stories";
 import ImageModal from "../modals/image-modal";
-import StyledAudio from "../styled-audio";
+import StyledAudio from "./styled-audio";
 
 export interface StoriesProps {
   roomData: IRoomDetail;
@@ -17,7 +17,7 @@ export interface StoriesProps {
 
 const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
   const { stories } = useUpdateStories({ roomData, lastStory });
-  const { autoBottomScrollDiv } = useAutoScrollToBottom({ roomData, stories, lastStory });
+  const { autoBottomScrollDiv } = useAutoScrollToBottom([roomData, stories, lastStory]);
 
   return (
     <div className="flex w-full flex-1 flex-col gap-8 pr-4 lg:max-h-full lg:overflow-y-auto lg:pr-6">

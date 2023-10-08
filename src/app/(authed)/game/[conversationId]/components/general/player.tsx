@@ -9,7 +9,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
-import { PlayerChanges } from "../stores/game-store";
+import { PlayerChanges } from "../../stores/game-store";
 
 const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: PlayerChanges }) => {
   const { player, currentPlayer, changes } = props;

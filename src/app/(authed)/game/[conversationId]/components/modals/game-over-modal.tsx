@@ -18,7 +18,7 @@ import { IGameState, IPlayer } from "@/types/room";
 
 import useRateDungeon from "../../hooks/use-rate-dungeon";
 import { gameStore } from "../../stores/game-store";
-import Player from "../player";
+import Player from "../general/player";
 
 interface GameOverModalProps {
   result: IGameState;

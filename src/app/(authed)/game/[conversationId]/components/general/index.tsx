@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEventHandler, useEffect, useRef, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
 import { useReadLocalStorage } from "usehooks-ts";
@@ -9,13 +9,14 @@ import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Spinner from "@/components/ui/spinner";
+import useAutoScrollToBottom from "@/hooks/use-auto-scroll-to-bottom";
 import useGetRoomData from "@/hooks/use-get-room-data";
 import { IMove, IPlayer, IQuestion } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
-import useAskQuestion from "../hooks/use-ask-question";
-import useGeneralSocket from "../hooks/use-general-socket";
-import { gameStore } from "../stores/game-store";
+import useAskQuestion from "../../hooks/use-ask-question";
+import useGeneralSocket from "../../hooks/use-general-socket";
+import { gameStore } from "../../stores/game-store";
 import MoveList from "./move-list";
 import Player from "./player";
 import Question from "./question";
@@ -70,13 +71,7 @@ const General = (props: { conversationId: string }) => {
     askQuestion({ conversationId, question }, { onError: () => setAsking(false) });
   };
 
-  const autoBottomScrollDiv = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (autoBottomScrollDiv.current) {
-      autoBottomScrollDiv.current.scrollIntoView({ behavior: "instant" });
-    }
-  }, [moveHistory, questionHistory]);
+  const { autoBottomScrollDiv } = useAutoScrollToBottom([moveHistory, questionHistory]);
 
   if (!roomData || !currentPlayer) {
     return (
