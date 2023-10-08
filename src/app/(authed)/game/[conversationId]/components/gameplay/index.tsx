@@ -8,7 +8,7 @@ import { backgroundStore } from "@/stores/background-store";
 
 import useGameplaySocket from "../../hooks/use-gameplay-socket";
 import useHandleGameStateChange from "../../hooks/use-handle-game-state-change";
-import useHandlePlayerChanges from "../../hooks/use-handle-player-changes";
+import useHandlePlayerStatusUpdate from "../../hooks/use-handle-player-status-update";
 import DiedModal from "../modals/died-modal";
 import GameOverModal from "../modals/game-over-modal";
 import HomeModal from "../modals/home-modal";
@@ -25,7 +25,7 @@ const Gameplay = (props: { conversationId: string }) => {
 
   const { lastStory, loadingText } = useGameplaySocket(conversationId);
 
-  const { currentPlayer } = useHandlePlayerChanges({ roomData });
+  const { currentPlayer } = useHandlePlayerStatusUpdate({ roomData });
 
   useHandleGameStateChange({ roomData });
 

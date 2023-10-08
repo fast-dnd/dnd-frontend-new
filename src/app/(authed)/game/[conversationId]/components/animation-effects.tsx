@@ -5,7 +5,7 @@ import { cn } from "@/utils/style-utils";
 import { gameStore } from "../stores/game-store";
 
 const AnimationEffects = () => {
-  const changes = gameStore.changes.use();
+  const statusUpdate = gameStore.statusUpdate.use();
 
   return (
     <div
@@ -20,14 +20,14 @@ const AnimationEffects = () => {
               className={cn(
                 "absolute h-full w-full from-red-500 to-5% opacity-0 transition-all duration-500",
                 dir,
-                changes.lostHealth && "opacity-100",
+                statusUpdate.lostHealth && "opacity-100",
               )}
             />
             <div
               className={cn(
                 "absolute h-full w-full from-green-500 to-5% opacity-0 transition-all duration-500",
                 dir,
-                changes.gainedHealth && "opacity-100",
+                statusUpdate.gainedHealth && "opacity-100",
               )}
             />
           </React.Fragment>

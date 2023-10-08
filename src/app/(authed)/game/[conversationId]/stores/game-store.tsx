@@ -1,11 +1,11 @@
 import { observable } from "@legendapp/state";
 
-export interface PlayerChanges {
+export interface PlayerStatusUpdate {
   lostHealth?: boolean;
   gainedHealth?: boolean;
-  gainedMana?: boolean;
-  gainedBonus?: boolean;
-  gainedGold?: boolean;
+  mana?: boolean;
+  bonus?: boolean;
+  gold?: boolean;
 }
 
 export interface IGameStore {
@@ -16,7 +16,7 @@ export interface IGameStore {
   rewardModal: boolean;
   gameOverModal: boolean;
   dying: boolean;
-  changes: PlayerChanges;
+  statusUpdate: PlayerStatusUpdate;
 }
 
 export const gameStore = observable<IGameStore>({
@@ -27,5 +27,5 @@ export const gameStore = observable<IGameStore>({
   rewardModal: false,
   gameOverModal: false,
   dying: false,
-  changes: {},
+  statusUpdate: {},
 });

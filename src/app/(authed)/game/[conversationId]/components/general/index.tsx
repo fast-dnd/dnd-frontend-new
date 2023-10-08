@@ -38,7 +38,7 @@ const General = (props: { conversationId: string }) => {
   const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =
     useGeneralSocket(conversationId);
 
-  const changes = gameStore.changes.use();
+  const statusUpdate = gameStore.statusUpdate.use();
 
   const accountId = useReadLocalStorage<string>("accountId");
 
@@ -83,7 +83,7 @@ const General = (props: { conversationId: string }) => {
 
   return (
     <Box title="general" className="flex min-h-0 flex-1 flex-col gap-4 p-5 lg:gap-8 lg:p-8">
-      <Player player={currentPlayer} currentPlayer changes={changes} />
+      <Player player={currentPlayer} currentPlayer statusUpdate={statusUpdate} />
       <div className="w-full border-t border-white/25" />
       <div className={cn("flex min-h-0 flex-1 flex-col gap-4 lg:gap-8", statsOpened && "hidden")}>
         {roomData.playerState.length > 1 && (
