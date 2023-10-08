@@ -10,11 +10,11 @@ import { IPlayMove, IPlayMoveResponse } from "@/types/game";
 import { IPlayer, IRoomDetail } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
-import usePlayMove from "../hooks/use-play-move";
-import usePlayMoveSocket from "../hooks/use-play-move-socket";
-import { randomDice } from "../utils/dice";
-import DiceBreakdown from "./dice-breakdown";
-import Die from "./die";
+import usePlayMove from "../../hooks/use-play-move";
+import usePlayMoveSocket from "../../hooks/use-play-move-socket";
+import { randomDice } from "../../utils/dice";
+import DiceBreakdown from "../dice-breakdown";
+import Die from "../die";
 import MoveInput from "./move-input";
 
 export interface PlayMoveProps {

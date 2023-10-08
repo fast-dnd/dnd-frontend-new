@@ -6,14 +6,14 @@ import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
 import { backgroundStore } from "@/stores/background-store";
 
-import useGameplaySocket from "../hooks/use-gameplay-socket";
-import useHandleGameStateChange from "../hooks/use-handle-game-state-change";
-import useHandlePlayerChanges from "../hooks/use-handle-player-changes";
-import { gameStore } from "../stores/game-store";
-import DiedModal from "./modals/died-modal";
-import GameOverModal from "./modals/game-over-modal";
-import HomeModal from "./modals/home-modal";
-import RewardModal from "./modals/reward-modal";
+import useGameplaySocket from "../../hooks/use-gameplay-socket";
+import useHandleGameStateChange from "../../hooks/use-handle-game-state-change";
+import useHandlePlayerChanges from "../../hooks/use-handle-player-changes";
+import { gameStore } from "../../stores/game-store";
+import DiedModal from "../modals/died-modal";
+import GameOverModal from "../modals/game-over-modal";
+import HomeModal from "../modals/home-modal";
+import RewardModal from "../modals/reward-modal";
 import PlayMove from "./play-move";
 import Stories from "./stories";
 

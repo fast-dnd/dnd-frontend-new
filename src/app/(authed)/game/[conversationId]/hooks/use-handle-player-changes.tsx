@@ -34,13 +34,17 @@ const useHandlePlayerChanges = ({ roomData }: { roomData?: IRoomDetail }) => {
         if (changes.lostHealth && player.health <= 0) gameStore.dying.set(true);
         if (Object.keys(changes).length) {
           gameStore.changes.set(changes);
-          setTimeout(() => {
+          const removeChangesTimeout = setTimeout(() => {
             gameStore.changes.set({});
             if (changes.lostHealth && player.health <= 0) {
               gameStore.dying.set(false);
               gameStore.diedModal.set(true);
             }
           }, 1500);
+
+          return () => {
+            clearTimeout(removeChangesTimeout);
+          };
         }
       }
       setCurrentPlayer(player);
