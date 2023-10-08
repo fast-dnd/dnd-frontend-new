@@ -43,6 +43,7 @@ const General = (props: { conversationId: string }) => {
   const accountId = useReadLocalStorage<string>("accountId");
 
   useEffect(() => {
+    // TODO: refactor this to a custom hook (or custom component if logic is localized)
     if (roomData) {
       setCurrentPlayer(roomData.playerState.find((player) => player.accountId === accountId));
       const questionsLength = roomData.questions3History.length;
@@ -107,8 +108,8 @@ const General = (props: { conversationId: string }) => {
           <div ref={autoBottomScrollDiv} />
         </div>
 
-        <form onSubmit={onSubmit} className="flex w-full items-end gap-8">
-          <div className="flex flex-1 flex-col">
+        <form onSubmit={onSubmit} className="flex w-full items-end">
+          <div className="flex flex-1">
             <Input
               disabled={!canAsk}
               label="Ask Bob"
@@ -123,7 +124,7 @@ const General = (props: { conversationId: string }) => {
             disabled={!canAsk}
             type="submit"
             variant="ghost"
-            className="w-fit text-2xl text-primary"
+            className="w-fit text-3xl text-primary"
             isLoading={asking}
           >
             {!asking && <IoMdSend />}
