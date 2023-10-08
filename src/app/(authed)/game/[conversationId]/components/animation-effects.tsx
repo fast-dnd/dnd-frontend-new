@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { cn } from "@/utils/style-utils";
 
@@ -6,6 +6,11 @@ import { gameStore } from "../stores/game-store";
 
 const AnimationEffects = () => {
   const statusUpdate = gameStore.statusUpdate.use();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div
@@ -18,14 +23,16 @@ const AnimationEffects = () => {
           <React.Fragment key={dir}>
             <div
               className={cn(
-                "absolute h-full w-full from-red-500 to-5% opacity-0 transition-all duration-500",
+                "absolute h-full w-full from-red-500 to-5% opacity-0",
+                mounted && "transition-all duration-500",
                 dir,
                 statusUpdate.lostHealth && "opacity-100",
               )}
             />
             <div
               className={cn(
-                "absolute h-full w-full from-green-500 to-5% opacity-0 transition-all duration-500",
+                "absolute h-full w-full from-green-500 to-5% opacity-0",
+                mounted && "transition-all duration-500",
                 dir,
                 statusUpdate.gainedHealth && "opacity-100",
               )}
