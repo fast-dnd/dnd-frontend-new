@@ -9,7 +9,7 @@ import { IGameplaySocketEvent } from "../types/events";
 
 const useGameplaySocket = (conversationId: string) => {
   const queryClient = useQueryClient();
-  const [lastStory, setLastStory] = useState<string>("");
+  const [lastStory, setLastStory] = useState("");
   const [loadingText, setLoadingText] = useState(false);
 
   useEffect(() => {
