@@ -118,16 +118,22 @@ const GeneralInfo = () => {
               <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
                 <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8">
                   <Slider
+                    min={1}
+                    max={100}
                     label="Reality level"
                     value={[dungeonFormData.realityLevel.get()]}
                     onValueChange={(newValue) => dungeonFormData.realityLevel.set(newValue[0])}
                   />
                   <Slider
-                    label="Misery level"
+                    min={1}
+                    max={100}
+                    label="Mistery level"
                     value={[dungeonFormData.misteryLevel.get()]}
                     onValueChange={(newValue) => dungeonFormData.misteryLevel.set(newValue[0])}
                   />
                   <Slider
+                    min={1}
+                    max={100}
                     label="Action level"
                     value={[dungeonFormData.actionLevel.get()]}
                     onValueChange={(newValue) => dungeonFormData.actionLevel.set(newValue[0])}
