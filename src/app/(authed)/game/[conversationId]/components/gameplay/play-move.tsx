@@ -71,7 +71,11 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
   ]);
 
   useEffect(() => {
-    submitting && setTimeout(() => setDice(randomDice()), 200);
+    if (submitting) {
+      const timeout = setTimeout(() => setDice(randomDice()), 200);
+
+      return () => clearTimeout(timeout);
+    }
   }, [dice, submitting]);
 
   useEffect(() => {
@@ -113,8 +117,13 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
         onSuccess: (res) => {
           setFreeWill("");
           setRollInfo(res);
-          setTimeout(() => setRollButtonState("ROLLED"), 1500);
-          setTimeout(() => setDice(randomDice(res.diceAfterBonus)), 250);
+          const rollTimeout = setTimeout(() => setRollButtonState("ROLLED"), 1500);
+          const diceTimeout = setTimeout(() => setDice(randomDice(res.diceAfterBonus)), 250);
+
+          return () => {
+            clearTimeout(rollTimeout);
+            clearTimeout(diceTimeout);
+          };
         },
         onError: () => {
           setRollButtonState("CANPLAY");
