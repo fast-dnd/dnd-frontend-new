@@ -60,7 +60,6 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
       setRollButtonState("CANPLAY");
     }
     if (roomData.state === "WIN" || roomData.state === "LOSE") setCanPlay(false);
-    //TODO setRollInfo of most recent move, when move format contains all required fields
   }, [
     currentPlayer,
     loadingText,
