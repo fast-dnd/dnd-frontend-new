@@ -31,11 +31,10 @@ const Gameplay = (props: { conversationId: string }) => {
   const [dying, setDying] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
 
-  const homeModal = gameStore.homeModal.use();
-  const diedModal = gameStore.diedModal.use();
-
   const { lastStory, loadingText } = useGameplaySocket(conversationId);
   const { reward } = useRewardSocket(conversationId);
+
+  const diedModal = gameStore.diedModal.use();
 
   const accountId = useReadLocalStorage<string>("accountId");
 
@@ -116,8 +115,8 @@ const Gameplay = (props: { conversationId: string }) => {
         currentPlayer={currentPlayer}
         loadingText={loadingText}
       />
-      <HomeModal open={homeModal} close={() => gameStore.homeModal.set(false)} />
-      <DiedModal open={diedModal} close={() => gameStore.diedModal.set(false)} />
+      <HomeModal />
+      <DiedModal />
       <GameOverModal
         open={gameOverModal && !diedModal && !dying}
         close={() => {

@@ -13,7 +13,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-const HomeModal = ({ open, close }: { open: boolean; close: () => void }) => {
+import { gameStore } from "../stores/game-store";
+
+const HomeModal = () => {
+  const open = gameStore.homeModal.use();
+
   const router = useRouter();
   const [goingHome, setGoingHome] = useState(false);
 
@@ -21,7 +25,7 @@ const HomeModal = ({ open, close }: { open: boolean; close: () => void }) => {
     <Dialog
       open={open}
       onOpenChange={(change) => {
-        if (!change) close();
+        if (!change) gameStore.homeModal.set(false);
       }}
     >
       <DialogContent className="w-fit lg:w-fit">
@@ -37,7 +41,7 @@ const HomeModal = ({ open, close }: { open: boolean; close: () => void }) => {
             variant="outline"
             onClick={() => {
               setGoingHome(true);
-              close();
+              gameStore.homeModal.set(false);
               router.push("/home");
             }}
             isLoading={goingHome}
@@ -46,7 +50,7 @@ const HomeModal = ({ open, close }: { open: boolean; close: () => void }) => {
           </Button>
           <Button
             className="w-fit whitespace-nowrap px-4 py-3 text-base lg:px-8 lg:text-xl"
-            onClick={close}
+            onClick={() => gameStore.homeModal.set(false)}
             autoFocus
           >
             STAY AND PLAY

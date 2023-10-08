@@ -8,12 +8,16 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-const DiedModal = ({ open, close }: { open: boolean; close: () => void }) => {
+import { gameStore } from "../stores/game-store";
+
+const DiedModal = () => {
+  const open = gameStore.diedModal.use();
+
   return (
     <Dialog
       open={open}
       onOpenChange={(change) => {
-        if (!change) close();
+        if (!change) gameStore.diedModal.set(false);
       }}
     >
       <DialogContent>
@@ -24,7 +28,10 @@ const DiedModal = ({ open, close }: { open: boolean; close: () => void }) => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button className="whitespace-nowrap px-8 py-3 uppercase" onClick={close}>
+          <Button
+            className="whitespace-nowrap px-8 py-3 uppercase"
+            onClick={() => gameStore.diedModal.set(false)}
+          >
             spectate
           </Button>
         </DialogFooter>

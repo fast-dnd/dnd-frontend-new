@@ -15,16 +15,16 @@ const DiceBreakdown = ({ rollInfo }: { rollInfo: IPlayMoveResponse }) => {
         <p>{rollInfo.diceBreakdown.dice}</p>
       </div>
       <DiceBreakdownItem
-        icon={BsFillArrowRightSquareFill}
+        Icon={BsFillArrowRightSquareFill}
         label="Round bonus"
         value={rollInfo.diceBreakdown.bonusApplied}
       />
       <DiceBreakdownItem
-        icon={FaRobot}
+        Icon={FaRobot}
         label="Bob gave"
         value={rollInfo.diceBreakdown.aiDiceBonus}
       />
-      <DiceBreakdownItem icon={HiSparkles} label="Mana used" value={rollInfo.diceBreakdown.mana} />
+      <DiceBreakdownItem Icon={HiSparkles} label="Mana used" value={rollInfo.diceBreakdown.mana} />
     </div>
   );
 };
@@ -32,12 +32,12 @@ const DiceBreakdown = ({ rollInfo }: { rollInfo: IPlayMoveResponse }) => {
 export default DiceBreakdown;
 
 type Props = {
-  icon: IconType;
+  Icon: IconType;
   label: string;
   value: number;
 };
 
-const DiceBreakdownItem = ({ icon: Icon, label, value }: Props) => {
+const DiceBreakdownItem = ({ Icon, label, value }: Props) => {
   return (
     <div className="flex w-full justify-between opacity-50">
       <div className="flex items-center gap-2">
