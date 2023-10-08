@@ -16,26 +16,29 @@ import {
 import { IDungeonDetail } from "@/types/dungeon";
 import { IGameState, IPlayer } from "@/types/room";
 
-import useRateDungeon from "../hooks/use-rate-dungeon";
-import Player from "./player";
+import useRateDungeon from "../../hooks/use-rate-dungeon";
+import { gameStore } from "../../stores/game-store";
+import Player from "../player";
 
 interface GameOverModalProps {
-  open: boolean;
-  close: () => void;
   result: IGameState;
   dungeon: IDungeonDetail;
   conversationId: string;
   players: IPlayer[];
 }
 
-const GameOverModal = ({
-  open,
-  close,
-  result,
-  dungeon,
-  conversationId,
-  players,
-}: GameOverModalProps) => {
+const GameOverModal = ({ result, dungeon, conversationId, players }: GameOverModalProps) => {
+  const gameOverModal = gameStore.gameOverModal.use();
+  const diedModal = gameStore.diedModal.use();
+  const dying = gameStore.dying.use();
+
+  const open = gameOverModal && !diedModal && !dying;
+
+  const close = () => {
+    gameStore.gameOverModal.set(false);
+    gameStore.rewardModal.set(true);
+  };
+
   const router = useRouter();
   const [goingHome, setGoingHome] = useState(false);
   const [rating, setRating] = useState(3);
@@ -50,8 +53,8 @@ const GameOverModal = ({
   return (
     <Dialog
       open={open}
-      onOpenChange={(change) => {
-        if (!change) close();
+      onOpenChange={(isOpen) => {
+        if (!isOpen) close();
       }}
     >
       <DialogContent className="max-h-[700px] w-fit lg:max-w-[550px]">

@@ -6,7 +6,7 @@ import SkeletonIcon from "@/components/icons/skeleton-icon";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
 
-import ImageModal from "./image-modal";
+import ImageModal from "./modals/image-modal";
 import StyledAudio from "./styled-audio";
 
 export interface StoriesProps {

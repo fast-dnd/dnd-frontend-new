@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import { gameStore } from "../stores/game-store";
+import { gameStore } from "../../stores/game-store";
 
 const DiedModal = () => {
   const open = gameStore.diedModal.use();
@@ -16,8 +16,8 @@ const DiedModal = () => {
   return (
     <Dialog
       open={open}
-      onOpenChange={(change) => {
-        if (!change) gameStore.diedModal.set(false);
+      onOpenChange={(isOpen) => {
+        if (!isOpen) gameStore.diedModal.set(false);
       }}
     >
       <DialogContent>

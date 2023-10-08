@@ -13,7 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import { gameStore } from "../stores/game-store";
+import { gameStore } from "../../stores/game-store";
 
 const HomeModal = () => {
   const open = gameStore.homeModal.use();
@@ -24,8 +24,8 @@ const HomeModal = () => {
   return (
     <Dialog
       open={open}
-      onOpenChange={(change) => {
-        if (!change) gameStore.homeModal.set(false);
+      onOpenChange={(isOpen) => {
+        if (!isOpen) gameStore.homeModal.set(false);
       }}
     >
       <DialogContent className="w-fit lg:w-fit">

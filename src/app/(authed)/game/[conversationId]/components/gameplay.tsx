@@ -1,23 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useReadLocalStorage } from "usehooks-ts";
-
 import { Box } from "@/components/ui/box";
 import Spinner from "@/components/ui/spinner";
 import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
 import { backgroundStore } from "@/stores/background-store";
-import { IPlayer } from "@/types/room";
 
 import useGameplaySocket from "../hooks/use-gameplay-socket";
-import useRewardSocket from "../hooks/use-reward-socket";
-import { gameStore, PlayerChanges } from "../stores/game-store";
-import DiedModal from "./died-modal";
-import GameOverModal from "./game-over-modal";
-import HomeModal from "./home-modal";
+import useHandleGameStateChange from "../hooks/use-handle-game-state-change";
+import useHandlePlayerChanges from "../hooks/use-handle-player-changes";
+import { gameStore } from "../stores/game-store";
+import DiedModal from "./modals/died-modal";
+import GameOverModal from "./modals/game-over-modal";
+import HomeModal from "./modals/home-modal";
+import RewardModal from "./modals/reward-modal";
 import PlayMove from "./play-move";
-import RewardModal from "./reward-modal";
 import Stories from "./stories";
 
 const Gameplay = (props: { conversationId: string }) => {
@@ -25,67 +22,12 @@ const Gameplay = (props: { conversationId: string }) => {
 
   const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
-  const [gaming, setGaming] = useState(true);
-  const [gameOverModal, setGameOverModal] = useState(false);
-  const [rewardModal, setRewardModal] = useState(false);
-  const [dying, setDying] = useState(false);
-  const [currentPlayer, setCurrentPlayer] = useState<IPlayer>();
 
   const { lastStory, loadingText } = useGameplaySocket(conversationId);
-  const { reward } = useRewardSocket(conversationId);
 
-  const diedModal = gameStore.diedModal.use();
+  const { currentPlayer } = useHandlePlayerChanges({ roomData });
 
-  const accountId = useReadLocalStorage<string>("accountId");
-
-  useEffect(() => {
-    if (roomData) {
-      const player = roomData.playerState.find((player) => player.accountId === accountId);
-      if (currentPlayer && player) {
-        const changes: PlayerChanges = {};
-        if (player.health !== currentPlayer.health) {
-          if (currentPlayer.health > player.health) {
-            changes.lostHealth = true;
-          } else {
-            changes.gainedHealth = true;
-          }
-        }
-        if (player.mana !== currentPlayer.mana) {
-          changes.gainedMana = true;
-        }
-        if (player.bonusForNextRound !== currentPlayer.bonusForNextRound) {
-          changes.gainedBonus = true;
-        }
-        if (player.gold !== currentPlayer.gold) {
-          changes.gainedGold = true;
-        }
-        if (changes.lostHealth && player.health <= 0) setDying(true);
-        if (Object.keys(changes).length) {
-          gameStore.changes.set(changes);
-          setTimeout(() => {
-            gameStore.changes.set({});
-            if (changes.lostHealth && player.health <= 0) {
-              setDying(false);
-              gameStore.diedModal.set(true);
-            }
-          }, 1500);
-        }
-      }
-      setCurrentPlayer(player);
-
-      if (roomData.state === "WIN" || roomData.state === "LOSE") {
-        if (gaming) {
-          setGaming(false);
-          setGameOverModal(true);
-        }
-      }
-    }
-    // if (!dungeonData) bgUrl.set("");
-    // if (dungeonData && !bgSet) {
-    //   setBgSet(true);
-    //   bgUrl.set(dungeonData.backgroundUrl);
-    // }
-  }, [accountId, currentPlayer, dungeonData, gaming, roomData]);
+  useHandleGameStateChange({ roomData });
 
   if (!roomData || !dungeonData || !currentPlayer)
     return (
@@ -118,21 +60,12 @@ const Gameplay = (props: { conversationId: string }) => {
       <HomeModal />
       <DiedModal />
       <GameOverModal
-        open={gameOverModal && !diedModal && !dying}
-        close={() => {
-          setGameOverModal(false);
-          setRewardModal(true);
-        }}
         result={roomData.state}
         dungeon={dungeonData}
         conversationId={conversationId}
         players={roomData.playerState}
       />
-      <RewardModal
-        reward={reward}
-        open={rewardModal && !!reward}
-        close={() => setRewardModal(false)}
-      />
+      <RewardModal conversationId={conversationId} />
     </Box>
   );
 };
