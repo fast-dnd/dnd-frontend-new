@@ -39,6 +39,7 @@ const Gameplay = (props: { conversationId: string }) => {
   backgroundStore.set(dungeonData.backgroundUrl);
 
   return (
+    // TODO: make this a div with these properties (look at transcript page and header), and remove all these properties from the Box component
     <Box
       title={dungeonData.name}
       howTo

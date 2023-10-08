@@ -14,6 +14,7 @@ const useHandlePlayerChanges = ({ roomData }: { roomData?: IRoomDetail }) => {
     if (roomData) {
       const player = roomData.playerState.find((player) => player.accountId === accountId);
       if (currentPlayer && player) {
+        // TODO: make this more readable (extract to function)
         const changes: PlayerChanges = {};
         if (player.health !== currentPlayer.health) {
           if (currentPlayer.health > player.health) {

@@ -25,6 +25,7 @@ export interface PlayMoveProps {
 }
 
 const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: PlayMoveProps) => {
+  // TODO: separate state and effects into custom hooks (or custom components if the state is localized)
   const [rollInfo, setRollInfo] = useState<IPlayMoveResponse>();
   const [freeWill, setFreeWill] = useState<string>("");
   const [timer, setTimer] = useState(0);
@@ -98,8 +99,8 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
         conversationId,
         mana: powerUp,
         moveType: move,
-        playerId: currentPlayer.accountId,
         message: "",
+        playerId: currentPlayer.accountId,
       };
     } else {
       moveToPlay = {
