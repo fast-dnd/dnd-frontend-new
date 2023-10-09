@@ -88,12 +88,12 @@ const moveMappingWithIcons = (moveMapping: IMoveMapping) => {
   ];
 };
 
-const DungeonDetailSkeleton = () => {
+export const DungeonDetailSkeleton = () => {
   return (
-    <div className="flex flex-1 flex-col overflow-y-auto border-b-2 border-b-white/20 pr-4">
+    <div className="flex w-full flex-1 flex-col overflow-y-auto border-b-2 border-b-white/20 pr-4">
       <Skeleton />
       <div className="my-8">
-        <p>HEROES</p>
+        <div className="mb-1 h-5 w-16 rounded-lg bg-gray-600" />
         <div className="mt-8 flex flex-col gap-12 px-6">
           {Array.from(
             {
