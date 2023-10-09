@@ -6,13 +6,16 @@ import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/text-area";
 
+import useSendFeedback from "../hooks/use-send-feedback";
 import { gameStore } from "../stores/game-store";
 
 const Feedback = () => {
   const [feedback, setFeedback] = useState("");
 
+  const { mutate: sendFeedback, isLoading } = useSendFeedback();
+
   const onSendFeedback = () => {
-    // TODO: send feedback to backend
+    sendFeedback({ text: feedback });
   };
 
   return (
@@ -53,7 +56,7 @@ const Feedback = () => {
               onChange={(e) => setFeedback(e.target.value)}
             />
             <div className="flex justify-end">
-              <Button className="w-fit px-8 py-2" onClick={onSendFeedback}>
+              <Button className="w-fit px-8 py-2" onClick={onSendFeedback} isLoading={isLoading}>
                 SEND
               </Button>
             </div>
