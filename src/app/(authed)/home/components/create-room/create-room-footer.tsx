@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
 import useCreateRoom from "../../hooks/use-create-room";
+import TemplateSentences from "./template-sentences";
 
 const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
   const router = useRouter();
@@ -12,12 +13,15 @@ const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
 
   const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
 
+  const [templateSentences, setTemplateSentences] = useState("");
+
   const onCreateRoom = () => {
     createRoom(
       {
         generateAudio: false,
         generateImages: false,
         dungeon: dungeonDetailId,
+        templateSentences,
       },
       {
         onSuccess: (data) => {
@@ -31,6 +35,10 @@ const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
 
   return (
     <div className="flex justify-end">
+      <TemplateSentences
+        templateSentences={templateSentences}
+        setTemplateSentences={setTemplateSentences}
+      />
       <Button
         className="w-fit whitespace-nowrap"
         isLoading={isCreatingRoom || loadingRoom}
