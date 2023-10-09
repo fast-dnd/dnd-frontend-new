@@ -23,8 +23,8 @@ const Player = ({ player }: { player: IPlayer }) => {
           </p>
         ) : (
           <div className="mb-2 flex items-center gap-2">
-            <Spinner className="m-0 h-6 w-6" />
-            <p className="mt-1">Choosing hero...</p>
+            <Spinner className="m-0 h-5 w-5" />
+            <p className="mt-0.5">Choosing hero...</p>
           </div>
         )}
       </div>

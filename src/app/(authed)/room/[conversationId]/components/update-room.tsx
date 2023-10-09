@@ -42,7 +42,7 @@ const UpdateRoom = ({
 
   const isAdmin = accountId === roomData.playerState[0].accountId;
 
-  const { setGenerateImages, setGenerateAudio } = useOnRoomChange({
+  const { setGenerateImages, setGenerateAudio, updatingRoom } = useOnRoomChange({
     conversationId,
     duration,
     roomData,
@@ -77,6 +77,7 @@ const UpdateRoom = ({
         onValueChange={(value) => setDuration(value as DungeonDuration)}
         label="Game mode"
         value={roomData.responseDetailsDepth}
+        loading={updatingRoom && duration !== roomData.responseDetailsDepth}
         disabled={!isAdmin}
       >
         {dungeonDurations.map((duration) => (
