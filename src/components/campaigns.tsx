@@ -1,3 +1,5 @@
+"use client";
+
 import { Campaign } from "@/components/campaign";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";

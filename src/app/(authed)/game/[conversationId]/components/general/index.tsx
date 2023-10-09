@@ -1,5 +1,3 @@
-"use client";
-
 import { FormEventHandler, useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";

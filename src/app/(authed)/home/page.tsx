@@ -1,5 +1,3 @@
-"use client";
-
 import GameHistory from "@/components/game-history";
 import { Box } from "@/components/ui/box";
 

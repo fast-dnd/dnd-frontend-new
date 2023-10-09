@@ -1,5 +1,3 @@
-"use client";
-
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi";
 

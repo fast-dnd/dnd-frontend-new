@@ -1,5 +1,3 @@
-"use client";
-
 import SkeletonIcon from "@/components/icons/skeleton-icon";
 import useAutoScrollToBottom from "@/hooks/use-auto-scroll-to-bottom";
 import { IDungeonDetail } from "@/types/dungeon";

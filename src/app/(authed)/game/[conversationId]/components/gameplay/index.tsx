@@ -1,5 +1,3 @@
-"use client";
-
 import { Box } from "@/components/ui/box";
 import Spinner from "@/components/ui/spinner";
 import useGetDungeon from "@/hooks/use-get-dungeon";

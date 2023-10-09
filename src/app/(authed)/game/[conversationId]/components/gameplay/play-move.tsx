@@ -1,5 +1,3 @@
-"use client";
-
 import { IPlayer, IRoomDetail } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 

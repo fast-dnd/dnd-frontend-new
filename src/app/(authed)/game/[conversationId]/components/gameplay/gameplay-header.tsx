@@ -1,5 +1,3 @@
-"use client";
-
 import { AiOutlineExclamationCircle, AiOutlineHome, AiOutlineQuestionCircle } from "react-icons/ai";
 
 import Spinner from "@/components/ui/spinner";

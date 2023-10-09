@@ -1,3 +1,5 @@
+"use client";
+
 import QuillIcon from "@/components/icons/quill-icon";
 import RoomItem from "@/components/room-item";
 import { Button } from "@/components/ui/button";

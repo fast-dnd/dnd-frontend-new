@@ -1,5 +1,3 @@
-"use client";
-
 import { Copy } from "iconsax-react";
 
 import useCopy from "@/hooks/use-copy";

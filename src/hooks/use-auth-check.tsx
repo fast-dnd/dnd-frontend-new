@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect } from "react";
 import { redirect, usePathname, useRouter } from "next/navigation";
 import { useLocalStorage } from "usehooks-ts";
