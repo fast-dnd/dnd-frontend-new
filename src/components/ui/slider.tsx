@@ -27,7 +27,7 @@ const Slider = React.forwardRef<
     )}
     <SliderPrimitive.Root
       ref={ref}
-      className={cn("relative flex touch-none select-none items-center", className)}
+      className={cn("nozoom slider relative flex touch-none select-none items-center", className)}
       {...props}
     >
       <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-white/25">

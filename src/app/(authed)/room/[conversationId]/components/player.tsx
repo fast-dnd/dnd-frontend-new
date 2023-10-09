@@ -22,9 +22,9 @@ const Player = ({ player }: { player: IPlayer }) => {
             <span className="text-sm font-light lg:text-base">{player.champion.description}</span>
           </p>
         ) : (
-          <div className="flex gap-2">
-            <Spinner className="h-8 w-8" />
-            <p>Choosing hero...</p>
+          <div className="mb-2 flex items-center gap-2">
+            <Spinner className="m-0 h-6 w-6" />
+            <p className="mt-1">Choosing hero...</p>
           </div>
         )}
       </div>
