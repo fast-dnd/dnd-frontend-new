@@ -41,6 +41,7 @@ export const baseDungeonSchema = z.object({
       imageUrl: z.string(),
     })
     .nullish(),
+  publiclySeen: z.boolean(),
 });
 
 export const dungeonSchema = baseDungeonSchema.extend({

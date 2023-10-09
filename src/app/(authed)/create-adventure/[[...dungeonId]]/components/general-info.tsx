@@ -3,6 +3,7 @@ import { BsFillImageFill } from "react-icons/bs";
 
 import Rewards from "@/components/rewards";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -31,12 +32,21 @@ const GeneralInfo = () => {
           <SelectBgScreen setSelectedReward={setSelectedReward} setSelectingBg={setSelectingBg} />
         ) : (
           <div className="flex h-full w-full flex-col items-center gap-5 lg:flex-row lg:items-start lg:gap-8">
-            <div className="flex flex-col gap-5 lg:gap-8">
+            <div className="flex flex-col gap-4">
               <UploadImage
                 image={dungeonFormData.imageUrl.get()}
                 setImage={(image) => dungeonFormData.imageUrl.set(image)}
                 defaultImage={dungeonFormData.imageUrl.get()}
               />
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  className="bg-transparent"
+                  onCheckedChange={(checked) =>
+                    dungeonFormData.publiclySeen.set(checked as boolean)
+                  }
+                />
+                Public adventure
+              </div>
             </div>
 
             <div className="flex h-full w-full flex-1 flex-col gap-5 lg:gap-8">

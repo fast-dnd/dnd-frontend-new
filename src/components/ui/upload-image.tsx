@@ -24,10 +24,10 @@ const UploadImage = ({ image, setImage, defaultImage }: IUploadImageProps) => {
   };
 
   return (
-    <div className={cn("relative h-[170px] w-[170px]")}>
+    <div className={cn("relative h-[170px] w-[170px] rounded-md")}>
       <div
         className={cn(
-          "absolute z-10 flex h-[170px] w-[170px] cursor-pointer flex-col items-center justify-center gap-4 bg-black/50 text-white/75 hover:bg-black/30",
+          "absolute z-10 flex h-[170px] w-[170px] cursor-pointer flex-col items-center justify-center gap-4 rounded-md bg-black/50 text-white/75 hover:bg-black/30",
           image && "bg-black/20",
         )}
         onClick={addImage}
@@ -42,7 +42,7 @@ const UploadImage = ({ image, setImage, defaultImage }: IUploadImageProps) => {
         src={image || defaultImage || "/images/bg-cover.png"}
         width={170}
         height={170}
-        className={cn("h-[170px] w-[170px]", !image && "opacity-40")}
+        className={cn("h-[170px] w-[170px] rounded-md", !image && "opacity-40")}
         alt="upload"
         style={{ objectFit: "cover" }}
       />

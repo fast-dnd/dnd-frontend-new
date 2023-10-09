@@ -6,6 +6,7 @@ import { z } from "zod";
 import StatusModal, { StatusModalContent } from "@/components/status-modal";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 import UploadImage from "@/components/ui/upload-image";
@@ -15,7 +16,7 @@ import useUpdateCampaign from "../hooks/use-update-campaign";
 import { campaignFormStore } from "../stores/campaign-form-store";
 
 const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
-  const { name, description, dungeons, image } = campaignFormStore.use();
+  const { name, description, dungeons, image, publiclySeen } = campaignFormStore.use();
 
   const [modalContent, setModalContent] = useState<StatusModalContent>();
 
@@ -27,6 +28,7 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
       name,
       description,
       image,
+      publiclySeen,
       dungeons: dungeons.map((dungeon) => dungeon._id),
     };
 
@@ -70,7 +72,7 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
     >
       <div className="flex h-full w-full flex-col justify-between gap-6">
         <div className="flex items-center gap-8">
-          <div className="flex h-fit flex-1">
+          <div className="flex h-fit flex-1 flex-col gap-4">
             <Input
               label="Name"
               placeholder="The Crimson Abyss"
@@ -78,6 +80,15 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
               value={name}
               onChange={(e) => campaignFormStore.name.set(e.target.value)}
             />
+            <div className="flex items-center gap-2">
+              <Checkbox
+                className="bg-transparent"
+                onCheckedChange={(checked) =>
+                  campaignFormStore.publiclySeen.set(checked as boolean)
+                }
+              />
+              Public campaign
+            </div>
           </div>
           <UploadImage
             image={image}

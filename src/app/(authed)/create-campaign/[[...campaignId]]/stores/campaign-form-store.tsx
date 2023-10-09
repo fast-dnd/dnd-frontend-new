@@ -7,6 +7,7 @@ interface ICampaignFormStore {
   name: string;
   image: string;
   description: string;
+  publiclySeen: boolean;
   dungeons: IBaseDungeon[];
 }
 
@@ -14,6 +15,7 @@ const initialCampaignFormData: ICampaignFormStore = {
   name: "",
   image: "",
   description: "",
+  publiclySeen: false,
   dungeons: [],
 };
 

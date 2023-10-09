@@ -14,6 +14,7 @@ export const campaignSchema = z.object({
       imageUrl: z.string(),
     })
     .nullish(),
+  publiclySeen: z.boolean(),
 });
 
 export const campaignDetailSchema = campaignSchema.extend({
