@@ -80,7 +80,7 @@ const General = (props: { conversationId: string }) => {
           </Button>
         </form>
       </div>
-      <div className={cn("flex flex-col gap-8", !statsOpened && "hidden")}>
+      <div className={cn("flex min-h-0 flex-col gap-8", !statsOpened && "hidden")}>
         <div className="flex w-full">
           <Button
             variant={"ghost"}
@@ -90,9 +90,10 @@ const General = (props: { conversationId: string }) => {
             <AiOutlineLeft /> <span className="mt-[1px]">back to events</span>
           </Button>
         </div>
-        <div className="flex min-h-0 flex-1 flex-col gap-8 overflow-auto">
+        <div className="flex min-h-0 flex-1 flex-col gap-8 overflow-y-auto">
           {roomData.playerState
             .filter((player) => player.accountId !== currentPlayer.accountId)
+
             .map((player) => (
               <Player key={player.accountId} player={player} />
             ))}

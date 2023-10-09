@@ -17,16 +17,16 @@ import { gameStore } from "./stores/game-store";
 const Game = ({ params }: { params: { conversationId: string } }) => {
   const conversationId = params.conversationId;
   const [openedGameplay, setOpenedGameplay] = useState(true);
-  const displayHowToPlay = gameStore.displayHowToPlay.use();
-  const displayFeedback = gameStore.displayFeedback.use();
 
-  if (displayFeedback) return <Feedback />;
+  const pageState = gameStore.pageState.use();
 
-  if (displayHowToPlay)
+  if (pageState === "FEEDBACK") return <Feedback />;
+
+  if (pageState === "HOWTOPLAY")
     return (
       <div className="flex h-full min-h-0 flex-col gap-5 lg:pb-12">
         <HowToPlay
-          onHideHowToPlay={() => gameStore.displayHowToPlay.set(false)}
+          onHideHowToPlay={() => gameStore.pageState.set("DEFAULT")}
           hideText={"back to the game"}
         />
       </div>
@@ -36,13 +36,13 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
     <div className="flex h-full min-h-0 flex-col gap-5 lg:pb-12">
       <AnimationEffects />
       <MobileNavbar
-        goBackAction={() => gameStore.homeModal.set(true)}
+        goBackAction={() => gameStore.pageState.set("GOHOME")}
         goBackText="HOME"
         href=""
         howTo
-        onClickHowTo={() => gameStore.displayHowToPlay.set(true)}
+        onClickHowTo={() => gameStore.pageState.set("HOWTOPLAY")}
         feedback
-        onClickFeedback={() => gameStore.displayFeedback.set(true)}
+        onClickFeedback={() => gameStore.pageState.set("FEEDBACK")}
       />
       <div className="px-5 lg:hidden">
         <Button

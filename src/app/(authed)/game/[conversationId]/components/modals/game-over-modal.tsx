@@ -27,10 +27,9 @@ interface GameOverModalProps {
 
 const GameOverModal = ({ result, dungeon, conversationId, players }: GameOverModalProps) => {
   const gameOverModal = gameStore.gameOverModal.use();
-  const diedModal = gameStore.diedModal.use();
-  const dying = gameStore.dying.use();
+  const pageState = gameStore.pageState.use();
 
-  const open = gameOverModal && !diedModal && !dying;
+  const open = gameOverModal && pageState === "DEFAULT";
 
   const close = () => {
     gameStore.gameOverModal.set(false);
@@ -55,7 +54,7 @@ const GameOverModal = ({ result, dungeon, conversationId, players }: GameOverMod
         if (!isOpen) close();
       }}
     >
-      <DialogContent className="max-h-[700px] w-fit lg:max-w-[550px]">
+      <DialogContent className="flex max-h-[800px] w-fit flex-col lg:max-w-[550px]">
         <DialogHeader>
           <DialogTitle>
             {result === "WIN" && "Game finished"}
@@ -75,7 +74,7 @@ const GameOverModal = ({ result, dungeon, conversationId, players }: GameOverMod
             )}
           </DialogDescription>
         </DialogHeader>
-        <div className="mt-6 flex min-h-0 w-full flex-1 flex-col gap-6 overflow-y-scroll lg:mt-8 lg:gap-8">
+        <div className="mt-6 flex min-h-0 w-full flex-1 flex-col gap-6 overflow-y-auto lg:mt-8 lg:gap-8">
           <div className="w-full border-t border-white/25" />
 
           {players.map((player) => (

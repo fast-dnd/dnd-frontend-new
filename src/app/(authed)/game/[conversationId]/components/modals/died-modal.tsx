@@ -11,13 +11,13 @@ import {
 import { gameStore } from "../../stores/game-store";
 
 const DiedModal = () => {
-  const open = gameStore.diedModal.use();
+  const pageState = gameStore.pageState.use();
 
   return (
     <Dialog
-      open={open}
+      open={pageState === "DIED"}
       onOpenChange={(isOpen) => {
-        if (!isOpen) gameStore.diedModal.set(false);
+        if (!isOpen) gameStore.pageState.set("DEFAULT");
       }}
     >
       <DialogContent>
@@ -30,7 +30,7 @@ const DiedModal = () => {
         <DialogFooter>
           <Button
             className="whitespace-nowrap px-8 py-3 uppercase"
-            onClick={() => gameStore.diedModal.set(false)}
+            onClick={() => gameStore.pageState.set("DEFAULT")}
           >
             spectate
           </Button>

@@ -7,9 +7,9 @@ import { jibril } from "@/utils/fonts";
 import { gameStore } from "../../stores/game-store";
 
 const GamePlayHeader = ({ title, loading }: { title: string; loading?: boolean }) => {
-  const onClickHome = () => gameStore.homeModal.set(true);
-  const onClickHowTo = () => gameStore.displayHowToPlay.set(true);
-  const onClickFeedback = () => gameStore.displayFeedback.set(true);
+  const onClickHome = () => gameStore.pageState.set("GOHOME");
+  const onClickHowTo = () => gameStore.pageState.set("HOWTOPLAY");
+  const onClickFeedback = () => gameStore.pageState.set("FEEDBACK");
 
   return (
     <div className="relative flex w-full items-center justify-center gap-4 rounded-t-md bg-dark-900 px-12 py-6">

@@ -21,13 +21,13 @@ const Feedback = () => {
   return (
     <div className="mt-8 flex flex-col items-center gap-8 overflow-x-hidden px-5 pb-8">
       <MobileNavbar
-        goBackAction={() => gameStore.displayFeedback.set(false)}
+        goBackAction={() => gameStore.pageState.set("DEFAULT")}
         goBackText="BACK TO THE GAME"
         href=""
       />
       <div
         className="hidden cursor-pointer items-center gap-1 text-lg font-medium uppercase tracking-[0.08em] lg:flex"
-        onClick={() => gameStore.displayFeedback.set(false)}
+        onClick={() => gameStore.pageState.set("DEFAULT")}
       >
         <AiOutlineLeft className="inline-block" /> BACK TO THE GAME
       </div>
