@@ -1,5 +1,3 @@
-import { Box } from "@/components/ui/box";
-import Spinner from "@/components/ui/spinner";
 import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
 import { backgroundStore } from "@/stores/background-store";
@@ -12,6 +10,7 @@ import GameOverModal from "../modals/game-over-modal";
 import HomeModal from "../modals/home-modal";
 import RewardModal from "../modals/reward-modal";
 import GamePlayHeader from "./gameplay-header";
+import GameplaySkeleton from "./gameplay-skeleton";
 import PlayMove from "./play-move";
 import Stories from "./stories";
 
@@ -27,12 +26,7 @@ const Gameplay = (props: { conversationId: string }) => {
 
   useHandleGameStateChange({ roomData });
 
-  if (!roomData || !dungeonData || !currentPlayer)
-    return (
-      <Box title="GAMEPLAY" className="flex h-full items-center justify-center">
-        <Spinner className="h-40 w-40" />
-      </Box>
-    );
+  if (!roomData || !dungeonData || !currentPlayer) return <GameplaySkeleton />;
 
   backgroundStore.set(dungeonData.backgroundUrl);
 
