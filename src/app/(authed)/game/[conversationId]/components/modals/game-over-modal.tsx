@@ -26,14 +26,12 @@ interface GameOverModalProps {
 }
 
 const GameOverModal = ({ result, dungeon, conversationId, players }: GameOverModalProps) => {
-  const gameOverModal = gameStore.gameOverModal.use();
   const pageState = gameStore.pageState.use();
 
-  const open = gameOverModal && pageState === "DEFAULT";
+  const open = pageState === "GAMEOVER";
 
   const close = () => {
-    gameStore.gameOverModal.set(false);
-    gameStore.rewardModal.set(true);
+    gameStore.pageState.set("REWARD");
   };
 
   const router = useRouter();

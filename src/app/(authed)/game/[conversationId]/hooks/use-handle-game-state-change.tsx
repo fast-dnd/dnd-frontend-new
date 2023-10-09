@@ -13,9 +13,10 @@ const useHandleGameStateChange = ({ roomData }: { roomData?: IRoomDetail }) => {
         !!previousState &&
         previousState !== roomData.state &&
         (roomData.state === "WIN" || roomData.state === "LOSE")
-      ) {
-        gameStore.gameOverModal.set(true);
-      }
+      )
+        setTimeout(() => {
+          if (gameStore.pageState.get() === "DEFAULT") gameStore.pageState.set("GAMEOVER");
+        }, 1500);
 
       setPreviousState(roomData.state);
     }

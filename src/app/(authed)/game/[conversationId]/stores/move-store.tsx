@@ -19,4 +19,6 @@ export const moveStore = observable<IMoveStore>({
   freeWill: "",
   powerup: 0,
   dice: [0, 0],
+  move: undefined,
+  roll: undefined,
 });

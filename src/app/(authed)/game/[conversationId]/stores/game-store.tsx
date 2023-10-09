@@ -9,15 +9,19 @@ export interface PlayerStatusUpdate {
 }
 
 export interface IGameStore {
-  pageState: "DEFAULT" | "HOWTOPLAY" | "FEEDBACK" | "GOHOME" | "DYING" | "DIED";
-  gameOverModal: boolean;
-  rewardModal: boolean;
+  pageState:
+    | "DEFAULT"
+    | "HOWTOPLAY"
+    | "FEEDBACK"
+    | "GOHOME"
+    | "DYING"
+    | "DIED"
+    | "GAMEOVER"
+    | "REWARD";
   statusUpdate: PlayerStatusUpdate;
 }
 
 export const gameStore = observable<IGameStore>({
   pageState: "DEFAULT",
-  gameOverModal: false,
-  rewardModal: false,
   statusUpdate: {},
 });

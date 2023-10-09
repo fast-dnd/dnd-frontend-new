@@ -43,7 +43,7 @@ const Gameplay = (props: { conversationId: string }) => {
           loadingText={loadingText}
         />
         <HomeModal />
-        <DiedModal />
+        <DiedModal state={roomData.state} />
         <GameOverModal
           result={roomData.state}
           dungeon={dungeonData}
