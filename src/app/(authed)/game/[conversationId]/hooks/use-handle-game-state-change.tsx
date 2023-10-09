@@ -1,22 +1,25 @@
 import { useEffect, useState } from "react";
 
-import { IRoomDetail } from "@/types/room";
+import { IGameState, IRoomDetail } from "@/types/room";
 
 import { gameStore } from "../stores/game-store";
 
 const useHandleGameStateChange = ({ roomData }: { roomData?: IRoomDetail }) => {
-  const [gaming, setGaming] = useState(true);
+  const [previousState, setPreviousState] = useState<IGameState>();
 
   useEffect(() => {
     if (roomData) {
-      if (roomData.state === "WIN" || roomData.state === "LOSE") {
-        if (gaming) {
-          setGaming(false);
-          gameStore.gameOverModal.set(true);
-        }
+      if (
+        !!previousState &&
+        previousState !== roomData.state &&
+        (roomData.state === "WIN" || roomData.state === "LOSE")
+      ) {
+        gameStore.gameOverModal.set(true);
       }
+
+      setPreviousState(roomData.state);
     }
-  }, [gaming, roomData]);
+  }, [previousState, roomData]);
 };
 
 export default useHandleGameStateChange;
