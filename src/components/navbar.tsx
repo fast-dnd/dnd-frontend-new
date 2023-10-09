@@ -20,7 +20,9 @@ const Navbar = () => {
 
   return (
     <div className="hidden w-full items-center justify-between gap-12 pl-2 pr-8 lg:flex">
-      <Image src="/images/logo.png" width={300} height={100} alt="logo" />
+      <Link href="/home">
+        <Image src="/images/logo.png" width={300} height={100} alt="logo" />
+      </Link>
       <div className="flex items-center gap-6 text-2xl leading-7 tracking-[3.3px]">
         <Link
           href={loggedIn ? "/home" : "/login"}
