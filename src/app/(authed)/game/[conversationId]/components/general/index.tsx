@@ -10,6 +10,7 @@ import { cn } from "@/utils/style-utils";
 import useAskQuestion from "../../hooks/use-ask-question";
 import useGeneral from "../../hooks/use-general";
 import { gameStore } from "../../stores/game-store";
+import GeneralSkeleton from "./general-skeleton";
 import MoveQuestionHistory from "./move-question-history";
 import Player from "./player";
 
@@ -32,8 +33,7 @@ const General = (props: { conversationId: string }) => {
     askQuestion({ conversationId, question }, { onError: () => setAsking(false) });
   };
 
-  if (!roomData || !currentPlayer)
-    return <Box title="GENERAL" className="flex h-full items-center justify-center"></Box>;
+  if (!roomData || !currentPlayer) return <GeneralSkeleton />;
 
   return (
     <Box
@@ -92,7 +92,6 @@ const General = (props: { conversationId: string }) => {
           <div className="flex min-h-[100px] flex-1 flex-col gap-8 overflow-y-auto">
             {roomData.playerState
               .filter((player) => player.accountId !== currentPlayer.accountId)
-
               .map((player) => (
                 <Player key={player.accountId} player={player} />
               ))}
