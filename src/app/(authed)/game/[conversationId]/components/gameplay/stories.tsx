@@ -25,13 +25,12 @@ const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
         return (
           <div key={i} className="flex w-full flex-col gap-8">
             <div className="flex w-full items-center gap-8">
-              <div className="flex max-w-[95%] flex-col text-lg font-semibold uppercase tracking-[0.2em] lg:flex-row lg:text-2xl">
+              <div className="flex max-w-full flex-col text-lg font-semibold uppercase tracking-[0.2em] lg:flex-row lg:text-2xl">
                 <span className="mr-2 whitespace-nowrap text-primary">
-                  TURN {i + 1}/{roomData.maxRounds + 1}.
+                  TURN {i + 1}/{roomData.maxRounds + 1}
                 </span>
                 <span className="truncate">{dungeonData.locations[Math.floor(i / 2)]?.name}</span>
               </div>
-              <div className="border-t border-primary lg:flex-1" />
             </div>
             <div className="w-full">
               {roomData.generateImages && i % 2 === 0 && (

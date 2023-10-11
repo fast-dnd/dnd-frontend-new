@@ -27,14 +27,12 @@ const GamePlayHeader = ({ title, loading }: { title: string; loading?: boolean }
       </div>
 
       <div className="flex shrink-0 items-center gap-4">
-        <Spinner
-          className={cn("m-0 h-[22px] w-[22px] shrink-0 opacity-0", loading && "opacity-50")}
-        />
+        <Spinner className={cn("m-0 h-5 w-5 shrink-0 opacity-0", loading && "opacity-50")} />
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger
               onClick={onClickHowTo}
-              className="text-2xl text-white/50 hover:text-white"
+              className="text-2xl text-white/50 transition-all duration-200 hover:text-white"
             >
               <AiOutlineQuestionCircle />
             </TooltipTrigger>
@@ -47,7 +45,7 @@ const GamePlayHeader = ({ title, loading }: { title: string; loading?: boolean }
           <Tooltip>
             <TooltipTrigger
               onClick={onClickFeedback}
-              className="text-2xl text-white/50 hover:text-white"
+              className="text-2xl text-white/50 transition-all duration-200 hover:text-white"
             >
               <AiOutlineExclamationCircle />
             </TooltipTrigger>
@@ -57,7 +55,7 @@ const GamePlayHeader = ({ title, loading }: { title: string; loading?: boolean }
           </Tooltip>
         </TooltipProvider>
         <div
-          className="flex cursor-pointer gap-2 rounded-md bg-white/5 px-4 py-3 uppercase text-white/50 transition-all duration-200 hover:opacity-80"
+          className="flex cursor-pointer gap-2 rounded-md bg-white/5 px-4 py-3 uppercase text-white/50 opacity-80 transition-all duration-200 hover:opacity-100"
           onClick={onClickHome}
         >
           <CloseCircle />
