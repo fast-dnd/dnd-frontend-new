@@ -28,7 +28,7 @@ const Gameplay = (props: { conversationId: string }) => {
 
   if (!roomData || !dungeonData || !currentPlayer) return <GameplaySkeleton />;
 
-  backgroundStore.set(dungeonData.backgroundUrl);
+  backgroundStore.set(dungeonData.background?.url || "");
 
   return (
     <div className="flex h-full w-full flex-col">

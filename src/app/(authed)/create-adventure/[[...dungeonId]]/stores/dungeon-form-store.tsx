@@ -20,7 +20,7 @@ export const initialDungeonFormData: IDungeonDetailWithTags = {
   actionLevel: 0,
   misteryLevel: 0,
   realityLevel: 50,
-  backgroundUrl: "",
+  background: null,
   publiclySeen: false,
 };
 

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { BsFillImageFill } from "react-icons/bs";
 
-import Rewards from "@/components/rewards";
+import "./location";
+
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ComboBox } from "@/components/ui/combobox";
@@ -16,14 +17,15 @@ import { DungeonDuration, dungeonDurations, dungeonTags } from "@/utils/dungeon-
 import { dungeonFormStore } from "../stores/dungeon-form-store";
 import tagsComboboxStyles from "../utils/tags-combobox-styles";
 import { tagsAttachLabel, TagsWithLabel } from "../utils/tags-utils";
+import SelectBgScreen from "./select-bg-screen";
 
 const GeneralInfo = () => {
+  const dungeonFormData = dungeonFormStore.dungeonFormData;
+  const { name, description, background } = dungeonFormData.use();
+
   const [isSelectingBg, setSelectingBg] = useState(false);
 
-  const [selectedReward, setSelectedReward] = useState<IReward>();
-
-  const dungeonFormData = dungeonFormStore.dungeonFormData;
-  const { name, description } = dungeonFormData.use();
+  const [selectedReward, setSelectedReward] = useState<IReward | null>(background);
 
   return (
     <>
@@ -104,12 +106,12 @@ const GeneralInfo = () => {
                         <BsFillImageFill />
                         {selectedReward ? (
                           <>
-                            <p>{selectedReward.name}</p>
+                            <p>{selectedReward?.name}</p>
                             <div className="h-2 w-2 rotate-45 bg-white/25" />
-                            <p>{selectedReward.rarity}</p>
+                            <p>{selectedReward?.rarity}</p>
                           </>
                         ) : (
-                          <></>
+                          <>Default</>
                         )}
                       </div>
                       <Button
@@ -126,21 +128,21 @@ const GeneralInfo = () => {
               <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
                 <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8">
                   <Slider
-                    min={1}
+                    min={0}
                     max={100}
                     label="Reality level"
                     value={[dungeonFormData.realityLevel.get()]}
                     onValueChange={(newValue) => dungeonFormData.realityLevel.set(newValue[0])}
                   />
                   <Slider
-                    min={1}
+                    min={0}
                     max={100}
                     label="Mistery level"
                     value={[dungeonFormData.misteryLevel.get()]}
                     onValueChange={(newValue) => dungeonFormData.misteryLevel.set(newValue[0])}
                   />
                   <Slider
-                    min={1}
+                    min={0}
                     max={100}
                     label="Action level"
                     value={[dungeonFormData.actionLevel.get()]}
@@ -169,30 +171,3 @@ const GeneralInfo = () => {
 };
 
 export default GeneralInfo;
-
-const SelectBgScreen = ({
-  setSelectedReward,
-  setSelectingBg,
-}: {
-  setSelectedReward: (reward: IReward) => void;
-  setSelectingBg: (selecting: boolean) => void;
-}) => {
-  const bgUrlObs = dungeonFormStore.dungeonFormData.backgroundUrl;
-
-  return (
-    <div className="flex flex-1 flex-col">
-      <Rewards
-        selectedReward={bgUrlObs.get()}
-        onSelectReward={(reward) => {
-          setSelectedReward(reward);
-          bgUrlObs.set(reward.url);
-        }}
-      />
-      <div className="mt-8 flex justify-end">
-        <Button className="w-fit" onClick={() => setSelectingBg(false)}>
-          CHOOSE BACKGROUND
-        </Button>
-      </div>
-    </div>
-  );
-};
