@@ -8,4 +8,4 @@
 
 # Deployed version:
 
-[https://v3rpg.fastdnd.net/](https://v3rpg.fastdnd.net/)
+[https://play.v3rpg.com/](https://play.v3rpg.com/)
