@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
@@ -11,20 +9,23 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { IReward } from "@/types/reward";
 
-interface RewardModalProps {
-  open: boolean;
-  close: () => void;
-  reward: IReward | undefined;
-}
+import useRewardSocket from "../../hooks/use-reward-socket";
+import { gameStore } from "../../stores/game-store";
 
-const RewardModal = ({ open, close, reward }: RewardModalProps) => {
+const RewardModal = ({ conversationId }: { conversationId: string }) => {
+  const { reward } = useRewardSocket(conversationId);
+
+  const pageState = gameStore.pageState.use();
+
+  const open = pageState === "REWARD" && !!reward;
+  const close = () => gameStore.pageState.set("DEFAULT");
+
   return (
     <Dialog
       open={open}
-      onOpenChange={(change) => {
-        if (!change) close();
+      onOpenChange={(isOpen) => {
+        if (!isOpen) close();
       }}
     >
       <DialogContent className="max-h-[700px] w-fit lg:max-w-[550px]">

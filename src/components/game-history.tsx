@@ -1,3 +1,5 @@
+"use client";
+
 import QuillIcon from "@/components/icons/quill-icon";
 import RoomItem from "@/components/room-item";
 import { Button } from "@/components/ui/button";
@@ -68,7 +70,11 @@ const GameHistory = ({ showFull = false }: { showFull?: boolean }) => {
               </div>
             )}
             {!showFull && (
-              <Button href="/profile?activeTab=GAME+HISTORY" variant="outline">
+              <Button
+                className="whitespace-nowrap"
+                href="/profile?activeTab=GAME HISTORY"
+                variant="outline"
+              >
                 SHOW ENTIRE GAME HISTORY
               </Button>
             )}

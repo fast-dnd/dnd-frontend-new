@@ -10,6 +10,7 @@ const useRewardSocket = (conversationId: string) => {
   const accountId = useReadLocalStorage<string>("accountId");
 
   const [reward, setReward] = useState<IReward>();
+
   useEffect(() => {
     const onEvent = (event: IRewardEvent) => {
       if (event.event === "REWARD_EARNED")

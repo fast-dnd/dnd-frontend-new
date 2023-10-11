@@ -7,7 +7,6 @@ const TranscriptSkeleton = () => {
         title="TRANSCRIPT"
         wrapperClassName="w-3/5 min-h-0 h-full"
         className="h-full overflow-y-hidden p-12"
-        titleClassName="h-24"
       >
         <div className="flex animate-pulse flex-col gap-8 pr-4">
           <div className="h-8 w-16 rounded-lg bg-gray-600" />

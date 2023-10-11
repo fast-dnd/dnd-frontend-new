@@ -18,7 +18,7 @@ const usePlayerInfo = (roomData: IRoomDetail | undefined) => {
       setAvatarId(currentPlayer?.accountId);
       setRole(currentPlayer?.champion?.name);
     }
-    setDuration(roomData?.responseDetailsDepth);
+    if (roomData?.responseDetailsDepth) setDuration(roomData.responseDetailsDepth);
   }, [accountId, roomData]);
 
   return { avatarId, setAvatarId, role, setRole, duration, setDuration };

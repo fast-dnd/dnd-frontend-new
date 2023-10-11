@@ -5,12 +5,15 @@ import { GiCancel } from "react-icons/gi";
 
 import { cn } from "@/utils/style-utils";
 
+import Spinner from "./spinner";
+
 export interface ToggleGroupProps {
   state?: "error" | "success";
   successMessage?: string;
   errorMessage?: string;
   label?: string;
   labelClassName?: string;
+  loading?: boolean;
 }
 
 const ToggleGroup = React.forwardRef<
@@ -26,6 +29,7 @@ const ToggleGroup = React.forwardRef<
       errorMessage,
       className,
       disabled,
+      loading,
       children,
       ...props
     },
@@ -35,7 +39,7 @@ const ToggleGroup = React.forwardRef<
       {label && (
         <div
           className={cn(
-            "w-fit pb-2 text-sm tracking-[0.07em] backdrop-blur-none",
+            "flex w-fit items-center gap-4 pb-2 text-sm tracking-[0.07em] backdrop-blur-none",
             state === "error" && "text-error",
             state === "success" && "text-success",
             disabled && "opacity-50",
@@ -43,13 +47,14 @@ const ToggleGroup = React.forwardRef<
           )}
         >
           {label}
+          {loading && <Spinner className="m-0 h-3 w-3 opacity-75" />}
         </div>
       )}
       <ToggleGroupPrimitive.Root
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-center gap-2",
-          disabled && "pointer-events-none opacity-50",
+          "inline-flex items-center justify-center gap-2 transition-all duration-200",
+          (disabled || loading) && "pointer-events-none opacity-50",
           className,
         )}
         {...props}

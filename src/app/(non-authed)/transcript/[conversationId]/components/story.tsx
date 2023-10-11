@@ -1,4 +1,3 @@
-import React, { Fragment } from "react";
 import Image from "next/image";
 
 import { ITranscript } from "@/types/transcript";
@@ -21,23 +20,23 @@ const Story = ({ transcripts }: { transcripts: ITranscript }) => {
             </div>
           )}
           <p className="tracking-wide">{story.storyChunk}</p>
-          <div className="mt-4 flex gap-4">
+          <div className="mt-4 flex flex-col gap-4">
             {story.movesInRound?.map((move) => {
               const player = transcripts.players.find(
                 (player) => player.accountId === move.playerAccountId,
               );
               if (!player) return null;
               return (
-                <Fragment key={move.action}>
+                <div className="flex gap-4" key={move.action}>
                   <Image
                     src={player.imageUrl || "/images/default-avatar.png"}
                     width={32}
                     height={32}
                     alt={`${player.name}'s avatar`}
-                    className="rounded-md"
+                    className="h-8 w-8 rounded-md"
                   />
                   <span className="font-semibold text-primary">{player.name}:</span> {move.action}
-                </Fragment>
+                </div>
               );
             })}
           </div>

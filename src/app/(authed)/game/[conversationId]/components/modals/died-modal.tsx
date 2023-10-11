@@ -7,13 +7,23 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { IGameState } from "@/types/room";
 
-const DiedModal = ({ open, close }: { open: boolean; close: () => void }) => {
+import { gameStore } from "../../stores/game-store";
+
+const DiedModal = ({ state }: { state: IGameState }) => {
+  const pageState = gameStore.pageState.use();
+
+  const close = () => {
+    if (state === "WIN" || state === "LOSE") gameStore.pageState.set("GAMEOVER");
+    else gameStore.pageState.set("DEFAULT");
+  };
+
   return (
     <Dialog
-      open={open}
-      onOpenChange={(change) => {
-        if (!change) close();
+      open={pageState === "DIED"}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) close();
       }}
     >
       <DialogContent>
@@ -24,7 +34,7 @@ const DiedModal = ({ open, close }: { open: boolean; close: () => void }) => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button className="whitespace-nowrap px-8 py-3 uppercase" onClick={close}>
+          <Button className="whitespace-nowrap px-8 py-3 uppercase" onClick={() => close()}>
             spectate
           </Button>
         </DialogFooter>

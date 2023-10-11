@@ -21,21 +21,25 @@ const useOnRoomChange = ({
   const [generateImages, setGenerateImages] = useState<boolean>();
   const [generateAudio, setGenerateAudio] = useState<boolean>();
 
-  const { mutate: updateRoom } = useUpdateRoom(conversationId);
+  const { mutate: updateRoom, isLoading: updatingRoom } = useUpdateRoom(conversationId);
 
   useEffect(() => {
-    if (isAdmin && (duration || generateImages || generateAudio)) {
+    if (
+      isAdmin &&
+      !updatingRoom &&
+      (duration || generateImages !== undefined || generateAudio !== undefined)
+    )
       updateRoom({
         conversationId,
         responseDetailsDepth: duration || roomData?.responseDetailsDepth,
         generateImages,
         generateAudio,
       });
-    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [duration, generateImages, generateAudio]);
 
-  return { generateImages, setGenerateImages, generateAudio, setGenerateAudio };
+  return { generateImages, setGenerateImages, generateAudio, setGenerateAudio, updatingRoom };
 };
 
 export default useOnRoomChange;

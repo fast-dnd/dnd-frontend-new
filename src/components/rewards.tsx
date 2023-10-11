@@ -7,7 +7,7 @@ import { IReward } from "@/types/reward";
 import { cn } from "@/utils/style-utils";
 
 interface IRewardProps {
-  selectedReward?: string;
+  selectedReward?: IReward;
   onSelectReward?: (reward: IReward) => void;
 }
 
@@ -35,11 +35,11 @@ const Rewards = ({ selectedReward, onSelectReward }: IRewardProps) => {
                 height={150}
                 className={cn(
                   "h-full w-full rounded-md",
-                  selectedReward === reward.url && "border-2 border-primary",
+                  selectedReward?._id === reward._id && "border-2 border-primary",
                 )}
                 onClick={() => onSelectReward?.(reward)}
               />
-              {selectedReward === reward.url && (
+              {selectedReward?._id === reward._id && (
                 <div className="absolute right-2 top-2 bg-primary px-2 py-1">Equipped</div>
               )}
             </div>

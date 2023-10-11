@@ -34,7 +34,16 @@ export const Campaign = React.forwardRef<
       />
       <div className="flex w-full min-w-0 flex-col gap-4">
         <div className="flex w-full items-center justify-between">
-          <p className="truncate text-2xl font-bold uppercase">{campaign.name}</p>
+          <div className="flex gap-8">
+            <p className="truncate text-2xl font-bold uppercase">{campaign.name}</p>
+            {isOwned && (
+              <div className="rounded-md border border-white/25">
+                <p className="px-3 py-1 text-sm capitalize">
+                  {campaign.publiclySeen ? "Public" : "Private"}
+                </p>
+              </div>
+            )}
+          </div>
           {showActions && (
             <div className="mr-8 flex shrink-0 gap-4" onClick={(e) => e.stopPropagation()}>
               <div

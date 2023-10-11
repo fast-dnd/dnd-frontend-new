@@ -1,31 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { socketIO } from "@/lib/socket";
-import { IDefaultMove } from "@/types/room";
 
+import { moveStore } from "../stores/move-store";
 import { IGameplaySocketEvent } from "../types/events";
 
 const useGameplaySocket = (conversationId: string) => {
-  const [canPlay, setCanPlay] = useState(true);
-  const [move, setMove] = useState<IDefaultMove>();
-  const [rollButtonState, setRollButtonState] = useState<"CANPLAY" | "ROLLING" | "ROLLED">(
-    "CANPLAY",
-  );
-
   useEffect(() => {
     const onEvent = (event: IGameplaySocketEvent) => {
       switch (event.event) {
         case "GAME_ENDED":
-          setMove(undefined);
-          setRollButtonState("ROLLED");
+          moveStore.move.set(undefined);
+          moveStore.buttonState.set("ROLLED");
         case "ROUND_STORY_CHUNK":
         case "REQUEST_SENT_TO_DM":
-          setCanPlay(false);
+          moveStore.canPlay.set(false);
           break;
         case "ROUND_STORY":
-          setRollButtonState("CANPLAY");
-          setCanPlay(true);
-          setMove(undefined);
+          moveStore.buttonState.set("CANPLAY");
+          moveStore.canPlay.set(true);
+          moveStore.move.set(undefined);
           break;
       }
     };
@@ -34,15 +28,6 @@ const useGameplaySocket = (conversationId: string) => {
       socketIO.off(conversationId, onEvent);
     };
   }, [conversationId]);
-
-  return {
-    canPlay,
-    setCanPlay,
-    move,
-    setMove,
-    rollButtonState,
-    setRollButtonState,
-  };
 };
 
 export default useGameplaySocket;

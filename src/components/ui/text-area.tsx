@@ -37,7 +37,7 @@ export interface TextAreaProps
   errorMessage?: string;
   label?: string;
   canResize?: boolean;
-  center?: boolean;
+  indent?: boolean;
   fullHeight?: boolean;
 }
 
@@ -53,7 +53,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
       errorMessage,
       label,
       canResize,
-      center = false,
+      indent,
       fullHeight = false,
       disabled,
       className,
@@ -93,7 +93,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
             className={cn(
               "h-full",
               !canResize && "resize-none",
-              center && "text-center",
+              indent && "indent-20",
               textAreaVariants(),
             )}
             ref={ref}

@@ -2,6 +2,8 @@ import { z } from "zod";
 
 import { dungeonDurationsArray, dungeonTags } from "@/utils/dungeon-options";
 
+import { rewardSchema } from "./reward";
+
 export const locationSchema = z.object({
   _id: z.string(),
   name: z.string(),
@@ -41,6 +43,8 @@ export const baseDungeonSchema = z.object({
       imageUrl: z.string(),
     })
     .nullish(),
+  publiclySeen: z.boolean(),
+  background: rewardSchema.nullable(),
 });
 
 export const dungeonSchema = baseDungeonSchema.extend({
@@ -54,13 +58,18 @@ export const dungeonDetailSchema = baseDungeonSchema.extend({
   realityLevel: z.number().min(0).max(100),
   actionLevel: z.number().min(0).max(100),
   misteryLevel: z.number().min(0).max(100),
-  backgroundUrl: z.string(),
 });
 
-export const dungeonForBackendSchema = dungeonDetailSchema.omit({
-  numOfRatings: true,
-  rating: true,
-});
+export const dungeonForBackendSchema = dungeonDetailSchema
+  .omit({
+    numOfRatings: true,
+    rating: true,
+    imageUrl: true,
+  })
+  .extend({
+    background: z.string().nullable(),
+    image: z.string().optional(),
+  });
 
 export const dungeonResponseSchema = z.object({
   id: z.string(),

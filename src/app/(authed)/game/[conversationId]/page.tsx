@@ -8,6 +8,7 @@ import MobileNavbar from "@/components/mobile-navbar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 
+import AnimationEffects from "./components/animation-effects";
 import Feedback from "./components/feedback";
 import Gameplay from "./components/gameplay";
 import General from "./components/general";
@@ -16,56 +17,32 @@ import { gameStore } from "./stores/game-store";
 const Game = ({ params }: { params: { conversationId: string } }) => {
   const conversationId = params.conversationId;
   const [openedGameplay, setOpenedGameplay] = useState(true);
-  const displayHowToPlay = gameStore.displayHowToPlay.use();
-  const displayFeedback = gameStore.displayFeedback.use();
-  const changes = gameStore.changes.use();
 
-  if (displayFeedback)
-    return <Feedback onHideFeedback={() => gameStore.displayFeedback.set(false)} />;
+  const pageState = gameStore.pageState.use();
 
-  if (displayHowToPlay)
+  if (pageState === "FEEDBACK") return <Feedback />;
+
+  if (pageState === "HOWTOPLAY")
     return (
-      <HowToPlay
-        onHideHowToPlay={() => gameStore.displayHowToPlay.set(false)}
-        hideText={"back to the game"}
-      />
+      <div className="flex h-full min-h-0 flex-col gap-5 lg:pb-12">
+        <HowToPlay
+          onHideHowToPlay={() => gameStore.pageState.set("DEFAULT")}
+          hideText={"back to the game"}
+        />
+      </div>
     );
+
   return (
     <div className="flex h-full min-h-0 flex-col gap-5 lg:pb-12">
-      <div
-        className={cn(
-          "pointer-events-none absolute bottom-0 left-0 h-full min-h-0 w-full overflow-hidden",
-        )}
-      >
-        {["bg-gradient-to-r", "bg-gradient-to-l", "bg-gradient-to-t", "bg-gradient-to-b"].map(
-          (dir) => (
-            <React.Fragment key={dir}>
-              <div
-                className={cn(
-                  "absolute h-full w-full from-red-500 to-5% opacity-0 transition-all duration-500",
-                  dir,
-                  changes.lostHealth && "opacity-100",
-                )}
-              />
-              <div
-                className={cn(
-                  "absolute h-full w-full from-green-500 to-5% opacity-0 transition-all duration-500",
-                  dir,
-                  changes.gainedHealth && "opacity-100",
-                )}
-              />
-            </React.Fragment>
-          ),
-        )}
-      </div>
+      <AnimationEffects />
       <MobileNavbar
-        goBackAction={() => gameStore.homeModal.set(true)}
+        goBackAction={() => gameStore.pageState.set("GOHOME")}
         goBackText="HOME"
         href=""
         howTo
-        onClickHowTo={() => gameStore.displayHowToPlay.set(true)}
+        onClickHowTo={() => gameStore.pageState.set("HOWTOPLAY")}
         feedback
-        onClickFeedback={() => gameStore.displayFeedback.set(true)}
+        onClickFeedback={() => gameStore.pageState.set("FEEDBACK")}
       />
       <div className="px-5 lg:hidden">
         <Button
@@ -86,8 +63,10 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
         </Button>
       </div>
 
-      <div className="flex h-full min-h-0 w-full min-w-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:flex-row lg:gap-12 lg:py-0">
-        <div className={cn("flex flex-1 lg:w-[70%]", !openedGameplay && "hidden", "lg:flex")}>
+      <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:flex-row lg:gap-12 lg:py-0">
+        <div
+          className={cn("flex h-full flex-1 lg:w-[70%]", !openedGameplay && "hidden", "lg:flex")}
+        >
           <Gameplay conversationId={conversationId} />
         </div>
         <div

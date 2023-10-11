@@ -1,13 +1,13 @@
 import { Box } from "@/components/ui/box";
 import Skeleton from "@/components/ui/skeleton";
 
-const CreateCampaignSkeleton = () => {
+const CreateCampaignSkeleton = ({ isEditing }: { isEditing: boolean }) => {
   return (
     <div className="h-full w-full overflow-y-auto">
       <div className="flex h-full w-full justify-between gap-12 pb-12 lg:overflow-y-hidden">
         <div className="flex h-full w-full">
           <Box
-            title="EDIT Campaign"
+            title={isEditing ? "EDIT CAMPAIGN" : "CREATE CAMPAIGN"}
             className="mb-4 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:mb-0 lg:gap-6 lg:p-8"
             wrapperClassName="w-[95%] lg:w-[1200px] mx-auto"
           >

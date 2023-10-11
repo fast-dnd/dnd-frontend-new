@@ -1,11 +1,12 @@
 import { cn } from "@/utils/style-utils";
 
-import { dieMap } from "../utils/dice";
+import { dieMap } from "../../utils/dice";
 
 const Die = (props: { roll: number }) => {
   const dieRows = dieMap[props.roll];
 
   if (!dieRows) return <div className="flex h-14 w-14 flex-col rounded-lg bg-white p-1.5" />;
+
   return (
     <div className="flex h-14 w-14 flex-col rounded-lg bg-white p-1.5">
       {dieRows.map((row, i) => (

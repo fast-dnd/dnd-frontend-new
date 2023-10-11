@@ -6,6 +6,7 @@ import { z } from "zod";
 import StatusModal, { StatusModalContent } from "@/components/status-modal";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
+import { IDungeonForBackend } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
 import useCreateDungeon from "../hooks/use-create-dungeon";
@@ -23,8 +24,10 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
   const { mutate: updateDungeon, isLoading: isUpdating } = useUpdateDungeon();
 
   const onFinishForm = () => {
-    const dungeonFormDataWithoutTags = {
+    const dungeonFormDataWithoutTags: IDungeonForBackend = {
       ...dungeonFormData,
+      image: dungeonFormData.imageUrl,
+      background: dungeonFormData.background?._id || null,
       tags: tagsRemoveLabel(dungeonFormData.tags),
     };
 

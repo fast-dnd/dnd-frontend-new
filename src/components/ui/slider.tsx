@@ -12,11 +12,11 @@ const Slider = React.forwardRef<
     state?: "error" | "success";
   }
 >(({ className, label, state, disabled, ...props }, ref) => (
-  <div>
+  <div className="flex flex-col gap-2">
     {label && (
       <div
         className={cn(
-          "w-fit pb-2 text-sm tracking-[0.07em] backdrop-blur-none",
+          "w-fit text-sm tracking-[0.07em] backdrop-blur-none",
           state === "error" && "text-error",
           state === "success" && "text-success",
           disabled && "opacity-50",
@@ -27,7 +27,7 @@ const Slider = React.forwardRef<
     )}
     <SliderPrimitive.Root
       ref={ref}
-      className={cn("relative flex w-full touch-none select-none items-center", className)}
+      className={cn("nozoom slider relative flex touch-none select-none items-center", className)}
       {...props}
     >
       <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-white/25">

@@ -14,7 +14,7 @@ const CreateCampaign = ({ params }: { params: { campaignId?: [string] } }) => {
 
   useLoadCampaignData({ data: campaignQuery.data });
 
-  if (campaignQuery?.isInitialLoading) return <CreateCampaignSkeleton />;
+  if (campaignQuery?.isInitialLoading) return <CreateCampaignSkeleton isEditing={!!campaignId} />;
 
   if (!!campaignId && !campaignQuery.data)
     return <div className="flex justify-center overflow-y-auto pb-8"> Something went wrong. </div>;

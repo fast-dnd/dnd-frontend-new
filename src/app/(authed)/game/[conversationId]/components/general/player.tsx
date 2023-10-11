@@ -9,10 +9,14 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
-import { PlayerChanges } from "../stores/game-store";
+import { PlayerStatusUpdate } from "../../stores/game-store";
 
-const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: PlayerChanges }) => {
-  const { player, currentPlayer, changes } = props;
+const Player = (props: {
+  player: IPlayer;
+  currentPlayer?: boolean;
+  statusUpdate?: PlayerStatusUpdate;
+}) => {
+  const { player, currentPlayer, statusUpdate } = props;
 
   return (
     <div className="relative flex gap-4 lg:gap-6">
@@ -30,7 +34,7 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
             <SkullIcon
               className={cn(
                 "h-3/4 w-3/4",
-                !!currentPlayer && !!changes && changes.lostHealth && "fill-primary",
+                !!currentPlayer && !!statusUpdate && statusUpdate.lostHealth && "fill-primary",
               )}
             />
           </div>
@@ -57,8 +61,14 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
                   disabled={player.health <= 0}
                   className={cn(
                     "mr-4 flex cursor-default items-center gap-1 text-sm transition-colors duration-500 lg:gap-2 lg:text-lg",
-                    !!currentPlayer && !!changes && !!changes.gainedHealth && "text-green-500",
-                    !!currentPlayer && !!changes && !!changes.lostHealth && "text-red-500",
+                    !!currentPlayer &&
+                      !!statusUpdate &&
+                      !!statusUpdate.gainedHealth &&
+                      "text-green-500",
+                    !!currentPlayer &&
+                      !!statusUpdate &&
+                      !!statusUpdate.lostHealth &&
+                      "text-red-500",
                   )}
                 >
                   <VscHeartFilled />
@@ -77,7 +87,7 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
                   disabled={player.health <= 0}
                   className={cn(
                     "mr-4 flex cursor-default items-center gap-1 text-sm transition-colors duration-500 lg:gap-2 lg:text-lg",
-                    !!currentPlayer && !!changes && !!changes.gainedBonus && "text-fuchsia-500",
+                    !!currentPlayer && !!statusUpdate && !!statusUpdate.bonus && "text-fuchsia-500",
                   )}
                 >
                   <BsFillLightningFill />
@@ -96,7 +106,7 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
                   disabled={player.health <= 0}
                   className={cn(
                     "mr-4 flex cursor-default items-center gap-1 text-sm transition-colors duration-500 lg:gap-2 lg:text-lg",
-                    !!currentPlayer && !!changes && !!changes.gainedMana && "text-cyan-500",
+                    !!currentPlayer && !!statusUpdate && !!statusUpdate.mana && "text-cyan-500",
                   )}
                 >
                   <HiSparkles />
@@ -115,7 +125,7 @@ const Player = (props: { player: IPlayer; currentPlayer?: boolean; changes?: Pla
                   disabled={player.health <= 0}
                   className={cn(
                     "mr-4 flex cursor-default items-center gap-1 text-sm transition-colors duration-500 lg:gap-2 lg:text-lg",
-                    !!currentPlayer && !!changes && !!changes.gainedGold && "text-yellow-400",
+                    !!currentPlayer && !!statusUpdate && !!statusUpdate.gold && "text-yellow-400",
                   )}
                 >
                   <RiCopperCoinFill />

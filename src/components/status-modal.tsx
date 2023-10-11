@@ -8,7 +8,6 @@ import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -47,7 +46,7 @@ const StatusModal = ({ open, type, content, onClose }: IStatusModalProps) => {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title[content.state]}</AlertDialogTitle>
-          <AlertDialogDescription>
+          <div className="text-white/60">
             {content.state === "ERRORED" && (
               <ul className="my-8 flex list-disc flex-col items-center justify-center gap-2">
                 {content.errorMessages.map((msg, i) => (
@@ -73,7 +72,7 @@ const StatusModal = ({ open, type, content, onClose }: IStatusModalProps) => {
                 </span>
               </p>
             )}
-          </AlertDialogDescription>
+          </div>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogAction onClick={onClose}>

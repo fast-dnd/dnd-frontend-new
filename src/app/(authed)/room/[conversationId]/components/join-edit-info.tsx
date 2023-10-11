@@ -4,11 +4,11 @@ import { redirect } from "next/navigation";
 
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import Spinner from "@/components/ui/spinner";
 import useCopy from "@/hooks/use-copy";
 import useGetDungeon from "@/hooks/use-get-dungeon";
 import useGetRoomData from "@/hooks/use-get-room-data";
 
+import JoinEditSkeleton from "./join-edit-skeleton";
 import Player from "./player";
 import UpdateRoom from "./update-room";
 
@@ -22,17 +22,7 @@ const JoinEditInfo = (props: { conversationId: string }) => {
 
   if (isError) redirect("/home");
 
-  if (isLoadingRoomData || isLoadingDungeonData)
-    return (
-      <Box
-        title=""
-        className="mb-4 flex h-full min-h-0 flex-1 flex-col items-center justify-center rounded-t-md p-8 lg:mb-0 lg:gap-8"
-        wrapperClassName="h-full basis-1/4"
-        titleClassName="hidden"
-      >
-        <Spinner className="h-40 w-40" />
-      </Box>
-    );
+  if (isLoadingRoomData || isLoadingDungeonData) return <JoinEditSkeleton />;
 
   if (!roomData || !dungeonData) return <div>Something went wrong</div>;
 

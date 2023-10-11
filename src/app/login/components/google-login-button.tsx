@@ -1,5 +1,3 @@
-"use client";
-
 import { GoogleLogin } from "@react-oauth/google";
 
 import useLogin from "../hooks/use-login";

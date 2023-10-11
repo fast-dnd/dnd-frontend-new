@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 
@@ -8,30 +6,36 @@ import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/text-area";
 
-interface IFeedbackProps {
-  onHideFeedback?: () => void;
-}
+import useSendFeedback from "../hooks/use-send-feedback";
+import { gameStore } from "../stores/game-store";
 
-const Feedback = ({ onHideFeedback }: IFeedbackProps) => {
+const Feedback = () => {
   const [feedback, setFeedback] = useState("");
 
+  const { mutate: sendFeedback, isLoading } = useSendFeedback();
+
   const onSendFeedback = () => {
-    // TODO: send feedback to backend
+    sendFeedback({ text: feedback });
   };
 
   return (
-    <div className="mt-8 flex flex-col items-center gap-8 overflow-x-hidden px-5 pb-8">
-      <MobileNavbar goBackAction={onHideFeedback} goBackText="BACK TO THE GAME" href="" />
+    <div className="mt-8 flex flex-col items-center gap-8 overflow-hidden px-5 pb-8">
+      <MobileNavbar
+        goBackAction={() => gameStore.pageState.set("DEFAULT")}
+        goBackText="BACK TO THE GAME"
+        href=""
+      />
       <div
         className="hidden cursor-pointer items-center gap-1 text-lg font-medium uppercase tracking-[0.08em] lg:flex"
-        onClick={onHideFeedback}
+        onClick={() => gameStore.pageState.set("DEFAULT")}
       >
         <AiOutlineLeft className="inline-block" /> BACK TO THE GAME
       </div>
-      <div className="w-full lg:w-fit">
+      <div className="flex min-h-0 w-full shrink grow-0 lg:w-fit">
         <Box
           title="FEEDBACK"
-          className="flex min-h-0 flex-1 flex-row items-start justify-center p-5 tracking-wider lg:px-12 lg:py-8"
+          className="flex h-full items-start justify-center overflow-y-auto p-5 tracking-wider lg:px-12 lg:py-8"
+          wrapperClassName="h-full"
         >
           <div className="flex w-full flex-col gap-5 lg:w-[768px] lg:gap-12">
             <p className="w-fit font-semibold uppercase leading-7 tracking-widest lg:text-lg">
@@ -53,7 +57,7 @@ const Feedback = ({ onHideFeedback }: IFeedbackProps) => {
               onChange={(e) => setFeedback(e.target.value)}
             />
             <div className="flex justify-end">
-              <Button className="w-fit px-8 py-2" onClick={onSendFeedback}>
+              <Button className="w-fit px-8 py-2" onClick={onSendFeedback} isLoading={isLoading}>
                 SEND
               </Button>
             </div>

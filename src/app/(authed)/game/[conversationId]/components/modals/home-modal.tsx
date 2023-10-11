@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -13,15 +11,19 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-const HomeModal = ({ open, close }: { open: boolean; close: () => void }) => {
+import { gameStore } from "../../stores/game-store";
+
+const HomeModal = () => {
+  const pageState = gameStore.pageState.use();
+
   const router = useRouter();
   const [goingHome, setGoingHome] = useState(false);
 
   return (
     <Dialog
-      open={open}
-      onOpenChange={(change) => {
-        if (!change) close();
+      open={pageState === "GOHOME"}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) gameStore.pageState.set("DEFAULT");
       }}
     >
       <DialogContent className="w-fit lg:w-fit">
@@ -37,7 +39,7 @@ const HomeModal = ({ open, close }: { open: boolean; close: () => void }) => {
             variant="outline"
             onClick={() => {
               setGoingHome(true);
-              close();
+              gameStore.pageState.set("DEFAULT");
               router.push("/home");
             }}
             isLoading={goingHome}
@@ -46,7 +48,7 @@ const HomeModal = ({ open, close }: { open: boolean; close: () => void }) => {
           </Button>
           <Button
             className="w-fit whitespace-nowrap px-4 py-3 text-base lg:px-8 lg:text-xl"
-            onClick={close}
+            onClick={() => gameStore.pageState.set("DEFAULT")}
             autoFocus
           >
             STAY AND PLAY

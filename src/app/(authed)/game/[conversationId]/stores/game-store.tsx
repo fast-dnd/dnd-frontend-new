@@ -1,25 +1,27 @@
 import { observable } from "@legendapp/state";
 
-export interface PlayerChanges {
+export interface PlayerStatusUpdate {
   lostHealth?: boolean;
   gainedHealth?: boolean;
-  gainedMana?: boolean;
-  gainedBonus?: boolean;
-  gainedGold?: boolean;
+  mana?: boolean;
+  bonus?: boolean;
+  gold?: boolean;
 }
 
 export interface IGameStore {
-  displayHowToPlay: boolean;
-  displayFeedback: boolean;
-  homeModal: boolean;
-  diedModal: boolean;
-  changes: PlayerChanges;
+  pageState:
+    | "DEFAULT"
+    | "HOWTOPLAY"
+    | "FEEDBACK"
+    | "GOHOME"
+    | "DYING"
+    | "DIED"
+    | "GAMEOVER"
+    | "REWARD";
+  statusUpdate: PlayerStatusUpdate;
 }
 
 export const gameStore = observable<IGameStore>({
-  displayHowToPlay: false,
-  displayFeedback: false,
-  homeModal: false,
-  diedModal: false,
-  changes: {},
+  pageState: "DEFAULT",
+  statusUpdate: {},
 });

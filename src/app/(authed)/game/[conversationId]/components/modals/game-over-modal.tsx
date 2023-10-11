@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Rating } from "@smastrom/react-rating";
@@ -16,26 +14,26 @@ import {
 import { IDungeonDetail } from "@/types/dungeon";
 import { IGameState, IPlayer } from "@/types/room";
 
-import useRateDungeon from "../hooks/use-rate-dungeon";
-import Player from "./player";
+import useRateDungeon from "../../hooks/use-rate-dungeon";
+import { gameStore } from "../../stores/game-store";
+import Player from "../general/player";
 
 interface GameOverModalProps {
-  open: boolean;
-  close: () => void;
   result: IGameState;
   dungeon: IDungeonDetail;
   conversationId: string;
   players: IPlayer[];
 }
 
-const GameOverModal = ({
-  open,
-  close,
-  result,
-  dungeon,
-  conversationId,
-  players,
-}: GameOverModalProps) => {
+const GameOverModal = ({ result, dungeon, conversationId, players }: GameOverModalProps) => {
+  const pageState = gameStore.pageState.use();
+
+  const open = pageState === "GAMEOVER";
+
+  const close = () => {
+    gameStore.pageState.set("REWARD");
+  };
+
   const router = useRouter();
   const [goingHome, setGoingHome] = useState(false);
   const [rating, setRating] = useState(3);
@@ -50,11 +48,11 @@ const GameOverModal = ({
   return (
     <Dialog
       open={open}
-      onOpenChange={(change) => {
-        if (!change) close();
+      onOpenChange={(isOpen) => {
+        if (!isOpen) close();
       }}
     >
-      <DialogContent className="max-h-[700px] w-fit lg:max-w-[550px]">
+      <DialogContent className="flex max-h-[800px] w-fit flex-col lg:max-w-[550px]">
         <DialogHeader>
           <DialogTitle>
             {result === "WIN" && "Game finished"}
@@ -74,7 +72,7 @@ const GameOverModal = ({
             )}
           </DialogDescription>
         </DialogHeader>
-        <div className="mt-6 flex min-h-0 w-full flex-1 flex-col gap-6 overflow-y-scroll lg:mt-8 lg:gap-8">
+        <div className="mt-6 flex min-h-0 w-full flex-1 flex-col gap-6 overflow-y-auto lg:mt-8 lg:gap-8">
           <div className="w-full border-t border-white/25" />
 
           {players.map((player) => (

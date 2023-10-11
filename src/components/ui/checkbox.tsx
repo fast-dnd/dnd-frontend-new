@@ -14,7 +14,7 @@ export const checkboxVariants = cva(
 );
 
 export const checkboxContainerVariants = cva(
-  "relative flex items-center gap-2 bg-white/5 px-5 py-4 text-base transition-all duration-300",
+  "relative flex items-center gap-2 bg-white/5 text-base transition-all duration-300",
   {
     variants: {
       state: {

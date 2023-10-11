@@ -1,15 +1,18 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 
-const StyledAudio = (props: { audio?: string }) => {
-  const { audio } = props;
+const StyledAudio = ({ audio }: { audio?: string }) => {
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (audio && !!audioRef.current) audioRef.current.currentTime = 0.01;
+  }, [audio]);
 
   return (
     <>
@@ -17,6 +20,7 @@ const StyledAudio = (props: { audio?: string }) => {
         <audio
           src={audio}
           ref={audioRef}
+          controls
           className="hidden"
           onTimeUpdate={(e) => {
             setProgress(e.currentTarget.currentTime);
@@ -42,7 +46,7 @@ const StyledAudio = (props: { audio?: string }) => {
           {!playing && <BsPlayFill />}
         </Button>
         <div className="w-3/4 lg:w-60">
-          {!!audioRef.current && !!audioRef.current.duration && (
+          {!!audio && !!audioRef.current?.duration && (
             <Slider
               min={0}
               max={audioRef.current.duration}
