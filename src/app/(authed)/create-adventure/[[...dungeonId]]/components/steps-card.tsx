@@ -26,6 +26,7 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
   const onFinishForm = () => {
     const dungeonFormDataWithoutTags: IDungeonForBackend = {
       ...dungeonFormData,
+      image: dungeonFormData.imageUrl,
       background: dungeonFormData.background?._id || null,
       tags: tagsRemoveLabel(dungeonFormData.tags),
     };

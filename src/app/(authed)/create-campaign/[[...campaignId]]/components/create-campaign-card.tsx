@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 import UploadImage from "@/components/ui/upload-image";
+import { ICampaignForBackend } from "@/types/campaign";
 
 import useCreateCampaign from "../hooks/use-create-campaign";
 import useUpdateCampaign from "../hooks/use-update-campaign";
@@ -24,7 +25,7 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
   const { mutate: updateCampaign, isLoading: isUpdating } = useUpdateCampaign();
 
   const onComplete = () => {
-    const dataForBackend = {
+    const dataForBackend: ICampaignForBackend = {
       name,
       description,
       image,

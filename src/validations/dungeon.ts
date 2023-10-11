@@ -64,9 +64,11 @@ export const dungeonForBackendSchema = dungeonDetailSchema
   .omit({
     numOfRatings: true,
     rating: true,
+    imageUrl: true,
   })
   .extend({
     background: z.string().nullable(),
+    image: z.string().optional(),
   });
 
 export const dungeonResponseSchema = z.object({
