@@ -83,6 +83,7 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
             <div className="flex items-center gap-2">
               <Checkbox
                 className="bg-transparent"
+                checked={publiclySeen}
                 onCheckedChange={(checked) =>
                   campaignFormStore.publiclySeen.set(checked as boolean)
                 }

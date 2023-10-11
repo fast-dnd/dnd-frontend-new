@@ -21,7 +21,7 @@ import SelectBgScreen from "./select-bg-screen";
 
 const GeneralInfo = () => {
   const dungeonFormData = dungeonFormStore.dungeonFormData;
-  const { name, description, background } = dungeonFormData.use();
+  const { name, description, background, publiclySeen } = dungeonFormData.use();
 
   const [isSelectingBg, setSelectingBg] = useState(false);
 
@@ -43,6 +43,7 @@ const GeneralInfo = () => {
               <div className="flex items-center gap-2">
                 <Checkbox
                   className="bg-transparent"
+                  checked={publiclySeen}
                   onCheckedChange={(checked) =>
                     dungeonFormData.publiclySeen.set(checked as boolean)
                   }
