@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
+import { FaChevronDown } from "react-icons/fa";
 import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
@@ -8,6 +10,9 @@ import Skeleton from "@/components/ui/skeleton";
 import useGetDungeon from "@/hooks/use-get-dungeon";
 import { IChampion, IMoveMapping } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
+
+import { Button } from "./ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
 
 interface IDungeonDetailProps {
   dungeonDetailId: string;
@@ -21,6 +26,8 @@ const DungeonDetail = ({
   onChangeChampion,
 }: IDungeonDetailProps) => {
   const { data: dungeon, isLoading } = useGetDungeon(dungeonDetailId ?? "");
+
+  const [showActionsId, setShowActionsId] = useState<string>();
 
   if (isLoading) return <DungeonDetailSkeleton />;
 
@@ -37,26 +44,48 @@ const DungeonDetail = ({
             <div
               key={champion._id}
               className={cn(
-                "flex flex-col gap-4 rounded-md p-6 transition-all duration-200 hover:bg-white/10",
-                champion._id === selectedChampion?._id && "border-2 border-primary bg-white/10",
+                "flex flex-col gap-4 rounded-md border-2 border-white bg-white/10 p-6 transition-all duration-200",
+                champion._id === selectedChampion?._id && "border-primary",
               )}
-              onClick={() => onChangeChampion && onChangeChampion(champion)}
             >
               <p className="truncate text-xl font-semibold">{champion.name}</p>
               <p className="truncate font-light">{champion.description}</p>
-              <div className="flex flex-col gap-4">
-                <p>ACTIONS</p>
-                <div className="grid grid-cols-2 gap-4">
-                  {moveMappingWithIcons(champion.moveMapping).map((move, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary/10">
-                        {move.icon}
+              <Collapsible
+                open={showActionsId === champion._id}
+                onOpenChange={(isOpen) => setShowActionsId(isOpen ? champion._id : undefined)}
+                className="space-y-2"
+              >
+                <CollapsibleTrigger className="flex items-center gap-2 font-medium tracking-wide">
+                  ACTIONS
+                  <FaChevronDown
+                    className={cn(
+                      "transition-all duration-200",
+                      showActionsId === champion._id && "rotate-180",
+                    )}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <div className="grid grid-cols-2 gap-4">
+                    {moveMappingWithIcons(champion.moveMapping).map((move, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary/10">
+                          {move.icon}
+                        </div>
+                        <p className="truncate">{move.text}</p>
                       </div>
-                      <p className="truncate">{move.text}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+                    ))}
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+              {onChangeChampion && (
+                <Button
+                  variant={champion._id === selectedChampion?._id ? "primary" : "outline"}
+                  className="w-fit"
+                  onClick={() => onChangeChampion(champion)}
+                >
+                  {champion._id === selectedChampion?._id ? "SELECTED" : "CHOOSE THIS HERO"}
+                </Button>
+              )}
             </div>
           ))}
         </div>
