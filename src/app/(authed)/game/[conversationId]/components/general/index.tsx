@@ -54,7 +54,11 @@ const General = (props: { conversationId: string }) => {
               Team stats
             </Button>
           )}
-          <MoveQuestionHistory moveHistory={moveHistory} questionHistory={questionHistory} />
+          <MoveQuestionHistory
+            moveHistory={moveHistory}
+            questionHistory={questionHistory}
+            thinking={asking}
+          />
 
           <form onSubmit={onSubmit} className="flex w-full items-end">
             <div className="flex flex-1">
@@ -72,7 +76,7 @@ const General = (props: { conversationId: string }) => {
               disabled={!canAsk}
               type="submit"
               variant="ghost"
-              className="w-fit text-3xl text-primary"
+              className="h-[60px] w-20 items-center text-3xl text-primary"
               isLoading={asking}
             >
               {!asking && <IoMdSend />}

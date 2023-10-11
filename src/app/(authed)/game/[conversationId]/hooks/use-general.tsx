@@ -37,7 +37,7 @@ const useGeneral = (conversationId: string) => {
       const questions = roomData.questions3History || [];
       setQuestionHistory(questionAsked ? [...questions, questionAsked] : questions);
       const moves = roomData.moves || [];
-      setMoveHistory(roomData.queuedMoves ? [...moves, roomData.queuedMoves] : moves);
+      setMoveHistory(roomData.queuedMoves.length > 0 ? [...moves, roomData.queuedMoves] : moves);
     }
   }, [accountId, questionAsked, roomData, setCanAsk, setQuestionAsked]);
 

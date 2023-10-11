@@ -38,7 +38,7 @@ const useGeneralSocket = (conversationId: string) => {
           break;
 
         case "PLAYER_MOVE":
-          queryClient.refetchQueries([roomKey, conversationId]);
+          queryClient.invalidateQueries([roomKey, conversationId]);
           break;
         case "ROUND_STORY":
           setCanAsk(true);
