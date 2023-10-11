@@ -14,10 +14,16 @@ import { Metadata } from "next";
 import Background from "../components/background";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://play.v3rpg.com/"),
   title: "v3RPG",
   description: "Bringing gamification to storytelling. Powered by AI.",
   icons: {
     icon: "/v3dnd-logo.svg",
+  },
+  openGraph: {
+    images: ["/v3dnd-logo.png"],
+    title: "v3RPG",
+    description: "Bringing gamification to storytelling. Powered by AI.",
   },
 };
 
