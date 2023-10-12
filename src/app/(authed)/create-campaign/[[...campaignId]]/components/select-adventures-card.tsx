@@ -21,7 +21,7 @@ const SelectAdventuresCard = ({ isEditing }: { isEditing: boolean }) => {
         className="mb-4 flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:mb-0 lg:gap-6 lg:p-8"
         wrapperClassName="w-[95%] lg:w-full mx-auto"
       >
-        <GoBackButton href="/profile" />
+        <GoBackButton href="/profile?activeTab=CAMPAIGNS" />
         <div className="flex flex-row items-center justify-between gap-8">
           <p className="w-full text-lg font-semibold uppercase leading-7 tracking-[0.15em] lg:text-[22px]">
             CREATE CAMPAIGN <span className="text-white/50">/ SELECT ADVENTURES</span>
