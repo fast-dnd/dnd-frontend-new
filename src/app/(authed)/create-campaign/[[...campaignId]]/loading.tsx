@@ -7,9 +7,9 @@ import CreateCampaignSkeleton from "./components/create-campaign-skeleton";
 
 const Loading = () => {
   const params = useParams();
-  const dungeonId = params.campaignId?.[0];
+  const campaignId = params.campaignId?.[0];
 
-  return <CreateCampaignSkeleton isEditing={!!dungeonId} />;
+  return <CreateCampaignSkeleton isEditing={!!campaignId} />;
 };
 
 export default Loading;
