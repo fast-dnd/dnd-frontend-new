@@ -9,9 +9,11 @@ const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> & {
     label?: string;
+    minText?: string;
+    maxText?: string;
     state?: "error" | "success";
   }
->(({ className, label, state, disabled, ...props }, ref) => (
+>(({ className, label, minText, maxText, state, disabled, ...props }, ref) => (
   <div className="flex flex-col gap-2">
     {label && (
       <div
@@ -35,6 +37,12 @@ const Slider = React.forwardRef<
       </SliderPrimitive.Track>
       <SliderPrimitive.Thumb className="block h-4 w-4 rounded-full bg-white ring-offset-white transition-colors focus-visible:bg-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
     </SliderPrimitive.Root>
+    {(minText || maxText) && (
+      <div className="flex justify-between text-sm opacity-50">
+        <span>{minText}</span>
+        <span>{maxText}</span>
+      </div>
+    )}
   </div>
 ));
 Slider.displayName = SliderPrimitive.Root.displayName;
