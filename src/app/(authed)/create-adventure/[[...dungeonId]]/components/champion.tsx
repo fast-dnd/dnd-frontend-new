@@ -30,28 +30,28 @@ const Champion = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
             </div>
             <div className="grid grid-cols-2 gap-6">
               <Input
-                label="Heal action text"
+                label="Heal action"
                 placeholder="Try to heal yourself"
                 {...register("moveMapping.discover_health")}
                 state={championErrors?.moveMapping?.discover_health ? "error" : undefined}
                 errorMessage={championErrors?.moveMapping?.discover_health?.message}
               />
               <Input
-                label="Team action text"
+                label="Team action"
                 placeholder="Explore the location"
                 {...register("moveMapping.conversation_with_team")}
                 state={championErrors?.moveMapping?.conversation_with_team ? "error" : undefined}
                 errorMessage={championErrors?.moveMapping?.conversation_with_team?.message}
               />
               <Input
-                label="Mana action text"
+                label="Mana action"
                 placeholder="Try to find something useful"
                 {...register("moveMapping.discover_mana")}
                 state={championErrors?.moveMapping?.discover_mana ? "error" : undefined}
                 errorMessage={championErrors?.moveMapping?.discover_mana?.message}
               />
               <Input
-                label="Rest action text"
+                label="Rest action"
                 placeholder="Take a rest"
                 {...register("moveMapping.rest")}
                 state={championErrors?.moveMapping?.rest ? "error" : undefined}

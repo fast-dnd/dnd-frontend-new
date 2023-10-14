@@ -14,6 +14,7 @@ import { IDungeonDetail } from "@/types/dungeon";
 
 import useLoadDungeonData from "../hooks/use-load-dungeon-data";
 import { dungeonFormStore } from "../stores/dungeon-form-store";
+import { stepDescriptions } from "../utils/step-utils";
 
 interface IFormStepWrapperProps {
   isEditing?: boolean;
@@ -22,6 +23,8 @@ interface IFormStepWrapperProps {
 }
 
 const FormStepWrapper = ({ isEditing, children, dungeonData }: IFormStepWrapperProps) => {
+  const currStep = dungeonFormStore.currentStep.use();
+  const stepDescription = stepDescriptions[currStep];
   const statusObs = dungeonFormStore.status;
   const status = statusObs.use();
 
@@ -49,7 +52,7 @@ const FormStepWrapper = ({ isEditing, children, dungeonData }: IFormStepWrapperP
 
       <div className="flex flex-row items-center justify-between gap-8">
         <p className="w-full text-lg font-semibold uppercase leading-7 tracking-[0.15em] lg:text-[22px]">
-          {dungeonFormStore.currentStep.get()}
+          {currStep} {stepDescription && <span className="text-white/50">/ {stepDescription}</span>}
         </p>
         <TooltipProvider>
           <Tooltip>
@@ -60,7 +63,7 @@ const FormStepWrapper = ({ isEditing, children, dungeonData }: IFormStepWrapperP
             </TooltipTrigger>
             <TooltipContent className="border-transparent">
               <ul className="list-inside list-disc">
-                <li>Name is required</li>
+                <li>Title is required</li>
                 <li>Description is required</li>
                 <li>Locations: Min. 3 - Max. 4</li>
                 <li>Champions: Min. 2 - Max. 4</li>
