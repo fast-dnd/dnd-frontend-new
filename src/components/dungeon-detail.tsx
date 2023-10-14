@@ -17,12 +17,14 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collap
 interface IDungeonDetailProps {
   dungeonDetailId: string;
   selectedChampion?: IChampion | undefined;
+  takenChampions?: IChampion[];
   onChangeChampion?: (champion: IChampion) => void;
 }
 
 const DungeonDetail = ({
   dungeonDetailId,
   selectedChampion,
+  takenChampions,
   onChangeChampion,
 }: IDungeonDetailProps) => {
   const { data: dungeon, isLoading } = useGetDungeon(dungeonDetailId ?? "");
@@ -32,6 +34,9 @@ const DungeonDetail = ({
   if (isLoading) return <DungeonDetailSkeleton />;
 
   if (!dungeon) return <div>Something went wrong</div>;
+
+  const isTaken = (champion: IChampion) =>
+    takenChampions?.some((champ) => champ._id === champion._id) ?? false;
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto border-b-2 border-b-white/20 pr-4">
@@ -81,9 +86,14 @@ const DungeonDetail = ({
                 <Button
                   variant={champion._id === selectedChampion?._id ? "primary" : "outline"}
                   className="w-fit"
+                  disabled={isTaken(champion)}
                   onClick={() => onChangeChampion(champion)}
                 >
-                  {champion._id === selectedChampion?._id ? "SELECTED" : "CHOOSE THIS HERO"}
+                  {isTaken(champion)
+                    ? "TAKEN"
+                    : champion._id === selectedChampion?._id
+                    ? "SELECTED"
+                    : "CHOOSE THIS HERO"}
                 </Button>
               )}
             </div>
