@@ -11,20 +11,20 @@ const AdventureSkeletonLoading = ({ isEditing }: { isEditing: boolean }) => {
         >
           <div className="flex w-full animate-pulse flex-col gap-6">
             <div className="h-8 w-20 rounded-lg bg-gray-600" />
-            <div className="h-8 w-72 rounded-lg bg-gray-600" />
+            <div className="h-10 w-96 rounded-lg bg-gray-600" />
             <div className="hidden w-full border-t border-white/20 lg:block" />
 
             <div className="flex flex-col gap-5 overflow-hidden lg:flex-1 lg:flex-row lg:gap-8">
-              <div className="h-[170px] w-[170px] rounded-lg bg-gray-600" />
+              <div className="h-[170px] w-[170px] shrink-0 rounded-lg bg-gray-600" />
               <div className="flex flex-col gap-5 lg:basis-1/2 lg:gap-8">
-                <div className="h-20 w-full rounded-lg bg-gray-600" />
-                <div className="h-20 w-full rounded-lg bg-gray-600" />
-                <div className="h-44 w-full rounded-lg bg-gray-600" />
+                <div className="h-[86px] w-full rounded-lg bg-gray-600" />
+                <div className="h-[86px] w-full rounded-lg bg-gray-600" />
+                <div className="h-64 w-full rounded-lg bg-gray-600" />
               </div>
               <div className="flex flex-col gap-5 lg:basis-1/2 lg:gap-8">
-                <div className="h-20 w-full rounded-lg bg-gray-600" />
-                <div className="h-20 w-full rounded-lg bg-gray-600" />
-                <div className="h-44 w-full rounded-lg bg-gray-600" />
+                <div className="h-[86px] w-full rounded-lg bg-gray-600" />
+                <div className="h-[86px] w-full rounded-lg bg-gray-600" />
+                <div className="h-64 w-full rounded-lg bg-gray-600" />
               </div>
             </div>
           </div>

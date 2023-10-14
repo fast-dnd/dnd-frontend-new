@@ -130,21 +130,27 @@ const GeneralInfo = () => {
                 <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8">
                   <Slider
                     min={0}
+                    minText="Real world"
                     max={100}
+                    maxText="Fantasy world"
                     label="Fantasy level"
                     value={[dungeonFormData.realityLevel.get()]}
                     onValueChange={(newValue) => dungeonFormData.realityLevel.set(newValue[0])}
                   />
                   <Slider
                     min={0}
+                    minText="No misteries"
                     max={100}
+                    maxText="Total enigma"
                     label="Mistery level"
                     value={[dungeonFormData.misteryLevel.get()]}
                     onValueChange={(newValue) => dungeonFormData.misteryLevel.set(newValue[0])}
                   />
                   <Slider
                     min={0}
+                    minText="Pacifist"
                     max={100}
+                    maxText="Mayhem"
                     label="Action level"
                     value={[dungeonFormData.actionLevel.get()]}
                     onValueChange={(newValue) => dungeonFormData.actionLevel.set(newValue[0])}
