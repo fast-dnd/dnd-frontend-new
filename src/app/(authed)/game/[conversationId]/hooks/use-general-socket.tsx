@@ -36,10 +36,11 @@ const useGeneralSocket = (conversationId: string) => {
           });
           queryClient.invalidateQueries([roomKey, conversationId]);
           break;
-
         case "PLAYER_MOVE":
           queryClient.invalidateQueries([roomKey, conversationId]);
           break;
+        case "REQUEST_SENT_TO_DM":
+          setCanAsk(false);
         case "ROUND_STORY":
           setCanAsk(true);
           break;
