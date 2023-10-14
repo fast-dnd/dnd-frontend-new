@@ -43,7 +43,7 @@ const DungeonDetail = ({
       <Dungeon dungeon={dungeon} />
 
       <div className="my-8">
-        <p>HEROES</p>
+        <p>CHARACTERS</p>
         <div className="mt-8 flex flex-col gap-12 px-6">
           {dungeon.champions.map((champion) => (
             <div
