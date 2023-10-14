@@ -9,6 +9,7 @@ import useGetAccount from "@/hooks/use-get-account";
 import useCheckJWT from "@/utils/check-jwt";
 import { cn } from "@/utils/style-utils";
 
+import ClaimRewardModal from "./claim-reward-modal";
 import Coin from "./coin";
 import {
   Tooltip,
@@ -27,10 +28,13 @@ const Navbar = () => {
   const loggedIn = tokenExists && account;
 
   return (
-    <div className="hidden w-full items-center justify-between gap-12 pl-2 pr-8 lg:flex">
-      <Link href="/home">
-        <Image src="/images/logo.png" width={300} height={100} alt="logo" />
-      </Link>
+    <div className="hidden w-full items-center justify-between gap-12 py-10 lg:flex">
+      <div className="flex items-center gap-12">
+        <Link href="/home">
+          <Image src="/images/navbar-logo.png" width={203} height={70} alt="logo" />
+        </Link>
+        <ClaimRewardModal />
+      </div>
       <div className="flex items-center gap-6 text-2xl leading-7 tracking-[3.3px]">
         <Link
           href={loggedIn ? "/home" : "/login"}
