@@ -114,7 +114,7 @@ const moveMappingWithIcons = (moveMapping: IMoveMapping) => {
     },
     {
       text: moveMapping.conversation_with_team,
-      icon: <GoPeople className="h-5 w-5" />,
+      icon: <GoPeople className="h-5 w-5 fill-green-500" />,
     },
     {
       text: moveMapping.discover_mana,
@@ -122,7 +122,7 @@ const moveMappingWithIcons = (moveMapping: IMoveMapping) => {
     },
     {
       text: moveMapping.rest,
-      icon: <GiNightSleep className="h-5 w-5" />,
+      icon: <GiNightSleep className="h-5 w-5 fill-purple-400" />,
     },
   ];
 };
