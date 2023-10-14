@@ -6,6 +6,15 @@ import { socketIO } from "@/lib/socket";
 import { roomKey } from "@/services/room-service";
 import { roomDetailSchema } from "@/validations/room";
 
+import {
+  gameStore,
+  getInitialGameStoreData,
+} from "@/app/(authed)/game/[conversationId]/stores/game-store";
+import {
+  getInitialMoveStoreData,
+  moveStore,
+} from "@/app/(authed)/game/[conversationId]/stores/move-store";
+
 import { IRoomSocketEvent } from "../types/events";
 
 const useRoomSocket = (conversationId: string) => {
@@ -27,6 +36,8 @@ const useRoomSocket = (conversationId: string) => {
           setGameStarting(true);
           break;
         case "GAME_STARTED":
+          moveStore.set(getInitialMoveStoreData());
+          gameStore.set(getInitialGameStoreData());
           router.push(`/game/${conversationId}`);
           break;
       }

@@ -5,6 +5,15 @@ import { Book, Play } from "iconsax-react";
 
 import { IRoom } from "@/types/room";
 
+import {
+  gameStore,
+  getInitialGameStoreData,
+} from "@/app/(authed)/game/[conversationId]/stores/game-store";
+import {
+  getInitialMoveStoreData,
+  moveStore,
+} from "@/app/(authed)/game/[conversationId]/stores/move-store";
+
 const RoomItem = React.forwardRef<
   HTMLDivElement,
   {
@@ -32,7 +41,14 @@ const RoomItem = React.forwardRef<
       </div>
 
       {roomState.text.includes("IN PROGRESS") ? (
-        <Link href={`/game/${room.conversationId}`} aria-label="Transcript">
+        <Link
+          onClick={() => {
+            moveStore.set(getInitialMoveStoreData());
+            gameStore.set(getInitialGameStoreData());
+          }}
+          href={`/game/${room.conversationId}`}
+          aria-label="Transcript"
+        >
           <Play variant="Bold" size={40} color="#FF5A5A" />
         </Link>
       ) : (

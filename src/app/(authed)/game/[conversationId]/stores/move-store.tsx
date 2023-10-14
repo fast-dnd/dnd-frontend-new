@@ -2,6 +2,7 @@ import { observable } from "@legendapp/state";
 
 import { IPlayMoveResponse } from "@/types/game";
 import { IDefaultMove } from "@/types/room";
+import { deepClone } from "@/utils/clone";
 
 export interface IMoveStore {
   canPlay: boolean;
@@ -13,7 +14,7 @@ export interface IMoveStore {
   roll?: IPlayMoveResponse;
 }
 
-export const moveStore = observable<IMoveStore>({
+export const initialMoveStoreData: IMoveStore = {
   canPlay: true,
   buttonState: "CANPLAY",
   freeWill: "",
@@ -21,4 +22,8 @@ export const moveStore = observable<IMoveStore>({
   dice: [0, 0],
   move: undefined,
   roll: undefined,
-});
+};
+
+export const getInitialMoveStoreData = () => deepClone(initialMoveStoreData);
+
+export const moveStore = observable<IMoveStore>(getInitialMoveStoreData());

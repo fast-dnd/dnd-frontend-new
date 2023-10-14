@@ -1,5 +1,7 @@
 import { observable } from "@legendapp/state";
 
+import { deepClone } from "@/utils/clone";
+
 export interface PlayerStatusUpdate {
   lostHealth?: boolean;
   gainedHealth?: boolean;
@@ -21,7 +23,11 @@ export interface IGameStore {
   statusUpdate: PlayerStatusUpdate;
 }
 
-export const gameStore = observable<IGameStore>({
+export const initialGameStoreData: IGameStore = {
   pageState: "DEFAULT",
   statusUpdate: {},
-});
+};
+
+export const getInitialGameStoreData = () => deepClone(initialGameStoreData);
+
+export const gameStore = observable<IGameStore>(getInitialGameStoreData());
