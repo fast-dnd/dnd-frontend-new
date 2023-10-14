@@ -1,5 +1,6 @@
 import React from "react";
 import { GoGift } from "react-icons/go";
+import { toast } from "sonner";
 
 import { Button } from "./ui/button";
 import {
@@ -30,7 +31,12 @@ const ClaimRewardModal = () => {
         </DialogHeader>
         <DialogFooter>
           <Input placeholder="Enter your..." />
-          <Button className="mb-2 flex w-fit gap-2 whitespace-nowrap">REDEEM</Button>
+          <Button
+            className="mb-2 flex w-fit gap-2 whitespace-nowrap"
+            onClick={() => toast.success("Claimed!")}
+          >
+            REDEEM
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
