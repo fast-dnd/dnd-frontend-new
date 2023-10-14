@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Copy } from "iconsax-react";
 
 import useCopy from "@/hooks/use-copy";
@@ -31,6 +31,7 @@ interface IStatusModalProps {
 }
 
 const StatusModal = ({ open, type, content, onClose }: IStatusModalProps) => {
+  const router = useRouter();
   const title = {
     EDITED: `${type} EDITED SUCCESSFULLY`,
     CREATED: `${type} CREATED SUCCESSFULLY`,
@@ -40,6 +41,15 @@ const StatusModal = ({ open, type, content, onClose }: IStatusModalProps) => {
   const { copied, onCopy } = useCopy();
 
   if (!content) return null;
+
+  const leave = () => {
+    if (content.state === "EDITED") {
+      router.push("/profile");
+    } else if (content.state === "CREATED") {
+      onCopy(content.id);
+      router.push("/profile");
+    }
+  };
 
   return (
     <AlertDialog open={open}>
@@ -75,21 +85,20 @@ const StatusModal = ({ open, type, content, onClose }: IStatusModalProps) => {
           </div>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction onClick={onClose}>
+          <AlertDialogAction
+            onClick={() => {
+              onClose();
+              leave();
+            }}
+          >
             {content.state === "ERRORED" ? (
               "CONTINUE"
             ) : content.state === "EDITED" ? (
-              <Link href="/profile">GO TO PROFILE</Link>
+              "GO TO PROFILE"
             ) : (
-              <div className="flex gap-8">
-                <Link
-                  className="flex gap-2 tracking-widest"
-                  href="/profile"
-                  onClick={() => onCopy(content.id)}
-                >
-                  <Copy variant="Bold" color="#000" />
-                  {copied ? "COPIED" : "COPY ID"}
-                </Link>
+              <div className="flex gap-2.5">
+                <Copy variant="Bold" color="#000" />
+                {copied ? "COPIED" : "COPY ID"}
               </div>
             )}
           </AlertDialogAction>
