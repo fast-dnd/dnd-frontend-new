@@ -37,7 +37,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
           wrapperClassName="h-full min-h-0"
         >
           <div className="flex flex-col gap-5 lg:w-[444px]">
-            <p className="w-fit border-b border-b-primary text-lg font-semibold uppercase tracking-widest lg:text-2xl">
+            <p className="w-fit border-b-2 border-b-primary text-lg font-semibold uppercase tracking-widest lg:text-2xl">
               Quick guide
             </p>
             <p className="leading-6 lg:text-lg">
@@ -67,7 +67,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
           <div className="block w-full border-t border-t-white/20 lg:hidden" />
 
           <div className="flex flex-col lg:w-[770px]">
-            <p className="w-fit border-b border-b-primary text-lg font-semibold uppercase tracking-widest lg:text-2xl">
+            <p className="w-fit border-b-2 border-b-primary text-lg font-semibold uppercase tracking-widest lg:text-2xl">
               Movement probabilities
             </p>
             <p className="mt-4 font-semibold lg:text-lg">PREPARATION TURNS</p>
@@ -90,7 +90,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
                     ))}
                   </tr>
                 </thead>
-                <tbody className="bg-white/20">
+                <tbody className="bg-white/10">
                   <tr className="text-center">
                     <td className="border-b border-b-white/25 px-3 py-2 text-left">
                       Try to heal yourself
@@ -177,7 +177,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
                     ))}
                   </tr>
                 </thead>
-                <tbody className="bg-white/20">
+                <tbody className="bg-white/10">
                   <tr className="text-center">
                     <td className="border-b border-b-white/25 px-3 py-2 text-left">
                       Try to find something useful
