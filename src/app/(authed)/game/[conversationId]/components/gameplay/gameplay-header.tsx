@@ -59,7 +59,7 @@ const GamePlayHeader = ({ title, loading }: { title: string; loading?: boolean }
           onClick={onClickHome}
         >
           <CloseCircle />
-          <span className="">leave the game</span>
+          <span>leave the game</span>
         </div>
       </div>
     </div>
