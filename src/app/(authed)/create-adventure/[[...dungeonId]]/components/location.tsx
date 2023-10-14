@@ -11,7 +11,7 @@ const Location = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
     <ChampionLocationWrapper
       editIndex={editIndex}
       setEditIndex={setEditIndex}
-      locationOrChampion="Location"
+      locationOrChampion="Scene"
     >
       {({ register, errors }) => {
         const locationErrors = errors as FieldErrors<ILocationSchema>;
@@ -20,8 +20,8 @@ const Location = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
           <>
             <div className="w-full">
               <Input
-                label="Location name"
-                placeholder="Enter a memorable name for this location... e.g., 'The Enchanted Forest'"
+                label="Scene title"
+                placeholder="Enter a memorable name for this scene... e.g., 'The Enchanted Forest'"
                 className="m-0 w-full"
                 {...register("name")}
                 state={locationErrors?.name ? "error" : undefined}
@@ -30,24 +30,24 @@ const Location = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
             </div>
             <div className="flex h-full flex-row gap-6">
               <TextArea
-                label="Location mission"
-                placeholder="The goal is to find the secret treasure hidden somewhere in the old castle..."
-                className="m-0 h-full"
-                {...register("mission")}
-                state={locationErrors?.mission ? "error" : undefined}
-                errorMessage={locationErrors?.mission?.message}
-              />
-              <TextArea
-                label="Location description"
-                placeholder="Venture into the heart of an enchanted forest..."
+                label="Scene description"
+                placeholder="Describe this scene in detail... e.g., 'A mysterious forest filled with towering, ancient trees and bio-luminescent flora that bathes the forest floor in an eerie, ethereal glow...'"
                 className="m-0 h-full"
                 {...register("description")}
                 state={locationErrors?.description ? "error" : undefined}
                 errorMessage={locationErrors?.description?.message}
               />
               <TextArea
-                label="Location transition"
-                placeholder="You leave this place to enter the dark swamp..."
+                label="Scene mission"
+                placeholder="What's the main objective here? e.g., 'Recover the lost magical orb'"
+                className="m-0 h-full"
+                {...register("mission")}
+                state={locationErrors?.mission ? "error" : undefined}
+                errorMessage={locationErrors?.mission?.message}
+              />
+              <TextArea
+                label="Scene transition"
+                placeholder="Describe the way players found them selves in this state e.g., 'After walking through the dense forests of South America players found an ancient city of Akuma...'"
                 className="m-0 h-full"
                 {...register("transition")}
                 state={locationErrors?.transition ? "error" : undefined}

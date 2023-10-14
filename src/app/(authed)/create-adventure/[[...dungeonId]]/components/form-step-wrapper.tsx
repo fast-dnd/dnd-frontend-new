@@ -57,7 +57,7 @@ const FormStepWrapper = ({ isEditing, children, dungeonData }: IFormStepWrapperP
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="whitespace-nowrap rounded-md border border-white/25 px-3 py-1.5 tracking-wider">
+              <div className="cursor-default whitespace-nowrap rounded-md border border-white/25 px-3 py-1.5 tracking-wider">
                 See requirements
               </div>
             </TooltipTrigger>
@@ -65,8 +65,8 @@ const FormStepWrapper = ({ isEditing, children, dungeonData }: IFormStepWrapperP
               <ul className="list-inside list-disc">
                 <li>Title is required</li>
                 <li>Description is required</li>
-                <li>Locations: Min. 3 - Max. 4</li>
-                <li>Champions: Min. 2 - Max. 4</li>
+                <li>Scenes: Min. 3 - Max. 4</li>
+                <li>Characters: Min. 2 - Max. 4</li>
               </ul>
               <TooltipArrow className=" fill-select text-select" />
             </TooltipContent>
