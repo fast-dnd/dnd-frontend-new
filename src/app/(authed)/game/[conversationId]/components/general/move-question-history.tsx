@@ -31,7 +31,7 @@ const MoveQuestionHistory = ({
           <div className="flex items-center gap-2">
             <Spinner className="m-0 fill-none text-primary" hidePath />
             <span>
-              <span className="font-semibold text-primary">Master</span> is thinking...
+              <span className="font-semibold text-primary">Bob</span> is thinking...
             </span>
           </div>
         )}
