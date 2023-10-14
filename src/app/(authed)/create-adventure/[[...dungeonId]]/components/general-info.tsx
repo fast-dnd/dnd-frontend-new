@@ -56,7 +56,7 @@ const GeneralInfo = () => {
               <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
                 <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8">
                   <Input
-                    label="Name"
+                    label="Title"
                     placeholder="The Enchanted Grove"
                     className="m-0"
                     value={name}
@@ -131,7 +131,7 @@ const GeneralInfo = () => {
                   <Slider
                     min={0}
                     max={100}
-                    label="Reality level"
+                    label="Fantasy level"
                     value={[dungeonFormData.realityLevel.get()]}
                     onValueChange={(newValue) => dungeonFormData.realityLevel.set(newValue[0])}
                   />

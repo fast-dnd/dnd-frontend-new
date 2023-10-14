@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { championSchema, IChampionSchema } from "../schemas/champion-schema";
 import { ILocationSchema, locationSchema } from "../schemas/location-schema";
 import { dungeonFormStore } from "../stores/dungeon-form-store";
+import { IChampionsLocationsWrapperProps } from "./champions-locations-wrapper";
 
 export interface IChampionLocationProps {
   editIndex: number;
@@ -18,8 +19,9 @@ interface IChildrenProps {
   register: UseFormRegister<ILocationSchema | IChampionSchema>;
   errors: FieldErrors<ILocationSchema | IChampionSchema>;
 }
-interface IChampionLocationWrapperProps extends IChampionLocationProps {
-  locationOrChampion: "Location" | "Champion";
+interface IChampionLocationWrapperProps
+  extends IChampionLocationProps,
+    IChampionsLocationsWrapperProps {
   children: React.ReactNode | ((props: IChildrenProps) => React.ReactNode);
 }
 
@@ -32,7 +34,7 @@ const ChampionLocationWrapper = ({
   const statusObs = dungeonFormStore.status;
   const status = statusObs.use();
 
-  const dungeonFormField = locationOrChampion === "Location" ? "locations" : "champions";
+  const dungeonFormField = locationOrChampion === "Scene" ? "locations" : "champions";
 
   const chmpLocData = dungeonFormStore.dungeonFormData[dungeonFormField][editIndex].use();
 
@@ -43,7 +45,7 @@ const ChampionLocationWrapper = ({
     control,
     formState: { errors },
   } = useForm<IChampionSchema | ILocationSchema>({
-    resolver: zodResolver(locationOrChampion === "Champion" ? championSchema : locationSchema),
+    resolver: zodResolver(locationOrChampion === "Scene" ? locationSchema : championSchema),
     values: status === "EDITING" ? chmpLocData : undefined,
   });
 

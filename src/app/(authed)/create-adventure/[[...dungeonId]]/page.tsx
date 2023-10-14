@@ -30,11 +30,9 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
       <div className="flex h-full basis-2/3">
         <FormStepWrapper isEditing={!!dungeonId} dungeonData={dungeonData}>
           {currentStep === "General information" && <GeneralInfo />}
-          {currentStep === "Locations" && (
-            <ChampionsLocationsWrapper locationOrChampion="Location" />
-          )}
-          {currentStep === "Champions" && (
-            <ChampionsLocationsWrapper locationOrChampion="Champion" />
+          {currentStep === "Scenes" && <ChampionsLocationsWrapper locationOrChampion="Scene" />}
+          {currentStep === "Characters" && (
+            <ChampionsLocationsWrapper locationOrChampion="Character" />
           )}
         </FormStepWrapper>
       </div>

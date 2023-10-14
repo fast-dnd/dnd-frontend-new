@@ -42,7 +42,6 @@ const MyAccount = () => {
           <div className="flex w-full min-w-0 flex-col gap-2.5">
             <div className="flex w-full flex-col gap-1">
               <p className="truncate text-xl font-bold uppercase">{account.account.username}</p>
-              <p>Level {account.account.level}</p>
             </div>
             <p>{account.account.properties.email}</p>
             <div className="flex flex-col gap-2 transition-all duration-200 hover:opacity-80">

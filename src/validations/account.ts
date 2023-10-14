@@ -34,3 +34,7 @@ export const accountSchema = z.object({
     totalGameplayHours: z.number(),
   }),
 });
+
+export const couponSchema = z.object({
+  message: z.string(),
+});

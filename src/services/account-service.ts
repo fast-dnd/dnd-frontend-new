@@ -1,4 +1,4 @@
-import { accountSchema } from "@/validations/account";
+import { accountSchema, couponSchema } from "@/validations/account";
 
 import createApi from "./api-factory";
 
@@ -12,9 +12,14 @@ const editAccount = async (data: { username: string; image?: string }) => {
   return await accountApi.put("", data);
 };
 
+const redeemCoupon = async (data: { code: string }) => {
+  return await accountApi.post("coupon", data).then((res) => couponSchema.parse(res.data));
+};
+
 const accountService = {
   getAccount,
   editAccount,
+  redeemCoupon,
 };
 
 export default accountService;

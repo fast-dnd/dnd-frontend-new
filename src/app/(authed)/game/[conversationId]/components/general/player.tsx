@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { BsFillLightningFill } from "react-icons/bs";
 import { HiSparkles } from "react-icons/hi";
-import { RiCopperCoinFill } from "react-icons/ri";
 import { VscHeartFilled } from "react-icons/vsc";
 
 import SkullIcon from "@/components/icons/skull-icon";
@@ -114,25 +113,6 @@ const Player = (props: {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Mana - can be used on any roll</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-          <div>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger
-                  disabled={player.health <= 0}
-                  className={cn(
-                    "mr-4 flex cursor-default items-center gap-1 text-sm transition-colors duration-500 lg:gap-2 lg:text-lg",
-                    !!currentPlayer && !!statusUpdate && !!statusUpdate.gold && "text-yellow-400",
-                  )}
-                >
-                  <RiCopperCoinFill />
-                  <span className="mt-0.5">{player.gold}</span>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Gold that you have aquired till now</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

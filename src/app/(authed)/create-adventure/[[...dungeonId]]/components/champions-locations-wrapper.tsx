@@ -14,15 +14,15 @@ import Champion from "./champion";
 import Location from "./location";
 import SortableItem from "./sortable-item";
 
-interface IChampionsLocationsWrapperProps {
-  locationOrChampion: "Location" | "Champion";
+export interface IChampionsLocationsWrapperProps {
+  locationOrChampion: "Scene" | "Character";
 }
 
 const ChampionsLocationsWrapper = ({ locationOrChampion }: IChampionsLocationsWrapperProps) => {
   const statusObs = dungeonFormStore.status;
   const status = statusObs.use();
 
-  const dungeonFormField = locationOrChampion === "Location" ? "locations" : "champions";
+  const dungeonFormField = locationOrChampion === "Scene" ? "locations" : "champions";
   type ObservableChampionLocation = ObservableObject<(ILocation | IChampion)[]>;
 
   const { dungeonFormData } = dungeonFormStore.use();
@@ -93,7 +93,7 @@ const ChampionsLocationsWrapper = ({ locationOrChampion }: IChampionsLocationsWr
                   </SortableContext>
                 </div>
               </DndContext>
-            ) : locationOrChampion === "Location" ? (
+            ) : locationOrChampion === "Scene" ? (
               <ZeroLocations />
             ) : (
               <ZeroChampions />
@@ -113,7 +113,7 @@ const ChampionsLocationsWrapper = ({ locationOrChampion }: IChampionsLocationsWr
 
             <div className="flex flex-row items-center justify-between gap-8 lg:hidden" />
           </div>
-        ) : locationOrChampion === "Location" ? (
+        ) : locationOrChampion === "Scene" ? (
           <Location editIndex={editIndex} setEditIndex={setEditIndex} />
         ) : (
           <Champion editIndex={editIndex} setEditIndex={setEditIndex} />
@@ -134,8 +134,8 @@ const ZeroLocations = () => {
           Empty Halls Await Your Imagination!
         </p>
         <p className="text-center text-sm font-normal leading-7 tracking-widest text-white/50 lg:text-base">
-          Your dungeon is an open book, waiting for its first chapter. Add a new location and start
-          writing your adventure&apos;s exciting tale!
+          Your adventure is an open book, waiting for its first chapter. Add a new scene and start
+          writing your tale!
         </p>
       </div>
     </div>
@@ -151,8 +151,8 @@ const ZeroChampions = () => {
           Call Forth a Hero!
         </p>
         <p className="text-center text-sm font-normal leading-7 tracking-widest text-white/50 lg:text-base">
-          Your story needs a hero. Click &apos;Add New Champion&apos; to create a legend as unique
-          and bold as your own imagination. Let&apos;s start the saga!
+          Your story needs a playable character. Click &apos;Add New Character&apos; to create a
+          legend as unique and bold as your own imagination. Let&apos;s start the saga!
         </p>
       </div>
     </div>
