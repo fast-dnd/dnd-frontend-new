@@ -1,6 +1,7 @@
 import React from "react";
 import { GoGift } from "react-icons/go";
-import { toast } from "sonner";
+
+import useRedeemCoupon from "@/hooks/use-redeem-coupon";
 
 import { Button } from "./ui/button";
 import {
@@ -15,6 +16,10 @@ import {
 import { Input } from "./ui/input";
 
 const ClaimRewardModal = () => {
+  const [code, setCode] = React.useState("");
+
+  const { mutate: redeemCoupon, isLoading } = useRedeemCoupon();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -27,13 +32,18 @@ const ClaimRewardModal = () => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Reedem your coupon</DialogTitle>
-          <DialogDescription>This action cannot be reversed.</DialogDescription>
+          <DialogDescription>Enter coupon coude to redeem rewards</DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Input placeholder="Enter your..." />
+          <Input
+            placeholder="Enter your code..."
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
           <Button
             className="mb-2 flex w-fit gap-2 whitespace-nowrap"
-            onClick={() => toast.success("Claimed!")}
+            onClick={() => redeemCoupon({ code })}
+            isLoading={isLoading}
           >
             REDEEM
           </Button>

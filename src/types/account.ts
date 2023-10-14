@@ -1,5 +1,7 @@
 import { z } from "zod";
 
-import { accountSchema } from "@/validations/account";
+import { accountSchema, couponSchema } from "@/validations/account";
 
 export type IAccount = z.infer<typeof accountSchema>;
+
+export type ICoupon = z.infer<typeof couponSchema>;
