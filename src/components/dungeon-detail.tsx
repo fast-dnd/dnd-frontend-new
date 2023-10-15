@@ -93,7 +93,7 @@ const DungeonDetail = ({
                     ? "TAKEN"
                     : champion._id === selectedChampion?._id
                     ? "SELECTED"
-                    : "CHOOSE THIS HERO"}
+                    : "CHOOSE THIS CHARACTER"}
                 </Button>
               )}
             </div>
