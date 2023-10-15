@@ -15,7 +15,7 @@ const Feedback = () => {
   const { mutate: sendFeedback, isLoading } = useSendFeedback();
 
   const onSendFeedback = () => {
-    sendFeedback({ text: feedback });
+    sendFeedback({ text: feedback }, { onSuccess: () => setFeedback("") });
   };
 
   return (

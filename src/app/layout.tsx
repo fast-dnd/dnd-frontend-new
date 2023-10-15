@@ -1,7 +1,7 @@
 import NextTopLoader from "nextjs-toploader";
 
 import Providers from "@/lib/providers";
-import { jost } from "@/utils/fonts";
+import { lexend } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
 import "@/styles/globals.css";
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
-      <body className={cn("flex flex-col", jost.className)}>
+      <body className={cn("flex flex-col", lexend.className)}>
         <Providers>
           <NextTopLoader />
           <Background />
