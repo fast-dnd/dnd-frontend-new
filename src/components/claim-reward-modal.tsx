@@ -23,10 +23,10 @@ const ClaimRewardModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex cursor-pointer items-center gap-2 rounded-md border-2 border-primary bg-dark-900/50 p-4 text-sm tracking-widest backdrop-blur-sm transition-all duration-200 hover:opacity-80">
+        <button className="flex cursor-pointer items-center gap-2 rounded-md border-2 border-primary bg-dark-900/50 p-4 text-sm tracking-widest backdrop-blur-sm transition-all duration-200 hover:opacity-80">
           <GoGift />
           CLAIM REWARD
-        </div>
+        </button>
       </DialogTrigger>
 
       <DialogContent>

@@ -29,11 +29,11 @@ const StyledAudio = ({ audio }: { audio?: string }) => {
         />
       )}
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-4">
         <Button
           disabled={!audio}
           variant="ghost"
-          className="w-fit text-white"
+          className="w-fit px-0 text-white"
           onClick={() => {
             if (audio) {
               if (playing) audioRef.current?.pause();
@@ -41,6 +41,7 @@ const StyledAudio = ({ audio }: { audio?: string }) => {
               setPlaying(!playing);
             }
           }}
+          aria-label={playing ? "Pause" : "Play"}
         >
           {playing && <BsPauseFill />}
           {!playing && <BsPlayFill />}
@@ -55,6 +56,7 @@ const StyledAudio = ({ audio }: { audio?: string }) => {
                 if (audioRef.current) audioRef.current.currentTime = values[0];
                 setProgress(values[0]);
               }}
+              aria-label="Audio"
             />
           )}
         </div>

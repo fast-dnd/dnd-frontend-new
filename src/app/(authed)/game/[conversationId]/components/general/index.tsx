@@ -78,6 +78,7 @@ const General = (props: { conversationId: string }) => {
               variant="ghost"
               className="h-[60px] w-20 items-center text-3xl text-primary"
               isLoading={asking}
+              aria-label="Send"
             >
               {!asking && <IoMdSend />}
             </Button>

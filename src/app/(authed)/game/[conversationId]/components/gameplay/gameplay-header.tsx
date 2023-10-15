@@ -33,6 +33,7 @@ const GamePlayHeader = ({ title, loading }: { title: string; loading?: boolean }
             <TooltipTrigger
               onClick={onClickHowTo}
               className="text-2xl text-white/50 transition-all duration-200 hover:text-white"
+              aria-label="How to play"
             >
               <AiOutlineQuestionCircle />
             </TooltipTrigger>
@@ -46,6 +47,7 @@ const GamePlayHeader = ({ title, loading }: { title: string; loading?: boolean }
             <TooltipTrigger
               onClick={onClickFeedback}
               className="text-2xl text-white/50 transition-all duration-200 hover:text-white"
+              aria-label="Feedback"
             >
               <AiOutlineExclamationCircle />
             </TooltipTrigger>

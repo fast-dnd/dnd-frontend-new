@@ -61,6 +61,7 @@ const MoveInput = ({ champion }: { champion: IChampion | null | undefined }) => 
               move === "discover_health" && "border-primary text-primary",
             )}
             onClick={() => moveStore.move.set("discover_health")}
+            aria-label="Discover health"
           >
             <AiFillHeart />
           </Button>
@@ -72,6 +73,7 @@ const MoveInput = ({ champion }: { champion: IChampion | null | undefined }) => 
               move === "discover_mana" && "border-cyan-500 text-cyan-500",
             )}
             onClick={() => moveStore.move.set("discover_mana")}
+            aria-label="Discover mana"
           >
             <HiSparkles />
           </Button>
@@ -83,6 +85,7 @@ const MoveInput = ({ champion }: { champion: IChampion | null | undefined }) => 
               move === "conversation_with_team" && "border-green-500 text-green-500",
             )}
             onClick={() => moveStore.move.set("conversation_with_team")}
+            aria-label="Conversation with team"
           >
             <GoPeople />
           </Button>
@@ -94,6 +97,7 @@ const MoveInput = ({ champion }: { champion: IChampion | null | undefined }) => 
               move === "rest" && "border-purple-400 text-purple-400",
             )}
             onClick={() => moveStore.move.set("rest")}
+            aria-label="Rest"
           >
             <GiNightSleep />
           </Button>

@@ -47,6 +47,7 @@ const GeneralInfo = () => {
                   onCheckedChange={(checked) =>
                     dungeonFormData.publiclySeen.set(checked as boolean)
                   }
+                  aria-label="Publicly seen"
                 />
                 Public adventure
               </div>
@@ -136,6 +137,7 @@ const GeneralInfo = () => {
                     label="Fantasy level"
                     value={[dungeonFormData.realityLevel.get()]}
                     onValueChange={(newValue) => dungeonFormData.realityLevel.set(newValue[0])}
+                    aria-label="Fantasy level"
                   />
                   <Slider
                     min={0}
@@ -145,6 +147,7 @@ const GeneralInfo = () => {
                     label="Mistery level"
                     value={[dungeonFormData.misteryLevel.get()]}
                     onValueChange={(newValue) => dungeonFormData.misteryLevel.set(newValue[0])}
+                    aria-label="Mistery level"
                   />
                   <Slider
                     min={0}
@@ -154,6 +157,7 @@ const GeneralInfo = () => {
                     label="Action level"
                     value={[dungeonFormData.actionLevel.get()]}
                     onValueChange={(newValue) => dungeonFormData.actionLevel.set(newValue[0])}
+                    aria-label="Action level"
                   />
                 </div>
                 <div className="flex h-full w-full flex-col gap-5 lg:w-1/2 lg:gap-8">

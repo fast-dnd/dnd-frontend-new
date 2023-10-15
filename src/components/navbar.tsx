@@ -122,7 +122,11 @@ const Navbar = () => {
           </>
         )}
         <div className="flex gap-6 rounded-md bg-white/10 px-2 py-1.5 backdrop-blur-sm transition-all duration-300 hover:opacity-80">
-          <Link href="https://discord.gg/ThZyScUt" className="flex items-center">
+          <Link
+            href="https://discord.com/invite/36chp8DnzC"
+            className="flex items-center"
+            aria-label="Discord"
+          >
             <FaDiscord className="h-11 w-11" />
           </Link>
         </div>

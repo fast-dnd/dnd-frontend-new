@@ -78,7 +78,7 @@ const UpdateRoom = ({
         label="Game mode"
         value={roomData.responseDetailsDepth}
         loading={updatingRoom && duration !== roomData.responseDetailsDepth}
-        disabled={!isAdmin || isGameStarting}
+        disabled={!isAdmin || isGameStarting || gameStarting}
       >
         {dungeonDurations.map((duration) => (
           <ToggleGroupItem
@@ -102,7 +102,7 @@ const UpdateRoom = ({
         type="multiple"
         onValueChange={onChangeImagesAudio}
         value={generateAudioImagesArray()}
-        disabled={!isAdmin || isGameStarting}
+        disabled={!isAdmin || isGameStarting || gameStarting}
         label="Media options"
       >
         {imagesAudio.map((type) => (

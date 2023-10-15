@@ -44,26 +44,25 @@ const EditProfile = () => {
   return (
     <div className="mt-8 flex flex-col items-center gap-8">
       <form onSubmit={handleSubmit(onSubmit)} className="px-5 lg:min-w-fit lg:px-0">
-        <Box
-          title="EDIT PROFILE"
-          className="flex flex-col items-center gap-5 p-5 lg:flex-row lg:gap-8 lg:p-8"
-        >
+        <Box title="EDIT PROFILE" className="flex flex-col gap-5 p-5 lg:gap-8 lg:p-8">
           <GoBackButton href="/profile" />
-          <UploadImage
-            image={image}
-            defaultImage={account.account.imageUrl || "/images/default-avatar.png"}
-            setImage={(image) => setValue("image", image)}
-          />
-          <div className="flex w-80 flex-col justify-center gap-6 lg:w-96 lg:gap-12">
-            <Input
-              label="Your profile's username"
-              placeholder="Thorian Blackthorn"
-              className="text-xl tracking-[0.07em]"
-              {...register("username")}
-              state={errors?.username ? "error" : undefined}
-              errorMessage={errors?.username?.message}
+          <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
+            <UploadImage
+              image={image}
+              defaultImage={account.account.imageUrl || "/images/default-avatar.png"}
+              setImage={(image) => setValue("image", image)}
             />
-            <Button isLoading={isEditing}>UPDATE</Button>
+            <div className="flex w-80 flex-col justify-center gap-6 lg:w-96 lg:gap-12">
+              <Input
+                label="Your profile's username"
+                placeholder="Thorian Blackthorn"
+                className="text-xl tracking-[0.07em]"
+                {...register("username")}
+                state={errors?.username ? "error" : undefined}
+                errorMessage={errors?.username?.message}
+              />
+              <Button isLoading={isEditing}>UPDATE</Button>
+            </div>
           </div>
         </Box>
       </form>
@@ -77,12 +76,10 @@ export default EditProfile;
 const EditProfileSkeleton = () => {
   return (
     <div className="mt-8 flex flex-col items-center gap-8">
-      <div className="h-7 w-28 animate-pulse rounded-lg bg-gray-600" />
       <div className="lg:min-w-fit">
-        <Box
-          title="EDIT PROFILE"
-          className="flex flex-col items-center gap-5 p-5 lg:flex-row lg:gap-8 lg:p-8"
-        >
+        <Box title="EDIT PROFILE" className="flex flex-col gap-5 p-5 lg:gap-8 lg:p-8">
+          <div className="h-7 w-28 animate-pulse rounded-lg bg-gray-600" />
+
           <div className="flex animate-pulse gap-5 lg:gap-8">
             <div className="h-[170px] w-[170px] rounded-lg bg-gray-600" />
             <div className="flex flex-col gap-6 lg:gap-12">

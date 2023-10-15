@@ -28,10 +28,10 @@ const DeleteModal = ({ id, type }: { id: string; type: "adventure" | "campaign" 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className="flex items-center gap-2 text-white/50 transition-all duration-200 hover:text-error">
+        <button className="flex items-center gap-2 text-white/50 transition-all duration-200 hover:text-error">
           <p>Delete</p>
           <Trash variant="Bold" />
-        </div>
+        </button>
       </DialogTrigger>
 
       <DialogContent>

@@ -24,6 +24,7 @@ const PickPowerup = ({ currentMana }: { currentMana: number }) => {
         disabled={powerup === 0 || !canPlay}
         onClick={() => moveStore.powerup.set(powerup - 1)}
         className="flex h-full w-12 items-center justify-center bg-white/10 px-0 text-white"
+        aria-label="Decrease mana boost"
       >
         <FiMinus />
       </Button>
@@ -46,6 +47,7 @@ const PickPowerup = ({ currentMana }: { currentMana: number }) => {
         disabled={powerup === 2 || powerup >= currentMana || !canPlay}
         onClick={() => moveStore.powerup.set(powerup + 1)}
         className="flex h-full w-12 items-center justify-center bg-white/10 px-0 text-white"
+        aria-label="Increase mana boost"
       >
         <FiPlus />
       </Button>

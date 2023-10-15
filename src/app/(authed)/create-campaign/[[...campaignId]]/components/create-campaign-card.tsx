@@ -88,6 +88,7 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
                 onCheckedChange={(checked) =>
                   campaignFormStore.publiclySeen.set(checked as boolean)
                 }
+                aria-label="Publicly seen"
               />
               Public campaign
             </div>
