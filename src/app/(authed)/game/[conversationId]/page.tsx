@@ -63,7 +63,7 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
         </Button>
       </div>
 
-      <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-5 overflow-y-auto p-5 lg:flex-row lg:gap-12 lg:py-0">
+      <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-5 overflow-y-auto py-5 lg:flex-row lg:gap-12 lg:py-0">
         <div
           className={cn("flex h-full flex-1 lg:w-[70%]", !openedGameplay && "hidden", "lg:flex")}
         >

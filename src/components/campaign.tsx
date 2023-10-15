@@ -21,7 +21,7 @@ export const Campaign = React.forwardRef<
 
   return (
     <div
-      className="flex cursor-pointer gap-8 rounded-md p-4 hover:bg-white/5"
+      className="flex w-full cursor-pointer gap-8 rounded-md p-4 hover:bg-white/5"
       ref={ref}
       onClick={() => setCampaignDetailId && setCampaignDetailId(campaign._id)}
     >
@@ -34,7 +34,7 @@ export const Campaign = React.forwardRef<
       />
       <div className="flex w-full min-w-0 flex-col gap-4">
         <div className="flex w-full items-center justify-between">
-          <div className="flex gap-8">
+          <div className="flex min-w-0 flex-1 gap-8">
             <p className="truncate text-2xl font-bold uppercase">{campaign.name}</p>
             {isOwned && (
               <div className="rounded-md border border-white/25">

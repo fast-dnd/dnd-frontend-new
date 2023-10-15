@@ -10,7 +10,7 @@ const Profile = ({
   const activeTab = (searchParams?.activeTab ?? "ADVENTURES") as Tab;
 
   return (
-    <div className="flex min-h-0 flex-1 gap-12 pb-12">
+    <div className="flex min-h-0 flex-1 justify-between gap-12 pb-12">
       <MyCollection activeTab={activeTab} />
       <MyAccount />
     </div>
