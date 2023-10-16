@@ -11,6 +11,8 @@ import "@smastrom/react-rating/style.css";
 
 import { Metadata } from "next";
 
+import Navbar from "@/components/navbar";
+
 import Background from "../components/background";
 
 export const metadata: Metadata = {
@@ -34,7 +36,11 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         <Providers>
           <NextTopLoader />
           <Background />
-          <div className="flex flex-1 flex-col px-16 lg:max-h-full">{children}</div>
+          <div className="flex flex-1 flex-col px-16 lg:max-h-full">
+            <Navbar />
+
+            {children}
+          </div>
         </Providers>
       </body>
     </html>

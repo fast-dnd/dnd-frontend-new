@@ -11,8 +11,12 @@ import "./legend-state";
 
 import { Toaster } from "sonner";
 
+import useAuthCheck from "@/hooks/use-auth-check";
+
 const Providers = ({ children }: React.PropsWithChildren) => {
   const [client] = React.useState(new QueryClient(queryClientConfig));
+
+  useAuthCheck();
 
   return (
     <GoogleOAuthProvider clientId="695030285071-oc4e483rn2791srvc7tep6a0dto8ltkr.apps.googleusercontent.com">

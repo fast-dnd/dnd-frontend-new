@@ -12,7 +12,11 @@ const useAuthCheck = () => {
   const [_, setRedirectURL] = useLocalStorage("redirectURL", pathname);
 
   useEffect(() => {
-    if (pathname === "/login") {
+    const nonAuthURLs = ["/guide", "/transcript"];
+    const isNonAuthURL = nonAuthURLs.some((url) => pathname?.includes(url));
+
+    if (isNonAuthURL) return;
+    else if (pathname === "/login") {
       if (tokenExists) redirect("/home");
     } else {
       if (!tokenExists) {

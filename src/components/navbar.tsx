@@ -33,14 +33,15 @@ const Navbar = () => {
         <Link href="/home">
           <Image src="/images/navbar-logo.png" width={203} height={70} alt="logo" />
         </Link>
-        <ClaimRewardModal />
+        {loggedIn && <ClaimRewardModal />}
       </div>
       <div className="flex items-center gap-6 text-2xl leading-7 tracking-[3.3px]">
         <Link
           href={loggedIn ? "/home" : "/login"}
           className={cn(
             "border-b-4 border-transparent transition-all duration-300 hover:border-primary-500/50",
-            pathname === "/home" && "border-primary-500",
+            loggedIn && pathname === "/home" && "border-primary-500",
+            !loggedIn && pathname === "/login" && "border-primary-500",
           )}
         >
           {loggedIn ? "PLAY" : "LOG IN"}
