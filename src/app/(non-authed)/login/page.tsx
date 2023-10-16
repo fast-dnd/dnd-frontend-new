@@ -1,26 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useGoogleLogin } from "@react-oauth/google";
 import { FcGoogle } from "react-icons/fc";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
+
+import useLogin from "./hooks/use-login";
 
 const Login = () => {
   const slides = ["/images/login-bg-1.png", "/images/login-bg-2.png", "/images/login-bg-3.png"];
 
   const [current, setCurrent] = useState(0);
 
-  const previousSlide = () => {
-    if (current === 0) setCurrent(slides.length - 1);
-    else setCurrent(current - 1);
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((c) => (c + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [slides.length]);
 
-  const nextSlide = () => {
-    if (current === slides.length - 1) setCurrent(0);
-    else setCurrent(current + 1);
-  };
+  const { mutate: login } = useLogin();
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => login({ credential: tokenResponse.access_token }),
+  });
 
   return (
     <div className="flex h-full items-end justify-center">
@@ -54,7 +60,12 @@ const Login = () => {
           Our smart AI buddy will start things off by setting the scene. You might be in a spooky
           castle, a busy city, or even outer space!
         </p>
-        <Button variant="google" className="mt-12 w-fit gap-2 px-6 py-5">
+        {/* <GoogleLoginButton /> */}
+        <Button
+          variant="google"
+          className="mt-12 w-fit gap-2 px-6 py-5"
+          onClick={() => googleLogin()}
+        >
           <FcGoogle />
           LOG IN WITH GOOGLE
         </Button>
@@ -73,9 +84,6 @@ const Login = () => {
             );
           })}
         </div>
-        {/* <Box title="ACCOUNT" className="flex items-center justify-center p-8 lg:w-[450px]">
-          <GoogleLoginButton />
-        </Box> */}
       </div>
     </div>
   );
