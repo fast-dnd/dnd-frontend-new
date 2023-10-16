@@ -3,11 +3,10 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useGoogleLogin } from "@react-oauth/google";
-import { FcGoogle } from "react-icons/fc";
 
-import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 
+import GoogleLoginButton from "./components/google-login-button";
 import useLogin from "./hooks/use-login";
 
 const Login = () => {
@@ -60,15 +59,15 @@ const Login = () => {
           Our smart AI buddy will start things off by setting the scene. You might be in a spooky
           castle, a busy city, or even outer space!
         </p>
-        {/* <GoogleLoginButton /> */}
-        <Button
+        <GoogleLoginButton />
+        {/* <Button
           variant="google"
           className="mt-12 w-fit gap-2 px-6 py-5"
           onClick={() => googleLogin()}
         >
           <FcGoogle />
           LOG IN WITH GOOGLE
-        </Button>
+        </Button> */}
         <div className="mt-12 flex gap-3">
           {slides.map((_, i) => {
             return (
