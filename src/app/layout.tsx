@@ -11,6 +11,7 @@ import "@smastrom/react-rating/style.css";
 
 import { Metadata } from "next";
 
+import GoogleAnalytics from "@/components/google-analytics";
 import Navbar from "@/components/navbar";
 
 import Background from "../components/background";
@@ -32,6 +33,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
+      <GoogleAnalytics GA_MEASUREMENT_ID="G-WR2T115S96" />
       <body className={cn("flex flex-col", lexend.className)}>
         <Providers>
           <NextTopLoader />
