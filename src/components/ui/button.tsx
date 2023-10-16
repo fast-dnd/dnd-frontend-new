@@ -17,6 +17,7 @@ export const buttonVariants = cva(
           "border-2 border-primary bg-transparent text-white hover:bg-primary focus:ring-2 focus:ring-primary-200 focus:ring-offset-2 active:border-primary-600 active:bg-transparent active:shadow-basic",
         ghost:
           "border border-transparent bg-transparent font-normal tracking-[0.08em] text-white/50 hover:text-white active:text-white/75",
+        google: "border-2 border-white bg-black hover:bg-white/10 active:bg-white/25",
       },
       size: {
         xs: "px-6 py-2 text-xs",

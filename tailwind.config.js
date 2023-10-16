@@ -20,6 +20,8 @@ module.exports = {
       },
 
       colors: {
+        loginGradient:
+          "linear-gradient(180deg, rgba(2, 4, 7, 0.00) 0%, rgba(1, 3, 6, 0.70) 34.2%, #010306 100%)",
         primary: {
           50: "#FFEAEA",
           100: "#FFD6D6",
