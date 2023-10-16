@@ -4,9 +4,9 @@ import { redirect } from "next/navigation";
 
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import useCopy from "@/hooks/use-copy";
-import useGetDungeon from "@/hooks/use-get-dungeon";
-import useGetRoomData from "@/hooks/use-get-room-data";
+import useCopy from "@/hooks/helpers/use-copy";
+import useGetDungeon from "@/hooks/queries/use-get-dungeon";
+import useGetRoomData from "@/hooks/queries/use-get-room-data";
 
 import JoinEditSkeleton from "./join-edit-skeleton";
 import Player from "./player";

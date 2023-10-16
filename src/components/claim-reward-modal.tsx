@@ -1,7 +1,7 @@
 import React from "react";
 import { GoGift } from "react-icons/go";
 
-import useRedeemCoupon from "@/hooks/use-redeem-coupon";
+import useRedeemCoupon from "@/hooks/mutations/use-redeem-coupon";
 
 import { Button } from "./ui/button";
 import {

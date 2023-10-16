@@ -9,7 +9,7 @@ import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UploadImage from "@/components/ui/upload-image";
-import useGetAccount from "@/hooks/use-get-account";
+import useGetAccount from "@/hooks/queries/use-get-account";
 
 import useEditProfile from "./hooks/use-edit-profile";
 import { editProfileSchema, IEditProfileSchema } from "./schemas/edit-profile-schema";

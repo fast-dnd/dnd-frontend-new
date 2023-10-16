@@ -1,6 +1,6 @@
 "use client";
 
-import useGetCampaign from "@/hooks/use-get-campaign";
+import useGetCampaign from "@/hooks/queries/use-get-campaign";
 
 import RightCard from "./components/create-campaign-card";
 import CreateCampaignSkeleton from "./components/create-campaign-skeleton";

@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { Copy } from "iconsax-react";
 
-import useCopy from "@/hooks/use-copy";
+import useCopy from "@/hooks/helpers/use-copy";
 
 import HelmetIcon from "./icons/helmet-icon";
 import {

@@ -1,5 +1,5 @@
 import SkeletonIcon from "@/components/icons/skeleton-icon";
-import useAutoScrollToBottom from "@/hooks/use-auto-scroll-to-bottom";
+import useAutoScrollToBottom from "@/hooks/helpers/use-auto-scroll-to-bottom";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
 

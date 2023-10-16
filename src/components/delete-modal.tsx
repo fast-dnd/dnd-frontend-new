@@ -11,8 +11,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import useDeleteCampaign from "@/hooks/use-delete-campaign";
-import useDeleteDungeon from "@/hooks/use-delete-dungeon";
+import useDeleteCampaign from "@/hooks/mutations/use-delete-campaign";
+import useDeleteDungeon from "@/hooks/mutations/use-delete-dungeon";
 
 const DeleteModal = ({ id, type }: { id: string; type: "adventure" | "campaign" }) => {
   const [open, setOpen] = useState(false);

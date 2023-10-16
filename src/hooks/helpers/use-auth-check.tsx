@@ -1,18 +1,21 @@
 import { useEffect } from "react";
-import { redirect, usePathname, useRouter } from "next/navigation";
-import { useLocalStorage } from "usehooks-ts";
+import { redirect, usePathname } from "next/navigation";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 
 import useCheckJWT from "@/utils/check-jwt";
 
 const useAuthCheck = () => {
+  const { width } = useWindowSize();
+
   const tokenExists = useCheckJWT();
   const pathname = usePathname();
-  const router = useRouter();
 
   const [_, setRedirectURL] = useLocalStorage("redirectURL", pathname);
 
   useEffect(() => {
-    const nonAuthURLs = ["/guide", "/transcript"];
+    if (pathname !== "/mobile-wip" && width !== 0 && width < 1280) redirect("/mobile-wip");
+
+    const nonAuthURLs = ["/guide", "/transcript", "/mobile-wip"];
     const isNonAuthURL = nonAuthURLs.some((url) => pathname?.includes(url));
 
     if (isNonAuthURL) return;
@@ -24,7 +27,7 @@ const useAuthCheck = () => {
         redirect("/login");
       }
     }
-  }, [pathname, router, setRedirectURL, tokenExists]);
+  }, [pathname, setRedirectURL, tokenExists, width]);
 
   return;
 };

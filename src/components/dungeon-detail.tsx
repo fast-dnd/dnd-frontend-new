@@ -7,7 +7,7 @@ import { HiSparkles } from "react-icons/hi";
 
 import { Dungeon } from "@/components/dungeon";
 import Skeleton from "@/components/ui/skeleton";
-import useGetDungeon from "@/hooks/use-get-dungeon";
+import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import { IChampion, IMoveMapping } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 

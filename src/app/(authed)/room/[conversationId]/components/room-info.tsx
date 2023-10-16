@@ -6,7 +6,7 @@ import { useReadLocalStorage } from "usehooks-ts";
 import DungeonDetail from "@/components/dungeon-detail";
 import GoBackButton from "@/components/go-back-button";
 import { Box } from "@/components/ui/box";
-import useGetRoomData from "@/hooks/use-get-room-data";
+import useGetRoomData from "@/hooks/queries/use-get-room-data";
 import { IChampion } from "@/types/dungeon";
 
 import useUpdateRole from "../hooks/use-update-role";

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { Lock } from "iconsax-react";
 
-import useGetRewards from "@/hooks/use-get-rewards";
+import useGetRewards from "@/hooks/queries/use-get-rewards";
 import { IReward } from "@/types/reward";
 import { cn } from "@/utils/style-utils";
 

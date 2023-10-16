@@ -1,5 +1,5 @@
-import useGetDungeon from "@/hooks/use-get-dungeon";
-import useGetRoomData from "@/hooks/use-get-room-data";
+import useGetDungeon from "@/hooks/queries/use-get-dungeon";
+import useGetRoomData from "@/hooks/queries/use-get-room-data";
 import { backgroundStore } from "@/stores/background-store";
 
 import useGameplaySocket from "../../hooks/use-gameplay-socket";

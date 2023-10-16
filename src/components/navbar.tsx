@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaDiscord } from "react-icons/fa";
 
-import useGetAccount from "@/hooks/use-get-account";
+import useGetAccount from "@/hooks/queries/use-get-account";
 import useCheckJWT from "@/utils/check-jwt";
 import { cn } from "@/utils/style-utils";
 

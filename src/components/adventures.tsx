@@ -6,8 +6,8 @@ import { Dungeon } from "@/components/dungeon";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 import Spinner from "@/components/ui/spinner";
-import useGetDungeons from "@/hooks/use-get-dungeons";
-import useIntersectionObserver from "@/hooks/use-intersection-observer";
+import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
+import useGetDungeons from "@/hooks/queries/use-get-dungeons";
 import { IBaseDungeon } from "@/types/dungeon";
 
 const Adventures = ({

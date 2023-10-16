@@ -5,8 +5,8 @@ import RoomItem from "@/components/room-item";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 import Spinner from "@/components/ui/spinner";
-import useGetRoomHistory from "@/hooks/use-get-room-history";
-import useIntersectionObserver from "@/hooks/use-intersection-observer";
+import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
+import useGetRoomHistory from "@/hooks/queries/use-get-room-history";
 
 const GameHistory = ({ showFull = false }: { showFull?: boolean }) => {
   const {

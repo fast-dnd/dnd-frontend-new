@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { Dungeon } from "@/components/dungeon";
 import Skeleton from "@/components/ui/skeleton";
-import useGetCampaign from "@/hooks/use-get-campaign";
+import useGetCampaign from "@/hooks/queries/use-get-campaign";
 
 const CampaignDetail = ({
   setDungeonDetailId,

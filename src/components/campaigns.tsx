@@ -4,8 +4,8 @@ import { Campaign } from "@/components/campaign";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 import Spinner from "@/components/ui/spinner";
-import useGetCampaigns from "@/hooks/use-get-campaigns";
-import useIntersectionObserver from "@/hooks/use-intersection-observer";
+import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
+import useGetCampaigns from "@/hooks/queries/use-get-campaigns";
 
 const Campaigns = ({
   setCampaignDetailId,

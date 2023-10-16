@@ -1,5 +1,5 @@
 import Spinner from "@/components/ui/spinner";
-import useAutoScrollToBottom from "@/hooks/use-auto-scroll-to-bottom";
+import useAutoScrollToBottom from "@/hooks/helpers/use-auto-scroll-to-bottom";
 import { IMove, IQuestion } from "@/types/room";
 
 import MoveList from "./move-list";

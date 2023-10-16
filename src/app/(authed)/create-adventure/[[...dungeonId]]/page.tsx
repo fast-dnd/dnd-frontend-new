@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { useIsClient } from "usehooks-ts";
 
-import useGetDungeon from "@/hooks/use-get-dungeon";
+import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 
 import AdventureSkeletonLoading from "./components/adventure-skeleton-loading";
 import ChampionsLocationsWrapper from "./components/champions-locations-wrapper";

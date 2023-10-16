@@ -11,7 +11,7 @@ import "./legend-state";
 
 import { Toaster } from "sonner";
 
-import useAuthCheck from "@/hooks/use-auth-check";
+import useAuthCheck from "@/hooks/helpers/use-auth-check";
 
 const Providers = ({ children }: React.PropsWithChildren) => {
   const [client] = React.useState(new QueryClient(queryClientConfig));

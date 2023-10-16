@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Copy } from "iconsax-react";
 import { GiCheckMark } from "react-icons/gi";
 
-import useCopy from "@/hooks/use-copy";
+import useCopy from "@/hooks/helpers/use-copy";
 import { ICampaign } from "@/types/campaign";
 
 import DeleteModal from "./delete-modal";

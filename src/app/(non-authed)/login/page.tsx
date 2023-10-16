@@ -3,7 +3,7 @@
 import React from "react";
 
 import { Box } from "@/components/ui/box";
-import useAuthCheck from "@/hooks/use-auth-check";
+import useAuthCheck from "@/hooks/helpers/use-auth-check";
 
 import GoogleLoginButton from "./components/google-login-button";
 

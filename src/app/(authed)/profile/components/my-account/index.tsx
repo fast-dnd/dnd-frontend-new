@@ -9,7 +9,7 @@ import Coin from "@/components/coin";
 import Helmet2Icon from "@/components/icons/helmet2-icon";
 import SwordsIcon from "@/components/icons/swords-icon";
 import { Box } from "@/components/ui/box";
-import useGetAccount from "@/hooks/use-get-account";
+import useGetAccount from "@/hooks/queries/use-get-account";
 
 import MyAccountSkeleton from "./my-account-skeleton";
 import SignOutButton from "./sign-out-button";

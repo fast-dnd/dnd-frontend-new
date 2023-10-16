@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useReadLocalStorage } from "usehooks-ts";
 
-import useGetRoomData from "@/hooks/use-get-room-data";
+import useGetRoomData from "@/hooks/queries/use-get-room-data";
 import { IMove, IPlayer, IQuestion } from "@/types/room";
 
 import useGeneralSocket from "./use-general-socket";

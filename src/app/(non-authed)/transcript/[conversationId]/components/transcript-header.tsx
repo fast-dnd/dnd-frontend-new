@@ -1,6 +1,6 @@
 import { Copy } from "iconsax-react";
 
-import useCopy from "@/hooks/use-copy";
+import useCopy from "@/hooks/helpers/use-copy";
 import { jibril } from "@/utils/fonts";
 
 const TranscriptHeader = () => {
