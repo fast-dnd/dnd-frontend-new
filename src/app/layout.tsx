@@ -13,6 +13,7 @@ import { Metadata } from "next";
 
 import CookieBanner from "@/components/cookie-banner";
 import GoogleAnalytics from "@/components/google-analytics";
+import HotjarAnalytics from "@/components/hotjar-analytics";
 import Navbar from "@/components/navbar";
 
 import Background from "../components/background";
@@ -34,6 +35,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
+      <HotjarAnalytics HJID="3696290" HJSV="6" />
       <GoogleAnalytics GA_MEASUREMENT_ID="G-WR2T115S96" />
       <body className={cn("flex flex-col", lexend.className)}>
         <Providers>
