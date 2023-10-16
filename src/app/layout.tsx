@@ -11,6 +11,7 @@ import "@smastrom/react-rating/style.css";
 
 import { Metadata } from "next";
 
+import CookieBanner from "@/components/cookie-banner";
 import GoogleAnalytics from "@/components/google-analytics";
 import Navbar from "@/components/navbar";
 
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
             <Navbar />
 
             {children}
+            <CookieBanner />
           </div>
         </Providers>
       </body>
