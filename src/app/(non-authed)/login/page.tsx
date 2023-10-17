@@ -29,7 +29,7 @@ const Login = () => {
 
   return (
     <div className="flex h-full items-end justify-center">
-      <div className="absolute inset-0 z-[-5] flex h-full w-full bg-loginGradient" />
+      <div className="absolute inset-0 z-[-5] flex h-full w-full bg-gradient-to-b from-black via-black/10 via-35% to-black" />
       <div className={`absolute inset-0 -z-10 flex h-full w-full`}>
         <div
           className="flex h-full w-full overflow-hidden transition duration-300 ease-out"
@@ -38,15 +38,7 @@ const Login = () => {
           }}
         >
           {slides.map((s) => (
-            <Image
-              src={s}
-              key={s}
-              alt={s}
-              fill
-              priority
-              quality={100}
-              style={{ objectFit: "cover" }}
-            />
+            <Image src={s} key={s} alt={s} priority fill objectFit="cover" quality={100} />
           ))}
         </div>
       </div>
@@ -59,7 +51,9 @@ const Login = () => {
           Our smart AI buddy will start things off by setting the scene. You might be in a spooky
           castle, a busy city, or even outer space!
         </p>
-        <GoogleLoginButton />
+        <div className="nozoom">
+          <GoogleLoginButton />
+        </div>
         {/* <Button
           variant="google"
           className="mt-12 w-fit gap-2 px-6 py-5"
