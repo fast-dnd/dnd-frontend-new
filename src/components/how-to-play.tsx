@@ -40,7 +40,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
             <p className="w-fit border-b-2 border-b-primary text-lg font-semibold uppercase tracking-widest lg:text-2xl">
               About v3rpg
             </p>
-            <p className="text-sm leading-[160%] tracking-normal">
+            <div className="text-sm leading-[160%] tracking-normal">
               📜 <span className="font-semibold">V3RPG</span> is an exciting interactive
               storytelling game that lets you step into the shoes of a character within the story.{" "}
               <span className="font-semibold">You&apos;ll journey through up to 8 turns</span>
@@ -118,7 +118,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
               <br />
               🤞🏻{" "}
               <span className="font-semibold">Good luck and enjoy your adventure in V3RPG! </span>
-            </p>
+            </div>
           </div>
 
           <div className="hidden h-full border-l border-l-white/20 lg:block" />
@@ -353,7 +353,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
             </p>
 
             <div className="w-[310px] overflow-x-auto pb-2 sm:w-full lg:pb-0">
-              <table className="mt-4 w-full whitespace-nowrap font-normal lg:mt-2 lg:table-fixed">
+              <table className="mt-4 w-full whitespace-nowrap font-normal lg:mt-2">
                 <thead>
                   <tr className="bg-white/25 text-center">
                     <th className="border-b border-b-white/25 px-3 py-2 text-left">Dice total</th>
