@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Book, Play } from "iconsax-react";
+import { Book1, Play } from "iconsax-react";
 
 import { IRoom } from "@/types/room";
 
@@ -25,7 +25,7 @@ const RoomItem = React.forwardRef<
   return (
     <div
       key={room.conversationId}
-      className="flex w-full items-center justify-between gap-4 rounded-md transition-colors duration-300 hover:bg-white/10"
+      className="flex w-full items-center justify-between gap-4 rounded-md p-2 transition-colors duration-300 hover:bg-white/10"
       ref={ref}
     >
       <Image
@@ -33,7 +33,7 @@ const RoomItem = React.forwardRef<
         alt={"Game"}
         width={80}
         height={80}
-        className="h-20"
+        className="h-20 rounded-md"
       />
       <div className="flex min-w-0 flex-1 flex-col justify-center gap-3">
         <p className="truncate font-bold">{room.dungeon.name}</p>
@@ -53,7 +53,7 @@ const RoomItem = React.forwardRef<
         </Link>
       ) : (
         <Link href={`/transcript/${room.conversationId}`} aria-label="Transcript">
-          <Book variant="Bold" size={40} />
+          <Book1 variant="Bold" size={40} />
         </Link>
       )}
     </div>

@@ -29,7 +29,7 @@ const HomeModal = () => {
       <DialogContent className="w-fit lg:w-fit">
         <DialogHeader>
           <DialogTitle>Leave the game?</DialogTitle>
-          <DialogDescription className="text-center">
+          <DialogDescription className="text-center tracking-normal">
             Stepping away? Remember, each game phase waits for 10 minutes. Miss it, and face a loss.
           </DialogDescription>
         </DialogHeader>
