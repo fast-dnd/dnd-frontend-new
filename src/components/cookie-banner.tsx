@@ -32,7 +32,47 @@ export default function CookieBanner() {
   return (
     <div
       className={cn(
-        "fixed inset-x-0 bottom-0 mx-auto my-10 flex max-w-max flex-col items-center justify-between gap-4 rounded-lg bg-gray-700 p-3 shadow sm:flex-row md:max-w-screen-sm md:px-4",
+        "absolute inset-x-0 bottom-0 w-full items-center justify-center border-t border-white bg-neutral-900 py-6",
+        cookieConsent !== null ? "hidden" : "flex",
+      )}
+    >
+      <div className="flex w-2/3 min-w-fit justify-between gap-20">
+        <div className="flex items-center gap-8">
+          <div className="h-2 w-2 rotate-45 bg-white" />
+          <div className="tracking-wide">
+            <Link href="/info/cookies" className="font-bold">
+              We use cookies to enhance your browsing experience.
+            </Link>
+            <br />
+            By clicking `Allow` you agree to the use of cookies.
+          </div>
+        </div>
+        <div className="flex items-center gap-8">
+          <div className="flex gap-4">
+            <button
+              className="rounded border-2 border-white bg-white px-6 py-2 text-center text-xs font-bold uppercase leading-[18px] tracking-wide text-neutral-900"
+              onClick={() => setCookieConsent(true)}
+            >
+              Allow Cookies
+            </button>
+
+            <button
+              className="rounded border-2 border-white px-6 py-2 text-xs font-bold uppercase leading-[18px] tracking-wide"
+              onClick={() => setCookieConsent(false)}
+            >
+              Decline Cookies
+            </button>
+          </div>
+          <div className="h-2 w-2 rotate-45 bg-white" />
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div
+      className={cn(
+        "inset-x-0 bottom-0 flex w-full items-center justify-between gap-4 rounded-lg bg-gray-700 p-3 shadow sm:flex-row md:max-w-screen-sm md:px-4",
         cookieConsent !== null ? "hidden" : "flex",
       )}
     >
