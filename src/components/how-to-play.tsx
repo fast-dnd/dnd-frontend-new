@@ -1,5 +1,5 @@
 import { AiFillHeart, AiOutlineLeft } from "react-icons/ai";
-import { BsFillLightningFill, BsStars } from "react-icons/bs";
+import { BsFillLightningFill } from "react-icons/bs";
 
 import { cn } from "@/utils/style-utils";
 
@@ -36,51 +36,109 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
           className="mb-4 flex h-full flex-col items-start justify-center gap-5 overflow-y-auto p-5 tracking-wider lg:flex-row lg:gap-12 lg:px-12 lg:py-8"
           wrapperClassName="h-full min-h-0"
         >
-          <div className="flex flex-col gap-5 lg:w-[444px]">
+          <div className="flex flex-col gap-5 lg:w-[830px]">
             <p className="w-fit border-b-2 border-b-primary text-lg font-semibold uppercase tracking-widest lg:text-2xl">
-              Quick guide
+              About v3rpg
             </p>
-            <p className="leading-6 lg:text-lg">
-              🎲 The game consists of a <b>maximum of 8 turns</b>. The turns alternate between{" "}
-              <b>preparation turns</b> and <b>free will turns</b>.
+            <p className="text-sm leading-[160%] tracking-normal">
+              📜 <span className="font-semibold">V3RPG</span> is an exciting interactive
+              storytelling game that lets you step into the shoes of a character within the story.{" "}
+              <span className="font-semibold">You&apos;ll journey through up to 8 turns</span>
+              , and each turn unfolds the story based on your choices as the player.
               <br />
               <br />
-              🛡️ The preparation turn is the turn in which{" "}
-              <b>you have the opportunity to manipulate the stats of your champions</b>. At this
-              time you are shown what you can do, and the AI will interpret it as it sees fit for
-              your adventure.
+              🛡️ In the game, you&apos;ll encounter{" "}
+              <span className="font-semibold">2 types of actions</span>: <br />
+              <ol className="ml-2 list-inside list-decimal">
+                <li>
+                  <span className="font-semibold">Default actions</span> can impact your
+                  character&apos;s stats, such as health, mana, and round bonuses, although they
+                  might not significantly alter the story.{" "}
+                </li>
+                <li>
+                  <span className="font-semibold">Free will actions</span>, on the other hand,
+                  won&apos;t modify your stats (unless, unfortunately, you meet a tragic fate or get
+                  injured), but they provide you with the power to influence the story&apos;s
+                  direction and express your character.{" "}
+                </li>
+              </ol>
               <br />
+              🎲{" "}
+              <span className="font-semibold">
+                Both free will and default actions can lead to either positive or negative outcomes
+              </span>
+              , depending on the results of dice rolls and the modifiers specific to each round.{" "}
+              <span className="font-semibold">
+                Aiming for higher dice numbers increases your chances of success
+              </span>
+              . <br />
               <br />
-              🤞🏻 After selecting your action, <b>click roll and cross your fingers!</b>
+              ✍🏻{" "}
+              <span className="font-semibold">
+                Let&apos;s take a look at the dice roll modifiers
+              </span>
+              :
+              <ol className="ml-2 list-inside list-decimal">
+                <li>
+                  {" "}
+                  <span className="font-semibold">Bob&apos;s Combined Rating</span>: Our Dungeon
+                  Master (DM), Bob, assesses your actions. If they align with safety, ease, and your
+                  character&apos;s traits, you&apos;ll receive better ratings and bonus points.
+                  However, if you&apos;re taking risks or acting out of character, you might receive
+                  lower ratings and lose points.
+                </li>
+                <li>
+                  {" "}
+                  <span className="font-semibold">Mana</span>: You can acquire mana by successfully
+                  executing your character&apos;s default mana action. As the game progresses, you
+                  can utilize this mana to enhance your dice rolls. Remember to declare your intent
+                  to use mana before you roll the dice.
+                </li>
+                <li>
+                  {" "}
+                  <span className="font-semibold">Round Bonus</span>: If you perform the round bonus
+                  action correctly, you&apos;ll gain a bonus for your next turn. This bonus benefits
+                  all players but only lasts for one round{" "}
+                </li>
+              </ol>
               <br />
+              ❤️‍🩹 It&apos;s essential to keep an eye on your character&apos;s health. If your actions
+              result in harm, it could lead to dire consequences. <br />
+              🔮 Additionally, you have the opportunity to ask Bob a direct question in each round
+              to obtain additional information and influence the storyline as you wish. Bob will
+              answer one question per round, providing relevant and truthful information. <br />
               <br />
-              ✍🏻 After that turn comes the time when your creativity is most needed: the free will
-              turn. <b>You can write whatever you want</b>.
+              ⚔️{" "}
+              <span className="font-semibold">
+                The game concludes when you successfully complete the adventure or, unfortunately,
+                meet your character&apos;s demise
+              </span>
+              . The last player standing is declared the winner, while all others who perish or fail
+              during the process are considered defeated. <br />
               <br />
-              <br />
-              📜 <b>Your creativity + your role + the AI&apos;s humor</b> will propel the story
-              forward
+              🤞🏻{" "}
+              <span className="font-semibold">Good luck and enjoy your adventure in V3RPG! </span>
             </p>
           </div>
 
           <div className="hidden h-full border-l border-l-white/20 lg:block" />
           <div className="block w-full border-t border-t-white/20 lg:hidden" />
 
-          <div className="flex flex-col lg:w-[770px]">
+          <div className="flex flex-col lg:w-[850px]">
             <p className="w-fit border-b-2 border-b-primary text-lg font-semibold uppercase tracking-widest lg:text-2xl">
-              Movement probabilities
+              Dice roll distribution key
             </p>
-            <p className="mt-4 font-semibold lg:text-lg">PREPARATION TURNS</p>
-            <p className="mt-4 lg:mt-2 lg:text-lg">
+            <p className="mt-4 font-semibold tracking-[2.7px] lg:text-lg">DEFAULT TURNS</p>
+            <p className="mt-4 lg:mt-2">
               Depending of what action you choose, the total dice value will have a different effect
-              on your champion stats.
+              on your characters stats.
             </p>
-            <div className="w-[310px] overflow-x-auto pb-2 sm:w-full lg:pb-0">
+            <div className="mt-2 w-[310px] overflow-x-auto pb-2 sm:w-full lg:pb-0">
               <table className="mt-4 w-full whitespace-nowrap font-normal lg:mt-2">
                 <thead>
                   <tr className="bg-white/25 text-center">
                     <th className="border-b border-b-white/25 px-3 py-2 text-left">Dice total</th>
-                    {["2 to 6", "7 or 8", "9 or 10", "11 or 12"].map((value, index) => (
+                    {["2", "3-4", "5-6", "7-8-9", "10-11", "12"].map((value, index) => (
                       <th
                         key={index}
                         className="border-b border-l border-b-white/25 border-l-white/25 px-3 py-2"
@@ -92,23 +150,155 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
                 </thead>
                 <tbody className="bg-white/10">
                   <tr className="text-center">
-                    <td className="border-b border-b-white/25 px-3 py-2 text-left">
-                      Try to heal yourself
+                    <td className="border-b border-b-white/25 px-3 py-2 text-left text-sm">
+                      Heal action
                     </td>
-                    {["-2", "+1", "+2", "+3"].map((value, index) => (
+                    {["-3", "-1", "nothing", "+1", "+2", "+3"].map((value, index) => (
                       <td
                         key={index}
                         className="border-b border-l border-b-white/25 border-l-white/25"
                       >
-                        <div className="flex flex-row items-center justify-center gap-2">
+                        <div className="flex flex-row items-center justify-center gap-2 text-sm">
                           <p>{value}</p>
-                          <AiFillHeart />
+                          {value !== "nothing" && <AiFillHeart />}
                         </div>
                       </td>
                     ))}
                   </tr>
+                </tbody>
+              </table>
+            </div>
 
+            <div className="mt-2 w-[310px] overflow-x-auto pb-2 sm:w-full lg:pb-0">
+              <table className="mt-4 w-full whitespace-nowrap font-normal lg:mt-2">
+                <thead>
+                  <tr className="bg-white/25 text-center">
+                    <th className="border-b border-b-white/25 px-3 py-2 text-left">Dice total</th>
+                    {["2", "3-4", "5-6", "7-8", "9-10-11", "12"].map((value, index) => (
+                      <th
+                        key={index}
+                        className="border-b border-l border-b-white/25 border-l-white/25 px-3 py-2"
+                      >
+                        {value}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="bg-white/10">
                   <tr className="text-center">
+                    <td className="border-b border-b-white/25 px-3 py-2 text-left text-sm">
+                      Mana action
+                    </td>
+                    {[
+                      { value: "-3", Icon: <AiFillHeart /> },
+                      { value: "-1", Icon: <AiFillHeart /> },
+                      { value: "both" },
+                      { value: "+1", Icon: <BsFillLightningFill /> },
+                      { value: "+2", Icon: <BsFillLightningFill /> },
+                      { value: "+3", Icon: <BsFillLightningFill /> },
+                    ].map((item, index) => (
+                      <td
+                        key={index}
+                        className="border-b border-l border-b-white/25 border-l-white/25"
+                      >
+                        {item.value === "both" ? (
+                          <div className="flex flex-row items-center justify-center gap-4 text-sm">
+                            <div className="flex flex-row items-center justify-center gap-2 text-sm">
+                              <p>-1</p>
+                              <AiFillHeart />
+                            </div>
+                            <div className="flex flex-row items-center justify-center gap-2 text-sm">
+                              <p>+1</p>
+                              <BsFillLightningFill />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="flex flex-row items-center justify-center gap-2 text-sm">
+                            <p>{item.value}</p>
+                            {item.Icon}
+                          </div>
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="mt-2 w-[310px] overflow-x-auto pb-2 sm:w-full lg:pb-0">
+              <table className="mt-4 w-full whitespace-nowrap font-normal lg:mt-2">
+                <thead>
+                  <tr className="bg-white/25 text-center">
+                    <th className="border-b border-b-white/25 px-3 py-2 text-left">Dice total</th>
+                    {["2", "3-4", "5-6", "7", "8-9", "10-11", "12"].map((value, index) => (
+                      <th
+                        key={index}
+                        className="border-b border-l border-b-white/25 border-l-white/25 px-3 py-2"
+                      >
+                        {value}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="bg-white/10">
+                  <tr className="text-center">
+                    <td className="border-b border-b-white/25 px-3 py-2 text-left text-sm">
+                      Round bonus action
+                    </td>
+                    {["-3", "-2", "-1", "nothing", "+1", "+2", "+3"].map((value, index) => (
+                      <td
+                        key={index}
+                        className="border-b border-l border-b-white/25 border-l-white/25"
+                      >
+                        <div className="flex flex-row items-center justify-center gap-2 text-sm">
+                          <p>{value}</p>
+                          {value !== "nothing" && value.includes("-") && <AiFillHeart />}
+                          {value !== "nothing" && value.includes("+") && <BsFillLightningFill />}
+                        </div>
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="mt-2 w-[310px] overflow-x-auto pb-2 sm:w-full lg:pb-0">
+              <table className="mt-4 w-full whitespace-nowrap font-normal lg:mt-2">
+                <thead>
+                  <tr className="bg-white/25 text-center">
+                    <th className="border-b border-b-white/25 px-3 py-2 text-left">Dice total</th>
+                    {["2-6", "7-12"].map((value, index) => (
+                      <th
+                        key={index}
+                        className="border-b border-l border-b-white/25 border-l-white/25 px-3 py-2"
+                      >
+                        {value}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="bg-white/10">
+                  <tr className="text-center">
+                    <td className="border-b border-b-white/25 px-3 py-2 text-left text-sm">
+                      Round bonus action
+                    </td>
+                    {["-1", "No effect on your stats"].map((value, index) => (
+                      <td
+                        key={index}
+                        className="border-b border-l border-b-white/25 border-l-white/25"
+                      >
+                        <div className="flex flex-row items-center justify-center gap-2 text-sm">
+                          <p>{value}</p>
+                          {value.includes("-") && <AiFillHeart />}
+                        </div>
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* <tr className="text-center">
                     <td className="border-b border-b-white/25 px-3 py-2 text-left">
                       Try to find something useful
                     </td>
@@ -152,14 +342,14 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
                       No effect on your stats
                     </td>
                   </tr>
-                </tbody>
+                </tbody> 
               </table>
-            </div>
+            </div>*/}
 
-            <p className="mt-8 font-semibold lg:text-lg lg:tracking-widest">FREE WILL TURNS</p>
-            <p className="mt-2 lg:text-lg">
-              Despite what you decide, the total dice value will have an effect on your champion
-              stats.
+            <p className="mt-8 font-semibold tracking-[2.7px] lg:text-lg">FREE WILL TURNS</p>
+            <p className="mt-2">
+              Outcomes of your actions depend on the total die value after the modifiers. Higher the
+              number, more successfull you are. These are the projected outcomes:
             </p>
 
             <div className="w-[310px] overflow-x-auto pb-2 sm:w-full lg:pb-0">
@@ -167,7 +357,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
                 <thead>
                   <tr className="bg-white/25 text-center">
                     <th className="border-b border-b-white/25 px-3 py-2 text-left">Dice total</th>
-                    {["2 to 6", "7 to 12"].map((value, index) => (
+                    {["2", "3-4", "5-6", "7", "8-9", "10-11", "12"].map((value, index) => (
                       <th
                         key={index}
                         className="border-b border-l border-b-white/25 border-l-white/25 px-3 py-2"
@@ -178,18 +368,25 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
                   </tr>
                 </thead>
                 <tbody className="bg-white/10">
-                  <tr className="text-center">
+                  <tr className="text-center text-sm">
                     <td className="border-b border-b-white/25 px-3 py-2 text-left">
-                      Try to find something useful
+                      Typing your move
                     </td>
-                    {["-2", "+1"].map((value, index) => (
+                    {[
+                      "abysmal",
+                      "terrible",
+                      "bad",
+                      "mediocre",
+                      "good",
+                      "excellent",
+                      "miraculous",
+                    ].map((value, index) => (
                       <td
                         key={index}
                         className="border-b border-l border-b-white/25 border-l-white/25"
                       >
                         <div className="flex flex-row items-center justify-center gap-2">
                           <p>{value}</p>
-                          {index === 0 ? <AiFillHeart /> : <BsStars />}
                         </div>
                       </td>
                     ))}
