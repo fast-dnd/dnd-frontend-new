@@ -35,9 +35,9 @@ const Navbar = () => {
         <Link
           href={loggedIn ? "/home" : "/login"}
           className={cn(
-            "border-b-4 border-transparent transition-all duration-300 hover:border-primary-500/50",
-            loggedIn && pathname === "/home" && "border-primary-500",
-            !loggedIn && pathname === "/login" && "border-primary-500",
+            "border-b-4 border-transparent transition-all duration-300 hover:border-primary/50",
+            loggedIn && pathname === "/home" && "border-primary",
+            !loggedIn && pathname === "/login" && "border-primary",
           )}
         >
           {loggedIn ? "PLAY" : "LOG IN"}
@@ -48,8 +48,8 @@ const Navbar = () => {
             <Link
               href="/create-adventure"
               className={cn(
-                "border-b-4 border-transparent transition-all duration-300 hover:border-primary-500/50",
-                pathname === "/create-adventure" && "border-primary-500",
+                "border-b-4 border-transparent transition-all duration-300 hover:border-primary/50",
+                pathname === "/create-adventure" && "border-primary",
               )}
             >
               CREATE ADVENTURE
@@ -60,8 +60,8 @@ const Navbar = () => {
         <Link
           href="/guide"
           className={cn(
-            "border-b-4 border-transparent transition-all duration-300 hover:border-primary-500/50",
-            pathname === "/guide" && "border-primary-500",
+            "border-b-4 border-transparent transition-all duration-300 hover:border-primary/50",
+            pathname === "/guide" && "border-primary",
           )}
         >
           GUIDE
