@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
 "use client";
 
 import Image from "next/image";
@@ -8,7 +7,6 @@ import { FcGoogle } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 
-import GoogleLoginButton from "./components/google-login-button";
 import useLogin from "./hooks/use-login";
 import useSlides from "./hooks/use-slides";
 import { slides } from "./utils/slides";
@@ -65,16 +63,14 @@ const Login = () => {
             </div>
           ))}
         </div>
-        {
-          <Button
-            variant="google"
-            className="mt-12 w-fit gap-2 px-6 py-5"
-            onClick={() => googleLogin()}
-          >
-            <FcGoogle />
-            LOG IN WITH GOOGLE
-          </Button>
-        }
+        <Button
+          variant="google"
+          className="mt-12 w-fit gap-2 px-6 py-5"
+          onClick={() => googleLogin()}
+        >
+          <FcGoogle />
+          LOG IN WITH GOOGLE
+        </Button>
         <div className="flex gap-3">
           {slides.map((_, i) => {
             return (
