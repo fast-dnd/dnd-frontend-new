@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { FaDiscord } from "react-icons/fa";
 
 import useGetAccount from "@/hooks/queries/use-get-account";
-import useCheckJWT from "@/utils/check-jwt";
+import checkJWT from "@/utils/check-jwt";
 import { cn } from "@/utils/style-utils";
 
 import ClaimRewardModal from "./claim-reward-modal";
@@ -20,10 +20,10 @@ import {
 } from "./ui/tooltip";
 
 const Navbar = () => {
-  const tokenExists = useCheckJWT();
+  const tokenExists = checkJWT();
   const pathname = usePathname();
 
-  const { data: account } = useGetAccount(!tokenExists);
+  const { data: account } = useGetAccount(tokenExists);
 
   const loggedIn = tokenExists && account;
 

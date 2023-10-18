@@ -6,7 +6,7 @@ const parseJwt = (token: string) => {
   }
 };
 
-const useCheckJWT = () => {
+const checkJWT = () => {
   if (typeof window === "undefined") return false;
 
   const token = localStorage.getItem("jwtToken");
@@ -22,4 +22,4 @@ const useCheckJWT = () => {
   return now < jwt.exp;
 };
 
-export default useCheckJWT;
+export default checkJWT;

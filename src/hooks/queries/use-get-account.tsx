@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 
 import accountService, { accountKey } from "@/services/account-service";
 
-const useGetAccount = (disabled?: boolean) => {
+const useGetAccount = (enabled?: boolean) => {
   return useQuery({
     queryKey: [accountKey],
     queryFn: accountService.getAccount,
-    enabled: !disabled,
+    enabled,
   });
 };
 
