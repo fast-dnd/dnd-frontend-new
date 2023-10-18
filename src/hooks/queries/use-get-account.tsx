@@ -1,12 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 
 import accountService, { accountKey } from "@/services/account-service";
+import { IAccount } from "@/types/account";
 
-const useGetAccount = (disabled?: boolean) => {
+interface IUseGetAccountProps {
+  tokenExists: boolean;
+  setUser: (user: IAccount) => void;
+}
+const useGetAccount = ({ tokenExists, setUser }: IUseGetAccountProps) => {
   return useQuery({
     queryKey: [accountKey],
     queryFn: accountService.getAccount,
-    enabled: !disabled,
+    enabled: tokenExists,
+    onSuccess: (data) => {
+      setUser(data);
+    },
   });
 };
 

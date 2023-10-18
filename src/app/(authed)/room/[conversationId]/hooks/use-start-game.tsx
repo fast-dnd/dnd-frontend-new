@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { accountKey } from "@/services/account-service";
 import roomService, { roomKey } from "@/services/room-service";
 
 const useStartGame = () => {
@@ -9,6 +10,7 @@ const useStartGame = () => {
     mutationFn: roomService.startGame,
     onSuccess: () => {
       queryClient.invalidateQueries([roomKey]);
+      queryClient.invalidateQueries([accountKey]);
     },
   });
 };
