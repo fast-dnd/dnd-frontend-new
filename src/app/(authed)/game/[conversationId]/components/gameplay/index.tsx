@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import useGetRoomData from "@/hooks/queries/use-get-room-data";
 import { backgroundStore } from "@/stores/background-store";
@@ -25,10 +27,11 @@ const Gameplay = (props: { conversationId: string }) => {
   const { currentPlayer } = useHandlePlayerStatusUpdate({ roomData });
 
   useHandleGameStateChange({ roomData });
+  useEffect(() => {
+    if (dungeonData) backgroundStore.set(dungeonData.background?.url || "");
+  }, [dungeonData]);
 
   if (!roomData || !dungeonData || !currentPlayer) return <GameplaySkeleton />;
-
-  backgroundStore.set(dungeonData.background?.url || "");
 
   return (
     <div className="flex h-full w-full flex-col">
@@ -47,7 +50,6 @@ const Gameplay = (props: { conversationId: string }) => {
         <GameOverModal
           result={roomData.state}
           dungeon={dungeonData}
-          conversationId={conversationId}
           players={roomData.playerState}
         />
         <RewardModal conversationId={conversationId} />

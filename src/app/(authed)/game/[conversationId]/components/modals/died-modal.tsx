@@ -5,8 +5,8 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog";
+import ThemeTitle from "@/components/ui/theme-title";
 import { IGameState } from "@/types/room";
 
 import { gameStore } from "../../stores/game-store";
@@ -28,12 +28,14 @@ const DiedModal = ({ state }: { state: IGameState }) => {
     >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>You are dead</DialogTitle>
-          <DialogDescription>
-            You have tried with all your might, but you have been defeated.
+          <ThemeTitle title="killed" />
+
+          <DialogDescription className="text-center">
+            Your story has come to a tragic end. <br />
+            You have died!
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
+        <DialogFooter className="flex-col gap-6">
           <Button className="whitespace-nowrap px-8 py-3 uppercase" onClick={() => close()}>
             spectate
           </Button>

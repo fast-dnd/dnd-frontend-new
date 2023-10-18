@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Rating } from "@smastrom/react-rating";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -9,41 +8,35 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog";
+import ThemeTitle from "@/components/ui/theme-title";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IGameState, IPlayer } from "@/types/room";
 
-import useRateDungeon from "../../hooks/use-rate-dungeon";
 import { gameStore } from "../../stores/game-store";
 import Player from "../general/player";
 
 interface GameOverModalProps {
   result: IGameState;
   dungeon: IDungeonDetail;
-  conversationId: string;
   players: IPlayer[];
 }
 
-const GameOverModal = ({ result, dungeon, conversationId, players }: GameOverModalProps) => {
+const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
   const pageState = gameStore.pageState.use();
 
   const open = pageState === "GAMEOVER";
 
   const close = () => {
-    gameStore.pageState.set("REWARD");
+    gameStore.pageState.set("DEFAULT");
+  };
+
+  const rate = () => {
+    gameStore.pageState.set("RATE");
   };
 
   const router = useRouter();
   const [goingHome, setGoingHome] = useState(false);
-  const [rating, setRating] = useState(3);
-  const [rated, setRated] = useState(false);
-  const { mutate } = useRateDungeon();
-
-  const rateDungeon = () => {
-    setRated(true);
-    mutate({ dungeonId: dungeon._id, rating, roomId: conversationId });
-  };
 
   return (
     <Dialog
@@ -54,21 +47,16 @@ const GameOverModal = ({ result, dungeon, conversationId, players }: GameOverMod
     >
       <DialogContent className="flex max-h-[800px] w-fit flex-col lg:max-w-[550px]">
         <DialogHeader>
-          <DialogTitle>
-            {result === "WIN" && "Game finished"}
-            {result === "LOSE" && "You failed"}
-          </DialogTitle>
-          <DialogDescription className="text-center">
+          <ThemeTitle title={result === "WIN" ? "victory" : "defeat"} blue={result === "WIN"} />
+
+          <DialogDescription className="w-[440px] text-center">
             {result === "WIN" && (
               <span>
                 You have completed <span className="font-semibold">{dungeon.name}</span>
               </span>
             )}
             {result === "LOSE" && (
-              <span>
-                You and your teammates have died in the adventure.
-                <span className="font-semibold"> Better luck next time!</span>
-              </span>
+              <span>You have tried with all your might, but you have been defeated.</span>
             )}
           </DialogDescription>
         </DialogHeader>
@@ -79,33 +67,18 @@ const GameOverModal = ({ result, dungeon, conversationId, players }: GameOverMod
             <Player key={player.accountId} player={player} />
           ))}
         </div>
-        <div className="mt-6 flex w-full flex-col gap-3">
-          <div className="w-full border-t border-white/25" />
-          <p>Rate this adventure</p>
-          <div className="flex items-center gap-4">
-            <Rating className="grow" value={rating} onChange={setRating} isDisabled={rated} />
-            <Button
-              variant={rated ? "outline" : "primary"}
-              className="h-fit w-fit"
-              onClick={rateDungeon}
-              disabled={rated}
-            >
-              Rate
-            </Button>
-          </div>
-        </div>
-        <DialogFooter>
+        <DialogFooter className="flex-col">
           <Button
             variant="outline"
-            className="flex w-fit flex-1 border-primary px-8 text-base lg:text-xl"
-            onClick={close}
+            className="flex px-8 text-base lg:text-xl"
+            onClick={rate}
             autoFocus
           >
-            CLOSE
+            RATE THIS DUNGEON
           </Button>
           <Button
             variant="primary"
-            className="flex w-fit flex-1 whitespace-nowrap px-8 text-base lg:text-xl"
+            className="flex whitespace-nowrap px-8 text-base lg:text-xl"
             onClick={() => {
               setGoingHome(true);
               close();
@@ -113,7 +86,7 @@ const GameOverModal = ({ result, dungeon, conversationId, players }: GameOverMod
             }}
             isLoading={goingHome}
           >
-            GO HOME
+            GO BACK HOME
           </Button>
         </DialogFooter>
       </DialogContent>

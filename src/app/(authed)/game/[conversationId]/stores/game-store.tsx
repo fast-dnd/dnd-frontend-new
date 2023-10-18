@@ -19,12 +19,14 @@ export interface IGameStore {
     | "DYING"
     | "DIED"
     | "GAMEOVER"
-    | "REWARD";
+    | "RATE";
+  reward: boolean;
   statusUpdate: PlayerStatusUpdate;
 }
 
 export const initialGameStoreData: IGameStore = {
   pageState: "DEFAULT",
+  reward: false,
   statusUpdate: {},
 };
 
