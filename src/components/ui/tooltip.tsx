@@ -5,8 +5,6 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
 import { cn } from "@/utils/style-utils";
 
-// const TooltipProvider = TooltipPrimitive.Provider;
-
 const TooltipProvider = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Provider>,
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>

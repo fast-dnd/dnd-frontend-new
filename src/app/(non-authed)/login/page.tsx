@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useGoogleLogin } from "@react-oauth/google";
 
@@ -8,25 +7,11 @@ import { cn } from "@/utils/style-utils";
 
 import GoogleLoginButton from "./components/google-login-button";
 import useLogin from "./hooks/use-login";
+import useSlides from "./hooks/use-slides";
+import { slides } from "./utils/slides";
 
 const Login = () => {
-  const slides = ["/images/login-bg-1.png", "/images/login-bg-2.png", "/images/login-bg-3.png"];
-  const slideHeaderBegins = ["GET CHALLENGED BY", "YOU ARE FREE TO MAKE", "SETTLE INTO YOUR"];
-  const slideHeaderEnds = ["AI AS A DUNGEON MASTER", "YOUR OWN DECISIONS", "FAMILIAR DND SETTING"];
-  const slideDescriptions = [
-    "Our smart AI buddy will start things off by setting the scene. You might be in a spooky castle, a busy city, or even outer space!",
-    "Think about what your character should do based on AI suggestions. Want to chat with that friendly-looking NPC over there? Go for it!",
-    "So you've made your move. But how did it turn out? That's where our dice come in. The AI will use them to decide the outcome.",
-  ];
-
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((c) => (c + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [slides.length, current]);
+  const [current, setCurrent] = useSlides();
 
   const { mutate: login } = useLogin();
 
@@ -44,12 +29,11 @@ const Login = () => {
             transform: `translateX(-${(100 * current) / 3}%)`,
           }}
         >
-          {slides.map((s) => (
-            <div key={s} className="flex h-full w-1/3">
+          {slides.map((slide) => (
+            <div key={slide.image} className="flex h-full w-1/3">
               <Image
-                src={s}
-                alt={s}
-                priority
+                src={slide.image}
+                alt={slide.description}
                 width={0}
                 height={0}
                 sizes="100vw"
@@ -62,21 +46,19 @@ const Login = () => {
       </div>
       <div className="flex flex-col items-center gap-16 pb-24">
         <div className="relative w-full">
-          {slides.map((s, i) => (
+          {slides.map((slide, i) => (
             <div
-              key={s}
+              key={slide.image}
               className={cn(
                 "absolute bottom-0 flex w-full flex-col items-center gap-4 opacity-0 blur-xl transition-all duration-500 ease-out",
                 current === i && "opacity-100 blur-none",
               )}
             >
               <p className="text-center text-5xl font-light tracking-[6.72px]">
-                {slideHeaderBegins[i]} <br />
-                <span className="whitespace-nowrap font-bold">{slideHeaderEnds[i]}</span>
+                {slide.headerStart} <br />
+                <span className="whitespace-nowrap font-bold">{slide.headerEnd}</span>
               </p>
-              <p className="w-[550px] text-center text-xl tracking-widest">
-                {slideDescriptions[i]}
-              </p>
+              <p className="w-[550px] text-center text-xl tracking-widest">{slide.description}</p>
             </div>
           ))}
         </div>
