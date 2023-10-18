@@ -5,8 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaDiscord } from "react-icons/fa";
 
-import useGetAccount from "@/hooks/queries/use-get-account";
-import checkJWT from "@/utils/check-jwt";
+import useAuth from "@/hooks/helpers/use-auth";
 import { cn } from "@/utils/style-utils";
 
 import ClaimRewardModal from "./claim-reward-modal";
@@ -20,12 +19,9 @@ import {
 } from "./ui/tooltip";
 
 const Navbar = () => {
-  const tokenExists = checkJWT();
   const pathname = usePathname();
 
-  const { data: account } = useGetAccount(tokenExists);
-
-  const loggedIn = tokenExists && account;
+  const { user, loggedIn } = useAuth();
 
   return (
     <div className="hidden w-full items-center justify-between gap-12 py-10 lg:flex">
@@ -80,7 +76,7 @@ const Navbar = () => {
                   <TooltipTrigger asChild>
                     <div className="flex cursor-default items-center gap-1">
                       <Coin silver />
-                      {account?.account.coins ?? "-"}
+                      {user?.account.coins ?? "-"}
                     </div>
                   </TooltipTrigger>
                   <TooltipContent className="border-transparent tracking-widest">
@@ -95,7 +91,7 @@ const Navbar = () => {
                   <TooltipTrigger asChild>
                     <div className="flex cursor-default items-center gap-1">
                       <Coin />
-                      {account?.account.dmCurrency ?? "-"}
+                      {user?.account.dmCurrency ?? "-"}
                     </div>
                   </TooltipTrigger>
                   <TooltipContent className="border-transparent tracking-widest">
@@ -111,7 +107,7 @@ const Navbar = () => {
             <div className="flex gap-6 rounded-md bg-white/10 px-2 py-1.5 backdrop-blur-sm transition-all duration-300 hover:opacity-80">
               <Link href="/profile" className="flex items-center gap-2 tracking-[4px]">
                 <Image
-                  src={account?.account.imageUrl || "/images/default-avatar.png"}
+                  src={user?.account.imageUrl || "/images/default-avatar.png"}
                   width={40}
                   height={40}
                   alt="avatar"

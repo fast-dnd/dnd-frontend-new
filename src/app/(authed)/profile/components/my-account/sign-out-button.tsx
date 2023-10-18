@@ -1,16 +1,11 @@
-import React from "react";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
+import { logout } from "@/utils/auth";
 
 const SignOutButton = () => {
-  const router = useRouter();
-
   const onSignOut = () => {
-    localStorage.removeItem("jwtToken");
-    localStorage.removeItem("accountId");
-    router.push("/login");
+    logout();
     toast.success("Signed out successfully!");
   };
 

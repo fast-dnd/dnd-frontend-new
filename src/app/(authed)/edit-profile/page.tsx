@@ -9,13 +9,13 @@ import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UploadImage from "@/components/ui/upload-image";
-import useGetAccount from "@/hooks/queries/use-get-account";
+import useAuth from "@/hooks/helpers/use-auth";
 
 import useEditProfile from "./hooks/use-edit-profile";
 import { editProfileSchema, IEditProfileSchema } from "./schemas/edit-profile-schema";
 
 const EditProfile = () => {
-  const { data: account, isLoading } = useGetAccount();
+  const { loggingIn, user } = useAuth();
 
   const {
     register,
@@ -26,7 +26,7 @@ const EditProfile = () => {
     formState: { errors },
   } = useForm<IEditProfileSchema>({
     resolver: zodResolver(editProfileSchema),
-    values: account?.account,
+    values: user?.account,
   });
 
   const image = watch("image");
@@ -37,9 +37,9 @@ const EditProfile = () => {
     editProfile(data);
   };
 
-  if (isLoading) return <EditProfileSkeleton />;
+  if (loggingIn) return <EditProfileSkeleton />;
 
-  if (!account) return <div>Something went wrong</div>;
+  if (!user) return <div>Something went wrong</div>;
 
   return (
     <div className="mt-8 flex flex-col items-center gap-8">
@@ -49,7 +49,7 @@ const EditProfile = () => {
           <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
             <UploadImage
               image={image}
-              defaultImage={account.account.imageUrl || "/images/default-avatar.png"}
+              defaultImage={user?.account.imageUrl || "/images/default-avatar.png"}
               setImage={(image) => setValue("image", image)}
             />
             <div className="flex w-80 flex-col justify-center gap-6 lg:w-96 lg:gap-12">

@@ -1,18 +1,18 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { toast } from "sonner";
 
+import { logout } from "@/utils/auth";
+
 const handleInterceptors = (apiInstance: AxiosInstance) => {
   apiInstance.defaults.headers.common["Content-Type"] = "application/json";
 
   apiInstance.interceptors.response.use(
     (response) => response,
     (error) => {
-      if (error.response && error.response.status === 401) {
-        localStorage.removeItem("jwtToken");
-        localStorage.removeItem("accountId");
-        window.location.href = "/login";
-      }
       if (error.response && error.response.data && error.response.data.message) {
+        if (error.response.status === 401) {
+          logout();
+        }
         toast.error(error.response.data.message);
       }
       return Promise.reject(error);
