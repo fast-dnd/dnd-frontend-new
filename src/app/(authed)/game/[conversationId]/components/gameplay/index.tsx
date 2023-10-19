@@ -10,6 +10,7 @@ import useHandlePlayerStatusUpdate from "../../hooks/use-handle-player-status-up
 import DiedModal from "../modals/died-modal";
 import GameOverModal from "../modals/game-over-modal";
 import HomeModal from "../modals/home-modal";
+import RateModal from "../modals/rate-modal";
 import RewardModal from "../modals/reward-modal";
 import GamePlayHeader from "./gameplay-header";
 import GameplaySkeleton from "./gameplay-skeleton";
@@ -52,6 +53,7 @@ const Gameplay = (props: { conversationId: string }) => {
           dungeon={dungeonData}
           players={roomData.playerState}
         />
+        <RateModal dungeon={dungeonData} conversationId={conversationId} />
         <RewardModal conversationId={conversationId} />
       </div>
     </div>

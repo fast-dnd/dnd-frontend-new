@@ -16,10 +16,14 @@ import { gameStore } from "../../stores/game-store";
 const RewardModal = ({ conversationId }: { conversationId: string }) => {
   const { reward } = useRewardSocket(conversationId);
 
+  const rewardOpen = gameStore.reward.use();
   const pageState = gameStore.pageState.use();
 
-  const open = pageState === "REWARD" && !!reward;
-  const close = () => gameStore.pageState.set("DEFAULT");
+  const open =
+    (pageState === "DEFAULT" || pageState === "GAMEOVER" || pageState === "RATE") &&
+    rewardOpen &&
+    !!reward;
+  const close = () => gameStore.reward.set(false);
 
   return (
     <Dialog

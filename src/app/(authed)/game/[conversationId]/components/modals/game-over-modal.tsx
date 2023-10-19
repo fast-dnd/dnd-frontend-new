@@ -74,7 +74,7 @@ const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
             onClick={rate}
             autoFocus
           >
-            RATE THIS DUNGEON
+            RATE THIS ADVENTURE
           </Button>
           <Button
             variant="primary"

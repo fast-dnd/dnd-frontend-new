@@ -26,7 +26,7 @@ export const textAreaContainerVariants = cva(
 );
 
 export interface TextAreaProps
-  extends React.InputHTMLAttributes<HTMLTextAreaElement>,
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     VariantProps<typeof textAreaVariants>,
     VariantProps<typeof textAreaContainerVariants> {
   StartIcon?: (iconProps: React.SVGProps<SVGSVGElement>) => JSX.Element;

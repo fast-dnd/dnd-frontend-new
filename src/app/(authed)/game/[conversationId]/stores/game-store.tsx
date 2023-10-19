@@ -26,7 +26,7 @@ export interface IGameStore {
 
 export const initialGameStoreData: IGameStore = {
   pageState: "DEFAULT",
-  reward: false,
+  reward: true,
   statusUpdate: {},
 };
 
