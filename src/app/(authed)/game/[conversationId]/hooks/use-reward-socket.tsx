@@ -4,6 +4,7 @@ import { useReadLocalStorage } from "usehooks-ts";
 import { socketIO } from "@/lib/socket";
 import { IReward } from "@/types/reward";
 
+import { gameStore } from "../stores/game-store";
 import { IRewardEvent } from "../types/events";
 
 const useRewardSocket = (conversationId: string) => {
@@ -15,6 +16,7 @@ const useRewardSocket = (conversationId: string) => {
     const onEvent = (event: IRewardEvent) => {
       if (event.event === "REWARD_EARNED")
         if (event.data.accountId === accountId) {
+          gameStore.reward.set(true);
           setReward(event.data.reward);
         }
     };

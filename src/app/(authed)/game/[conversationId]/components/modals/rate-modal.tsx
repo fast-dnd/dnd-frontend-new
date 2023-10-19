@@ -25,8 +25,9 @@ const RateModal = ({
   conversationId: string;
 }) => {
   const pageState = gameStore.pageState.use();
+  const rewardOpen = gameStore.reward.use();
 
-  const open = pageState === "RATE";
+  const open = pageState === "RATE" && !rewardOpen;
 
   const close = () => {
     gameStore.pageState.set("DEFAULT");

@@ -24,8 +24,9 @@ interface GameOverModalProps {
 
 const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
   const pageState = gameStore.pageState.use();
+  const rewardOpen = gameStore.reward.use();
 
-  const open = pageState === "GAMEOVER";
+  const open = pageState === "GAMEOVER" && !rewardOpen;
 
   const close = () => {
     gameStore.pageState.set("DEFAULT");
