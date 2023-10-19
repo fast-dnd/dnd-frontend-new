@@ -32,109 +32,92 @@
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1140px) {
   body {
-    height: calc(100vh / 0.55);
-    zoom: 55%;
+    height: calc(100vh / 0.5);
+    zoom: 50%;
   }
 
   .nozoom {
-    zoom: calc(100% / 0.55);
+    zoom: calc(100% / 0.5);
   }
 
   .slider {
-    transform: scale(0.55);
+    transform: scale(0.5);
     transform-origin: left;
-    width: calc(100% / 0.55);
+    width: calc(100% / 0.5);
   }
 }
 
-@media (min-width: 1366px) {
+@media (min-width: 1365px) {
   body {
-    height: calc(100vh / 0.62);
-    zoom: 62%;
+    height: calc(100vh / 0.6);
+    zoom: 60%;
   }
 
   .nozoom {
-    zoom: calc(100% / 0.62);
+    zoom: calc(100% / 0.6);
   }
 
   .slider {
-    transform: scale(0.62);
+    transform: scale(0.6);
     transform-origin: left;
-    width: calc(100% / 0.62);
+    width: calc(100% / 0.6);
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1595px) {
   body {
-    height: calc(100vh / 0.68);
-    zoom: 68%;
+    height: calc(100vh / 0.7);
+    zoom: 70%;
   }
 
   .nozoom {
-    zoom: calc(100% / 0.68);
+    zoom: calc(100% / 0.7);
   }
 
   .slider {
-    transform: scale(0.68);
+    transform: scale(0.7);
     transform-origin: left;
-    width: calc(100% / 0.68);
+    width: calc(100% / 0.7);
   }
 }
 
-@media (min-width: 1536px) {
+@media (min-width: 1820px) {
   body {
-    height: calc(100vh / 0.74);
-    zoom: 74%;
+    height: calc(100vh / 0.8);
+    zoom: 80%;
   }
 
   .nozoom {
-    zoom: calc(100% / 0.74);
+    zoom: calc(100% / 0.8);
   }
 
   .slider {
-    transform: scale(0.74);
+    transform: scale(0.8);
     transform-origin: left;
-    width: calc(100% / 0.74);
+    width: calc(100% / 0.8);
   }
 }
 
-@media (min-width: 1700px) {
+@media (min-width: 2050px) {
   body {
-    height: calc(100vh / 0.82);
-    zoom: 82%;
+    height: calc(100vh / 0.9);
+    zoom: 90%;
   }
 
   .nozoom {
-    zoom: calc(100% / 0.82);
+    zoom: calc(100% / 0.9);
   }
 
   .slider {
-    transform: scale(0.82);
+    transform: scale(0.9);
     transform-origin: left;
-    width: calc(100% / 0.82);
+    width: calc(100% / 0.9);
   }
 }
 
-@media (min-width: 2200px) {
-  body {
-    height: calc(100vh / 0.92);
-    zoom: 92%;
-  }
-
-  .nozoom {
-    zoom: calc(100% / 0.92);
-  }
-
-  .slider {
-    transform: scale(0.92);
-    transform-origin: left;
-    width: calc(100% / 0.92);
-  }
-}
-
-@media (min-width: 2500px) {
+@media (min-width: 2280px) {
   body {
     height: 100vh;
     zoom: 100%;
