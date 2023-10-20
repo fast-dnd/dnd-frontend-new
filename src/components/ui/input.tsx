@@ -82,7 +82,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
 
-          <input id={label} className={cn(inputVariants())} ref={ref} {...props} />
+          <input
+            disabled={disabled}
+            id={label}
+            className={cn(inputVariants())}
+            ref={ref}
+            {...props}
+          />
 
           {EndIcon && (
             <div className="mr-4 flex justify-center">
