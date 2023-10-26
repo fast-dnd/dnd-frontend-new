@@ -66,7 +66,7 @@ const FormStepWrapper = ({ isEditing, children, dungeonData }: IFormStepWrapperP
                 <li>Title is required</li>
                 <li>Description is required</li>
                 <li>Scenes: Min. 3 - Max. 4</li>
-                <li>Characters: Min. 2 - Max. 4</li>
+                <li>Characters: Min. 1</li>
               </ul>
               <TooltipArrow className=" fill-select text-select" />
             </TooltipContent>
