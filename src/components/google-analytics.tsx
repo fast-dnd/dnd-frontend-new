@@ -4,8 +4,6 @@ import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 
-import { pageview } from "@/utils/gtag-helper";
-
 export default function GoogleAnalytics({ GA_MEASUREMENT_ID }: { GA_MEASUREMENT_ID: string }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -13,7 +11,9 @@ export default function GoogleAnalytics({ GA_MEASUREMENT_ID }: { GA_MEASUREMENT_
   useEffect(() => {
     const url = pathname + searchParams.toString();
 
-    pageview(GA_MEASUREMENT_ID, url);
+    window.gtag("config", GA_MEASUREMENT_ID, {
+      page_path: url,
+    });
   }, [pathname, searchParams, GA_MEASUREMENT_ID]);
 
   return (

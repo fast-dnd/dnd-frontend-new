@@ -11,7 +11,7 @@ const useIntersectionObserver = ({
 }) => {
   const intObserver = useRef<IntersectionObserver | null>(null);
   const lastObjectRef = useCallback(
-    (object: any) => {
+    (object: Element | null) => {
       if (isFetchingNextPage) return;
 
       if (intObserver.current) intObserver.current.disconnect();
