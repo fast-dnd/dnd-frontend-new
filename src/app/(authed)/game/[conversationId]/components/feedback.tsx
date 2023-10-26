@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineLeft } from "react-icons/ai";
+import { z } from "zod";
 
 import MobileNavbar from "@/components/mobile-navbar";
 import { Box } from "@/components/ui/box";
@@ -10,12 +12,24 @@ import useSendFeedback from "../hooks/use-send-feedback";
 import { gameStore } from "../stores/game-store";
 
 const Feedback = () => {
-  const [feedback, setFeedback] = useState("");
+  const feedbackSchema = z.object({
+    text: z.string().nonempty("Please enter your feedback"),
+  });
+  type FeedbackSchema = z.infer<typeof feedbackSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FeedbackSchema>({
+    resolver: zodResolver(feedbackSchema),
+  });
 
   const { mutate: sendFeedback, isLoading } = useSendFeedback();
 
-  const onSendFeedback = () => {
-    sendFeedback({ text: feedback }, { onSuccess: () => setFeedback("") });
+  const onSendFeedback: SubmitHandler<FeedbackSchema> = (data) => {
+    sendFeedback({ ...data }, { onSuccess: () => reset() });
   };
 
   return (
@@ -37,7 +51,10 @@ const Feedback = () => {
           className="flex h-full items-start justify-center overflow-y-auto p-5 tracking-wider lg:px-12 lg:py-8"
           wrapperClassName="h-full"
         >
-          <div className="flex w-full flex-col gap-5 lg:w-[768px] lg:gap-12">
+          <form
+            className="flex w-full flex-col gap-5 lg:w-[768px] lg:gap-12"
+            onSubmit={handleSubmit(onSendFeedback)}
+          >
             <p className="w-fit font-semibold uppercase leading-7 tracking-widest lg:text-lg">
               HELP US IMPROVE THE GAME
             </p>
@@ -53,15 +70,16 @@ const Feedback = () => {
             <TextArea
               placeholder="What I think about V3RPG..."
               className="h-24 leading-7 tracking-widest lg:h-56 lg:text-xl"
-              value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
+              {...register("text")}
+              state={errors?.text ? "error" : undefined}
+              errorMessage={errors?.text?.message}
             />
             <div className="flex justify-end">
-              <Button className="w-fit px-8 py-2" onClick={onSendFeedback} isLoading={isLoading}>
+              <Button className="w-fit px-8 py-2" isLoading={isLoading}>
                 SEND
               </Button>
             </div>
-          </div>
+          </form>
         </Box>
       </div>
     </div>
