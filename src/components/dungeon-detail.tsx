@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
-import { FaChevronDown } from "react-icons/fa";
 import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
@@ -11,8 +10,8 @@ import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import { IChampion, IMoveMapping } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
+import HelmetIcon from "./icons/helmet-icon";
 import { Button } from "./ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
 
 interface IDungeonDetailProps {
   dungeonDetailId: string;
@@ -43,59 +42,56 @@ const DungeonDetail = ({
       <Dungeon dungeon={dungeon} />
 
       <div className="my-8">
-        <p>CHARACTERS</p>
-        <div className="mt-8 flex flex-col gap-12 px-6">
+        {onChangeChampion ? (
+          <div className="w-full text-center text-2xl font-bold leading-9">SELECT YOUR HERO</div>
+        ) : (
+          <p>CHARACTERS</p>
+        )}
+        <div className="mt-8 grid grid-cols-2 gap-4 px-6">
           {dungeon.champions.map((champion) => (
             <div
               key={champion._id}
               className={cn(
-                "flex flex-col gap-4 rounded-md border-2 border-white bg-white/10 p-6 transition-all duration-200",
+                "flex min-w-0 basis-1/3 flex-col justify-between gap-4 rounded-md border-2 border-white bg-white/10 p-6 transition-all duration-200",
                 champion._id === selectedChampion?._id && "border-primary",
               )}
             >
-              <p className="truncate text-xl font-semibold">{champion.name}</p>
-              <p className="truncate font-light">{champion.description}</p>
-              <Collapsible
-                open={showActionsId === champion._id}
-                onOpenChange={(isOpen) => setShowActionsId(isOpen ? champion._id : undefined)}
-                className="space-y-2"
-              >
-                <CollapsibleTrigger className="flex items-center gap-2 font-medium tracking-wide">
-                  ACTIONS
-                  <FaChevronDown
-                    className={cn(
-                      "transition-all duration-200",
-                      showActionsId === champion._id && "rotate-180",
-                    )}
-                  />
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <div className="grid grid-cols-2 gap-4">
-                    {moveMappingWithIcons(champion.moveMapping).map((move, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary/10">
-                          {move.icon}
-                        </div>
-                        <p className="truncate">{move.text}</p>
+              <div className="flex items-center gap-4">
+                <HelmetIcon className="shrink-0" />
+                <div className="flex flex-col gap-1">
+                  <p className="truncate text-xl font-semibold">{champion.name}</p>
+                  <p title={champion.description} className="line-clamp-3 font-light">
+                    {champion.description}
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col gap-4">
+                <p className="font-medium tracking-wide">ACTIONS</p>
+                <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+                  {moveMappingWithIcons(champion.moveMapping).map((move, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      {move.icon}
+                      <div className="flex h-[72px] items-center">
+                        <p className="line-clamp-3 font-light hover:line-clamp-4">{move.text}</p>
                       </div>
-                    ))}
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
-              {onChangeChampion && (
-                <Button
-                  variant={champion._id === selectedChampion?._id ? "primary" : "outline"}
-                  className="w-fit"
-                  disabled={isTaken(champion)}
-                  onClick={() => onChangeChampion(champion)}
-                >
-                  {isTaken(champion)
-                    ? "TAKEN"
-                    : champion._id === selectedChampion?._id
-                    ? "SELECTED"
-                    : "CHOOSE THIS CHARACTER"}
-                </Button>
-              )}
+                    </div>
+                  ))}
+                </div>
+                {onChangeChampion && (
+                  <Button
+                    variant={champion._id === selectedChampion?._id ? "primary" : "outline"}
+                    className="w-fit"
+                    disabled={isTaken(champion)}
+                    onClick={() => onChangeChampion(champion)}
+                  >
+                    {isTaken(champion)
+                      ? "TAKEN"
+                      : champion._id === selectedChampion?._id
+                      ? "SELECTED"
+                      : "CHOOSE THIS CHARACTER"}
+                  </Button>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -110,19 +106,35 @@ const moveMappingWithIcons = (moveMapping: IMoveMapping) => {
   return [
     {
       text: moveMapping.discover_health,
-      icon: <AiFillHeart className="h-5 w-5 fill-primary" />,
+      icon: (
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-primary bg-primary/10">
+          <AiFillHeart className="h-5 w-5 fill-primary" />
+        </div>
+      ),
     },
     {
       text: moveMapping.conversation_with_team,
-      icon: <GoPeople className="h-5 w-5 fill-green-500" />,
+      icon: (
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-green-500 bg-primary/10">
+          <GoPeople className="h-5 w-5 fill-green-500" />
+        </div>
+      ),
     },
     {
       text: moveMapping.discover_mana,
-      icon: <HiSparkles className="h-5 w-5 fill-info" />,
+      icon: (
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-info bg-primary/10">
+          <HiSparkles className="h-5 w-5 fill-info" />
+        </div>
+      ),
     },
     {
       text: moveMapping.rest,
-      icon: <GiNightSleep className="h-5 w-5 fill-purple-400" />,
+      icon: (
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-purple-400 bg-primary/10">
+          <GiNightSleep className="h-5 w-5 fill-purple-400" />
+        </div>
+      ),
     },
   ];
 };
