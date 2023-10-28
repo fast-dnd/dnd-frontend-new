@@ -12,7 +12,7 @@ const useSolanaLogin = () => {
 
   return useMutation({
     mutationFn: authService.solanaLogin,
-    onSuccess: (data: { data: { jwtToken: string } }) => {
+    onSuccess: (data) => {
       router.push(redirectTo);
       localStorage.removeItem("redirectURL");
       localStorage.setItem("jwtToken", data.data.jwtToken);

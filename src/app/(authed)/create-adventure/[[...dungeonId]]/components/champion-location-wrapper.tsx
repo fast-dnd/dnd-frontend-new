@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";

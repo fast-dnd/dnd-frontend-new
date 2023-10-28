@@ -23,9 +23,11 @@ export const championSchema = z.object({
   _id: z.string(),
   name: z.string(),
   description: z.string(),
-  type: z.string(),
+  type: z.enum(["standard", "nft"]),
   moveMapping: moveMappingSchema,
   label: z.string().optional(),
+  imageUrl: z.string().nullish(),
+  link: z.string().nullish(),
 });
 
 export const baseDungeonSchema = z.object({
@@ -46,6 +48,7 @@ export const baseDungeonSchema = z.object({
     .nullish(),
   publiclySeen: z.boolean(),
   background: rewardSchema.nullable(),
+  type: z.enum(["standard", "nft"]),
 });
 
 export const dungeonSchema = baseDungeonSchema.extend({

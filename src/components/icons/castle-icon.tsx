@@ -22,14 +22,14 @@ const CastleIcon = (props: React.SVGProps<SVGSVGElement>) => {
         fillOpacity="0.6"
       />
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         clip-rule="evenodd"
         d="M21.75 22.5H39.25V55H34.25V48.75C34.25 46.6788 32.5712 45 30.5 45C28.4288 45 26.75 46.6788 26.75 48.75V55H21.75V22.5Z"
         fill="white"
         fillOpacity="0.5"
       />
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         clip-rule="evenodd"
         d="M10.5 36.25H21.75V55H8L10.5 36.25ZM14.25 40.625V45H18V40.625C18 39.59 17.16 38.75 16.125 38.75C15.09 38.75 14.25 39.59 14.25 40.625Z"
         fill="white"
@@ -41,7 +41,7 @@ const CastleIcon = (props: React.SVGProps<SVGSVGElement>) => {
         fill="white"
       />
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         clip-rule="evenodd"
         d="M50.5 36.25H39.25V55H53L50.5 36.25ZM46.75 40.625V45H43V40.625C43 39.59 43.84 38.75 44.875 38.75C45.91 38.75 46.75 39.59 46.75 40.625Z"
         fill="white"

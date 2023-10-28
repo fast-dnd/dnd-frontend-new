@@ -1,5 +1,8 @@
 import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { AiFillHeart } from "react-icons/ai";
+import { FiExternalLink } from "react-icons/fi";
 import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
@@ -53,13 +56,43 @@ const DungeonDetail = ({
               key={champion._id}
               className={cn(
                 "flex min-w-0 basis-1/3 flex-col justify-between gap-4 rounded-md border-2 border-white bg-white/10 p-6 transition-all duration-200",
+                champion.type === "nft" && "border-gold",
                 champion._id === selectedChampion?._id && "border-primary",
               )}
             >
               <div className="flex items-center gap-4">
-                <HelmetIcon className="shrink-0" />
+                {champion.type === "nft" ? (
+                  <Image
+                    src={champion.imageUrl || "/images/default-avatar.png"}
+                    alt={champion.name}
+                    width={48}
+                    height={48}
+                    className="h-12 w-12"
+                  />
+                ) : (
+                  <HelmetIcon className="shrink-0" />
+                )}
                 <div className="flex flex-col gap-1">
-                  <p className="truncate text-xl font-semibold">{champion.name}</p>
+                  <div className="flex w-full justify-between">
+                    <p
+                      className={cn(
+                        "truncate text-xl font-semibold",
+                        champion.type === "nft" && "text-gold",
+                      )}
+                    >
+                      {champion.name}
+                    </p>
+                    {champion.type === "nft" && (
+                      <Link
+                        className="flex items-center gap-1 rounded-md border border-dashed border-gold bg-gold/10 fill-gold px-3 py-1.5 font-semibold text-gold"
+                        href={champion.link || "#"}
+                        target="_blank"
+                      >
+                        NFT
+                        <FiExternalLink />
+                      </Link>
+                    )}
+                  </div>
                   <p title={champion.description} className="line-clamp-3 font-light">
                     {champion.description}
                   </p>
