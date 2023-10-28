@@ -40,7 +40,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         <Providers>
           <NextTopLoader />
           <Background />
-          <div className="flex flex-1 flex-col px-16 lg:max-h-full">
+          <div className="flex flex-1 flex-col px-4 lg:max-h-full lg:px-16">
             <Navbar />
 
             {children}
