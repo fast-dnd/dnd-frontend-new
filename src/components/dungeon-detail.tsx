@@ -67,7 +67,7 @@ const DungeonDetail = ({
                     alt={champion.name}
                     width={48}
                     height={48}
-                    className="h-12 w-12"
+                    className="h-24 w-24"
                   />
                 ) : (
                   <HelmetIcon className="shrink-0" />
