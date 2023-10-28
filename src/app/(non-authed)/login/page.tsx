@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect } from "react";
 import Image from "next/image";
+import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
@@ -12,12 +13,14 @@ import { cn } from "@/utils/style-utils";
 
 import useLogin from "./hooks/use-login";
 import useSlides from "./hooks/use-slides";
+import useSolanaLogin from "./hooks/use-solana-login";
 import { slides } from "./utils/slides";
 
 const Login = () => {
   const [current, setCurrent] = useSlides();
   const { signMessage, wallet, publicKey } = useWallet();
   const { mutate: login } = useLogin();
+  const { mutate: solanaLogin } = useSolanaLogin();
 
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => login({ credential: tokenResponse.access_token }),
@@ -28,15 +31,13 @@ const Login = () => {
     if (!publicKey || !wallet) return;
 
     try {
-      const encodedMessage = new TextEncoder().encode("Hello World");
-      console.log(encodedMessage);
-
+      const encodedMessage = new TextEncoder().encode("I want to connect my wallet to v3rpg");
       const signature = await signMessage!(encodedMessage);
-      console.log(signature);
+      await solanaLogin({ signature: bs58.encode(signature), walletAddress: publicKey });
     } catch (error) {
       console.log(error);
     }
-  }, [publicKey, signMessage, wallet]);
+  }, [solanaLogin, publicKey, signMessage, wallet]);
 
   useEffect(() => {
     if (publicKey) handleSignMessage();

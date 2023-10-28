@@ -23,6 +23,7 @@ export const championSchema = z.object({
   _id: z.string(),
   name: z.string(),
   description: z.string(),
+  type: z.string(),
   moveMapping: moveMappingSchema,
   label: z.string().optional(),
 });
