@@ -45,8 +45,8 @@ const Login = () => {
           ))}
         </div>
       </div>
-      <div className="flex flex-col items-center gap-16 pb-24">
-        <div className="relative w-full">
+      <div className="absolute bottom-0 flex flex-col items-center gap-6 pb-24 md:gap-16">
+        <div className="relative w-full bg-red-500">
           {slides.map((slide, i) => (
             <div
               key={slide.image}
@@ -55,23 +55,25 @@ const Login = () => {
                 current === i && "opacity-100 blur-none",
               )}
             >
-              <p className="text-center text-5xl font-light tracking-[6.72px]">
+              <p className="text-center text-2xl font-light tracking-widest max-lg:w-[320px] lg:text-5xl lg:tracking-[6.72px]">
                 {slide.headerStart} <br />
                 <span className="whitespace-nowrap font-bold">{slide.headerEnd}</span>
               </p>
-              <p className="w-[550px] text-center text-xl tracking-widest">{slide.description}</p>
+              <p className="w-[270px] text-center text-sm tracking-widest lg:w-[550px] lg:text-xl">
+                {slide.description}
+              </p>
             </div>
           ))}
         </div>
         <Button
           variant="google"
-          className="mt-12 w-fit gap-2 px-6 py-5"
+          className="mt-12 w-fit gap-2 px-6 py-5 text-sm lg:text-xl"
           onClick={() => googleLogin()}
         >
           <FcGoogle />
           LOG IN WITH GOOGLE
         </Button>
-        <div className="flex gap-3">
+        <div className="flex gap-3 pb-6">
           {slides.map((_, i) => {
             return (
               <button
