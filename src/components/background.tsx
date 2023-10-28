@@ -11,7 +11,7 @@ const Background = () => {
   const showBg = bgUrl && pathname.startsWith("/game");
 
   return (
-    <div className="absolute -z-20 h-[110%] w-full lg:h-full">
+    <div className="absolute -z-20 h-full w-full">
       <Image
         src={showBg ? bgUrl : "/images/bg-cover.png"}
         fill
