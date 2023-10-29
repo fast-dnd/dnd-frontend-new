@@ -49,7 +49,7 @@ const Login = () => {
           ))}
         </div>
       </div>
-      <div className="absolute bottom-0 flex flex-col items-center gap-6 pb-24 md:gap-16">
+      <div className="absolute bottom-0 flex flex-col items-center gap-6 lg:gap-16 lg:pb-24">
         <div className="relative w-full bg-red-500">
           {slides.map((slide, i) => (
             <div
@@ -59,9 +59,11 @@ const Login = () => {
                 current === i && "opacity-100 blur-none",
               )}
             >
-              <p className="text-center text-2xl font-light tracking-widest max-lg:w-[320px] lg:text-5xl lg:tracking-[6.72px]">
+              <p className="text-center text-2xl font-light tracking-widest max-lg:w-[328px] lg:text-5xl lg:tracking-[6.72px]">
                 {slide.headerStart} <br />
-                <span className="whitespace-nowrap font-bold">{slide.headerEnd}</span>
+                <span className="text-center font-bold lg:whitespace-nowrap">
+                  {slide.headerEnd}
+                </span>
               </p>
               <p className="w-[270px] text-center text-sm tracking-widest lg:w-[550px] lg:text-xl">
                 {slide.description}
