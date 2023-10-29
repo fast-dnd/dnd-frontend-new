@@ -7,6 +7,7 @@ import { cn } from "@/utils/style-utils";
 import "@/styles/globals.css";
 import "@/styles/scrollbar.css";
 import "@/styles/zoom.css";
+import "@/styles/wallet.css";
 
 import { Metadata } from "next";
 
