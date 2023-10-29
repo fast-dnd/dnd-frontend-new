@@ -1,8 +1,9 @@
 import GameHistory from "@/components/game-history";
+import MobileNavbar from "@/components/mobile-navbar";
 import { Box } from "@/components/ui/box";
 
-import CreateRoom from "./components/create-room";
-import JoinRoom from "./components/join-room";
+import CreateRoom from "./components/desktop/create-room";
+import JoinRoom from "./components/desktop/join-room";
 
 const Page = () => {
   return (
@@ -22,7 +23,10 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className="flex lg:hidden"></div>
+      <div className="flex lg:hidden">
+        <MobileNavbar />
+        {/* <MobileCreateRoom /> */}
+      </div>
     </>
   );
 };
