@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { useCallback, useEffect } from "react";
@@ -32,14 +31,15 @@ const Login = () => {
     onSuccess: (tokenResponse) => login({ credential: tokenResponse.access_token }),
   });
 
-  /** SignMessage */
   const handleSignMessage = useCallback(async () => {
-    if (!publicKey || !wallet) return;
+    if (!publicKey || !wallet || !signMessage) return;
 
     try {
       const encodedMessage = new TextEncoder().encode("I want to connect my wallet to v3rpg");
-      const signature = await signMessage!(encodedMessage);
-      await solanaLogin({ signature: bs58.encode(signature), walletAddress: publicKey });
+      const signedMessage = await signMessage(encodedMessage);
+      const signature = bs58.encode(signedMessage);
+
+      solanaLogin({ signature, walletAddress: publicKey });
     } catch (error) {
       console.log(error);
     }
@@ -47,8 +47,7 @@ const Login = () => {
 
   useEffect(() => {
     if (publicKey) handleSignMessage();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [publicKey]);
+  }, [handleSignMessage, publicKey]);
 
   return (
     <div className="flex h-full items-end justify-center">

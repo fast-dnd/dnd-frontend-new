@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { useState } from "react";
@@ -36,25 +35,29 @@ const RoomInfo = (props: { conversationId: string }) => {
     .map((player) => player.champion) as IChampion[];
 
   const onChangeChampion = async (champion: IChampion) => {
+    if (!signMessage || !publicKey) return;
+
     if (!takenChampions.some((champ) => champ._id === champion._id)) {
+      const timestamp = Date.now().toString();
+      const encodedMessage = new TextEncoder().encode(timestamp);
+      const signedMessage = await signMessage(encodedMessage);
+      const signature = bs58.encode(signedMessage);
+
       if (champion?.type === "nft") {
-        const timestamp = Date.now().toString();
-        const encodedMessage = new TextEncoder().encode(timestamp);
-        const signature = await signMessage!(encodedMessage);
         updateRole(
           {
             conversationId,
             championId: champion._id,
             signMessage: timestamp,
-            signature: bs58.encode(signature),
+            signature,
             walletAddress: publicKey,
           },
           { onSuccess: () => setSelectedChampion(champion) },
         );
-        return;
+      } else {
+        setSelectedChampion(champion);
+        updateRole({ conversationId, championId: champion._id });
       }
-      setSelectedChampion(champion);
-      updateRole({ conversationId, championId: champion._id });
     }
   };
   return (
