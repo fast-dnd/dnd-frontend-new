@@ -13,12 +13,12 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border-radius: 0.25rem; /* equivalent to rounded-md */
+  border-radius: 0.25rem;
   text-align: center;
-  font-size: 1.25rem; /* equivalent to text-xl */
+  font-size: 1.25rem;
   font-weight: bold;
   text-transform: uppercase;
-  letter-spacing: 0.125rem; /* equivalent to tracking-wider */
+  letter-spacing: 0.125rem;
   transition: all 300ms;
   font-weight: bold;
 }
@@ -37,4 +37,11 @@ body {
 
 .wallet-adapter-dropdown-list {
   width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .wallet-adapter-button {
+    font-size: 16px;
+    height: 45px;
+  }
 }
