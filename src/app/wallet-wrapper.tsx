@@ -8,8 +8,6 @@ import { PhantomWalletAdapter, SolflareWalletAdapter } from "@solana/wallet-adap
 
 import "@solana/wallet-adapter-react-ui/styles.css";
 
-import { BackpackWalletAdapter } from "@solana/wallet-adapter-backpack";
-
 import { SOLANA_RPC_HOST_DEVNET } from "@/utils/constants";
 
 export default function CustomWalletWrapper({ children }: React.PropsWithChildren) {
@@ -22,7 +20,6 @@ export default function CustomWalletWrapper({ children }: React.PropsWithChildre
     () => [
       new PhantomWalletAdapter(),
       new SolflareWalletAdapter({ network }),
-      new BackpackWalletAdapter({ network }),
     ],
     [network],
   );
