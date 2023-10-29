@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/utils/style-utils";
 
-import { BaseTabType, subTabs, SubTabType, tabStore } from "./store/tab-store";
+import { BaseTabType, subTabs, SubTabType, tabStore } from "../../../stores/tab-store";
 
 const Tabs = () => {
   const activeBaseTab = tabStore.baseTab.use();

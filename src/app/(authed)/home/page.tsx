@@ -24,7 +24,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className="flex lg:hidden">
+      <div className="flex flex-col lg:hidden">
         <MobileNavbar />
         <MobileCreateRoom />
       </div>
