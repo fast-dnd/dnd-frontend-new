@@ -1,3 +1,4 @@
+import { PublicKey } from "@solana/web3.js";
 import { z } from "zod";
 
 import { DungeonDuration } from "@/utils/dungeon-options";
@@ -52,5 +53,14 @@ export interface IEditRoom {
 
 export interface IEditChampion {
   conversationId: string;
+  championId: string;
+  signMessage?: string;
+  signature?: string;
+  walletAddress?: PublicKey;
+}
+
+export interface IEditAvatar {
+  conversationId: string;
+  avatarId: string;
   championId: string | undefined;
 }

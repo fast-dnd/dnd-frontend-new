@@ -1,7 +1,11 @@
 "use client";
 
+import { useCallback, useEffect } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
+import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 import { useGoogleLogin } from "@react-oauth/google";
+import { useWallet } from "@solana/wallet-adapter-react";
 import { FcGoogle } from "react-icons/fc";
 
 import MobileNavbar from "@/components/mobile-navbar";
@@ -10,16 +14,41 @@ import { cn } from "@/utils/style-utils";
 
 import useLogin from "./hooks/use-login";
 import useSlides from "./hooks/use-slides";
+import useSolanaLogin from "./hooks/use-solana-login";
 import { slides } from "./utils/slides";
+
+const WalletMultiButtonDynamic = dynamic(
+  async () => (await import("@solana/wallet-adapter-react-ui")).WalletMultiButton,
+  { ssr: false },
+);
 
 const Login = () => {
   const [current, setCurrent] = useSlides();
-
+  const { signMessage, wallet, publicKey } = useWallet();
   const { mutate: login } = useLogin();
+  const { mutate: solanaLogin } = useSolanaLogin();
 
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => login({ credential: tokenResponse.access_token }),
   });
+
+  const handleSignMessage = useCallback(async () => {
+    if (!publicKey || !wallet || !signMessage) return;
+
+    try {
+      const encodedMessage = new TextEncoder().encode("I want to connect my wallet to v3rpg");
+      const signedMessage = await signMessage(encodedMessage);
+      const signature = bs58.encode(signedMessage);
+
+      solanaLogin({ signature, walletAddress: publicKey });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [solanaLogin, publicKey, signMessage, wallet]);
+
+  useEffect(() => {
+    if (publicKey) handleSignMessage();
+  }, [handleSignMessage, publicKey]);
 
   return (
     <div className="flex h-full items-end justify-center max-lg:px-4">
@@ -69,15 +98,22 @@ const Login = () => {
             </div>
           ))}
         </div>
-        <Button
-          variant="google"
-          className="mt-12 w-fit gap-2 px-6 py-5 text-sm lg:text-xl"
-          onClick={() => googleLogin()}
-        >
-          <FcGoogle />
-          LOG IN WITH GOOGLE
-        </Button>
-        <div className="flex gap-3 pb-6">
+        <div className="mt-12 flex w-full flex-col items-center gap-6">
+          <Button variant="google" className="w-fit gap-2 px-6 py-5" onClick={() => googleLogin()}>
+            <FcGoogle />
+            LOG IN WITH GOOGLE
+          </Button>
+          <div className="flex items-center">
+            <div className="h-1 w-20 rounded-md bg-white/25 transition-all duration-200 hover:bg-white/60 active:bg-white/90"></div>
+            <span className="px-5">OR</span>
+            <div className="h-1 w-20 rounded-md bg-white/25 transition-all duration-200 hover:bg-white/60 active:bg-white/90"></div>
+          </div>
+          <div className="flex w-full items-center rounded-md border-2 border-white bg-black px-6 py-2 hover:bg-white/10 active:bg-white/25">
+            <WalletMultiButtonDynamic />
+          </div>
+        </div>
+
+        <div className="flex gap-3">
           {slides.map((_, i) => {
             return (
               <button

@@ -22,6 +22,7 @@ export const initialDungeonFormData: IDungeonDetailWithTags = {
   realityLevel: 50,
   background: null,
   publiclySeen: false,
+  type: "standard",
 };
 
 export const getInitialDungeonFormData = () => deepClone(initialDungeonFormData);

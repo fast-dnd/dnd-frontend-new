@@ -16,6 +16,7 @@ import HotjarAnalytics from "@/components/hotjar-analytics";
 import Navbar from "@/components/navbar";
 
 import Background from "../components/background";
+import CustomWalletWrapper from "./wallet-wrapper";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://play.v3rpg.com/"),
@@ -37,16 +38,18 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       <HotjarAnalytics HJID="3696290" HJSV="6" />
       <GoogleAnalytics GA_MEASUREMENT_ID="G-WR2T115S96" />
       <body className={cn("flex flex-col", lexend.className)}>
-        <Providers>
-          <NextTopLoader />
-          <Background />
-          <div className="flex flex-1 flex-col lg:max-h-full lg:px-16">
-            <Navbar />
+        <CustomWalletWrapper>
+          <Providers>
+            <NextTopLoader />
+            <Background />
+            <div className="flex flex-1 flex-col lg:max-h-full lg:px-16">
+              <Navbar />
 
-            {children}
-            <CookieBanner />
-          </div>
-        </Providers>
+              {children}
+              <CookieBanner />
+            </div>
+          </Providers>
+        </CustomWalletWrapper>
       </body>
     </html>
   );
