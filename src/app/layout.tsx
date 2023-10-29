@@ -7,6 +7,7 @@ import { cn } from "@/utils/style-utils";
 import "@/styles/globals.css";
 import "@/styles/scrollbar.css";
 import "@/styles/zoom.css";
+import "@/styles/wallet.css";
 
 import { Metadata } from "next";
 
@@ -16,6 +17,7 @@ import HotjarAnalytics from "@/components/hotjar-analytics";
 import Navbar from "@/components/navbar";
 
 import Background from "../components/background";
+import CustomWalletWrapper from "./wallet-wrapper";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://play.v3rpg.com/"),
@@ -36,17 +38,20 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
     <html lang="en">
       <HotjarAnalytics HJID="3696290" HJSV="6" />
       <GoogleAnalytics GA_MEASUREMENT_ID="G-WR2T115S96" />
-      <body className={cn("flex flex-col bg-dark-900", lexend.className)}>
-        <Providers>
-          <NextTopLoader />
-          <Background />
-          <div className="flex flex-1 flex-col lg:max-h-full lg:px-16">
-            <Navbar />
 
-            {children}
-            <CookieBanner />
-          </div>
-        </Providers>
+      <body className={cn("flex flex-col bg-dark-900", lexend.className)}>
+        <CustomWalletWrapper>
+          <Providers>
+            <NextTopLoader />
+            <Background />
+            <div className="flex flex-1 flex-col lg:max-h-full lg:px-16">
+              <Navbar />
+
+              {children}
+              <CookieBanner />
+            </div>
+          </Providers>
+        </CustomWalletWrapper>
       </body>
     </html>
   );

@@ -7,7 +7,6 @@ import useGetAccount from "../queries/use-get-account";
 
 const useAuth = () => {
   const [user, setUser] = useState<IAccount>();
-
   const tokenExists = checkJWT();
 
   const { refetch, isLoading } = useGetAccount({ tokenExists, setUser });

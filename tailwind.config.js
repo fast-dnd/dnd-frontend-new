@@ -56,6 +56,7 @@ module.exports = {
         select: "#606768",
         selectHover: "#555b5c",
         selectSelected: "#4e5354",
+        gold: "#FFD700",
       },
       keyframes: {
         "accordion-down": {
