@@ -35,15 +35,15 @@ const RoomInfo = (props: { conversationId: string }) => {
     .map((player) => player.champion) as IChampion[];
 
   const onChangeChampion = async (champion: IChampion) => {
-    if (!signMessage || !publicKey) return;
-
     if (!takenChampions.some((champ) => champ._id === champion._id)) {
-      const timestamp = Date.now().toString();
-      const encodedMessage = new TextEncoder().encode(timestamp);
-      const signedMessage = await signMessage(encodedMessage);
-      const signature = bs58.encode(signedMessage);
-
       if (champion?.type === "nft") {
+        console.log("HERE");
+        if (!signMessage || !publicKey) return;
+        const timestamp = Date.now().toString();
+        const encodedMessage = new TextEncoder().encode(timestamp);
+        const signedMessage = await signMessage(encodedMessage);
+        const signature = bs58.encode(signedMessage);
+        if (!signMessage || !publicKey) return;
         updateRole(
           {
             conversationId,
