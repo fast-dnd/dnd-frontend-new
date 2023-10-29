@@ -8,7 +8,7 @@ import useUpdateRoom from "../hooks/use-update-room";
 interface IUseOnRoomChangeProps {
   conversationId: string;
   duration: DungeonDuration | undefined;
-  roomData: IRoomDetail;
+  roomData?: IRoomDetail;
   isAdmin: boolean;
 }
 
