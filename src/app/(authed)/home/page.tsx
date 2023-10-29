@@ -4,6 +4,7 @@ import { Box } from "@/components/ui/box";
 
 import CreateRoom from "./components/desktop/create-room";
 import JoinRoom from "./components/desktop/join-room";
+import MobileCreateRoom from "./components/mobile/mobile-create-room";
 
 const Page = () => {
   return (
@@ -25,7 +26,7 @@ const Page = () => {
       </div>
       <div className="flex lg:hidden">
         <MobileNavbar />
-        {/* <MobileCreateRoom /> */}
+        <MobileCreateRoom />
       </div>
     </>
   );
