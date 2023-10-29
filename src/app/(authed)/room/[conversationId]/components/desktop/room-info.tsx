@@ -9,11 +9,10 @@ import { Box } from "@/components/ui/box";
 import useGetRoomData from "@/hooks/queries/use-get-room-data";
 import { IChampion } from "@/types/dungeon";
 
-import useUpdateRole from "../hooks/use-update-role";
+import useUpdateRole from "../../hooks/use-update-role";
 import RoomInfoSkeleton from "./room-info-skeleton";
 
-const RoomInfo = (props: { conversationId: string }) => {
-  const { conversationId } = props;
+const RoomInfo = ({ conversationId }: { conversationId: string }) => {
   const accountId = useReadLocalStorage<string>("accountId");
 
   const { data: roomData, isLoading: isLoadingRoomData } = useGetRoomData(conversationId);
@@ -36,6 +35,7 @@ const RoomInfo = (props: { conversationId: string }) => {
       updateRole({ conversationId, championId: champion._id });
     }
   };
+
   return (
     <Box
       title="LOBBY"

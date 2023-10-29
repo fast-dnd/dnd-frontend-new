@@ -12,9 +12,7 @@ import JoinEditSkeleton from "./join-edit-skeleton";
 import Player from "./player";
 import UpdateRoom from "./update-room";
 
-const JoinEditInfo = (props: { conversationId: string }) => {
-  const { conversationId } = props;
-
+const JoinEditInfo = ({ conversationId }: { conversationId: string }) => {
   const { data: roomData, isLoading: isLoadingRoomData, isError } = useGetRoomData(conversationId);
   const { data: dungeonData, isLoading: isLoadingDungeonData } = useGetDungeon(roomData?.dungeonId);
 

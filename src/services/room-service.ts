@@ -1,6 +1,6 @@
 import queryString from "query-string";
 
-import { ICreateRoom, IEditAvatar, IEditChampion, IEditRoom } from "@/types/room";
+import { ICreateRoom, IEditChampion, IEditRoom } from "@/types/room";
 import { roomDetailSchema, roomHistorySchema, roomSummarySchema } from "@/validations/room";
 
 import createApi, { PAGINATION_LIMIT } from "./api-factory";
@@ -42,10 +42,6 @@ const editChampion = async (data: IEditChampion) => {
   return await roomApi.put("player/champion/edit", data);
 };
 
-const editAvatar = async (data: IEditAvatar) => {
-  return await roomApi.put("player/avatar/edit", data);
-};
-
 const roomService = {
   getRoomHistory,
   getRoomData,
@@ -54,7 +50,6 @@ const roomService = {
   editRoom,
   startGame,
   editChampion,
-  editAvatar,
 };
 
 export default roomService;

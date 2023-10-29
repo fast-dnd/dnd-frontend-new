@@ -52,10 +52,5 @@ export interface IEditRoom {
 
 export interface IEditChampion {
   conversationId: string;
-  championId: string;
-}
-
-export interface IEditAvatar {
-  conversationId: string;
-  avatarId: string;
+  championId: string | undefined;
 }

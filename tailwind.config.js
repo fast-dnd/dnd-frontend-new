@@ -20,6 +20,7 @@ module.exports = {
       },
 
       colors: {
+        lobbyGradient: "linear-gradient(180deg, rgba(2, 4, 7, 0.00) 0%, #010306 59.88%);",
         primary: {
           50: "#FFEAEA",
           100: "#FFD6D6",

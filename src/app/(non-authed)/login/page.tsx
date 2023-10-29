@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useGoogleLogin } from "@react-oauth/google";
 import { FcGoogle } from "react-icons/fc";
 
+import MobileNavbar from "@/components/mobile-navbar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 
@@ -21,7 +22,10 @@ const Login = () => {
   });
 
   return (
-    <div className="flex h-full items-end justify-center">
+    <div className="flex h-full items-end justify-center max-lg:px-4">
+      <div className="absolute top-0 w-full">
+        <MobileNavbar />
+      </div>
       <div className="absolute inset-0 z-[-5] flex h-full w-full bg-gradient-to-b from-black via-black/10 via-35% to-black" />
       <div className={`absolute inset-0 -z-10 h-full w-full`}>
         <div
