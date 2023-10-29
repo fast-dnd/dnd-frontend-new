@@ -18,7 +18,7 @@ const Background = () => {
         priority
         quality={100}
         alt="bg-cover"
-        style={{ objectFit: "cover" }}
+        className="hidden object-cover lg:block"
       />
     </div>
   );

@@ -34,11 +34,7 @@ const Feedback = () => {
 
   return (
     <div className="mt-8 flex flex-col items-center gap-8 overflow-hidden px-5 pb-8">
-      <MobileNavbar
-        goBackAction={() => gameStore.pageState.set("DEFAULT")}
-        goBackText="BACK TO THE GAME"
-        href=""
-      />
+      <MobileNavbar />
       <div
         className="hidden cursor-pointer items-center gap-1 text-lg font-medium uppercase tracking-[0.08em] lg:flex"
         onClick={() => gameStore.pageState.set("DEFAULT")}

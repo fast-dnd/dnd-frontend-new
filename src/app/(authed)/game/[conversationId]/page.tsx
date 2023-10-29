@@ -35,15 +35,7 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
   return (
     <div className="flex h-full min-h-0 flex-col gap-5 lg:pb-12">
       <AnimationEffects />
-      <MobileNavbar
-        goBackAction={() => gameStore.pageState.set("GOHOME")}
-        goBackText="HOME"
-        href=""
-        howTo
-        onClickHowTo={() => gameStore.pageState.set("HOWTOPLAY")}
-        feedback
-        onClickFeedback={() => gameStore.pageState.set("FEEDBACK")}
-      />
+      <MobileNavbar />
       <div className="px-5 lg:hidden">
         <Button
           variant="outline"

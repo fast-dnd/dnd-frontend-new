@@ -19,9 +19,7 @@ const HowToPlay = ({ onHideHowToPlay, hideText }: IHowToPlayProps) => {
         onHideHowToPlay && hideText && "mt-8 lg:mt-4",
       )}
     >
-      {onHideHowToPlay && hideText && (
-        <MobileNavbar goBackAction={onHideHowToPlay} goBackText={hideText} href="" />
-      )}
+      {onHideHowToPlay && hideText && <MobileNavbar />}
       {onHideHowToPlay && hideText && (
         <div
           className="hidden cursor-pointer items-center gap-1 text-lg font-medium uppercase tracking-[0.08em] lg:flex lg:shrink-0"

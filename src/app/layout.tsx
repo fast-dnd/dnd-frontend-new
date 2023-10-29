@@ -36,7 +36,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
     <html lang="en">
       <HotjarAnalytics HJID="3696290" HJSV="6" />
       <GoogleAnalytics GA_MEASUREMENT_ID="G-WR2T115S96" />
-      <body className={cn("flex flex-col", lexend.className)}>
+      <body className={cn("flex flex-col bg-dark-900", lexend.className)}>
         <Providers>
           <NextTopLoader />
           <Background />
