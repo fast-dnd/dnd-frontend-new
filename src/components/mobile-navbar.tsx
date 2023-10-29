@@ -24,7 +24,12 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const { user } = useAuth();
 
   return (
-    <div className={cn("flex w-full items-center justify-between px-4 pt-3 lg:hidden", className)}>
+    <div
+      className={cn(
+        "flex w-full items-center justify-between bg-gradient-to-b from-black to-transparent px-4 pt-3 lg:hidden",
+        className,
+      )}
+    >
       {onClickBack && (
         <BiChevronLeft className="absolute left-4 top-4 h-6 w-auto" onClick={onClickBack} />
       )}
