@@ -53,13 +53,20 @@ const ChampionLocationWrapper = ({
     // TODO: replace this with backend call and then update with the returned id
     if (status === "CREATING") {
       if ("moveMapping" in data)
-        dungeonFormStore.dungeonFormData.champions.set((prev) => [...prev, { ...data, _id: "" }]);
+        dungeonFormStore.dungeonFormData.champions.set((prev) => [
+          ...prev,
+          { ...data, _id: "", type: "standard" },
+        ]);
       else
         dungeonFormStore.dungeonFormData.locations.set((prev) => [...prev, { ...data, _id: "" }]);
     } else if (status === "EDITING") {
       const _id = chmpLocData._id;
       if ("moveMapping" in data)
-        dungeonFormStore.dungeonFormData.champions[editIndex].set({ ...data, _id });
+        dungeonFormStore.dungeonFormData.champions[editIndex].set({
+          ...data,
+          _id,
+          type: "standard",
+        });
       else dungeonFormStore.dungeonFormData.locations[editIndex].set({ ...data, _id });
     }
 

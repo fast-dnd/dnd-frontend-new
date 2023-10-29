@@ -6,3 +6,34 @@ body {
   color: #ffffff;
   overflow: hidden;
 }
+
+.wallet-adapter-button {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem; /* equivalent to rounded-md */
+  text-align: center;
+  font-size: 1.25rem; /* equivalent to text-xl */
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.125rem; /* equivalent to tracking-wider */
+  transition: all 300ms;
+  font-weight: bold;
+}
+
+.wallet-adapter-button:not([disabled]):hover {
+  background-color: transparent;
+}
+
+.wallet-adapter-dropdown {
+  width: 100%;
+}
+
+.wallet-adapter-button-trigger {
+  width: 100%;
+}
+
+.wallet-adapter-dropdown-list {
+  width: 100%;
+}

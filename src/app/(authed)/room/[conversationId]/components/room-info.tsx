@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
+import { useWallet } from "@solana/wallet-adapter-react";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import DungeonDetail from "@/components/dungeon-detail";
@@ -14,6 +16,8 @@ import RoomInfoSkeleton from "./room-info-skeleton";
 
 const RoomInfo = (props: { conversationId: string }) => {
   const { conversationId } = props;
+  const { signMessage, publicKey } = useWallet();
+
   const accountId = useReadLocalStorage<string>("accountId");
 
   const { data: roomData, isLoading: isLoadingRoomData } = useGetRoomData(conversationId);
@@ -30,10 +34,30 @@ const RoomInfo = (props: { conversationId: string }) => {
     .filter((player) => player.accountId !== accountId && !!player.champion)
     .map((player) => player.champion) as IChampion[];
 
-  const onChangeChampion = (champion: IChampion) => {
+  const onChangeChampion = async (champion: IChampion) => {
+    if (!signMessage || !publicKey) return;
+
     if (!takenChampions.some((champ) => champ._id === champion._id)) {
-      setSelectedChampion(champion);
-      updateRole({ conversationId, championId: champion._id });
+      const timestamp = Date.now().toString();
+      const encodedMessage = new TextEncoder().encode(timestamp);
+      const signedMessage = await signMessage(encodedMessage);
+      const signature = bs58.encode(signedMessage);
+
+      if (champion?.type === "nft") {
+        updateRole(
+          {
+            conversationId,
+            championId: champion._id,
+            signMessage: timestamp,
+            signature,
+            walletAddress: publicKey,
+          },
+          { onSuccess: () => setSelectedChampion(champion) },
+        );
+      } else {
+        setSelectedChampion(champion);
+        updateRole({ conversationId, championId: champion._id });
+      }
     }
   };
   return (
