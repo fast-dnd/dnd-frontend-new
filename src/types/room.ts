@@ -58,9 +58,3 @@ export interface IEditChampion {
   signature?: string;
   walletAddress?: PublicKey;
 }
-
-export interface IEditAvatar {
-  conversationId: string;
-  avatarId: string;
-  championId: string | undefined;
-}
