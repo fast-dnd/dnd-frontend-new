@@ -8,13 +8,10 @@ import { PhantomWalletAdapter, SolflareWalletAdapter } from "@solana/wallet-adap
 
 import "@solana/wallet-adapter-react-ui/styles.css";
 
-import { SOLANA_RPC_HOST_DEVNET } from "@/utils/constants";
+import { env } from "@/utils/env.mjs";
 
-export default function CustomWalletWrapper({ children }: React.PropsWithChildren) {
+const CustomWalletProvider = ({ children }: React.PropsWithChildren) => {
   const network = WalletAdapterNetwork.Devnet;
-
-  const networkRPC = SOLANA_RPC_HOST_DEVNET;
-  const endpoint = useMemo(() => networkRPC, [networkRPC]);
 
   const wallets = useMemo(
     () => [new PhantomWalletAdapter(), new SolflareWalletAdapter({ network })],
@@ -27,10 +24,12 @@ export default function CustomWalletWrapper({ children }: React.PropsWithChildre
   };
 
   return (
-    <ConnectionProvider endpoint={endpoint}>
+    <ConnectionProvider endpoint={env.NEXT_PUBLIC_WALLET_ENDPOINT}>
       <WalletProvider wallets={wallets} onError={walletConnectionError} autoConnect={true}>
         <WalletModalProvider>{children}</WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
   );
-}
+};
+
+export default CustomWalletProvider;

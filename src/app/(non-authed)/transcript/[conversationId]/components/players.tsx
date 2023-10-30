@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { ITranscriptPlayer } from "@/types/transcript";
 
-export function Players({ players }: { players: ITranscriptPlayer[] }) {
+const Players = ({ players }: { players: ITranscriptPlayer[] }) => {
   return (
     <div className="flex flex-col gap-7">
       <p className="text-xl uppercase tracking-[2px]">Players</p>
@@ -23,4 +23,6 @@ export function Players({ players }: { players: ITranscriptPlayer[] }) {
       </div>
     </div>
   );
-}
+};
+
+export default Players;

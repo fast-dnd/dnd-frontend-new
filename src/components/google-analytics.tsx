@@ -4,23 +4,25 @@ import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 
-export default function GoogleAnalytics({ GA_MEASUREMENT_ID }: { GA_MEASUREMENT_ID: string }) {
+import { env } from "@/utils/env.mjs";
+
+const GoogleAnalytics = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
     const url = pathname + searchParams.toString();
 
-    window.gtag("config", GA_MEASUREMENT_ID, {
+    window.gtag("config", env.NEXT_PUBLIC_GA_MEASUREMENT_ID, {
       page_path: url,
     });
-  }, [pathname, searchParams, GA_MEASUREMENT_ID]);
+  }, [pathname, searchParams]);
 
   return (
     <>
       <Script
         strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
       />
       <Script
         id="google-analytics"
@@ -35,7 +37,7 @@ export default function GoogleAnalytics({ GA_MEASUREMENT_ID }: { GA_MEASUREMENT_
                     'analytics_storage': 'denied'
                 });
                 
-                gtag('config', '${GA_MEASUREMENT_ID}', {
+                gtag('config', '${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}', {
                     page_path: window.location.pathname,
                 });
                 `,
@@ -43,4 +45,6 @@ export default function GoogleAnalytics({ GA_MEASUREMENT_ID }: { GA_MEASUREMENT_
       />
     </>
   );
-}
+};
+
+export default GoogleAnalytics;

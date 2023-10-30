@@ -7,7 +7,7 @@ import { useLocalStorage } from "usehooks-ts";
 
 import { cn } from "@/utils/style-utils";
 
-export default function CookieBanner() {
+const CookieBanner = () => {
   const [cookieConsent, setCookieConsent] = useState<boolean | null>(false);
 
   const [storedCookieConsent, setStoredCookieConsent] = useLocalStorage<boolean | null>(
@@ -68,4 +68,6 @@ export default function CookieBanner() {
       </div>
     </div>
   );
-}
+};
+
+export default CookieBanner;
