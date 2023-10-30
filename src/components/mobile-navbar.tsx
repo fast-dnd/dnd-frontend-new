@@ -5,8 +5,10 @@ import Link from "next/link";
 import { BiChevronLeft } from "react-icons/bi";
 import { FaDiscord } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
+import { toast } from "sonner";
 
 import useAuth from "@/hooks/helpers/use-auth";
+import { logout } from "@/utils/auth";
 import { cn } from "@/utils/style-utils";
 
 import Coin from "./coin";
@@ -22,6 +24,11 @@ interface IMobileNavbarProps {
 
 const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const { user } = useAuth();
+
+  const onSignOut = () => {
+    logout();
+    toast.success("Signed out successfully!");
+  };
   return (
     <div
       className={cn(
@@ -100,7 +107,9 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                 </div>
               </div>
 
-              <div className="my-5 text-center">SIGN OUT</div>
+              <div className="my-5 text-center" onClick={onSignOut}>
+                SIGN OUT
+              </div>
             </div>
           ) : (
             <div />

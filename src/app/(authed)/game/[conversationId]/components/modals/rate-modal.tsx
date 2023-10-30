@@ -38,7 +38,6 @@ const RateModal = ({
   const { mutate } = useRateDungeon();
 
   const rateDungeon = () => {
-    //TODO: add comments after they are added on backend
     mutate({ dungeonId: dungeon._id, rating, roomId: conversationId });
   };
 

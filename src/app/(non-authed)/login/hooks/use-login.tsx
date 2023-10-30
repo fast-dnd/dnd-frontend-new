@@ -1,5 +1,6 @@
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import authService from "@/services/auth-service";
@@ -16,6 +17,7 @@ const useLogin = () => {
       router.push(redirectTo);
       localStorage.removeItem("redirectURL");
       localStorage.setItem("jwtToken", data.data.jwtToken);
+      toast.success("Logged in successfully!");
     },
   });
 };
