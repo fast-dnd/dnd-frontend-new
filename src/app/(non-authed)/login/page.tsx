@@ -78,7 +78,7 @@ const Login = () => {
           ))}
         </div>
       </div>
-      <div className="absolute bottom-0 flex flex-col items-center gap-6 lg:gap-16 lg:pb-24">
+      <div className="absolute bottom-10 flex flex-col items-center gap-6 lg:bottom-0 lg:gap-16 lg:pb-24">
         <div className="relative w-full bg-red-500">
           {slides.map((slide, i) => (
             <div
