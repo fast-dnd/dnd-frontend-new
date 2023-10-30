@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Game, Star1 } from "iconsax-react";
@@ -13,39 +12,39 @@ const MobileAdventure = ({
   adventureDetailId,
   setAdventureDetailId,
   featured = false,
+  featuredOpened,
+  setFeaturedOpened,
 }: {
   adventure: IBaseDungeon;
   adventureDetailId?: string | undefined;
   setAdventureDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   featured?: boolean;
+  featuredOpened: boolean;
+  setFeaturedOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [open, setOpen] = useState(false);
+  const open = featuredOpened === featured && adventureDetailId === adventure._id;
 
   return (
     <div
       className={cn(
-        "relative flex h-[104px] w-full shrink-0 rounded border border-transparent bg-black pl-[118px] transition-all hover:border-primary",
+        "relative flex h-[104px] w-full shrink-0 rounded border border-transparent bg-black pl-[118px] opacity-100 transition-all duration-500 hover:border-primary",
         featured && "h-52 w-48 justify-between p-3",
-        adventureDetailId === adventure._id && open && "static",
-        !!adventureDetailId && !open && "invisible",
+        open && "pointer-events-none static bg-transparent hover:border-transparent",
+        !!adventureDetailId && !open && "pointer-events-none opacity-0",
       )}
       onClick={() => {
         if (!adventureDetailId) {
           setAdventureDetailId?.(adventure._id);
-          setOpen(true);
-        } else {
-          setAdventureDetailId?.(undefined);
-          setTimeout(() => {
-            setOpen(false);
-          }, 500);
+          setFeaturedOpened(featured);
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
         }
       }}
     >
       <motion.div
         className={cn(
           "absolute inset-0 aspect-square w-[102px]",
-          (featured || (adventureDetailId === adventure._id && open)) && "w-full",
-          open && "z-20",
+          featured && "w-full",
+          open && "z-10 w-full",
         )}
         layout
         transition={{
@@ -77,7 +76,12 @@ const MobileAdventure = ({
         />
       </motion.div>
 
-      <div className={cn("z-10 flex w-full flex-col justify-between")}>
+      <div
+        className={cn(
+          "z-10 flex w-full flex-col justify-between opacity-100 transition-all duration-200",
+          open && "opacity-0",
+        )}
+      >
         <div className={cn("flex justify-between", !featured && "justify-start gap-10 py-2")}>
           <div className="flex items-center gap-2">
             <div className="flex h-5 w-5 items-center justify-center rounded bg-black/30">

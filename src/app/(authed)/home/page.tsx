@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import GameHistory from "@/components/game-history";
 import MobileNavbar from "@/components/mobile-navbar";
 import { Box } from "@/components/ui/box";
@@ -7,6 +11,14 @@ import JoinRoom from "./components/desktop/join-room";
 import MobileCreateRoom from "./components/mobile/mobile-create-room";
 
 const Page = () => {
+  const [adventureDetailId, setAdventureDetailId] = useState<string>();
+
+  const onClickBack = adventureDetailId
+    ? () => {
+        setAdventureDetailId(undefined);
+      }
+    : undefined;
+
   return (
     <>
       <div className="hidden min-h-0 flex-1 flex-col gap-12 overflow-y-auto px-5 pb-12 lg:flex lg:flex-row lg:px-0">
@@ -25,8 +37,11 @@ const Page = () => {
         </div>
       </div>
       <div className="relative flex flex-col lg:hidden">
-        <MobileNavbar />
-        <MobileCreateRoom />
+        <MobileNavbar className="fixed z-30" onClickBack={onClickBack} />
+        <MobileCreateRoom
+          adventureDetailId={adventureDetailId}
+          setAdventureDetailId={setAdventureDetailId}
+        />
       </div>
     </>
   );

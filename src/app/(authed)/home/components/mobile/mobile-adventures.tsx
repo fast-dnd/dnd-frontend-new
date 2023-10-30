@@ -1,8 +1,9 @@
 import { PiSlidersFill } from "react-icons/pi";
 
-import MobileAdventure from "@/components/mobile/mobile-adventure";
 import useGetDungeons from "@/hooks/queries/use-get-dungeons";
 import { cn } from "@/utils/style-utils";
+
+import MobileAdventure from "./mobile-adventure";
 
 const MobileAdventures = ({
   adventureDetailId,
@@ -14,8 +15,8 @@ const MobileAdventures = ({
   adventureDetailId?: string | undefined;
   setAdventureDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   featured?: boolean;
-  featuredOpened?: boolean;
-  setFeaturedOpened?: React.Dispatch<React.SetStateAction<boolean>>;
+  featuredOpened: boolean;
+  setFeaturedOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const {
     data: dungeonsData,
@@ -57,6 +58,8 @@ const MobileAdventures = ({
             adventure={dungeon}
             adventureDetailId={adventureDetailId}
             setAdventureDetailId={setAdventureDetailId}
+            featuredOpened={featuredOpened}
+            setFeaturedOpened={setFeaturedOpened}
           />
         );
       }
@@ -67,6 +70,8 @@ const MobileAdventures = ({
           adventure={dungeon}
           adventureDetailId={adventureDetailId}
           setAdventureDetailId={setAdventureDetailId}
+          featuredOpened={featuredOpened}
+          setFeaturedOpened={setFeaturedOpened}
         />
       );
     }),
