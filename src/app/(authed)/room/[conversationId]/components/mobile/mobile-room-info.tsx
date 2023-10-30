@@ -36,7 +36,6 @@ const MobileRoomInfo = ({
           <div key={player.accountId} className="relative w-fit rounded-full border border-white">
             {player.champion && (
               <>
-                {" "}
                 <div className="absolute h-full w-full rounded-full  bg-gradient-to-b from-black/0 to-black backdrop-blur-[1px]" />
                 <GiCheckMark className="absolute left-1/4 top-1/4" />{" "}
               </>
