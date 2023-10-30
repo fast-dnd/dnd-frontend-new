@@ -32,11 +32,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: React.PropsWithChildren) {
+const RootLayout = ({ children }: React.PropsWithChildren) => {
   return (
     <html lang="en">
-      <HotjarAnalytics HJID="3696290" HJSV="6" />
-      <GoogleAnalytics GA_MEASUREMENT_ID="G-WR2T115S96" />
+      <HotjarAnalytics />
+      <GoogleAnalytics />
 
       <body className={cn("flex flex-col bg-dark-900", lexend.className)}>
         <Providers>
@@ -52,4 +52,6 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

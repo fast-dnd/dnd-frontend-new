@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import GoBackButton from "@/components/go-back-button";
 
-import { Players } from "./components/players";
+import Players from "./components/players";
 import Story from "./components/story";
 import TranscriptHeader from "./components/transcript-header";
 import TranscriptSkeleton from "./components/transcript-skeleton";

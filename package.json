@@ -35,6 +35,7 @@
     "@solana/wallet-adapter-wallets": "^0.19.23",
     "@solana/wallet-standard-features": "^1.1.0",
     "@solana/wallet-standard-util": "^1.1.0",
+    "@t3-oss/env-nextjs": "^0.7.1",
     "@tanstack/react-query": "^4.35.3",
     "@tanstack/react-query-devtools": "^4.35.3",
     "autoprefixer": "10.4.14",

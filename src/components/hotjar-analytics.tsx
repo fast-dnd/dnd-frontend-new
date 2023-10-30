@@ -2,7 +2,9 @@
 
 import Script from "next/script";
 
-export default function HotjarAnalytics({ HJID, HJSV }: { HJID: string; HJSV: string }) {
+import { env } from "@/utils/env.mjs";
+
+const HotjarAnalytics = () => {
   return (
     <>
       <Script
@@ -12,7 +14,7 @@ export default function HotjarAnalytics({ HJID, HJSV }: { HJID: string; HJSV: st
           __html: `
           (function(h,o,t,j,a,r){
             h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:${HJID},hjsv:${HJSV}};
+            h._hjSettings={hjid:${env.NEXT_PUBLIC_HJID},hjsv:${env.NEXT_PUBLIC_HJSV}};
             a=o.getElementsByTagName('head')[0];
             r=o.createElement('script');r.async=1;
             r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
@@ -23,4 +25,6 @@ export default function HotjarAnalytics({ HJID, HJSV }: { HJID: string; HJSV: st
       />
     </>
   );
-}
+};
+
+export default HotjarAnalytics;

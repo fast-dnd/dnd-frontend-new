@@ -12,8 +12,9 @@ import "./legend-state";
 import { Toaster } from "sonner";
 
 import useAuthCheck from "@/hooks/helpers/use-auth-check";
+import { env } from "@/utils/env.mjs";
 
-import CustomWalletWrapper from "./wallet-wrapper";
+import CustomWalletProvider from "./wallet-provider";
 
 const Providers = ({ children }: React.PropsWithChildren) => {
   const [client] = React.useState(new QueryClient(queryClientConfig));
@@ -21,15 +22,15 @@ const Providers = ({ children }: React.PropsWithChildren) => {
   useAuthCheck();
 
   return (
-    <CustomWalletWrapper>
-      <GoogleOAuthProvider clientId="695030285071-oc4e483rn2791srvc7tep6a0dto8ltkr.apps.googleusercontent.com">
+    <CustomWalletProvider>
+      <GoogleOAuthProvider clientId={env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID}>
         <QueryClientProvider client={client}>
           {children}
           <Toaster richColors />
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </GoogleOAuthProvider>
-    </CustomWalletWrapper>
+    </CustomWalletProvider>
   );
 };
 
