@@ -6,17 +6,12 @@ import { cn } from "@/utils/style-utils";
 
 import { baseTabs, tabStore } from "../../stores/tab-store";
 
-const TabToggle = ({ hide }: { hide: boolean }) => {
+const TabToggle = () => {
   const activeBaseTab = tabStore.baseTab.use();
 
   return (
-    <div
-      className={cn(
-        "flex justify-center px-4 opacity-100 transition-all duration-500",
-        hide && "pointer-events-none opacity-0",
-      )}
-    >
-      <div className="relative flex rounded-full border border-white/[8%] bg-black">
+    <div className={cn("flex justify-center px-4")}>
+      <div className="pointer-events-auto relative flex rounded-full border border-white/[8%] bg-black">
         {baseTabs.map((tab) => (
           <div
             key={tab}

@@ -22,11 +22,10 @@ interface IMobileNavbarProps {
 
 const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const { user } = useAuth();
-
   return (
     <div
       className={cn(
-        "flex w-full items-center justify-between bg-gradient-to-b from-black via-black/80 to-transparent px-4 pt-3 lg:hidden",
+        "flex w-full items-center justify-between bg-gradient-to-b from-black via-black/60 via-60% to-transparent px-4 pt-3 lg:hidden",
         className,
       )}
     >

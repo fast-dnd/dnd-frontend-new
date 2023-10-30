@@ -12,10 +12,14 @@ import MobileCreateRoom from "./components/mobile/mobile-create-room";
 
 const Page = () => {
   const [adventureDetailId, setAdventureDetailId] = useState<string>();
+  const [closingId, setClosingId] = useState<string>();
 
   const onClickBack = adventureDetailId
     ? () => {
+        setClosingId(adventureDetailId);
         setAdventureDetailId(undefined);
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        setTimeout(() => setClosingId(undefined), 500);
       }
     : undefined;
 
@@ -37,10 +41,11 @@ const Page = () => {
         </div>
       </div>
       <div className="relative flex flex-col lg:hidden">
-        <MobileNavbar className="fixed z-30" onClickBack={onClickBack} />
+        <MobileNavbar className="fixed z-30 h-16 items-start" onClickBack={onClickBack} />
         <MobileCreateRoom
           adventureDetailId={adventureDetailId}
           setAdventureDetailId={setAdventureDetailId}
+          closingId={closingId}
         />
       </div>
     </>

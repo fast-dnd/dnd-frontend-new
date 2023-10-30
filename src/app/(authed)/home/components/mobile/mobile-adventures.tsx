@@ -9,12 +9,14 @@ const MobileAdventures = ({
   adventureDetailId,
   setAdventureDetailId,
   featured,
+  closingId,
   featuredOpened,
   setFeaturedOpened,
 }: {
   adventureDetailId?: string | undefined;
   setAdventureDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   featured?: boolean;
+  closingId?: string | undefined;
   featuredOpened: boolean;
   setFeaturedOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
@@ -54,6 +56,7 @@ const MobileAdventures = ({
         return (
           <MobileAdventure
             featured={featured}
+            closingId={closingId}
             key={dungeon._id}
             adventure={dungeon}
             adventureDetailId={adventureDetailId}
@@ -66,6 +69,7 @@ const MobileAdventures = ({
       return (
         <MobileAdventure
           featured={featured}
+          closingId={closingId}
           key={dungeon._id}
           adventure={dungeon}
           adventureDetailId={adventureDetailId}
@@ -90,7 +94,13 @@ const MobileAdventures = ({
         </div>
       )}
 
-      <div className={cn("flex flex-col gap-4", featured && "flex-row overflow-x-auto")}>
+      <div
+        className={cn(
+          "flex flex-col gap-4",
+          adventureDetailId && "overflow-y-hidden",
+          featured && "flex-row overflow-x-auto",
+        )}
+      >
         {content}
       </div>
     </div>

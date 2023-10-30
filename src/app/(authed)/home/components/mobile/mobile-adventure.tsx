@@ -12,6 +12,7 @@ const MobileAdventure = ({
   adventureDetailId,
   setAdventureDetailId,
   featured = false,
+  closingId,
   featuredOpened,
   setFeaturedOpened,
 }: {
@@ -19,24 +20,25 @@ const MobileAdventure = ({
   adventureDetailId?: string | undefined;
   setAdventureDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   featured?: boolean;
+  closingId?: string | undefined;
   featuredOpened: boolean;
   setFeaturedOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const open = featuredOpened === featured && adventureDetailId === adventure._id;
-
+  const closing = featuredOpened === featured && closingId === adventure._id;
   return (
     <div
       className={cn(
         "relative flex h-[104px] w-full shrink-0 rounded border border-transparent bg-black pl-[118px] opacity-100 transition-all duration-500 hover:border-primary",
         featured && "h-52 w-48 justify-between p-3",
-        open && "pointer-events-none static bg-transparent hover:border-transparent",
-        !!adventureDetailId && !open && "pointer-events-none opacity-0",
+        open && "pointer-events-none static bg-transparent",
+        !featured && !!adventureDetailId && !open && "hidden",
       )}
       onClick={() => {
         if (!adventureDetailId) {
           setAdventureDetailId?.(adventure._id);
           setFeaturedOpened(featured);
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          setTimeout(() => window.scrollTo({ top: 0, left: 0, behavior: "smooth" }), 250);
         }
       }}
     >
@@ -44,9 +46,10 @@ const MobileAdventure = ({
         className={cn(
           "absolute inset-0 aspect-square w-[102px]",
           featured && "w-full",
-          open && "z-10 w-full",
+          open && "z-20 w-full",
+          closing && "z-20",
         )}
-        layout
+        layout={!adventureDetailId || open}
         transition={{
           type: "spring",
           stiffness: 150,
@@ -65,13 +68,19 @@ const MobileAdventure = ({
         <div
           className={cn(
             "pointer-events-none absolute inset-0 z-10 aspect-square w-full bg-gradient-to-b from-black to-transparent to-50% opacity-0 transition-all",
-            (featured || open) && "opacity-100",
+            featured && !open && "opacity-100",
           )}
         />
         <div
           className={cn(
             "pointer-events-none absolute inset-0 z-10 aspect-square w-full bg-gradient-to-t from-black to-transparent to-80% opacity-0 transition-all",
-            (featured || open) && "opacity-100",
+            featured && !open && "opacity-100",
+          )}
+        />
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-0 z-10 aspect-square w-full bg-gradient-to-t from-dark-900 via-dark-900/70 via-30% to-transparent to-60% opacity-0 transition-all",
+            open && "opacity-100",
           )}
         />
       </motion.div>
