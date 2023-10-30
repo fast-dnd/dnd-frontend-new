@@ -21,7 +21,7 @@ const GameSettings = ({
   selectedChampion: IChampion | null | undefined;
   roomData: IRoomDetail | undefined;
 }) => {
-  const { duration } = usePlayerInfo(roomData);
+  const { duration, setDuration } = usePlayerInfo(roomData);
 
   const { gameStarting } = useRoomSocket(conversationId);
 
@@ -50,7 +50,7 @@ const GameSettings = ({
       )}
     >
       <p className="uppercase">Game settings</p>
-      <DurationSlider roomData={roomData} disabled={disabled} />
+      <DurationSlider duration={duration} setDuration={setDuration} disabled={disabled} />
       <div className="-mx-8 mt-4 h-1 w-[calc(100%_+_4rem)] bg-black shadow-lobby" />
       <div className="flex w-full items-center gap-6">
         <ImageAudioToggle

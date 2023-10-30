@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { BiCoffee } from "react-icons/bi";
 import { BsFillLightningFill } from "react-icons/bs";
 import { GiCheckMark } from "react-icons/gi";
 
 import SwordsIcon from "@/components/icons/swords-icon";
-import { IRoomDetail } from "@/types/room";
 import { DungeonDuration } from "@/utils/dungeon-options";
 import { cn } from "@/utils/style-utils";
 
-import usePlayerInfo from "../../hooks/use-player-info";
-
 const elements = [
+  {
+    icon: BsFillLightningFill,
+    title: "blitz",
+    text: "The game and storyline are short",
+  },
   {
     icon: SwordsIcon,
     title: "standard",
@@ -22,47 +24,45 @@ const elements = [
     title: "long",
     text: "The game and storyline are long",
   },
-  {
-    icon: BsFillLightningFill,
-    title: "blitz",
-    text: "The game and storyline are short",
-  },
 ] as const;
 
-const positions = ["center", "left", "right"];
+const positions = ["left", "center", "right"];
 
 const imageVariants: Variants = {
-  center: { x: "0%", scale: 1, zIndex: 5 },
   left: { x: "-50%", scaleX: 0.7, scaleY: 0.8, zIndex: 3 },
+  center: { x: "0%", scale: 1, zIndex: 5 },
   right: { x: "50%", scaleX: 0.7, scaleY: 0.8, zIndex: 3 },
 };
 
 interface IDurationSliderProps {
-  roomData: IRoomDetail | undefined;
   disabled: boolean;
+  duration: DungeonDuration | undefined;
+  setDuration: React.Dispatch<React.SetStateAction<DungeonDuration | undefined>>;
 }
 
-const DurationSlider = ({ roomData, disabled }: IDurationSliderProps) => {
-  const { duration, setDuration } = usePlayerInfo(roomData);
+const positionsFromIndex = (index: number) => {
+  return [1, 2, 0].map((pos) => (pos - index + 3) % 3);
+};
 
-  const [positionIndexes, setPositionIndexes] = useState([0, 1, 2]);
+const indexFromDuration = (duration: DungeonDuration) => {
+  return duration === "blitz" ? 0 : duration === "standard" ? 1 : 2;
+};
+
+const DurationSlider = ({ disabled, duration, setDuration }: IDurationSliderProps) => {
+  const [positionIndexes, setPositionIndexes] = useState(
+    positionsFromIndex(indexFromDuration(duration || "blitz")),
+  );
 
   const onSelectDuration = (index: number) => {
-    const duration: DungeonDuration = index === 0 ? "standard" : index === 1 ? "long" : "blitz";
+    const newDuration: DungeonDuration = elements[index].title;
+    if (newDuration === duration) return;
 
-    setDuration(duration);
-
-    // TODO: fix animation
-    console.log(positionIndexes);
-    // if center element is clicked, do nothing
-    // if left element is clicked, move all elements to the left by 1 (while keeping the order so that the leftmost element becomes the rightmost element)
-    // if right element is clicked, move all elements to the right by 1 (while keeping the order so that the rightmost element becomes the leftmost element)
-    if (index === 0) return;
-    setPositionIndexes((prevIndexes) => {
-      const updatedIndexes = prevIndexes.map((prevIndex) => (prevIndex + prevIndexes[index]) % 3);
-      return updatedIndexes;
-    });
+    setDuration(newDuration);
   };
+
+  useEffect(() => {
+    setPositionIndexes(positionsFromIndex(indexFromDuration(duration || "blitz")));
+  }, [duration]);
 
   return (
     <div className="flex h-40 w-full justify-center">
