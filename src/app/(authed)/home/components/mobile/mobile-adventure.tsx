@@ -88,7 +88,7 @@ const MobileAdventure = ({
       <div
         className={cn(
           "z-10 flex w-full flex-col justify-between opacity-100 transition-all duration-200",
-          open && "opacity-0",
+          (open || closing) && "opacity-0",
         )}
       >
         <div className={cn("flex justify-between", !featured && "justify-start gap-10 py-2")}>
