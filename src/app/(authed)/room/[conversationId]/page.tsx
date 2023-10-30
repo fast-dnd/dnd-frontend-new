@@ -15,7 +15,15 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
   const conversationId = params.conversationId;
   const router = useRouter();
 
-  const { selectedChampion, onChangeChampion } = useChampionInfo({ conversationId });
+  const {
+    roomData,
+    selectedChampion,
+    displayedChampion,
+    isTaken,
+    onChangeChampion,
+    nextChamp,
+    prevChamp,
+  } = useChampionInfo({ conversationId });
 
   const onClickBack = () => {
     if (selectedChampion) onChangeChampion(selectedChampion);
@@ -31,9 +39,20 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
 
       <div className="flex flex-1 flex-col lg:hidden">
         <MobileNavbar className="bg-black" onClickBack={onClickBack} />
-        <MobileRoomInfo conversationId={conversationId} />
-        <ChooseCharacter conversationId={conversationId} />
-        <GameSettings conversationId={conversationId} />
+        <MobileRoomInfo roomData={roomData} selectedChampion={selectedChampion} />
+        <ChooseCharacter
+          selectedChampion={selectedChampion}
+          displayedChampion={displayedChampion}
+          isTaken={isTaken}
+          onChangeChampion={onChangeChampion}
+          nextChamp={nextChamp}
+          prevChamp={prevChamp}
+        />
+        <GameSettings
+          roomData={roomData}
+          selectedChampion={selectedChampion}
+          conversationId={conversationId}
+        />
       </div>
     </>
   );

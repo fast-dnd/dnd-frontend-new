@@ -5,14 +5,18 @@ import { Copy } from "iconsax-react";
 import { GiCheckMark } from "react-icons/gi";
 
 import useCopy from "@/hooks/helpers/use-copy";
+import { IChampion } from "@/types/dungeon";
+import { IRoomDetail } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
-import useChampionInfo from "../../hooks/use-champion-info";
-
-const MobileRoomInfo = ({ conversationId }: { conversationId: string }) => {
+const MobileRoomInfo = ({
+  roomData,
+  selectedChampion,
+}: {
+  roomData: IRoomDetail | undefined;
+  selectedChampion: IChampion | null | undefined;
+}) => {
   const { copied, onCopy } = useCopy();
-
-  const { roomData, selectedChampion } = useChampionInfo({ conversationId });
 
   return (
     <div className="relative flex items-center justify-between bg-black p-4">

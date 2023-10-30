@@ -7,17 +7,26 @@ import { HiSparkles } from "react-icons/hi";
 
 import HelmetIcon from "@/components/icons/helmet-icon";
 import { Button } from "@/components/ui/button";
-import { IMoveMapping } from "@/types/dungeon";
+import { IChampion, IMoveMapping } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
-import useChampionInfo from "../../hooks/use-champion-info";
 import ChooseCharacterControls from "./choose-character-controls";
 
-const ChooseCharacter = ({ conversationId }: { conversationId: string }) => {
-  const { selectedChampion, isTaken, onChangeChampion, displayedChampion } = useChampionInfo({
-    conversationId,
-  });
-
+const ChooseCharacter = ({
+  selectedChampion,
+  isTaken,
+  onChangeChampion,
+  displayedChampion,
+  nextChamp,
+  prevChamp,
+}: {
+  selectedChampion: IChampion | null | undefined;
+  isTaken: (champion: IChampion | undefined) => boolean;
+  onChangeChampion: (champion: IChampion | undefined) => void;
+  displayedChampion: IChampion | undefined;
+  nextChamp: () => void;
+  prevChamp: () => void;
+}) => {
   return (
     <div
       className={cn(
@@ -62,7 +71,7 @@ const ChooseCharacter = ({ conversationId }: { conversationId: string }) => {
           )}
         </Button>
       </div>
-      <ChooseCharacterControls conversationId={conversationId} />
+      <ChooseCharacterControls nextChamp={nextChamp} prevChamp={prevChamp} />
     </div>
   );
 };

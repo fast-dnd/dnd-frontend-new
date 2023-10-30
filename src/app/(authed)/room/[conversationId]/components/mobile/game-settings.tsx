@@ -1,9 +1,10 @@
 import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
+import { IChampion } from "@/types/dungeon";
+import { IRoomDetail } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
-import useChampionInfo from "../../hooks/use-champion-info";
 import useOnRoomChange from "../../hooks/use-on-room-change";
 import usePlayerInfo from "../../hooks/use-player-info";
 import useRoomSocket from "../../hooks/use-room-socket";
@@ -11,9 +12,15 @@ import useStartGame from "../../hooks/use-start-game";
 import DurationSlider from "./duration-slider";
 import ImageAudioToggle from "./image-audio-toggle";
 
-const GameSettings = ({ conversationId }: { conversationId: string }) => {
-  const { selectedChampion, roomData } = useChampionInfo({ conversationId });
-
+const GameSettings = ({
+  conversationId,
+  selectedChampion,
+  roomData,
+}: {
+  conversationId: string;
+  selectedChampion: IChampion | null | undefined;
+  roomData: IRoomDetail | undefined;
+}) => {
   const { duration } = usePlayerInfo(roomData);
 
   const { gameStarting } = useRoomSocket(conversationId);

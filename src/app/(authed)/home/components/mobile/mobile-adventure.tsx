@@ -38,7 +38,7 @@ const MobileAdventure = ({
         if (!adventureDetailId) {
           setAdventureDetailId?.(adventure._id);
           setFeaturedOpened(featured);
-          setTimeout(() => window.scrollTo({ top: 0, left: 0, behavior: "smooth" }), 250);
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
         }
       }}
     >

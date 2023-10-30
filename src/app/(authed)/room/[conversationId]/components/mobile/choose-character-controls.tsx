@@ -1,10 +1,12 @@
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
-import useCharacterControls from "../../hooks/use-character-controls";
-
-const ChooseCharacterControls = ({ conversationId }: { conversationId: string }) => {
-  const { nextChamp, prevChamp } = useCharacterControls({ conversationId });
-
+const ChooseCharacterControls = ({
+  nextChamp,
+  prevChamp,
+}: {
+  nextChamp: () => void;
+  prevChamp: () => void;
+}) => {
   return (
     <>
       <div

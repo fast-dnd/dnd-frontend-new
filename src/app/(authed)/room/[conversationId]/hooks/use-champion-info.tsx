@@ -7,7 +7,7 @@ import useCharacterControls from "./use-character-controls";
 import useUpdateRole from "./use-update-role";
 
 const useChampionInfo = ({ conversationId }: { conversationId: string }) => {
-  const { dungeon, currentIndex } = useCharacterControls({ conversationId });
+  const { dungeon, currentIndex, nextChamp, prevChamp } = useCharacterControls({ conversationId });
 
   const displayedChampion = dungeon?.champions[currentIndex];
 
@@ -40,6 +40,8 @@ const useChampionInfo = ({ conversationId }: { conversationId: string }) => {
     takenChampions,
     isTaken,
     onChangeChampion,
+    nextChamp,
+    prevChamp,
   };
 };
 
