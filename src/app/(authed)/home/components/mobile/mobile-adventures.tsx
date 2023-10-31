@@ -1,9 +1,10 @@
 import { PiSlidersFill } from "react-icons/pi";
 
+import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetDungeons from "@/hooks/queries/use-get-dungeons";
 import { cn } from "@/utils/style-utils";
 
-import MobileAdventure from "./mobile-adventure";
+import { MobileAdventure } from "./mobile-adventure";
 
 const MobileAdventures = ({
   adventureDetailId,
@@ -28,6 +29,12 @@ const MobileAdventures = ({
     isError,
     isLoading,
   } = useGetDungeons({ filter: "top" || "owned" });
+
+  const { lastObjectRef: lastAdventureRef } = useIntersectionObserver({
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  });
 
   if (isError) return <div>Something went wrong</div>;
 
@@ -58,6 +65,7 @@ const MobileAdventures = ({
             featured={featured}
             closingId={closingId}
             key={dungeon._id}
+            ref={featured ? null : lastAdventureRef}
             adventure={dungeon}
             adventureDetailId={adventureDetailId}
             setAdventureDetailId={setAdventureDetailId}
@@ -101,7 +109,7 @@ const MobileAdventures = ({
           featured && "flex-row overflow-x-auto",
         )}
       >
-        {content}
+        {featured ? content[0] : content}
       </div>
     </div>
   );
