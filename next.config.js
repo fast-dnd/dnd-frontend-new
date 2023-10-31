@@ -4,7 +4,7 @@ const nextConfig = {
     domains: [
       "resource-images-bucket-fastdnd.s3.amazonaws.com",
       "dnd-images-bucket.s3.amazonaws.com",
-      "arweave.net",
+      "shdw-drive.genesysgo.net",
     ],
   },
 };
