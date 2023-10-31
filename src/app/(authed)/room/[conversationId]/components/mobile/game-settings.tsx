@@ -52,7 +52,7 @@ const GameSettings = ({
       <p className="uppercase">Game settings</p>
       <DurationSlider duration={duration} setDuration={setDuration} disabled={disabled} />
       <div className="-mx-8 mt-4 h-1 w-[calc(100%_+_4rem)] bg-black shadow-lobby" />
-      <div className="mx-8 flex w-[calc(100%_+_2rem)] items-center justify-center gap-6 ">
+      <div className="flex w-[calc(100%_+_2rem)] items-center justify-center gap-6">
         <ImageAudioToggle
           generate={generateImages}
           setGenerate={setGenerateImages}
