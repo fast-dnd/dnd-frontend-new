@@ -30,7 +30,7 @@ const ChooseCharacter = ({
   return (
     <div
       className={cn(
-        "flex flex-1 flex-col items-center gap-4 bg-primary-900 px-8 py-4 text-sm",
+        "flex flex-1 flex-col items-center gap-4 px-8 py-4 text-sm",
         selectedChampion && "hidden",
       )}
     >

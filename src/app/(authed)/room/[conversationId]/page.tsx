@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import MobileNavbar from "@/components/mobile-navbar";
@@ -17,6 +18,7 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
 
   const {
     roomData,
+    dungeon,
     selectedChampion,
     displayedChampion,
     isTaken,
@@ -37,9 +39,10 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
         <JoinEditInfo conversationId={conversationId} />
       </div>
 
-      <div className="flex flex-1 flex-col lg:hidden">
+      <div className="relative flex flex-1 flex-col lg:hidden">
         <MobileNavbar className="bg-black" onClickBack={onClickBack} />
         <MobileRoomInfo roomData={roomData} selectedChampion={selectedChampion} />
+
         <ChooseCharacter
           selectedChampion={selectedChampion}
           displayedChampion={displayedChampion}
@@ -53,6 +56,17 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
           selectedChampion={selectedChampion}
           conversationId={conversationId}
         />
+        <div className="absolute inset-0 -z-10 bg-dark-900 pt-32">
+          {!!dungeon?.imageUrl && (
+            <Image
+              src={dungeon.imageUrl}
+              alt=""
+              width={1024}
+              height={1024}
+              className="h-full object-cover blur-md"
+            />
+          )}
+        </div>
       </div>
     </>
   );

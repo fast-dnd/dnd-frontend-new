@@ -45,14 +45,14 @@ const GameSettings = ({
   return (
     <div
       className={cn(
-        "flex flex-1 flex-col items-center gap-4 bg-primary-900 px-8 py-4 text-sm",
+        "flex flex-1 flex-col items-center gap-4 px-8 py-4 text-sm",
         !selectedChampion && "hidden",
       )}
     >
       <p className="uppercase">Game settings</p>
       <DurationSlider duration={duration} setDuration={setDuration} disabled={disabled} />
       <div className="-mx-8 mt-4 h-1 w-[calc(100%_+_4rem)] bg-black shadow-lobby" />
-      <div className="flex w-full items-center gap-6">
+      <div className="flex w-full flex-wrap items-center gap-6">
         <ImageAudioToggle
           generate={generateImages}
           setGenerate={setGenerateImages}

@@ -35,6 +35,7 @@ const useChampionInfo = ({ conversationId }: { conversationId: string }) => {
 
   return {
     roomData,
+    dungeon,
     selectedChampion,
     displayedChampion,
     takenChampions,

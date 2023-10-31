@@ -22,7 +22,7 @@ const MobileAdventures = ({
   setFeaturedOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const {
-    data: dungeonsData,
+    data: adventuresData,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
@@ -56,17 +56,16 @@ const MobileAdventures = ({
       </div>
     );
 
-  const content = dungeonsData.pages.map((page) =>
-    page.dungeons.map((dungeon, i) => {
+  const content = adventuresData.pages.map((page) =>
+    page.dungeons.map((adventure, i) => {
       if (page.dungeons.length === i + 1) {
-        //todo ref when last
         return (
           <MobileAdventure
             featured={featured}
             closingId={closingId}
-            key={dungeon._id}
+            key={adventure._id}
             ref={featured ? null : lastAdventureRef}
-            adventure={dungeon}
+            adventure={adventure}
             adventureDetailId={adventureDetailId}
             setAdventureDetailId={setAdventureDetailId}
             featuredOpened={featuredOpened}
@@ -78,8 +77,8 @@ const MobileAdventures = ({
         <MobileAdventure
           featured={featured}
           closingId={closingId}
-          key={dungeon._id}
-          adventure={dungeon}
+          key={adventure._id}
+          adventure={adventure}
           adventureDetailId={adventureDetailId}
           setAdventureDetailId={setAdventureDetailId}
           featuredOpened={featuredOpened}
@@ -106,7 +105,7 @@ const MobileAdventures = ({
         className={cn(
           "flex flex-col gap-4",
           adventureDetailId && "overflow-y-hidden",
-          featured && "flex-row overflow-x-auto",
+          featured && "flex-row overflow-x-auto pr-4",
         )}
       >
         {featured ? content[0] : content}
