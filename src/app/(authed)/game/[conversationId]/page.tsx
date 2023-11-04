@@ -1,23 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import React from "react";
 
 import HowToPlay from "@/components/how-to-play";
 import MobileNavbar from "@/components/mobile-navbar";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 
 import AnimationEffects from "./components/animation-effects";
 import Feedback from "./components/feedback";
 import Gameplay from "./components/gameplay";
 import General from "./components/general";
+import MobileStory from "./components/mobile/mobile-story";
 import { gameStore } from "./stores/game-store";
 
 const Game = ({ params }: { params: { conversationId: string } }) => {
   const conversationId = params.conversationId;
-  const [openedGameplay, setOpenedGameplay] = useState(true);
-
   const pageState = gameStore.pageState.use();
 
   if (pageState === "FEEDBACK") return <Feedback />;
@@ -33,41 +30,25 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
     );
 
   return (
-    <div className="flex h-full min-h-0 flex-col gap-5 lg:pb-12">
-      <AnimationEffects />
-      <MobileNavbar />
-      <div className="px-5 lg:hidden">
-        <Button
-          variant="outline"
-          className=" border-white normal-case hover:bg-transparent hover:text-white active:bg-transparent "
-          onClick={() => setOpenedGameplay(!openedGameplay)}
-        >
-          {openedGameplay && (
-            <div className="flex items-center gap-2">
-              Master & team <AiOutlineRight />
-            </div>
-          )}
-          {!openedGameplay && (
-            <div className="flex items-center gap-2">
-              <AiOutlineLeft /> Back to story
-            </div>
-          )}
-        </Button>
+    <>
+      <div className="hidden h-full min-h-0 flex-col gap-5 lg:flex lg:pb-12">
+        <AnimationEffects />
+
+        <div className="flex min-h-0 w-full min-w-0 flex-1 flex-row gap-12 overflow-y-auto py-0">
+          <div className={cn("flex h-full w-[70%] flex-1")}>
+            <Gameplay conversationId={conversationId} />
+          </div>
+          <div className={cn("flex h-full min-h-0 w-[27%]")}>
+            <General conversationId={conversationId} />
+          </div>
+        </div>
       </div>
 
-      <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-5 overflow-y-auto py-5 lg:flex-row lg:gap-12 lg:py-0">
-        <div
-          className={cn("flex h-full flex-1 lg:w-[70%]", !openedGameplay && "hidden", "lg:flex")}
-        >
-          <Gameplay conversationId={conversationId} />
-        </div>
-        <div
-          className={cn("flex h-full min-h-0 lg:w-[27%]", openedGameplay && "hidden", "lg:flex")}
-        >
-          <General conversationId={conversationId} />
-        </div>
+      <div className="flex flex-col lg:hidden">
+        <MobileNavbar className="fixed z-20 h-16 items-start" />
+        <MobileStory conversationId={conversationId} />
       </div>
-    </div>
+    </>
   );
 };
 

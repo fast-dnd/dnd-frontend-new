@@ -53,7 +53,7 @@ const MobileRoomInfo = ({
 
       <hr
         className={cn(
-          "absolute bottom-0 left-0 bg-primary transition-all duration-500",
+          "absolute bottom-0 left-0 border-primary transition-all duration-500",
           selectedChampion ? "w-[70%]" : "w-[30%]",
         )}
       />

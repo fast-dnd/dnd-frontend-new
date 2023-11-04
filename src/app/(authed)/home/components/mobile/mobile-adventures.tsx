@@ -101,13 +101,7 @@ const MobileAdventures = ({
         </div>
       )}
 
-      <div
-        className={cn(
-          "flex flex-col gap-4",
-          adventureDetailId && "overflow-y-hidden",
-          featured && "flex-row overflow-x-auto pr-4",
-        )}
-      >
+      <div className={cn("flex flex-col gap-4", featured && "flex-row overflow-x-auto pr-4")}>
         {featured ? content[0] : content}
       </div>
     </div>

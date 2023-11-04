@@ -3,6 +3,7 @@ import { cn } from "@/utils/style-utils";
 
 import usePlayMove from "../../hooks/use-play-move";
 import usePlayMoveSocket from "../../hooks/use-play-move-socket";
+import useTimer from "../../hooks/use-timer";
 import { moveStore } from "../../stores/move-store";
 import MoveInput from "./move-input";
 import PickPowerup from "./pick-powerup";
@@ -17,7 +18,8 @@ export interface PlayMoveProps {
 
 const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: PlayMoveProps) => {
   usePlayMoveSocket(conversationId);
-  const { timeToDisplay } = usePlayMove(roomData, currentPlayer, loadingText);
+  usePlayMove(roomData, currentPlayer, loadingText);
+  const { timeToDisplay } = useTimer(roomData, loadingText);
   const store = moveStore.use();
 
   return (

@@ -25,16 +25,18 @@ const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
         return (
           <div key={i} className="flex w-full flex-col gap-8">
             <div className="flex w-full items-center gap-8">
-              <div className="flex max-w-full flex-col text-lg font-semibold uppercase tracking-[0.2em] lg:flex-row lg:text-2xl">
-                <span className="mr-2 whitespace-nowrap text-primary">
+              <div className="line-clamp-2 max-w-full text-lg font-semibold uppercase tracking-[0.2em] lg:flex lg:text-2xl">
+                <span className="mr-2 whitespace-nowrap text-white/30 lg:text-primary">
                   TURN {i + 1}/{roomData.maxRounds + 1}
                 </span>
-                <span className="truncate">{dungeonData.locations[Math.floor(i / 2)]?.name}</span>
+                <span className="lg:truncate">
+                  {dungeonData.locations[Math.floor(i / 2)]?.name}
+                </span>
               </div>
             </div>
             <div className="w-full">
               {roomData.generateImages && i % 2 === 0 && (
-                <div className="mb-4 flex aspect-square w-full shrink-0 justify-center lg:float-left lg:mr-6 lg:inline-block lg:h-72 lg:w-72">
+                <div className="mb-4 flex aspect-video w-full shrink-0 justify-center lg:float-left lg:mr-6 lg:inline-block lg:aspect-square lg:h-72 lg:w-72">
                   {generatedImage && generatedImage.length > 0 ? (
                     <ImageModal image={generatedImage} />
                   ) : (
