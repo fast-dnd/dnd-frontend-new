@@ -28,9 +28,7 @@ const RollDice = ({
             {store.buttonState === "ROLLING" &&
               store.dice.map((roll, i) => <Die key={i} roll={roll} />)}
 
-            {!!store.roll && store.buttonState !== "ROLLING" && (
-              <DiceBreakdown rollInfo={store.roll} />
-            )}
+            {!!store.roll && store.buttonState !== "ROLLING" && <DiceBreakdown />}
           </>
         )}
       </div>

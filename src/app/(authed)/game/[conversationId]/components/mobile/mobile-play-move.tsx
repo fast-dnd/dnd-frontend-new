@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { AiFillHeart, AiOutlineLeft } from "react-icons/ai";
 import { FaDice } from "react-icons/fa";
 import { GiNightSleep } from "react-icons/gi";
@@ -21,10 +20,8 @@ import PickPowerup from "../gameplay/pick-powerup";
 import { PlayMoveProps } from "../gameplay/play-move";
 
 const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: PlayMoveProps) => {
-  usePlayMoveSocket(conversationId);
-  const { onPlay, submitting } = usePlayMove(conversationId, roomData, currentPlayer);
-
-  const [openedDetails, setOpenedDetails] = useState(false);
+  const { openedDetails, setOpenedDetails } = usePlayMoveSocket(conversationId);
+  const { onPlay } = usePlayMove(conversationId, roomData, currentPlayer);
 
   const store = moveStore.use();
 
@@ -33,7 +30,7 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: PlayMovePro
     <div
       className={cn(
         "flex border-t border-white/20 bg-black opacity-100 transition-all",
-        // !store.canPlay && "hidden opacity-0",
+        !store.canPlay && "hidden opacity-0",
       )}
     >
       <div
@@ -103,13 +100,15 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: PlayMovePro
         </div>
         <div className="flex border border-gray-800">
           <PickPowerup currentMana={currentPlayer.mana} />
-          <Button
-            onClick={onPlay}
-            disabled={!store.canPlay || (!store.move && !store.freeWill)}
-            className="flex flex-1 items-center gap-1 rounded-none border-none py-1.5 text-xs"
-          >
-            <FaDice /> Roll the dice
-          </Button>
+          <div className="flex w-full bg-primary px-6">
+            <Button
+              onClick={onPlay}
+              disabled={!store.canPlay || (!store.move && !store.freeWill)}
+              className="flex w-full items-center gap-1 rounded-none border-none py-1.5 text-xs"
+            >
+              <FaDice /> Roll the dice
+            </Button>
+          </div>
         </div>
       </div>
     </div>

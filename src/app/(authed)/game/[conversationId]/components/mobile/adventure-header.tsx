@@ -33,7 +33,7 @@ const AdventureHeader = ({
         className="absolute -z-10 h-32 object-cover"
       />
       <div className="flex h-14 w-full items-end bg-gradient-to-t from-black to-transparent p-4 text-sm">
-        <div className="flex w-full flex-wrap items-center justify-between">
+        <div className="flex w-full items-center justify-between gap-2">
           <p className="truncate font-medium leading-4">{adventure.name}</p>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5">

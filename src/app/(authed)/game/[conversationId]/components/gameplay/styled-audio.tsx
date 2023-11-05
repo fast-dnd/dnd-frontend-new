@@ -29,7 +29,7 @@ const StyledAudio = ({ audio }: { audio?: string }) => {
         />
       )}
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 lg:gap-4">
         <Button
           disabled={!audio}
           variant="ghost"

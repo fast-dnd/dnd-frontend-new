@@ -32,11 +32,11 @@ const Slider = React.forwardRef<
       className={cn("nozoom slider relative flex touch-none select-none items-center", className)}
       {...props}
     >
-      <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-white/25">
-        <SliderPrimitive.Range className="absolute h-full bg-primary" />
+      <SliderPrimitive.Track className="relative h-1 w-full grow overflow-hidden rounded-full bg-white/25 lg:h-2">
+        <SliderPrimitive.Range className="absolute h-full bg-white lg:bg-primary" />
       </SliderPrimitive.Track>
       <SliderPrimitive.Thumb
-        className="block h-4 w-4 rounded-full bg-white ring-offset-white transition-colors focus-visible:bg-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+        className="block h-3 w-3 rounded-full bg-white ring-offset-white transition-colors focus-visible:bg-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 lg:h-4 lg:w-4 lg:focus-visible:bg-primary"
         aria-label={props["aria-label"]}
       />
     </SliderPrimitive.Root>

@@ -12,6 +12,7 @@ export interface IMoveStore {
   dice: [number, number];
   move?: IDefaultMove;
   roll?: IPlayMoveResponse;
+  aiDescription?: string;
 }
 
 export const initialMoveStoreData: IMoveStore = {
@@ -20,8 +21,6 @@ export const initialMoveStoreData: IMoveStore = {
   freeWill: "",
   powerup: 0,
   dice: [0, 0],
-  move: undefined,
-  roll: undefined,
 };
 
 export const getInitialMoveStoreData = () => deepClone(initialMoveStoreData);

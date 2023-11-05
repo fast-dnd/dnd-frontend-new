@@ -1,5 +1,6 @@
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi";
+import { useMediaQuery } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -8,6 +9,7 @@ import { cn } from "@/utils/style-utils";
 import { moveStore } from "../../stores/move-store";
 
 const PickPowerup = ({ currentMana }: { currentMana: number }) => {
+  const isMobileTablet = useMediaQuery("(max-width: 1024px)");
   const powerup = moveStore.powerup.use();
   const canPlay = moveStore.canPlay.use();
 
@@ -29,7 +31,10 @@ const PickPowerup = ({ currentMana }: { currentMana: number }) => {
       </Button>
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger className="flex cursor-default items-center gap-1 text-xs font-semibold lg:gap-2.5 lg:text-xl">
+          <TooltipTrigger
+            disabled={isMobileTablet}
+            className="flex cursor-default items-center gap-1 text-xs font-semibold lg:gap-2.5 lg:text-xl"
+          >
             <span className="mt-0.5">{powerup}</span> <HiSparkles />
           </TooltipTrigger>
           <TooltipContent>
