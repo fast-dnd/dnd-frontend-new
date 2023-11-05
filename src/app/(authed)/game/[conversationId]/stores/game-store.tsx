@@ -22,12 +22,14 @@ export interface IGameStore {
     | "RATE";
   reward: boolean;
   statusUpdate: PlayerStatusUpdate;
+  loadingText: boolean;
 }
 
 export const initialGameStoreData: IGameStore = {
   pageState: "DEFAULT",
   reward: false,
   statusUpdate: {},
+  loadingText: false,
 };
 
 export const getInitialGameStoreData = () => deepClone(initialGameStoreData);

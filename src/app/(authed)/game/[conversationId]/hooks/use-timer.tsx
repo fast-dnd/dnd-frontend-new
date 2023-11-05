@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 
 import { IRoomDetail } from "@/types/room";
 
-const useTimer = (roomData?: IRoomDetail, loadingText?: boolean) => {
+import { gameStore } from "../stores/game-store";
+
+const useTimer = (roomData?: IRoomDetail) => {
+  const loadingText = gameStore.loadingText.use();
+
   const [timer, setTimer] = useState(0);
   useEffect(() => {
     if (loadingText) {

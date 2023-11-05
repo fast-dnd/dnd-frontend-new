@@ -9,28 +9,27 @@ import { moveStore } from "../../stores/move-store";
 
 const PickPowerup = ({ currentMana }: { currentMana: number }) => {
   const powerup = moveStore.powerup.use();
-  const buttonState = moveStore.buttonState.use();
   const canPlay = moveStore.canPlay.use();
 
   return (
     <div
       className={cn(
-        "flex h-12 w-full items-center justify-between bg-white/5",
-        buttonState !== "CANPLAY" && "hidden opacity-50 lg:flex",
+        "flex h-8 items-center justify-between gap-4 bg-white/10 lg:h-12 lg:w-full lg:bg-white/5",
+        !canPlay && "opacity-50",
       )}
     >
       <Button
         variant="ghost"
         disabled={powerup === 0 || !canPlay}
         onClick={() => moveStore.powerup.set(powerup - 1)}
-        className="flex h-full w-12 items-center justify-center bg-white/10 px-0 text-white"
+        className="flex h-full w-7 items-center justify-center bg-white/20 px-0 text-white max-lg:rounded-none lg:w-12 lg:bg-white/10"
         aria-label="Decrease mana boost"
       >
         <FiMinus />
       </Button>
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger className="flex cursor-default items-center gap-2.5 text-xl font-semibold">
+          <TooltipTrigger className="flex cursor-default items-center gap-1 text-xs font-semibold lg:gap-2.5 lg:text-xl">
             <span className="mt-0.5">{powerup}</span> <HiSparkles />
           </TooltipTrigger>
           <TooltipContent>
@@ -46,7 +45,7 @@ const PickPowerup = ({ currentMana }: { currentMana: number }) => {
         variant="ghost"
         disabled={powerup === 2 || powerup >= currentMana || !canPlay}
         onClick={() => moveStore.powerup.set(powerup + 1)}
-        className="flex h-full w-12 items-center justify-center bg-white/10 px-0 text-white"
+        className="flex h-full w-7 items-center justify-center bg-white/20 px-0 text-white max-lg:rounded-none lg:w-12 lg:bg-white/10"
         aria-label="Increase mana boost"
       >
         <FiPlus />

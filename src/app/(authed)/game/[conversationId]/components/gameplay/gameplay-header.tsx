@@ -8,10 +8,11 @@ import { cn } from "@/utils/style-utils";
 
 import { gameStore } from "../../stores/game-store";
 
-const GamePlayHeader = ({ title, loading }: { title: string; loading?: boolean }) => {
+const GamePlayHeader = ({ title }: { title: string }) => {
   const onClickHome = () => gameStore.pageState.set("GOHOME");
   const onClickHowTo = () => gameStore.pageState.set("HOWTOPLAY");
   const onClickFeedback = () => gameStore.pageState.set("FEEDBACK");
+  const loading = gameStore.loadingText.use();
 
   return (
     <div className="flex w-full items-center justify-between gap-8 rounded-t-md bg-dark-900 px-12 py-6">

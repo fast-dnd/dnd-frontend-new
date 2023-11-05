@@ -10,6 +10,7 @@ import AnimationEffects from "./components/animation-effects";
 import Feedback from "./components/feedback";
 import Gameplay from "./components/gameplay";
 import General from "./components/general";
+import MobileControls from "./components/mobile/mobile-controls";
 import MobileStory from "./components/mobile/mobile-story";
 import { gameStore } from "./stores/game-store";
 
@@ -47,6 +48,7 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
       <div className="flex flex-col lg:hidden">
         <MobileNavbar className="fixed z-20 h-16 items-start" />
         <MobileStory conversationId={conversationId} />
+        <MobileControls conversationId={conversationId} />
       </div>
     </>
   );

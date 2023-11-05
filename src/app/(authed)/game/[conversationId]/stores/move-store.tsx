@@ -6,7 +6,7 @@ import { deepClone } from "@/utils/clone";
 
 export interface IMoveStore {
   canPlay: boolean;
-  buttonState: "CANPLAY" | "ROLLING" | "ROLLED";
+  buttonState: "DEFAULT" | "ROLLING" | "ROLLED";
   freeWill: string;
   powerup: number;
   dice: [number, number];
@@ -16,7 +16,7 @@ export interface IMoveStore {
 
 export const initialMoveStoreData: IMoveStore = {
   canPlay: true,
-  buttonState: "CANPLAY",
+  buttonState: "DEFAULT",
   freeWill: "",
   powerup: 0,
   dice: [0, 0],

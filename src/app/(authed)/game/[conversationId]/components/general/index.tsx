@@ -9,6 +9,7 @@ import { cn } from "@/utils/style-utils";
 
 import useAskQuestion from "../../hooks/use-ask-question";
 import useGeneral from "../../hooks/use-general";
+import useGetCurrentPlayer from "../../hooks/use-get-current-player";
 import { gameStore } from "../../stores/game-store";
 import GeneralSkeleton from "./general-skeleton";
 import MoveQuestionHistory from "./move-question-history";
@@ -17,7 +18,8 @@ import Player from "./player";
 const General = (props: { conversationId: string }) => {
   const { conversationId } = props;
 
-  const { roomData, currentPlayer, moveHistory, questionHistory, canAsk, asking, setAsking } =
+  const { currentPlayer } = useGetCurrentPlayer(conversationId);
+  const { roomData, moveHistory, questionHistory, canAsk, asking, setAsking } =
     useGeneral(conversationId);
   const { mutate: askQuestion } = useAskQuestion();
 

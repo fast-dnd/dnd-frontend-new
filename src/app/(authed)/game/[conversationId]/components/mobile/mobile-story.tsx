@@ -11,7 +11,7 @@ const MobileStory = ({ conversationId }: { conversationId: string }) => {
   const { data: adventureData } = useGetDungeon(roomData?.dungeonId);
   const { currentPlayer } = useHandlePlayerStatusUpdate({ roomData });
 
-  const { lastStory, loadingText } = useGameplaySocket(conversationId);
+  const { lastStory } = useGameplaySocket(conversationId);
 
   if (!roomData || !adventureData || !currentPlayer) return <div>todo</div>;
 
@@ -21,10 +21,9 @@ const MobileStory = ({ conversationId }: { conversationId: string }) => {
         roomData={roomData}
         adventure={adventureData}
         currentPlayer={currentPlayer}
-        loadingText={loadingText}
         progress={(100 * (roomData.currentRound + 1)) / (roomData.maxRounds + 1)}
       />
-      <div className="mb-16 mt-32 p-4">
+      <div className="mb-24 mt-32 p-4">
         <Stories dungeonData={adventureData} roomData={roomData} lastStory={lastStory} />
       </div>
     </div>

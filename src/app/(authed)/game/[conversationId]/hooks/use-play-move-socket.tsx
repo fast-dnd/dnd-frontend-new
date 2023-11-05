@@ -5,7 +5,7 @@ import { socketIO } from "@/lib/socket";
 import { moveStore } from "../stores/move-store";
 import { IGameplaySocketEvent } from "../types/events";
 
-const useGameplaySocket = (conversationId: string) => {
+const usePlayMoveSocket = (conversationId: string) => {
   useEffect(() => {
     const onEvent = (event: IGameplaySocketEvent) => {
       switch (event.event) {
@@ -17,7 +17,7 @@ const useGameplaySocket = (conversationId: string) => {
           moveStore.canPlay.set(false);
           break;
         case "ROUND_STORY":
-          moveStore.buttonState.set("CANPLAY");
+          moveStore.buttonState.set("DEFAULT");
           moveStore.canPlay.set(true);
           moveStore.move.set(undefined);
           break;
@@ -30,4 +30,4 @@ const useGameplaySocket = (conversationId: string) => {
   }, [conversationId]);
 };
 
-export default useGameplaySocket;
+export default usePlayMoveSocket;

@@ -49,7 +49,7 @@ const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
 
               <div className="tracking-widest lg:text-[22px] lg:leading-8">
                 {roomData.generateAudio && (
-                  <div className="mb-4">
+                  <div className="mb-4 max-lg:w-full">
                     <StyledAudio audio={roomData.generatedAudio[i]} />
                   </div>
                 )}

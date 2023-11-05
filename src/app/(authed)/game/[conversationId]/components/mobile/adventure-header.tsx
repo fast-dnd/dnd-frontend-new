@@ -15,16 +15,14 @@ const AdventureHeader = ({
   roomData,
   adventure,
   currentPlayer,
-  loadingText,
   progress,
 }: {
   roomData: IRoomDetail;
   adventure: IDungeonDetail;
   currentPlayer: IPlayer;
-  loadingText: boolean;
   progress: number;
 }) => {
-  const { timeToDisplay } = useTimer(roomData, loadingText);
+  const { timeToDisplay } = useTimer(roomData);
   return (
     <div className="fixed z-10 flex h-32 w-full flex-col justify-end">
       <Image
