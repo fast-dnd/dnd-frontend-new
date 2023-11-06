@@ -15,7 +15,7 @@ export interface StoriesProps {
 
 const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
   const { stories } = useUpdateStories({ roomData, lastStory });
-  const { autoBottomScrollDiv } = useAutoScrollToBottom([roomData, stories, lastStory]);
+  const { autoBottomScrollDiv } = useAutoScrollToBottom([roomData, stories]);
 
   return (
     <div className="flex w-full flex-1 flex-col gap-8 pr-4 lg:overflow-y-auto lg:pr-6">

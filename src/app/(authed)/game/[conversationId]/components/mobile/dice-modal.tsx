@@ -15,7 +15,7 @@ const DiceModal = () => {
   const buttonState = moveStore.buttonState.use();
   const roll = moveStore.roll.use();
   const aiDescription = moveStore.aiDescription.use();
-  const close = () => {
+  const onClose = () => {
     gameStore.diceModal.set(false);
   };
 
@@ -23,7 +23,7 @@ const DiceModal = () => {
     <Dialog
       open={open}
       onOpenChange={(isOpen) => {
-        if (!isOpen) close();
+        if (!isOpen) onClose();
       }}
     >
       <DialogContent
@@ -31,7 +31,7 @@ const DiceModal = () => {
         className="left-0 top-0 flex h-full w-full max-w-full translate-x-0 translate-y-0 flex-col items-center gap-4 bg-black/50 px-4 py-3"
       >
         <div className={cn("flex w-full justify-end", buttonState === "ROLLING" && "hidden")}>
-          <AiOutlineClose onClick={close} />
+          <AiOutlineClose onClick={onClose} />
         </div>
         <div
           className={cn(

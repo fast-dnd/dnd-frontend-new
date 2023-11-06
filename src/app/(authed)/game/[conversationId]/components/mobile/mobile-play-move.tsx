@@ -21,6 +21,7 @@ import { PlayMoveProps } from "../gameplay/play-move";
 
 const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: PlayMoveProps) => {
   const { openedDetails, setOpenedDetails } = usePlayMoveSocket(conversationId);
+  //todo animate on open details
   const { onPlay } = usePlayMove(conversationId, roomData, currentPlayer);
 
   const store = moveStore.use();

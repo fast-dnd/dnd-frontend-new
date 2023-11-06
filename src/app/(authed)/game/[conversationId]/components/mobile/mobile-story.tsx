@@ -13,7 +13,7 @@ const MobileStory = ({ conversationId }: { conversationId: string }) => {
 
   const { lastStory } = useGameplaySocket(conversationId);
 
-  if (!roomData || !adventureData || !currentPlayer) return <div>todo</div>;
+  if (!roomData || !adventureData || !currentPlayer) return <div></div>;
 
   return (
     <div className="flex flex-col">
