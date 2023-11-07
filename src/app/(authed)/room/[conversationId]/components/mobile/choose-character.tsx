@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { AiFillHeart } from "react-icons/ai";
 import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
@@ -8,20 +9,21 @@ import { HiSparkles } from "react-icons/hi";
 import HelmetIcon from "@/components/icons/helmet-icon";
 import { Button } from "@/components/ui/button";
 import { IChampion, IMoveMapping } from "@/types/dungeon";
+import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
 import ChooseCharacterControls from "./choose-character-controls";
 
 const ChooseCharacter = ({
   selectedChampion,
-  isTaken,
+  takenBy,
   onChangeChampion,
   displayedChampion,
   nextChamp,
   prevChamp,
 }: {
   selectedChampion: IChampion | null | undefined;
-  isTaken: (champion: IChampion | undefined) => boolean;
+  takenBy: IPlayer | undefined;
   onChangeChampion: (champion: IChampion | undefined) => void;
   displayedChampion: IChampion | undefined;
   nextChamp: () => void;
@@ -55,21 +57,26 @@ const ChooseCharacter = ({
               </div>
             ))}
         </div>
-        <Button
-          className="absolute bottom-0 -mx-4 flex  gap-1.5"
-          onClick={() => onChangeChampion(displayedChampion)}
-        >
-          {isTaken(displayedChampion) ? (
-            "ALREADY SELECTED"
-          ) : displayedChampion?._id === selectedChampion?._id ? (
-            "SELECTED"
-          ) : (
-            <>
-              <HelmetIcon className="h-5 w-5" />
-              SELECT THIS CHARACTER
-            </>
-          )}
-        </Button>
+        {takenBy ? (
+          <div className="absolute bottom-6 -mx-4 flex w-full items-center justify-center gap-2">
+            <Image
+              src={takenBy.imageUrl || "/images/default-avatar.png"}
+              width={30}
+              height={30}
+              alt={`player-${takenBy.accountId}-avatar`}
+              className="rounded-full"
+            />
+            TAKEN
+          </div>
+        ) : (
+          <Button
+            className="absolute bottom-0 -mx-4 flex  gap-1.5"
+            onClick={() => onChangeChampion(displayedChampion)}
+          >
+            <HelmetIcon className="h-5 w-5" />
+            SELECT THIS CHARACTER
+          </Button>
+        )}
       </div>
       <ChooseCharacterControls nextChamp={nextChamp} prevChamp={prevChamp} />
     </div>

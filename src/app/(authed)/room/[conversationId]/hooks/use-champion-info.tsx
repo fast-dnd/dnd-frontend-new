@@ -24,7 +24,12 @@ const useChampionInfo = ({ conversationId }: { conversationId: string }) => {
     .map((player) => player.champion) as IChampion[];
 
   const isTaken = (champion?: IChampion) =>
-    takenChampions?.some((champ) => champ._id === champion?._id) ?? false;
+    takenChampions?.find((champ) => champ._id === champion?._id);
+
+  const chmpTakenBy = (champion?: IChampion) =>
+    roomData?.playerState.find((player) => player.champion?._id === champion?._id);
+
+  const takenBy = chmpTakenBy(displayedChampion);
 
   const onChangeChampion = (champion?: IChampion) => {
     if (champion === selectedChampion) updateRole({ conversationId, championId: undefined });
@@ -40,6 +45,8 @@ const useChampionInfo = ({ conversationId }: { conversationId: string }) => {
     displayedChampion,
     takenChampions,
     isTaken,
+    chmpTakenBy,
+    takenBy,
     onChangeChampion,
     nextChamp,
     prevChamp,
