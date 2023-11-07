@@ -32,7 +32,7 @@ const RewardModal = ({ conversationId }: { conversationId: string }) => {
         if (!isOpen) close();
       }}
     >
-      <DialogContent className="max-h-[700px] w-fit lg:max-w-[550px]">
+      <DialogContent className="h-full w-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:h-fit lg:w-fit lg:max-w-[550px]">
         <DialogHeader className="lg:px-0">
           <DialogTitle>You earned a reward!</DialogTitle>
           <DialogDescription className="text-center">
@@ -45,13 +45,13 @@ const RewardModal = ({ conversationId }: { conversationId: string }) => {
             alt={reward?.name || "reward"}
             width={256}
             height={256}
-            className="h-32 w-32 lg:h-[256px] lg:w-[256px]"
+            className="aspect-square w-[256px] max-w-full"
           />
         </div>
         <DialogFooter>
           <Button
             variant="outline"
-            className="flex w-fit flex-1 border-primary px-8 text-base lg:text-xl"
+            className="flex w-fit border-primary px-8 text-base lg:text-xl"
             onClick={close}
           >
             CLOSE
