@@ -19,7 +19,9 @@ module.exports = {
         basic: "0px 0px 20px 0px rgba(255, 90, 90, 0.4)",
         lobby: "0px 1px 0px 0px rgba(255, 255, 255, 0.06);",
       },
-
+      backgroundImage: {
+        radialGradient: "radial-gradient(circle at 50%, #ffffff06, transparent 75%)",
+      },
       colors: {
         lobbyGradient: "linear-gradient(180deg, rgba(2, 4, 7, 0.00) 0%, #010306 59.88%);",
         primary: {

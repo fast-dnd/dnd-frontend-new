@@ -26,8 +26,11 @@ const DiedModal = ({ state }: { state: IGameState }) => {
         if (!isOpen) close();
       }}
     >
-      <DialogContent>
-        <DialogHeader>
+      <DialogContent className="flex flex-col max-lg:h-full max-lg:w-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900">
+        <div className="pointer-events-none absolute inset-0 h-full w-full bg-radialGradient lg:hidden">
+          <div className="h-full w-full blur-xl" />
+        </div>
+        <DialogHeader className="max-lg:h-full max-lg:justify-center">
           <ThemeTitle title="killed" />
 
           <DialogDescription className="text-center">
@@ -35,8 +38,11 @@ const DiedModal = ({ state }: { state: IGameState }) => {
             You have died!
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="flex-col gap-6">
-          <Button className="whitespace-nowrap px-8 py-3 uppercase" onClick={() => close()}>
+        <DialogFooter className="">
+          <Button
+            className="whitespace-nowrap px-8 py-3 uppercase max-lg:w-52"
+            onClick={() => close()}
+          >
             spectate
           </Button>
         </DialogFooter>

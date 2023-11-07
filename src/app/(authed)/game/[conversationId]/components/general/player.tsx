@@ -26,13 +26,13 @@ const Player = (props: {
           draggable={false}
           width={90}
           height={90}
-          className="h-full w-full"
+          className="h-full w-full max-lg:rounded-full max-lg:border max-lg:border-white/50"
         />
         {player.health <= 0 && (
-          <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black/75">
+          <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black/75 max-lg:rounded-full">
             <SkullIcon
               className={cn(
-                "h-3/4 w-3/4",
+                "h-1/2 w-1/2 lg:h-3/4 lg:w-3/4",
                 !!currentPlayer && !!statusUpdate && statusUpdate.lostHealth && "fill-primary",
               )}
             />
@@ -43,7 +43,7 @@ const Player = (props: {
       <div
         className={cn(
           "flex w-full min-w-0 flex-col justify-between lg:gap-1.5",
-          player.health <= 0 && "pointer-events-none opacity-50",
+          player.health <= 0 && "pointer-events-none lg:opacity-50",
         )}
       >
         <p className="-mt-1 truncate font-semibold uppercase tracking-[0.07em] lg:text-xl">

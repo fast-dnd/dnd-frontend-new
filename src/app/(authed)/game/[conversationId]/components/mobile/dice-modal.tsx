@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { AiOutlineClose } from "react-icons/ai";
+import { useMediaQuery } from "usehooks-ts";
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/utils/style-utils";
@@ -10,18 +12,27 @@ import DiceBreakdown from "../gameplay/dice-breakdown";
 import Die from "../gameplay/die";
 
 const DiceModal = () => {
-  const open = gameStore.diceModal.use();
+  const isMobileTablet = useMediaQuery("(max-width: 1024px)");
+  const [open, setOpen] = useState(false);
+
   const dice = moveStore.dice.use();
   const buttonState = moveStore.buttonState.use();
   const roll = moveStore.roll.use();
   const aiDescription = moveStore.aiDescription.use();
+
+  const pageState = gameStore.pageState.use();
+
+  useEffect(() => {
+    if (buttonState === "ROLLING") setOpen(true);
+  }, [buttonState]);
+
   const onClose = () => {
-    gameStore.diceModal.set(false);
+    setOpen(false);
   };
 
   return (
     <Dialog
-      open={open}
+      open={open && isMobileTablet && pageState === "DEFAULT"}
       onOpenChange={(isOpen) => {
         if (!isOpen) onClose();
       }}

@@ -54,7 +54,6 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
       moveStore.buttonState.set("ROLLING");
       moveStore.roll.set(undefined);
       moveStore.aiDescription.set(undefined);
-      gameStore.diceModal.set(true);
       moveStore.canPlay.set(false);
       submitMove(moveToPlay, {
         onSuccess: (res) => {

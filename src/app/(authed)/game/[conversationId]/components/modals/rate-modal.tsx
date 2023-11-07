@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Star1 } from "iconsax-react";
+import { useMediaQuery } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +25,7 @@ const RateModal = ({
   dungeon: IDungeonDetail;
   conversationId: string;
 }) => {
+  const isMobileTablet = useMediaQuery("(max-width: 1024px)");
   const pageState = gameStore.pageState.use();
   const rewardOpen = gameStore.reward.use();
 
@@ -48,13 +50,13 @@ const RateModal = ({
         if (!isOpen) close();
       }}
     >
-      <DialogContent>
+      <DialogContent className="max-lg:h-full max-lg:w-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900">
         <DialogHeader>
           <DialogTitle className="text-center uppercase">
             RATE YOUR ADVENTURE IN {dungeon.name}
           </DialogTitle>
 
-          <DialogDescription className="w-[530px] text-center text-base leading-7 tracking-tight">
+          <DialogDescription className="text-center text-base leading-7 tracking-tight lg:w-[530px]">
             Your bravery led you through the twists and turns of {dungeon.name}. We value your
             feedback. How did you find your journey?
           </DialogDescription>
@@ -65,10 +67,10 @@ const RateModal = ({
               <Star1
                 key={i + 1}
                 onMouseEnter={() => {
-                  setHovered(i + 1);
+                  if (!isMobileTablet) setHovered(i + 1);
                 }}
                 onMouseLeave={() => {
-                  setHovered(undefined);
+                  if (!isMobileTablet) setHovered(undefined);
                 }}
                 onClick={() => {
                   if (rating === i + 1) setRating(0);
@@ -78,7 +80,7 @@ const RateModal = ({
                   "h-12 w-12 fill-transparent text-primary transition-all duration-200",
                   hovered === undefined
                     ? rating >= i + 1 && "fill-primary"
-                    : hovered >= i + 1 && "fill-primary",
+                    : hovered >= i + 1 && "lg:fill-primary",
                 )}
               />
             ))}

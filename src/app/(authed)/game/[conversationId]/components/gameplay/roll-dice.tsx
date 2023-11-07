@@ -41,9 +41,9 @@ const RollDice = ({
         onClick={onPlay}
       >
         {store.buttonState === "DEFAULT" && <p className="text-center">Roll the dice</p>}
-        {store.buttonState === "ROLLING" && <p className="text-center">Rolling...</p>}
+        {store.buttonState === "ROLLING" && <p className="text-center text-white">Rolling...</p>}
         {store.buttonState === "ROLLED" && (
-          <div className="flex w-full justify-between px-4">
+          <div className="flex w-full justify-between px-4 text-white">
             <p>Total</p>
             <p>{store.roll?.diceAfterBonus}</p>
           </div>

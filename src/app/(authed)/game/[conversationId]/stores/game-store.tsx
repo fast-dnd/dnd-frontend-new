@@ -21,7 +21,6 @@ export interface IGameStore {
     | "GAMEOVER"
     | "RATE";
   reward: boolean;
-  diceModal: boolean;
   statusUpdate: PlayerStatusUpdate;
   loadingText: boolean;
 }
@@ -29,7 +28,6 @@ export interface IGameStore {
 export const initialGameStoreData: IGameStore = {
   pageState: "DEFAULT",
   reward: false,
-  diceModal: false,
   statusUpdate: {},
   loadingText: false,
 };
