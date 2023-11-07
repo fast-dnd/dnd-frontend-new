@@ -14,8 +14,17 @@ import MobileAdventureDetail from "@/app/(authed)/home/components/mobile/mobile-
 
 const Adventures = () => {
   const [adventureDetailId, setAdventureDetailId] = useState<string>();
-
+  const [closingId, setClosingId] = useState<string>();
   const { copied, onCopy } = useCopy();
+
+  const onClose = adventureDetailId
+    ? () => {
+        setClosingId(adventureDetailId);
+        setAdventureDetailId(undefined);
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        setTimeout(() => setClosingId(undefined), 500);
+      }
+    : undefined;
 
   const {
     data: adventuresData,
@@ -51,36 +60,20 @@ const Adventures = () => {
       </div>
     );
 
-  const AdventureWrapper = ({
-    children,
-    adventure,
-  }: {
-    children: React.ReactNode;
-    adventure: IBaseDungeon;
-  }) => (
-    <div className="flex flex-col gap-0.5">
-      {children}
-      <div className="flex w-full gap-0.5">
-        <button
-          className="flex w-1/2 items-center justify-center gap-1 bg-black py-1"
-          onClick={() => onCopy(adventure._id)}
-        >
-          Copy ID
-          <Copy variant="Bold" />
-        </button>
-        <DeleteModal id={adventure._id} type="adventure" />
-      </div>
-    </div>
-  );
-
   const content = adventuresData.pages.map((page) =>
     page.dungeons.map((adventure, i) => {
       if (page.dungeons.length === i + 1) {
         return (
-          <AdventureWrapper key={adventure._id} adventure={adventure}>
+          <AdventureWrapper
+            key={adventure._id}
+            adventure={adventure}
+            adventureDetailId={adventureDetailId}
+            onCopy={onCopy}
+          >
             <MobileAdventure
               key={adventure._id}
               ref={lastAdventureRef}
+              closingId={closingId}
               adventure={adventure}
               adventureDetailId={adventureDetailId}
               setAdventureDetailId={setAdventureDetailId}
@@ -89,9 +82,15 @@ const Adventures = () => {
         );
       }
       return (
-        <AdventureWrapper key={adventure._id} adventure={adventure}>
+        <AdventureWrapper
+          key={adventure._id}
+          adventure={adventure}
+          adventureDetailId={adventureDetailId}
+          onCopy={onCopy}
+        >
           <MobileAdventure
             key={adventure._id}
+            closingId={closingId}
             adventure={adventure}
             adventureDetailId={adventureDetailId}
             setAdventureDetailId={setAdventureDetailId}
@@ -104,13 +103,9 @@ const Adventures = () => {
   return adventuresData.pages[0].dungeons.length === 0 ? (
     <NoAdventures />
   ) : (
-    <div className="flex w-full flex-1 flex-col gap-4">
-      {adventureDetailId ? (
-        // TODO: image not showing at top
-        <MobileAdventureDetail adventureDetailId={adventureDetailId} />
-      ) : (
-        content
-      )}
+    <div className="relative flex w-full flex-1 flex-col gap-4">
+      <MobileAdventureDetail onClose={onClose} adventureDetailId={adventureDetailId} />
+      {content}
 
       {isFetchingNextPage && (
         <div className="flex h-10 justify-center">
@@ -121,10 +116,41 @@ const Adventures = () => {
   );
 };
 
+const AdventureWrapper = ({
+  children,
+  adventure,
+  adventureDetailId,
+  onCopy,
+}: {
+  children: React.ReactNode;
+  adventure: IBaseDungeon;
+  adventureDetailId?: string | undefined;
+  onCopy: (text: string) => void;
+}) => (
+  <div
+    className={cn(
+      "flex flex-col gap-0.5",
+      !!adventureDetailId && adventureDetailId !== adventure._id && "hidden",
+    )}
+  >
+    {children}
+    <div className="flex w-full gap-0.5">
+      <button
+        className="flex w-1/2 items-center justify-center gap-1 bg-black py-1"
+        onClick={() => onCopy(adventure._id)}
+      >
+        Copy ID
+        <Copy variant="Bold" />
+      </button>
+      <DeleteModal id={adventure._id} type="adventure" />
+    </div>
+  </div>
+);
+
 export default Adventures;
 
 const NoAdventures = () => (
-  <div className="flex w-full flex-1 items-center justify-center">
+  <div className="relative flex w-full flex-1 items-center justify-center">
     <div className="flex h-full w-[490px] flex-col items-center justify-start gap-5 p-5 lg:gap-3 lg:p-8">
       <svg
         xmlns="http://www.w3.org/2000/svg"

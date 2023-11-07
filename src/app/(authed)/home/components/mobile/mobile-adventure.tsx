@@ -27,7 +27,7 @@ export const MobileAdventure = React.forwardRef<
       setAdventureDetailId,
       featured = false,
       closingId,
-      featuredOpened,
+      featuredOpened = false,
       setFeaturedOpened,
     },
     ref,
@@ -38,10 +38,10 @@ export const MobileAdventure = React.forwardRef<
     return (
       <div
         className={cn(
-          "relative flex h-[104px] w-full shrink-0 rounded border border-transparent bg-black pl-[118px] opacity-100 transition-all duration-500 hover:border-primary",
+          "relative flex h-[104px] w-full shrink-0 rounded border border-transparent bg-black pl-[118px] opacity-100 transition-all duration-500",
           featured && "h-52 w-48 justify-between p-3",
           open && "pointer-events-none static bg-transparent",
-          !featured && !!adventureDetailId && !open && "hidden",
+          !featured && !!adventureDetailId && !open && "hidden", //TODO don't hide when another is opening
         )}
         ref={ref}
         onClick={() => {
@@ -69,7 +69,7 @@ export const MobileAdventure = React.forwardRef<
           <Image
             alt=""
             draggable={false}
-            src={adventure.imageUrl ?? "/images/default-dungeon.png"}
+            src={adventure.imageUrl || "/images/default-dungeon.png"}
             width={1024}
             height={1024}
             className="aspect-square w-full"

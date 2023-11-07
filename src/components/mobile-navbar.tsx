@@ -50,7 +50,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
         <SheetContent
           className={cn("flex flex-col justify-between gap-8 bg-primary-900/60 backdrop-blur-xl")}
         >
-          <Link href="/home">
+          <Link href="/home" className="w-fit">
             <Image src="/images/navbar-logo.png" width={94} height={32} alt="logo" />
           </Link>
 

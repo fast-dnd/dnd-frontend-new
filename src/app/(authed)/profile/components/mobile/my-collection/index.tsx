@@ -15,13 +15,13 @@ const MobileMyCollection = () => {
 
   return (
     <>
-      <div className="flex w-full justify-between gap-4">
+      <div className="flex w-full justify-between gap-4 overflow-auto">
         {tabs.map((tab) => (
           <p
             key={tab}
             className={cn(
-              "py-2 text-sm font-medium text-white/50 transition-all duration-300",
-              activeTab === tab && "border-b-2 border-b-primary text-primary",
+              "border-b-2 border-transparent py-2 text-sm font-medium text-white/50 transition-all duration-300",
+              activeTab === tab && "border-b-primary text-primary",
             )}
             onClick={() => setActiveTab(tab)}
           >

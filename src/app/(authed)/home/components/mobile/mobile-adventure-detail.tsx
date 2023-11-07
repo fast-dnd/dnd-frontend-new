@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Game, Star1 } from "iconsax-react";
+import { AiOutlineClose } from "react-icons/ai";
 import { FiChevronDown } from "react-icons/fi";
 
 import HelmetIcon from "@/components/icons/helmet-icon";
@@ -16,8 +17,10 @@ import useCreateRoom from "../../hooks/use-create-room";
 
 const MobileAdventureDetail = ({
   adventureDetailId,
+  onClose,
 }: {
   adventureDetailId?: string | undefined;
+  onClose?: () => void;
 }) => {
   const router = useRouter();
   const { data: adventure, isLoading } = useGetDungeon(adventureDetailId ?? "");
@@ -47,12 +50,17 @@ const MobileAdventureDetail = ({
       {!!adventureDetailId && !isLoading && !!adventure && (
         <>
           <motion.div
-            className={cn("absolute inset-0 top-[50vw] z-20 h-fit w-full")}
+            className={cn("pointer-events-none absolute inset-0 z-30 h-fit w-full pt-[50vw]")}
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
             exit={{ y: 100, opacity: 0 }}
           >
-            <div className="flex flex-col">
+            {onClose && (
+              <div className="pointer-events-auto absolute right-1 top-1 z-20" onClick={onClose}>
+                <AiOutlineClose />
+              </div>
+            )}
+            <div className="pointer-events-auto flex flex-col">
               <div className="flex flex-col gap-2 px-4">
                 <div className="flex gap-6">
                   <div className="flex items-center gap-1">
@@ -73,7 +81,7 @@ const MobileAdventureDetail = ({
                   </div>
                 </div>
 
-                <p className="text-[32px] font-semibold uppercase">{adventure.name}</p>
+                <p className="truncate text-[32px] font-semibold uppercase">{adventure.name}</p>
 
                 <div className="flex gap-2 overflow-x-hidden py-2 pl-0.5">
                   {adventure.tags.map((tag) => (
@@ -83,7 +91,9 @@ const MobileAdventureDetail = ({
                   ))}
                 </div>
 
-                <p className="mt-2 text-sm font-light">{adventure.description}</p>
+                <p className="mt-2 w-full break-words text-sm font-light">
+                  {adventure.description}
+                </p>
 
                 <div className="mt-4 flex items-center gap-2">
                   <p className="text-sm font-medium">Created by:</p>
@@ -107,10 +117,10 @@ const MobileAdventureDetail = ({
                 {adventure.champions.map((champion) => (
                   <div key={champion._id} className="flex gap-4 rounded-md bg-black p-4">
                     <HelmetIcon className="h-10 w-10 shrink-0" />
-                    <div className="flex flex-col justify-between gap-4">
+                    <div className="flex w-full min-w-0 flex-col justify-between gap-4">
                       <div className="flex flex-col gap-1">
-                        <p className="line-clamp-1 font-bold">{champion.name}</p>
-                        <p className="font-light">{champion.description}</p>
+                        <p className="w-full truncate break-words font-bold">{champion.name}</p>
+                        <p className="w-full break-words font-light">{champion.description}</p>
                       </div>
                       <div className="flex items-center gap-1 font-bold">
                         Character&apos;s Actions
@@ -126,7 +136,7 @@ const MobileAdventureDetail = ({
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
-            className="pointer-events-none fixed bottom-0 z-20 flex w-full justify-center bg-gradient-to-t from-dark-900 via-dark-900/60 via-60% to-transparent pb-6 pt-12"
+            className="pointer-events-none fixed bottom-0 z-30 flex w-full justify-center bg-gradient-to-t from-dark-900 via-dark-900/60 via-60% to-transparent pb-6 pt-12"
           >
             <Button
               isLoading={isCreatingRoom || loadingRoom}
