@@ -21,7 +21,7 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
     dungeon,
     selectedChampion,
     displayedChampion,
-    isTaken,
+    takenBy,
     onChangeChampion,
     nextChamp,
     prevChamp,
@@ -46,7 +46,7 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
         <ChooseCharacter
           selectedChampion={selectedChampion}
           displayedChampion={displayedChampion}
-          isTaken={isTaken}
+          takenBy={takenBy}
           onChangeChampion={onChangeChampion}
           nextChamp={nextChamp}
           prevChamp={prevChamp}
