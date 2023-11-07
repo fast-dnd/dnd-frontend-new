@@ -1,11 +1,11 @@
 import React from "react";
 
+import Rewards from "@/components/rewards";
 import { cn } from "@/utils/style-utils";
 
 import Adventures from "./adventures";
 import Campaigns from "./campaigns";
 import History from "./history";
-import Rewards from "./rewards";
 
 export const tabs = ["Adventures", "Campaigns", "History", "Rewards"] as const;
 export type Tab = (typeof tabs)[number];
