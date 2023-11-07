@@ -106,6 +106,7 @@ const Adventures = () => {
   ) : (
     <div className="flex w-full flex-1 flex-col gap-4">
       {adventureDetailId ? (
+        // TODO: image not showing at top
         <MobileAdventureDetail adventureDetailId={adventureDetailId} />
       ) : (
         content
