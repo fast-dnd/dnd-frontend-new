@@ -48,7 +48,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
           <IoMdMenu className="h-8 w-8" />
         </SheetTrigger>
         <SheetContent
-          className={cn("flex flex-col justify-between gap-8", user && "bg-primary-900/60")}
+          className={cn("flex flex-col justify-between gap-8 bg-primary-900/60 backdrop-blur-xl")}
         >
           <Link href="/home">
             <Image src="/images/navbar-logo.png" width={94} height={32} alt="logo" />
