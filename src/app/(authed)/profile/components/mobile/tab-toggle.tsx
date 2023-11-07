@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 import { cn } from "@/utils/style-utils";
 
-import { BaseTab } from "../../page";
+import { BaseTab } from "../../utils/tabs";
 
 interface ITabToggleProps {
   tabs: readonly BaseTab[];

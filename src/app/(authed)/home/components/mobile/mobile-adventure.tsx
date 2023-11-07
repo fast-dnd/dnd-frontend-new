@@ -16,8 +16,8 @@ export const MobileAdventure = React.forwardRef<
     setAdventureDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
     featured?: boolean;
     closingId?: string | undefined;
-    featuredOpened: boolean;
-    setFeaturedOpened: React.Dispatch<React.SetStateAction<boolean>>;
+    featuredOpened?: boolean;
+    setFeaturedOpened?: React.Dispatch<React.SetStateAction<boolean>>;
   }
 >(
   (
@@ -47,7 +47,7 @@ export const MobileAdventure = React.forwardRef<
         onClick={() => {
           if (!adventureDetailId) {
             setAdventureDetailId?.(adventure._id);
-            setFeaturedOpened(featured);
+            setFeaturedOpened?.(featured);
             window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
           }
         }}
@@ -121,7 +121,7 @@ export const MobileAdventure = React.forwardRef<
           <div className="flex flex-col gap-2">
             <p className="line-clamp-2 font-semibold">{adventure.name}</p>
             <div className="flex bg-gradient-to-l from-black to-transparent to-30%">
-              <div className="-z-10 flex gap-2 overflow-x-hidden">
+              <div className="-z-10 flex gap-2 overflow-x-hidden pb-2">
                 {adventure.tags.map((tag) => (
                   <div key={tag} className="whitespace-nowrap text-xs capitalize opacity-70">
                     {tag}

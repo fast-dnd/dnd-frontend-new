@@ -1,42 +1,32 @@
-"use client";
+import React, { useState } from "react";
+import { Copy } from "iconsax-react";
 
-import React from "react";
-
-import { Dungeon } from "@/components/dungeon";
-import { Button } from "@/components/ui/button";
-import Skeleton from "@/components/ui/skeleton";
+import DeleteModal from "@/components/delete-modal";
 import Spinner from "@/components/ui/spinner";
+import useCopy from "@/hooks/helpers/use-copy";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetDungeons from "@/hooks/queries/use-get-dungeons";
 import { IBaseDungeon } from "@/types/dungeon";
+import { cn } from "@/utils/style-utils";
 
-import { SubTabType } from "@/app/(authed)/home/stores/tab-store";
+import { MobileAdventure } from "@/app/(authed)/home/components/mobile/mobile-adventure";
+import MobileAdventureDetail from "@/app/(authed)/home/components/mobile/mobile-adventure-detail";
 
-const Adventures = ({
-  setDungeonDetailId,
-  filter,
-  addToCampaign,
-  addedToCampaign,
-  isOwned,
-  showActions,
-}: {
-  setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  filter?: SubTabType;
-  addToCampaign?: (dungeonName: IBaseDungeon) => void;
-  addedToCampaign?: IBaseDungeon[];
-  isOwned?: boolean;
-  showActions?: boolean;
-}) => {
+const Adventures = () => {
+  const [adventureDetailId, setAdventureDetailId] = useState<string>();
+
+  const { copied, onCopy } = useCopy();
+
   const {
-    data: dungeonsData,
+    data: adventuresData,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
     isError,
     isLoading,
-  } = useGetDungeons({ filter: filter || "owned" });
+  } = useGetDungeons({ filter: "top" }); //TODO: return this to owned
 
-  const { lastObjectRef: lastDungeonRef } = useIntersectionObserver({
+  const { lastObjectRef: lastAdventureRef } = useIntersectionObserver({
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
@@ -46,45 +36,81 @@ const Adventures = ({
 
   if (isLoading)
     return (
-      <div className="no-scrollbar flex flex-1 flex-col gap-8 overflow-y-auto">
-        <Skeleton amount={2} />
+      <div className={cn("flex animate-pulse flex-col gap-4 px-4 py-2")}>
+        <div className={cn("flex flex-col gap-4 overflow-hidden")}>
+          {Array.from({ length: 3 }, (_, i) => (
+            <div key={i} className="flex flex-col gap-1 bg-transparent">
+              <div className={cn("h-[102px] w-full shrink-0 rounded-lg bg-gray-600")} />
+              <div className="flex w-full gap-1">
+                <div className="h-5 w-40 animate-pulse rounded bg-gray-600" />
+                <div className="h-5 w-40 animate-pulse rounded bg-gray-600" />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
 
-  const content = dungeonsData.pages.map((page) =>
-    page.dungeons.map((dungeon, i) => {
+  const AdventureWrapper = ({
+    children,
+    adventure,
+  }: {
+    children: React.ReactNode;
+    adventure: IBaseDungeon;
+  }) => (
+    <div className="flex flex-col gap-0.5">
+      {children}
+      <div className="flex w-full gap-0.5">
+        <button
+          className="flex w-1/2 items-center justify-center gap-1 bg-black py-1"
+          onClick={() => onCopy(adventure._id)}
+        >
+          Copy ID
+          <Copy variant="Bold" />
+        </button>
+        <DeleteModal id={adventure._id} type="adventure" />
+      </div>
+    </div>
+  );
+
+  const content = adventuresData.pages.map((page) =>
+    page.dungeons.map((adventure, i) => {
       if (page.dungeons.length === i + 1) {
         return (
-          <Dungeon
-            key={dungeon._id}
-            dungeon={dungeon}
-            setDungeonDetailId={setDungeonDetailId}
-            ref={lastDungeonRef}
-            addToCampaign={addToCampaign}
-            isAddedToCampaign={addedToCampaign?.some((added) => added._id === dungeon._id)}
-            isOwned={isOwned}
-            showActions={showActions}
-          />
+          <AdventureWrapper key={adventure._id} adventure={adventure}>
+            <MobileAdventure
+              key={adventure._id}
+              ref={lastAdventureRef}
+              adventure={adventure}
+              adventureDetailId={adventureDetailId}
+              setAdventureDetailId={setAdventureDetailId}
+            />
+          </AdventureWrapper>
         );
       }
       return (
-        <Dungeon
-          key={dungeon._id}
-          dungeon={dungeon}
-          setDungeonDetailId={setDungeonDetailId}
-          addToCampaign={addToCampaign}
-          isAddedToCampaign={addedToCampaign?.some((added) => added._id === dungeon._id)}
-          isOwned={isOwned}
-          showActions={showActions}
-        />
+        <AdventureWrapper key={adventure._id} adventure={adventure}>
+          <MobileAdventure
+            key={adventure._id}
+            adventure={adventure}
+            adventureDetailId={adventureDetailId}
+            setAdventureDetailId={setAdventureDetailId}
+          />
+        </AdventureWrapper>
       );
     }),
   );
-  return dungeonsData.pages[0].dungeons.length === 0 ? (
+
+  return adventuresData.pages[0].dungeons.length === 0 ? (
     <NoAdventures />
   ) : (
-    <div className="flex w-full flex-1 flex-col gap-8 overflow-y-auto pr-4">
-      {content}
+    <div className="flex w-full flex-1 flex-col gap-4">
+      {adventureDetailId ? (
+        <MobileAdventureDetail adventureDetailId={adventureDetailId} />
+      ) : (
+        content
+      )}
+
       {isFetchingNextPage && (
         <div className="flex h-10 justify-center">
           <Spinner className="m-0 h-8 w-8" />
@@ -130,15 +156,12 @@ const NoAdventures = () => (
           fillOpacity="0.5"
         />
       </svg>
-      <p className="text-center text-lg font-semibold uppercase leading-7 tracking-[3.30px] lg:text-xl">
+      <p className="text-center text-lg font-semibold uppercase leading-7 tracking-widest lg:text-xl">
         No Adventures Carved Out Yet!
       </p>
       <p className="text-center text-sm font-normal lg:text-base">
-        Every legendary story starts in a mysterious dungeon. Dive into your imagination and craft
-        your first adventure. Fill its corridors with challenges, secrets, and tales that
-        adventurers yearn to explore!
+        To create an adventure switch to your desktop and follow a step-by-step process.
       </p>
-      <Button href="/create-adventure">CREATE NEW ADVENTURE</Button>
     </div>
   </div>
 );

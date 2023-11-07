@@ -10,9 +10,7 @@ import { Tab } from "./components/desktop/my-collection/types/tab";
 import MobileMyAccount from "./components/mobile/my-account";
 import MobileMyCollection from "./components/mobile/my-collection";
 import TabToggle from "./components/mobile/tab-toggle";
-
-export const baseTabs = ["MY PROFILE", "MY COLLECTIONS"] as const;
-export type BaseTab = (typeof baseTabs)[number];
+import { baseTabs } from "./utils/tabs";
 
 const Profile = ({
   searchParams,
@@ -21,7 +19,7 @@ const Profile = ({
 }) => {
   const activeTab = (searchParams?.activeTab ?? "ADVENTURES") as Tab;
 
-  const [baseActiveTab, setBaseActiveTab] = useState<(typeof baseTabs)[number]>(baseTabs[0]);
+  const [baseActiveTab, setBaseActiveTab] = useState<(typeof baseTabs)[number]>(baseTabs[1]);
 
   return (
     <>
