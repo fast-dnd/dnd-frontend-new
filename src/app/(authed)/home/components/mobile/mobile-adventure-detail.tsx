@@ -56,7 +56,10 @@ const MobileAdventureDetail = ({
             exit={{ y: 100, opacity: 0 }}
           >
             {onClose && (
-              <div className="pointer-events-auto absolute right-1 top-1 z-20" onClick={onClose}>
+              <div
+                className="pointer-events-auto absolute right-1 top-1 z-20 rounded bg-black/20"
+                onClick={onClose}
+              >
                 <AiOutlineClose />
               </div>
             )}
@@ -111,7 +114,7 @@ const MobileAdventureDetail = ({
                   </div>
                 </div>
               </div>
-              <div className="my-6 h-[1px] w-full border-b border-white/[6%] bg-black" />
+              <div className="my-6 h-0.5 w-full bg-black shadow-lobby" />
               <div className="mb-28 flex flex-col gap-4 px-4 pb-4">
                 <p className="text-sm font-medium uppercase">Characters</p>
                 {adventure.champions.map((champion) => (

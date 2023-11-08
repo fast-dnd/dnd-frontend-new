@@ -18,6 +18,8 @@ export const MobileAdventure = React.forwardRef<
     closingId?: string | undefined;
     featuredOpened?: boolean;
     setFeaturedOpened?: React.Dispatch<React.SetStateAction<boolean>>;
+    opening?: boolean;
+    setOpening?: React.Dispatch<React.SetStateAction<boolean>>;
   }
 >(
   (
@@ -29,6 +31,8 @@ export const MobileAdventure = React.forwardRef<
       closingId,
       featuredOpened = false,
       setFeaturedOpened,
+      opening = false,
+      setOpening,
     },
     ref,
   ) => {
@@ -38,16 +42,21 @@ export const MobileAdventure = React.forwardRef<
     return (
       <div
         className={cn(
-          "relative flex h-[104px] w-full shrink-0 rounded border border-transparent bg-black pl-[118px] opacity-100 transition-all duration-500",
+          "relative flex h-[104px] w-full shrink-0 rounded border border-transparent bg-black pl-[118px]",
           featured && "h-52 w-48 justify-between p-3",
-          open && "pointer-events-none static bg-transparent",
-          !featured && !!adventureDetailId && !open && "hidden", //TODO don't hide when another is opening
+          open && "pointer-events-none static",
+          open && !opening && "bg-transparent",
+          !featured && !!adventureDetailId && !open && !opening && "hidden",
         )}
         ref={ref}
         onClick={() => {
           if (!adventureDetailId) {
             setAdventureDetailId?.(adventure._id);
             setFeaturedOpened?.(featured);
+            if (setOpening) {
+              setOpening(true);
+              setTimeout(() => setOpening(false), 500);
+            }
             window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
           }
         }}
@@ -61,9 +70,9 @@ export const MobileAdventure = React.forwardRef<
           )}
           layout={!adventureDetailId || open}
           transition={{
-            type: "spring",
-            stiffness: 150,
-            damping: 20,
+            type: "tween",
+            stiffness: 10,
+            damping: 10,
           }}
         >
           <Image
@@ -89,7 +98,7 @@ export const MobileAdventure = React.forwardRef<
           />
           <div
             className={cn(
-              "pointer-events-none absolute inset-0 z-10 aspect-square w-full bg-gradient-to-t from-dark-900 via-dark-900/70 via-30% to-transparent to-60% opacity-0 transition-all",
+              "pointer-events-none absolute inset-0 z-10 aspect-square w-full bg-gradient-to-t from-dark-900 via-dark-900/90 via-15% to-transparent to-60% opacity-0 transition-all",
               open && "opacity-100",
             )}
           />
@@ -98,7 +107,7 @@ export const MobileAdventure = React.forwardRef<
         <div
           className={cn(
             "z-10 flex w-full flex-col justify-between opacity-100 transition-all duration-200",
-            (open || closing) && "opacity-0",
+            (open || closing) && !opening && "opacity-0",
           )}
         >
           <div className={cn("flex justify-between", !featured && "justify-start gap-10 pt-2")}>

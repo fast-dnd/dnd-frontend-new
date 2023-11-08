@@ -15,6 +15,8 @@ import MobileAdventureDetail from "@/app/(authed)/home/components/mobile/mobile-
 const Adventures = () => {
   const [adventureDetailId, setAdventureDetailId] = useState<string>();
   const [closingId, setClosingId] = useState<string>();
+  const [opening, setOpening] = useState(false);
+
   const { copied, onCopy } = useCopy();
 
   const onClose = adventureDetailId
@@ -68,6 +70,7 @@ const Adventures = () => {
             key={adventure._id}
             adventure={adventure}
             adventureDetailId={adventureDetailId}
+            opening={opening}
             onCopy={onCopy}
           >
             <MobileAdventure
@@ -77,6 +80,8 @@ const Adventures = () => {
               adventure={adventure}
               adventureDetailId={adventureDetailId}
               setAdventureDetailId={setAdventureDetailId}
+              opening={opening}
+              setOpening={setOpening}
             />
           </AdventureWrapper>
         );
@@ -86,6 +91,7 @@ const Adventures = () => {
           key={adventure._id}
           adventure={adventure}
           adventureDetailId={adventureDetailId}
+          opening={opening}
           onCopy={onCopy}
         >
           <MobileAdventure
@@ -94,6 +100,8 @@ const Adventures = () => {
             adventure={adventure}
             adventureDetailId={adventureDetailId}
             setAdventureDetailId={setAdventureDetailId}
+            opening={opening}
+            setOpening={setOpening}
           />
         </AdventureWrapper>
       );
@@ -112,6 +120,12 @@ const Adventures = () => {
           <Spinner className="m-0 h-8 w-8" />
         </div>
       )}
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-0 z-10 bg-dark-900 opacity-0 transition-all duration-500",
+          adventureDetailId && "pointer-events-auto opacity-100",
+        )}
+      />
     </div>
   );
 };
@@ -120,25 +134,27 @@ const AdventureWrapper = ({
   children,
   adventure,
   adventureDetailId,
+  opening,
   onCopy,
 }: {
   children: React.ReactNode;
   adventure: IBaseDungeon;
   adventureDetailId?: string | undefined;
+  opening: boolean;
   onCopy: (text: string) => void;
 }) => (
   <div
     className={cn(
       "flex flex-col gap-0.5",
       !!adventureDetailId && "pointer-events-none",
-      !!adventureDetailId && adventureDetailId !== adventure._id && "hidden",
+      !!adventureDetailId && adventureDetailId !== adventure._id && !opening && "hidden",
     )}
   >
     {children}
     <div
       className={cn(
         "flex w-full gap-0.5 opacity-100 transition-all duration-500",
-        !!adventureDetailId && "opacity-0",
+        !!adventureDetailId && !opening && "opacity-0",
       )}
     >
       <button
