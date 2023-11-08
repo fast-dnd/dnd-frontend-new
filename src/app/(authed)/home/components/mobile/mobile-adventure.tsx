@@ -128,7 +128,7 @@ export const MobileAdventure = React.forwardRef<
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="line-clamp-2 font-semibold">{adventure.name}</p>
+            <p className="line-clamp-2 break-words font-semibold">{adventure.name}</p>
             <div className="flex bg-gradient-to-l from-black to-transparent to-30%">
               <div className="-z-10 flex gap-2 overflow-x-hidden pb-2">
                 {adventure.tags.map((tag) => (

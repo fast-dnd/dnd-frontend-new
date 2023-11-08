@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { PiSlidersFill } from "react-icons/pi";
 
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetCampaigns from "@/hooks/queries/use-get-campaigns";
 import { cn } from "@/utils/style-utils";
 
+import { tabStore } from "../../stores/tab-store";
 import { MobileCampaign } from "./mobile-campaign";
+import MobileFilter from "./mobile-filter";
 
 const MobileCampaigns = ({
   campaignDetailId,
@@ -18,6 +19,11 @@ const MobileCampaigns = ({
   closingId?: string | undefined;
   animate?: boolean;
 }) => {
+  const [opening, setOpening] = useState(false);
+
+  const [filter, setFilter] = useState(false);
+  const subTab = tabStore.subTab.use();
+
   const {
     data: campaignsData,
     hasNextPage,
@@ -25,9 +31,7 @@ const MobileCampaigns = ({
     isFetchingNextPage,
     isError,
     isLoading,
-  } = useGetCampaigns({ filter: "top" || "owned" });
-
-  const [opening, setOpening] = useState(false);
+  } = useGetCampaigns({ filter: subTab || "owned" });
 
   const { lastObjectRef: lastCampaignRef } = useIntersectionObserver({
     isFetchingNextPage,
@@ -62,7 +66,7 @@ const MobileCampaigns = ({
             setCampaignDetailId={setCampaignDetailId}
             opening={opening}
             setOpening={setOpening}
-            animate={animate}
+            animate={animate && !filter}
           />
         );
       }
@@ -75,7 +79,7 @@ const MobileCampaigns = ({
           setCampaignDetailId={setCampaignDetailId}
           opening={opening}
           setOpening={setOpening}
-          animate={animate}
+          animate={animate && !filter}
         />
       );
     }),
@@ -84,13 +88,23 @@ const MobileCampaigns = ({
   return (
     <div className={cn("flex flex-col gap-2 px-4 py-2")}>
       <div className="flex items-center justify-between">
-        <p className="text-sm font-medium uppercase">ALL CAMPAIGNS</p>
-        <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[8%] bg-black">
-          <PiSlidersFill />
-        </div>
+        {isLoading ? (
+          <div className="h-5 w-40 rounded bg-gray-700/80" />
+        ) : (
+          <p className="text-sm font-medium uppercase">ALL CAMPAIGNS</p>
+        )}
+        <MobileFilter open={filter} setOpen={setFilter} />
       </div>
 
-      <div className={cn("flex flex-col gap-4")}>{content}</div>
+      {isLoading ? (
+        <div className={cn("flex flex-col gap-4 overflow-hidden")}>
+          {Array.from({ length: 3 }, (_, i) => (
+            <div key={i} className={cn("h-[102px] w-full shrink-0 rounded-lg bg-gray-700/80")} />
+          ))}
+        </div>
+      ) : (
+        <div className={cn("flex flex-col gap-4")}>{content}</div>
+      )}
     </div>
   );
 };

@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { PiSlidersFill } from "react-icons/pi";
 
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetDungeons from "@/hooks/queries/use-get-dungeons";
 import { cn } from "@/utils/style-utils";
 
+import { tabStore } from "../../stores/tab-store";
 import { MobileAdventure } from "./mobile-adventure";
+import MobileFilter from "./mobile-filter";
 
 const MobileAdventures = ({
   adventureDetailId,
@@ -21,6 +22,9 @@ const MobileAdventures = ({
   const [featuredOpened, setFeaturedOpened] = useState(false);
   const [opening, setOpening] = useState(false);
 
+  const [filter, setFilter] = useState(false);
+  const subTab = tabStore.subTab.use();
+
   const {
     data: featuredAdventuresData,
     isError: featuredError,
@@ -34,7 +38,7 @@ const MobileAdventures = ({
     isFetchingNextPage,
     isError,
     isLoading,
-  } = useGetDungeons({ filter: "top" || "owned" }); //todo
+  } = useGetDungeons({ filter: subTab || "owned" });
 
   const { lastObjectRef: lastAdventureRef } = useIntersectionObserver({
     isFetchingNextPage,
@@ -43,30 +47,7 @@ const MobileAdventures = ({
   });
   if (isError || featuredError) return <div>Something went wrong</div>;
 
-  if (isLoading || featuredLoading)
-    return (
-      <div>
-        <div className={cn("flex animate-pulse flex-col gap-4 py-6 pl-4")}>
-          <div className="h-5 w-40 rounded bg-gray-600" />
-          <div className={cn("flex gap-4 overflow-hidden")}>
-            {Array.from({ length: 3 }, (_, i) => (
-              <div key={i} className={cn("h-52 w-48 shrink-0 rounded-lg bg-gray-600")} />
-            ))}
-          </div>
-        </div>
-        <div className="h-0.5 w-full bg-black shadow-lobby" />
-        <div className={cn("flex animate-pulse flex-col gap-4 px-4 py-2")}>
-          <div className="h-5 w-40 rounded bg-gray-600" />
-          <div className={cn("flex flex-col gap-4 overflow-hidden")}>
-            {Array.from({ length: 3 }, (_, i) => (
-              <div key={i} className={cn("h-[102px] w-full shrink-0 rounded-lg bg-gray-600")} />
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-
-  const featuredContent = featuredAdventuresData.pages.map((page) =>
+  const featuredContent = featuredAdventuresData?.pages.map((page) =>
     page.dungeons.map((adventure, i) => {
       if (page.dungeons.length === i + 1) {
         return (
@@ -104,7 +85,7 @@ const MobileAdventures = ({
     }),
   );
 
-  const content = adventuresData.pages.map((page) =>
+  const content = adventuresData?.pages.map((page) =>
     page.dungeons.map((adventure, i) => {
       if (page.dungeons.length === i + 1) {
         return (
@@ -119,7 +100,7 @@ const MobileAdventures = ({
             setFeaturedOpened={setFeaturedOpened}
             opening={opening}
             setOpening={setOpening}
-            animate={animate}
+            animate={animate && !filter}
           />
         );
       }
@@ -134,7 +115,7 @@ const MobileAdventures = ({
           setFeaturedOpened={setFeaturedOpened}
           opening={opening}
           setOpening={setOpening}
-          animate={animate}
+          animate={animate && !filter}
         />
       );
     }),
@@ -142,21 +123,42 @@ const MobileAdventures = ({
 
   return (
     <div>
-      <div className={cn("flex flex-col gap-2 py-6 pl-4")}>
-        <p className="text-sm font-medium uppercase">TOP PICKS THIS MONTH</p>
-
-        <div className={cn("flex flex-row gap-4 overflow-x-auto pr-4")}>{featuredContent}</div>
-      </div>
-      <div className="h-0.5 w-full bg-black shadow-lobby" />
-      <div className={cn("flex flex-col gap-2 px-4 py-2")}>
-        <div className="flex items-center justify-between">
-          <p className="text-sm font-medium uppercase">ALL ADVENTURES</p>
-          <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[8%] bg-black">
-            <PiSlidersFill />
+      {featuredLoading ? (
+        <div className={cn("flex animate-pulse flex-col gap-4 py-6 pl-4")}>
+          <div className="h-5 w-40 rounded bg-gray-600" />
+          <div className={cn("flex gap-4 overflow-hidden")}>
+            {Array.from({ length: 3 }, (_, i) => (
+              <div key={i} className={cn("h-52 w-48 shrink-0 rounded-lg bg-gray-600")} />
+            ))}
           </div>
         </div>
+      ) : (
+        <div className={cn("flex flex-col gap-2 py-6 pl-4")}>
+          <p className="text-sm font-medium uppercase">TOP PICKS THIS MONTH</p>
+          <div className={cn("flex flex-row gap-4 overflow-x-auto pr-4")}>{featuredContent}</div>
+        </div>
+      )}
 
-        <div className={cn("flex flex-col gap-4")}>{content}</div>
+      <div className="h-0.5 w-full bg-black shadow-lobby" />
+
+      <div className={cn("flex flex-col gap-2 px-4 py-2")}>
+        <div className="flex items-center justify-between">
+          {isLoading ? (
+            <div className="h-5 w-40 rounded bg-gray-600" />
+          ) : (
+            <p className="text-sm font-medium uppercase">{subTab} ADVENTURES</p>
+          )}
+          <MobileFilter open={filter} setOpen={setFilter} />
+        </div>
+        {isLoading ? (
+          <div className={cn("flex flex-col gap-4 overflow-hidden")}>
+            {Array.from({ length: 3 }, (_, i) => (
+              <div key={i} className={cn("h-[102px] w-full shrink-0 rounded-lg bg-gray-600")} />
+            ))}
+          </div>
+        ) : (
+          <div className={cn("flex flex-col gap-4")}>{content}</div>
+        )}
       </div>
     </div>
   );
