@@ -12,7 +12,7 @@ const AnimationEffects = () => {
   return (
     <div
       className={cn(
-        "pointer-events-none absolute bottom-0 left-0 h-full min-h-0 w-full overflow-hidden",
+        "pointer-events-none fixed bottom-0 left-0 z-40 h-full min-h-0 w-full overflow-hidden",
       )}
     >
       {["bg-gradient-to-r", "bg-gradient-to-l", "bg-gradient-to-t", "bg-gradient-to-b"].map(

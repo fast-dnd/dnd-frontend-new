@@ -25,6 +25,7 @@ const useHandlePlayerStatusUpdate = ({ roomData }: { roomData?: IRoomDetail }) =
   const displayStatusUpdate = (update: PlayerStatusUpdate, updated: IPlayer) => {
     if (Object.keys(update).length) {
       gameStore.statusUpdate.set(update);
+      console.log(update);
       if (update.lostHealth && updated.health <= 0) gameStore.pageState.set("DYING");
 
       setTimeout(() => {

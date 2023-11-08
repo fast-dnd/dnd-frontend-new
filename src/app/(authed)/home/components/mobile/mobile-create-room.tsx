@@ -18,6 +18,7 @@ const MobileCreateRoom = ({
   closingId?: string | undefined;
 }) => {
   const [featuredOpened, setFeaturedOpened] = useState(false);
+  const [opening, setOpening] = useState(false);
 
   return (
     <div className="mt-16 flex flex-col">
@@ -29,22 +30,26 @@ const MobileCreateRoom = ({
         setAdventureDetailId={setAdventureDetailId}
         featuredOpened={featuredOpened}
         setFeaturedOpened={setFeaturedOpened}
+        opening={opening}
+        setOpening={setOpening}
       />
-      <div className="h-[1px] w-full border-b border-white/[6%] bg-black"></div>
+      <div className="h-0.5 w-full bg-black shadow-lobby" />
       <MobileAdventures
         closingId={closingId}
         adventureDetailId={adventureDetailId}
         setAdventureDetailId={setAdventureDetailId}
         featuredOpened={featuredOpened}
         setFeaturedOpened={setFeaturedOpened}
+        opening={opening}
+        setOpening={setOpening}
       />
       <MobileAdventureDetail adventureDetailId={adventureDetailId} />
       <div
         className={cn(
-          "pointer-events-none absolute inset-0 z-10 bg-dark-900 opacity-0 transition-all duration-0",
+          "pointer-events-none absolute inset-0 z-10 bg-dark-900 opacity-0 transition-all duration-500",
           adventureDetailId && "pointer-events-auto opacity-100",
         )}
-      ></div>
+      />
     </div>
   );
 };

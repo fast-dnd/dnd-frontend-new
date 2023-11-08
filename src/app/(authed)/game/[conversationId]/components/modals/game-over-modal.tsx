@@ -66,8 +66,7 @@ const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
         </DialogHeader>
         <div className="mt-6 flex min-h-0 w-full flex-1 flex-col gap-6 overflow-y-auto lg:mt-8 lg:gap-8">
           <div className="w-full border-t border-white/25 max-lg:hidden" />
-          <div className="h-[1px] w-full border-b border-white/[6%] bg-black lg:hidden" />
-
+          <div className="h-0.5 w-full bg-black shadow-lobby lg:hidden" />
           {players.map((player) => (
             <Player key={player.accountId} player={player} />
           ))}

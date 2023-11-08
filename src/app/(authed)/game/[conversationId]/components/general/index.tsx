@@ -7,7 +7,6 @@ import { cn } from "@/utils/style-utils";
 
 import useGeneral from "../../hooks/use-general";
 import useGetCurrentPlayer from "../../hooks/use-get-current-player";
-import { gameStore } from "../../stores/game-store";
 import AskQuestion from "./ask-question";
 import GeneralSkeleton from "./general-skeleton";
 import MoveQuestionHistory from "./move-question-history";
@@ -20,8 +19,6 @@ const General = ({ conversationId }: { conversationId: string }) => {
 
   const [statsOpened, setStatsOpened] = useState(false);
 
-  const statusUpdate = gameStore.statusUpdate.use();
-
   if (!roomData || !currentPlayer) return <GeneralSkeleton />;
 
   return (
@@ -31,7 +28,7 @@ const General = ({ conversationId }: { conversationId: string }) => {
       wrapperClassName="h-full"
     >
       <div className="flex h-full min-h-0 w-full flex-col gap-4 overflow-y-auto px-5 lg:gap-8 lg:px-8">
-        <Player player={currentPlayer} currentPlayer statusUpdate={statusUpdate} />
+        <Player player={currentPlayer} currentPlayer />
         <div className="w-full border-t border-white/25" />
         <div className={cn("flex min-h-0 flex-1 flex-col gap-4 lg:gap-8", statsOpened && "hidden")}>
           {roomData.playerState.length > 1 && (

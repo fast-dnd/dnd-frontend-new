@@ -10,6 +10,7 @@ import { IPlayer, IRoomDetail } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
 import useTimer from "../../hooks/use-timer";
+import { gameStore } from "../../stores/game-store";
 
 const AdventureHeader = ({
   roomData,
@@ -23,6 +24,8 @@ const AdventureHeader = ({
   progress: number;
 }) => {
   const { timeToDisplay } = useTimer(roomData);
+  const statusUpdate = gameStore.statusUpdate.use();
+
   return (
     <div className="fixed z-10 flex h-32 w-full flex-col justify-end">
       <Image
@@ -36,15 +39,31 @@ const AdventureHeader = ({
         <div className="flex w-full items-center justify-between gap-2">
           <p className="truncate font-medium leading-4">{adventure.name}</p>
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5">
+            <div
+              className={cn(
+                "flex items-center gap-1.5 transition-colors duration-500",
+                statusUpdate.gainedHealth && "text-green-500",
+                statusUpdate.lostHealth && "text-red-500",
+              )}
+            >
               <VscHeartFilled />
               {currentPlayer.health}
             </div>
-            <div className="flex items-center gap-1.5">
+            <div
+              className={cn(
+                "flex items-center gap-1.5 transition-colors duration-500",
+                statusUpdate.bonus && "text-fuchsia-500",
+              )}
+            >
               <BsFillLightningFill />
               {currentPlayer.bonusForNextRound}
             </div>
-            <div className="flex items-center gap-1.5">
+            <div
+              className={cn(
+                "flex items-center gap-1.5 transition-colors duration-500",
+                statusUpdate.mana && "text-cyan-500",
+              )}
+            >
               <HiSparkles />
               {currentPlayer.mana}
             </div>
