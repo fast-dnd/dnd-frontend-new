@@ -1,30 +1,64 @@
-import { Copy } from "iconsax-react";
+"use client";
+
+import Image from "next/image";
+import { motion, useScroll } from "framer-motion";
+import { PiShareFatFill } from "react-icons/pi";
 
 import useCopy from "@/hooks/helpers/use-copy";
+import { ITranscript } from "@/types/transcript";
 import { jibril } from "@/utils/fonts";
 
-const TranscriptHeader = () => {
-  const { copied, onCopy } = useCopy();
+const TranscriptHeader = ({ transcripts }: { transcripts: ITranscript }) => {
+  const { onCopy } = useCopy();
+
+  const { scrollYProgress } = useScroll();
 
   return (
-    <div className="relative flex w-full items-center justify-center rounded-t-md bg-dark-900 px-12 py-6">
-      <div className="relative flex items-center justify-center gap-4">
+    <div className="z-10 flex w-full items-center justify-between bg-black px-4 pb-5 pt-8 max-lg:fixed max-lg:mt-10 lg:rounded-t-md lg:px-6 lg:py-9">
+      <div className="hidden items-center gap-4 text-3xl lg:flex">
+        <div className="h-2 w-2 rotate-45 bg-primary" style={jibril.style} />
+        [DUNGEON NAME] {/* TODO: update this when backend finishes */}
         <div className="h-2 w-2 rotate-45 bg-primary" />
-        <p
-          className="mt-1 truncate leading-none tracking-widest lg:text-xl lg:leading-7 lg:tracking-[0.2em]"
-          style={jibril.style}
-        >
-          Transcript
+      </div>
+      <div className="lg:hidden">
+        <p className="font-light">Transcript</p>
+        <p className="font-bold">[DUNGEON NAME]</p>
+        <p className="font-light text-white/50">[DATE]</p>
+      </div>
+
+      <div className="flex items-center gap-2 lg:gap-4">
+        <p className="hidden font-bold lg:block">
+          TRANSCRIPT <span className="font-light">[DATE]</span>
         </p>
-        <div className="h-2 w-2 rotate-45 bg-primary" />
+        <hr className="hidden h-7 w-1 border-l border-white/20 lg:block" />
+        <p className="hidden font-medium lg:block">Players</p>
+        <div className="flex items-center -space-x-2">
+          {transcripts.players.map((player) => (
+            <div key={player.accountId} className="rounded-full border border-white">
+              <Image
+                src={player.imageUrl || "/images/default-avatar.png"}
+                width={26}
+                height={26}
+                alt={`player-${player.accountId}-avatar`}
+                className="h-[26px] w-[26px] rounded-full lg:h-[40px] lg:w-[40px]"
+              />
+            </div>
+          ))}
+        </div>
+        <hr className="h-7 w-1 border-l border-white/20" />
+        <button
+          className="flex items-center gap-1 font-semibold lg:text-lg"
+          onClick={() => onCopy(window.location.href)}
+        >
+          SHARE
+          <PiShareFatFill />
+        </button>
       </div>
-      <div
-        className="absolute right-10 flex cursor-pointer gap-2 rounded-md bg-white/5 px-4 py-3 font-semibold uppercase text-white/50 transition-all duration-200 hover:opacity-80"
-        onClick={() => onCopy(window.location.href)}
-      >
-        {copied ? "Copied!" : "Copy share link"}
-        <Copy variant="Bold" />
-      </div>
+
+      <motion.hr
+        className="absolute inset-x-0 bottom-0 border-primary transition-all duration-500"
+        style={{ scaleX: scrollYProgress, WebkitTransformOrigin: "0%" }}
+      />
     </div>
   );
 };
