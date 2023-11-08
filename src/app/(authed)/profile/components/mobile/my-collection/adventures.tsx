@@ -130,11 +130,17 @@ const AdventureWrapper = ({
   <div
     className={cn(
       "flex flex-col gap-0.5",
+      !!adventureDetailId && "pointer-events-none",
       !!adventureDetailId && adventureDetailId !== adventure._id && "hidden",
     )}
   >
     {children}
-    <div className="flex w-full gap-0.5">
+    <div
+      className={cn(
+        "flex w-full gap-0.5 opacity-100 transition-all duration-500",
+        !!adventureDetailId && "opacity-0",
+      )}
+    >
       <button
         className="flex w-1/2 items-center justify-center gap-1 bg-black py-1"
         onClick={() => onCopy(adventure._id)}

@@ -8,14 +8,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
-import { PlayerStatusUpdate } from "../../stores/game-store";
+import { gameStore } from "../../stores/game-store";
 
-const Player = (props: {
-  player: IPlayer;
-  currentPlayer?: boolean;
-  statusUpdate?: PlayerStatusUpdate;
-}) => {
-  const { player, currentPlayer, statusUpdate } = props;
+const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: boolean }) => {
+  const statusUpdate = gameStore.statusUpdate.use();
 
   return (
     <div className="relative flex gap-4 lg:gap-6">

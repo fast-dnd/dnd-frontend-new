@@ -61,8 +61,8 @@ const RateModal = ({
             feedback. How did you find your journey?
           </DialogDescription>
         </DialogHeader>
-        <div className="mt-8 flex flex-col items-center gap-8">
-          <div className="flex justify-center gap-4">
+        <div className="mt-8 flex w-full flex-col items-center gap-8">
+          <div className="flex w-full justify-center gap-4">
             {Array.from({ length: 5 }, (_, i) => (
               <Star1
                 key={i + 1}
@@ -91,10 +91,10 @@ const RateModal = ({
             rows={3}
           />
         </div>
-        <DialogFooter>
+        <DialogFooter className="items-center max-lg:flex-col">
           <Button
             variant="outline"
-            className="flex w-fit flex-1 px-8 text-base lg:text-xl"
+            className="flex max-w-full flex-1 px-4 text-sm max-lg:w-56 lg:w-fit lg:px-8 lg:text-xl"
             onClick={close}
             autoFocus
           >
@@ -102,7 +102,7 @@ const RateModal = ({
           </Button>
           <Button
             variant="primary"
-            className="flex w-fit flex-1 whitespace-nowrap px-8 text-base lg:text-xl"
+            className="flex w-fit max-w-full flex-1  whitespace-nowrap px-4 text-sm max-lg:w-56 lg:px-8 lg:text-xl"
             onClick={() => {
               rateDungeon();
               close();
