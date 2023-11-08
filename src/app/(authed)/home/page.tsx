@@ -9,15 +9,22 @@ import { Box } from "@/components/ui/box";
 import CreateRoom from "./components/desktop/create-room";
 import JoinRoom from "./components/desktop/join-room";
 import MobileCreateRoom from "./components/mobile/mobile-create-room";
+import MobileJoinRoom from "./components/mobile/mobile-join-room";
 
 const Page = () => {
+  const [join, setJoin] = useState(false);
+
   const [adventureDetailId, setAdventureDetailId] = useState<string>();
   const [campaignDetailId, setCampaignDetailId] = useState<string>();
 
   const [closingAdventureId, setClosingAdventureId] = useState<string>();
   const [closingCampaignId, setClosingCampaignId] = useState<string>();
 
-  const onClickBack = adventureDetailId
+  const onClickBack = join
+    ? () => {
+        setJoin(false);
+      }
+    : adventureDetailId
     ? () => {
         setClosingAdventureId(adventureDetailId);
         setAdventureDetailId(undefined);
@@ -52,6 +59,12 @@ const Page = () => {
       </div>
       <div className="relative flex flex-col lg:hidden">
         <MobileNavbar className="fixed z-40 h-16 items-start" onClickBack={onClickBack} />
+        <MobileJoinRoom
+          show={!adventureDetailId && !campaignDetailId}
+          open={join}
+          setOpen={setJoin}
+        />
+
         <MobileCreateRoom
           adventureDetailId={adventureDetailId}
           setAdventureDetailId={setAdventureDetailId}
