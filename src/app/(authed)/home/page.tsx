@@ -12,14 +12,24 @@ import MobileCreateRoom from "./components/mobile/mobile-create-room";
 
 const Page = () => {
   const [adventureDetailId, setAdventureDetailId] = useState<string>();
-  const [closingId, setClosingId] = useState<string>();
+  const [campaignDetailId, setCampaignDetailId] = useState<string>();
+
+  const [closingAdventureId, setClosingAdventureId] = useState<string>();
+  const [closingCampaignId, setClosingCampaignId] = useState<string>();
 
   const onClickBack = adventureDetailId
     ? () => {
-        setClosingId(adventureDetailId);
+        setClosingAdventureId(adventureDetailId);
         setAdventureDetailId(undefined);
         window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-        setTimeout(() => setClosingId(undefined), 500);
+        setTimeout(() => setClosingAdventureId(undefined), 500);
+      }
+    : campaignDetailId
+    ? () => {
+        setClosingCampaignId(campaignDetailId);
+        setCampaignDetailId(undefined);
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        setTimeout(() => setClosingCampaignId(undefined), 500);
       }
     : undefined;
 
@@ -41,11 +51,14 @@ const Page = () => {
         </div>
       </div>
       <div className="relative flex flex-col lg:hidden">
-        <MobileNavbar className="fixed z-30 h-16 items-start" onClickBack={onClickBack} />
+        <MobileNavbar className="fixed z-40 h-16 items-start" onClickBack={onClickBack} />
         <MobileCreateRoom
           adventureDetailId={adventureDetailId}
           setAdventureDetailId={setAdventureDetailId}
-          closingId={closingId}
+          campaignDetailId={campaignDetailId}
+          setCampaignDetailId={setCampaignDetailId}
+          closingAdventureId={closingAdventureId}
+          closingCampaignId={closingCampaignId}
         />
       </div>
     </>

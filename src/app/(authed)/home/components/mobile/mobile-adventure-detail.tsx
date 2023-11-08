@@ -84,7 +84,9 @@ const MobileAdventureDetail = ({
                   </div>
                 </div>
 
-                <p className="truncate text-[32px] font-semibold uppercase">{adventure.name}</p>
+                <p className="line-clamp-2 w-full break-words text-[32px] font-semibold uppercase">
+                  {adventure.name}
+                </p>
 
                 <div className="flex gap-2 overflow-x-hidden py-2 pl-0.5">
                   {adventure.tags.map((tag) => (

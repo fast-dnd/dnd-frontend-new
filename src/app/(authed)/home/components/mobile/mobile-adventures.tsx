@@ -15,6 +15,7 @@ const MobileAdventures = ({
   setFeaturedOpened,
   opening,
   setOpening,
+  animate,
 }: {
   adventureDetailId?: string | undefined;
   setAdventureDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -24,6 +25,7 @@ const MobileAdventures = ({
   setFeaturedOpened: React.Dispatch<React.SetStateAction<boolean>>;
   opening: boolean;
   setOpening: React.Dispatch<React.SetStateAction<boolean>>;
+  animate?: boolean;
 }) => {
   const {
     data: adventuresData,
@@ -76,6 +78,7 @@ const MobileAdventures = ({
             setFeaturedOpened={setFeaturedOpened}
             opening={opening}
             setOpening={setOpening}
+            animate={animate}
           />
         );
       }
@@ -91,6 +94,7 @@ const MobileAdventures = ({
           setFeaturedOpened={setFeaturedOpened}
           opening={opening}
           setOpening={setOpening}
+          animate={animate}
         />
       );
     }),

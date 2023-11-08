@@ -32,23 +32,28 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   return (
     <div
       className={cn(
-        "flex w-full items-center justify-between bg-gradient-to-b from-black via-black/60 via-60% to-transparent px-4 pt-3 lg:hidden",
+        "pointer-events-none flex w-full items-center justify-between bg-gradient-to-b from-black via-black/60 via-60% to-transparent px-4 pt-3 lg:hidden",
         className,
       )}
     >
       {onClickBack && (
-        <BiChevronLeft className="absolute left-4 top-4 h-6 w-auto" onClick={onClickBack} />
+        <BiChevronLeft
+          className="pointer-events-auto absolute left-4 top-4 h-6 w-auto"
+          onClick={onClickBack}
+        />
       )}
       <div />
-      <Link href="/home" className="translate-x-1/4">
+      <Link href="/home" className="pointer-events-auto translate-x-1/4">
         <Image src="/images/navbar-logo.png" width={94} height={32} alt="logo" />
       </Link>
       <Sheet>
-        <SheetTrigger>
+        <SheetTrigger className="pointer-events-auto">
           <IoMdMenu className="h-8 w-8" />
         </SheetTrigger>
         <SheetContent
-          className={cn("flex flex-col justify-between gap-8 bg-primary-900/60 backdrop-blur-xl")}
+          className={cn(
+            "pointer-events-auto flex flex-col justify-between gap-8 bg-primary-900/60 backdrop-blur-xl",
+          )}
         >
           <Link href="/home" className="w-fit">
             <Image src="/images/navbar-logo.png" width={94} height={32} alt="logo" />
@@ -86,14 +91,14 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
             </Button>
           </div>
           {user ? (
-            <div className="-mx-6 -mb-6 flex w-[calc(100%_+_3rem)] flex-col items-center bg-primary-900">
-              <Link href="/profile">
+            <div className="-mx-4 -mb-6 flex w-[calc(100%_+_3rem)] flex-col items-center bg-primary-900">
+              <Link href="/profile" className="-translate-y-1/2 ">
                 <Image
                   src={user?.account.imageUrl || "/images/default-avatar.png"}
                   width={76}
                   height={76}
                   alt="avatar"
-                  className="-translate-y-1/2 rounded-full"
+                  className="rounded-full"
                 />
               </Link>
               <div className="flex gap-4">

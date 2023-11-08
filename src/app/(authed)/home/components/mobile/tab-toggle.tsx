@@ -6,7 +6,13 @@ import { cn } from "@/utils/style-utils";
 
 import { baseTabs, tabStore } from "../../stores/tab-store";
 
-const TabToggle = () => {
+const TabToggle = ({
+  switching = false,
+  setSwitching,
+}: {
+  switching?: boolean;
+  setSwitching?: (swtiching: boolean) => void;
+}) => {
   const activeBaseTab = tabStore.baseTab.use();
 
   return (
@@ -22,7 +28,13 @@ const TabToggle = () => {
               activeBaseTab === tab && "opacity-100",
             )}
             onClick={() => {
-              tabStore.baseTab.set(tab);
+              if (activeBaseTab !== tab && !switching) {
+                tabStore.baseTab.set(tab);
+                if (setSwitching) {
+                  setSwitching(true);
+                  setTimeout(() => setSwitching(false), 500);
+                }
+              }
             }}
           >
             {tab === "adventures" && <HelmetIcon className="h-4 w-4" />}

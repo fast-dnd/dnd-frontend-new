@@ -20,6 +20,7 @@ export const MobileAdventure = React.forwardRef<
     setFeaturedOpened?: React.Dispatch<React.SetStateAction<boolean>>;
     opening?: boolean;
     setOpening?: React.Dispatch<React.SetStateAction<boolean>>;
+    animate?: boolean;
   }
 >(
   (
@@ -33,6 +34,7 @@ export const MobileAdventure = React.forwardRef<
       setFeaturedOpened,
       opening = false,
       setOpening,
+      animate = true,
     },
     ref,
   ) => {
@@ -53,10 +55,8 @@ export const MobileAdventure = React.forwardRef<
           if (!adventureDetailId) {
             setAdventureDetailId?.(adventure._id);
             setFeaturedOpened?.(featured);
-            if (setOpening) {
-              setOpening(true);
-              setTimeout(() => setOpening(false), 500);
-            }
+            setOpening?.(true);
+            setTimeout(() => setOpening?.(false), 500);
             window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
           }
         }}
@@ -68,7 +68,7 @@ export const MobileAdventure = React.forwardRef<
             open && "z-20 w-full",
             closing && "z-20",
           )}
-          layout={!adventureDetailId || open}
+          layout={animate && (!adventureDetailId || open)}
           transition={{
             type: "tween",
             stiffness: 10,
