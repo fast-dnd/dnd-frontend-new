@@ -40,10 +40,10 @@ const MobileCampaigns = ({
   if (isLoading)
     return (
       <div className={cn("flex animate-pulse flex-col gap-4 px-4 py-2")}>
-        <div className="h-5 w-40 rounded bg-gray-600" />
+        <div className="h-5 w-40 rounded bg-gray-700/80" />
         <div className={cn("flex flex-col gap-4 overflow-hidden")}>
           {Array.from({ length: 3 }, (_, i) => (
-            <div key={i} className={cn("h-[102px] w-full shrink-0 rounded-lg bg-gray-600")} />
+            <div key={i} className={cn("h-[102px] w-full shrink-0 rounded-lg bg-gray-700/80")} />
           ))}
         </div>
       </div>

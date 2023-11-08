@@ -27,8 +27,6 @@ const MobileCreateRoom = ({
   closingAdventureId?: string | undefined;
   closingCampaignId?: string | undefined;
 }) => {
-  const [featuredOpened, setFeaturedOpened] = useState(false);
-  const [opening, setOpening] = useState(false);
   const activeBaseTab = tabStore.baseTab.use();
   const [switching, setSwitching] = useState(false);
   return (
@@ -82,26 +80,10 @@ const MobileCreateRoom = ({
             className={cn("flex flex-col")}
           >
             <MobileAdventures
-              featured
-              closingId={closingAdventureId}
               adventureDetailId={adventureDetailId}
               setAdventureDetailId={setAdventureDetailId}
-              featuredOpened={featuredOpened}
-              setFeaturedOpened={setFeaturedOpened}
-              opening={opening}
-              setOpening={setOpening}
               animate={activeBaseTab === "adventures"}
-            />
-            <div className="h-0.5 w-full bg-black shadow-lobby" />
-            <MobileAdventures
               closingId={closingAdventureId}
-              adventureDetailId={adventureDetailId}
-              setAdventureDetailId={setAdventureDetailId}
-              featuredOpened={featuredOpened}
-              setFeaturedOpened={setFeaturedOpened}
-              opening={opening}
-              setOpening={setOpening}
-              animate={activeBaseTab === "adventures"}
             />
             <MobileAdventureDetail adventureDetailId={adventureDetailId} />
             <div
