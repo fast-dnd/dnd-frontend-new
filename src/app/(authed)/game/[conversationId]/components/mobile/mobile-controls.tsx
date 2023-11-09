@@ -13,7 +13,11 @@ const MobileControls = ({ conversationId }: { conversationId: string }) => {
   return (
     <div className="fixed bottom-0 flex w-full flex-col">
       <DiceModal />
-      <MobileAdditionalInfo conversationId={conversationId} />
+      <MobileAdditionalInfo
+        conversationId={conversationId}
+        currentPlayer={currentPlayer}
+        roomData={roomData}
+      />
       <MobilePlayMove
         conversationId={conversationId}
         currentPlayer={currentPlayer}

@@ -39,7 +39,7 @@ const DiceModal = () => {
     >
       <DialogContent
         fromBottom
-        className="left-0 top-0 flex h-full w-full max-w-full translate-x-0 translate-y-0 flex-col items-center gap-4 bg-black/50 px-4 py-3"
+        className="left-0 top-0 flex h-full w-full max-w-full translate-x-0 translate-y-0 flex-col items-center gap-4 bg-black/50 px-4 py-3 data-[state=closed]:duration-300 data-[state=open]:duration-300"
       >
         <div className={cn("flex w-full justify-end", buttonState === "ROLLING" && "hidden")}>
           <AiOutlineClose onClick={onClose} />

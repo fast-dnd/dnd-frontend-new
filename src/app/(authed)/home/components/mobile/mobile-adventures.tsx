@@ -47,7 +47,7 @@ const MobileAdventures = ({
   });
   if (isError || featuredError) return <div>Something went wrong</div>;
 
-  const featuredContent = featuredAdventuresData?.pages.map((page) =>
+  const featuredContent = featuredAdventuresData?.pages.slice(0, 1).map((page) =>
     page.dungeons.map((adventure, i) => {
       if (page.dungeons.length === i + 1) {
         return (

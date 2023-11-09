@@ -42,10 +42,10 @@ const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: bo
           player.health <= 0 && "pointer-events-none lg:opacity-50",
         )}
       >
-        <p className="-mt-1 truncate font-semibold uppercase tracking-[0.07em] lg:text-xl">
+        <p className="-mt-1 truncate font-bold uppercase tracking-[0.07em] lg:text-xl">
           {player.name}
         </p>
-        <p className="-mt-0.5 truncate text-sm font-light tracking-[0.15em] lg:text-base">
+        <p className="-mt-0.5 truncate text-xs tracking-[0.15em] lg:text-base lg:font-light">
           {player.champion?.name}
         </p>
         <div className="flex lg:gap-4">

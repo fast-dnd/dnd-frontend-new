@@ -2,21 +2,31 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Coffee, Game } from "iconsax-react";
 import { AiOutlineLeft, AiOutlinePlus } from "react-icons/ai";
 import { FaDice } from "react-icons/fa";
 
+import { IPlayer, IRoomDetail } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
 import { moveStore } from "../../stores/move-store";
 import DiceBreakdown from "../gameplay/dice-breakdown";
 import Die from "../gameplay/die";
 import AskModal from "./ask-modal";
+import PlayerStatsModal from "./player-stats-modal";
 
-const MobileAdditionalInfo = ({ conversationId }: { conversationId: string }) => {
+const MobileAdditionalInfo = ({
+  conversationId,
+  roomData,
+  currentPlayer,
+}: {
+  conversationId: string;
+  roomData: IRoomDetail;
+  currentPlayer: IPlayer;
+}) => {
   const [open, setOpen] = useState(false);
   const [askModal, setAskModal] = useState(false);
   const [diceStats, setDiceStats] = useState(false);
+  const [statsModal, setStatsModal] = useState(false);
 
   const dice = moveStore.dice.use();
   const roll = moveStore.roll.use();
@@ -48,16 +58,20 @@ const MobileAdditionalInfo = ({ conversationId }: { conversationId: string }) =>
         )}
       >
         <div
-          onClick={() => {
-            setOpen(false);
-            setAskModal(true);
-          }}
           className={cn(
-            "flex items-center gap-2 text-xs font-medium uppercase text-primary opacity-100 transition-all duration-500",
+            "opacity-100 transition-all duration-500",
             diceStats && "pointer-events-none opacity-0",
           )}
         >
-          <Game className="h-5 w-5" /> <p className="mt-0.5">ask bob</p>
+          <AskModal
+            conversationId={conversationId}
+            open={askModal}
+            onOpen={() => {
+              setOpen(false);
+              setAskModal(true);
+            }}
+            onClose={() => setAskModal(false)}
+          />
         </div>
         <div className={cn("hidden h-5", diceStats && "block")}></div>
         <div
@@ -100,21 +114,22 @@ const MobileAdditionalInfo = ({ conversationId }: { conversationId: string }) =>
 
         <div
           className={cn(
-            "flex items-center gap-2 text-xs uppercase opacity-100 transition-all duration-500",
+            "opacity-100 transition-all duration-500",
             diceStats && "pointer-events-none opacity-0",
           )}
         >
-          <Coffee className="h-5 w-5" /> <p className="mt-0.5">player stats</p>
+          <PlayerStatsModal
+            open={statsModal}
+            onOpen={() => {
+              setOpen(false);
+              setStatsModal(true);
+            }}
+            onClose={() => setStatsModal(false)}
+            currentPlayer={currentPlayer}
+            roomData={roomData}
+          />
         </div>
       </div>
-
-      <AskModal
-        conversationId={conversationId}
-        open={askModal}
-        onClose={() => {
-          setAskModal(false);
-        }}
-      />
     </div>
   );
 };
