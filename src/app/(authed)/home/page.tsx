@@ -58,7 +58,7 @@ const Page = () => {
         </div>
       </div>
       <div className="relative flex flex-col lg:hidden">
-        <MobileNavbar className="fixed z-40 h-16 items-start" onClickBack={onClickBack} />
+        <MobileNavbar className="fixed z-[55] h-16 items-start" onClickBack={onClickBack} />
         <MobileJoinRoom
           show={!adventureDetailId && !campaignDetailId}
           open={join}

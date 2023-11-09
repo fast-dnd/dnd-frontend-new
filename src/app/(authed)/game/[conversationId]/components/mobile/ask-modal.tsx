@@ -50,7 +50,9 @@ const AskModal = ({
           <div className="flex items-center gap-2 text-xs font-medium uppercase">
             <Game className="h-5 w-5" /> <p className="mt-0.5">ask bob</p>
           </div>
-          <AiOutlineClose className="pointer-events-auto h-4 w-4" onClick={onClose} />
+          <button autoFocus onClick={onClose}>
+            <AiOutlineClose className="pointer-events-auto h-4 w-4" />
+          </button>
         </div>
         <MoveQuestionHistory
           moveHistory={moveHistory}

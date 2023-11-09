@@ -88,46 +88,51 @@ const EditProfile = () => {
       </div>
 
       <div className="flex flex-1 flex-col items-center gap-8 lg:hidden">
-        <MobileNavbar className="bg-neutral-900" onClickBack={() => router.push("/profile")} />
-        <form onSubmit={handleSubmit(onSubmit)} className="flex-1 px-5">
-          <div className="flex h-full flex-1 flex-col gap-6">
-            <p className="font-medium">EDIT PROFILE PHOTO</p>
-            <div className="flex items-center gap-3">
-              <Image
-                src={image || user?.account.imageUrl || "/images/default-avatar.png"}
-                alt="avatar"
-                width={100}
-                height={100}
-                className="rounded-full"
-              />
-              <button
-                className="flex items-center gap-2 whitespace-nowrap rounded-md border border-white px-4 py-3 text-sm font-bold"
-                onClick={addImage}
-                type="button"
-              >
-                <input type="file" ref={imageRef} className="hidden" accept="image/*" />
-                <FiUpload />
-                UPLOAD NEW PHOTO
-              </button>
-            </div>
+        <div className="fixed left-0 top-0 w-full">
+          <MobileNavbar className="bg-neutral-900" onClickBack={() => router.push("/profile")} />
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-4 flex-1 px-5">
+            <div className="flex h-full flex-1 flex-col gap-6">
+              <p className="font-medium">EDIT PROFILE PHOTO</p>
+              <div className="flex items-center gap-3">
+                <Image
+                  src={image || user?.account.imageUrl || "/images/default-avatar.png"}
+                  alt="avatar"
+                  width={100}
+                  height={100}
+                  className="rounded-full"
+                />
+                <button
+                  className="flex items-center gap-2 whitespace-nowrap rounded-md border border-white px-4 py-3 text-sm font-bold"
+                  onClick={addImage}
+                  type="button"
+                >
+                  <input type="file" ref={imageRef} className="hidden" accept="image/*" />
+                  <FiUpload />
+                  UPLOAD NEW PHOTO
+                </button>
+              </div>
 
-            <div className="h-0.5 bg-black shadow-lobby" />
+              <div className="h-0.5 bg-black shadow-lobby" />
 
-            <div className="flex flex-1 flex-col justify-start">
-              <Input
-                label="EDIT YOUR USERNAME"
-                placeholder="Thorian Blackthorn"
-                className="text-xl tracking-[0.07em]"
-                {...register("username")}
-                state={errors?.username ? "error" : undefined}
-                errorMessage={errors?.username?.message}
-              />
-              <Button className="mb-4 mt-auto" isLoading={isEditing}>
-                SAVE CHANGES
-              </Button>
+              <div className="flex flex-1 flex-col justify-start">
+                <Input
+                  label="EDIT YOUR USERNAME"
+                  placeholder="Thorian Blackthorn"
+                  className="text-xl tracking-[0.07em]"
+                  {...register("username")}
+                  state={errors?.username ? "error" : undefined}
+                  errorMessage={errors?.username?.message}
+                />
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
+
+        <div className="fixed bottom-4 left-0 flex w-full justify-center">
+          <Button className="w-52" isLoading={isEditing}>
+            SAVE CHANGES
+          </Button>
+        </div>
         <DevTool control={control} id="edit-profile-form" />
       </div>
     </>
@@ -159,28 +164,32 @@ const EditProfileSkeleton = () => {
       </div>
 
       <div className="flex flex-1 flex-col items-center gap-8 lg:hidden">
-        <MobileNavbar className="bg-neutral-900" />
-        <div className="flex-1 px-5">
-          <div className="flex h-full flex-1 flex-col gap-6">
-            <p className="font-medium">EDIT PROFILE PHOTO</p>
-            <div className="flex items-center gap-3">
-              <div className="h-[100px] w-[100px] rounded-full bg-gray-600" />
+        <div className="fixed left-0 top-0 w-full">
+          <MobileNavbar className="bg-neutral-900" />
+          <div className="mt-4 flex-1 px-5">
+            <div className="flex h-full flex-1 flex-col gap-6">
+              <p className="font-medium">EDIT PROFILE PHOTO</p>
+              <div className="flex items-center gap-3">
+                <div className="h-[100px] w-[100px] rounded-full bg-gray-600" />
 
-              <div className="flex items-center gap-2 whitespace-nowrap rounded-md border border-white px-4 py-3 text-sm font-bold">
-                <FiUpload />
-                UPLOAD NEW PHOTO
+                <div className="flex items-center gap-2 whitespace-nowrap rounded-md border border-white px-4 py-3 text-sm font-bold">
+                  <FiUpload />
+                  UPLOAD NEW PHOTO
+                </div>
+              </div>
+
+              <div className="h-0.5 bg-black shadow-lobby" />
+
+              <div className="flex flex-1 flex-col justify-start">
+                <p className="font-medium">EDIT YOUR USERNAME</p>
+                <div className="h-14 w-80 rounded-lg bg-gray-600" />
               </div>
             </div>
-
-            <div className="h-0.5 bg-black shadow-lobby" />
-
-            <div className="flex flex-1 flex-col justify-start">
-              <p className="font-medium">EDIT YOUR USERNAME</p>
-              <div className="h-14 w-80 rounded-lg bg-gray-600" />
-
-              <Button className="mb-4 mt-auto">SAVE CHANGES</Button>
-            </div>
           </div>
+        </div>
+
+        <div className="fixed bottom-4 left-0 flex w-full justify-center">
+          <Button className="w-52">SAVE CHANGES</Button>
         </div>
       </div>
     </>

@@ -20,9 +20,13 @@ import PickPowerup from "../gameplay/pick-powerup";
 import { PlayMoveProps } from "../gameplay/play-move";
 
 const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: PlayMoveProps) => {
-  const { openedDetails, setOpenedDetails } = usePlayMoveSocket(conversationId);
+  usePlayMoveSocket(conversationId);
   //todo animate on open details
-  const { onPlay } = usePlayMove(conversationId, roomData, currentPlayer);
+  const { onPlay, openedDetails, setOpenedDetails } = usePlayMove(
+    conversationId,
+    roomData,
+    currentPlayer,
+  );
 
   const store = moveStore.use();
 
@@ -30,10 +34,16 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: PlayMovePro
   return (
     <div
       className={cn(
-        "flex border-t border-white/20 bg-black opacity-100 transition-all",
-        !store.canPlay && "hidden opacity-0",
+        "relative flex border-t border-white/20 bg-black",
+        !store.canPlay && "pointer-events-none",
       )}
     >
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-0 z-10 h-full w-full bg-black opacity-0 transition-all duration-200",
+          !store.canPlay && "opacity-40",
+        )}
+      />
       <div
         className={cn("relative flex w-full flex-col gap-3 py-3.5 pl-4", openedDetails && "hidden")}
       >

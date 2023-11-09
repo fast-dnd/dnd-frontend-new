@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { IPlayMove } from "@/types/game";
 import { IPlayer, IRoomDetail } from "@/types/room";
@@ -9,6 +9,8 @@ import { generateDice, generateRandomDice } from "../utils/dice";
 import useSubmitMove from "./use-submit-move";
 
 const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlayer: IPlayer) => {
+  const [openedDetails, setOpenedDetails] = useState(false);
+
   const loadingText = gameStore.loadingText.use();
   const { mutate: submitMove, isLoading: submitting } = useSubmitMove();
   const store = moveStore.use();
@@ -55,6 +57,7 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
       moveStore.roll.set(undefined);
       moveStore.aiDescription.set(undefined);
       moveStore.canPlay.set(false);
+      setOpenedDetails(false);
       submitMove(moveToPlay, {
         onSuccess: (res) => {
           moveStore.freeWill.set("");
@@ -78,6 +81,6 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
     }
   };
 
-  return { onPlay, submitting };
+  return { onPlay, submitting, openedDetails, setOpenedDetails };
 };
 export default usePlayMove;
