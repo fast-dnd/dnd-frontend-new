@@ -52,7 +52,7 @@ const MobileRoomInfo = ({
                   width={30}
                   height={30}
                   alt={`player-${player.accountId}-avatar`}
-                  className="rounded-full"
+                  className="h-[30px] w-[30px] rounded-full"
                 />
               </div>
             ))}
@@ -78,7 +78,7 @@ const MobileRoomInfo = ({
                     width={57}
                     height={57}
                     alt={`player-${player.accountId}-avatar`}
-                    className="h-[57px] w-[57px] rounded-full"
+                    className="h-[57px] w-[57px] rounded-full border border-white"
                   />
                 </div>
                 <div className="flex flex-col justify-center">

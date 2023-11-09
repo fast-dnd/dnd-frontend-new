@@ -40,7 +40,7 @@ const AskQuestion = ({
         />
       </div>
       <Button
-        disabled={!canAsk}
+        disabled={!canAsk || !question}
         type="submit"
         variant="ghost"
         className="h-[60px] w-[60px] items-center justify-center p-0 text-3xl text-primary"

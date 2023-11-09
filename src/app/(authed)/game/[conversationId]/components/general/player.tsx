@@ -69,7 +69,7 @@ const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: bo
                   <VscHeartFilled />
                   <span className="mt-0.5">{Math.max(0, player.health)}</span>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className="max-lg:hidden">
                   <p>Health</p>
                 </TooltipContent>
               </Tooltip>
@@ -88,7 +88,7 @@ const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: bo
                   <BsFillLightningFill />
                   <span className="mt-0.5">{player.bonusForNextRound}</span>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className="max-lg:hidden">
                   <p>Bonus - will be applied on next roll</p>
                 </TooltipContent>
               </Tooltip>
@@ -107,7 +107,7 @@ const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: bo
                   <HiSparkles />
                   <span className="mt-0.5">{player.mana}</span>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className="max-lg:hidden">
                   <p>Mana - can be used on any roll</p>
                 </TooltipContent>
               </Tooltip>

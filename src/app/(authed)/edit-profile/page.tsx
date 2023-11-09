@@ -101,7 +101,7 @@ const EditProfile = () => {
                 className="rounded-full"
               />
               <button
-                className="flex items-center gap-2 rounded-md border border-white px-4 py-3 font-bold"
+                className="flex items-center gap-2 whitespace-nowrap rounded-md border border-white px-4 py-3 text-sm font-bold"
                 onClick={addImage}
                 type="button"
               >

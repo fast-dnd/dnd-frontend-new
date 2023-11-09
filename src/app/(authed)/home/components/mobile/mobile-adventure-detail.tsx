@@ -183,7 +183,7 @@ const Champion = ({ champion }: { champion: IChampion }) => {
               collapsed: { opacity: 0, height: 0 },
             }}
             transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
-            className="bg-black pl-[88px] pr-2"
+            className="bg-black pl-16 pr-2"
           >
             <div className={cn("pointer-events-none flex flex-col")}>
               {moveMappingWithIcons(champion.moveMapping).map((move, index) => (
