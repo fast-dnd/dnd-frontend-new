@@ -90,6 +90,7 @@ export const MobileCampaign = React.forwardRef<
           <p className="line-clamp-2 w-full break-words font-semibold">{campaign.name}</p>
 
           <div className="flex gap-2">
+            <p className="font-medium">By:</p>
             <Image
               src={campaign.createdBy?.imageUrl || "/images/default-avatar.png"}
               alt={campaign.createdBy?.username || ""}
