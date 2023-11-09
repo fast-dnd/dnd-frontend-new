@@ -61,8 +61,7 @@ export const MobileCampaign = React.forwardRef<
           layout={animate && (!campaignDetailId || open)}
           transition={{
             type: "tween",
-            stiffness: 10,
-            damping: 10,
+            ease: "easeOut",
           }}
         >
           <Image

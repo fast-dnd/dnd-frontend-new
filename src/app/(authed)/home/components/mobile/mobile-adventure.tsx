@@ -71,8 +71,7 @@ export const MobileAdventure = React.forwardRef<
           layout={animate && (!adventureDetailId || open)}
           transition={{
             type: "tween",
-            stiffness: 10,
-            damping: 10,
+            ease: "easeOut",
           }}
         >
           <Image
