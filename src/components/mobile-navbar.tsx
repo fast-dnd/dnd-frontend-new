@@ -101,12 +101,12 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                   className="rounded-full"
                 />
               </Link>
-              <div className="flex gap-4">
-                <div className="flex h-10 w-24 items-center justify-center gap-1 rounded-md bg-white/5">
+              <div className="mr-4 flex gap-2">
+                <div className="flex items-center justify-center gap-1 rounded-md bg-white/5 px-6 py-1">
                   <Coin silver />
                   {user?.account.coins ?? "-"}
                 </div>
-                <div className="flex h-10 w-24 items-center justify-center gap-1 rounded-md bg-white/5">
+                <div className="flex items-center justify-center gap-1 rounded-md bg-white/5 px-6 py-1">
                   <Coin />
                   {user?.account.dmCurrency ?? "-"}
                 </div>
