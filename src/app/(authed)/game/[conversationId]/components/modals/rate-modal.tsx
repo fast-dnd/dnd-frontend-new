@@ -105,11 +105,11 @@ const RateModal = ({
             variant="outline"
             className="flex max-w-full flex-1 px-4 text-sm max-lg:hidden lg:w-fit lg:px-8 lg:text-xl"
             onClick={close}
-            autoFocus
           >
             cancel
           </Button>
           <Button
+            autoFocus
             variant="primary"
             className="flex w-fit max-w-full flex-1 whitespace-nowrap px-4 text-sm max-lg:w-full max-lg:rounded-none lg:px-8 lg:text-xl"
             onClick={() => {

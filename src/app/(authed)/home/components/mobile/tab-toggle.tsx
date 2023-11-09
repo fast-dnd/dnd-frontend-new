@@ -17,12 +17,12 @@ const TabToggle = ({
 
   return (
     <div className={cn("flex justify-center px-4")}>
-      <div className="pointer-events-auto relative flex rounded-full border border-white/[8%] bg-black">
+      <div className="pointer-events-auto relative flex w-full rounded-full border border-white/[8%] bg-black">
         {baseTabs.map((tab) => (
           <div
             key={tab}
             className={cn(
-              "z-10 mx-5 my-2.5 flex select-none items-center text-sm uppercase opacity-50 transition-all",
+              "z-10 mx-5 my-2.5 flex w-full select-none items-center justify-center text-sm uppercase opacity-50 transition-all",
               tab === "adventures" && "gap-1",
               tab === "campaigns" && "gap-2.5",
               activeBaseTab === tab && "opacity-100",
@@ -51,10 +51,7 @@ const TabToggle = ({
           )}
         >
           <motion.div
-            className={cn(
-              "h-9 w-[154px] rounded-full bg-primary",
-              activeBaseTab === "campaigns" && "w-[150px]",
-            )}
+            className={cn("h-9 w-1/2 rounded-full bg-primary")}
             layout
             transition={{
               type: "spring",

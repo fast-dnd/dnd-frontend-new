@@ -29,6 +29,7 @@ const CookieBanner = () => {
     setStoredCookieConsent(cookieConsent);
   }, [cookieConsent]);
 
+  //todo mobile
   return (
     <div
       className={cn(
@@ -36,6 +37,7 @@ const CookieBanner = () => {
         cookieConsent !== null ? "hidden" : "flex",
       )}
     >
+      /
       <div className="flex w-2/3 min-w-fit justify-between gap-20">
         <div className="flex items-center gap-8">
           <div className="h-2 w-2 rotate-45 bg-white" />
