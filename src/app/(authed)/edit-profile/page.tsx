@@ -166,7 +166,7 @@ const EditProfileSkeleton = () => {
             <div className="flex items-center gap-3">
               <div className="h-[100px] w-[100px] rounded-full bg-gray-600" />
 
-              <div className="flex items-center gap-2 rounded-md border border-white px-4 py-3 font-bold">
+              <div className="flex items-center gap-2 whitespace-nowrap rounded-md border border-white px-4 py-3 text-sm font-bold">
                 <FiUpload />
                 UPLOAD NEW PHOTO
               </div>
