@@ -132,7 +132,11 @@ const Campaigns = () => {
         adventureDetailId={adventureDetailId}
         setAdventureDetailId={setAdventureDetailId}
       />
-      <MobileAdventureDetail onClose={onClose} adventureDetailId={adventureDetailId} />
+      <MobileAdventureDetail
+        hideStartButton
+        onClose={onClose}
+        adventureDetailId={adventureDetailId}
+      />
       {isFetchingNextPage && (
         <div className="flex h-10 justify-center">
           <Spinner className="m-0 h-8 w-8" />

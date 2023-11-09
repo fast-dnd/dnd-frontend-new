@@ -22,9 +22,11 @@ import useCreateRoom from "../../hooks/use-create-room";
 const MobileAdventureDetail = ({
   adventureDetailId,
   onClose,
+  hideStartButton = false,
 }: {
   adventureDetailId?: string | undefined;
   onClose?: () => void;
+  hideStartButton?: boolean;
 }) => {
   const router = useRouter();
   const { data: adventure, isLoading } = useGetDungeon(adventureDetailId ?? "");
@@ -133,7 +135,10 @@ const MobileAdventureDetail = ({
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
-            className="pointer-events-none fixed bottom-0 z-30 flex w-full justify-center bg-gradient-to-t from-dark-900 via-dark-900/60 via-60% to-transparent pb-6 pt-12"
+            className={cn(
+              "pointer-events-none fixed bottom-0 z-30 flex w-full justify-center bg-gradient-to-t from-dark-900 via-dark-900/60 via-60% to-transparent pb-6 pt-12",
+              hideStartButton && "hidden",
+            )}
           >
             <Button
               isLoading={isCreatingRoom || loadingRoom}

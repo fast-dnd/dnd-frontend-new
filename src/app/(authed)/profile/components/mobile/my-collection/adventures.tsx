@@ -112,8 +112,12 @@ const Adventures = () => {
     <NoAdventures />
   ) : (
     <div className="relative flex w-full flex-1 flex-col gap-4">
-      <MobileAdventureDetail onClose={onClose} adventureDetailId={adventureDetailId} />
       {content}
+      <MobileAdventureDetail
+        hideStartButton
+        onClose={onClose}
+        adventureDetailId={adventureDetailId}
+      />
 
       {isFetchingNextPage && (
         <div className="flex h-10 justify-center">
