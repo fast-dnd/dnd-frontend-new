@@ -89,7 +89,7 @@ const EditProfile = () => {
 
       <div className="flex flex-1 flex-col items-center gap-8 lg:hidden">
         <MobileNavbar className="bg-neutral-900" onClickBack={() => router.push("/profile")} />
-        <form onSubmit={handleSubmit(onSubmit)} className="flex-1 px-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full flex-1 px-5">
           <div className="flex h-full flex-1 flex-col gap-6">
             <p className="font-medium">EDIT PROFILE PHOTO</p>
             <div className="flex items-center gap-3">
@@ -180,7 +180,7 @@ const EditProfileSkeleton = () => {
 
               <div className="flex flex-1 flex-col justify-start">
                 <p className="font-medium">EDIT YOUR USERNAME</p>
-                <div className="h-14 w-80 rounded-lg bg-gray-600" />
+                <div className="h-14 w-full rounded-lg bg-gray-600" />
               </div>
             </div>
           </div>
