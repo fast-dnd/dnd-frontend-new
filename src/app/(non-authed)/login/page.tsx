@@ -100,7 +100,7 @@ const Login = () => {
             </div>
           ))}
         </div>
-        <div className="mt-12 flex w-full flex-col items-center gap-6">
+        <div className="flex w-full flex-col items-center gap-6 lg:mt-12">
           <Button variant="google" className="w-fit gap-2 px-6 py-5" onClick={() => googleLogin()}>
             <FcGoogle />
             LOG IN WITH GOOGLE
