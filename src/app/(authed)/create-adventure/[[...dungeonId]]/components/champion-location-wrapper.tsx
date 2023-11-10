@@ -50,7 +50,6 @@ const ChampionLocationWrapper = ({
   });
 
   const onSubmit: SubmitHandler<ILocationSchema | IChampionSchema> = (data) => {
-    // TODO: replace this with backend call and then update with the returned id
     if (status === "CREATING") {
       if ("moveMapping" in data)
         dungeonFormStore.dungeonFormData.champions.set((prev) => [

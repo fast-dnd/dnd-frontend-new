@@ -19,7 +19,7 @@ const Profile = ({
 }) => {
   const activeTab = (searchParams?.activeTab ?? "ADVENTURES") as Tab;
 
-  const [baseActiveTab, setBaseActiveTab] = useState<(typeof baseTabs)[number]>(baseTabs[1]); //TODO: switch back to 0 instead of 1
+  const [baseActiveTab, setBaseActiveTab] = useState<(typeof baseTabs)[number]>(baseTabs[0]);
 
   return (
     <>

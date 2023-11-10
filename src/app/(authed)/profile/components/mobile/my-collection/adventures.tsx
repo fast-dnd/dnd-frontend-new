@@ -35,7 +35,7 @@ const Adventures = () => {
     isFetchingNextPage,
     isError,
     isLoading,
-  } = useGetDungeons({ filter: "top" }); //TODO: return this to owned
+  } = useGetDungeons({ filter: "owned" });
 
   const { lastObjectRef: lastAdventureRef } = useIntersectionObserver({
     isFetchingNextPage,

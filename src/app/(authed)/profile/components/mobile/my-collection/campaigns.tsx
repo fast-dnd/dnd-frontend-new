@@ -46,7 +46,7 @@ const Campaigns = () => {
     isFetchingNextPage,
     isError,
     isLoading,
-  } = useGetCampaigns({ filter: "top" }); //TODO: return this to owned
+  } = useGetCampaigns({ filter: "owned" });
 
   const { lastObjectRef: lastAdventureRef } = useIntersectionObserver({
     isFetchingNextPage,
