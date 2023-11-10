@@ -51,7 +51,7 @@ const Login = () => {
   }, [handleSignMessage, publicKey]);
 
   return (
-    <div className="flex h-full items-end justify-center max-lg:px-4">
+    <div className="fixed inset-0 flex h-full items-end justify-center max-lg:px-4">
       <div className="absolute top-0 w-full">
         <MobileNavbar />
       </div>

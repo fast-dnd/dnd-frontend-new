@@ -33,15 +33,14 @@ const CookieBanner = () => {
   return (
     <div
       className={cn(
-        "absolute inset-x-0 bottom-0 w-full items-center justify-center border-t border-white bg-neutral-900 py-6",
+        "fixed inset-x-0 bottom-0 z-50 w-full items-center justify-center border-t border-white bg-neutral-900 px-4 py-6",
         cookieConsent !== null ? "hidden" : "flex",
       )}
     >
-      /
-      <div className="flex w-2/3 min-w-fit justify-between gap-20">
-        <div className="flex items-center gap-8">
-          <div className="h-2 w-2 rotate-45 bg-white" />
-          <div className="tracking-wide">
+      <div className="flex min-w-fit flex-col justify-between gap-4 lg:w-2/3 lg:flex-row lg:gap-20">
+        <div className="flex items-center justify-center gap-8">
+          <div className="h-2 w-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
+          <div className="max-lg:text-center max-lg:text-xs lg:tracking-wide">
             <Link href="/info/cookies" className="font-bold">
               We use cookies to enhance your browsing experience.
             </Link>
@@ -49,23 +48,24 @@ const CookieBanner = () => {
             By clicking `Allow` you agree to the use of cookies.
           </div>
         </div>
-        <div className="flex items-center gap-8">
-          <div className="flex gap-4">
+        <div className="flex items-center justify-center gap-8 max-lg:w-full">
+          <div className="flex justify-center gap-4 max-lg:w-full">
             <button
-              className="rounded border-2 border-white bg-white px-6 py-2 text-center text-xs font-bold uppercase leading-[18px] tracking-wide text-neutral-900"
+              className="rounded border border-white bg-white px-2 py-1 text-center text-xs font-bold uppercase leading-[18px] tracking-wide text-neutral-900 max-lg:w-full lg:border-2 lg:px-6 lg:py-2"
               onClick={() => setCookieConsent(true)}
             >
-              Allow Cookies
+              Allow
+              <span className="max-lg:hidden">Cookies</span>
             </button>
 
             <button
-              className="rounded border-2 border-white px-6 py-2 text-xs font-bold uppercase leading-[18px] tracking-wide"
+              className="rounded border border-white px-2 py-1 text-xs font-bold uppercase leading-[18px] tracking-wide max-lg:w-full lg:border-2 lg:px-6 lg:py-2"
               onClick={() => setCookieConsent(false)}
             >
-              Decline Cookies
+              Decline <span className="max-lg:hidden">Cookies</span>
             </button>
           </div>
-          <div className="h-2 w-2 rotate-45 bg-white" />
+          <div className="h-2 w-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
         </div>
       </div>
     </div>
