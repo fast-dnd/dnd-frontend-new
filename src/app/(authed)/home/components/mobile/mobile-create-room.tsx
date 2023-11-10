@@ -59,7 +59,7 @@ const MobileCreateRoom = ({
                 closingId={closingAdventureId}
                 setAdventureDetailId={setAdventureDetailId}
               />
-              <MobileAdventureDetail adventureDetailId={adventureDetailId} />
+
               <div
                 className={cn(
                   "pointer-events-none absolute inset-0 z-10 bg-dark-900 opacity-0 transition-all duration-500",

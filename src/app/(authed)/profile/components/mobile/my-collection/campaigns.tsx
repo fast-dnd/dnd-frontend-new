@@ -9,7 +9,6 @@ import useGetCampaigns from "@/hooks/queries/use-get-campaigns";
 import { ICampaign } from "@/types/campaign";
 import { cn } from "@/utils/style-utils";
 
-import MobileAdventureDetail from "@/app/(authed)/home/components/mobile/mobile-adventure-detail";
 import { MobileCampaign } from "@/app/(authed)/home/components/mobile/mobile-campaign";
 import MobileCampaignDetail from "@/app/(authed)/home/components/mobile/mobile-campaign-detail";
 
@@ -126,17 +125,14 @@ const Campaigns = () => {
     <div className="relative flex w-full flex-1 flex-col gap-4">
       {content}
       <MobileCampaignDetail
+        hideStartButton
         onClose={onClose}
         campaignDetailId={campaignDetailId}
         closingId={closingAdventureId}
         adventureDetailId={adventureDetailId}
         setAdventureDetailId={setAdventureDetailId}
       />
-      <MobileAdventureDetail
-        hideStartButton
-        onClose={onClose}
-        adventureDetailId={adventureDetailId}
-      />
+
       {isFetchingNextPage && (
         <div className="flex h-10 justify-center">
           <Spinner className="m-0 h-8 w-8" />
