@@ -12,7 +12,7 @@ const StatisticsCard = ({ icon, value, name }: IStatisticsCardProps) => {
       </div>
       <div className="flex flex-col whitespace-nowrap">
         <p className="font-bold">{value || "-- --"}</p>
-        <p className="text-xs text-white/50">{name}</p>
+        <p className="text-[10px] text-white/50">{name}</p>
       </div>
     </div>
   );
