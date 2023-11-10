@@ -158,7 +158,7 @@ const Champion = ({ champion }: { champion: IChampion }) => {
   const [actions, setActions] = useState(false);
 
   return (
-    <motion.div className="rounded-md bg-black py-4">
+    <div className="rounded-md bg-black py-4">
       <motion.header className="flex gap-4 bg-black px-4">
         <HelmetIcon className="h-10 w-10 shrink-0" />
         <div className="flex w-full min-w-0 flex-col justify-between gap-4">
@@ -204,7 +204,7 @@ const Champion = ({ champion }: { champion: IChampion }) => {
           </motion.section>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 };
 

@@ -29,7 +29,6 @@ const CookieBanner = () => {
     setStoredCookieConsent(cookieConsent);
   }, [cookieConsent]);
 
-  //todo mobile
   return (
     <div
       className={cn(
