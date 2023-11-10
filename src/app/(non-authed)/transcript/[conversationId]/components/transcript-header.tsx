@@ -14,7 +14,7 @@ const TranscriptHeader = ({ transcripts }: { transcripts: ITranscript }) => {
   const { scrollYProgress } = useScroll();
 
   return (
-    <div className="z-10 flex w-full items-center justify-between bg-black px-4 pb-5 pt-8 max-lg:fixed max-lg:mt-10 lg:rounded-t-md lg:px-6 lg:py-9">
+    <div className="z-10 flex w-full items-center justify-between bg-black px-4 pb-5 pt-8 max-lg:fixed max-lg:mt-[45px] lg:rounded-t-md lg:px-6 lg:py-9">
       <div className="hidden items-center gap-4 text-3xl lg:flex">
         <div className="h-2 w-2 rotate-45 bg-primary" style={jibril.style} />
         [DUNGEON NAME] {/* TODO: update this when backend finishes */}
@@ -30,7 +30,7 @@ const TranscriptHeader = ({ transcripts }: { transcripts: ITranscript }) => {
         <p className="hidden font-bold lg:block">
           TRANSCRIPT <span className="font-light">[DATE]</span>
         </p>
-        <hr className="hidden h-7 w-1 border-l border-white/20 lg:block" />
+        <div className="hidden h-7 w-1 border-l border-white/20 lg:block" />
         <p className="hidden font-medium lg:block">Players</p>
         <div className="flex items-center -space-x-2">
           {transcripts.players.map((player) => (
@@ -45,7 +45,7 @@ const TranscriptHeader = ({ transcripts }: { transcripts: ITranscript }) => {
             </div>
           ))}
         </div>
-        <hr className="h-7 w-1 border-l border-white/20" />
+        <div className="h-7 w-1 border-l border-white/20" />
         <button
           className="flex items-center gap-1 font-semibold lg:text-lg"
           onClick={() => onCopy(window.location.href)}

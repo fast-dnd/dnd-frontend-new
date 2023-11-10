@@ -45,7 +45,7 @@ const ChooseCharacter = ({
       >
         <p className="text-lg font-bold">{displayedChampion?.name}</p>
         <p className="line-clamp-5 font-light">{displayedChampion?.description}</p>
-        <div className="mt-4 flex flex-col gap-4">
+        <div className="mt-4 flex flex-col gap-2">
           {displayedChampion?.moveMapping &&
             moveMappingWithIcons(displayedChampion.moveMapping).map((move, index) => (
               <div key={index} className="flex items-center gap-3">

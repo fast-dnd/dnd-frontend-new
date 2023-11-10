@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 body {
-  height: 100svh;
   color: #ffffff;
   overflow: hidden;
+}
+
+@media (max-width: 1023px) {
+  body {
+    height: 100svh;
+  }
 }

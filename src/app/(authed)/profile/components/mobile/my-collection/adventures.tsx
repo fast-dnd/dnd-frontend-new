@@ -162,7 +162,7 @@ const AdventureWrapper = ({
       )}
     >
       <button
-        className="flex w-1/2 items-center justify-center gap-1 bg-black py-1"
+        className="flex w-1/2 items-center justify-center gap-1 rounded-bl-md bg-black py-1"
         onClick={() => onCopy(adventure._id)}
       >
         Copy ID

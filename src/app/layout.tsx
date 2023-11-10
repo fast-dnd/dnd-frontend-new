@@ -42,7 +42,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
       <HotjarAnalytics />
       <GoogleAnalytics />
 
-      <body className={cn("flex flex-col bg-dark-900", lexend.className)}>
+      <body className={cn("flex flex-col overflow-auto bg-dark-900", lexend.className)}>
         <Providers>
           <NextTopLoader />
           <Background />
