@@ -53,8 +53,7 @@ const CookieBanner = () => {
               className="rounded border border-white bg-white px-2 py-1 text-center text-xs font-bold uppercase leading-[18px] tracking-wide text-neutral-900 max-lg:w-full lg:border-2 lg:px-6 lg:py-2"
               onClick={() => setCookieConsent(true)}
             >
-              Allow
-              <span className="max-lg:hidden">Cookies</span>
+              Allow <span className="max-lg:hidden">Cookies</span>
             </button>
 
             <button
