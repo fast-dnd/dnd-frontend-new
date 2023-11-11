@@ -41,24 +41,12 @@ const MobileCampaigns = ({
 
   if (isError) return <div>Something went wrong</div>;
 
-  if (isLoading)
-    return (
-      <div className={cn("flex animate-pulse flex-col gap-4 px-4 py-2")}>
-        <div className="h-5 w-40 rounded bg-gray-700/80" />
-        <div className={cn("flex flex-col gap-4 overflow-hidden")}>
-          {Array.from({ length: 3 }, (_, i) => (
-            <div key={i} className={cn("h-[102px] w-full shrink-0 rounded-lg bg-gray-700/80")} />
-          ))}
-        </div>
-      </div>
-    );
-
-  const content = campaignsData.pages.map((page) =>
+  const content = campaignsData?.pages.map((page) =>
     page.campaigns.map((campaign, i) => {
       if (page.campaigns.length === i + 1) {
         return (
           <MobileCampaign
-            key={campaign._id}
+            key={`${subTab}${campaign._id}`}
             closingId={closingId}
             ref={lastCampaignRef}
             campaign={campaign}
@@ -66,20 +54,20 @@ const MobileCampaigns = ({
             setCampaignDetailId={setCampaignDetailId}
             opening={opening}
             setOpening={setOpening}
-            animate={animate && !filter}
+            animate={animate}
           />
         );
       }
       return (
         <MobileCampaign
-          key={campaign._id}
+          key={`${subTab}${campaign._id}`}
           closingId={closingId}
           campaign={campaign}
           campaignDetailId={campaignDetailId}
           setCampaignDetailId={setCampaignDetailId}
           opening={opening}
           setOpening={setOpening}
-          animate={animate && !filter}
+          animate={animate}
         />
       );
     }),
