@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
-import useCreateRoom from "../../hooks/use-create-room";
+import useCreateRoom from "../../../hooks/use-create-room";
 import TemplateSentences from "./template-sentences";
 
 const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {

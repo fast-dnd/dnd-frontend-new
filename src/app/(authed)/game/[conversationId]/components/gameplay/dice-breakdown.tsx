@@ -3,28 +3,30 @@ import { BsFillArrowRightSquareFill } from "react-icons/bs";
 import { FaDice, FaRobot } from "react-icons/fa";
 import { HiSparkles } from "react-icons/hi";
 
-import { IPlayMoveResponse } from "@/types/game";
+import { moveStore } from "../../stores/move-store";
 
-const DiceBreakdown = ({ rollInfo }: { rollInfo: IPlayMoveResponse }) => {
+const DiceBreakdown = () => {
+  const rollInfo = moveStore.roll.use();
+
   return (
-    <div className="flex w-full flex-col px-4">
-      <div className="flex w-full justify-between">
+    <div className="flex w-full flex-col lg:px-4">
+      <div className="flex w-full justify-between max-lg:text-xs">
         <div className="flex items-center gap-2">
           <FaDice /> You rolled
         </div>
-        <p>{rollInfo.diceBreakdown.dice}</p>
+        <p>{rollInfo?.diceBreakdown.dice}</p>
       </div>
       <DiceBreakdownItem
         Icon={BsFillArrowRightSquareFill}
         label="Round bonus"
-        value={rollInfo.diceBreakdown.bonusApplied}
+        value={rollInfo?.diceBreakdown.bonusApplied}
       />
       <DiceBreakdownItem
         Icon={FaRobot}
         label="Bob gave"
-        value={rollInfo.diceBreakdown.aiDiceBonus}
+        value={rollInfo?.diceBreakdown.aiDiceBonus}
       />
-      <DiceBreakdownItem Icon={HiSparkles} label="Mana used" value={rollInfo.diceBreakdown.mana} />
+      <DiceBreakdownItem Icon={HiSparkles} label="Mana used" value={rollInfo?.diceBreakdown.mana} />
     </div>
   );
 };
@@ -39,7 +41,7 @@ type Props = {
 
 const DiceBreakdownItem = ({ Icon, label, value }: Props) => {
   return (
-    <div className="flex w-full justify-between opacity-50">
+    <div className="flex w-full justify-between opacity-50 max-lg:text-xs">
       <div className="flex items-center gap-2">
         <Icon /> {label}
       </div>

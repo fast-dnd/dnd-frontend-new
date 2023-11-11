@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const useCopy = () => {
   const [copied, setCopied] = useState(false);
@@ -11,6 +12,7 @@ const useCopy = () => {
 
     setCopied(true);
     navigator.clipboard.writeText(text);
+    toast.success("Copied to clipboard");
   };
 
   useEffect(() => {

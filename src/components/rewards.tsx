@@ -24,7 +24,7 @@ const Rewards = ({ selectedReward, onSelectReward }: IRewardProps) => {
       )}
     >
       <p>Unlocked {rewards?.length ?? "~"}/50</p>
-      <div className="grid grid-cols-4 gap-7">
+      <div className="grid grid-cols-2 gap-7 lg:grid-cols-4">
         {rewards?.map((reward) => (
           <div key={reward._id} className="flex flex-col gap-2">
             <div className="relative aspect-[1.7] w-[500px] max-w-full">
@@ -43,10 +43,10 @@ const Rewards = ({ selectedReward, onSelectReward }: IRewardProps) => {
                 <div className="absolute right-2 top-2 bg-primary px-2 py-1">Equipped</div>
               )}
             </div>
-            <div className="flex w-full items-center justify-between">
-              <p className="text-xl uppercase">{reward.name}</p>
+            <div className="flex w-full flex-col items-start justify-between max-lg:gap-2 lg:flex-row lg:items-center">
+              <p className="text-sm uppercase lg:text-xl">{reward.name}</p>
               <div className="flex items-center gap-2 rounded-md border border-white/25 px-2 py-1">
-                <p className="text-xl">{reward.rarity}</p>
+                <p className="text-xs lg:text-xl">{reward.rarity}</p>
               </div>
             </div>
           </div>

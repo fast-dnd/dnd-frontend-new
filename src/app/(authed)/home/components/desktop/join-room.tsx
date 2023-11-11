@@ -6,7 +6,7 @@ import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import useJoinRoom from "../hooks/use-join-room";
+import useJoinRoom from "../../hooks/use-join-room";
 
 const JoinRoom = () => {
   const [roomLink, setRoomLink] = React.useState<string>("");

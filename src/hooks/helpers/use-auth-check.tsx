@@ -14,8 +14,8 @@ const useAuthCheck = () => {
   const [_, setRedirectURL] = useLocalStorage("redirectURL", pathname);
 
   useEffect(() => {
-    if (pathname !== "/mobile-wip" && width !== 0 && width < 1024) redirect("/mobile-wip");
-    if (pathname === "/mobile-wip" && width !== 0 && width >= 1024) redirect("/home");
+    // if (pathname !== "/mobile-wip" && width !== 0 && width < 1024) redirect("/mobile-wip");
+    // if (pathname === "/mobile-wip" && width !== 0 && width >= 1024) redirect("/home");
 
     const nonAuthURLs = ["/guide", "/transcript", "/mobile-wip"];
     const isNonAuthURL = nonAuthURLs.some((url) => pathname?.includes(url));

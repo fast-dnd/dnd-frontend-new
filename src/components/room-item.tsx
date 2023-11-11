@@ -25,7 +25,7 @@ const RoomItem = React.forwardRef<
   return (
     <div
       key={room.conversationId}
-      className="flex w-full items-center justify-between gap-4 rounded-md p-2 transition-colors duration-300 hover:bg-white/10"
+      className="flex w-full items-center justify-between gap-4 rounded-md p-0 pr-2 transition-colors duration-300 hover:bg-white/10 max-lg:bg-black lg:p-2"
       ref={ref}
     >
       <Image

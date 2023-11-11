@@ -53,13 +53,8 @@ export interface IEditRoom {
 
 export interface IEditChampion {
   conversationId: string;
-  championId: string;
+  championId: string | undefined;
   signMessage?: string;
   signature?: string;
   walletAddress?: PublicKey;
-}
-
-export interface IEditAvatar {
-  conversationId: string;
-  avatarId: string;
 }

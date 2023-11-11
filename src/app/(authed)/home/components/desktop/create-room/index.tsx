@@ -9,9 +9,9 @@ import DungeonDetail from "@/components/dungeon-detail";
 import GoBackButton from "@/components/go-back-button";
 import { Box } from "@/components/ui/box";
 
+import { tabStore } from "../../../stores/tab-store";
 import AddFavoriteFooter from "./add-favorite-footer";
 import CreateRoomFooter from "./create-room-footer";
-import { tabStore } from "./store/tab-store";
 import Tabs from "./tabs";
 
 const CreateRoom = () => {

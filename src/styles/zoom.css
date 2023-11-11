@@ -1,20 +1,3 @@
-@media (max-width: 389px) {
-  body {
-    height: calc(100vh / 0.9);
-    zoom: 90%;
-  }
-
-  .nozoom {
-    zoom: calc(100% / 0.9);
-  }
-
-  .slider {
-    transform: scale(0.9);
-    transform-origin: left;
-    width: calc(100% / 0.9);
-  }
-}
-
 @media (min-width: 1024px) {
   body {
     height: calc(100vh / 0.4);

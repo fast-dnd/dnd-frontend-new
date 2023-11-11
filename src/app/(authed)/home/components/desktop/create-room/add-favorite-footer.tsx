@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import useAddFavoriteCampaign from "../../hooks/use-add-favorite-campaign";
-import useAddFavoriteDungeon from "../../hooks/use-add-favorite-dungeon";
-import { tabStore } from "./store/tab-store";
+import useAddFavoriteCampaign from "../../../hooks/use-add-favorite-campaign";
+import useAddFavoriteDungeon from "../../../hooks/use-add-favorite-dungeon";
+import { tabStore } from "../../../stores/tab-store";
 
 const AddFavoriteFooter = () => {
   const activeBaseTab = tabStore.baseTab.use();

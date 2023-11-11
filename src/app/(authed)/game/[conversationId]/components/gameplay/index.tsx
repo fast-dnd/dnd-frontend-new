@@ -23,7 +23,7 @@ const Gameplay = (props: { conversationId: string }) => {
   const { data: roomData } = useGetRoomData(conversationId);
   const { data: dungeonData } = useGetDungeon(roomData?.dungeonId);
 
-  const { lastStory, loadingText } = useGameplaySocket(conversationId);
+  const { lastStory } = useGameplaySocket(conversationId);
 
   const { currentPlayer } = useHandlePlayerStatusUpdate({ roomData });
 
@@ -36,7 +36,7 @@ const Gameplay = (props: { conversationId: string }) => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <GamePlayHeader title={dungeonData.name} loading={loadingText} />
+      <GamePlayHeader title={dungeonData.name} />
 
       <div className="flex min-h-0 flex-1 flex-col gap-8 rounded-b-md bg-glass p-5 backdrop-blur-2xl lg:px-12 lg:py-8">
         <Stories roomData={roomData} dungeonData={dungeonData} lastStory={lastStory} />
@@ -44,7 +44,6 @@ const Gameplay = (props: { conversationId: string }) => {
           roomData={roomData}
           conversationId={conversationId}
           currentPlayer={currentPlayer}
-          loadingText={loadingText}
         />
         <HomeModal />
         <DiedModal state={roomData.state} />

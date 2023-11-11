@@ -1,37 +1,23 @@
-import { FormEventHandler, useState } from "react";
+import { useState } from "react";
 import { AiOutlineLeft } from "react-icons/ai";
-import { IoMdSend } from "react-icons/io";
 
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/style-utils";
 
-import useAskQuestion from "../../hooks/use-ask-question";
 import useGeneral from "../../hooks/use-general";
-import { gameStore } from "../../stores/game-store";
+import useGetCurrentPlayer from "../../hooks/use-get-current-player";
+import AskQuestion from "./ask-question";
 import GeneralSkeleton from "./general-skeleton";
 import MoveQuestionHistory from "./move-question-history";
 import Player from "./player";
 
-const General = (props: { conversationId: string }) => {
-  const { conversationId } = props;
-
-  const { roomData, currentPlayer, moveHistory, questionHistory, canAsk, asking, setAsking } =
+const General = ({ conversationId }: { conversationId: string }) => {
+  const { currentPlayer } = useGetCurrentPlayer(conversationId);
+  const { roomData, moveHistory, questionHistory, canAsk, asking, setAsking } =
     useGeneral(conversationId);
-  const { mutate: askQuestion } = useAskQuestion();
 
   const [statsOpened, setStatsOpened] = useState(false);
-  const [question, setQuestion] = useState("");
-
-  const statusUpdate = gameStore.statusUpdate.use();
-
-  const onSubmit: FormEventHandler<HTMLFormElement> = (ev) => {
-    ev.preventDefault();
-    setAsking(true);
-    setQuestion("");
-    askQuestion({ conversationId, question }, { onError: () => setAsking(false) });
-  };
 
   if (!roomData || !currentPlayer) return <GeneralSkeleton />;
 
@@ -42,7 +28,7 @@ const General = (props: { conversationId: string }) => {
       wrapperClassName="h-full"
     >
       <div className="flex h-full min-h-0 w-full flex-col gap-4 overflow-y-auto px-5 lg:gap-8 lg:px-8">
-        <Player player={currentPlayer} currentPlayer statusUpdate={statusUpdate} />
+        <Player player={currentPlayer} currentPlayer />
         <div className="w-full border-t border-white/25" />
         <div className={cn("flex min-h-0 flex-1 flex-col gap-4 lg:gap-8", statsOpened && "hidden")}>
           {roomData.playerState.length > 1 && (
@@ -60,29 +46,12 @@ const General = (props: { conversationId: string }) => {
             thinking={asking}
           />
 
-          <form onSubmit={onSubmit} className="flex w-full items-end">
-            <div className="flex flex-1">
-              <Input
-                disabled={!canAsk}
-                label="Ask Bob"
-                value={question}
-                className="m-0"
-                onChange={(e) => {
-                  setQuestion(e.target.value);
-                }}
-              />
-            </div>
-            <Button
-              disabled={!canAsk}
-              type="submit"
-              variant="ghost"
-              className="h-[60px] w-20 items-center text-3xl text-primary"
-              isLoading={asking}
-              aria-label="Send"
-            >
-              {!asking && <IoMdSend />}
-            </Button>
-          </form>
+          <AskQuestion
+            conversationId={conversationId}
+            canAsk={canAsk}
+            asking={asking}
+            setAsking={setAsking}
+          />
         </div>
         <div className={cn("flex min-h-0 flex-col gap-8", !statsOpened && "hidden")}>
           <div className="flex w-full">

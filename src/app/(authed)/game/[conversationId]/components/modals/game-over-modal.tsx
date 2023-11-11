@@ -46,11 +46,14 @@ const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
         if (!isOpen) close();
       }}
     >
-      <DialogContent className="flex max-h-[800px] w-fit flex-col lg:max-w-[550px]">
+      <DialogContent className="flex h-full w-full flex-col p-4 max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:max-h-[800px] lg:w-fit lg:max-w-[550px]">
+        <div className="pointer-events-none absolute inset-0 h-full w-full -translate-y-1/3 bg-radialGradient lg:hidden">
+          <div className="h-full w-full blur-xl" />
+        </div>
         <DialogHeader>
           <ThemeTitle title={result === "WIN" ? "victory" : "defeat"} blue={result === "WIN"} />
 
-          <DialogDescription className="w-[440px] text-center">
+          <DialogDescription className="text-center lg:w-[440px]">
             {result === "WIN" && (
               <span>
                 You have completed <span className="font-semibold">{dungeon.name}</span>
@@ -62,16 +65,16 @@ const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
           </DialogDescription>
         </DialogHeader>
         <div className="mt-6 flex min-h-0 w-full flex-1 flex-col gap-6 overflow-y-auto lg:mt-8 lg:gap-8">
-          <div className="w-full border-t border-white/25" />
-
+          <div className="w-full border-t border-white/25 max-lg:hidden" />
+          <div className="h-0.5 w-full bg-black shadow-lobby lg:hidden" />
           {players.map((player) => (
             <Player key={player.accountId} player={player} />
           ))}
         </div>
-        <DialogFooter className="flex-col">
+        <DialogFooter className="flex-col items-center  max-lg:gap-3">
           <Button
             variant="outline"
-            className="flex px-8 text-base lg:text-xl"
+            className="flex px-4 text-base max-lg:w-64 lg:text-xl"
             onClick={rate}
             autoFocus
           >
@@ -79,7 +82,7 @@ const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
           </Button>
           <Button
             variant="primary"
-            className="flex whitespace-nowrap px-8 text-base lg:text-xl"
+            className="flex whitespace-nowrap px-4 text-base max-lg:w-64 lg:text-xl"
             onClick={() => {
               setGoingHome(true);
               close();

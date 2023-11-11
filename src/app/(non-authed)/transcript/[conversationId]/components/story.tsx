@@ -1,48 +1,42 @@
+"use client";
+
 import Image from "next/image";
 
-import { ITranscript } from "@/types/transcript";
+import { ITranscript, ITranscriptStory } from "@/types/transcript";
 
-import ChatWithMaster from "./chat-with-master";
+import ChatItem from "./chat-item";
 
-const Story = ({ transcripts }: { transcripts: ITranscript }) => {
+const Story = ({ story, transcripts }: { story: ITranscriptStory; transcripts: ITranscript }) => {
   return (
-    <div className="mt-8 flex flex-col gap-10">
-      {transcripts.story.map((story, index) => (
-        <div key={story.storyChunk} className="flex flex-col gap-4 text-xl ">
-          {story.image && (
-            <div className="flex items-center justify-center">
-              <Image
-                src={story.image || "/images/default-dungeon.png"}
-                width={280}
-                height={280}
-                alt={`${story.title}'s image`}
-              />
-            </div>
-          )}
-          <p className="tracking-wide">{story.storyChunk}</p>
-          <div className="mt-4 flex flex-col gap-4">
-            {story.movesInRound?.map((move) => {
-              const player = transcripts.players.find(
-                (player) => player.accountId === move.playerAccountId,
-              );
-              if (!player) return null;
-              return (
-                <div className="flex gap-4" key={move.action}>
-                  <Image
-                    src={player.imageUrl || "/images/default-avatar.png"}
-                    width={32}
-                    height={32}
-                    alt={`${player.name}'s avatar`}
-                    className="h-8 w-8 rounded-md"
-                  />
-                  <span className="font-semibold text-primary">{player.name}:</span> {move.action}
-                </div>
-              );
-            })}
-          </div>
-          {story.question && story.answer && story.playerAsking && <ChatWithMaster story={story} />}
+    <div className="flex flex-col gap-6 rounded-md bg-black p-1 pb-6 lg:p-8">
+      {story.image && (
+        <Image
+          src={story.image || "/images/default-dungeon.png"}
+          width={100}
+          height={100}
+          alt={`${story.title}'s image`}
+          className="h-44 w-full rounded-md lg:h-56"
+        />
+      )}
+      <div className="flex flex-col gap-6 max-lg:px-4">
+        <div className="flex flex-col gap-1">
+          <p className="text-lg font-bold lg:text-2xl">{story.title}</p>
+          <p className="font-light leading-4 lg:leading-5">{story.storyChunk}</p>
         </div>
-      ))}
+      </div>
+
+      {story.movesInRound?.map((move) => {
+        const player = transcripts.players.find(
+          (player) => player.accountId === move.playerAccountId,
+        );
+
+        if (!player) return null;
+        return (
+          <ChatItem key={player.accountId} player={player} text={move.action} dice={move.dice} />
+        );
+      })}
+
+      {story.question && story.answer && story.playerAsking && <ChatItem text={story.answer} />}
     </div>
   );
 };

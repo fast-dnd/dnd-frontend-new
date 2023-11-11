@@ -8,14 +8,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
-import { PlayerStatusUpdate } from "../../stores/game-store";
+import { gameStore } from "../../stores/game-store";
 
-const Player = (props: {
-  player: IPlayer;
-  currentPlayer?: boolean;
-  statusUpdate?: PlayerStatusUpdate;
-}) => {
-  const { player, currentPlayer, statusUpdate } = props;
+const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: boolean }) => {
+  const statusUpdate = gameStore.statusUpdate.use();
 
   return (
     <div className="relative flex gap-4 lg:gap-6">
@@ -26,13 +22,13 @@ const Player = (props: {
           draggable={false}
           width={90}
           height={90}
-          className="h-full w-full"
+          className="h-full w-full max-lg:rounded-full max-lg:border max-lg:border-white/50"
         />
         {player.health <= 0 && (
-          <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black/75">
+          <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black/75 max-lg:rounded-full">
             <SkullIcon
               className={cn(
-                "h-3/4 w-3/4",
+                "h-1/2 w-1/2 lg:h-3/4 lg:w-3/4",
                 !!currentPlayer && !!statusUpdate && statusUpdate.lostHealth && "fill-primary",
               )}
             />
@@ -43,13 +39,13 @@ const Player = (props: {
       <div
         className={cn(
           "flex w-full min-w-0 flex-col justify-between lg:gap-1.5",
-          player.health <= 0 && "pointer-events-none opacity-50",
+          player.health <= 0 && "pointer-events-none lg:opacity-50",
         )}
       >
-        <p className="-mt-1 truncate font-semibold uppercase tracking-[0.07em] lg:text-xl">
+        <p className="-mt-1 truncate font-bold uppercase tracking-[0.07em] lg:text-xl">
           {player.name}
         </p>
-        <p className="-mt-0.5 truncate text-sm font-light tracking-[0.15em] lg:text-base">
+        <p className="-mt-0.5 truncate text-xs tracking-[0.15em] lg:text-base lg:font-light">
           {player.champion?.name}
         </p>
         <div className="flex lg:gap-4">
@@ -73,7 +69,7 @@ const Player = (props: {
                   <VscHeartFilled />
                   <span className="mt-0.5">{Math.max(0, player.health)}</span>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className="max-lg:hidden">
                   <p>Health</p>
                 </TooltipContent>
               </Tooltip>
@@ -92,7 +88,7 @@ const Player = (props: {
                   <BsFillLightningFill />
                   <span className="mt-0.5">{player.bonusForNextRound}</span>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className="max-lg:hidden">
                   <p>Bonus - will be applied on next roll</p>
                 </TooltipContent>
               </Tooltip>
@@ -111,7 +107,7 @@ const Player = (props: {
                   <HiSparkles />
                   <span className="mt-0.5">{player.mana}</span>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className="max-lg:hidden">
                   <p>Mana - can be used on any roll</p>
                 </TooltipContent>
               </Tooltip>

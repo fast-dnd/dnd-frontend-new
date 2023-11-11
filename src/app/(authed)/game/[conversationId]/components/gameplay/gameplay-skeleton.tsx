@@ -8,7 +8,7 @@ const GameplaySkeleton = () => {
           <div className="h-8 w-1/3 rounded-lg bg-gray-700" />
         </div>
 
-        <div className="flex shrink-0 items-center gap-4">
+        <div className="flex shrink-0 animate-pulse items-center gap-4">
           <div className="h-6 w-6 rounded-xl bg-gray-700" />
           <div className="h-6 w-6 rounded-xl bg-gray-700" />
           <div className="h-12 w-48 rounded-lg bg-gray-700" />

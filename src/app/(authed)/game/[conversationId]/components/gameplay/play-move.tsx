@@ -1,8 +1,8 @@
 import { IPlayer, IRoomDetail } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
-import usePlayMove from "../../hooks/use-play-move";
 import usePlayMoveSocket from "../../hooks/use-play-move-socket";
+import useTimer from "../../hooks/use-timer";
 import { moveStore } from "../../stores/move-store";
 import MoveInput from "./move-input";
 import PickPowerup from "./pick-powerup";
@@ -12,12 +12,11 @@ export interface PlayMoveProps {
   roomData: IRoomDetail;
   conversationId: string;
   currentPlayer: IPlayer;
-  loadingText: boolean;
 }
 
-const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: PlayMoveProps) => {
+const PlayMove = ({ roomData, conversationId, currentPlayer }: PlayMoveProps) => {
   usePlayMoveSocket(conversationId);
-  const { timeToDisplay } = usePlayMove(roomData, currentPlayer, loadingText);
+  const { timeToDisplay } = useTimer(roomData);
   const store = moveStore.use();
 
   return (
@@ -32,7 +31,7 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
         <div
           className={cn(
             "flex h-full flex-1 flex-col gap-6",
-            store.buttonState !== "CANPLAY" && "hidden lg:flex",
+            store.buttonState !== "DEFAULT" && "hidden lg:flex",
           )}
         >
           <div
@@ -50,7 +49,11 @@ const PlayMove = ({ roomData, conversationId, currentPlayer, loadingText }: Play
         </div>
         <div className="flex flex-col gap-6">
           <PickPowerup currentMana={currentPlayer.mana} />
-          <RollDice conversationId={conversationId} accountId={currentPlayer.accountId} />
+          <RollDice
+            currentPlayer={currentPlayer}
+            roomData={roomData}
+            conversationId={conversationId}
+          />
         </div>
       </div>
 

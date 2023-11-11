@@ -8,6 +8,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { FcGoogle } from "react-icons/fc";
 
+import MobileNavbar from "@/components/mobile-navbar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 
@@ -50,7 +51,10 @@ const Login = () => {
   }, [handleSignMessage, publicKey]);
 
   return (
-    <div className="flex h-full items-end justify-center">
+    <div className="fixed inset-0 flex h-full items-end justify-center max-lg:px-4">
+      <div className="absolute top-0 w-full">
+        <MobileNavbar />
+      </div>
       <div className="absolute inset-0 z-[-5] flex h-full w-full bg-gradient-to-b from-black via-black/10 via-35% to-black" />
       <div className={`absolute inset-0 -z-10 h-full w-full`}>
         <div
@@ -74,8 +78,8 @@ const Login = () => {
           ))}
         </div>
       </div>
-      <div className="flex flex-col items-center gap-16 pb-24">
-        <div className="relative w-full">
+      <div className="absolute bottom-10 flex flex-col items-center gap-6 lg:bottom-0 lg:gap-16 lg:pb-24">
+        <div className="relative w-full bg-red-500">
           {slides.map((slide, i) => (
             <div
               key={slide.image}
@@ -84,25 +88,31 @@ const Login = () => {
                 current === i && "opacity-100 blur-none",
               )}
             >
-              <p className="text-center text-5xl font-light tracking-[6.72px]">
+              <p className="text-center text-2xl font-light tracking-widest max-lg:w-[328px] lg:text-5xl lg:tracking-[6.72px]">
                 {slide.headerStart} <br />
-                <span className="whitespace-nowrap font-bold">{slide.headerEnd}</span>
+                <span className="text-center font-bold lg:whitespace-nowrap">
+                  {slide.headerEnd}
+                </span>
               </p>
-              <p className="w-[550px] text-center text-xl tracking-widest">{slide.description}</p>
+              <p className="w-[270px] text-center text-sm tracking-widest lg:w-[550px] lg:text-xl">
+                {slide.description}
+              </p>
             </div>
           ))}
         </div>
-        <div className="mt-12 flex w-full flex-col items-center gap-6">
+        <div className="flex w-full flex-col items-center gap-6 lg:mt-12">
           <Button variant="google" className="w-fit gap-2 px-6 py-5" onClick={() => googleLogin()}>
             <FcGoogle />
             LOG IN WITH GOOGLE
           </Button>
+
           <div className="flex items-center">
-            <div className="h-1 w-20 rounded-md bg-white/25 transition-all duration-200 hover:bg-white/60 active:bg-white/90"></div>
+            <div className="h-1 w-20 rounded-md bg-white/25"></div>
             <span className="px-5">OR</span>
-            <div className="h-1 w-20 rounded-md bg-white/25 transition-all duration-200 hover:bg-white/60 active:bg-white/90"></div>
+            <div className="h-1 w-20 rounded-md bg-white/25"></div>
           </div>
-          <div className="flex w-full items-center rounded-md border-2 border-white bg-black px-6 py-2 hover:bg-white/10 active:bg-white/25">
+
+          <div className="flex w-full items-center rounded-md border-2 border-white bg-black px-6 py-2 transition-all duration-300 hover:bg-white/10 active:bg-white/25">
             <WalletMultiButtonDynamic />
           </div>
         </div>

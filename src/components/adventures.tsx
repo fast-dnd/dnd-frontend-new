@@ -10,6 +10,8 @@ import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetDungeons from "@/hooks/queries/use-get-dungeons";
 import { IBaseDungeon } from "@/types/dungeon";
 
+import { SubTabType } from "@/app/(authed)/home/stores/tab-store";
+
 const Adventures = ({
   setDungeonDetailId,
   filter,
@@ -19,7 +21,7 @@ const Adventures = ({
   showActions,
 }: {
   setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  filter?: string;
+  filter?: SubTabType;
   addToCampaign?: (dungeonName: IBaseDungeon) => void;
   addedToCampaign?: IBaseDungeon[];
   isOwned?: boolean;

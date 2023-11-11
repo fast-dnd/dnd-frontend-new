@@ -9,10 +9,10 @@ import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
 import { DungeonDuration, dungeonDurations } from "@/utils/dungeon-options";
 
-import useOnRoomChange from "../hooks/use-on-room-change";
-import usePlayerInfo from "../hooks/use-player-info";
-import useRoomSocket from "../hooks/use-room-socket";
-import useStartGame from "../hooks/use-start-game";
+import useOnRoomChange from "../../hooks/use-on-room-change";
+import usePlayerInfo from "../../hooks/use-player-info";
+import useRoomSocket from "../../hooks/use-room-socket";
+import useStartGame from "../../hooks/use-start-game";
 
 const imagesAudio = [
   {

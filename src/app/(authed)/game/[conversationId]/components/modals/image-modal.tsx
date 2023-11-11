@@ -13,7 +13,11 @@ const ImageModal = ({ image }: { image: string }) => {
       alt="dungeon"
       height={512}
       width={512}
-      className={cn("w-full", isModal && "w-[90vh] p-2")}
+      className={cn(
+        "w-full",
+        isModal && "w-[90vh] p-2",
+        isMobileTablet && "h-full rounded-md object-cover",
+      )}
       draggable={false}
     />
   );
