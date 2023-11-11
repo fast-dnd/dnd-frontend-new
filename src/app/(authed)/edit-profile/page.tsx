@@ -124,14 +124,15 @@ const EditProfile = () => {
               />
             </div>
           </div>
+
+          <div className="fixed bottom-4 left-0 flex w-full justify-center">
+            <Button className="w-52" isLoading={isEditing}>
+              SAVE CHANGES
+            </Button>
+          </div>
         </form>
       </div>
 
-      <div className="fixed bottom-4 left-0 flex w-full justify-center">
-        <Button className="w-52" isLoading={isEditing}>
-          SAVE CHANGES
-        </Button>
-      </div>
       <DevTool control={control} id="edit-profile-form" />
     </>
   );

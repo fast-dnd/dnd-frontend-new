@@ -35,7 +35,7 @@ const MobileMyAccount = () => {
         </div>
         <div className="flex flex-col justify-center gap-4">
           <p className="truncate text-xl font-bold uppercase">{account.username}</p>
-          <p className="text-sm text-primary">{account.properties.email}</p>
+          <p className="text-xs text-primary">{account.properties.email}</p>
           <div className="flex flex-col gap-2 transition-all duration-200 hover:opacity-80">
             <Link
               className="flex w-fit items-center gap-2 rounded-md bg-white/5 px-3 py-1"

@@ -7,7 +7,7 @@ interface IStatisticsCardProps {
 const StatisticsCard = ({ icon, value, name }: IStatisticsCardProps) => {
   return (
     <div className="flex w-full items-center gap-3 rounded-md bg-primary-900">
-      <div className="flex min-h-[36px] min-w-[36px] items-center justify-center rounded-md bg-primary/10">
+      <div className="flex h-[36px] w-[36px] items-center justify-center rounded-md bg-primary/10">
         {icon}
       </div>
       <div className="flex flex-col whitespace-nowrap">
