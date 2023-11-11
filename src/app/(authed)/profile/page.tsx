@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import MobileNavbar from "@/components/mobile-navbar";
 
@@ -12,12 +13,10 @@ import MobileMyCollection from "./components/mobile/my-collection";
 import TabToggle from "./components/mobile/tab-toggle";
 import { baseTabs } from "./utils/tabs";
 
-const Profile = ({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) => {
-  const activeTab = (searchParams?.activeTab ?? "ADVENTURES") as Tab;
+const Profile = () => {
+  const searchParams = useSearchParams();
+
+  const activeTab = (searchParams.get("activeTab") ?? "ADVENTURES") as Tab;
 
   const [baseActiveTab, setBaseActiveTab] = useState<(typeof baseTabs)[number]>(
     activeTab === "GAME HISTORY" ? baseTabs[1] : baseTabs[0],
