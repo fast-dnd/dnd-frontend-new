@@ -91,7 +91,7 @@ const MobileCampaigns = ({
         {isLoading ? (
           <div className="h-5 w-40 rounded bg-gray-700/80" />
         ) : (
-          <p className="text-sm font-medium uppercase">ALL CAMPAIGNS</p>
+          <p className="text-sm font-medium uppercase">{subTab} CAMPAIGNS</p>
         )}
         <MobileFilter open={filter} setOpen={setFilter} />
       </div>
