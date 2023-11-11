@@ -13,6 +13,7 @@ export const transcriptStorySchema = z.object({
       z.object({
         playerAccountId: z.string(),
         action: z.string(),
+        dice: z.number(),
       }),
     )
     .nullish(),
@@ -31,4 +32,6 @@ export const transcriptStorySchema = z.object({
 export const transcriptSchema = z.object({
   players: z.array(transcriptPlayerSchema),
   story: z.array(transcriptStorySchema),
+  title: z.string(),
+  createdAt: z.coerce.date(),
 });

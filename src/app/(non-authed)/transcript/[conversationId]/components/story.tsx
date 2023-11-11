@@ -29,8 +29,11 @@ const Story = ({ story, transcripts }: { story: ITranscriptStory; transcripts: I
         const player = transcripts.players.find(
           (player) => player.accountId === move.playerAccountId,
         );
+
         if (!player) return null;
-        return <ChatItem key={player.accountId} player={player} text={move.action} />;
+        return (
+          <ChatItem key={player.accountId} player={player} text={move.action} dice={move.dice} />
+        );
       })}
 
       {story.question && story.answer && story.playerAsking && <ChatItem text={story.answer} />}

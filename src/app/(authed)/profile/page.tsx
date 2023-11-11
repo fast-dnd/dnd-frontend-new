@@ -19,7 +19,9 @@ const Profile = ({
 }) => {
   const activeTab = (searchParams?.activeTab ?? "ADVENTURES") as Tab;
 
-  const [baseActiveTab, setBaseActiveTab] = useState<(typeof baseTabs)[number]>(baseTabs[0]);
+  const [baseActiveTab, setBaseActiveTab] = useState<(typeof baseTabs)[number]>(
+    activeTab === "GAME HISTORY" ? baseTabs[1] : baseTabs[0],
+  );
 
   return (
     <>
@@ -32,7 +34,11 @@ const Profile = ({
         <MobileNavbar />
         <div className="relative flex flex-1 flex-col gap-4 p-4">
           <TabToggle tabs={baseTabs} activeTab={baseActiveTab} setActiveTab={setBaseActiveTab} />
-          {baseActiveTab === "MY PROFILE" ? <MobileMyAccount /> : <MobileMyCollection />}
+          {baseActiveTab === "MY PROFILE" && activeTab !== "GAME HISTORY" ? (
+            <MobileMyAccount />
+          ) : (
+            <MobileMyCollection showGameHistory={activeTab === "GAME HISTORY"} />
+          )}
         </div>
       </div>
     </>

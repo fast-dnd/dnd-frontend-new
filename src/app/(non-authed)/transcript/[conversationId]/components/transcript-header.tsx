@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { format } from "date-fns";
 import { motion, useScroll } from "framer-motion";
 import { PiShareFatFill } from "react-icons/pi";
 
@@ -17,18 +18,19 @@ const TranscriptHeader = ({ transcripts }: { transcripts: ITranscript }) => {
     <div className="z-10 flex w-full items-center justify-between bg-black px-4 pb-5 pt-8 max-lg:fixed max-lg:mt-[45px] lg:rounded-t-md lg:px-6 lg:py-9">
       <div className="hidden items-center gap-4 text-3xl lg:flex">
         <div className="h-2 w-2 rotate-45 bg-primary" style={jibril.style} />
-        [DUNGEON NAME] {/* TODO: update this when backend finishes */}
+        {transcripts.title}
         <div className="h-2 w-2 rotate-45 bg-primary" />
       </div>
       <div className="lg:hidden">
         <p className="font-light">Transcript</p>
-        <p className="font-bold">[DUNGEON NAME]</p>
-        <p className="font-light text-white/50">[DATE]</p>
+        <p className="font-bold">{transcripts.title}</p>
+        <p className="font-light text-white/50">{format(transcripts.createdAt, "MMM d, yyyy")}</p>
       </div>
 
       <div className="flex items-center gap-2 lg:gap-4">
         <p className="hidden font-bold lg:block">
-          TRANSCRIPT <span className="font-light">[DATE]</span>
+          TRANSCRIPT{" "}
+          <span className="font-light">{format(transcripts.createdAt, "MMM d, yyyy")}</span>
         </p>
         <div className="hidden h-7 w-1 border-l border-white/20 lg:block" />
         <p className="hidden font-medium lg:block">Players</p>

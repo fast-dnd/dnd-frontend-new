@@ -1,4 +1,5 @@
 import React from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 import Rewards from "@/components/rewards";
 import { cn } from "@/utils/style-utils";
@@ -10,8 +11,11 @@ import History from "./history";
 export const tabs = ["Adventures", "Campaigns", "History", "Rewards"] as const;
 export type Tab = (typeof tabs)[number];
 
-const MobileMyCollection = () => {
-  const [activeTab, setActiveTab] = React.useState<Tab>("Adventures");
+const MobileMyCollection = ({ showGameHistory }: { showGameHistory?: boolean }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const [activeTab, setActiveTab] = React.useState<Tab>(showGameHistory ? "History" : "Adventures");
 
   return (
     <>
@@ -23,7 +27,10 @@ const MobileMyCollection = () => {
               "border-b-2 border-transparent py-2 text-sm font-medium text-white/50 transition-all duration-300",
               activeTab === tab && "border-b-primary text-primary",
             )}
-            onClick={() => setActiveTab(tab)}
+            onClick={() => {
+              router.push(pathname);
+              setActiveTab(tab);
+            }}
           >
             {tab}
           </p>

@@ -1,3 +1,4 @@
+import { usePathname, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 import { cn } from "@/utils/style-utils";
@@ -11,6 +12,9 @@ interface ITabToggleProps {
 }
 
 const TabToggle = ({ tabs, activeTab, setActiveTab }: ITabToggleProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
   return (
     <div className={cn("flex justify-center")}>
       <div className="pointer-events-auto relative flex w-full rounded-full border border-white/[8%] bg-black">
@@ -24,6 +28,7 @@ const TabToggle = ({ tabs, activeTab, setActiveTab }: ITabToggleProps) => {
               activeTab === tab && "opacity-100",
             )}
             onClick={() => {
+              router.push(pathname);
               setActiveTab(tab);
             }}
           >

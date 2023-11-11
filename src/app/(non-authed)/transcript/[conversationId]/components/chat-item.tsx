@@ -2,11 +2,18 @@
 
 import Image from "next/image";
 import { Game } from "iconsax-react";
+import { FaDice } from "react-icons/fa";
 
 import { ITranscriptPlayer } from "@/types/transcript";
 import { cn } from "@/utils/style-utils";
 
-const ChatItem = ({ player, text }: { player?: ITranscriptPlayer; text: string }) => {
+interface IChatItemProps {
+  player?: ITranscriptPlayer;
+  text: string;
+  dice?: number;
+}
+
+const ChatItem = ({ player, text, dice }: IChatItemProps) => {
   return (
     <div className="flex flex-col gap-4 max-lg:px-4">
       <div className="ml-3 flex items-center gap-2">
@@ -32,7 +39,7 @@ const ChatItem = ({ player, text }: { player?: ITranscriptPlayer; text: string }
       </div>
       <div
         className={cn(
-          "relative mt-2 w-full rounded-md p-4 font-light",
+          "relative mt-2 flex w-full flex-col gap-2 rounded-md p-4 font-light",
           player ? "bg-white text-black" : "bg-primary text-white",
         )}
       >
@@ -43,6 +50,10 @@ const ChatItem = ({ player, text }: { player?: ITranscriptPlayer; text: string }
           )}
         />
         {text}
+        <div className="flex items-center gap-1 font-medium text-primary">
+          <FaDice className="min-h-[14px] min-w-[22px] fill-primary" />
+          Rolled: {dice}
+        </div>
       </div>
     </div>
   );
