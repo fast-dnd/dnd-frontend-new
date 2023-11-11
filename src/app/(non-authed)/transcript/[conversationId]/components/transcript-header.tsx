@@ -16,14 +16,19 @@ const TranscriptHeader = ({ transcripts }: { transcripts: ITranscript }) => {
 
   return (
     <div className="z-10 flex w-full items-center justify-between bg-black px-4 pb-5 pt-8 max-lg:fixed max-lg:mt-[45px] lg:rounded-t-md lg:px-6 lg:py-9">
-      <div className="hidden items-center gap-4 text-3xl lg:flex">
-        <div className="h-2 w-2 rotate-45 bg-primary" style={jibril.style} />
+      <div
+        className="hidden items-center gap-4 text-3xl leading-none tracking-widest lg:flex"
+        style={jibril.style}
+      >
+        <div className="h-2 w-2 rotate-45 bg-primary" />
         {transcripts.title}
         <div className="h-2 w-2 rotate-45 bg-primary" />
       </div>
       <div className="lg:hidden">
         <p className="font-light">Transcript</p>
-        <p className="font-bold">{transcripts.title}</p>
+        <p className="font-bold tracking-widest" style={jibril.style}>
+          {transcripts.title}
+        </p>
         <p className="font-light text-white/50">{format(transcripts.createdAt, "MMM d, yyyy")}</p>
       </div>
 

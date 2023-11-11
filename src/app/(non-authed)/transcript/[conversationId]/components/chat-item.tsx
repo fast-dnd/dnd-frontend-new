@@ -50,10 +50,12 @@ const ChatItem = ({ player, text, dice }: IChatItemProps) => {
           )}
         />
         {text}
-        <div className="flex items-center gap-1 font-medium text-primary">
-          <FaDice className="min-h-[14px] min-w-[22px] fill-primary" />
-          Rolled: {dice}
-        </div>
+        {dice && (
+          <div className="flex items-center gap-1 font-medium text-primary">
+            <FaDice className="min-h-[14px] min-w-[22px] fill-primary" />
+            Rolled: {dice}
+          </div>
+        )}
       </div>
     </div>
   );
