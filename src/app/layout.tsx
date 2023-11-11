@@ -5,6 +5,7 @@ import { lexend } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
 import "@/styles/globals.css";
+import "@/styles/tailwind.css";
 import "@/styles/scrollbar.css";
 import "@/styles/wallet.css";
 import "@/styles/zoom.css";
