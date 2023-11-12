@@ -1,19 +1,19 @@
+import { useState } from "react";
 import { useReadLocalStorage } from "usehooks-ts";
 
+import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import useGetRoomData from "@/hooks/queries/use-get-room-data";
 import { IChampion } from "@/types/dungeon";
 
-import useCharacterControls from "./use-character-controls";
 import useUpdateRole from "./use-update-role";
 
 const useChampionInfo = ({ conversationId }: { conversationId: string }) => {
-  const { dungeon, currentIndex, nextChamp, prevChamp } = useCharacterControls({ conversationId });
-
-  const displayedChampion = dungeon?.champions[currentIndex];
+  const { data: roomData } = useGetRoomData(conversationId);
+  const { data: dungeon } = useGetDungeon(roomData?.dungeonId);
 
   const { mutate: updateRole } = useUpdateRole();
 
-  const { data: roomData } = useGetRoomData(conversationId);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const accountId = useReadLocalStorage<string>("accountId");
   const currUser = roomData?.playerState.find((player) => player.accountId === accountId);
@@ -24,12 +24,10 @@ const useChampionInfo = ({ conversationId }: { conversationId: string }) => {
     .map((player) => player.champion) as IChampion[];
 
   const isTaken = (champion?: IChampion) =>
-    takenChampions?.find((champ) => champ._id === champion?._id);
+    takenChampions?.some((champ) => champ._id === champion?._id) ?? false;
 
   const chmpTakenBy = (champion?: IChampion) =>
     roomData?.playerState.find((player) => player.champion?._id === champion?._id);
-
-  const takenBy = chmpTakenBy(displayedChampion);
 
   const onChangeChampion = (champion?: IChampion) => {
     if (champion === selectedChampion) updateRole({ conversationId, championId: undefined });
@@ -41,15 +39,13 @@ const useChampionInfo = ({ conversationId }: { conversationId: string }) => {
   return {
     roomData,
     dungeon,
+    currentIndex,
     selectedChampion,
-    displayedChampion,
     takenChampions,
     isTaken,
     chmpTakenBy,
-    takenBy,
     onChangeChampion,
-    nextChamp,
-    prevChamp,
+    setCurrentIndex,
   };
 };
 

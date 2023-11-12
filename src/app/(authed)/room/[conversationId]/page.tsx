@@ -20,11 +20,11 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
     roomData,
     dungeon,
     selectedChampion,
-    displayedChampion,
-    takenBy,
+    currentIndex,
+    isTaken,
+    chmpTakenBy,
     onChangeChampion,
-    nextChamp,
-    prevChamp,
+    setCurrentIndex,
   } = useChampionInfo({ conversationId });
 
   const onClickBack = () => {
@@ -44,12 +44,13 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
         <MobileRoomInfo roomData={roomData} selectedChampion={selectedChampion} />
 
         <ChooseCharacter
+          dungeonData={dungeon}
           selectedChampion={selectedChampion}
-          displayedChampion={displayedChampion}
-          takenBy={takenBy}
+          currentIndex={currentIndex}
+          isTaken={isTaken}
+          takenBy={chmpTakenBy}
           onChangeChampion={onChangeChampion}
-          nextChamp={nextChamp}
-          prevChamp={prevChamp}
+          setCurrentIndex={setCurrentIndex}
         />
         <GameSettings
           roomData={roomData}
