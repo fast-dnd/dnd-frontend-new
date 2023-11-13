@@ -15,30 +15,39 @@ const ImageAudioToggle = ({ generate, setGenerate, disabled, type }: ImageAudioT
   return (
     <div className={cn("flex items-center gap-2", disabled && "pointer-events-none opacity-40")}>
       <p className="text-sm font-medium">{type}:</p>
-      <div className="relative h-[39px] w-[94px]" onClick={() => setGenerate(!generate)}>
-        <div className="absolute left-0 top-0 h-[39px] w-[94px] rounded-full border border-white/10 bg-black backdrop-blur-[10px]" />
+      <div
+        className="relative h-[39px] w-[94px] rounded-full border border-white/10 bg-black"
+        onClick={() => setGenerate(!generate)}
+      >
         <div
           className={cn(
-            "absolute top-[10px] text-sm font-semibold text-white text-opacity-25 transition-all duration-300",
-            generate ? "left-[12px]" : "right-[12px]",
+            "absolute top-0 flex h-full items-center px-3 text-sm font-semibold text-white text-opacity-25 transition-all duration-300",
+            generate ? "left-0" : "right-0",
           )}
         >
           {generate ? "ON" : "OFF"}
         </div>
-        <motion.div
-          className={cn(
-            "absolute top-0 flex h-[36px] w-[36px] items-center justify-center rounded-full border border-white/10 backdrop-blur-[10px]",
-          )}
-          animate={{
-            x: generate ? "54px" : "0px",
-            backgroundColor: generate ? "#FF5A5A" : "#171716",
-          }}
-          transition={{
-            duration: 0.3,
-          }}
-        >
-          {type === "Image" ? <ImageIcon variant="Bold" /> : <Headphone variant="Bold" />}
-        </motion.div>
+        <div className={cn("absolute top-0 flex h-full w-full items-center justify-start py-0.5")}>
+          <motion.div
+            className={cn(
+              "absolute flex h-[35px] w-[35px] items-center justify-center rounded-full",
+            )}
+            animate={{
+              left: generate ? "auto" : "2px",
+              right: generate ? "2px" : "auto",
+              backgroundColor: generate ? "#FF5A5A" : "#171716",
+            }}
+            transition={{
+              duration: 0.3,
+            }}
+          >
+            {type === "Image" ? (
+              <ImageIcon className="h-5 w-5" variant="Bold" />
+            ) : (
+              <Headphone className="h-5 w-5" variant="Bold" />
+            )}
+          </motion.div>
+        </div>
       </div>
     </div>
   );

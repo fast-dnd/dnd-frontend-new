@@ -45,29 +45,32 @@ const GameSettings = ({
   return (
     <div
       className={cn(
-        "flex flex-1 flex-col items-center gap-4 px-8 py-4 text-sm",
+        "flex flex-1 flex-col items-center gap-8 py-4 text-sm",
         !selectedChampion && "hidden",
       )}
     >
-      <p className="uppercase">Game settings</p>
-      <DurationSlider duration={duration} setDuration={setDuration} disabled={disabled} />
-      <div className="-mx-8 mt-4 h-1 w-[calc(100%_+_4rem)] bg-black shadow-lobby" />
-      <div className="flex w-[calc(100%_+_2rem)] items-center justify-center gap-6">
-        <ImageAudioToggle
-          generate={generateImages}
-          setGenerate={setGenerateImages}
-          disabled={disabled}
-          type="Image"
-        />
-        <ImageAudioToggle
-          generate={generateAudio}
-          setGenerate={setGenerateAudio}
-          disabled={disabled}
-          type="Audio"
-        />
+      <div className="flex w-full flex-1 flex-col items-center justify-center gap-4">
+        <p className="uppercase">Game settings</p>
+        <DurationSlider duration={duration} setDuration={setDuration} disabled={disabled} />
+        <div className="mt-4 h-[1px] w-full bg-black shadow-lobby" />
+        <div className="flex w-full flex-wrap items-center justify-evenly gap-3 px-4">
+          <ImageAudioToggle
+            generate={generateImages}
+            setGenerate={setGenerateImages}
+            disabled={disabled}
+            type="Image"
+          />
+          <ImageAudioToggle
+            generate={generateAudio}
+            setGenerate={setGenerateAudio}
+            disabled={disabled}
+            type="Audio"
+          />
+        </div>
       </div>
+
       <Button
-        className="mt-auto"
+        className="w-52"
         disabled={disabled || !canBegin}
         isLoading={isGameStarting || gameStarting}
         onClick={() => startGame({ conversationId })}

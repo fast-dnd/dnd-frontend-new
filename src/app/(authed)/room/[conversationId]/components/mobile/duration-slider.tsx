@@ -70,8 +70,9 @@ const DurationSlider = ({ disabled, duration, setDuration }: IDurationSliderProp
         <motion.div
           key={index}
           className={cn(
-            "relative flex min-w-[190px] flex-col items-center rounded-md bg-black/70 px-2 py-4 backdrop-blur-[7px]",
+            "relative flex min-w-[190px] flex-col items-center rounded-lg bg-black/70 px-2 py-4 backdrop-blur-[7px]",
             duration === element.title && "border-2 border-primary",
+            duration !== element.title && "opacity-50",
             disabled && "pointer-events-none opacity-40",
           )}
           initial="center"

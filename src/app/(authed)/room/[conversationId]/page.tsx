@@ -40,23 +40,27 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
       </div>
 
       <div className="relative flex flex-1 flex-col lg:hidden">
-        <MobileNavbar className="bg-black" onClickBack={onClickBack} />
-        <MobileRoomInfo roomData={roomData} selectedChampion={selectedChampion} />
+        <div className="fixed top-0 z-10 w-full">
+          <MobileNavbar className="bg-black" onClickBack={onClickBack} />
+          <MobileRoomInfo roomData={roomData} selectedChampion={selectedChampion} />
+        </div>
+        <div className="mt-32 flex h-full">
+          <ChooseCharacter
+            dungeonData={dungeon}
+            selectedChampion={selectedChampion}
+            currentIndex={currentIndex}
+            isTaken={isTaken}
+            takenBy={chmpTakenBy}
+            onChangeChampion={onChangeChampion}
+            setCurrentIndex={setCurrentIndex}
+          />
+          <GameSettings
+            roomData={roomData}
+            selectedChampion={selectedChampion}
+            conversationId={conversationId}
+          />
+        </div>
 
-        <ChooseCharacter
-          dungeonData={dungeon}
-          selectedChampion={selectedChampion}
-          currentIndex={currentIndex}
-          isTaken={isTaken}
-          takenBy={chmpTakenBy}
-          onChangeChampion={onChangeChampion}
-          setCurrentIndex={setCurrentIndex}
-        />
-        <GameSettings
-          roomData={roomData}
-          selectedChampion={selectedChampion}
-          conversationId={conversationId}
-        />
         <div className="absolute inset-0 -z-10 bg-dark-900 pt-32">
           {!!dungeon?.imageUrl && (
             <Image
