@@ -164,7 +164,7 @@ const Champion = ({ champion }: { champion: IChampion }) => {
         <div className="flex w-full min-w-0 flex-col justify-between gap-4">
           <div className="flex flex-col gap-1">
             <p className="w-full truncate break-words font-bold">{champion.name}</p>
-            <p className="w-full break-words font-light">{champion.description}</p>
+            <p className="w-full break-words text-sm font-light">{champion.description}</p>
           </div>
           <div
             onClick={() => setActions(!actions)}
