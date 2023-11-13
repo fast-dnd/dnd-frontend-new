@@ -35,7 +35,7 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: PlayMovePro
   return (
     <div
       className={cn(
-        "relative border-t border-white/20 bg-black",
+        "relative border-t border-white/20 bg-black pb-6",
         !store.canPlay && "pointer-events-none",
         hide && "hidden",
       )}
@@ -43,7 +43,7 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: PlayMovePro
       <div
         className={cn(
           "pointer-events-none absolute inset-0 z-20 h-full w-full bg-black opacity-0 transition-all duration-200",
-          !store.canPlay && "opacity-40",
+          !store.canPlay && "opacity-60",
         )}
       />
       <motion.header className="relative flex h-7 pl-4 pt-3">

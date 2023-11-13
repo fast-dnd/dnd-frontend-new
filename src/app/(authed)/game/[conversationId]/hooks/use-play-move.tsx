@@ -35,6 +35,7 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
       );
       if (currentPlayerMove) {
         moveStore.canPlay.set(false);
+        setOpenedDetails(false);
       }
     } else if (!loadingText && store.buttonState !== "ROLLING") {
       moveStore.canPlay.set(true);
