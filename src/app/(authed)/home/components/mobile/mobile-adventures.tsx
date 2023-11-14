@@ -113,7 +113,13 @@ const MobileAdventures = ({
       ) : (
         <div className={cn("flex flex-col gap-2 py-6 pl-4")}>
           <p className="text-sm font-medium uppercase">TOP PICKS THIS MONTH</p>
-          <div className={cn("flex flex-row gap-4 overflow-x-auto pr-4")}>{featuredContent}</div>
+          <div className="flex flex-row gap-4 overflow-x-auto pr-4">{featuredContent}</div>
+          <div
+            className={cn(
+              "pointer-events-none absolute right-0 top-[158px] z-20 h-52 w-16 bg-gradient-to-l from-dark-900 to-transparent",
+              adventureDetailId && "hidden",
+            )}
+          />
         </div>
       )}
 

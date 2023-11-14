@@ -78,29 +78,29 @@ const Login = () => {
           ))}
         </div>
       </div>
-      <div className="absolute bottom-10 flex flex-col items-center gap-6 lg:bottom-0 lg:gap-16 lg:pb-24">
-        <div className="relative w-full bg-red-500">
+      <div className="fixed bottom-0 flex w-full flex-col items-center gap-6 bg-gradient-to-t from-black via-black/60 via-80% to-transparent pb-10 lg:via-black/40">
+        <div className="relative h-80 w-full lg:pb-24">
           {slides.map((slide, i) => (
             <div
               key={slide.image}
               className={cn(
-                "absolute bottom-0 flex w-full flex-col items-center gap-4 opacity-0 blur-xl transition-all duration-500 ease-out",
+                "absolute bottom-0 flex w-full flex-col items-center gap-4 px-4 opacity-0 blur-xl transition-all duration-500 ease-out",
                 current === i && "opacity-100 blur-none",
               )}
             >
-              <p className="text-center text-2xl font-light tracking-widest max-lg:w-[328px] lg:text-5xl lg:tracking-[6.72px]">
+              <p className="text-center text-2xl font-light tracking-widest lg:text-5xl lg:tracking-[6.72px]">
                 {slide.headerStart} <br />
                 <span className="text-center font-bold lg:whitespace-nowrap">
                   {slide.headerEnd}
                 </span>
               </p>
-              <p className="w-[270px] text-center text-sm tracking-widest lg:w-[550px] lg:text-xl">
+              <p className="text-center text-sm tracking-widest lg:w-[550px] lg:text-xl">
                 {slide.description}
               </p>
             </div>
           ))}
         </div>
-        <div className="flex w-full flex-col items-center gap-6 lg:mt-12">
+        <div className="flex flex-col items-center gap-3 lg:mt-12">
           <Button variant="google" className="w-fit gap-2 px-6 py-5" onClick={() => googleLogin()}>
             <FcGoogle />
             LOG IN WITH GOOGLE
@@ -116,7 +116,6 @@ const Login = () => {
             <WalletMultiButtonDynamic />
           </div>
         </div>
-
         <div className="flex gap-3">
           {slides.map((_, i) => {
             return (

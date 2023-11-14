@@ -41,7 +41,9 @@ const MobileAdditionalInfo = ({
       />
       <div className="flex h-full items-center justify-center">
         <div
-          className="pointer-events-auto flex h-10 w-9 items-center justify-center rounded-r-lg border border-white/60 bg-white/50 backdrop-blur-sm"
+          className={cn(
+            "pointer-events-auto flex h-10 w-9 items-center justify-center rounded-r-lg border border-white/60 bg-white/50 backdrop-blur-sm",
+          )}
           onClick={() => {
             if (diceStats) setDiceStats(false);
             else setOpen(!open);
@@ -78,6 +80,7 @@ const MobileAdditionalInfo = ({
           className={cn(
             "flex flex-col gap-4",
             diceStats && "absolute inset-0 h-full w-full pb-4 pt-3.5",
+            !roll && "pointer-events-none opacity-40",
           )}
         >
           <motion.div
@@ -116,6 +119,7 @@ const MobileAdditionalInfo = ({
           className={cn(
             "opacity-100 transition-all duration-500",
             diceStats && "pointer-events-none opacity-0",
+            roomData.playerState.length <= 1 && "hidden",
           )}
         >
           <PlayerStatsModal

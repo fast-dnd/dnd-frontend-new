@@ -85,7 +85,6 @@ const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
             className="flex whitespace-nowrap px-4 text-base max-lg:w-64 lg:text-xl"
             onClick={() => {
               setGoingHome(true);
-              close();
               router.push("/home");
             }}
             isLoading={goingHome}
