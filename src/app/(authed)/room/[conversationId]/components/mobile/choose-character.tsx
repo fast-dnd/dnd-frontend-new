@@ -1,17 +1,21 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, type PanInfo } from "framer-motion";
 import { AiFillHeart } from "react-icons/ai";
 import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
+import { useWindowSize } from "usehooks-ts";
 
 import HelmetIcon from "@/components/icons/helmet-icon";
 import { Button } from "@/components/ui/button";
 import { IChampion, IDungeonDetail, IMoveMapping } from "@/types/dungeon";
 import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
+
+const DRAG_THRESHOLD = 100;
 
 const ChooseCharacter = ({
   dungeonData,
@@ -30,32 +34,107 @@ const ChooseCharacter = ({
   onChangeChampion: (champion: IChampion | undefined) => void;
   setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
 }) => {
+  const { width } = useWindowSize();
+  const itemWidth = width - 52;
+  const containerRef = useRef<HTMLUListElement>(null);
+  const offsetX = useMotionValue(-currentIndex * itemWidth);
+  const animatedX = useSpring(offsetX, {
+    damping: 20,
+    stiffness: 150,
+  });
+
+  useEffect(() => {
+    offsetX.set(-currentIndex * itemWidth);
+  }, [currentIndex, itemWidth, offsetX]);
+
   if (!dungeonData) return <div></div>;
 
+  const canScrollPrev = currentIndex > 0;
+  const canScrollNext = currentIndex < dungeonData.champions.length - 1;
+
+  const handleDragSnap = (_: MouseEvent, { offset: { x: dragOffset } }: PanInfo) => {
+    containerRef.current?.removeAttribute("data-dragging");
+    animatedX.stop();
+    const currentOffset = offsetX.get();
+    const steps = Math.round(-dragOffset / itemWidth);
+
+    if (
+      Math.abs(dragOffset) < DRAG_THRESHOLD ||
+      (!canScrollPrev && dragOffset > 0) ||
+      (!canScrollNext && dragOffset < 0) ||
+      steps === 0
+    ) {
+      animatedX.set(currentOffset);
+      return;
+    }
+    const combined = currentIndex + steps;
+
+    const newIndex =
+      combined < 0
+        ? 0
+        : combined > dungeonData.champions.length - 1
+        ? dungeonData.champions.length - 1
+        : combined;
+
+    setCurrentIndex(newIndex);
+  };
+
   return (
-    <div
-      className={cn(
-        "flex flex-1 flex-col items-center gap-4 overflow-hidden px-8 py-4 text-sm",
-        selectedChampion && "hidden",
+    <>
+      {!selectedChampion && (
+        <motion.div
+          className={cn(
+            "flex flex-1 flex-col items-center gap-4 overflow-hidden px-[26px] py-4 text-sm",
+            selectedChampion && "hidden",
+          )}
+        >
+          <p className="uppercase">Choose your Character</p>
+          <div className="h-full w-full">
+            <div className="relative h-full">
+              <motion.ul
+                ref={containerRef}
+                className="flex h-full items-start"
+                style={{
+                  x: animatedX,
+                }}
+                drag="x"
+                dragConstraints={{
+                  left: -(itemWidth * (dungeonData.champions.length - 1)),
+                  right: itemWidth,
+                }}
+                onDragStart={() => {
+                  containerRef.current?.setAttribute("data-dragging", "true");
+                }}
+                onDragEnd={handleDragSnap}
+              >
+                {dungeonData.champions.map((champion, index) => {
+                  return (
+                    <motion.li
+                      layout
+                      key={champion._id}
+                      className="relative h-full shrink-0 select-none"
+                      transition={{
+                        ease: "easeInOut",
+                        duration: 0.4,
+                      }}
+                    >
+                      <CharacterCard
+                        champion={champion}
+                        currentIndex={currentIndex}
+                        index={index}
+                        isTaken={isTaken}
+                        takenBy={takenBy}
+                        onChangeChampion={onChangeChampion}
+                      />
+                    </motion.li>
+                  );
+                })}
+              </motion.ul>
+            </div>
+          </div>
+        </motion.div>
       )}
-    >
-      <p className="uppercase">Choose your Character</p>
-      <div className="relative h-full w-full">
-        {dungeonData.champions.map((champion, i) => (
-          <CharacterCard
-            key={champion._id}
-            champion={champion}
-            index={i}
-            currentIndex={currentIndex}
-            animate={!selectedChampion}
-            isTaken={isTaken}
-            takenBy={takenBy}
-            onChangeChampion={onChangeChampion}
-            setCurrentIndex={setCurrentIndex}
-          />
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 
@@ -65,76 +144,64 @@ const CharacterCard = ({
   champion,
   index,
   currentIndex,
-  animate,
   isTaken,
   takenBy,
   onChangeChampion,
-  setCurrentIndex,
 }: {
   champion: IChampion;
   index: number;
   currentIndex: number;
-  animate: boolean;
   isTaken: (champion?: IChampion) => boolean;
   takenBy: (champion?: IChampion) => IPlayer | undefined;
   onChangeChampion: (champion: IChampion | undefined) => void;
-  setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const taker = isTaken(champion) ? takenBy(champion) : undefined;
 
-  const adjecent = index === currentIndex + 1 || index === currentIndex - 1;
-
   return (
-    <motion.div
-      className="absolute flex h-full w-full flex-col justify-between rounded-md bg-black/80"
-      layout={animate}
-      transition={{ type: "spring", stiffness: 150, damping: 20 }}
-      onClick={adjecent ? () => setCurrentIndex(index) : undefined}
-      style={{
-        left: `calc(${(index - currentIndex) * 100}% + ${(index - currentIndex) * 0.75}rem)`,
-      }}
-    >
-      <div className="p-4">
-        <p className="text-lg font-bold">{champion?.name}</p>
-        <p className="line-clamp-5 font-light">{champion?.description}</p>
-        <div className="mt-4 flex flex-col gap-2">
-          {champion?.moveMapping &&
-            moveMappingWithIcons(champion.moveMapping).map((move, index) => (
-              <div key={index} className="flex items-center gap-3">
-                {move.icon}
-                <div className="flex flex-col gap-1">
-                  <p className="font-semibold">{move.title}</p>
-                  <p className="line-clamp-1 font-light">{move.text}</p>
+    <div className="h-full w-[calc(100vw_-_3.25rem)] px-1.5">
+      <div className="flex h-full w-full flex-col justify-between rounded-md bg-black/80">
+        <div className="p-4">
+          <p className="text-lg font-bold">{champion?.name}</p>
+          <p className="line-clamp-5 font-light">{champion?.description}</p>
+          <div className="mt-4 flex flex-col gap-2">
+            {champion?.moveMapping &&
+              moveMappingWithIcons(champion.moveMapping).map((move, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  {move.icon}
+                  <div className="flex flex-col gap-1">
+                    <p className="font-semibold">{move.title}</p>
+                    <p className="line-clamp-1 font-light">{move.text}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+          </div>
         </div>
-      </div>
 
-      {taker ? (
-        <div className="flex w-full items-center justify-center gap-2 px-4 py-3">
-          <Image
-            src={taker.imageUrl || "/images/default-avatar.png"}
-            width={26}
-            height={26}
-            alt={`player-${taker.accountId}-avatar`}
-            className="h-[26px] w-[26px] rounded-full"
-          />
-          TAKEN
-        </div>
-      ) : (
-        <Button
-          className={cn(
-            "flex gap-1.5 rounded-t-none",
-            index !== currentIndex && "pointer-events-none",
-          )}
-          onClick={() => onChangeChampion(champion)}
-        >
-          <HelmetIcon className="h-5 w-5" />
-          SELECT THIS CHARACTER
-        </Button>
-      )}
-    </motion.div>
+        {taker ? (
+          <div className="flex w-full items-center justify-center gap-2 px-4 py-3">
+            <Image
+              src={taker.imageUrl || "/images/default-avatar.png"}
+              width={26}
+              height={26}
+              alt={`player-${taker.accountId}-avatar`}
+              className="h-[26px] w-[26px] rounded-full"
+            />
+            TAKEN
+          </div>
+        ) : (
+          <Button
+            className={cn(
+              "flex gap-1.5 rounded-t-none",
+              index !== currentIndex && "pointer-events-none",
+            )}
+            onClick={() => onChangeChampion?.(champion)}
+          >
+            <HelmetIcon className="h-5 w-5" />
+            SELECT THIS CHARACTER
+          </Button>
+        )}
+      </div>
+    </div>
   );
 };
 
