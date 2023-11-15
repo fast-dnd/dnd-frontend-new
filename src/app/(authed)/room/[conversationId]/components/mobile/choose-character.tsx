@@ -15,8 +15,6 @@ import { IChampion, IDungeonDetail, IMoveMapping } from "@/types/dungeon";
 import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
-const DRAG_THRESHOLD = 100;
-
 const ChooseCharacter = ({
   dungeonData,
   selectedChampion,
@@ -52,22 +50,25 @@ const ChooseCharacter = ({
   const canScrollPrev = currentIndex > 0;
   const canScrollNext = currentIndex < dungeonData.champions.length - 1;
 
-  const handleDragSnap = (_: MouseEvent, { offset: { x: dragOffset } }: PanInfo) => {
+  const handleDragSnap = (
+    _: MouseEvent,
+    { offset: { x: dragOffset }, velocity: { x: velocity } }: PanInfo,
+  ) => {
     containerRef.current?.removeAttribute("data-dragging");
     animatedX.stop();
     const currentOffset = offsetX.get();
+    const velocity_delta = Math.abs(velocity) > itemWidth ? -Math.sign(velocity) : 0;
     const steps = Math.round(-dragOffset / itemWidth);
 
     if (
-      Math.abs(dragOffset) < DRAG_THRESHOLD ||
+      (steps === 0 && velocity_delta === 0) ||
       (!canScrollPrev && dragOffset > 0) ||
-      (!canScrollNext && dragOffset < 0) ||
-      steps === 0
+      (!canScrollNext && dragOffset < 0)
     ) {
       animatedX.set(currentOffset);
       return;
     }
-    const combined = currentIndex + steps;
+    const combined = steps !== 0 ? currentIndex + steps : currentIndex + velocity_delta;
 
     const newIndex =
       combined < 0
