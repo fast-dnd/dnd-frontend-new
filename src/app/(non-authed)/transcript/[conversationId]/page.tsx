@@ -31,7 +31,7 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
 
   return (
     <>
-      <div className="my-16 hidden h-[900px] w-[1200px] max-w-7xl flex-col self-center lg:flex">
+      <div className="my-16 hidden min-h-0 w-[1200px] max-w-7xl flex-1 flex-col self-center lg:flex">
         <TranscriptHeader transcripts={transcripts} />
         <div className="relative flex min-h-0 w-full flex-1 flex-col overflow-y-scroll border-2 border-black bg-black/60 backdrop-blur-sm">
           <div className="relative mx-auto w-full flex-1 flex-col">

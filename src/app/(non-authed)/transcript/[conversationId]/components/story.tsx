@@ -12,10 +12,10 @@ const Story = ({ story, transcripts }: { story: ITranscriptStory; transcripts: I
       {story.image && (
         <Image
           src={story.image || "/images/default-dungeon.png"}
-          width={100}
-          height={100}
+          width={1024}
+          height={1024}
           alt={`${story.title}'s image`}
-          className="h-44 w-full rounded-md lg:h-56"
+          className="aspect-video w-full rounded-md object-cover"
         />
       )}
       <div className="flex flex-col gap-6 max-lg:px-4">
