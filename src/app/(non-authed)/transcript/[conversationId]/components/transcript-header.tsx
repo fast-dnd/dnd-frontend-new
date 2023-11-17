@@ -37,7 +37,7 @@ const TranscriptHeader = ({ transcripts }: { transcripts: ITranscript }) => {
           TRANSCRIPT{" "}
           <span className="font-light">{format(transcripts.createdAt, "MMM d, yyyy")}</span>
         </p>
-        <div className="hidden h-7 w-1 border-l border-white/20 lg:block" />
+        <div className="hidden h-10 w-1 border-l border-white/20 lg:block" />
         <p className="hidden font-medium lg:block">Players</p>
         <div className="flex items-center -space-x-2">
           {transcripts.players.map((player) => (
@@ -52,14 +52,24 @@ const TranscriptHeader = ({ transcripts }: { transcripts: ITranscript }) => {
             </div>
           ))}
         </div>
-        <div className="h-7 w-1 border-l border-white/20" />
-        <button
-          className="flex items-center gap-1 font-semibold lg:text-lg"
-          onClick={() => onCopy(window.location.href)}
-        >
-          SHARE
-          <PiShareFatFill />
-        </button>
+        <div className="h-10 w-1 border-l border-white/20" />
+
+        <p className="hidden lg:inline">
+          <span className="font-bold">Views:</span> {transcripts.seenCount}
+        </p>
+
+        <div className="h-10 w-1 border-l border-white/20" />
+
+        <div className="flex flex-col items-start">
+          <button
+            className="flex items-center gap-1 font-semibold lg:text-lg"
+            onClick={() => onCopy(window.location.href)}
+          >
+            SHARE
+            <PiShareFatFill />
+          </button>
+          <p className="font-light text-white/50 lg:hidden">{transcripts.seenCount} views</p>
+        </div>
       </div>
 
       <motion.hr

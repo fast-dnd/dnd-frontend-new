@@ -34,4 +34,5 @@ export const transcriptSchema = z.object({
   story: z.array(transcriptStorySchema),
   title: z.string(),
   createdAt: z.coerce.date(),
+  seenCount: z.number(),
 });

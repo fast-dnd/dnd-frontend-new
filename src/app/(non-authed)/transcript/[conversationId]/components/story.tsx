@@ -1,23 +1,14 @@
 "use client";
 
-import Image from "next/image";
-
 import { ITranscript, ITranscriptStory } from "@/types/transcript";
 
 import ChatItem from "./chat-item";
+import ImageModal from "./image-modal";
 
 const Story = ({ story, transcripts }: { story: ITranscriptStory; transcripts: ITranscript }) => {
   return (
     <div className="flex flex-col gap-6 rounded-md bg-black p-1 pb-6 lg:p-8">
-      {story.image && (
-        <Image
-          src={story.image || "/images/default-dungeon.png"}
-          width={1024}
-          height={1024}
-          alt={`${story.title}'s image`}
-          className="aspect-video w-full rounded-md object-cover"
-        />
-      )}
+      {story.image && <ImageModal image={story.image} />}
       <div className="flex flex-col gap-6 max-lg:px-4">
         <div className="flex flex-col gap-1">
           <p className="text-lg font-bold lg:text-2xl">{story.title}</p>
