@@ -63,7 +63,7 @@ const TranscriptHeader = ({ transcripts }: { transcripts: ITranscript }) => {
       </div>
 
       <motion.hr
-        className="absolute inset-x-0 bottom-0 border-primary transition-all duration-500"
+        className="absolute inset-x-0 bottom-0 border-primary transition-all duration-500 lg:hidden"
         style={{ scaleX: scrollYProgress, WebkitTransformOrigin: "0%" }}
       />
     </div>

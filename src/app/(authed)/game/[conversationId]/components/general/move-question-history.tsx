@@ -1,6 +1,7 @@
 import Spinner from "@/components/ui/spinner";
 import useAutoScrollToBottom from "@/hooks/helpers/use-auto-scroll-to-bottom";
 import { IMove, IQuestion } from "@/types/room";
+import { cn } from "@/utils/style-utils";
 
 import MoveList from "./move-list";
 import Question from "./question";
@@ -16,8 +17,20 @@ const MoveQuestionHistory = ({
 }) => {
   const { autoBottomScrollDiv } = useAutoScrollToBottom([moveHistory, questionHistory, thinking]);
 
+  const movesEmpty =
+    moveHistory.length === 0 || (moveHistory.length === 1 && moveHistory[0].length === 0);
+
   return (
     <div className="flex h-full min-h-[100px] flex-col gap-4 overflow-y-auto overflow-x-hidden pr-2 max-lg:pt-12 lg:pr-6">
+      <div
+        className={cn(
+          "hidden rounded-md bg-white/10 px-4 py-2 lg:text-lg",
+          movesEmpty && questionHistory.length === 0 && "block",
+        )}
+      >
+        Bob is your dungeon master. You can ask him anything you want so don&apos;t be shy! He knows
+        all the answers, and is there to make your gaming experience more fun!
+      </div>
       {Array.from({ length: Math.max(questionHistory.length, moveHistory.length) }, (_, i) => (
         <div key={i} className="flex flex-col gap-4">
           {!!questionHistory[i] && !!questionHistory[i].question && (
