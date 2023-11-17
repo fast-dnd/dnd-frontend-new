@@ -47,7 +47,7 @@ const DiceModal = () => {
         />
         <div
           className={cn(
-            "mt-32 flex text-[32px] font-bold leading-[48px]",
+            "flex text-[32px] font-bold leading-[48px]",
             buttonState !== "ROLLING" && "hidden",
           )}
         >
@@ -71,7 +71,7 @@ const DiceModal = () => {
         <div
           className={cn(
             "flex w-full flex-col items-center gap-5 opacity-100 transition-all duration-500",
-            buttonState === "ROLLING" && "opacity-0",
+            buttonState === "ROLLING" && "h-0 opacity-0",
           )}
         >
           <div className="flex w-40 flex-col items-center gap-2">

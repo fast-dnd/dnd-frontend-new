@@ -26,20 +26,20 @@ const HomeModal = () => {
         if (!isOpen) gameStore.pageState.set("DEFAULT");
       }}
     >
-      <DialogContent className="w-fit lg:w-fit">
-        <DialogHeader>
+      <DialogContent className="flex h-full w-full flex-col max-lg:max-w-full max-lg:bg-dark-900 lg:h-fit lg:w-fit">
+        <div className="pointer-events-none absolute inset-0 bg-radialGradient lg:hidden" />
+        <DialogHeader className="justify-center max-lg:h-full">
           <DialogTitle>Leave the game?</DialogTitle>
           <DialogDescription className="text-center tracking-normal">
             Stepping away? Remember, each game phase waits for 10 minutes. Miss it, and face a loss.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
+        <DialogFooter className="flex-col items-center max-lg:gap-4 lg:flex-row">
           <Button
-            className="w-fit whitespace-nowrap px-4 py-3 text-base lg:px-16 lg:text-xl"
+            className="w-fit whitespace-nowrap px-4 py-3 text-base max-lg:w-52 lg:px-16 lg:text-xl"
             variant="outline"
             onClick={() => {
               setGoingHome(true);
-              gameStore.pageState.set("DEFAULT");
               router.push("/home");
             }}
             isLoading={goingHome}
@@ -47,7 +47,7 @@ const HomeModal = () => {
             EXIT GAME
           </Button>
           <Button
-            className="w-fit whitespace-nowrap px-4 py-3 text-base lg:px-8 lg:text-xl"
+            className="w-fit whitespace-nowrap px-4 py-3 text-base max-lg:w-52 lg:px-8 lg:text-xl"
             onClick={() => gameStore.pageState.set("DEFAULT")}
             autoFocus
           >

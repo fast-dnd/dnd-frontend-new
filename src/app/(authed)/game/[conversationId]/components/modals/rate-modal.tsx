@@ -33,7 +33,8 @@ const RateModal = ({
   const open = pageState === "RATE" && !rewardOpen;
 
   const close = () => {
-    gameStore.pageState.set("DEFAULT");
+    if (isMobileTablet) gameStore.pageState.set("GOHOME");
+    else gameStore.pageState.set("DEFAULT");
   };
 
   const [rating, setRating] = useState(3);
