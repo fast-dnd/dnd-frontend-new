@@ -1,3 +1,4 @@
+import Spinner from "@/components/ui/spinner";
 import useAuth from "@/hooks/helpers/use-auth";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import { cn } from "@/utils/style-utils";
@@ -98,7 +99,17 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
   return (
     <div className={cn("flex min-h-0 flex-1 flex-col")}>
       <div className="border-b border-b-white/50">{topContent}</div>
+      {isFetchingPreviousPage && (
+        <div className="flex h-10 justify-center">
+          <Spinner className="m-0 h-8 w-8" />
+        </div>
+      )}
       <div className="flex flex-1 flex-col overflow-y-scroll">{content}</div>
+      {isFetchingNextPage && (
+        <div className="flex h-10 justify-center">
+          <Spinner className="m-0 h-8 w-8" />
+        </div>
+      )}
     </div>
   );
 };
