@@ -49,7 +49,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   return (
     <div
       className={cn(
-        "pointer-events-none flex w-full items-center justify-between bg-gradient-to-b from-black via-black/60 via-60% to-transparent px-4 pt-3 lg:hidden",
+        "pointer-events-none flex h-16 w-full items-start justify-between bg-gradient-to-b from-black via-black/60 via-60% to-transparent px-4 pt-3 lg:hidden",
         className,
       )}
     >

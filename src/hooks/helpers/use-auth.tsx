@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { IAccount } from "@/types/account";
+import { IProfile } from "@/types/account";
 import checkJWT from "@/utils/check-jwt";
 
 import useGetAccount from "../queries/use-get-account";
 
 const useAuth = () => {
-  const [user, setUser] = useState<IAccount>();
+  const [user, setUser] = useState<IProfile>();
   const tokenExists = checkJWT();
 
   const { refetch, isLoading } = useGetAccount({ tokenExists, setUser });

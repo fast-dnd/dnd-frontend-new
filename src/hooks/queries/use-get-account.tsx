@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 
 import accountService, { accountKey } from "@/services/account-service";
-import { IAccount } from "@/types/account";
+import { IProfile } from "@/types/account";
 
 interface IUseGetAccountProps {
   tokenExists: boolean;
-  setUser: (user: IAccount) => void;
+  setUser: (user: IProfile) => void;
 }
 const useGetAccount = ({ tokenExists, setUser }: IUseGetAccountProps) => {
   return useQuery({

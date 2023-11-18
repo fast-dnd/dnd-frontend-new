@@ -1,11 +1,11 @@
-import { accountSchema, couponSchema } from "@/validations/account";
+import { couponSchema, profileSchema } from "@/validations/account";
 
 import createApi from "./api-factory";
 
 const accountApi = createApi({ commonPrefix: "accounts" });
 
 const getAccount = async () => {
-  return await accountApi.get("").then((res) => accountSchema.parse(res.data));
+  return await accountApi.get("").then((res) => profileSchema.parse(res.data));
 };
 
 const editAccount = async (data: { username: string; image?: string }) => {

@@ -45,6 +45,7 @@ const MobileAdventures = ({
     fetchNextPage,
     hasNextPage,
   });
+
   if (isError || featuredError) return <div>Something went wrong</div>;
 
   const featuredContent = featuredAdventuresData?.pages[0].dungeons.map((adventure) => (
