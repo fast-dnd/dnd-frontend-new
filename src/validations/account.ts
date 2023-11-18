@@ -33,6 +33,20 @@ export const accountSchema = z.object({
     totalGamesPlayed: z.number(),
     totalGameplayHours: z.number(),
   }),
+  ranking: z.object({
+    gameplay: z.object({
+      rank: z.number(),
+      rating: z.number(),
+    }),
+    influencer: z.object({
+      rank: z.number(),
+      rating: z.number(),
+    }),
+    contentCreation: z.object({
+      rank: z.number(),
+      rating: z.number(),
+    }),
+  }),
 });
 
 export const couponSchema = z.object({
