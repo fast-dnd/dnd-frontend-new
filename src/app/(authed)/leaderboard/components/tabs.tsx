@@ -53,7 +53,7 @@ const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
         <div
           key={index}
           className={cn(
-            "relative flex flex-1 cursor-pointer flex-col items-center gap-2 rounded-t-lg py-3",
+            "relative flex flex-1 cursor-pointer flex-col items-center gap-2 rounded-t-xl py-3",
             ratingTabValue.name === selectedRating &&
               "border-b-2 border-primary bg-black transition-all duration-200",
           )}
