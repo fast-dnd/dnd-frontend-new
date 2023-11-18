@@ -5,14 +5,38 @@ import leaderboardService, { leaderboardKey } from "@/services/leaderboard-servi
 
 import { RatingType } from "../types/rating-type";
 
-const useGetLeaderboard = ({ filter }: { filter: RatingType }) => {
+const useGetLeaderboard = ({
+  filter,
+  currUserRank,
+}: {
+  filter: RatingType;
+  currUserRank?: number;
+}) => {
   return useInfiniteQuery({
-    queryKey: [leaderboardKey, filter],
-    queryFn: ({ pageParam = 1 }) => leaderboardService.getLeaderboard({ pageParam, filter }),
+    queryKey: [leaderboardKey, filter, currUserRank],
+    queryFn: ({ pageParam = 1 }) =>
+      leaderboardService.getLeaderboard({ pageParam, filter, currUserRank }),
     getNextPageParam: (lastPage, allPages) => {
-      const nextPage = lastPage.length === PAGINATION_LIMIT ? allPages.length + 1 : undefined;
+      const nextPage =
+        lastPage.leaderboard.length === PAGINATION_LIMIT ? allPages.length + 1 : undefined;
       return nextPage;
     },
+    // getPreviousPageParam: (firstPage, allPages) => {
+    //   if (!currUserRank) return undefined;
+
+    //   if (firstPage.leaderboard.length > 0) {
+    //     const firstItemRank = firstPage.leaderboard[0].rank;
+    //     const previousPageStartRank = firstItemRank - PAGINATION_LIMIT;
+    //     console.log(previousPageStartRank);
+    //     if (previousPageStartRank > 0) {
+    //       const previousPageNumber = Math.ceil(
+    //         (currUserRank - previousPageStartRank + 1) / PAGINATION_LIMIT,
+    //       );
+    //       return previousPageNumber;
+    //     }
+    //   }
+    //   return undefined;
+    // },
   });
 };
 

@@ -8,9 +8,17 @@ import createApi, { PAGINATION_LIMIT } from "./api-factory";
 
 const leaderboardApi = createApi({ commonPrefix: "leaderboards" });
 
-const getLeaderboard = async ({ filter, pageParam }: { filter: RatingType; pageParam: number }) => {
+const getLeaderboard = async ({
+  filter,
+  pageParam,
+  currUserRank,
+}: {
+  filter: RatingType;
+  pageParam: number;
+  currUserRank?: number;
+}) => {
   const queryParams = queryString.stringify({
-    skip: (pageParam - 1) * PAGINATION_LIMIT,
+    skip: (currUserRank ? currUserRank - 1 : 0) + (pageParam - 1) * PAGINATION_LIMIT,
     limit: PAGINATION_LIMIT,
   });
 

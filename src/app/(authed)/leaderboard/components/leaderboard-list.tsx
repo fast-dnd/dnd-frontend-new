@@ -10,13 +10,25 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
   const { loggingIn, user } = useAuth();
 
   const {
+    data: topLeaderboardData,
+    isError: topIsError,
+    isLoading: topIsLoading,
+  } = useGetLeaderboard({ filter: selectedRating });
+
+  const {
     data: leaderboardData,
     isError,
     isLoading,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useGetLeaderboard({ filter: selectedRating });
+    hasPreviousPage,
+    fetchPreviousPage,
+    isFetchingPreviousPage,
+  } = useGetLeaderboard({
+    filter: selectedRating,
+    currUserRank: user?.ranking[selectedRating].rank,
+  });
 
   const { lastObjectRef: lastLeaderboardUserRef } = useIntersectionObserver({
     isFetchingNextPage,
@@ -24,7 +36,13 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
     hasNextPage,
   });
 
-  if (loggingIn || isLoading)
+  const { lastObjectRef: firstLeaderboardUserRef } = useIntersectionObserver({
+    isFetchingNextPage: isFetchingPreviousPage,
+    fetchNextPage: fetchPreviousPage,
+    hasNextPage: hasPreviousPage,
+  });
+
+  if (loggingIn || isLoading || topIsLoading)
     return (
       <div className="flex animate-pulse flex-col">
         {Array.from({ length: 10 }).map((_, i) => (
@@ -41,16 +59,28 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
       </div>
     );
 
-  if (!user || isError) return <div>Something went wrong</div>;
+  if (!user || isError || topIsError) return <div>Something went wrong</div>;
+
+  const topContent = topLeaderboardData?.pages[0].leaderboard
+    .slice(0, 3)
+    .map((leaderboardUser) => (
+      <LeaderboardUserCard
+        key={leaderboardUser.accountId}
+        leaderboardUser={leaderboardUser}
+        isCurrUser={leaderboardUser.accountId === user.account._id}
+        top3
+      />
+    ));
 
   const content = leaderboardData?.pages.map((page) =>
-    page.map((leaderboardUser, i) => {
-      if (page.length === i + 1) {
+    page.leaderboard.map((leaderboardUser, i) => {
+      if (leaderboardUser.rank <= 3) return null;
+      if (page.leaderboard.length === i + 1 || i === 0) {
         return (
           <LeaderboardUserCard
             key={leaderboardUser.accountId}
             leaderboardUser={leaderboardUser}
-            ref={lastLeaderboardUserRef}
+            ref={i === 0 ? firstLeaderboardUserRef : lastLeaderboardUserRef}
             isCurrUser={leaderboardUser.accountId === user.account._id}
           />
         );
@@ -65,7 +95,12 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
     }),
   );
 
-  return <div className={cn("flex flex-col")}>{content}</div>;
+  return (
+    <div className={cn("flex min-h-0 flex-1 flex-col")}>
+      <div className="border-b border-b-white/50">{topContent}</div>
+      <div className="flex flex-1 flex-col overflow-y-scroll">{content}</div>
+    </div>
+  );
 };
 
 export default LeaderboardList;

@@ -65,7 +65,7 @@ const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
           {ratingTabValue.name === selectedRating && (
             <div
               className={cn(
-                "absolute bottom-0 left-1/2 h-0 w-0 -translate-x-1/2 translate-y-[100%] border-x-[8px] border-t-[10px] border-x-transparent border-t-primary",
+                "absolute bottom-0 left-1/2 z-20 h-0 w-0 -translate-x-1/2 translate-y-[100%] border-x-[8px] border-t-[10px] border-x-transparent border-t-primary",
               )}
             />
           )}

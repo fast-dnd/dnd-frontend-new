@@ -9,4 +9,7 @@ export const leaderboardUserSchema = z.object({
   rating: z.number(),
 });
 
-export const leaderboardSchema = z.array(leaderboardUserSchema);
+export const leaderboardSchema = z.object({
+  leaderboard: z.array(leaderboardUserSchema),
+  total: z.number(),
+});
