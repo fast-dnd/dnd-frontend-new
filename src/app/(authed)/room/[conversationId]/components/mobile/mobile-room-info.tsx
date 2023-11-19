@@ -21,7 +21,7 @@ const MobileRoomInfo = ({
   const { copied, onCopy } = useCopy();
 
   return (
-    <div className="relative flex items-center justify-between bg-black p-4">
+    <div className="relative flex items-center justify-between bg-black p-4 pt-0">
       <div className="flex flex-col gap-2 text-sm">
         <p className="font-light">Game ID:</p>
         <p

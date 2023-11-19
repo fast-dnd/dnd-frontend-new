@@ -18,23 +18,23 @@ const Leaderboard = () => {
   return (
     <>
       <Box
-        wrapperClassName="lg:flex hidden min-h-0 w-[1200px] max-w-7xl flex-1 flex-col self-center pb-12"
+        wrapperClassName="lg:flex flex-1 hidden min-h-0 w-[1200px] max-w-7xl flex-1 flex-col self-center pb-12"
         title="LEADERBOARD"
-        className="flex-1 py-8"
+        className="flex min-h-0 flex-1 p-8"
       >
-        <div className="mx-auto flex w-4/5 flex-col">
+        <div className="flex w-full flex-col">
           <Tabs selectedRating={selectedRating} setSelectedRating={setSelectedRating} />
           <LeaderboardList selectedRating={selectedRating} />
         </div>
       </Box>
 
-      <div className="flex flex-1 flex-col lg:hidden">
+      <div className="flex h-full min-h-0 flex-col lg:hidden">
         <MobileNavbar onClickBack={() => router.push("/home")} />
-        <div className="relative flex flex-1 flex-col p-4">
+        <div className="flex min-h-0 flex-1 flex-col p-4">
           <Tabs selectedRating={selectedRating} setSelectedRating={setSelectedRating} />
-
           <LeaderboardList selectedRating={selectedRating} />
         </div>
+        <div className="pointer-events-none fixed bottom-4 h-16 w-full bg-gradient-to-t from-dark-900 to-transparent" />
       </div>
     </>
   );

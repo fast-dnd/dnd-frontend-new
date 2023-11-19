@@ -13,3 +13,5 @@ export const leaderboardSchema = z.object({
   leaderboard: z.array(leaderboardUserSchema),
   total: z.number(),
 });
+
+export type ILeaderBoard = z.infer<typeof leaderboardSchema>;

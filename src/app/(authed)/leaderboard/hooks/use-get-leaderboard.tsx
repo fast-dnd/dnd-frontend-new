@@ -21,22 +21,20 @@ const useGetLeaderboard = ({
         lastPage.leaderboard.length === PAGINATION_LIMIT ? allPages.length + 1 : undefined;
       return nextPage;
     },
-    // getPreviousPageParam: (firstPage, allPages) => {
-    //   if (!currUserRank) return undefined;
+    getPreviousPageParam: (firstPage, allPages) => {
+      if (!currUserRank) return undefined;
 
-    //   if (firstPage.leaderboard.length > 0) {
-    //     const firstItemRank = firstPage.leaderboard[0].rank;
-    //     const previousPageStartRank = firstItemRank - PAGINATION_LIMIT;
-    //     console.log(previousPageStartRank);
-    //     if (previousPageStartRank > 0) {
-    //       const previousPageNumber = Math.ceil(
-    //         (currUserRank - previousPageStartRank + 1) / PAGINATION_LIMIT,
-    //       );
-    //       return previousPageNumber;
-    //     }
-    //   }
-    //   return undefined;
-    // },
+      if (firstPage.leaderboard.length > 0) {
+        const firstItemRank = firstPage.leaderboard[0].rank;
+        const previousPageStartRank = firstItemRank - PAGINATION_LIMIT;
+        console.log(previousPageStartRank);
+        if (previousPageStartRank > 0) {
+          const param = Math.ceil((previousPageStartRank - currUserRank + 1) / PAGINATION_LIMIT);
+          return param;
+        }
+      }
+      return undefined;
+    },
   });
 };
 

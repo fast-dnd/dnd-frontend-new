@@ -1,7 +1,11 @@
+import { useEffect, useRef } from "react";
+import { InfiniteData } from "@tanstack/react-query";
+
 import Spinner from "@/components/ui/spinner";
 import useAuth from "@/hooks/helpers/use-auth";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import { cn } from "@/utils/style-utils";
+import { ILeaderBoard } from "@/validations/leaderboard";
 
 import useGetLeaderboard from "../hooks/use-get-leaderboard";
 import { RatingType } from "../types/rating-type";
@@ -9,7 +13,9 @@ import LeaderboardUserCard from "./leaderboard-user";
 
 const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => {
   const { loggingIn, user } = useAuth();
+  const previousRef = useRef<InfiniteData<ILeaderBoard | undefined>>();
 
+  const scrollableRef = useRef<HTMLDivElement>(null);
   const {
     data: topLeaderboardData,
     isError: topIsError,
@@ -43,6 +49,19 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
     hasNextPage: hasPreviousPage,
   });
 
+  useEffect(() => {
+    if (
+      leaderboardData?.pages?.[0].leaderboard[0].accountId !==
+        previousRef.current?.pages?.[0]?.leaderboard[0].accountId &&
+      scrollableRef.current
+    ) {
+      //prevent scrolling to top when loaded previous
+      scrollableRef.current.scrollTop += 260; // 5 leaderboard users
+    }
+
+    previousRef.current = leaderboardData;
+  }, [leaderboardData]);
+
   if (loggingIn || isLoading || topIsLoading)
     return (
       <div className="flex animate-pulse flex-col">
@@ -73,19 +92,33 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
       />
     ));
 
-  const content = leaderboardData?.pages.map((page) =>
+  const content = leaderboardData?.pages.map((page, index) =>
     page.leaderboard.map((leaderboardUser, i) => {
       if (leaderboardUser.rank <= 3) return null;
-      if (page.leaderboard.length === i + 1 || i === 0) {
-        return (
-          <LeaderboardUserCard
-            key={leaderboardUser.accountId}
-            leaderboardUser={leaderboardUser}
-            ref={i === 0 ? firstLeaderboardUserRef : lastLeaderboardUserRef}
-            isCurrUser={leaderboardUser.accountId === user.account._id}
-          />
-        );
+      if (index === 0) {
+        if (i === 0) {
+          return (
+            <LeaderboardUserCard
+              key={leaderboardUser.accountId}
+              leaderboardUser={leaderboardUser}
+              ref={firstLeaderboardUserRef}
+              isCurrUser={leaderboardUser.accountId === user.account._id}
+            />
+          );
+        }
+      } else if (index === leaderboardData.pages.length - 1) {
+        if (page.leaderboard.length - 1 === i) {
+          return (
+            <LeaderboardUserCard
+              key={leaderboardUser.accountId}
+              leaderboardUser={leaderboardUser}
+              ref={lastLeaderboardUserRef}
+              isCurrUser={leaderboardUser.accountId === user.account._id}
+            />
+          );
+        }
       }
+
       return (
         <LeaderboardUserCard
           leaderboardUser={leaderboardUser}
@@ -97,19 +130,21 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
   );
 
   return (
-    <div className={cn("flex min-h-0 flex-1 flex-col")}>
+    <div className={cn("flex h-full min-h-0 flex-1 flex-col overflow-hidden")}>
       <div className="border-b border-b-white/50">{topContent}</div>
-      {isFetchingPreviousPage && (
-        <div className="flex h-10 justify-center">
-          <Spinner className="m-0 h-8 w-8" />
-        </div>
-      )}
-      <div className="flex flex-1 flex-col overflow-y-scroll">{content}</div>
-      {isFetchingNextPage && (
-        <div className="flex h-10 justify-center">
-          <Spinner className="m-0 h-8 w-8" />
-        </div>
-      )}
+      <div
+        className={cn(
+          "flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-auto bg-black/20 pb-4",
+        )}
+        ref={scrollableRef}
+      >
+        {content}
+        {isFetchingNextPage && (
+          <div className="flex h-10 justify-center">
+            <Spinner className="m-0 h-8 w-8" />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

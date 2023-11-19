@@ -20,8 +20,8 @@ const LeaderboardUserCard = React.forwardRef<
   return (
     <div
       className={cn(
-        "relative flex w-full justify-between bg-black/20 px-4 py-2",
-        isCurrUser && "bg-black/40",
+        "relative flex w-full justify-between px-4 py-2",
+        isCurrUser && "bg-black/20",
         top3 && "bg-black",
       )}
       ref={ref}
