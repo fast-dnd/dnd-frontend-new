@@ -34,15 +34,15 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const ratings = [
     {
       icon: <FaDice size={16} className="fill-white/50" />,
-      rank: user?.ranking.gameplay.rank,
+      rank: user?.ranking.gameplay.rating,
     },
     {
       icon: <Star size={16} weight="fill" className="fill-white/50" />,
-      rank: user?.ranking.influencer.rank,
+      rank: user?.ranking.influencer.rating,
     },
     {
       icon: <PenNib size={16} weight="fill" className="fill-white/50" />,
-      rank: user?.ranking.contentCreation.rank,
+      rank: user?.ranking.contentCreation.rating,
     },
   ];
 

@@ -26,7 +26,7 @@ const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
           )}
         />
       ),
-      rank: user?.ranking.gameplay.rank ?? "-",
+      rank: user?.ranking.gameplay.rating ?? "-",
       text: "Gameplay Rating",
     },
     {
@@ -41,7 +41,7 @@ const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
           )}
         />
       ),
-      rank: user?.ranking.influencer.rank ?? "-",
+      rank: user?.ranking.influencer.rating ?? "-",
       text: "Influencer Rating",
     },
     {
@@ -56,7 +56,7 @@ const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
           )}
         />
       ),
-      rank: user?.ranking.contentCreation.rank ?? "-",
+      rank: user?.ranking.contentCreation.rating ?? "-",
       text: "Content Creation Rating",
     },
   ] as const;
