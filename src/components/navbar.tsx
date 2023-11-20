@@ -54,6 +54,17 @@ const Navbar = () => {
             >
               CREATE ADVENTURE
             </Link>
+
+            <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+            <Link
+              href="/leaderboard"
+              className={cn(
+                "border-b-4 border-transparent transition-all duration-300 hover:border-primary/50",
+                pathname === "/leaderboard" && "border-primary",
+              )}
+            >
+              LEADERBOARD
+            </Link>
           </>
         )}
         <div className="h-2 w-2 rotate-45 bg-white opacity-25" />

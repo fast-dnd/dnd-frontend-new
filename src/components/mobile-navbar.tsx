@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { PenNib, Star } from "@phosphor-icons/react";
 import { BiChevronLeft } from "react-icons/bi";
-import { FaDiscord } from "react-icons/fa";
+import { FaDice, FaDiscord } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
 import { toast } from "sonner";
 
@@ -29,10 +30,26 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
     logout();
     toast.success("Signed out successfully!");
   };
+
+  const ratings = [
+    {
+      icon: <FaDice size={16} className="fill-white/50" />,
+      rank: user?.ranking.gameplay.rank,
+    },
+    {
+      icon: <Star size={16} weight="fill" className="fill-white/50" />,
+      rank: user?.ranking.influencer.rank,
+    },
+    {
+      icon: <PenNib size={16} weight="fill" className="fill-white/50" />,
+      rank: user?.ranking.contentCreation.rank,
+    },
+  ];
+
   return (
     <div
       className={cn(
-        "pointer-events-none flex w-full items-center justify-between bg-gradient-to-b from-black via-black/60 via-60% to-transparent px-4 pt-3 lg:hidden",
+        "pointer-events-none flex h-16 w-full items-start justify-between bg-gradient-to-b from-black via-black/60 via-60% to-transparent px-4 pt-3 lg:hidden",
         className,
       )}
     >
@@ -92,15 +109,35 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
           </div>
           {user ? (
             <div className="-mx-4 -mb-6 flex w-[calc(100%_+_3rem)] flex-col items-center bg-primary-900">
-              <Link href="/profile" className="-translate-y-1/2 ">
+              <Link href="/profile" className="-translate-y-1/2">
                 <Image
                   src={user?.account.imageUrl || "/images/default-avatar.png"}
                   width={76}
                   height={76}
                   alt="avatar"
-                  className="rounded-full"
+                  className="rounded-full border-4 border-primary-900"
                 />
               </Link>
+              <div className="-mt-14 mb-4 flex gap-4">
+                {ratings.map(({ icon, rank }, index) => (
+                  <div
+                    key={index}
+                    className="relative flex h-9 w-9 flex-col items-center justify-center rounded-full bg-[#232322]"
+                  >
+                    {icon}
+                    <p className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 font-medium text-white/50">
+                      {rank}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <Link className="mr-4 w-full text-center font-bold" href="/leaderboard">
+                SEE THE LEADERBOARD
+              </Link>
+
+              <div className="my-3 h-0.5 w-full bg-black shadow-lobby" />
+
               <div className="mr-4 flex gap-2">
                 <div className="flex items-center justify-center gap-1 rounded-md bg-white/5 px-6 py-1">
                   <Coin silver />
@@ -112,9 +149,9 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                 </div>
               </div>
 
-              <div className="my-5 text-center" onClick={onSignOut}>
+              <button className="my-5 text-center font-bold" onClick={onSignOut}>
                 SIGN OUT
-              </div>
+              </button>
             </div>
           ) : (
             <div />

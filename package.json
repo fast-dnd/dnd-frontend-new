@@ -19,6 +19,7 @@
     "@dnd-kit/utilities": "^3.2.1",
     "@hookform/resolvers": "^3.3.1",
     "@legendapp/state": "^1.11.1",
+    "@phosphor-icons/react": "^2.0.14",
     "@project-serum/anchor": "^0.26.0",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-checkbox": "^1.0.4",

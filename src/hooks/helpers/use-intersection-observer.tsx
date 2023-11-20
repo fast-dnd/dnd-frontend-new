@@ -16,8 +16,8 @@ const useIntersectionObserver = ({
 
       if (intObserver.current) intObserver.current.disconnect();
 
-      intObserver.current = new IntersectionObserver((objects) => {
-        if (objects[0].isIntersecting && hasNextPage) {
+      intObserver.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
           fetchNextPage();
         }
       });
