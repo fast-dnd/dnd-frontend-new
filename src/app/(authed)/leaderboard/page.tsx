@@ -34,7 +34,6 @@ const Leaderboard = () => {
           <Tabs selectedRating={selectedRating} setSelectedRating={setSelectedRating} />
           <LeaderboardList selectedRating={selectedRating} />
         </div>
-        <div className="pointer-events-none fixed bottom-4 h-16 w-full bg-gradient-to-t from-dark-900 to-transparent" />
       </div>
     </>
   );
