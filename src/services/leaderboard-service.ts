@@ -17,9 +17,11 @@ const getLeaderboard = async ({
   pageParam: number;
   currUserRank?: number;
 }) => {
+  const skip = (currUserRank ? currUserRank - 1 : 0) + (pageParam - 1) * PAGINATION_LIMIT;
+  const limit = skip >= 0 ? PAGINATION_LIMIT : Math.max(PAGINATION_LIMIT + skip, 0);
   const queryParams = queryString.stringify({
-    skip: Math.max(0, (currUserRank ? currUserRank - 1 : 0) + (pageParam - 1) * PAGINATION_LIMIT),
-    limit: PAGINATION_LIMIT,
+    skip: Math.max(0, skip),
+    limit: limit,
   });
 
   return await leaderboardApi

@@ -26,10 +26,9 @@ const useGetLeaderboard = ({
 
       if (firstPage.leaderboard.length > 0) {
         const firstItemRank = firstPage.leaderboard[0].rank;
-        const previousPageStartRank = firstItemRank - PAGINATION_LIMIT;
-        console.log(previousPageStartRank);
-        if (previousPageStartRank > 0) {
-          const param = Math.ceil((previousPageStartRank - currUserRank + 1) / PAGINATION_LIMIT);
+        const previousSkip = firstItemRank - PAGINATION_LIMIT;
+        if (previousSkip >= 0) {
+          const param = Math.ceil((previousSkip - currUserRank + 1) / PAGINATION_LIMIT);
           return param;
         }
       }

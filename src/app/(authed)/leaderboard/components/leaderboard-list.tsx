@@ -51,12 +51,16 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
 
   useEffect(() => {
     if (
+      leaderboardData &&
       leaderboardData?.pages?.[0].leaderboard[0].accountId !==
         previousRef.current?.pages?.[0]?.leaderboard[0].accountId &&
       scrollableRef.current
     ) {
       //prevent scrolling to top when loaded previous
-      scrollableRef.current.scrollTop += 260; // 5 leaderboard users
+      const numOfUsers = leaderboardData.pages[0].leaderboard.filter(
+        (user) => user.rank > 3,
+      ).length;
+      scrollableRef.current.scrollTop += numOfUsers * 52; // each leaderboard user is 52px
     }
 
     previousRef.current = leaderboardData;
@@ -106,7 +110,8 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
             />
           );
         }
-      } else if (index === leaderboardData.pages.length - 1) {
+      }
+      if (index === leaderboardData.pages.length - 1) {
         if (page.leaderboard.length - 1 === i) {
           return (
             <LeaderboardUserCard
