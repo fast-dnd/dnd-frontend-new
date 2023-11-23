@@ -36,8 +36,6 @@ const EditProfile = () => {
     resolver: zodResolver(editProfileSchema),
   });
 
-  console.log(user?.account);
-
   const image = watch("image");
 
   const imageRef = useRef<HTMLInputElement>(null);
