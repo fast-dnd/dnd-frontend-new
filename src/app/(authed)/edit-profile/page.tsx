@@ -34,8 +34,9 @@ const EditProfile = () => {
     formState: { errors },
   } = useForm<IEditProfileSchema>({
     resolver: zodResolver(editProfileSchema),
-    values: user?.account,
   });
+
+  console.log(user?.account);
 
   const image = watch("image");
 
@@ -75,7 +76,8 @@ const EditProfile = () => {
                   label="Your profile's username"
                   placeholder="Thorian Blackthorn"
                   className="text-xl tracking-[0.07em]"
-                  {...register("username")}
+                  defaultValue={user?.account.username}
+                  onChange={(e) => setValue("username", e.target.value)}
                   state={errors?.username ? "error" : undefined}
                   errorMessage={errors?.username?.message}
                 />
@@ -118,7 +120,8 @@ const EditProfile = () => {
                 label="EDIT YOUR USERNAME"
                 placeholder="Thorian Blackthorn"
                 className="text-xl tracking-[0.07em]"
-                {...register("username")}
+                defaultValue={user?.account.username}
+                onChange={(e) => setValue("username", e.target.value)}
                 state={errors?.username ? "error" : undefined}
                 errorMessage={errors?.username?.message}
               />
