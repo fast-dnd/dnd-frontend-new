@@ -112,7 +112,7 @@ const DungeonDetail = ({
                 </div>
                 {onChangeChampion && (
                   <Button
-                    variant={champion._id === selectedChampion?._id ? "primary" : "outline"}
+                    variant="primary"
                     className="w-fit"
                     disabled={isTaken(champion)}
                     onClick={() => onChangeChampion(champion)}
@@ -121,7 +121,7 @@ const DungeonDetail = ({
                       ? "TAKEN"
                       : champion._id === selectedChampion?._id
                       ? "SELECTED"
-                      : "CHOOSE THIS CHARACTER"}
+                      : "SELECT THIS CHARACTER"}
                   </Button>
                 )}
               </div>

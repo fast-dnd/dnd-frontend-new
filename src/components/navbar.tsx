@@ -134,6 +134,7 @@ const Navbar = () => {
             href="https://discord.com/invite/36chp8DnzC"
             className="flex items-center"
             aria-label="Discord"
+            target="_blank"
           >
             <FaDiscord className="h-11 w-11" />
           </Link>

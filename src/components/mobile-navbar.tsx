@@ -102,6 +102,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
               variant="sidebar"
               className="gap-2 py-4"
               href="https://discord.com/invite/36chp8DnzC"
+              target="_blank"
             >
               <FaDiscord className="h-6 w-6" />
               JOIN US

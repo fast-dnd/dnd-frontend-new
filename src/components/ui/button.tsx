@@ -39,6 +39,7 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   href?: string;
+  target?: "_blank" | "_self" | "_parent" | "_top" | (string & {});
   isLoading?: boolean;
 }
 
@@ -46,7 +47,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, disabled, href, isLoading, children, variant, ...props }, ref) => {
     if (href) {
       return (
-        <Link href={href} className={cn(buttonVariants({ variant, className }))}>
+        <Link
+          href={href}
+          className={cn(buttonVariants({ variant, className }))}
+          target={props.target}
+        >
           {children}
         </Link>
       );
