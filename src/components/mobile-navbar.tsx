@@ -69,7 +69,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
         </SheetTrigger>
         <SheetContent
           className={cn(
-            "pointer-events-auto flex flex-col justify-between gap-8 bg-primary-900/60 backdrop-blur-xl",
+            "pointer-events-auto z-[100] flex flex-col justify-between gap-8 bg-primary-900/60 backdrop-blur-xl",
           )}
         >
           <Link href="/home" className="w-fit">
