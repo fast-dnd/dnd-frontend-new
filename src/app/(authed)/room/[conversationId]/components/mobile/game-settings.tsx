@@ -70,7 +70,7 @@ const GameSettings = ({
       </div>
 
       <Button
-        className="w-52"
+        className="w-52 whitespace-nowrap"
         disabled={disabled || !canBegin}
         isLoading={isGameStarting || gameStarting}
         onClick={() => startGame({ conversationId })}
