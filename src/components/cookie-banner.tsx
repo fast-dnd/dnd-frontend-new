@@ -2,7 +2,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useLocalStorage } from "usehooks-ts";
 
 import { cn } from "@/utils/style-utils";
@@ -40,9 +39,7 @@ const CookieBanner = () => {
         <div className="flex items-center justify-center gap-8">
           <div className="h-2 w-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
           <div className="max-lg:text-center max-lg:text-xs lg:tracking-wide">
-            <Link href="/info/cookies" className="font-bold">
-              We use cookies to enhance your browsing experience.
-            </Link>
+            <p className="font-bold">We use cookies to enhance your browsing experience.</p>
             <br />
             By clicking `Allow` you agree to the use of cookies.
           </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
@@ -16,11 +16,20 @@ const MobileJoinRoom = ({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   show?: boolean;
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const [roomLink, setRoomLink] = useState<string>("");
 
   const { mutate: joinRoom, isLoading } = useJoinRoom();
 
+  useEffect(() => {
+    const timeout = open ? setTimeout(() => inputRef.current?.focus(), 1000) : undefined;
+
+    return () => clearTimeout(timeout);
+  }, [open]);
+
   const onJoinRoom = () => joinRoom({ link: roomLink });
+
   return (
     <AnimatePresence>
       {show && (
@@ -45,6 +54,7 @@ const MobileJoinRoom = ({
                   label="Room ID"
                   placeholder="ex. clean-thoughtless-evening"
                   onChange={(e) => setRoomLink(e.target.value)}
+                  ref={inputRef}
                 />
               </div>
               <button autoFocus className="pointer-events-none opacity-0" />
@@ -64,52 +74,6 @@ const MobileJoinRoom = ({
         </motion.div>
       )}
     </AnimatePresence>
-  );
-  return (
-    <>
-      <AnimatePresence>
-        {show && !open && (
-          <motion.div className="fixed -right-11 bottom-14 z-40 -rotate-90">
-            <button
-              onClick={() => {
-                setOpen(true);
-              }}
-              className="rounded-t-md bg-white/50 px-4 py-1.5 text-sm font-bold"
-            >
-              JOIN ROOM
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <AnimatePresence>
-        {show && open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed z-30 flex h-full w-full flex-col bg-dark-900 p-4"
-          >
-            <div className="flex flex-1 items-center">
-              <Input
-                label="Room ID"
-                placeholder="ex. clean-thoughtless-evening"
-                onChange={(e) => setRoomLink(e.target.value)}
-              />
-            </div>
-            <div className="flex justify-center">
-              <Button
-                isLoading={isLoading}
-                disabled={roomLink.length === 0}
-                onClick={onJoinRoom}
-                className="w-52 text-sm"
-              >
-                JOIN ROOM
-              </Button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
   );
 };
 

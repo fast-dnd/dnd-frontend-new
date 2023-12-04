@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { PenNib, Star } from "@phosphor-icons/react";
 import { BiChevronLeft } from "react-icons/bi";
 import { FaDice, FaDiscord } from "react-icons/fa";
@@ -25,6 +26,8 @@ interface IMobileNavbarProps {
 
 const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const { user } = useAuth();
+  const pathname = usePathname();
+  console.log(pathname);
 
   const onSignOut = () => {
     logout();
@@ -79,12 +82,16 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
           <div className="flex flex-col gap-4">
             {user ? (
               <>
-                <Button className="gap-2 py-4" href="/home">
+                <Button
+                  className="gap-2 py-4"
+                  href="/home"
+                  variant={pathname === "/home" ? "primary" : "sidebar"}
+                >
                   <SwordsIcon className="fill-white" />
                   PLAY
                 </Button>
                 <Button
-                  variant="sidebar"
+                  variant={pathname === "/profile" ? "primary" : "sidebar"}
                   className="gap-2 whitespace-nowrap py-4"
                   href="/profile?activeTab=GAME HISTORY"
                 >
@@ -93,7 +100,11 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                 </Button>
               </>
             ) : (
-              <Button variant="sidebar" className="py-4" href="/guide">
+              <Button
+                className="py-4"
+                href="/guide"
+                variant={pathname === "/guide" ? "primary" : "sidebar"}
+              >
                 HOW TO PLAY
               </Button>
             )}
@@ -133,7 +144,13 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                 ))}
               </div>
 
-              <Link className="mr-4 w-full text-center font-bold" href="/leaderboard">
+              <Link
+                className={cn(
+                  "mr-4 w-full text-center font-bold",
+                  pathname === "/leaderboard" && "text-primary",
+                )}
+                href="/leaderboard"
+              >
                 SEE THE LEADERBOARD
               </Link>
 
