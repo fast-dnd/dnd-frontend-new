@@ -9,7 +9,8 @@ import useAuth from "@/hooks/helpers/use-auth";
 import { cn } from "@/utils/style-utils";
 
 import ClaimRewardModal from "./claim-reward-modal";
-import Coin from "./coin";
+import DiamondDMCurrencyIcon from "./icons/diamond-dm-currency-icon";
+import GoldCoinIcon from "./icons/gold-coin-icon";
 import {
   Tooltip,
   TooltipArrow,
@@ -85,8 +86,8 @@ const Navbar = () => {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="flex cursor-default items-center gap-1">
-                      <Coin silver />
+                    <div className="flex cursor-default items-center gap-2">
+                      <GoldCoinIcon />
                       {user?.account.coins ?? "-"}
                     </div>
                   </TooltipTrigger>
@@ -100,8 +101,8 @@ const Navbar = () => {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="flex cursor-default items-center gap-1">
-                      <Coin />
+                    <div className="flex cursor-default items-center gap-2">
+                      <DiamondDMCurrencyIcon />
                       {user?.account.dmCurrency ?? "-"}
                     </div>
                   </TooltipTrigger>

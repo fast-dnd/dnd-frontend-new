@@ -13,7 +13,8 @@ import useAuth from "@/hooks/helpers/use-auth";
 import { logout } from "@/utils/auth";
 import { cn } from "@/utils/style-utils";
 
-import Coin from "./coin";
+import DiamondDMCurrencyIcon from "./icons/diamond-dm-currency-icon";
+import GoldCoinIcon from "./icons/gold-coin-icon";
 import QuillIcon from "./icons/quill-icon";
 import SwordsIcon from "./icons/swords-icon";
 import { Button } from "./ui/button";
@@ -27,7 +28,6 @@ interface IMobileNavbarProps {
 const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const { user } = useAuth();
   const pathname = usePathname();
-  console.log(pathname);
 
   const onSignOut = () => {
     logout();
@@ -158,11 +158,11 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
 
               <div className="mr-4 flex gap-2">
                 <div className="flex items-center justify-center gap-1 rounded-md bg-white/5 px-6 py-1">
-                  <Coin silver />
+                  <GoldCoinIcon />
                   {user?.account.coins ?? "-"}
                 </div>
                 <div className="flex items-center justify-center gap-1 rounded-md bg-white/5 px-6 py-1">
-                  <Coin />
+                  <DiamondDMCurrencyIcon image />
                   {user?.account.dmCurrency ?? "-"}
                 </div>
               </div>

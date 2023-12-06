@@ -5,7 +5,8 @@ import Link from "next/link";
 import { Game, People, Star1, Timer } from "iconsax-react";
 import { MdEdit } from "react-icons/md";
 
-import Coin from "@/components/coin";
+import DiamondDMCurrencyIcon from "@/components/icons/diamond-dm-currency-icon";
+import GoldCoinIcon from "@/components/icons/gold-coin-icon";
 import Helmet2Icon from "@/components/icons/helmet2-icon";
 import SwordsIcon from "@/components/icons/swords-icon";
 import { Box } from "@/components/ui/box";
@@ -62,8 +63,12 @@ const MyAccount = () => {
         <div className="flex w-full flex-col gap-2">
           <p className="text-lg font-bold">COINS</p>
           <div className="flex w-full gap-4">
-            <StatisticsCard icon={<Coin silver />} value={statistics.totalCoins} name="Coins" />
-            <StatisticsCard icon={<Coin />} value={statistics.totalDmCoinsEarned} name="DM Coins" />
+            <StatisticsCard icon={<GoldCoinIcon />} value={statistics.totalCoins} name="Coins" />
+            <StatisticsCard
+              icon={<DiamondDMCurrencyIcon />}
+              value={statistics.totalDmCoinsEarned}
+              name="DM Coins"
+            />
           </div>
         </div>
 
