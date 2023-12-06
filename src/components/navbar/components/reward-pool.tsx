@@ -11,7 +11,7 @@ const RewardPool = () => {
         <TooltipTrigger asChild>
           <button
             className={cn(
-              "z-20 flex cursor-pointer items-center gap-2 rounded-full border-2 border-white/20 bg-gradient-to-r from-[#FBBC05] via-[#977000] to-[#473500] p-2 pr-6 transition-all duration-200 hover:border-2 hover:bg-neutral-800 hover:shadow-[0px_0px_30px_0px_#FBBC0540] active:opacity-90",
+              "z-20 flex cursor-pointer items-center gap-2 rounded-full border border-[#7c692e] bg-gradient-to-r from-[#FBBC05] from-10% via-[#977000] via-50% to-[#473500] to-90% p-2 pr-6 transition-all duration-200 hover:border-2 hover:bg-neutral-800 hover:shadow-[0px_0px_30px_0px_#FBBC0540] active:opacity-90",
             )}
           >
             <Image
@@ -38,7 +38,7 @@ const RewardPool = () => {
           </button>
         </TooltipTrigger>
         <TooltipContent side="bottom" className="w-56 tracking-[1.02px]">
-          The 10 top players on the scoreboard will receive rewards from the reward pool.{" "}
+          The 10 top players on the scoreboard will receive rewards from the reward pool.
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
