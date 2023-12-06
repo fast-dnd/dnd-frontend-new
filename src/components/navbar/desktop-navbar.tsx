@@ -17,7 +17,7 @@ const DesktopNavbar = () => {
   const { user, loggedIn } = useAuth();
 
   return (
-    <div className="hidden w-full items-center justify-between gap-12 py-10 lg:flex">
+    <div className="z-10 hidden w-full items-center justify-between gap-12 py-10 lg:flex">
       <div className="flex items-center gap-12">
         <Link href="/home">
           <Image src="/images/navbar-logo.png" width={203} height={70} alt="logo" />

@@ -12,7 +12,7 @@ const Background = () => {
 
   return (
     <div className="absolute -z-20 h-full w-full">
-      <div className="absolute left-0 top-0 z-10 h-64 w-full bg-topGradient" />
+      <div className="absolute left-0 top-0 z-10 hidden h-64 w-full bg-topGradient lg:block" />
       <Image
         src={showBg ? bgUrl : "/images/bg-cover.png"}
         fill
