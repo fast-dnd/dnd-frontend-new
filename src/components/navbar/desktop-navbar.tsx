@@ -8,6 +8,7 @@ import useAuth from "@/hooks/helpers/use-auth";
 import { cn } from "@/utils/style-utils";
 
 import ClaimRewardModal from "../claim-reward-modal";
+import RewardPool from "./components/reward-pool";
 import ProfileDropdown from "./profile-dropdown";
 
 const DesktopNavbar = () => {
@@ -27,7 +28,7 @@ const DesktopNavbar = () => {
         <Link
           href={loggedIn ? "/home" : "/login"}
           className={cn(
-            "border-b-4 border-transparent transition-all duration-300 hover:border-primary/50",
+            "border-b-4 border-transparent pb-2 transition-all duration-300 hover:border-primary/50",
             loggedIn && pathname === "/home" && "border-primary",
             !loggedIn && pathname === "/login" && "border-primary",
           )}
@@ -40,7 +41,7 @@ const DesktopNavbar = () => {
             <Link
               href="/create-adventure"
               className={cn(
-                "border-b-4 border-transparent transition-all duration-300 hover:border-primary/50",
+                "border-b-4 border-transparent pb-2 transition-all duration-300 hover:border-primary/50",
                 pathname === "/create-adventure" && "border-primary",
               )}
             >
@@ -51,7 +52,7 @@ const DesktopNavbar = () => {
             <Link
               href="/leaderboard"
               className={cn(
-                "border-b-4 border-transparent transition-all duration-300 hover:border-primary/50",
+                "border-b-4 border-transparent pb-2 transition-all duration-300 hover:border-primary/50",
                 pathname === "/leaderboard" && "border-primary",
               )}
             >
@@ -59,14 +60,11 @@ const DesktopNavbar = () => {
             </Link>
           </>
         )}
+        <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
 
-        {loggedIn && (
-          <>
-            <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+        <RewardPool />
 
-            <ProfileDropdown />
-          </>
-        )}
+        <ProfileDropdown />
       </div>
     </div>
   );
