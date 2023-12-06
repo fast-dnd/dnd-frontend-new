@@ -9,13 +9,7 @@ import { IBaseDungeon } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
 import DeleteModal from "./delete-modal";
-import {
-  Tooltip,
-  TooltipArrow,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
 export const Dungeon = React.forwardRef<
   HTMLDivElement,
@@ -136,7 +130,6 @@ export const Dungeon = React.forwardRef<
                   </TooltipTrigger>
                   <TooltipContent className="border-transparent">
                     Max players in room
-                    <TooltipArrow className=" fill-select text-select" />
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -155,7 +148,6 @@ export const Dungeon = React.forwardRef<
                   </TooltipTrigger>
                   <TooltipContent className="border-transparent">
                     Rating (Number of reviews)
-                    <TooltipArrow className=" fill-select text-select" />
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>

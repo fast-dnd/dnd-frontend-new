@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { BookOpenText, DiscordLogo, Plugs, UserCircle } from "@phosphor-icons/react";
@@ -13,6 +13,7 @@ import { cn } from "@/utils/style-utils";
 
 import DiamondDMCurrencyIcon from "../icons/diamond-dm-currency-icon";
 import GoldCoinIcon from "../icons/gold-coin-icon";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
 const ProfileDropdown = () => {
   const { user } = useAuth();
@@ -62,20 +63,41 @@ const ProfileDropdown = () => {
           className="mt-14 flex flex-col gap-4 p-4 text-base tracking-[1.2px]"
         >
           <div className="flex items-center justify-between gap-2">
-            <div className="flex w-full items-center justify-between gap-2 rounded-lg bg-primary-900 px-1.5 py-2.5">
-              <GoldCoinIcon className="h-5 w-5" />
-              <p className="font-bold">{user?.account.coins}</p>
-              <Link href="/shop" className="rounded-lg bg-white/10 px-2 py-1">
-                +
-              </Link>
-            </div>
-            <div className="flex w-full items-center justify-between gap-2 rounded-lg bg-primary-900 px-1.5 py-2.5">
-              <DiamondDMCurrencyIcon className="h-5 w-5" />
-              <p className="font-bold">{user?.account.dmCurrency}</p>
-              <Link href="/shop" className="rounded-lg bg-white/10 px-2 py-1">
-                +
-              </Link>
-            </div>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex w-full items-center justify-between gap-2 rounded-lg bg-primary-900 px-1.5 py-2.5">
+                    <GoldCoinIcon className="h-5 w-5" />
+                    <p className="font-bold">{user?.account.coins}</p>
+                    <Link
+                      href="/shop"
+                      className="rounded-lg bg-white/10 px-2 py-1 hover:opacity-70 active:opacity-90"
+                    >
+                      +
+                    </Link>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">Coins used for creating games</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex w-full items-center justify-between gap-2 rounded-lg bg-primary-900 px-1.5 py-2.5">
+                    <DiamondDMCurrencyIcon className="h-5 w-5" />
+                    <p className="font-bold">{user?.account.dmCurrency}</p>
+                    <Link
+                      href="/shop"
+                      className="rounded-lg bg-white/10 px-2 py-1 hover:opacity-70 active:opacity-90"
+                    >
+                      +
+                    </Link>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">DM Coins, Cooming Soon!</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
 
           <div className="h-1 w-full bg-white/10" />
