@@ -21,11 +21,8 @@ module.exports = {
       },
       backgroundImage: {
         radialGradient: "radial-gradient(circle at 50%, #ffffff06, transparent 75%)",
-        topGradient:
-          "linear-gradient(0deg, rgba(2, 4, 7, 0.00) 0%, rgba(1, 3, 6, 0.80) 61%, #010306 100%);",
       },
       colors: {
-        lobbyGradient: "linear-gradient(180deg, rgba(2, 4, 7, 0.00) 0%, #010306 59.88%);",
         primary: {
           50: "#FFEAEA",
           100: "#FFD6D6",
