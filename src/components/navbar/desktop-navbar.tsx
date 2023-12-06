@@ -47,7 +47,6 @@ const DesktopNavbar = () => {
             >
               CREATE ADVENTURE
             </Link>
-
             <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
             <Link
               href="/leaderboard"
@@ -58,13 +57,11 @@ const DesktopNavbar = () => {
             >
               LEADERBOARD
             </Link>
+            <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+            <RewardPool /> {/* TODO: display only if web3  */}
+            <ProfileDropdown />
           </>
         )}
-        <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
-
-        <RewardPool />
-
-        <ProfileDropdown />
       </div>
     </div>
   );
