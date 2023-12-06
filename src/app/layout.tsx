@@ -15,7 +15,7 @@ import { Metadata } from "next";
 import CookieBanner from "@/components/cookie-banner";
 import GoogleAnalytics from "@/components/google-analytics";
 import HotjarAnalytics from "@/components/hotjar-analytics";
-import Navbar from "@/components/navbar";
+import DesktopNavbar from "@/components/navbar/desktop-navbar";
 
 import Background from "../components/background";
 
@@ -48,7 +48,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
           <NextTopLoader />
           <Background />
           <div className="flex h-full flex-1 flex-col lg:max-h-full lg:px-16">
-            <Navbar />
+            <DesktopNavbar />
 
             {children}
             <CookieBanner />

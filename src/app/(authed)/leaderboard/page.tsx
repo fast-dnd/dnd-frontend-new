@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import MobileNavbar from "@/components/mobile-navbar";
+import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { Box } from "@/components/ui/box";
 
 import LeaderboardList from "./components/leaderboard-list";

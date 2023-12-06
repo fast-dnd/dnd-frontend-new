@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import MobileNavbar from "@/components/mobile-navbar";
+import MobileNavbar from "@/components/navbar/mobile-navbar";
 
 import JoinEditInfo from "./components/desktop/join-edit-info";
 import RoomInfo from "./components/desktop/room-info";

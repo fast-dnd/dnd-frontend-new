@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import GameHistory from "@/components/game-history";
-import MobileNavbar from "@/components/mobile-navbar";
+import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { Box } from "@/components/ui/box";
 
 import CreateRoom from "./components/desktop/create-room";

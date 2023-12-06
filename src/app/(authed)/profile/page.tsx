@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-import MobileNavbar from "@/components/mobile-navbar";
+import MobileNavbar from "@/components/navbar/mobile-navbar";
 
 import MyAccount from "./components/desktop/my-account";
 import MyCollection from "./components/desktop/my-collection";

@@ -8,7 +8,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { FcGoogle } from "react-icons/fc";
 
-import MobileNavbar from "@/components/mobile-navbar";
+import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 

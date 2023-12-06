@@ -13,12 +13,12 @@ import useAuth from "@/hooks/helpers/use-auth";
 import { logout } from "@/utils/auth";
 import { cn } from "@/utils/style-utils";
 
-import DiamondDMCurrencyIcon from "./icons/diamond-dm-currency-icon";
-import GoldCoinIcon from "./icons/gold-coin-icon";
-import QuillIcon from "./icons/quill-icon";
-import SwordsIcon from "./icons/swords-icon";
-import { Button } from "./ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import DiamondDMCurrencyIcon from "../icons/diamond-dm-currency-icon";
+import GoldCoinIcon from "../icons/gold-coin-icon";
+import QuillIcon from "../icons/quill-icon";
+import SwordsIcon from "../icons/swords-icon";
+import { Button } from "../ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 
 interface IMobileNavbarProps {
   className?: string;
