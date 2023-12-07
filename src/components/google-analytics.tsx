@@ -4,7 +4,7 @@ import Script from "next/script";
 
 import { env } from "@/utils/env.mjs";
 
-const GoogleAnalytics = () => {
+export const GoogleAnalyticsScript = () => {
   return (
     <>
       <Script id="google-tag-manager" strategy="afterInteractive">
@@ -16,6 +16,13 @@ const GoogleAnalytics = () => {
         })(window,document,'script','dataLayer','${env.NEXT_PUBLIC_GTM_ID}');
         `}
       </Script>
+    </>
+  );
+};
+
+export const GoogleAnalyticsNoScript = () => {
+  return (
+    <>
       <noscript
         dangerouslySetInnerHTML={{
           __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${env.NEXT_PUBLIC_GTM_ID}" height="0" width="0" style="display: none; visibility: hidden;"></iframe>`,
@@ -24,5 +31,3 @@ const GoogleAnalytics = () => {
     </>
   );
 };
-
-export default GoogleAnalytics;

@@ -12,7 +12,7 @@ import "@/styles/zoom.css";
 
 import { Metadata } from "next";
 
-import GoogleAnalytics from "@/components/google-analytics";
+import { GoogleAnalyticsNoScript, GoogleAnalyticsScript } from "@/components/google-analytics";
 import HotjarAnalytics from "@/components/hotjar-analytics";
 import Navbar from "@/components/navbar";
 
@@ -40,7 +40,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
       </head>
 
       <HotjarAnalytics />
-      <GoogleAnalytics />
+      <GoogleAnalyticsScript />
 
       <body className={cn("flex flex-col overflow-auto bg-dark-900", lexend.className)}>
         <Providers>
@@ -52,6 +52,8 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
             {children}
           </div>
         </Providers>
+
+        <GoogleAnalyticsNoScript />
       </body>
     </html>
   );

@@ -27,7 +27,6 @@ interface IMobileNavbarProps {
 const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const { user } = useAuth();
   const pathname = usePathname();
-  console.log(pathname);
 
   const onSignOut = () => {
     logout();
