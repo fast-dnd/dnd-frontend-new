@@ -1,23 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 
 import { env } from "@/utils/env.mjs";
 
 const GoogleAnalytics = () => {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const url = pathname + searchParams.toString();
-
-    window.gtag("config", env.NEXT_PUBLIC_GTM_ID, {
-      page_path: url,
-    });
-  }, [pathname, searchParams]);
-
   return (
     <>
       <Script id="google-tag-manager" strategy="afterInteractive">
