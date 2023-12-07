@@ -5,14 +5,13 @@ import { lexend } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
 import "@/styles/globals.css";
-import "@/styles/tailwind.css";
 import "@/styles/scrollbar.css";
+import "@/styles/tailwind.css";
 import "@/styles/wallet.css";
 import "@/styles/zoom.css";
 
 import { Metadata } from "next";
 
-import CookieBanner from "@/components/cookie-banner";
 import GoogleAnalytics from "@/components/google-analytics";
 import HotjarAnalytics from "@/components/hotjar-analytics";
 import Navbar from "@/components/navbar";
@@ -51,7 +50,6 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
             <Navbar />
 
             {children}
-            <CookieBanner />
           </div>
         </Providers>
       </body>
