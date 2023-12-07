@@ -11,9 +11,9 @@ import useAuth from "@/hooks/helpers/use-auth";
 import { logout } from "@/utils/auth";
 import { cn } from "@/utils/style-utils";
 
-import DiamondDMCurrencyIcon from "../icons/diamond-dm-currency-icon";
-import GoldCoinIcon from "../icons/gold-coin-icon";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import DiamondDMCurrencyIcon from "../../icons/diamond-dm-currency-icon";
+import GoldCoinIcon from "../../icons/gold-coin-icon";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip";
 
 const ProfileDropdown = () => {
   const { user } = useAuth();
@@ -44,7 +44,12 @@ const ProfileDropdown = () => {
           className="h-fit w-fit rounded-full bg-white"
         />
         <p className="font-medium">{user?.account.username ?? "-----------"}</p>
-        <BiChevronDown className="h-auto w-8" />
+        <BiChevronDown
+          className={cn(
+            "h-auto w-8 transition-all duration-200",
+            openDropdown ? "rotate-180" : "rotate-0",
+          )}
+        />
       </button>
       <motion.div
         initial={{ height: 0 }}

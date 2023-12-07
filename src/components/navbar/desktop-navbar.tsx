@@ -8,8 +8,8 @@ import useAuth from "@/hooks/helpers/use-auth";
 import { cn } from "@/utils/style-utils";
 
 import ClaimRewardModal from "../claim-reward-modal";
+import ProfileDropdown from "./components/profile-dropdown";
 import RewardPool from "./components/reward-pool";
-import ProfileDropdown from "./profile-dropdown";
 
 const DesktopNavbar = () => {
   const pathname = usePathname();
