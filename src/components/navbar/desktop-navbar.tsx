@@ -14,6 +14,10 @@ import RewardPool from "./components/reward-pool";
 
 const DesktopNavbar = () => {
   const communityId = useReadLocalStorage<string>("communityId");
+  const defaultCommunityId = useReadLocalStorage<string>("defaultCommunityId");
+  const isDefault = Boolean(
+    defaultCommunityId && communityId && defaultCommunityId === communityId,
+  );
 
   const pathname = usePathname();
 
@@ -28,6 +32,20 @@ const DesktopNavbar = () => {
         {loggedIn && communityId && <ClaimRewardModal />}
       </div>
       <div className="flex items-center gap-6 text-2xl leading-7 tracking-[3.3px]">
+        {!isDefault && (
+          <>
+            <Link
+              href="/communities"
+              className={cn(
+                "border-b-4 border-transparent pb-2 transition-all duration-300 hover:border-primary/50",
+                pathname === "/communities" && "border-primary",
+              )}
+            >
+              COMMUNITIES
+            </Link>
+            <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+          </>
+        )}
         <Link
           href={loggedIn ? "/home" : "/login"}
           className={cn(

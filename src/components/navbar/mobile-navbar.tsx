@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { PenNib, Star } from "@phosphor-icons/react";
 import { BiChevronLeft } from "react-icons/bi";
-import { FaDice, FaDiscord } from "react-icons/fa";
+import { FaDice, FaDiscord, FaUsers } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
 import { toast } from "sonner";
 import { useReadLocalStorage } from "usehooks-ts";
@@ -29,6 +29,10 @@ interface IMobileNavbarProps {
 
 const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const communityId = useReadLocalStorage<string>("communityId");
+  const defaultCommunityId = useReadLocalStorage<string>("defaultCommunityId");
+  const isDefault = Boolean(
+    defaultCommunityId && communityId && defaultCommunityId === communityId,
+  );
 
   const { data: rating } = useGetRating();
 
@@ -89,6 +93,14 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
           <div className="flex flex-col gap-4">
             {user ? (
               <>
+                <Button
+                  className="gap-2 py-4"
+                  href="/communities"
+                  variant={pathname === "/communities" ? "primary" : "sidebar"}
+                >
+                  <FaUsers className="fill-white" />
+                  Communities
+                </Button>
                 <Button
                   className="gap-2 py-4"
                   href="/home"
