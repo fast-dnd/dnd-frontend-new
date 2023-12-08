@@ -21,7 +21,7 @@ const handleInterceptors = (apiInstance: AxiosInstance) => {
 
   apiInstance.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem("jwtToken");
+      const token = localStorage.getItem("jwtToken")?.replace(/['"]+/g, "");
 
       if (token) config.headers["Authorization"] = `Bearer ${token}`;
 

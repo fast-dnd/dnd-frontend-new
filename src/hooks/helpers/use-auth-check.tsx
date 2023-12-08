@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { redirect, usePathname } from "next/navigation";
 import { useLocalStorage, useReadLocalStorage, useWindowSize } from "usehooks-ts";
 
-import checkJWT from "@/utils/check-jwt";
+import useCheckJWT from "@/utils/check-jwt";
 
 const useAuthCheck = () => {
   const { width } = useWindowSize();
 
   const communityId = useReadLocalStorage<string>("communityId");
 
-  const tokenExists = checkJWT();
+  const tokenExists = useCheckJWT();
 
   const pathname = usePathname();
 

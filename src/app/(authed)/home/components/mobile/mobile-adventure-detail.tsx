@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Game, Star1 } from "iconsax-react";
 import { AiFillHeart, AiOutlineClose } from "react-icons/ai";
@@ -28,28 +27,16 @@ const MobileAdventureDetail = ({
   onClose?: () => void;
   hideStartButton?: boolean;
 }) => {
-  const router = useRouter();
   const { data: adventure, isLoading } = useGetDungeon(adventureDetailId ?? "");
-
-  const [loadingRoom, setLoadingRoom] = useState(false);
 
   const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
 
   const onCreateRoom = () => {
-    createRoom(
-      {
-        generateAudio: false,
-        generateImages: false,
-        dungeon: adventureDetailId,
-      },
-      {
-        onSuccess: (data) => {
-          if (data.admin) localStorage.setItem("accountId", JSON.stringify(data.admin.accountId));
-          setLoadingRoom(true);
-          router.push(`room/${data.conversationId}`);
-        },
-      },
-    );
+    createRoom({
+      generateAudio: false,
+      generateImages: false,
+      dungeon: adventureDetailId,
+    });
   };
   return (
     <AnimatePresence mode="wait">
@@ -141,7 +128,7 @@ const MobileAdventureDetail = ({
             )}
           >
             <Button
-              isLoading={isCreatingRoom || loadingRoom}
+              isLoading={isCreatingRoom}
               onClick={onCreateRoom}
               className="pointer-events-auto flex w-fit gap-2"
             >
