@@ -16,7 +16,7 @@ const Community = ({ community }: { community: ICommunity }) => {
   };
 
   return (
-    <div className="relative flex flex-col bg-black pb-4 lg:h-[350px] lg:w-[560px]">
+    <div className="relative flex flex-col rounded-lg bg-black pb-4 lg:h-[350px] lg:w-[560px]">
       <Image
         src={"/images/bg-cover.png"} //TODO: replace this with banner image
         alt={community.name + " banner"}
