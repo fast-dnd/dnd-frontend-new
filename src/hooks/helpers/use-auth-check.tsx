@@ -19,7 +19,9 @@ const useAuthCheck = () => {
     const nonAuthURLs = ["/guide", "/transcript", "/mobile-wip"];
     const isNonAuthURL = nonAuthURLs.some((url) => pathname?.includes(url));
 
-    if (pathname !== "/communities" && !communityId) redirect("/communities");
+    if (!["/communities", "/login"].includes(pathname) && !communityId) {
+      redirect("/communities");
+    }
 
     if (isNonAuthURL) return;
     else if (pathname === "/login") {

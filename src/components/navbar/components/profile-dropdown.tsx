@@ -46,6 +46,7 @@ const ProfileDropdown = () => {
           className="h-fit w-fit rounded-full bg-white"
         />
         <p className="font-medium">{user?.account.username ?? "-----------"}</p>
+        {/* TODO: add crypto currency */}
         <BiChevronDown
           className={cn(
             "h-auto w-8 transition-all duration-200",
