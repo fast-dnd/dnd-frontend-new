@@ -16,33 +16,39 @@ const Community = ({ community }: { community: ICommunity }) => {
   };
 
   return (
-    <div className="relative flex flex-col rounded-lg bg-black pb-4 lg:h-[350px] lg:w-[560px]">
-      <Image
-        src={"/images/bg-cover.png"} //TODO: replace this with banner image
-        alt={community.name + " banner"}
-        width={560}
-        height={180}
-        className="h-20 w-full rounded-t-lg lg:h-[180px] lg:w-[560px]"
-      />
-      <div className="absolute left-0 top-1/2 ml-5 translate-y-[-125%] rounded-lg bg-white p-1.5 drop-shadow-[4px_4px_0px_#FF5A5A] lg:translate-y-[-75%]">
-        <Image
-          src={"/images/default-avatar.png"} //TODO: replace this with avatar image
-          alt={community.name + " banner"}
-          width={100}
-          height={100}
-          className="h-[50px] w-[50px] rounded-full lg:h-[100px] lg:w-[100px]"
-        />
+    <div className="relative flex flex-col gap-4 rounded-lg bg-black pb-3 lg:w-[665px] lg:pb-5">
+      <div className="flex flex-col gap-8 lg:gap-12">
+        <div className="relative h-20 lg:h-[215px] lg:w-[665px]">
+          <div className="absolute inset-0 overflow-hidden rounded-t-lg">
+            <Image
+              src={"/images/bg-cover.png"} //TODO: replace this with banner image
+              alt={community.name + " banner"}
+              width={665}
+              height={665}
+              className="absolute w-full object-cover"
+            />
+          </div>
+
+          <div className="absolute -bottom-4 left-4 rounded-lg bg-white drop-shadow-[2px_2px_0px_#FF5A5A] lg:-bottom-8 lg:left-8 lg:drop-shadow-[4px_4px_0px_#FF5A5A]">
+            <Image
+              src={"/images/default-avatar.png"} //TODO: replace this with avatar image
+              alt={community.name + " banner"}
+              width={120}
+              height={120}
+              className="h-[50px] w-[50px] rounded-full lg:h-[120px] lg:w-[120px]"
+            />
+          </div>
+        </div>
+
+        <div className="flex justify-between px-4 lg:px-8">
+          <p className="text-xl font-bold lg:text-3xl">{community.name}</p>
+        </div>
       </div>
-
-      <p className="ml-5 mt-8 text-xl font-bold lg:text-3xl">{community.name}</p>
-
-      <Button
-        variant="google"
-        className="mx-5 mt-4 w-[calc(100%-2.5rem)] uppercase"
-        onClick={onJoinCommunity}
-      >
-        {communityId === community._id ? "JOINED" : `EXPLORE ${community.name}`}
-      </Button>
+      <div className="px-4 lg:px-8">
+        <Button variant="google" className="uppercase" onClick={onJoinCommunity}>
+          {communityId === community._id ? "JOINED" : `EXPLORE ${community.name}`}
+        </Button>
+      </div>
     </div>
   );
 };
