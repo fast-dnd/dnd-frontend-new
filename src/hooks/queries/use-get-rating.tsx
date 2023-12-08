@@ -2,12 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 
 import accountService, { accountKey } from "@/services/account-service";
 
-const useGetAccount = ({ tokenExists }: { tokenExists: boolean }) => {
+const useGetRating = ({ tokenExists }: { tokenExists: boolean }) => {
   return useQuery({
-    queryKey: [accountKey],
-    queryFn: accountService.getAccount,
+    queryKey: [accountKey, "rating"],
+    queryFn: accountService.getRating,
     enabled: tokenExists,
   });
 };
 
-export default useGetAccount;
+export default useGetRating;

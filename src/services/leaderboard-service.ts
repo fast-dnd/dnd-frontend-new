@@ -22,10 +22,11 @@ const getLeaderboard = async ({
   const queryParams = queryString.stringify({
     skip: Math.max(0, skip),
     limit: limit,
+    type: filter,
   });
 
   return await leaderboardApi
-    .get(filter + "?" + queryParams)
+    .get("?" + queryParams)
     .then((res) => leaderboardSchema.parse(res.data));
 };
 

@@ -26,7 +26,7 @@ interface IMobileNavbarProps {
 }
 
 const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
-  const { user } = useAuth();
+  const { rating, user } = useAuth();
   const pathname = usePathname();
 
   const onSignOut = () => {
@@ -37,15 +37,15 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const ratings = [
     {
       icon: <FaDice size={16} className="fill-white/50" />,
-      rank: user?.ranking.gameplay.rating,
+      rank: rating?.rating.gameplay,
     },
     {
       icon: <Star size={16} weight="fill" className="fill-white/50" />,
-      rank: user?.ranking.influencer.rating,
+      rank: rating?.rating.influencer,
     },
     {
       icon: <PenNib size={16} weight="fill" className="fill-white/50" />,
-      rank: user?.ranking.contentCreation.rating,
+      rank: rating?.rating.contentCreation,
     },
   ];
 

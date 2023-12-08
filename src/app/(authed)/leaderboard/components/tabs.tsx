@@ -12,7 +12,7 @@ interface ITabsProps {
 }
 
 const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
-  const { user } = useAuth();
+  const { rating } = useAuth();
 
   const ratingTabValues = [
     {
@@ -26,7 +26,7 @@ const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
           )}
         />
       ),
-      rank: user?.ranking.gameplay.rating ?? "-",
+      rank: rating?.rating.gameplay ?? "-",
       text: "Gameplay Rating",
     },
     {
@@ -41,7 +41,7 @@ const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
           )}
         />
       ),
-      rank: user?.ranking.influencer.rating ?? "-",
+      rank: rating?.rating.influencer ?? "-",
       text: "Influencer Rating",
     },
     {
@@ -56,7 +56,7 @@ const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
           )}
         />
       ),
-      rank: user?.ranking.contentCreation.rating ?? "-",
+      rank: rating?.rating.contentCreation ?? "-",
       text: "Content Creation Rating",
     },
   ] as const;

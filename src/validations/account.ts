@@ -34,25 +34,20 @@ export const statisticsSchema = z.object({
   totalGameplayHours: z.number(),
 });
 
-export const rankingSchema = z.object({
-  gameplay: z.object({
-    rank: z.number(),
-    rating: z.number(),
-  }),
-  influencer: z.object({
-    rank: z.number(),
-    rating: z.number(),
-  }),
-  contentCreation: z.object({
-    rank: z.number(),
-    rating: z.number(),
+export const ratingSchema = z.object({
+  _id: z.string(),
+  communityId: z.string(),
+  accountId: z.string(),
+  rating: z.object({
+    gameplay: z.number(),
+    influencer: z.number(),
+    contentCreation: z.number(),
   }),
 });
 
 export const profileSchema = z.object({
   account: accountSchema,
   statistics: statisticsSchema,
-  ranking: rankingSchema,
 });
 
 export const couponSchema = z.object({

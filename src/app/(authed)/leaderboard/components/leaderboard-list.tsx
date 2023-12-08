@@ -13,7 +13,7 @@ import { RatingType } from "../types/rating-type";
 import LeaderboardUserCard from "./leaderboard-user";
 
 const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => {
-  const { loggingIn, user } = useAuth();
+  const { loggingIn, rating } = useAuth();
   const previousRef = useRef<InfiniteData<ILeaderBoard | undefined>>();
 
   const scrollableRef = useRef<HTMLDivElement>(null);
@@ -35,7 +35,7 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
     isFetchingPreviousPage,
   } = useGetLeaderboard({
     filter: selectedRating,
-    currUserRank: user?.ranking[selectedRating].rank,
+    currUserRank: rating?.rating[selectedRating],
   });
 
   const { lastObjectRef: lastLeaderboardUserRef } = useIntersectionObserver({
@@ -84,7 +84,7 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
       </div>
     );
 
-  if (!user || isError || topIsError) return <div>Something went wrong</div>;
+  if (!rating || isError || topIsError) return <div>Something went wrong</div>;
 
   const topContent = topLeaderboardData?.pages[0].leaderboard
     .slice(0, 3)
@@ -92,7 +92,7 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
       <LeaderboardUserCard
         key={leaderboardUser.accountId}
         leaderboardUser={leaderboardUser}
-        isCurrUser={leaderboardUser.accountId === user.account._id}
+        isCurrUser={leaderboardUser.accountId === rating.accountId}
         top3
       />
     ));
@@ -107,7 +107,7 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
               key={leaderboardUser.accountId}
               leaderboardUser={leaderboardUser}
               ref={firstLeaderboardUserRef}
-              isCurrUser={leaderboardUser.accountId === user.account._id}
+              isCurrUser={leaderboardUser.accountId === rating.accountId}
             />
           );
         }
@@ -119,7 +119,7 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
               key={leaderboardUser.accountId}
               leaderboardUser={leaderboardUser}
               ref={lastLeaderboardUserRef}
-              isCurrUser={leaderboardUser.accountId === user.account._id}
+              isCurrUser={leaderboardUser.accountId === rating.accountId}
             />
           );
         }
@@ -129,7 +129,7 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
         <LeaderboardUserCard
           leaderboardUser={leaderboardUser}
           key={leaderboardUser.accountId}
-          isCurrUser={leaderboardUser.accountId === user.account._id}
+          isCurrUser={leaderboardUser.accountId === rating.accountId}
         />
       );
     }),

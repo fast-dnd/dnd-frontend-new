@@ -1,24 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import { IProfile } from "@/types/account";
 import checkJWT from "@/utils/check-jwt";
 
 import useGetAccount from "../queries/use-get-account";
+import useGetRating from "../queries/use-get-rating";
 
 const useAuth = () => {
-  const [user, setUser] = useState<IProfile>();
   const tokenExists = checkJWT();
 
-  const { refetch, isLoading } = useGetAccount({ tokenExists, setUser });
+  const {
+    data: user,
+    refetch: refetchUser,
+    isLoading: isLoadingUser,
+  } = useGetAccount({ tokenExists });
+  const {
+    data: rating,
+    refetch: refetchRating,
+    isLoading: isLoadingRating,
+  } = useGetRating({ tokenExists });
 
-  const loggedIn = !!(tokenExists && user);
-  const loggingIn = (!user && tokenExists) || isLoading;
+  const loggedIn = !!(tokenExists && user && rating);
+  const loggingIn = (!user && !rating && tokenExists) || isLoadingUser || isLoadingRating;
 
   useEffect(() => {
-    if (tokenExists && !user) refetch();
-  }, [refetch, tokenExists, user]);
+    if (tokenExists && (!user || !rating)) {
+      refetchUser();
+      refetchRating();
+    }
+  }, [refetchUser, refetchRating, tokenExists, user, rating]);
 
-  return { user, loggedIn, loggingIn };
+  return { user, rating, loggedIn, loggingIn };
 };
 
 export default useAuth;
