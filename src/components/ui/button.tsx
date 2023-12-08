@@ -49,7 +49,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       return (
         <Link
           href={href}
-          className={cn(buttonVariants({ variant, className }))}
+          className={cn(buttonVariants({ variant, className }), disabled && "opacity-50")}
           target={props.target}
         >
           {children}
@@ -59,7 +59,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       return (
         <button
           disabled={isLoading || disabled}
-          className={cn(buttonVariants({ variant, className }))}
+          className={cn(buttonVariants({ variant, className }), disabled && "opacity-50")}
           ref={ref}
           {...props}
         >
