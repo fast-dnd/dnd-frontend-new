@@ -32,7 +32,7 @@ const DesktopNavbar = () => {
         {loggedIn && communityId && <ClaimRewardModal />}
       </div>
       <div className="flex items-center gap-6 text-2xl leading-7 tracking-[3.3px]">
-        {!isDefault && (
+        {!isDefault && communityId && (
           <>
             <Link
               href="/communities"
