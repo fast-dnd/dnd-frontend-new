@@ -8,14 +8,12 @@ import authService from "@/services/auth-service";
 const useSolanaLogin = () => {
   const router = useRouter();
 
-  const redirectURL = useReadLocalStorage<string>("redirectURL");
-  const redirectTo = redirectURL ?? "/home";
+  const communityId = useReadLocalStorage<string>("communityId");
 
   return useMutation({
     mutationFn: authService.solanaLogin,
     onSuccess: (data) => {
-      router.push(redirectTo);
-      localStorage.removeItem("redirectURL");
+      router.push(communityId ? "/home" : "/communities");
       localStorage.setItem("jwtToken", data.data.jwtToken);
       toast.success("Logged in successfully!");
     },

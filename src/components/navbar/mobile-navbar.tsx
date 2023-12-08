@@ -8,8 +8,10 @@ import { BiChevronLeft } from "react-icons/bi";
 import { FaDice, FaDiscord } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
 import { toast } from "sonner";
+import { useReadLocalStorage } from "usehooks-ts";
 
 import useAuth from "@/hooks/helpers/use-auth";
+import useGetRating from "@/hooks/queries/use-get-rating";
 import { logout } from "@/utils/auth";
 import { cn } from "@/utils/style-utils";
 
@@ -26,7 +28,12 @@ interface IMobileNavbarProps {
 }
 
 const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
-  const { rating, user } = useAuth();
+  const communityId = useReadLocalStorage<string>("communityId");
+
+  const { data: rating } = useGetRating();
+
+  const { user } = useAuth();
+
   const pathname = usePathname();
 
   const onSignOut = () => {
@@ -86,6 +93,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                   className="gap-2 py-4"
                   href="/home"
                   variant={pathname === "/home" ? "primary" : "sidebar"}
+                  disabled={!communityId}
                 >
                   <SwordsIcon className="fill-white" />
                   PLAY
@@ -94,6 +102,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                   variant={pathname === "/profile" ? "primary" : "sidebar"}
                   className="gap-2 whitespace-nowrap py-4"
                   href="/profile?activeTab=GAME HISTORY"
+                  disabled={!communityId}
                 >
                   <QuillIcon className="h-4 w-4 shrink-0 fill-white" fillOpacity={1} />
                   GAME HISTORY
@@ -119,7 +128,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
               JOIN US
             </Button>
           </div>
-          {user ? (
+          {user && communityId ? (
             <div className="-mx-4 -mb-6 flex w-[calc(100%_+_3rem)] flex-col items-center bg-primary-900">
               <Link href="/profile" className="-translate-y-1/2">
                 <Image

@@ -1,7 +1,7 @@
 import { PenNib, Star } from "@phosphor-icons/react";
 import { FaDice } from "react-icons/fa";
 
-import useAuth from "@/hooks/helpers/use-auth";
+import useGetRating from "@/hooks/queries/use-get-rating";
 import { cn } from "@/utils/style-utils";
 
 import { RatingType } from "../types/rating-type";
@@ -12,7 +12,7 @@ interface ITabsProps {
 }
 
 const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
-  const { rating } = useAuth();
+  const { data: rating } = useGetRating();
 
   const ratingTabValues = [
     {

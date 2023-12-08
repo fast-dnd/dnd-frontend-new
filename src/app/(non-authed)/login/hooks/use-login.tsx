@@ -17,6 +17,7 @@ const useLogin = () => {
       router.push(redirectTo);
       localStorage.removeItem("redirectURL");
       localStorage.setItem("jwtToken", data.data.jwtToken);
+      localStorage.setItem("communityId", "656b461667aba1ae2936f624");
       toast.success("Logged in successfully!");
     },
   });

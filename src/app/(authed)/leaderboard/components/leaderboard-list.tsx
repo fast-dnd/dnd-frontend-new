@@ -3,8 +3,8 @@ import { CaretDoubleDown } from "@phosphor-icons/react";
 import { InfiniteData } from "@tanstack/react-query";
 
 import Spinner from "@/components/ui/spinner";
-import useAuth from "@/hooks/helpers/use-auth";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
+import useGetRating from "@/hooks/queries/use-get-rating";
 import { cn } from "@/utils/style-utils";
 import { ILeaderBoard } from "@/validations/leaderboard";
 
@@ -13,8 +13,9 @@ import { RatingType } from "../types/rating-type";
 import LeaderboardUserCard from "./leaderboard-user";
 
 const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => {
-  const { loggingIn, rating } = useAuth();
-  const previousRef = useRef<InfiniteData<ILeaderBoard | undefined>>();
+  const { data: rating, isLoading: isLoadingRating } = useGetRating();
+
+  const previousRef = useRef<InfiniteData<ILeaderBoard>>();
 
   const scrollableRef = useRef<HTMLDivElement>(null);
   const {
@@ -67,7 +68,7 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
     previousRef.current = leaderboardData;
   }, [leaderboardData]);
 
-  if (loggingIn || isLoading || topIsLoading)
+  if (isLoadingRating || isLoading || topIsLoading)
     return (
       <div className="flex animate-pulse flex-col">
         {Array.from({ length: 10 }).map((_, i) => (

@@ -5,7 +5,7 @@ import { BookOpenText, DiscordLogo, Plugs, UserCircle } from "@phosphor-icons/re
 import { motion } from "framer-motion";
 import { BiChevronDown } from "react-icons/bi";
 import { toast } from "sonner";
-import { useOnClickOutside } from "usehooks-ts";
+import { useOnClickOutside, useReadLocalStorage } from "usehooks-ts";
 
 import useAuth from "@/hooks/helpers/use-auth";
 import { logout } from "@/utils/auth";
@@ -16,6 +16,8 @@ import GoldCoinIcon from "../../icons/gold-coin-icon";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip";
 
 const ProfileDropdown = () => {
+  const communityId = useReadLocalStorage<string>("communityId");
+
   const { user } = useAuth();
 
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -31,7 +33,7 @@ const ProfileDropdown = () => {
     <div className="relative flex flex-col" ref={buttonRef}>
       <button
         className={cn(
-          "z-20 flex w-72 cursor-pointer items-center justify-between gap-2 rounded-full border-2 border-white/20 bg-black p-2 transition-all duration-200 hover:border-2 hover:bg-neutral-800 hover:shadow-sm hover:shadow-white/20 active:opacity-90",
+          "z-20 flex h-[70px] w-72 cursor-pointer items-center justify-between gap-2 rounded-full border-2 border-white/20 bg-black p-2 transition-all duration-200 hover:border-2 hover:bg-neutral-800 hover:shadow-sm hover:shadow-white/20 active:opacity-90",
           openDropdown && "border-b-0",
         )}
         onClick={() => setOpenDropdown(!openDropdown)}
@@ -65,69 +67,80 @@ const ProfileDropdown = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: openDropdown ? 1 : 0 }}
           transition={{ duration: 0.3 }}
-          className="mt-14 flex flex-col gap-4 p-4 text-base tracking-[1.2px]"
+          className="mt-16 flex flex-col gap-4 p-4 text-base tracking-[1.2px]"
         >
-          <div className="flex items-center justify-between gap-2">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="flex w-full items-center justify-between gap-2 rounded-lg bg-primary-900 px-1.5 py-2.5">
-                    <GoldCoinIcon className="h-5 w-5" />
-                    <p className="font-bold">{user?.account.coins}</p>
-                    <Link
-                      href="/shop"
-                      className="rounded-lg bg-white/10 px-2 py-1 hover:opacity-70 active:opacity-90"
-                    >
-                      +
-                    </Link>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">Coins used for creating games</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+          {communityId && (
+            <>
+              <div className="flex items-center justify-between gap-2">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex w-full items-center justify-between gap-2 rounded-lg bg-primary-900 px-1.5 py-2.5">
+                        <GoldCoinIcon className="h-5 w-5" />
+                        <p className="font-bold">{user?.account.coins}</p>
+                        <Link
+                          href="/shop"
+                          className="rounded-lg bg-white/10 px-2 py-1 hover:opacity-70 active:opacity-90"
+                        >
+                          +
+                        </Link>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom">Coins used for creating games</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
 
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="flex w-full items-center justify-between gap-2 rounded-lg bg-primary-900 px-1.5 py-2.5">
-                    <DiamondDMCurrencyIcon className="h-5 w-5" />
-                    <p className="font-bold">{user?.account.dmCurrency}</p>
-                    <Link
-                      href="/shop"
-                      className="rounded-lg bg-white/10 px-2 py-1 hover:opacity-70 active:opacity-90"
-                    >
-                      +
-                    </Link>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">DM Coins, Cooming Soon!</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex w-full items-center justify-between gap-2 rounded-lg bg-primary-900 px-1.5 py-2.5">
+                        <DiamondDMCurrencyIcon className="h-5 w-5" />
+                        <p className="font-bold">{user?.account.dmCurrency}</p>
+                        <Link
+                          href="/shop"
+                          className="rounded-lg bg-white/10 px-2 py-1 hover:opacity-70 active:opacity-90"
+                        >
+                          +
+                        </Link>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom">DM Coins, Cooming Soon!</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
 
-          <div className="h-1 w-full bg-white/10" />
+              <div className="h-1 w-full bg-white/10" />
 
-          <Link href="/profile" className="flex items-center gap-2">
-            <UserCircle className="h-7 w-7" />
-            View Profile
-          </Link>
+              <Link href="/profile" className="flex items-center gap-2">
+                <UserCircle className="h-7 w-7" />
+                View Profile
+              </Link>
+            </>
+          )}
 
           <button className="flex items-center gap-2 tracking-[1.2px]" onClick={onSignOut}>
             <Plugs className="h-7 w-7" />
             Logout
           </button>
 
-          <div className="h-1 w-full bg-white/10" />
+          {communityId && (
+            <>
+              <div className="h-1 w-full bg-white/10" />
 
-          <Link href="/guide" className="flex items-center gap-2">
-            <BookOpenText className="h-7 w-7" />
-            Guide
-          </Link>
+              <Link href="/guide" className="flex items-center gap-2">
+                <BookOpenText className="h-7 w-7" />
+                Guide
+              </Link>
 
-          <Link href="https://discord.com/invite/36chp8DnzC" className="flex items-center gap-2">
-            <DiscordLogo className="h-7 w-7" />
-            Join us on Discord
-          </Link>
+              <Link
+                href="https://discord.com/invite/36chp8DnzC"
+                className="flex items-center gap-2"
+              >
+                <DiscordLogo className="h-7 w-7" />
+                Join us on Discord
+              </Link>
+            </>
+          )}
         </motion.div>
       </motion.div>
     </div>
