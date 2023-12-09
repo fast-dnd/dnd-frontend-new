@@ -11,10 +11,11 @@ import "@/styles/wallet.css";
 import "@/styles/zoom.css";
 
 import { Metadata } from "next";
+import { GoogleTagManager } from "@next/third-parties/google";
 
-import { GoogleAnalyticsNoScript, GoogleAnalyticsScript } from "@/components/google-analytics";
 import HotjarAnalytics from "@/components/hotjar-analytics";
 import Navbar from "@/components/navbar";
+import { env } from "@/utils/env.mjs";
 
 import Background from "../components/background";
 
@@ -40,7 +41,6 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
       </head>
 
       <HotjarAnalytics />
-      <GoogleAnalyticsScript />
 
       <body className={cn("flex flex-col overflow-auto bg-dark-900", lexend.className)}>
         <Providers>
@@ -53,7 +53,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
           </div>
         </Providers>
 
-        <GoogleAnalyticsNoScript />
+        <GoogleTagManager gtmId={env.NEXT_PUBLIC_GTM_ID} />
       </body>
     </html>
   );
