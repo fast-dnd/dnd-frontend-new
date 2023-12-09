@@ -6,6 +6,7 @@ import { useReadLocalStorage } from "usehooks-ts";
 import MobileNavbar from "@/components/navbar/mobile-navbar";
 
 import BuildCommunity from "./components/build-community";
+import CommunitiesSkeleton from "./components/communities-skeleton";
 import Community from "./components/community";
 import useGetCommunities from "./hooks/use-get-communities";
 
@@ -56,31 +57,3 @@ const Communities = () => {
 };
 
 export default Communities;
-
-const CommunitiesSkeleton = () => {
-  return (
-    <>
-      <div className="hidden min-h-0 flex-1 flex-col items-center gap-36 overflow-y-auto pb-12 lg:flex">
-        <div className="min-h-0 max-w-[80%] flex-1 overflow-y-auto px-4">
-          <div className="flex w-[1350px] animate-pulse flex-wrap content-start gap-5">
-            {Array.from({ length: 3 }, (_, i) => (
-              <div key={i} className="h-[300px] w-[665px] rounded-lg bg-gray-600" />
-            ))}
-          </div>
-        </div>
-        <BuildCommunity />
-      </div>
-
-      <div className="flex flex-col gap-4 pb-4 lg:hidden">
-        <MobileNavbar className="fixed z-[55] h-16 items-start" />
-        <div className="mt-16 flex h-full flex-1 flex-col gap-3 px-4">
-          <p className="font-medium">COMMUNITIES</p>
-          <div className="flex animate-pulse flex-col gap-4 lg:flex-row">
-            <div className="h-[216px] w-[328px] rounded-lg bg-gray-600" />
-          </div>
-        </div>
-        <BuildCommunity />
-      </div>
-    </>
-  );
-};
