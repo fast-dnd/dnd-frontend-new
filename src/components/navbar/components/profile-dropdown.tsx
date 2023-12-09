@@ -6,10 +6,11 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { motion } from "framer-motion";
 import { BiChevronDown } from "react-icons/bi";
 import { toast } from "sonner";
-import { useOnClickOutside, useReadLocalStorage } from "usehooks-ts";
+import { useOnClickOutside } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import useAuth from "@/hooks/helpers/use-auth";
+import useCommunity from "@/hooks/helpers/use-community";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { logout } from "@/utils/auth";
 import { cn } from "@/utils/style-utils";
@@ -19,11 +20,7 @@ import GoldCoinIcon from "../../icons/gold-coin-icon";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip";
 
 const ProfileDropdown = () => {
-  const defaultCommunityId = useReadLocalStorage<string>("defaultCommunityId");
-  const communityId = useReadLocalStorage<string>("communityId");
-  const isDefault = Boolean(
-    defaultCommunityId && communityId && defaultCommunityId === communityId,
-  );
+  const { isDefault, communityId } = useCommunity();
 
   const { publicKey } = useWallet();
 

@@ -85,7 +85,7 @@ const MobileMyAccount = () => {
             <div className="flex w-full gap-4">
               <StatisticsCard icon={<GoldCoinIcon />} value={statistics.totalCoins} name="Coins" />
               <StatisticsCard
-                icon={<DiamondDMCurrencyIcon />}
+                icon={<DiamondDMCurrencyIcon image />}
                 value={statistics.totalDmCoinsEarned}
                 name="DM Coins"
               />

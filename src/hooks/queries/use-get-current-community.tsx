@@ -1,14 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { useReadLocalStorage } from "usehooks-ts";
 
 import communityService, { communityKey } from "@/services/community-service";
 
+import useCommunity from "../helpers/use-community";
+
 const useGetCurrentCommunity = () => {
-  const defaultCommunityId = useReadLocalStorage<string>("defaultCommunityId");
-  const communityId = useReadLocalStorage<string>("communityId");
-  const isDefault = Boolean(
-    defaultCommunityId && communityId && defaultCommunityId === communityId,
-  );
+  const { isDefault, communityId } = useCommunity();
 
   return useQuery({
     queryKey: [communityKey, communityId],

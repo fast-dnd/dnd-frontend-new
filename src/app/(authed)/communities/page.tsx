@@ -1,9 +1,9 @@
 "use client";
 
 import { redirect } from "next/navigation";
-import { useReadLocalStorage } from "usehooks-ts";
 
 import MobileNavbar from "@/components/navbar/mobile-navbar";
+import useCommunity from "@/hooks/helpers/use-community";
 
 import BuildCommunity from "./components/build-community";
 import CommunitiesSkeleton from "./components/communities-skeleton";
@@ -11,11 +11,7 @@ import Community from "./components/community";
 import useGetCommunities from "./hooks/use-get-communities";
 
 const Communities = () => {
-  const defaultCommunityId = useReadLocalStorage<string>("defaultCommunityId");
-  const communityId = useReadLocalStorage<string>("communityId");
-  const isDefault = Boolean(
-    defaultCommunityId && communityId && defaultCommunityId === communityId,
-  );
+  const { isDefault } = useCommunity();
 
   const { data: communities, isLoading } = useGetCommunities({ isDefault });
 

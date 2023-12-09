@@ -3,9 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useReadLocalStorage } from "usehooks-ts";
 
 import useAuth from "@/hooks/helpers/use-auth";
+import useCommunity from "@/hooks/helpers/use-community";
 import { cn } from "@/utils/style-utils";
 
 import ClaimRewardModal from "../claim-reward-modal";
@@ -13,11 +13,7 @@ import ProfileDropdown from "./components/profile-dropdown";
 import RewardPool from "./components/reward-pool";
 
 const DesktopNavbar = () => {
-  const communityId = useReadLocalStorage<string>("communityId");
-  const defaultCommunityId = useReadLocalStorage<string>("defaultCommunityId");
-  const isDefault = Boolean(
-    defaultCommunityId && communityId && defaultCommunityId === communityId,
-  );
+  const { isDefault, communityId } = useCommunity();
 
   const pathname = usePathname();
 
