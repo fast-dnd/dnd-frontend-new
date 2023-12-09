@@ -23,15 +23,15 @@ import StatisticsCard from "./statistics-card";
 const MyAccount = () => {
   const { isDefault } = useCommunity();
 
-  const { data: currentCommunity, isLoading } = useGetCurrentCommunity();
+  const { data: currentCommunity, isInitialLoading } = useGetCurrentCommunity();
 
   const { publicKey, wallet } = useWallet();
 
   const { loggingIn, user } = useAuth();
 
-  if (loggingIn || isLoading) return <MyAccountSkeleton />;
+  if (loggingIn || isInitialLoading) return <MyAccountSkeleton />;
 
-  if (!user || !currentCommunity) return <div>Something went wrong</div>;
+  if (!user || (!isDefault && !currentCommunity)) return <div>Something went wrong</div>;
 
   const { account, statistics } = user;
 
@@ -104,7 +104,7 @@ const MyAccount = () => {
               <StatisticsCard
                 icon={<GoldCoinIcon />}
                 value={statistics.totalCoins}
-                name={`$${currentCommunity.name}`}
+                name={`$${currentCommunity?.name}`}
               />
               <ClaimRewardModal />
             </>
