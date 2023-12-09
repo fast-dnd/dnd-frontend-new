@@ -8,7 +8,7 @@ import createApi, { PAGINATION_LIMIT } from "./api-factory";
 const dungeonApi = createApi({ commonPrefix: "dungeons" });
 
 const getDungeons = async ({ filter, pageParam }: { filter: string; pageParam: number }) => {
-  const communityId = JSON.parse(localStorage.getItem("communityId") || "{}");
+  const communityId = JSON.parse(localStorage.getItem("communityId") || "null");
 
   const queryParams = queryString.stringify({
     filter,

@@ -17,7 +17,7 @@ const getLeaderboard = async ({
   pageParam: number;
   currUserRank?: number;
 }) => {
-  const communityId = JSON.parse(localStorage.getItem("communityId") || "{}");
+  const communityId = JSON.parse(localStorage.getItem("communityId") || "null");
 
   const skip = (currUserRank ? currUserRank - 1 : 0) + (pageParam - 1) * PAGINATION_LIMIT;
   const limit = skip >= 0 ? PAGINATION_LIMIT : Math.max(PAGINATION_LIMIT + skip, 0);
