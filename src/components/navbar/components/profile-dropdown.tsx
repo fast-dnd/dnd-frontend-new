@@ -60,17 +60,19 @@ const ProfileDropdown = () => {
             <p className="font-medium">
               {publicKey?.toBase58().slice(0, 4)}...{publicKey?.toBase58().slice(-4, -1)}
             </p>
-            <div className="flex items-center gap-1 text-sm">
-              <Image
-                src={currentCommunity?.tokenImgUrl ?? ""}
-                width={20}
-                height={20}
-                alt={currentCommunity?.name + " token image"}
-                className="rounded-full bg-primary-900 p-1"
-              />
-              1000 {currentCommunity?.currencyName}
-              {/* TODO: replace with users current currency */}
-            </div>
+            {communityId && currentCommunity && (
+              <div className="flex items-center gap-1 text-sm">
+                <Image
+                  src={currentCommunity.tokenImgUrl}
+                  width={20}
+                  height={20}
+                  alt={currentCommunity.name + " token image"}
+                  className="rounded-full bg-primary-900 p-1"
+                />
+                1000 {currentCommunity.currencyName}
+                {/* TODO: replace with users current currency */}
+              </div>
+            )}
           </div>
         )}
         <BiChevronDown
