@@ -5,7 +5,7 @@ export const communitySchema = z.object({
   name: z.string(),
   type: z.enum(["web3", "web2"]),
   address: z.string(),
-  imageUrl: z.string(),
+  bannerImgUrl: z.string(),
   tokenImgUrl: z.string(),
   backgroundImgUrl: z.string(),
   basePrice: z.number(),

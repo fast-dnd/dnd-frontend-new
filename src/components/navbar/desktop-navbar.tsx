@@ -15,9 +15,7 @@ import RewardPool from "./components/reward-pool";
 const DesktopNavbar = () => {
   const communityId = useReadLocalStorage<string>("communityId");
   const defaultCommunityId = useReadLocalStorage<string>("defaultCommunityId");
-  const isDefault = Boolean(
-    defaultCommunityId && communityId && defaultCommunityId === communityId,
-  );
+  const isDefault = !!defaultCommunityId && !!communityId && defaultCommunityId === communityId;
 
   const pathname = usePathname();
 
@@ -29,10 +27,10 @@ const DesktopNavbar = () => {
         <Link href="/home">
           <Image src="/images/navbar-logo.png" width={203} height={70} alt="logo" />
         </Link>
-        {loggedIn && communityId && <ClaimRewardModal />}
+        {loggedIn && !!communityId && <ClaimRewardModal />}
       </div>
       <div className="flex items-center gap-6 text-2xl leading-7 tracking-[3.3px]">
-        {!isDefault && communityId && (
+        {loggedIn && !isDefault && !!communityId && (
           <>
             <Link
               href="/communities"
@@ -46,21 +44,19 @@ const DesktopNavbar = () => {
             <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
           </>
         )}
-        {communityId && (
-          <Link
-            href={loggedIn ? "/home" : "/login"}
-            className={cn(
-              "border-b-4 border-transparent pb-2 transition-all duration-300 hover:border-primary/50",
-              loggedIn && pathname === "/home" && "border-primary",
-              !loggedIn && pathname === "/login" && "border-primary",
-            )}
-          >
-            {loggedIn ? "PLAY" : "LOG IN"}
-          </Link>
-        )}
+        <Link
+          href={loggedIn ? "/home" : "/login"}
+          className={cn(
+            "border-b-4 border-transparent pb-2 transition-all duration-300 hover:border-primary/50",
+            loggedIn && pathname === "/home" && "border-primary",
+            !loggedIn && pathname === "/login" && "border-primary",
+          )}
+        >
+          {loggedIn ? "PLAY" : "LOG IN"}
+        </Link>
         {loggedIn && (
           <>
-            {communityId && (
+            {!!communityId && (
               <>
                 <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
                 <Link
