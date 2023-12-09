@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useWallet } from "@solana/wallet-adapter-react";
 import { Game, People, Star1, Timer } from "iconsax-react";
 import { MdEdit } from "react-icons/md";
 
@@ -8,43 +9,70 @@ import GoldCoinIcon from "@/components/icons/gold-coin-icon";
 import Helmet2Icon from "@/components/icons/helmet2-icon";
 import SwordsIcon from "@/components/icons/swords-icon";
 import useAuth from "@/hooks/helpers/use-auth";
+import useCommunity from "@/hooks/helpers/use-community";
+import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 
+import ClaimRewardModal from "../../claim-reward-modal";
 import MyAccountSkeleton from "./my-account-skeleton";
 import StatisticsCard from "./statistics-card";
 
 const MobileMyAccount = () => {
+  const { isDefault } = useCommunity();
+
+  const { data: currentCommunity, isInitialLoading } = useGetCurrentCommunity();
+
+  const { publicKey, wallet } = useWallet();
+
   const { loggingIn, user } = useAuth();
 
-  if (loggingIn) return <MyAccountSkeleton />;
+  if (loggingIn || isInitialLoading) return <MyAccountSkeleton />;
 
-  if (!user) return <div>Something went wrong</div>;
+  if (!user || (!isDefault && !currentCommunity)) return <div>Something went wrong</div>;
 
   const { account, statistics } = user;
 
   return (
     <div className="flex flex-1 flex-col gap-4">
       <div className="flex w-full gap-4">
-        <div className="h-[160px] w-[160px] shrink-0">
+        <div className="h-[130px] w-[130px] shrink-0">
           <Image
             src={account.imageUrl || "/images/default-avatar.png"}
-            width={160}
-            height={160}
+            width={130}
+            height={130}
             alt="avatar"
-            className="h-[160px] w-[160px] rounded-md"
+            className="h-[130px] w-[130px] rounded-md"
           />
         </div>
-        <div className="flex flex-col justify-center gap-4">
-          <p className="truncate text-xl font-bold uppercase">{account.username}</p>
-          <p className="text-xs text-primary">{account.properties.email}</p>
-          <div className="flex flex-col gap-2 transition-all duration-200 hover:opacity-80">
-            <Link
-              className="flex w-fit items-center gap-2 rounded-md bg-white/5 px-3 py-1"
-              href="/edit-profile"
-            >
-              <MdEdit />
-              EDIT
-            </Link>
-          </div>
+        <div className="flex w-full flex-col justify-between gap-4">
+          <p className="truncate text-xl font-bold uppercase">
+            {isDefault ? account.username : publicKey?.toBase58().slice(0, 4)}...
+            {publicKey?.toBase58().slice(-4, -1)}
+          </p>
+          {isDefault && <p className="text-xs text-primary">{account.properties.email}</p>}
+          {isDefault ? (
+            <div className="flex flex-col gap-2 transition-all duration-200 hover:opacity-80">
+              <Link
+                className="flex w-fit items-center gap-2 rounded-md bg-white/5 px-3 py-1"
+                href="/edit-profile"
+              >
+                <MdEdit />
+                EDIT
+              </Link>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between text-xs">
+              <p>Connected with:</p>
+              <div className="flex items-center gap-1">
+                <Image
+                  src={wallet?.adapter.icon ?? ""}
+                  alt={wallet?.adapter.name ?? ""}
+                  height={20}
+                  width={20}
+                />
+                <p className="font-semibold">{wallet?.adapter.name}</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -53,14 +81,25 @@ const MobileMyAccount = () => {
       <div className="flex flex-col gap-4">
         <div className="flex w-full flex-col gap-2">
           <p className="text-lg font-bold">COINS</p>
-          <div className="flex w-full gap-4">
-            <StatisticsCard icon={<GoldCoinIcon />} value={statistics.totalCoins} name="Coins" />
-            <StatisticsCard
-              icon={<DiamondDMCurrencyIcon image />}
-              value={statistics.totalDmCoinsEarned}
-              name="DM Coins"
-            />
-          </div>
+          {isDefault ? (
+            <div className="flex w-full gap-4">
+              <StatisticsCard icon={<GoldCoinIcon />} value={statistics.totalCoins} name="Coins" />
+              <StatisticsCard
+                icon={<DiamondDMCurrencyIcon image />}
+                value={statistics.totalDmCoinsEarned}
+                name="DM Coins"
+              />
+            </div>
+          ) : (
+            <>
+              <StatisticsCard
+                icon={<GoldCoinIcon />}
+                value={statistics.totalCoins}
+                name={`$${currentCommunity?.name}`}
+              />
+              <ClaimRewardModal />
+            </>
+          )}
         </div>
       </div>
 

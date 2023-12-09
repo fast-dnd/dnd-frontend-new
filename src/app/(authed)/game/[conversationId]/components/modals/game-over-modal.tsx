@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +11,7 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import ThemeTitle from "@/components/ui/theme-title";
+import useCommunity from "@/hooks/helpers/use-community";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IGameState, IPlayer } from "@/types/room";
@@ -26,11 +26,7 @@ interface GameOverModalProps {
 }
 
 const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
-  const defaultCommunityId = useReadLocalStorage<string>("defaultCommunityId");
-  const communityId = useReadLocalStorage<string>("communityId");
-  const isDefault = Boolean(
-    defaultCommunityId && communityId && defaultCommunityId === communityId,
-  );
+  const { isDefault } = useCommunity();
 
   const { data: currentCommunity } = useGetCurrentCommunity();
 

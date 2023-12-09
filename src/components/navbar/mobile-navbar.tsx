@@ -8,9 +8,9 @@ import { BiChevronLeft } from "react-icons/bi";
 import { FaDice, FaDiscord, FaUsers } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
 import { toast } from "sonner";
-import { useReadLocalStorage } from "usehooks-ts";
 
 import useAuth from "@/hooks/helpers/use-auth";
+import useCommunity from "@/hooks/helpers/use-community";
 import useGetRating from "@/hooks/queries/use-get-rating";
 import { logout } from "@/utils/auth";
 import { cn } from "@/utils/style-utils";
@@ -28,11 +28,7 @@ interface IMobileNavbarProps {
 }
 
 const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
-  const communityId = useReadLocalStorage<string>("communityId");
-  const defaultCommunityId = useReadLocalStorage<string>("defaultCommunityId");
-  const isDefault = Boolean(
-    defaultCommunityId && communityId && defaultCommunityId === communityId,
-  );
+  const { communityId } = useCommunity();
 
   const { data: rating } = useGetRating();
 
