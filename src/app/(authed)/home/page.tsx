@@ -5,6 +5,7 @@ import { useState } from "react";
 import GameHistory from "@/components/game-history";
 import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { Box } from "@/components/ui/box";
+import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
 
 import CommunityInfo from "./components/community-info";
@@ -42,6 +43,7 @@ const Page = () => {
         setTimeout(() => setClosingCampaignId(undefined), 500);
       }
     : undefined;
+  const { loggedIn } = useAuth();
 
   return (
     <>
@@ -62,7 +64,7 @@ const Page = () => {
       </div>
       <div className="relative flex flex-col lg:hidden">
         <MobileNavbar className="fixed z-[55] h-16 items-start" onClickBack={onClickBack} />
-        {!isDefault && <CommunityInfo />}
+        {loggedIn && !isDefault && <CommunityInfo />}
         <MobileJoinRoom
           show={!adventureDetailId && !campaignDetailId}
           open={join}

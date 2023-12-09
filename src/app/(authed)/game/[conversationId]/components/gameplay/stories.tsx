@@ -54,18 +54,16 @@ const StoryList = ({
             className="flex w-full flex-col gap-4 rounded-md bg-black p-4 lg:gap-8 lg:p-6"
           >
             <div className="flex w-full items-center gap-1.5 lg:gap-3">
-              <div className="inline-block h-2 w-2 shrink-0 rotate-45 bg-white" />
-              <div
-                className="mt-0.5 line-clamp-2 max-w-full text-lg font-semibold uppercase tracking-[0.2em] lg:flex lg:truncate lg:text-2xl"
+              <div className="h-2 w-2 shrink-0 rotate-45 bg-white" />
+              <p
+                className="mt-0.5 max-w-full font-semibold uppercase tracking-[0.2em] lg:line-clamp-2 lg:text-2xl"
                 style={jibril.style}
               >
-                <span className="mr-2 whitespace-nowrap text-white/30 lg:text-white/40">
+                <span className="whitespace-nowrap text-white/30 lg:text-white/40">
                   ROUND {i + 1}/{roomData.maxRounds + 1}
                 </span>
-                <span className="lg:truncate">
-                  {dungeonData.locations[Math.floor(i / 2)]?.name}
-                </span>
-              </div>
+                <span>&zwnj; {dungeonData.locations[Math.floor(i / 2)]?.name}</span>
+              </p>
               <div className="h-2 w-2 shrink-0 rotate-45 bg-white" />
             </div>
             <div className="lg:hidden">
