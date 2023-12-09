@@ -25,7 +25,7 @@ const Community = ({ community }: { community: ICommunity }) => {
               alt={community.name + " banner"}
               width={665}
               height={665}
-              className="absolute aspect-video h-20 w-full lg:h-[215px]"
+              className="absolute h-full w-full object-cover"
             />
           </div>
 

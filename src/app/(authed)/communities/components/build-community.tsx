@@ -13,7 +13,7 @@ const BuildCommunity = () => {
             alt="wizard"
             width={295}
             height={271}
-            className="absolute -bottom-16 w-full object-cover blur-[2px]"
+            className="absolute -top-8 w-full object-cover blur-[2px]"
           />
           <div className="absolute inset-0 rounded-lg bg-black/50 bg-gradient-to-t from-black via-black/90 via-30% to-transparent" />
         </div>

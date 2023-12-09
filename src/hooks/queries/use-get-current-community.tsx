@@ -10,7 +10,7 @@ const useGetCurrentCommunity = () => {
   return useQuery({
     queryKey: [communityKey, communityId],
     queryFn: () => communityService.getCommunity(communityId || ""),
-    enabled: !isDefault,
+    enabled: !isDefault && !!communityId,
   });
 };
 
