@@ -1,10 +1,13 @@
 import Image from "next/image";
 
+import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { cn } from "@/utils/style-utils";
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip";
 
 const RewardPool = () => {
+  const { data: currentCommunity } = useGetCurrentCommunity();
+
   return (
     <TooltipProvider>
       <Tooltip>
@@ -15,24 +18,24 @@ const RewardPool = () => {
             )}
           >
             <Image
-              src={"/images/default-avatar.png"} //TODO: replace with image from community
+              src={currentCommunity?.rewardPoolImgUrl ?? ""}
               width={45}
               height={45}
-              alt="crypto-currency-image"
+              alt={currentCommunity?.name + " reward pool image"}
               className="h-fit w-fit rounded-full"
             />
             <div className="flex flex-col justify-between font-medium">
               Reward Pool
               <div className="flex items-center gap-1 text-sm">
                 <Image
-                  src={"/images/default-avatar.png"} //TODO: replace with icon from community
+                  src={currentCommunity?.tokenImgUrl ?? ""}
                   width={20}
                   height={20}
-                  alt="crypto-currency-icon"
-                  className="rounded-full bg-white p-2"
+                  alt={currentCommunity?.name + " token image"}
+                  className="rounded-full bg-white p-1"
                 />
-                1000 $FISHY
-                {/* TODO: replace with community name and reward pool size */}
+                1000 {currentCommunity?.currencyName}
+                {/* TODO: replace with reward pool size */}
               </div>
             </div>
           </button>

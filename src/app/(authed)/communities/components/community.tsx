@@ -21,18 +21,18 @@ const Community = ({ community }: { community: ICommunity }) => {
         <div className="relative h-20 lg:h-[215px] lg:w-[665px]">
           <div className="absolute inset-0 overflow-hidden rounded-t-lg">
             <Image
-              src={"/images/bg-cover.png"} //TODO: replace this with banner image
+              src={community.bannerImgUrl}
               alt={community.name + " banner"}
               width={665}
               height={665}
-              className="absolute w-full object-cover"
+              className="absolute aspect-video h-20 w-full lg:h-[215px]"
             />
           </div>
 
           <div className="absolute -bottom-4 left-4 rounded-lg bg-white drop-shadow-[2px_2px_0px_#FF5A5A] lg:-bottom-8 lg:left-8 lg:drop-shadow-[4px_4px_0px_#FF5A5A]">
             <Image
-              src={"/images/default-avatar.png"} //TODO: replace this with avatar image
-              alt={community.name + " banner"}
+              src={community.logoImageUrl}
+              alt={community.name + " logo"}
               width={120}
               height={120}
               className="h-[50px] w-[50px] rounded-full lg:h-[120px] lg:w-[120px]"

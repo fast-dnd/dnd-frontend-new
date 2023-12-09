@@ -56,23 +56,23 @@ const ProfileDropdown = () => {
         {isDefault ? (
           <p className="font-medium">{user?.account.username ?? "-----------"}</p>
         ) : (
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-1 flex-col items-start gap-1">
             <p className="font-medium">
               {publicKey?.toBase58().slice(0, 4)}...{publicKey?.toBase58().slice(-4, -1)}
             </p>
             <div className="flex items-center gap-1 text-sm">
               <Image
-                src={"/images/default-avatar.png"} //TODO: replace with icon from community
+                src={currentCommunity?.tokenImgUrl ?? ""}
                 width={20}
                 height={20}
-                alt="crypto-currency-icon"
-                className="rounded-full bg-primary-900 p-2"
+                alt={currentCommunity?.name + " token image"}
+                className="rounded-full bg-primary-900 p-1"
               />
-              1000 ${currentCommunity?.name} {/* TODO: replace with users current currency */}
+              1000 {currentCommunity?.currencyName}
+              {/* TODO: replace with users current currency */}
             </div>
           </div>
         )}
-        {/* TODO: add crypto currency */}
         <BiChevronDown
           className={cn(
             "h-auto w-8 transition-all duration-200",
@@ -137,7 +137,9 @@ const ProfileDropdown = () => {
                   </TooltipProvider>
                 </div>
               ) : (
-                <Button className="whitespace-nowrap">ADD MORE ${currentCommunity?.name}</Button>
+                <Button className="whitespace-nowrap">
+                  ADD MORE {currentCommunity?.currencyName}
+                </Button>
                 // TODO: this should be a link to the web3 shop
               )}
 
