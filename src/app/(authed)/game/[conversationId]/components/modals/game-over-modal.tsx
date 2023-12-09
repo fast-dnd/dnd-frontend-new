@@ -1,5 +1,7 @@
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +12,7 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import ThemeTitle from "@/components/ui/theme-title";
+import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IGameState, IPlayer } from "@/types/room";
 
@@ -23,6 +26,14 @@ interface GameOverModalProps {
 }
 
 const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
+  const defaultCommunityId = useReadLocalStorage<string>("defaultCommunityId");
+  const communityId = useReadLocalStorage<string>("communityId");
+  const isDefault = Boolean(
+    defaultCommunityId && communityId && defaultCommunityId === communityId,
+  );
+
+  const { data: currentCommunity } = useGetCurrentCommunity();
+
   const pageState = gameStore.pageState.use();
   const rewardOpen = gameStore.reward.use();
 
@@ -53,14 +64,40 @@ const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
         <DialogHeader>
           <ThemeTitle title={result === "WIN" ? "victory" : "defeat"} blue={result === "WIN"} />
 
-          <DialogDescription className="text-center lg:w-[440px]">
+          <DialogDescription className="text-left lg:w-[440px]">
             {result === "WIN" && (
-              <span>
-                You have completed <span className="font-semibold">{dungeon.name}</span>
+              <span className="text-xl tracking-normal">
+                {isDefault ? (
+                  <>
+                    You have completed <span className="font-semibold">{dungeon.name}</span>
+                  </>
+                ) : (
+                  <>
+                    You have completed <span className="font-semibold">{dungeon.name}</span>. Keep
+                    playing and reach the top of the{" "}
+                    <Link href="/leaderboard" className="text-primary underline">
+                      leaderboard
+                    </Link>{" "}
+                    in order to earn a reward in ${currentCommunity?.name}.
+                  </>
+                )}
               </span>
             )}
             {result === "LOSE" && (
-              <span>You have tried with all your might, but you have been defeated.</span>
+              <span className="text-xl tracking-normal">
+                {isDefault ? (
+                  <>You have tried with all your might, but you have been defeated.</>
+                ) : (
+                  <>
+                    You have tried with all your might, but you have been defeated. Keep playing and
+                    reach the top of the{" "}
+                    <Link href="/leaderboard" className="text-primary underline">
+                      leaderboard
+                    </Link>{" "}
+                    in order to earn a reward IN ${currentCommunity?.name}.
+                  </>
+                )}
+              </span>
             )}
           </DialogDescription>
         </DialogHeader>
