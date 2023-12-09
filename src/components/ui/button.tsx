@@ -12,7 +12,7 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "border border-primary bg-primary text-white hover:shadow-basic focus:ring-2 focus:ring-primary-200 focus:ring-offset-2 active:bg-primary-600 active:shadow-none disabled:border-transparent lg:text-black",
+          "border border-primary bg-primary text-white hover:shadow-basic focus:ring-2 focus:ring-primary-200 focus:ring-offset-2 active:bg-primary-600 active:shadow-none disabled:border-transparent",
         outline:
           "border-2 border-primary bg-transparent text-white hover:bg-primary focus:ring-2 focus:ring-primary-200 focus:ring-offset-2 active:border-primary-600 active:bg-transparent active:shadow-basic disabled:bg-transparent",
         ghost:

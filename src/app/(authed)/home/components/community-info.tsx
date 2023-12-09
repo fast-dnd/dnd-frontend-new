@@ -15,10 +15,10 @@ const CommunityInfo = () => {
   return (
     <>
       <div className="relative hidden gap-6 lg:flex">
-        <div className="rounded-full border-[6px] border-primary-900/25 bg-white">
+        <div className="rounded-full border-[6px] border-primary-900/80 bg-white">
           <Image
-            src={"/images/default-avatar.png"} //TODO: replace this with avatar image
-            alt={currentCommunity.name + " banner"}
+            src={currentCommunity.logoImageUrl}
+            alt={currentCommunity.name + " logo"}
             width={110}
             height={110}
             className="rounded-full lg:h-[110px] lg:w-[110px]"
@@ -26,11 +26,7 @@ const CommunityInfo = () => {
         </div>
         <div className="flex flex-col">
           <p className="text-[44px] font-bold uppercase">WELCOME TO {currentCommunity.name}</p>
-          <p className="w-[550px] text-xl font-light">
-            Sharky is a platform where anyone can make loan offers for NFTs in a collection, and
-            holders choose the NFT.
-          </p>
-          {/* TODO: REPLACE THIS with DESCRIPTION */}
+          <p className="w-[550px] text-xl font-light">{currentCommunity.description}</p>
         </div>
         <div className="absolute -bottom-10 mb-6 h-[1px] w-full bg-black/40 shadow-[0px_2px_0px_#FFFFFF_16]" />
       </div>
@@ -38,7 +34,7 @@ const CommunityInfo = () => {
       <div className="relative mb-40 flex border-b border-b-white/10 lg:hidden">
         <div className="absolute inset-0">
           <Image
-            src={"/images/bg-cover.png"} //TODO: replace this with banner image
+            src={currentCommunity.bannerImgUrl}
             alt={currentCommunity.name + " banner"}
             width={665}
             height={665}
@@ -50,7 +46,7 @@ const CommunityInfo = () => {
 
         <div className="absolute ml-4 mt-24 flex gap-4 pr-4">
           <Image
-            src={"/images/default-avatar.png"} //TODO: replace this with avatar image
+            src={currentCommunity.logoImageUrl}
             alt={currentCommunity.name + " banner"}
             width={45}
             height={45}
@@ -58,11 +54,7 @@ const CommunityInfo = () => {
           />
           <div className="flex flex-col">
             <p className="font-bold uppercase">WELCOME TO {currentCommunity.name}</p>
-            <p className="text-sm font-light">
-              Sharky is a platform where anyone can make loan offers for NFTs in a collection, and
-              holders choose the NFT.
-            </p>
-            {/* TODO: REPLACE THIS with DESCRIPTION */}
+            <p className="text-sm font-light">{currentCommunity.description}</p>
           </div>
         </div>
       </div>

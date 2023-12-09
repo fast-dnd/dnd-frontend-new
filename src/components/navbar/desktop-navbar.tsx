@@ -78,8 +78,12 @@ const DesktopNavbar = () => {
                 >
                   LEADERBOARD
                 </Link>
-                <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
-                <RewardPool /> {/* TODO: display only if web3  */}
+                {!isDefault && (
+                  <>
+                    <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+                    <RewardPool />
+                  </>
+                )}
               </>
             )}
             <ProfileDropdown />

@@ -53,9 +53,9 @@ const ClaimRewardModal = () => {
           />
           <p className="z-10 text-5xl" style={jibril.style}>
             40
+            {/* TODO: replace this with reward from web3  */}
           </p>
           <p className="z-10 text-3xl">{currentCommunity?.currencyName}</p>
-          {/* TODO: replace this with reward from web3  */}
         </div>
 
         <DialogFooter className="flex w-full items-center justify-center">
