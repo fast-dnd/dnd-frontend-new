@@ -9,11 +9,23 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "resource-images-bucket-fastdnd.s3.amazonaws.com",
-      "dnd-images-bucket.s3.amazonaws.com",
-      "arweave.net",
-      "shdw-drive.genesysgo.net",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "resource-images-bucket-fastdnd.s3.amazonaws.com",
+      },
+      {
+        protocol: "https",
+        hostname: "dnd-images-bucket.s3.amazonaws.com",
+      },
+      {
+        protocol: "https",
+        hostname: "arweave.net",
+      },
+      {
+        protocol: "https",
+        hostname: "shdw-drive.genesysgo.net",
+      },
     ],
   },
   webpack: (config) => {
