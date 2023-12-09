@@ -3,7 +3,7 @@ import { useLocalStorage } from "@solana/wallet-adapter-react";
 
 import communityService from "@/services/community-service";
 
-const useGetDefaultCommunity = () => {
+const useSetDefaultCommunity = () => {
   const [defaultCommunityId, setDefaultCommunityId] = useLocalStorage<string | null>(
     "defaultCommunityId",
     null,
@@ -18,4 +18,4 @@ const useGetDefaultCommunity = () => {
   }, [defaultCommunityId, setDefaultCommunityId]);
 };
 
-export default useGetDefaultCommunity;
+export default useSetDefaultCommunity;
