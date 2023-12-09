@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useWallet } from "@solana/wallet-adapter-react";
 import { Game, People, Star1, Timer } from "iconsax-react";
 import { MdEdit } from "react-icons/md";
 
@@ -23,6 +24,8 @@ const MyAccount = () => {
   const { isDefault } = useCommunity();
 
   const { data: currentCommunity, isLoading } = useGetCurrentCommunity();
+
+  const { publicKey, wallet } = useWallet();
 
   const { loggingIn, user } = useAuth();
 
@@ -49,20 +52,38 @@ const MyAccount = () => {
               className="h-[100px] w-[100px] rounded-md"
             />
           </div>
-          <div className="flex w-full min-w-0 flex-col gap-2.5">
+          <div className="flex h-full w-full min-w-0 flex-col justify-between gap-2.5">
             <div className="flex w-full flex-col gap-1">
-              <p className="truncate text-xl font-bold uppercase">{account.username}</p>
+              <p className="truncate text-xl font-bold uppercase">
+                {isDefault ? account.username : publicKey?.toBase58().slice(0, 4)}...
+                {publicKey?.toBase58().slice(-4, -1)}
+              </p>
             </div>
-            <p>{account.properties.email}</p>
-            <div className="flex flex-col gap-2 transition-all duration-200 hover:opacity-80">
-              <Link
-                className="flex w-fit items-center gap-2 rounded-md bg-white/5 px-3 py-1"
-                href="/edit-profile"
-              >
-                <MdEdit />
-                EDIT
-              </Link>
-            </div>
+            {isDefault && <p>{account.properties.email}</p>}
+            {isDefault ? (
+              <div className="flex flex-col gap-2 transition-all duration-200 hover:opacity-80">
+                <Link
+                  className="flex w-fit items-center gap-2 rounded-md bg-white/5 px-3 py-1"
+                  href="/edit-profile"
+                >
+                  <MdEdit />
+                  EDIT
+                </Link>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between">
+                <p>Connected with:</p>
+                <div className="flex items-center gap-1">
+                  <Image
+                    src={wallet?.adapter.icon ?? ""}
+                    alt={wallet?.adapter.name ?? ""}
+                    height={20}
+                    width={20}
+                  />
+                  <p className="font-semibold">{wallet?.adapter.name}</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
