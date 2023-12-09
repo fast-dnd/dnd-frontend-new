@@ -1,4 +1,10 @@
+import NextBundleAnalyzer from "@next/bundle-analyzer";
+
 import "./src/utils/env.mjs";
+
+const withBundleAnalyzer = NextBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -19,4 +25,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);
