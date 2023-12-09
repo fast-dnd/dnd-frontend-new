@@ -46,17 +46,18 @@ const DesktopNavbar = () => {
             <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
           </>
         )}
-        <Link
-          href={loggedIn ? "/home" : "/login"}
-          className={cn(
-            "border-b-4 border-transparent pb-2 transition-all duration-300 hover:border-primary/50",
-            loggedIn && pathname === "/home" && "border-primary",
-            !loggedIn && pathname === "/login" && "border-primary",
-            !communityId && "hidden",
-          )}
-        >
-          {loggedIn ? "PLAY" : "LOG IN"}
-        </Link>
+        {communityId && (
+          <Link
+            href={loggedIn ? "/home" : "/login"}
+            className={cn(
+              "border-b-4 border-transparent pb-2 transition-all duration-300 hover:border-primary/50",
+              loggedIn && pathname === "/home" && "border-primary",
+              !loggedIn && pathname === "/login" && "border-primary",
+            )}
+          >
+            {loggedIn ? "PLAY" : "LOG IN"}
+          </Link>
+        )}
         {loggedIn && (
           <>
             {communityId && (

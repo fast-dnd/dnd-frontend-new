@@ -12,10 +12,13 @@ import createApi, { PAGINATION_LIMIT } from "./api-factory";
 const campaignApi = createApi({ commonPrefix: "campaigns" });
 
 const getCampaigns = async ({ filter, pageParam }: { filter: string; pageParam: number }) => {
+  const communityId = JSON.parse(localStorage.getItem("communityId") || "{}");
+
   const queryParams = queryString.stringify({
     filter,
     skip: (pageParam - 1) * PAGINATION_LIMIT,
     limit: PAGINATION_LIMIT,
+    communityId,
   });
 
   return await campaignApi.get("?" + queryParams).then((res) => campaignsSchema.parse(res.data));
