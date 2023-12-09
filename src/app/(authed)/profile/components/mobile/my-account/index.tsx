@@ -8,16 +8,23 @@ import GoldCoinIcon from "@/components/icons/gold-coin-icon";
 import Helmet2Icon from "@/components/icons/helmet2-icon";
 import SwordsIcon from "@/components/icons/swords-icon";
 import useAuth from "@/hooks/helpers/use-auth";
+import useCommunity from "@/hooks/helpers/use-community";
+import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 
+import ClaimRewardModal from "../../claim-reward-modal";
 import MyAccountSkeleton from "./my-account-skeleton";
 import StatisticsCard from "./statistics-card";
 
 const MobileMyAccount = () => {
+  const { isDefault } = useCommunity();
+
+  const { data: currentCommunity, isLoading } = useGetCurrentCommunity();
+
   const { loggingIn, user } = useAuth();
 
-  if (loggingIn) return <MyAccountSkeleton />;
+  if (loggingIn || isLoading) return <MyAccountSkeleton />;
 
-  if (!user) return <div>Something went wrong</div>;
+  if (!user || !currentCommunity) return <div>Something went wrong</div>;
 
   const { account, statistics } = user;
 
@@ -53,14 +60,25 @@ const MobileMyAccount = () => {
       <div className="flex flex-col gap-4">
         <div className="flex w-full flex-col gap-2">
           <p className="text-lg font-bold">COINS</p>
-          <div className="flex w-full gap-4">
-            <StatisticsCard icon={<GoldCoinIcon />} value={statistics.totalCoins} name="Coins" />
-            <StatisticsCard
-              icon={<DiamondDMCurrencyIcon image />}
-              value={statistics.totalDmCoinsEarned}
-              name="DM Coins"
-            />
-          </div>
+          {isDefault ? (
+            <div className="flex w-full gap-4">
+              <StatisticsCard icon={<GoldCoinIcon />} value={statistics.totalCoins} name="Coins" />
+              <StatisticsCard
+                icon={<DiamondDMCurrencyIcon />}
+                value={statistics.totalDmCoinsEarned}
+                name="DM Coins"
+              />
+            </div>
+          ) : (
+            <>
+              <StatisticsCard
+                icon={<GoldCoinIcon />}
+                value={statistics.totalCoins}
+                name={`$${currentCommunity.name}`}
+              />
+              <ClaimRewardModal />
+            </>
+          )}
         </div>
       </div>
 
