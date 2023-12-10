@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { BookOpenText, DiscordLogo, Plugs, UserCircle } from "@phosphor-icons/react";
@@ -13,6 +13,7 @@ import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { logout } from "@/utils/auth";
+import { getBalance } from "@/utils/solanaHelper";
 import { cn } from "@/utils/style-utils";
 
 import DiamondDMCurrencyIcon from "../../icons/diamond-dm-currency-icon";
@@ -27,6 +28,23 @@ const ProfileDropdown = () => {
   const { user } = useAuth();
 
   const { data: currentCommunity } = useGetCurrentCommunity();
+
+  const [userBalance, setUserBalance] = useState(0);
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        if (!currentCommunity) return;
+        const userBalance = await getBalance(
+          publicKey?.toString() ?? "",
+          currentCommunity.gameCurrency,
+        );
+        setUserBalance(userBalance);
+      } catch (error) {}
+      if (!currentCommunity) return;
+    };
+    fetchBalance();
+  }, [currentCommunity]);
 
   const ref = useRef<HTMLDivElement>(null);
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -69,7 +87,7 @@ const ProfileDropdown = () => {
                   alt={currentCommunity.name + " token image"}
                   className="rounded-full bg-primary-900 p-1"
                 />
-                1000 {currentCommunity.currencyName}
+                {userBalance} {currentCommunity.currencyName}
                 {/* TODO: replace with users current currency */}
               </div>
             )}
