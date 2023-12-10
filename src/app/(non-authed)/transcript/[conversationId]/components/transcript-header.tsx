@@ -21,12 +21,12 @@ const TranscriptHeader = ({ transcripts }: { transcripts: ITranscript }) => {
         style={jibril.style}
       >
         <div className="h-2 w-2 rotate-45 bg-primary" />
-        {transcripts.title}
+        <p className="max-w-[400px] truncate">{transcripts.title}</p>
         <div className="h-2 w-2 rotate-45 bg-primary" />
       </div>
       <div className="lg:hidden">
         <p className="font-light">Transcript</p>
-        <p className="font-bold tracking-widest" style={jibril.style}>
+        <p className="max-w-[170px] truncate font-bold tracking-widest" style={jibril.style}>
           {transcripts.title}
         </p>
         <p className="font-light text-white/50">{format(transcripts.createdAt, "MMM d, yyyy")}</p>
