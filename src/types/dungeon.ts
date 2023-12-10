@@ -5,7 +5,10 @@ import {
   championSchema,
   dungeonDetailSchema,
   dungeonForBackendSchema,
+  dungeonResponseSchema,
   dungeonSchema,
+  dungeonTxForBackendSchema,
+  dungeonTxResponseSchema,
   locationSchema,
   moveMappingSchema,
   rateDungeonSchema,
@@ -22,6 +25,10 @@ export type IDungeon = z.infer<typeof dungeonSchema>;
 export type IDungeonDetail = z.infer<typeof dungeonDetailSchema>;
 
 export type IDungeonForBackend = z.infer<typeof dungeonForBackendSchema>;
+
+export type IDungeonTxForBackend = z.infer<typeof dungeonTxForBackendSchema>;
+
+export type IDungeonResponse = z.infer<typeof dungeonTxResponseSchema>;
 
 export type IRateDungeon = z.infer<typeof rateDungeonSchema>;
 

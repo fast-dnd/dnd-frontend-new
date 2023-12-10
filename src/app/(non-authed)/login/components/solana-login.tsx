@@ -4,6 +4,7 @@ import { Wallet } from "@phosphor-icons/react";
 import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { PublicKey } from "@solana/web3.js";
 import { AiOutlineClose } from "react-icons/ai";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -16,23 +17,23 @@ const SolanaLogin = () => {
   const { signMessage, wallet, publicKey, wallets, select, disconnect, connecting } = useWallet();
   const { mutate: solanaLogin } = useSolanaLogin();
 
-  const handleSignMessage = useCallback(async () => {
-    if (!publicKey || !wallet || !signMessage) return;
+  // const handleSignMessage = useCallback(async () => {
+  //   if (!publicKey || !wallet || !signMessage) return;
 
-    try {
-      const encodedMessage = new TextEncoder().encode("I want to connect my wallet to v3rpg");
-      const signedMessage = await signMessage(encodedMessage);
-      const signature = bs58.encode(signedMessage);
+  //   try {
+  //     const encodedMessage = new TextEncoder().encode("I want to connect my wallet to v3rpg");
+  //     const signedMessage = await signMessage(encodedMessage);
+  //     const signature = bs58.encode(signedMessage);
 
-      solanaLogin({ signature, walletAddress: publicKey });
-    } catch (error) {
-      console.log(error);
-    }
-  }, [solanaLogin, publicKey, signMessage, wallet]);
+  //     solanaLogin({ signature, walletAddress: publicKey });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [solanaLogin, publicKey, signMessage, wallet]);
 
-  useEffect(() => {
-    if (publicKey) handleSignMessage();
-  }, [handleSignMessage, publicKey]);
+  // useEffect(() => {
+  //   if (publicKey) handleSignMessage();
+  // }, [handleSignMessage, publicKey]);
 
   return (
     <Dialog>
@@ -82,34 +83,36 @@ const SolanaLogin = () => {
 
         <div className="flex w-full flex-col gap-4">
           {wallets.map((wallet) => (
-            <button
-              key={wallet.adapter.name}
-              onClick={() => select(wallet.adapter.name)}
-              disabled={wallet.readyState !== "Installed"}
-              className={cn(
-                "flex w-full items-center justify-between rounded-md p-2 pr-6",
-                wallet.readyState === "Installed" && "hover:bg-white/10",
-              )}
-            >
-              <div className="flex items-center gap-5 lg:gap-9">
-                <Image
-                  src={wallet.adapter.icon}
-                  alt={wallet.adapter.name}
-                  height={52}
-                  width={52}
-                  className="max-lg:h-10 max-lg:w-10"
-                />
-                <p className="text-xl font-medium tracking-[1.5px]">{wallet.adapter.name}</p>
-              </div>
-              <p
+            <DialogClose>
+              <button
+                key={wallet.adapter.name}
+                onClick={() => select(wallet.adapter.name)}
+                disabled={wallet.readyState !== "Installed"}
                 className={cn(
-                  "font-light uppercase tracking-[1.5px] text-white/30 lg:text-xl",
-                  wallet.readyState !== "Installed" && "hidden",
+                  "flex w-full items-center justify-between rounded-md p-2 pr-6",
+                  wallet.readyState === "Installed" && "hover:bg-white/10",
                 )}
               >
-                Detected
-              </p>
-            </button>
+                <div className="flex items-center gap-5 lg:gap-9">
+                  <Image
+                    src={wallet.adapter.icon}
+                    alt={wallet.adapter.name}
+                    height={52}
+                    width={52}
+                    className="max-lg:h-10 max-lg:w-10"
+                  />
+                  <p className="text-xl font-medium tracking-[1.5px]">{wallet.adapter.name}</p>
+                </div>
+                <p
+                  className={cn(
+                    "font-light uppercase tracking-[1.5px] text-white/30 lg:text-xl",
+                    wallet.readyState !== "Installed" && "hidden",
+                  )}
+                >
+                  Detected
+                </p>
+              </button>
+            </DialogClose>
           ))}
         </div>
       </DialogContent>

@@ -1,7 +1,13 @@
 import queryString from "query-string";
 
-import { IDungeonForBackend, IRateDungeon } from "@/types/dungeon";
-import { dungeonDetailSchema, dungeonResponseSchema, dungeonsSchema } from "@/validations/dungeon";
+import { IDungeonForBackend, IDungeonTxForBackend, IRateDungeon } from "@/types/dungeon";
+import {
+  dungeonDetailSchema,
+  dungeonResponseSchema,
+  dungeonsSchema,
+  dungeonTxForBackendSchema,
+  dungeonTxResponseSchema,
+} from "@/validations/dungeon";
 
 import createApi, { PAGINATION_LIMIT } from "./api-factory";
 
@@ -25,7 +31,34 @@ const getDungeon = async (dungeonId: string) => {
 };
 
 const createDungeon = async (data: IDungeonForBackend) => {
-  return await dungeonApi.post("", data).then((res) => dungeonResponseSchema.parse(res.data));
+  const communityId = JSON.parse(localStorage.getItem("communityId") || "null");
+  console.log(data.transaction, "data.transaction");
+  debugger;
+
+  return await dungeonApi
+    .post("", {
+      ...data,
+      communityId,
+      creatorWalletAddress: data.creatorWalletAddress || "",
+      transaction: data.transaction || "",
+    })
+    .then((res) => dungeonResponseSchema.parse(res.data));
+};
+
+const createDungeonTx = async (data: IDungeonTxForBackend) => {
+  const communityId = JSON.parse(localStorage.getItem("communityId") || "null");
+  console.log("communityId", communityId);
+
+  return await dungeonApi
+    .post("tx", {
+      ...data,
+      communityId,
+    })
+    .then((res) => {
+      console.log("res", res);
+
+      return dungeonTxResponseSchema.parse(res.data);
+    });
 };
 
 const updateDungeon = async (data: IDungeonForBackend) => {
@@ -48,6 +81,7 @@ const dungeonService = {
   getDungeons,
   getDungeon,
   createDungeon,
+  createDungeonTx,
   updateDungeon,
   deleteDungeon,
   addFavorite,
