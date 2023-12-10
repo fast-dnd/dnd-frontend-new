@@ -1,0 +1,32 @@
+{
+  "name": "v3RPG-game",
+  "short_name": "v3RPG",
+  "icons": [
+    {
+      "src": "/icons/v3dnd-logo-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/v3dnd-logo-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/v3dnd-logo-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/v3dnd-logo-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#FF5A5A",
+  "background_color": "#171716",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

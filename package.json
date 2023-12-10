@@ -19,6 +19,7 @@
     "@dnd-kit/core": "^6.0.8",
     "@dnd-kit/sortable": "^7.0.2",
     "@dnd-kit/utilities": "^3.2.1",
+    "@ducanh2912/next-pwa": "^9.7.2",
     "@hookform/resolvers": "^3.3.1",
     "@legendapp/state": "^1.11.1",
     "@phosphor-icons/react": "^2.0.14",

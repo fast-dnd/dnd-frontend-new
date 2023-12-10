@@ -30,6 +30,7 @@ export const metadata: Metadata = {
     title: "v3RPG",
     description: "Bringing gamification to storytelling.",
   },
+  manifest: "/manifest.json",
 };
 
 const RootLayout = ({ children }: React.PropsWithChildren) => {
@@ -37,6 +38,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="theme-color" content="#FF5A5A" />
       </head>
 
       <HotjarAnalytics />
