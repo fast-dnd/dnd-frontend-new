@@ -17,7 +17,6 @@ import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 
 import ClaimRewardModal from "../../claim-reward-modal";
 import MyAccountSkeleton from "./my-account-skeleton";
-import SignOutButton from "./sign-out-button";
 import StatisticsCard from "./statistics-card";
 
 const MyAccount = () => {
@@ -167,7 +166,6 @@ const MyAccount = () => {
           </div>
         </div>
       </div>
-      <SignOutButton />
     </Box>
   );
 };

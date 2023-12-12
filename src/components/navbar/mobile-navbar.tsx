@@ -28,7 +28,7 @@ interface IMobileNavbarProps {
 }
 
 const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
-  const { communityId } = useCommunity();
+  const { communityId, isDefault } = useCommunity();
 
   const { data: rating } = useGetRating();
 
@@ -185,7 +185,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
               </div>
 
               <button className="my-5 text-center font-bold" onClick={onSignOut}>
-                SIGN OUT
+                {isDefault ? "Logout" : "Disconnect Wallet"}
               </button>
             </div>
           ) : (
