@@ -63,7 +63,7 @@ const Page = () => {
         </div>
       </div>
       <div className="relative flex flex-col lg:hidden">
-        <MobileNavbar className="fixed z-[55] h-16 items-start" onClickBack={onClickBack} />
+        <MobileNavbar className="fixed z-[45] h-16 items-start" onClickBack={onClickBack} />
         {loggedIn && !isDefault && <CommunityInfo />}
         <MobileJoinRoom
           show={!adventureDetailId && !campaignDetailId}
