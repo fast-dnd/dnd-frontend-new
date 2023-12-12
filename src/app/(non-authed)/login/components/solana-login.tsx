@@ -17,23 +17,23 @@ const SolanaLogin = () => {
   const { signMessage, wallet, publicKey, wallets, select, disconnect, connecting } = useWallet();
   const { mutate: solanaLogin } = useSolanaLogin();
 
-  // const handleSignMessage = useCallback(async () => {
-  //   if (!publicKey || !wallet || !signMessage) return;
+  const handleSignMessage = useCallback(async () => {
+    if (!publicKey || !wallet || !signMessage) return;
 
-  //   try {
-  //     const encodedMessage = new TextEncoder().encode("I want to connect my wallet to v3rpg");
-  //     const signedMessage = await signMessage(encodedMessage);
-  //     const signature = bs58.encode(signedMessage);
+    try {
+      const encodedMessage = new TextEncoder().encode("I want to connect my wallet to v3rpg");
+      const signedMessage = await signMessage(encodedMessage);
+      const signature = bs58.encode(signedMessage);
 
-  //     solanaLogin({ signature, walletAddress: publicKey });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, [solanaLogin, publicKey, signMessage, wallet]);
+      solanaLogin({ signature, walletAddress: publicKey });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [solanaLogin, publicKey, signMessage, wallet]);
 
-  // useEffect(() => {
-  //   if (publicKey) handleSignMessage();
-  // }, [handleSignMessage, publicKey]);
+  useEffect(() => {
+    if (publicKey) handleSignMessage();
+  }, [handleSignMessage, publicKey]);
 
   return (
     <Dialog>

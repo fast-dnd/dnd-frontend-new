@@ -62,7 +62,6 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
             const signedTx = await signTransaction!(transaction);
 
             const serializedTx = encode(signedTx.serialize());
-
             createDungeon(
               {
                 ...dungeonFormDataWithoutTags,

@@ -1,3 +1,6 @@
+import { decode, encode } from "@project-serum/anchor/dist/cjs/utils/bytes/bs58";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { Transaction } from "@solana/web3.js";
 import { AiFillSound, AiFillStar } from "react-icons/ai";
 import { BiImages } from "react-icons/bi";
 import { useReadLocalStorage } from "usehooks-ts";
@@ -5,6 +8,7 @@ import { useReadLocalStorage } from "usehooks-ts";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import roomService from "@/services/room-service";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
 import { DungeonDuration, dungeonDurations } from "@/utils/dungeon-options";
@@ -41,6 +45,8 @@ const UpdateRoom = ({
   const accountId = useReadLocalStorage<string>("accountId");
 
   const isAdmin = accountId === roomData.playerState[0].accountId;
+
+  const { publicKey, signTransaction } = useWallet();
 
   const { setGenerateImages, setGenerateAudio, updatingRoom } = useOnRoomChange({
     conversationId,
@@ -120,7 +126,20 @@ const UpdateRoom = ({
               className="px-8 uppercase"
               disabled={!isAdmin || !canBegin || gameStarting}
               isLoading={isGameStarting || gameStarting}
-              onClick={() => startGame({ conversationId })}
+              onClick={async () => {
+                if (publicKey) {
+                  debugger;
+                  const gameStartTx = await roomService.getStartGameTx({ conversationId });
+                  const transaction = Transaction.from(decode(gameStartTx?.transaction as string));
+                  const signedTx = await signTransaction!(transaction);
+                  debugger;
+                  const serializedTx = encode(signedTx.serialize());
+                  debugger;
+                  startGame({ conversationId, transaction: serializedTx });
+                } else {
+                  startGame({ conversationId });
+                }
+              }}
             >
               START ({roomData.price} coins)
             </Button>
