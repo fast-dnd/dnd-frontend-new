@@ -48,6 +48,7 @@ const DesktopNavbar = () => {
             "border-b-4 border-transparent pb-2 transition-all duration-300 hover:border-primary/50",
             loggedIn && pathname === "/home" && "border-primary",
             !loggedIn && pathname === "/login" && "border-primary",
+            pathname === "/communities" && "hidden",
           )}
         >
           {loggedIn ? "PLAY" : "LOG IN"}

@@ -1,7 +1,6 @@
-import React from "react";
 import Image from "next/image";
 
-import { Button } from "@/components/ui/button";
+import BuildCommunityFormModal from "./build-community-form-modal";
 
 const BuildCommunity = () => {
   return (
@@ -36,9 +35,7 @@ const BuildCommunity = () => {
           </p>
         </div>
 
-        <Button variant="google" className="w-full py-2 uppercase lg:py-5">
-          BUILD&nbsp;<span className="max-lg:hidden">YOUR&nbsp;</span>COMMUNITY
-        </Button>
+        <BuildCommunityFormModal />
       </div>
     </div>
   );

@@ -65,6 +65,9 @@ dependencies:
   '@solana/wallet-adapter-wallets':
     specifier: ^0.19.23
     version: 0.19.23(@babel/runtime@7.23.5)(@solana/web3.js@1.87.6)(bs58@4.0.1)(react-dom@18.2.0)(react@18.2.0)
+  '@solana/web3.js':
+    specifier: ^1.87.6
+    version: 1.87.6
   '@t3-oss/env-nextjs':
     specifier: ^0.7.1
     version: 0.7.1(typescript@5.1.3)(zod@3.22.2)
@@ -1805,7 +1808,7 @@ packages:
   /@censo-custody/solana-wallet-adapter@0.1.0:
     resolution: {integrity: sha512-iM1jFVzBMfk7iokgUVfA2xvGUegixklUISgMARa/VA2mFIjoi32t4xmD8PtWHht81fmg107aYhLnTV1cM7NkAg==}
     dependencies:
-      '@solana/web3.js': 1.87.3
+      '@solana/web3.js': 1.87.6
       bs58: 4.0.1
       eventemitter3: 4.0.7
       uuid: 8.3.2
@@ -1815,13 +1818,13 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@coral-xyz/borsh@0.26.0(@solana/web3.js@1.87.3):
+  /@coral-xyz/borsh@0.26.0(@solana/web3.js@1.87.6):
     resolution: {integrity: sha512-uCZ0xus0CszQPHYfWAqKS5swS1UxvePu83oOF+TWpUkedsNlg6p2p4azxZNSSqwXb9uXMFgxhuMBX9r3Xoi0vQ==}
     engines: {node: '>=10'}
     peerDependencies:
       '@solana/web3.js': ^1.68.0
     dependencies:
-      '@solana/web3.js': 1.87.3
+      '@solana/web3.js': 1.87.6
       bn.js: 5.2.1
       buffer-layout: 1.2.2
     dev: false
@@ -2363,7 +2366,7 @@ packages:
       '@keystonehq/bc-ur-registry': 0.5.5
       '@keystonehq/bc-ur-registry-sol': 0.3.1
       '@keystonehq/sdk': 0.13.1
-      '@solana/web3.js': 1.87.3
+      '@solana/web3.js': 1.87.6
       bs58: 5.0.0
       uuid: 8.3.2
     transitivePeerDependencies:
@@ -2626,8 +2629,8 @@ packages:
     resolution: {integrity: sha512-Nq+COIjE1135T7qfnOHEn7E0q39bQTgXLFk837/rgFe6Hkew9WML7eHsS+lSYD2p3OJaTiUOHTAq1lHy36oIqQ==}
     engines: {node: '>=11'}
     dependencies:
-      '@coral-xyz/borsh': 0.26.0(@solana/web3.js@1.87.3)
-      '@solana/web3.js': 1.87.3
+      '@coral-xyz/borsh': 0.26.0(@solana/web3.js@1.87.6)
+      '@solana/web3.js': 1.87.6
       base64-js: 1.5.1
       bn.js: 5.2.1
       bs58: 4.0.1
@@ -4541,30 +4544,6 @@ packages:
       - bs58
     dev: false
 
-  /@solana/web3.js@1.87.3:
-    resolution: {integrity: sha512-WGLzTZpi00vP443qGK3gL+LZXQJwaWkh6bzNXYpMTCAH2Z102y3YbPWOoQzJUeRSZWSXKh7MFkA3vDMFlMvGZQ==}
-    dependencies:
-      '@babel/runtime': 7.23.2
-      '@noble/curves': 1.2.0
-      '@noble/hashes': 1.3.2
-      '@solana/buffer-layout': 4.0.1
-      agentkeepalive: 4.5.0
-      bigint-buffer: 1.1.5
-      bn.js: 5.2.1
-      borsh: 0.7.0
-      bs58: 4.0.1
-      buffer: 6.0.3
-      fast-stable-stringify: 1.0.0
-      jayson: 4.1.0
-      node-fetch: 2.7.0
-      rpc-websockets: 7.6.1
-      superstruct: 0.14.2
-    transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - utf-8-validate
-    dev: false
-
   /@solana/web3.js@1.87.6:
     resolution: {integrity: sha512-LkqsEBgTZztFiccZZXnawWa8qNCATEqE97/d0vIwjTclmVlc8pBpD1DmjfVHtZ1HS5fZorFlVhXfpwnCNDZfyg==}
     dependencies:
@@ -4983,7 +4962,7 @@ packages:
       '@babel/runtime': 7.x
     dependencies:
       '@babel/runtime': 7.23.5
-      '@solana/web3.js': 1.87.3
+      '@solana/web3.js': 1.87.6
       '@toruslabs/base-controllers': 2.9.0(@babel/runtime@7.23.5)
       '@toruslabs/http-helpers': 3.4.0(@babel/runtime@7.23.5)
       '@toruslabs/openlogin-jrpc': 3.2.0(@babel/runtime@7.23.5)
@@ -7192,7 +7171,7 @@ packages:
       '@socket.io/component-emitter': 3.1.0
       debug: 4.3.4
       engine.io-parser: 5.2.1
-      ws: 8.11.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      ws: 8.11.0
       xmlhttprequest-ssl: 2.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -10799,7 +10778,7 @@ packages:
     dependencies:
       object-assign: 4.1.1
       react: 18.2.0
-      react-is: 16.13.1
+      react-is: 18.2.0
     dev: false
 
   /react-simple-animate@3.5.2(react-dom@18.2.0):
@@ -11102,18 +11081,6 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.3
-    dev: false
-
-  /rpc-websockets@7.6.1:
-    resolution: {integrity: sha512-MmRGaJJvxTHSRxYPjJJqcj2zWnCetw7YbYbKlD0Yc7qVw6PsZhRJg1MI3mpWlpBs+4zO+urlNfLl9zLsdOD/gA==}
-    dependencies:
-      '@babel/runtime': 7.23.2
-      eventemitter3: 4.0.7
-      uuid: 8.3.2
-      ws: 8.11.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-    optionalDependencies:
-      bufferutil: 4.0.8
-      utf-8-validate: 5.0.10
     dev: false
 
   /rpc-websockets@7.8.0:
@@ -12794,7 +12761,7 @@ packages:
       utf-8-validate:
         optional: true
 
-  /ws@8.11.0(bufferutil@4.0.8)(utf-8-validate@5.0.10):
+  /ws@8.11.0:
     resolution: {integrity: sha512-HPG3wQd9sNQoT9xHyNCXoDUa+Xw/VevmY9FoHyQ+g+rrMn4j6FB4np7Z0OhdTgjx6MgQLK7jwSy1YecU1+4Asg==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -12805,9 +12772,6 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
-    dependencies:
-      bufferutil: 4.0.8
-      utf-8-validate: 5.0.10
     dev: false
 
   /ws@8.14.2(bufferutil@4.0.8)(utf-8-validate@5.0.10):

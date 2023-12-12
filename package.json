@@ -36,6 +36,7 @@
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/wallet-adapter-wallets": "^0.19.23",
+    "@solana/web3.js": "^1.87.6",
     "@t3-oss/env-nextjs": "^0.7.1",
     "@tanstack/react-query": "^4.35.3",
     "@tanstack/react-query-devtools": "^4.35.3",

@@ -4,7 +4,6 @@ import { Wallet } from "@phosphor-icons/react";
 import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { PublicKey } from "@solana/web3.js";
 import { AiOutlineClose } from "react-icons/ai";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -17,23 +16,23 @@ const SolanaLogin = () => {
   const { signMessage, wallet, publicKey, wallets, select, disconnect, connecting } = useWallet();
   const { mutate: solanaLogin } = useSolanaLogin();
 
-  // const handleSignMessage = useCallback(async () => {
-  //   if (!publicKey || !wallet || !signMessage) return;
+  const handleSignMessage = useCallback(async () => {
+    if (!publicKey || !wallet || !signMessage) return;
 
-  //   try {
-  //     const encodedMessage = new TextEncoder().encode("I want to connect my wallet to v3rpg");
-  //     const signedMessage = await signMessage(encodedMessage);
-  //     const signature = bs58.encode(signedMessage);
+    try {
+      const encodedMessage = new TextEncoder().encode("I want to connect my wallet to v3rpg");
+      const signedMessage = await signMessage(encodedMessage);
+      const signature = bs58.encode(signedMessage);
 
-  //     solanaLogin({ signature, walletAddress: publicKey });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, [solanaLogin, publicKey, signMessage, wallet]);
+      solanaLogin({ signature, walletAddress: publicKey });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [solanaLogin, publicKey, signMessage, wallet]);
 
-  // useEffect(() => {
-  //   if (publicKey) handleSignMessage();
-  // }, [handleSignMessage, publicKey]);
+  useEffect(() => {
+    if (publicKey) handleSignMessage();
+  }, [handleSignMessage, publicKey]);
 
   return (
     <Dialog>
@@ -83,9 +82,8 @@ const SolanaLogin = () => {
 
         <div className="flex w-full flex-col gap-4">
           {wallets.map((wallet) => (
-            <DialogClose>
+            <DialogClose key={wallet.adapter.name} asChild>
               <button
-                key={wallet.adapter.name}
                 onClick={() => select(wallet.adapter.name)}
                 disabled={wallet.readyState !== "Installed"}
                 className={cn(
