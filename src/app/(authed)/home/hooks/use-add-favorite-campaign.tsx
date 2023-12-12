@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 import campaignService, { campaignKey } from "@/services/campaign-service";
 
@@ -8,7 +9,8 @@ const useAddFavoriteCampaign = () => {
   return useMutation({
     mutationFn: campaignService.addFavorite,
     onSuccess: () => {
-      queryClient.invalidateQueries([campaignKey, "favorite"]);
+      queryClient.invalidateQueries([campaignKey]);
+      toast.success("Campaign added to favorites");
     },
   });
 };
