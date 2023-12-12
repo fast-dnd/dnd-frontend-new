@@ -3,24 +3,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PenNib, Star } from "@phosphor-icons/react";
 import { BiChevronLeft } from "react-icons/bi";
-import { FaDice, FaDiscord, FaUsers } from "react-icons/fa";
+import { FaDiscord, FaUsers } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
-import { toast } from "sonner";
+import { PiTrophyFill } from "react-icons/pi";
 
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
-import useGetRating from "@/hooks/queries/use-get-rating";
-import { logout } from "@/utils/auth";
+import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { cn } from "@/utils/style-utils";
 
-import DiamondDMCurrencyIcon from "../icons/diamond-dm-currency-icon";
-import GoldCoinIcon from "../icons/gold-coin-icon";
 import QuillIcon from "../icons/quill-icon";
 import SwordsIcon from "../icons/swords-icon";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import MobileProfile from "./components/mobile-profile";
 
 interface IMobileNavbarProps {
   className?: string;
@@ -28,33 +25,12 @@ interface IMobileNavbarProps {
 }
 
 const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
-  const { communityId, isDefault } = useCommunity();
-
-  const { data: rating } = useGetRating();
+  const { isDefault, communityId } = useCommunity();
+  const { data: currentCommunity } = useGetCurrentCommunity();
 
   const { user } = useAuth();
 
   const pathname = usePathname();
-
-  const onSignOut = () => {
-    logout();
-    toast.success("Signed out successfully!");
-  };
-
-  const ratings = [
-    {
-      icon: <FaDice size={16} className="fill-white/50" />,
-      rank: rating?.rating.gameplay,
-    },
-    {
-      icon: <Star size={16} weight="fill" className="fill-white/50" />,
-      rank: rating?.rating.influencer,
-    },
-    {
-      icon: <PenNib size={16} weight="fill" className="fill-white/50" />,
-      rank: rating?.rating.contentCreation,
-    },
-  ];
 
   return (
     <div
@@ -63,136 +39,116 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
         className,
       )}
     >
-      {onClickBack && (
+      <div className="flex items-center gap-4">
         <BiChevronLeft
-          className="pointer-events-auto absolute left-4 top-4 h-6 w-auto"
+          className={cn("pointer-events-auto mb-1 h-6", !onClickBack && "hidden")}
           onClick={onClickBack}
         />
-      )}
-      <div />
-      <Link href="/home" className="pointer-events-auto translate-x-1/4">
-        <Image src="/images/navbar-logo.png" width={94} height={32} alt="logo" />
-      </Link>
-      <Sheet>
-        <SheetTrigger className="pointer-events-auto">
-          <IoMdMenu className="h-8 w-8" />
-        </SheetTrigger>
-        <SheetContent
-          className={cn(
-            "pointer-events-auto z-[100] flex flex-col justify-between gap-8 bg-primary-900/60 backdrop-blur-xl",
-          )}
-        >
-          <Link href="/home" className="w-fit">
-            <Image src="/images/navbar-logo.png" width={94} height={32} alt="logo" />
-          </Link>
 
-          <div className="flex flex-col gap-4">
-            {user ? (
-              <>
-                <Button
-                  className="gap-2 py-4"
-                  href="/communities"
-                  variant={pathname === "/communities" ? "primary" : "sidebar"}
-                >
-                  <FaUsers className="fill-white" />
-                  Communities
-                </Button>
-                <Button
-                  className="gap-2 py-4"
-                  href="/home"
-                  variant={pathname === "/home" ? "primary" : "sidebar"}
-                  disabled={!communityId}
-                >
-                  <SwordsIcon className="fill-white" />
-                  PLAY
-                </Button>
-                <Button
-                  variant={pathname === "/profile" ? "primary" : "sidebar"}
-                  className="gap-2 whitespace-nowrap py-4"
-                  href="/profile?activeTab=GAME HISTORY"
-                  disabled={!communityId}
-                >
-                  <QuillIcon className="h-4 w-4 shrink-0 fill-white" fillOpacity={1} />
-                  GAME HISTORY
-                </Button>
-              </>
-            ) : (
-              <Button
-                className="py-4"
-                href="/guide"
-                variant={pathname === "/guide" ? "primary" : "sidebar"}
-              >
-                HOW TO PLAY
-              </Button>
+        <Link href="/home" className="pointer-events-auto">
+          <Image src="/images/navbar-logo.png" width={94} height={32} alt="logo" />
+        </Link>
+      </div>
+      <div className="flex items-center gap-3">
+        <MobileProfile />
+        <Sheet>
+          <SheetTrigger className="pointer-events-auto">
+            <IoMdMenu className="h-8 w-8" />
+          </SheetTrigger>
+          <SheetContent
+            className={cn(
+              "pointer-events-auto z-[100] flex flex-col gap-8 bg-primary-900/60 p-0 backdrop-blur-xl",
             )}
-
-            <Button
-              variant="sidebar"
-              className="gap-2 py-4"
-              href="https://discord.com/invite/36chp8DnzC"
-              target="_blank"
-            >
-              <FaDiscord className="h-6 w-6" />
-              JOIN US
-            </Button>
-          </div>
-          {user && communityId ? (
-            <div className="-mx-4 -mb-6 flex w-[calc(100%_+_3rem)] flex-col items-center bg-primary-900">
-              <Link href="/profile" className="-translate-y-1/2">
-                <Image
-                  src={user?.account.imageUrl || "/images/default-avatar.png"}
-                  width={76}
-                  height={76}
-                  alt="avatar"
-                  className="rounded-full border-4 border-primary-900"
-                />
+          >
+            <div className="flex flex-1 flex-col gap-8 p-4 pb-0">
+              <Link href="/home" className="w-fit">
+                <Image src="/images/navbar-logo.png" width={94} height={32} alt="logo" />
               </Link>
-              <div className="-mt-14 mb-4 flex gap-4">
-                {ratings.map(({ icon, rank }, index) => (
-                  <div
-                    key={index}
-                    className="relative flex h-9 w-9 flex-col items-center justify-center rounded-full bg-[#232322]"
+              <div className="flex flex-1 flex-col justify-center gap-4">
+                {user ? (
+                  <>
+                    {!isDefault && (
+                      <Button
+                        className="gap-2 py-4"
+                        href="/communities"
+                        variant={pathname === "/communities" ? "primary" : "sidebar"}
+                      >
+                        <FaUsers className="h-5 w-5 shrink-0 fill-white" />
+                        <p className="flex-1 text-center">Communities</p>
+                      </Button>
+                    )}
+
+                    <Button
+                      className="gap-4 py-4"
+                      href="/home"
+                      variant={pathname === "/home" ? "primary" : "sidebar"}
+                      disabled={!communityId}
+                    >
+                      <SwordsIcon className="h-5 w-5 shrink-0 fill-white" />
+                      <p className="flex-1 text-center">play</p>
+                    </Button>
+                    <Button
+                      className="gap-4 py-4"
+                      href="/leaderboard"
+                      variant={pathname === "/leaderboard" ? "primary" : "sidebar"}
+                      disabled={!communityId}
+                    >
+                      <PiTrophyFill className="h-5 w-5 shrink-0" />
+                      <p className="flex-1 text-center">Scoreboard</p>
+                    </Button>
+                    <Button
+                      variant={pathname === "/profile" ? "primary" : "sidebar"}
+                      className="gap-4 whitespace-nowrap py-4"
+                      href="/profile?activeTab=GAME HISTORY"
+                      disabled={!communityId}
+                    >
+                      <QuillIcon className="h-5 w-5 shrink-0 fill-white" fillOpacity={1} />
+                      <p className="flex-1 text-center">GAME HISTORY</p>
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    className="py-4"
+                    href="/guide"
+                    variant={pathname === "/guide" ? "primary" : "sidebar"}
                   >
-                    {icon}
-                    <p className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 font-medium text-white/50">
-                      {rank}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <Link
-                className={cn(
-                  "mr-4 w-full text-center font-bold",
-                  pathname === "/leaderboard" && "text-primary",
+                    HOW TO PLAY
+                  </Button>
                 )}
-                href="/leaderboard"
-              >
-                SEE THE LEADERBOARD
-              </Link>
 
-              <div className="my-3 h-0.5 w-full bg-black shadow-lobby" />
+                <Button
+                  variant="sidebar"
+                  className="gap-4 py-4"
+                  href="https://discord.com/invite/36chp8DnzC"
+                  target="_blank"
+                >
+                  <FaDiscord className="h-5 w-5 shrink-0" />
+                  <p className="flex-1 text-center">JOIN US</p>
+                </Button>
+              </div>
+            </div>
 
-              <div className="mr-4 flex gap-2">
-                <div className="flex items-center justify-center gap-1 rounded-md bg-white/5 px-6 py-1">
-                  <GoldCoinIcon />
-                  {user?.account.coins ?? "-"}
-                </div>
-                <div className="flex items-center justify-center gap-1 rounded-md bg-white/5 px-6 py-1">
-                  <DiamondDMCurrencyIcon image />
-                  {user?.account.dmCurrency ?? "-"}
+            {!!currentCommunity && (
+              <div className="flex w-full items-center gap-2 border-t border-white/20 bg-gradient-to-r from-[#FBBC05] from-10% via-[#977000] via-50% to-[#473500] to-90% px-4 py-2">
+                <Image
+                  src={currentCommunity?.rewardPoolImgUrl ?? ""}
+                  width={34}
+                  height={34}
+                  alt={currentCommunity?.name + " reward pool image"}
+                  className=" rounded-full"
+                />
+                <div className="flex flex-col gap-1">
+                  <p className="text-sm leading-none tracking-[1.05px]">Reward Pool</p>
+                  <p className="text-sm font-bold leading-none tracking-[1px]">
+                    1000 {currentCommunity?.currencyName}
+                    {/* TODO: replace with reward pool size */}
+                  </p>
                 </div>
               </div>
-
-              <button className="my-5 text-center font-bold" onClick={onSignOut}>
-                {isDefault ? "Logout" : "Disconnect Wallet"}
-              </button>
-            </div>
-          ) : (
-            <div />
-          )}
-        </SheetContent>
-      </Sheet>
+            )}
+          </SheetContent>
+        </Sheet>
+      </div>
     </div>
   );
 };
