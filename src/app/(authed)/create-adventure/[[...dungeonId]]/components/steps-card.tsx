@@ -21,12 +21,13 @@ import { tagsRemoveLabel } from "../utils/tags-utils";
 
 const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
   const { publicKey, signTransaction } = useWallet();
+
   const { currentStep, dungeonFormData } = dungeonFormStore.use();
 
   const [modalContent, setModalContent] = useState<StatusModalContent>();
 
+  const { mutate: createDungeonTx } = useCreateDungeonTx();
   const { mutate: createDungeon, isLoading: isCreating } = useCreateDungeon();
-  const { mutate: createDungeonTx, isLoading: isCreatingTx } = useCreateDungeonTx();
   const { mutate: updateDungeon, isLoading: isUpdating } = useUpdateDungeon();
 
   const onFinishForm = async () => {
@@ -47,9 +48,9 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
         onSuccess: ({ id }) => {
           setModalContent({ state: "EDITED", id });
         },
-        onError: (data) => {
-          if (data instanceof AxiosError) {
-            const errorMessages = z.array(z.string()).parse(data?.response?.data);
+        onError: (err) => {
+          if (err instanceof AxiosError) {
+            const errorMessages = z.array(z.string()).parse(err?.response?.data);
             setModalContent({ errorMessages, state: "ERRORED" });
           }
         },
@@ -78,18 +79,18 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
                   }));
                   setModalContent({ state: "CREATED", id });
                 },
-                onError: (data) => {
-                  if (data instanceof AxiosError) {
-                    const errorMessages = z.array(z.string()).parse(data?.response?.data);
+                onError: (err) => {
+                  if (err instanceof AxiosError) {
+                    const errorMessages = z.array(z.string()).parse(err?.response?.data);
                     setModalContent({ errorMessages, state: "ERRORED" });
                   }
                 },
               },
             );
           },
-          onError: (data) => {
-            if (data instanceof AxiosError) {
-              const errorMessages = z.array(z.string()).parse(data?.response?.data);
+          onError: (err) => {
+            if (err instanceof AxiosError) {
+              const errorMessages = z.array(z.string()).parse(err?.response?.data);
               setModalContent({ errorMessages, state: "ERRORED" });
             }
           },
@@ -100,9 +101,9 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
             dungeonFormStore.dungeonFormData.set((prev) => ({ ...prev, id }));
             setModalContent({ state: "CREATED", id });
           },
-          onError: (data) => {
-            if (data instanceof AxiosError) {
-              const errorMessages = z.array(z.string()).parse(data?.response?.data);
+          onError: (err) => {
+            if (err instanceof AxiosError) {
+              const errorMessages = z.array(z.string()).parse(err?.response?.data);
               setModalContent({ errorMessages, state: "ERRORED" });
             }
           },

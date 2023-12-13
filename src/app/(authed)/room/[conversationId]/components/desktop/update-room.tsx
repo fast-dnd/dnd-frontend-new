@@ -8,6 +8,8 @@ import { useReadLocalStorage } from "usehooks-ts";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import useCommunity from "@/hooks/helpers/use-community";
+import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import roomService from "@/services/room-service";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
@@ -45,6 +47,9 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
   const isAdmin = accountId === roomData.playerState[0].accountId;
 
   const { publicKey, signTransaction } = useWallet();
+
+  const { isDefault } = useCommunity();
+  const { data: currentCommunity } = useGetCurrentCommunity();
 
   const { setGenerateImages, setGenerateAudio, updatingRoom } = useOnRoomChange({
     conversationId,
@@ -139,7 +144,8 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
               isLoading={isGameStarting || gameStarting}
               onClick={onStartGame}
             >
-              START ({roomData.price} coins)
+              START ({roomData.price.toFixed(5)}{" "}
+              {isDefault ? "coins" : currentCommunity?.currencyName})
             </Button>
           </TooltipTrigger>
           {!canBegin && (
