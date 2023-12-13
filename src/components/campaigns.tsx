@@ -1,5 +1,7 @@
 "use client";
 
+import { useDebounce } from "usehooks-ts";
+
 import { Campaign } from "@/components/campaign";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
@@ -12,9 +14,18 @@ interface ICampaignsProps {
   filter?: string;
   isOwned?: boolean;
   showActions?: boolean;
+  searchName?: string;
 }
 
-const Campaigns = ({ setCampaignDetailId, filter, isOwned, showActions }: ICampaignsProps) => {
+const Campaigns = ({
+  setCampaignDetailId,
+  filter,
+  isOwned,
+  showActions,
+  searchName,
+}: ICampaignsProps) => {
+  const debouncedName = useDebounce<string | undefined>(searchName, 500);
+
   const {
     data: campaignsData,
     hasNextPage,
@@ -22,7 +33,7 @@ const Campaigns = ({ setCampaignDetailId, filter, isOwned, showActions }: ICampa
     isFetchingNextPage,
     isError,
     isLoading,
-  } = useGetCampaigns({ filter: filter || "owned" });
+  } = useGetCampaigns({ filter: filter || "owned", name: debouncedName });
 
   const { lastObjectRef: lastCampaignRef } = useIntersectionObserver({
     isFetchingNextPage,

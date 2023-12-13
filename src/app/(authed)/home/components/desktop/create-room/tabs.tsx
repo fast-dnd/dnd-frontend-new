@@ -1,6 +1,7 @@
 import React from "react";
 
 import { tabsWithIcons } from "@/components/tabs-with-icons";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -13,7 +14,11 @@ import { cn } from "@/utils/style-utils";
 
 import { BaseTabType, subTabs, SubTabType, tabStore } from "../../../stores/tab-store";
 
-const Tabs = () => {
+const Tabs = ({
+  setSearchName,
+}: {
+  setSearchName?: React.Dispatch<React.SetStateAction<string | undefined>>;
+}) => {
   const activeBaseTab = tabStore.baseTab.use();
   const activeSubTab = tabStore.subTab.use();
 
@@ -35,23 +40,33 @@ const Tabs = () => {
           </div>
         ))}
       </div>
-      <Select
-        value={activeSubTab}
-        onValueChange={(value) => tabStore.subTab.set(value as SubTabType)}
-      >
-        <SelectTrigger className="mb-0 w-52 capitalize" aria-label="Select dungeon type">
-          <SelectValue placeholder="Select adventure type" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {subTabs.map((subTab) => (
-              <SelectItem key={subTab} value={subTab} className="capitalize">
-                {subTab}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <div className="flex items-center gap-4">
+        {!!setSearchName && (
+          <Input
+            placeholder="🔎 Search..."
+            className="m-0 py-2 leading-none"
+            onChange={(e) => setSearchName(e.target.value)}
+          />
+        )}
+
+        <Select
+          value={activeSubTab}
+          onValueChange={(value) => tabStore.subTab.set(value as SubTabType)}
+        >
+          <SelectTrigger className="mb-0 w-52 capitalize" aria-label="Select dungeon type">
+            <SelectValue placeholder="Select adventure type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {subTabs.map((subTab) => (
+                <SelectItem key={subTab} value={subTab} className="capitalize">
+                  {subTab}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 };

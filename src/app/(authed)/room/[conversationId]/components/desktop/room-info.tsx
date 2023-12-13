@@ -35,7 +35,6 @@ const RoomInfo = ({ conversationId }: { conversationId: string }) => {
         { conversationId, championId: champion._id },
         {
           onSuccess: () => {
-            console.log("here");
             setSelectedChampion(champion);
           },
         },

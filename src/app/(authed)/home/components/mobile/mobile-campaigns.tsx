@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDebounce } from "usehooks-ts";
 
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetCampaigns from "@/hooks/queries/use-get-campaigns";
@@ -7,6 +8,7 @@ import { cn } from "@/utils/style-utils";
 import { tabStore } from "../../stores/tab-store";
 import { MobileCampaign } from "./mobile-campaign";
 import MobileFilter from "./mobile-filter";
+import MobileSearch from "./mobile-search";
 
 interface IMobileCampaignsProps {
   campaignDetailId?: string | undefined;
@@ -23,6 +25,10 @@ const MobileCampaigns = ({
 }: IMobileCampaignsProps) => {
   const [opening, setOpening] = useState(false);
 
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchName, setSearchName] = useState<string>();
+  const debouncedName = useDebounce<string | undefined>(searchName, 500);
+
   const [filter, setFilter] = useState(false);
   const subTab = tabStore.subTab.use();
 
@@ -33,7 +39,7 @@ const MobileCampaigns = ({
     isFetchingNextPage,
     isError,
     isLoading,
-  } = useGetCampaigns({ filter: subTab || "owned" });
+  } = useGetCampaigns({ filter: subTab || "owned", name: debouncedName });
 
   const { lastObjectRef: lastCampaignRef } = useIntersectionObserver({
     isFetchingNextPage,
@@ -77,12 +83,21 @@ const MobileCampaigns = ({
 
   return (
     <div className={cn("flex flex-col gap-2 px-4 py-2")}>
-      <div className="flex items-center justify-between">
-        {isLoading ? (
-          <div className="h-5 w-40 rounded bg-gray-700/80" />
-        ) : (
-          <p className="text-sm font-medium uppercase">{subTab} CAMPAIGNS</p>
-        )}
+      <div className="relative flex items-center gap-2">
+        <div
+          className={cn(
+            "flex flex-1 opacity-100 transition-opacity duration-300",
+            searchOpen && "opacity-0",
+          )}
+        >
+          {isLoading ? (
+            <div className="h-5 w-40 rounded bg-gray-700/80" />
+          ) : (
+            <p className="text-sm font-medium uppercase">{subTab} CAMPAIGNS</p>
+          )}
+        </div>
+
+        <MobileSearch open={searchOpen} setOpen={setSearchOpen} setSearchName={setSearchName} />
         <MobileFilter open={filter} setOpen={setFilter} />
       </div>
 

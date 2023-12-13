@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useDebounce } from "usehooks-ts";
 
 import { Dungeon } from "@/components/dungeon";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ interface IAdventuresProps {
   addedToCampaign?: IBaseDungeon[];
   isOwned?: boolean;
   showActions?: boolean;
+  searchName?: string;
 }
 
 const Adventures = ({
@@ -28,7 +30,10 @@ const Adventures = ({
   addedToCampaign,
   isOwned,
   showActions,
+  searchName,
 }: IAdventuresProps) => {
+  const debouncedName = useDebounce<string | undefined>(searchName, 500);
+
   const {
     data: dungeonsData,
     hasNextPage,
@@ -36,14 +41,13 @@ const Adventures = ({
     isFetchingNextPage,
     isError,
     isLoading,
-  } = useGetDungeons({ filter: filter || "owned" });
+  } = useGetDungeons({ filter: filter || "owned", name: debouncedName });
 
   const { lastObjectRef: lastDungeonRef } = useIntersectionObserver({
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
   });
-
   if (isError) return <div>Something went wrong</div>;
 
   if (isLoading)

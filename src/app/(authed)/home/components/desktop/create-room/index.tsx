@@ -24,6 +24,8 @@ const CreateRoom = () => {
 
   const activeBaseTab = tabStore.baseTab.use();
 
+  const [searchName, setSearchName] = useState<string>();
+
   const [dungeonDetailId, setDungeonDetailId] = useState<string>();
   const [campaignDetailId, setCampaignDetailId] = useState<string>();
 
@@ -40,7 +42,11 @@ const CreateRoom = () => {
       wrapperClassName="w-3/4 min-w-0"
     >
       {loggedIn && !isDefault && <CommunityInfo />}
-      {dungeonDetailId || campaignDetailId ? <GoBackButton onClick={onGoBack} /> : <Tabs />}
+      {dungeonDetailId || campaignDetailId ? (
+        <GoBackButton onClick={onGoBack} />
+      ) : (
+        <Tabs setSearchName={setSearchName} />
+      )}
       {dungeonDetailId ? (
         <>
           <DungeonDetail dungeonDetailId={dungeonDetailId} />
@@ -58,6 +64,7 @@ const CreateRoom = () => {
               filter={subTab}
               setDungeonDetailId={setDungeonDetailId}
               isOwned={subTab === "owned"}
+              searchName={searchName}
             />
           )}
           {activeBaseTab === "campaigns" && (
@@ -65,6 +72,7 @@ const CreateRoom = () => {
               filter={subTab}
               setCampaignDetailId={setCampaignDetailId}
               isOwned={subTab === "owned"}
+              searchName={searchName}
             />
           )}
           {subTab === "favourite" && <AddFavoriteFooter />}

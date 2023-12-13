@@ -12,11 +12,20 @@ import createApi, { PAGINATION_LIMIT } from "./api-factory";
 
 const dungeonApi = createApi({ commonPrefix: "dungeons" });
 
-const getDungeons = async ({ filter, pageParam }: { filter: string; pageParam: number }) => {
+const getDungeons = async ({
+  filter,
+  pageParam,
+  name,
+}: {
+  filter: string;
+  pageParam: number;
+  name?: string;
+}) => {
   const communityId = JSON.parse(localStorage.getItem("communityId") || "null");
 
   const queryParams = queryString.stringify({
     filter,
+    name,
     skip: (pageParam - 1) * PAGINATION_LIMIT,
     limit: PAGINATION_LIMIT,
     communityId,
