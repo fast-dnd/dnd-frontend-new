@@ -7,15 +7,13 @@ import { moveStore } from "../../stores/move-store";
 import DiceBreakdown from "./dice-breakdown";
 import Die from "./die";
 
-const RollDice = ({
-  conversationId,
-  roomData,
-  currentPlayer,
-}: {
+interface IRollDiceProps {
   conversationId: string;
   roomData: IRoomDetail;
   currentPlayer: IPlayer;
-}) => {
+}
+
+const RollDice = ({ conversationId, roomData, currentPlayer }: IRollDiceProps) => {
   const { onPlay, submitting } = usePlayMove(conversationId, roomData, currentPlayer);
 
   const store = moveStore.use();

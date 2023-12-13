@@ -12,6 +12,15 @@ import MobileCampaignDetail from "./mobile-campaign-detail";
 import MobileCampaigns from "./mobile-campaigns";
 import TabToggle from "./tab-toggle";
 
+interface IMobileCreateRoomProps {
+  adventureDetailId?: string | undefined;
+  setAdventureDetailId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  campaignDetailId?: string | undefined;
+  setCampaignDetailId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  closingAdventureId?: string | undefined;
+  closingCampaignId?: string | undefined;
+}
+
 const MobileCreateRoom = ({
   adventureDetailId,
   setAdventureDetailId,
@@ -19,14 +28,7 @@ const MobileCreateRoom = ({
   setCampaignDetailId,
   closingAdventureId,
   closingCampaignId,
-}: {
-  adventureDetailId: string | undefined;
-  setAdventureDetailId: React.Dispatch<React.SetStateAction<string | undefined>>;
-  campaignDetailId: string | undefined;
-  setCampaignDetailId: React.Dispatch<React.SetStateAction<string | undefined>>;
-  closingAdventureId?: string | undefined;
-  closingCampaignId?: string | undefined;
-}) => {
+}: IMobileCreateRoomProps) => {
   const activeBaseTab = tabStore.baseTab.use();
   const [switching, setSwitching] = useState(false);
   return (

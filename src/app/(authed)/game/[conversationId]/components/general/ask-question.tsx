@@ -6,17 +6,14 @@ import { Input } from "@/components/ui/input";
 
 import useAskQuestion from "../../hooks/use-ask-question";
 
-const AskQuestion = ({
-  conversationId,
-  canAsk,
-  asking,
-  setAsking,
-}: {
+interface IAskQuestionProps {
   conversationId: string;
   canAsk: boolean;
   asking: boolean;
   setAsking: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+}
+
+const AskQuestion = ({ conversationId, canAsk, asking, setAsking }: IAskQuestionProps) => {
   const { mutate: askQuestion } = useAskQuestion();
   const [question, setQuestion] = useState("");
   const onSubmit: FormEventHandler<HTMLFormElement> = (ev) => {

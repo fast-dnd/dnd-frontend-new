@@ -12,6 +12,15 @@ import { IBaseDungeon } from "@/types/dungeon";
 
 import { SubTabType } from "@/app/(authed)/home/stores/tab-store";
 
+interface IAdventuresProps {
+  setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  filter?: SubTabType;
+  addToCampaign?: (dungeonName: IBaseDungeon) => void;
+  addedToCampaign?: IBaseDungeon[];
+  isOwned?: boolean;
+  showActions?: boolean;
+}
+
 const Adventures = ({
   setDungeonDetailId,
   filter,
@@ -19,14 +28,7 @@ const Adventures = ({
   addedToCampaign,
   isOwned,
   showActions,
-}: {
-  setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  filter?: SubTabType;
-  addToCampaign?: (dungeonName: IBaseDungeon) => void;
-  addedToCampaign?: IBaseDungeon[];
-  isOwned?: boolean;
-  showActions?: boolean;
-}) => {
+}: IAdventuresProps) => {
   const {
     data: dungeonsData,
     hasNextPage,

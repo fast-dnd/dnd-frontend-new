@@ -19,13 +19,12 @@ import { cn } from "@/utils/style-utils";
 import useRateDungeon from "../../hooks/use-rate-dungeon";
 import { gameStore } from "../../stores/game-store";
 
-const RateModal = ({
-  dungeon,
-  conversationId,
-}: {
+interface IRateModalProps {
   dungeon: IDungeonDetail;
   conversationId: string;
-}) => {
+}
+
+const RateModal = ({ dungeon, conversationId }: IRateModalProps) => {
   const isMobileTablet = useMediaQuery("(max-width: 1024px)");
   const pageState = gameStore.pageState.use();
   const rewardOpen = gameStore.reward.use();

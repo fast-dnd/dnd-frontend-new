@@ -8,15 +8,13 @@ import createApi, { PAGINATION_LIMIT } from "./api-factory";
 
 const leaderboardApi = createApi({ commonPrefix: "leaderboards" });
 
-const getLeaderboard = async ({
-  filter,
-  pageParam,
-  currUserRank,
-}: {
+interface IGetLeaderboardProps {
   filter: RatingType;
   pageParam: number;
   currUserRank?: number;
-}) => {
+}
+
+const getLeaderboard = async ({ filter, pageParam, currUserRank }: IGetLeaderboardProps) => {
   const communityId = JSON.parse(localStorage.getItem("communityId") || "null");
 
   const skip = (currUserRank ? currUserRank - 1 : 0) + (pageParam - 1) * PAGINATION_LIMIT;

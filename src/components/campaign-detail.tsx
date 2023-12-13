@@ -5,13 +5,12 @@ import { Dungeon } from "@/components/dungeon";
 import Skeleton from "@/components/ui/skeleton";
 import useGetCampaign from "@/hooks/queries/use-get-campaign";
 
-const CampaignDetail = ({
-  setDungeonDetailId,
-  campaignDetailId,
-}: {
-  campaignDetailId: string;
+interface ICampaignDetailProps {
+  campaignDetailId?: string | undefined;
   setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
-}) => {
+}
+
+const CampaignDetail = ({ setDungeonDetailId, campaignDetailId }: ICampaignDetailProps) => {
   const { data: campaign, isLoading } = useGetCampaign(campaignDetailId ?? "");
 
   if (isLoading)

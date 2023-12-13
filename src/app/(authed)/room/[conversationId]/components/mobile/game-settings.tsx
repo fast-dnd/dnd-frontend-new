@@ -12,15 +12,13 @@ import useStartGame from "../../hooks/use-start-game";
 import DurationSlider from "./duration-slider";
 import ImageAudioToggle from "./image-audio-toggle";
 
-const GameSettings = ({
-  conversationId,
-  selectedChampion,
-  roomData,
-}: {
+interface IGameSettingsProps {
   conversationId: string;
   selectedChampion: IChampion | null | undefined;
   roomData: IRoomDetail | undefined;
-}) => {
+}
+
+const GameSettings = ({ conversationId, selectedChampion, roomData }: IGameSettingsProps) => {
   const { duration, setDuration } = usePlayerInfo(roomData);
 
   const { gameStarting } = useRoomSocket(conversationId);

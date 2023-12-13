@@ -11,6 +11,15 @@ import { cn } from "@/utils/style-utils";
 import { MobileAdventure } from "./mobile-adventure";
 import MobileAdventureDetail from "./mobile-adventure-detail";
 
+interface IMobileCampaignDetailProps {
+  campaignDetailId?: string | undefined;
+  adventureDetailId?: string | undefined;
+  closingId?: string | undefined;
+  setAdventureDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  onClose?: () => void;
+  hideStartButton?: boolean;
+}
+
 const MobileCampaignDetail = ({
   campaignDetailId,
   adventureDetailId,
@@ -18,14 +27,7 @@ const MobileCampaignDetail = ({
   setAdventureDetailId,
   onClose,
   hideStartButton,
-}: {
-  campaignDetailId?: string | undefined;
-  adventureDetailId?: string | undefined;
-  closingId?: string | undefined;
-  setAdventureDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  onClose?: () => void;
-  hideStartButton?: boolean;
-}) => {
+}: IMobileCampaignDetailProps) => {
   const { data: campaign, isLoading } = useGetCampaign(campaignDetailId ?? "");
   const [opening, setOpening] = useState(false);
 

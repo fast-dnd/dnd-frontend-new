@@ -150,19 +150,21 @@ const Campaigns = () => {
 
 export default Campaigns;
 
+interface ICampaignWrapperProps {
+  children: React.ReactNode;
+  campaign: ICampaign;
+  campaignDetailId?: string | undefined;
+  opening: boolean;
+  onCopy: (text: string) => void;
+}
+
 const CampaignWrapper = ({
   children,
   campaign,
   campaignDetailId,
   opening,
   onCopy,
-}: {
-  children: React.ReactNode;
-  campaign: ICampaign;
-  campaignDetailId?: string | undefined;
-  opening: boolean;
-  onCopy: (text: string) => void;
-}) => (
+}: ICampaignWrapperProps) => (
   <div
     className={cn(
       "flex flex-col gap-0.5",

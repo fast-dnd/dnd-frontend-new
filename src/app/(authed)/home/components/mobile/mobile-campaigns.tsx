@@ -8,17 +8,19 @@ import { tabStore } from "../../stores/tab-store";
 import { MobileCampaign } from "./mobile-campaign";
 import MobileFilter from "./mobile-filter";
 
+interface IMobileCampaignsProps {
+  campaignDetailId?: string | undefined;
+  setCampaignDetailId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  closingId?: string | undefined;
+  animate?: boolean;
+}
+
 const MobileCampaigns = ({
   campaignDetailId,
   setCampaignDetailId,
   closingId,
   animate,
-}: {
-  campaignDetailId?: string | undefined;
-  setCampaignDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  closingId?: string | undefined;
-  animate?: boolean;
-}) => {
+}: IMobileCampaignsProps) => {
   const [opening, setOpening] = useState(false);
 
   const [filter, setFilter] = useState(false);

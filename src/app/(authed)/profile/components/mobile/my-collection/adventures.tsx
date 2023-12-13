@@ -134,19 +134,21 @@ const Adventures = () => {
   );
 };
 
+interface IAdventureWrapperProps {
+  children: React.ReactNode;
+  adventure: IBaseDungeon;
+  adventureDetailId?: string | undefined;
+  opening: boolean;
+  onCopy: (text: string) => void;
+}
+
 const AdventureWrapper = ({
   children,
   adventure,
   adventureDetailId,
   opening,
   onCopy,
-}: {
-  children: React.ReactNode;
-  adventure: IBaseDungeon;
-  adventureDetailId?: string | undefined;
-  opening: boolean;
-  onCopy: (text: string) => void;
-}) => (
+}: IAdventureWrapperProps) => (
   <div
     className={cn(
       "flex flex-col gap-0.5",

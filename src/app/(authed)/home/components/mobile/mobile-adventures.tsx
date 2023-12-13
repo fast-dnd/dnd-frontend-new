@@ -8,17 +8,19 @@ import { tabStore } from "../../stores/tab-store";
 import { MobileAdventure } from "./mobile-adventure";
 import MobileFilter from "./mobile-filter";
 
+interface IMobileAdventuresProps {
+  adventureDetailId?: string | undefined;
+  setAdventureDetailId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  closingId?: string | undefined;
+  animate?: boolean;
+}
+
 const MobileAdventures = ({
   adventureDetailId,
   setAdventureDetailId,
   closingId,
   animate,
-}: {
-  adventureDetailId: string | undefined;
-  setAdventureDetailId: React.Dispatch<React.SetStateAction<string | undefined>>;
-  closingId?: string | undefined;
-  animate?: boolean;
-}) => {
+}: IMobileAdventuresProps) => {
   const [featuredOpened, setFeaturedOpened] = useState(false);
   const [opening, setOpening] = useState(false);
 

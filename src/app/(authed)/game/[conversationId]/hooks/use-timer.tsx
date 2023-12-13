@@ -8,6 +8,7 @@ const useTimer = (roomData?: IRoomDetail) => {
   const loadingText = gameStore.loadingText.use();
 
   const [timer, setTimer] = useState(0);
+
   useEffect(() => {
     if (loadingText) {
       setTimer(0);

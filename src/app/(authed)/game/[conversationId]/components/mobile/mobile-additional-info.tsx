@@ -14,15 +14,17 @@ import Die from "../gameplay/die";
 import AskModal from "./ask-modal";
 import PlayerStatsModal from "./player-stats-modal";
 
+interface IMobileAdditionalInfoProps {
+  conversationId: string;
+  roomData: IRoomDetail;
+  currentPlayer: IPlayer;
+}
+
 const MobileAdditionalInfo = ({
   conversationId,
   roomData,
   currentPlayer,
-}: {
-  conversationId: string;
-  roomData: IRoomDetail;
-  currentPlayer: IPlayer;
-}) => {
+}: IMobileAdditionalInfoProps) => {
   const [open, setOpen] = useState(false);
   const [askModal, setAskModal] = useState(false);
   const [diceStats, setDiceStats] = useState(false);

@@ -5,13 +5,12 @@ import leaderboardService, { leaderboardKey } from "@/services/leaderboard-servi
 
 import { RatingType } from "../types/rating-type";
 
-const useGetLeaderboard = ({
-  filter,
-  currUserRank,
-}: {
+interface IUseGetLeaderboardProps {
   filter: RatingType;
   currUserRank?: number;
-}) => {
+}
+
+const useGetLeaderboard = ({ filter, currUserRank }: IUseGetLeaderboardProps) => {
   return useInfiniteQuery({
     queryKey: [leaderboardKey, filter, currUserRank],
     queryFn: ({ pageParam = 1 }) =>

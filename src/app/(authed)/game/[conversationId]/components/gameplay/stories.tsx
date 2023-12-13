@@ -14,13 +14,13 @@ import useUpdateStories from "../../hooks/use-update-stories";
 import ImageModal from "../modals/image-modal";
 import StyledAudio from "./styled-audio";
 
-export interface StoriesProps {
+interface IStoriesProps {
   roomData: IRoomDetail;
   dungeonData: IDungeonDetail;
   lastStory?: string;
 }
 
-const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
+const Stories = ({ roomData, dungeonData, lastStory }: IStoriesProps) => {
   const { stories } = useUpdateStories({ roomData, lastStory });
   const { autoBottomScrollDiv } = useAutoScrollToBottom([roomData, stories]);
 
@@ -32,15 +32,13 @@ const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
   );
 };
 
-const StoryList = ({
-  roomData,
-  dungeonData,
-  stories,
-}: {
+interface IStoryListProps {
   roomData: IRoomDetail;
   dungeonData: IDungeonDetail;
   stories: string[];
-}) => {
+}
+
+const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
   const [openedMission, setOpenedMission] = useState(-1);
 
   return (

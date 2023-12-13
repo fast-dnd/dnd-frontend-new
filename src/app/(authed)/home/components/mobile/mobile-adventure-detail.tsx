@@ -18,15 +18,17 @@ import { cn } from "@/utils/style-utils";
 
 import useCreateRoom from "../../hooks/use-create-room";
 
+interface IMobileAdventureDetailProps {
+  adventureDetailId?: string | undefined;
+  onClose?: () => void;
+  hideStartButton?: boolean;
+}
+
 const MobileAdventureDetail = ({
   adventureDetailId,
   onClose,
   hideStartButton = false,
-}: {
-  adventureDetailId?: string | undefined;
-  onClose?: () => void;
-  hideStartButton?: boolean;
-}) => {
+}: IMobileAdventureDetailProps) => {
   const { data: adventure, isLoading } = useGetDungeon(adventureDetailId ?? "");
 
   const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
