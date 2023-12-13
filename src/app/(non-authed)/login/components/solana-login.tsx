@@ -4,7 +4,6 @@ import { Wallet } from "@phosphor-icons/react";
 import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { PublicKey } from "@solana/web3.js";
 import { AiOutlineClose } from "react-icons/ai";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -83,9 +82,8 @@ const SolanaLogin = () => {
 
         <div className="flex w-full flex-col gap-4">
           {wallets.map((wallet) => (
-            <DialogClose>
+            <DialogClose key={wallet.adapter.name} asChild>
               <button
-                key={wallet.adapter.name}
                 onClick={() => select(wallet.adapter.name)}
                 disabled={wallet.readyState !== "Installed"}
                 className={cn(

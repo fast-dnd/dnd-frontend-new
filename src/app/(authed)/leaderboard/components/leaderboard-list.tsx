@@ -54,8 +54,8 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
   useEffect(() => {
     if (
       leaderboardData &&
-      leaderboardData?.pages?.[0].leaderboard[0].accountId !==
-        previousRef.current?.pages?.[0]?.leaderboard[0].accountId &&
+      leaderboardData?.pages?.[0].leaderboard?.[0]?.accountId !==
+        previousRef.current?.pages?.[0]?.leaderboard?.[0]?.accountId &&
       scrollableRef.current
     ) {
       //prevent scrolling to top when loaded previous

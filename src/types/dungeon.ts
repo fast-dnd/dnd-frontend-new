@@ -5,7 +5,6 @@ import {
   championSchema,
   dungeonDetailSchema,
   dungeonForBackendSchema,
-  dungeonResponseSchema,
   dungeonSchema,
   dungeonTxForBackendSchema,
   dungeonTxResponseSchema,

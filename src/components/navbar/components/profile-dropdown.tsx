@@ -44,7 +44,7 @@ const ProfileDropdown = () => {
       if (!currentCommunity) return;
     };
     fetchBalance();
-  }, [currentCommunity]);
+  }, [currentCommunity, publicKey]);
 
   const ref = useRef<HTMLDivElement>(null);
   const [openDropdown, setOpenDropdown] = useState(false);
