@@ -1,6 +1,12 @@
+import { decode, encode } from "@project-serum/anchor/dist/cjs/utils/bytes/bs58";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { Transaction } from "@solana/web3.js";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
+import useCommunity from "@/hooks/helpers/use-community";
+import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
+import roomService from "@/services/room-service";
 import { IChampion } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
 import { cn } from "@/utils/style-utils";
@@ -27,6 +33,11 @@ const GameSettings = ({ conversationId, selectedChampion, roomData }: IGameSetti
 
   const isAdmin = accountId === roomData?.playerState[0].accountId;
 
+  const { publicKey, signTransaction } = useWallet();
+
+  const { isDefault } = useCommunity();
+  const { data: currentCommunity } = useGetCurrentCommunity();
+
   const { generateAudio, generateImages, setGenerateImages, setGenerateAudio } = useOnRoomChange({
     conversationId,
     duration,
@@ -39,6 +50,19 @@ const GameSettings = ({ conversationId, selectedChampion, roomData }: IGameSetti
   const canBegin = roomData?.playerState.every((player) => player.champion) ?? false;
 
   const disabled = !isAdmin || isGameStarting || gameStarting;
+
+  const onStartGame = async () => {
+    if (publicKey && signTransaction) {
+      const gameStartTx = await roomService.getStartGameTx({ conversationId });
+      const transaction = Transaction.from(decode(gameStartTx.transaction));
+      const signedTx = await signTransaction(transaction);
+
+      const serializedTx = encode(signedTx.serialize());
+      startGame({ conversationId, transaction: serializedTx });
+    } else {
+      startGame({ conversationId });
+    }
+  };
 
   return (
     <div
@@ -71,9 +95,9 @@ const GameSettings = ({ conversationId, selectedChampion, roomData }: IGameSetti
         className="w-52 whitespace-nowrap"
         disabled={disabled || !canBegin}
         isLoading={isGameStarting || gameStarting}
-        onClick={() => startGame({ conversationId })}
+        onClick={onStartGame}
       >
-        PLAY ({roomData?.price} coins)
+        START ({roomData?.price.toFixed(5)} {isDefault ? "coins" : currentCommunity?.currencyName})
       </Button>
     </div>
   );
