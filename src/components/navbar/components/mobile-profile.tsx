@@ -66,6 +66,7 @@ const MobileProfile = ({}: {}) => {
       </DialogTrigger>
       <DialogContent
         fromBottom
+        alwaysOnTop
         className="pointer-events-auto bottom-0 left-0 top-auto flex w-full max-w-full translate-x-0 translate-y-0 flex-col items-center gap-4 rounded-lg border-t border-t-white/[16%] bg-dark-900 p-4 pt-2.5 focus:ring-0 data-[state=closed]:duration-300 data-[state=open]:duration-300"
       >
         <div className="pointer-events-none absolute -top-9 flex w-full justify-center">
@@ -78,26 +79,26 @@ const MobileProfile = ({}: {}) => {
           />
         </div>
 
-        <div className="mb-2 flex w-full justify-end">
+        <div className="mb-10 flex w-full justify-end">
           <DialogClose>
             <AiOutlineClose />
           </DialogClose>
         </div>
+        <div className="absolute top-4 mb-2 flex gap-5">
+          {ratings.map(({ icon, rank }, index) => (
+            <div
+              key={index}
+              className="relative flex h-12 w-12 flex-col items-center justify-center rounded-full bg-[#232322]"
+            >
+              {icon}
+              <p className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 font-medium text-white/50">
+                {rank}
+              </p>
+            </div>
+          ))}
+        </div>
         {isDefault ? (
           <>
-            <div className="mb-2 flex gap-5">
-              {ratings.map(({ icon, rank }, index) => (
-                <div
-                  key={index}
-                  className="relative flex h-12 w-12 flex-col items-center justify-center rounded-full bg-[#232322]"
-                >
-                  {icon}
-                  <p className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 font-medium text-white/50">
-                    {rank}
-                  </p>
-                </div>
-              ))}
-            </div>
             <div className="h-0.5 w-full bg-black shadow-lobby" />
             <div className="flex w-full gap-2">
               <div className="flex basis-1/2 justify-end">

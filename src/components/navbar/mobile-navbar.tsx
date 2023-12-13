@@ -94,7 +94,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                       disabled={!communityId}
                     >
                       <PiTrophyFill className="h-5 w-5 shrink-0" />
-                      <p className="flex-1 text-center">Scoreboard</p>
+                      <p className="flex-1 text-center">Leaderboard</p>
                     </Button>
                     <Button
                       variant={pathname === "/profile" ? "primary" : "sidebar"}

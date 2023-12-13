@@ -33,7 +33,7 @@ const DesktopNavbar = () => {
             <Link
               href="/communities"
               className={cn(
-                "border-b-4 border-transparent pb-2 transition-all duration-300 hover:border-primary/50",
+                "mt-1 border-b-4 border-transparent pb-1 transition-all duration-300 hover:border-primary/50",
                 pathname === "/communities" && "border-primary",
               )}
             >
@@ -45,7 +45,7 @@ const DesktopNavbar = () => {
         <Link
           href={loggedIn ? "/home" : "/login"}
           className={cn(
-            "border-b-4 border-transparent pb-2 transition-all duration-300 hover:border-primary/50",
+            "mt-1 border-b-4 border-transparent pb-1 transition-all duration-300 hover:border-primary/50",
             loggedIn && pathname === "/home" && "border-primary",
             !loggedIn && pathname === "/login" && "border-primary",
             pathname === "/communities" && "hidden",
@@ -61,7 +61,7 @@ const DesktopNavbar = () => {
                 <Link
                   href="/create-adventure"
                   className={cn(
-                    "border-b-4 border-transparent pb-2 transition-all duration-300 hover:border-primary/50",
+                    "mt-1 border-b-4 border-transparent pb-1 transition-all duration-300 hover:border-primary/50",
                     pathname === "/create-adventure" && "border-primary",
                     !communityId && "hidden",
                   )}
@@ -72,7 +72,7 @@ const DesktopNavbar = () => {
                 <Link
                   href="/leaderboard"
                   className={cn(
-                    "border-b-4 border-transparent pb-2 transition-all duration-300 hover:border-primary/50",
+                    "mt-1 border-b-4 border-transparent pb-1 transition-all duration-300 hover:border-primary/50",
                     pathname === "/leaderboard" && "border-primary",
                     !communityId && "hidden",
                   )}

@@ -18,7 +18,7 @@ const CommunitiesSkeleton = () => {
       </div>
 
       <div className="flex flex-col gap-4 pb-4 lg:hidden">
-        <MobileNavbar className="fixed z-[45] h-16 items-start" />
+        <MobileNavbar className="fixed z-[55] h-16 items-start" />
         <div className="mt-16 flex h-full flex-1 flex-col gap-3 px-4">
           <p className="font-medium">COMMUNITIES</p>
           <div className="flex animate-pulse flex-col gap-4 lg:flex-row">
