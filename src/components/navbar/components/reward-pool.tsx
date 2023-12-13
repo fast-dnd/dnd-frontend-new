@@ -1,30 +1,18 @@
-import { useEffect, useState } from "react";
 import Image from "next/image";
 
+import useGetWeb3Balance from "@/hooks/helpers/use-get-web3-balance";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
-import { getBalance } from "@/utils/solanaHelper";
 import { cn } from "@/utils/style-utils";
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip";
 
 const RewardPool = () => {
   const { data: currentCommunity } = useGetCurrentCommunity();
-  const [rewardPoolBalance, setRewardPoolBalance] = useState(0);
 
-  useEffect(() => {
-    const fetchBalance = async () => {
-      try {
-        if (!currentCommunity) return;
-        const balance = await getBalance(
-          currentCommunity.rewardPool,
-          currentCommunity.gameCurrency,
-        );
-        setRewardPoolBalance(balance);
-      } catch (error) {}
-      if (!currentCommunity) return;
-    };
-    fetchBalance();
-  }, [currentCommunity]);
+  const rewardPoolBalance = useGetWeb3Balance({
+    tokenAccountAddress: currentCommunity?.rewardPool ?? "",
+    mintAddress: currentCommunity?.gameCurrency ?? "",
+  });
 
   return (
     <TooltipProvider>
@@ -54,7 +42,6 @@ const RewardPool = () => {
                     className="rounded-full bg-white p-1"
                   />
                   {rewardPoolBalance} {currentCommunity?.currencyName}
-                  {/* TODO: replace with reward pool size */}
                 </div>
               </div>
             </button>

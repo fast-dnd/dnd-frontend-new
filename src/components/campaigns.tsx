@@ -7,17 +7,14 @@ import Spinner from "@/components/ui/spinner";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetCampaigns from "@/hooks/queries/use-get-campaigns";
 
-const Campaigns = ({
-  setCampaignDetailId,
-  filter,
-  isOwned,
-  showActions,
-}: {
+interface ICampaignsProps {
   setCampaignDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   filter?: string;
   isOwned?: boolean;
   showActions?: boolean;
-}) => {
+}
+
+const Campaigns = ({ setCampaignDetailId, filter, isOwned, showActions }: ICampaignsProps) => {
   const {
     data: campaignsData,
     hasNextPage,

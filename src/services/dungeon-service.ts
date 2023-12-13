@@ -31,8 +31,6 @@ const getDungeon = async (dungeonId: string) => {
 
 const createDungeon = async (data: IDungeonForBackend) => {
   const communityId = JSON.parse(localStorage.getItem("communityId") || "null");
-  console.log(data.transaction, "data.transaction");
-  debugger;
 
   return await dungeonApi
     .post("", {
@@ -46,18 +44,13 @@ const createDungeon = async (data: IDungeonForBackend) => {
 
 const createDungeonTx = async (data: IDungeonTxForBackend) => {
   const communityId = JSON.parse(localStorage.getItem("communityId") || "null");
-  console.log("communityId", communityId);
 
   return await dungeonApi
     .post("tx", {
       ...data,
       communityId,
     })
-    .then((res) => {
-      console.log("res", res);
-
-      return dungeonTxResponseSchema.parse(res.data);
-    });
+    .then((res) => dungeonTxResponseSchema.parse(res.data));
 };
 
 const updateDungeon = async (data: IDungeonForBackend) => {

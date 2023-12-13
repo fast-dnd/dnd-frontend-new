@@ -29,15 +29,13 @@ const imagesAudio = [
   },
 ];
 
-const UpdateRoom = ({
-  conversationId,
-  roomData,
-  dungeonData,
-}: {
+interface IUpdateRoomProps {
   conversationId: string;
   roomData: IRoomDetail;
   dungeonData: IDungeonDetail;
-}) => {
+}
+
+const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps) => {
   const { duration, setDuration } = usePlayerInfo(roomData);
 
   const { gameStarting } = useRoomSocket(conversationId);
@@ -73,6 +71,19 @@ const UpdateRoom = ({
   };
 
   const canBegin = roomData.playerState.every((player) => player.champion) ?? false;
+
+  const onStartGame = async () => {
+    if (publicKey && signTransaction) {
+      const gameStartTx = await roomService.getStartGameTx({ conversationId });
+      const transaction = Transaction.from(decode(gameStartTx.transaction));
+      const signedTx = await signTransaction(transaction);
+
+      const serializedTx = encode(signedTx.serialize());
+      startGame({ conversationId, transaction: serializedTx });
+    } else {
+      startGame({ conversationId });
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -126,20 +137,7 @@ const UpdateRoom = ({
               className="px-8 uppercase"
               disabled={!isAdmin || !canBegin || gameStarting}
               isLoading={isGameStarting || gameStarting}
-              onClick={async () => {
-                if (publicKey) {
-                  debugger;
-                  const gameStartTx = await roomService.getStartGameTx({ conversationId });
-                  const transaction = Transaction.from(decode(gameStartTx?.transaction as string));
-                  const signedTx = await signTransaction!(transaction);
-                  debugger;
-                  const serializedTx = encode(signedTx.serialize());
-                  debugger;
-                  startGame({ conversationId, transaction: serializedTx });
-                } else {
-                  startGame({ conversationId });
-                }
-              }}
+              onClick={onStartGame}
             >
               START ({roomData.price} coins)
             </Button>

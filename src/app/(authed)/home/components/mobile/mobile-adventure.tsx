@@ -8,21 +8,20 @@ import { Game, Star1 } from "iconsax-react";
 import { IBaseDungeon } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
-export const MobileAdventure = React.forwardRef<
-  HTMLDivElement,
-  {
-    adventure: IBaseDungeon;
-    adventureDetailId?: string | undefined;
-    setAdventureDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
-    featured?: boolean;
-    closingId?: string | undefined;
-    featuredOpened?: boolean;
-    setFeaturedOpened?: React.Dispatch<React.SetStateAction<boolean>>;
-    opening?: boolean;
-    setOpening?: React.Dispatch<React.SetStateAction<boolean>>;
-    animate?: boolean;
-  }
->(
+interface IMobileAdventureProps {
+  adventure: IBaseDungeon;
+  adventureDetailId?: string | undefined;
+  setAdventureDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  featured?: boolean;
+  closingId?: string | undefined;
+  featuredOpened?: boolean;
+  setFeaturedOpened?: React.Dispatch<React.SetStateAction<boolean>>;
+  opening?: boolean;
+  setOpening?: React.Dispatch<React.SetStateAction<boolean>>;
+  animate?: boolean;
+}
+
+export const MobileAdventure = React.forwardRef<HTMLDivElement, IMobileAdventureProps>(
   (
     {
       adventure,

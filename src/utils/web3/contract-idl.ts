@@ -34,7 +34,7 @@ export type V3rpgContract = {
           name: "tokenProgram";
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -62,7 +62,7 @@ export type V3rpgContract = {
         {
           name: "feeShare";
           type: "u16";
-        }
+        },
       ];
     },
     {
@@ -97,7 +97,7 @@ export type V3rpgContract = {
           name: "tokenProgram";
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -107,7 +107,7 @@ export type V3rpgContract = {
         {
           name: "isInCommunity";
           type: "bool";
-        }
+        },
       ];
     },
     {
@@ -152,13 +152,13 @@ export type V3rpgContract = {
           name: "systemProgram";
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
           name: "amount";
           type: "u64";
-        }
+        },
       ];
     },
     {
@@ -198,13 +198,13 @@ export type V3rpgContract = {
           name: "feeTreasury";
           isMut: true;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
           name: "transferAmount";
           type: "u64";
-        }
+        },
       ];
     },
     {
@@ -229,7 +229,7 @@ export type V3rpgContract = {
           name: "tokenProgram";
           isMut: false;
           isSigner: false;
-        }
+        },
       ];
       args: [
         {
@@ -237,9 +237,9 @@ export type V3rpgContract = {
           type: {
             vec: "u64";
           };
-        }
+        },
       ];
-    }
+    },
   ];
   accounts: [
     {
@@ -284,7 +284,7 @@ export type V3rpgContract = {
           {
             name: "totalDistributed";
             type: "u64";
-          }
+          },
         ];
       };
     },
@@ -326,10 +326,10 @@ export type V3rpgContract = {
           {
             name: "currency";
             type: "publicKey";
-          }
+          },
         ];
       };
-    }
+    },
   ];
   errors: [
     {
@@ -376,7 +376,7 @@ export type V3rpgContract = {
       code: 6008;
       name: "InvalidRewardPool";
       msg: "Invalid reward pool";
-    }
+    },
   ];
 };
 

@@ -30,32 +30,29 @@ export const championSchema = z.object({
   link: z.string().nullish(),
 });
 
-export const baseDungeonSchema = z
-  .object({
-    _id: z.string(),
-    name: z.string(),
-    description: z.string(),
-    recommendedResponseDetailsDepth: z.enum(dungeonDurationsArray),
-    tags: z.array(z.enum(dungeonTags)),
-    maxPlayers: z.number(),
-    imageUrl: z.string().optional(),
-    rating: z.number(),
-    numOfRatings: z.number(),
-    createdBy: z
-      .object({
-        username: z.string(),
-        imageUrl: z.string(),
-      })
-      .nullish(),
-    publiclySeen: z.boolean(),
-    background: rewardSchema.nullable(),
-    type: z.enum(["standard", "nft"]),
-  })
-  .extend({
-    communityId: z.string().optional(),
-    creatorWalletAddress: z.string().optional(),
-    transaction: z.string().optional(),
-  });
+export const baseDungeonSchema = z.object({
+  _id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  recommendedResponseDetailsDepth: z.enum(dungeonDurationsArray),
+  tags: z.array(z.enum(dungeonTags)),
+  maxPlayers: z.number(),
+  imageUrl: z.string().optional(),
+  rating: z.number(),
+  numOfRatings: z.number(),
+  createdBy: z
+    .object({
+      username: z.string(),
+      imageUrl: z.string(),
+    })
+    .nullish(),
+  publiclySeen: z.boolean(),
+  background: rewardSchema.nullable(),
+  type: z.enum(["standard", "nft"]),
+  communityId: z.string().optional(),
+  creatorWalletAddress: z.string().optional(),
+  transaction: z.string().optional(),
+});
 
 export const dungeonSchema = baseDungeonSchema.extend({
   locations: z.array(z.string()),
@@ -80,11 +77,6 @@ export const dungeonForBackendSchema = dungeonDetailSchema
     background: z.string().nullable(),
     image: z.string().optional(),
   });
-
-export const dungeonTxForBackendSchema = z.object({
-  name: z.string(),
-  payer: z.string(),
-});
 
 export const dungeonTxResponseSchema = z.object({
   transaction: z.string(),

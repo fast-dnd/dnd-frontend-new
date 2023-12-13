@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { BookOpenText, DiscordLogo, Plugs, UserCircle } from "@phosphor-icons/react";
@@ -11,9 +11,9 @@ import { useOnClickOutside } from "usehooks-ts";
 import { Button } from "@/components/ui/button";
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
+import useGetWeb3Balance from "@/hooks/helpers/use-get-web3-balance";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { logout } from "@/utils/auth";
-import { getBalance } from "@/utils/solanaHelper";
 import { cn } from "@/utils/style-utils";
 
 import DiamondDMCurrencyIcon from "../../icons/diamond-dm-currency-icon";
@@ -29,22 +29,10 @@ const ProfileDropdown = () => {
 
   const { data: currentCommunity } = useGetCurrentCommunity();
 
-  const [userBalance, setUserBalance] = useState(0);
-
-  useEffect(() => {
-    const fetchBalance = async () => {
-      try {
-        if (!currentCommunity) return;
-        const userBalance = await getBalance(
-          publicKey?.toString() ?? "",
-          currentCommunity.gameCurrency,
-        );
-        setUserBalance(userBalance);
-      } catch (error) {}
-      if (!currentCommunity) return;
-    };
-    fetchBalance();
-  }, [currentCommunity, publicKey]);
+  const userBalance = useGetWeb3Balance({
+    tokenAccountAddress: publicKey?.toString() ?? "",
+    mintAddress: currentCommunity?.gameCurrency ?? "",
+  });
 
   const ref = useRef<HTMLDivElement>(null);
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -88,7 +76,6 @@ const ProfileDropdown = () => {
                   className="rounded-full bg-primary-900 p-1"
                 />
                 {userBalance} {currentCommunity.currencyName}
-                {/* TODO: replace with users current currency */}
               </div>
             )}
           </div>

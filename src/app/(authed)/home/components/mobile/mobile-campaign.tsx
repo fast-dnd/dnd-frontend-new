@@ -7,18 +7,17 @@ import { motion } from "framer-motion";
 import { ICampaign } from "@/types/campaign";
 import { cn } from "@/utils/style-utils";
 
-export const MobileCampaign = React.forwardRef<
-  HTMLDivElement,
-  {
-    campaign: ICampaign;
-    campaignDetailId?: string | undefined;
-    setCampaignDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
-    closingId?: string | undefined;
-    opening?: boolean;
-    setOpening?: React.Dispatch<React.SetStateAction<boolean>>;
-    animate?: boolean;
-  }
->(
+interface IMobileCampaignProps {
+  campaign: ICampaign;
+  campaignDetailId?: string | undefined;
+  setCampaignDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  closingId?: string | undefined;
+  opening?: boolean;
+  setOpening?: React.Dispatch<React.SetStateAction<boolean>>;
+  animate?: boolean;
+}
+
+export const MobileCampaign = React.forwardRef<HTMLDivElement, IMobileCampaignProps>(
   (
     {
       campaign,

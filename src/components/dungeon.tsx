@@ -11,17 +11,16 @@ import { cn } from "@/utils/style-utils";
 import DeleteModal from "./delete-modal";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
-export const Dungeon = React.forwardRef<
-  HTMLDivElement,
-  {
-    dungeon: IBaseDungeon;
-    setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
-    addToCampaign?: (dungeon: IBaseDungeon) => void;
-    isAddedToCampaign?: boolean;
-    isOwned?: boolean;
-    showActions?: boolean;
-  }
->(
+interface IDungeonProps {
+  dungeon: IBaseDungeon;
+  setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  addToCampaign?: (dungeon: IBaseDungeon) => void;
+  isAddedToCampaign?: boolean;
+  isOwned?: boolean;
+  showActions?: boolean;
+}
+
+export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
   (
     { dungeon, setDungeonDetailId, addToCampaign, isAddedToCampaign, isOwned, showActions },
     ref,
