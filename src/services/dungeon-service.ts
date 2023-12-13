@@ -5,7 +5,6 @@ import {
   dungeonDetailSchema,
   dungeonResponseSchema,
   dungeonsSchema,
-  dungeonTxForBackendSchema,
   dungeonTxResponseSchema,
 } from "@/validations/dungeon";
 
