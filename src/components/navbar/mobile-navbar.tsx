@@ -41,7 +41,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
     >
       <div className="flex items-center gap-4">
         <BiChevronLeft
-          className={cn("pointer-events-auto mb-1 h-6", !onClickBack && "hidden")}
+          className={cn("pointer-events-auto mb-1 h-6 w-auto", !onClickBack && "hidden")}
           onClick={onClickBack}
         />
 
