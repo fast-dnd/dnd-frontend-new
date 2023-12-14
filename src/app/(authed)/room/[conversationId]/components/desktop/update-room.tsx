@@ -1,6 +1,3 @@
-import { decode, encode } from "@project-serum/anchor/dist/cjs/utils/bytes/bs58";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { Transaction } from "@solana/web3.js";
 import { AiFillSound, AiFillStar } from "react-icons/ai";
 import { BiImages } from "react-icons/bi";
 import { useReadLocalStorage } from "usehooks-ts";
@@ -10,15 +7,14 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import useCommunity from "@/hooks/helpers/use-community";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
-import roomService from "@/services/room-service";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
 import { DungeonDuration, dungeonDurations } from "@/utils/dungeon-options";
 
 import useOnRoomChange from "../../hooks/use-on-room-change";
+import useOnStartGame from "../../hooks/use-on-start-game";
 import usePlayerInfo from "../../hooks/use-player-info";
 import useRoomSocket from "../../hooks/use-room-socket";
-import useStartGame from "../../hooks/use-start-game";
 
 const imagesAudio = [
   {
@@ -46,8 +42,6 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
 
   const isAdmin = accountId === roomData.playerState[0].accountId;
 
-  const { publicKey, signTransaction } = useWallet();
-
   const { isDefault } = useCommunity();
   const { data: currentCommunity } = useGetCurrentCommunity();
 
@@ -58,7 +52,7 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
     isAdmin,
   });
 
-  const { mutate: startGame, isLoading: isGameStarting } = useStartGame();
+  const { isGameStarting, onStartGame } = useOnStartGame({ conversationId });
 
   const generateAudioImagesArray = () => {
     const audioImagesArray = [];
@@ -76,19 +70,6 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
   };
 
   const canBegin = roomData.playerState.every((player) => player.champion) ?? false;
-
-  const onStartGame = async () => {
-    if (publicKey && signTransaction) {
-      const gameStartTx = await roomService.getStartGameTx({ conversationId });
-      const transaction = Transaction.from(decode(gameStartTx.transaction));
-      const signedTx = await signTransaction(transaction);
-
-      const serializedTx = encode(signedTx.serialize());
-      startGame({ conversationId, transaction: serializedTx });
-    } else {
-      startGame({ conversationId });
-    }
-  };
 
   return (
     <div className="flex flex-col gap-4">
