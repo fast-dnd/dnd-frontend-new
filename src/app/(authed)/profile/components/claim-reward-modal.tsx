@@ -15,9 +15,11 @@ const ClaimRewardModal = () => {
       <div className="w-full rounded-b-md text-sm font-bold tracking-wider transition-all duration-300 lg:rounded-md lg:border-2 lg:text-xl lg:tracking-normal">
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger asChild>
-              <DialogTrigger asChild>
-                <Button className="w-full uppercase">claim reward</Button>
+            <TooltipTrigger asChild disabled>
+              <DialogTrigger asChild disabled>
+                <Button className="w-full uppercase" disabled>
+                  claim reward
+                </Button>
               </DialogTrigger>
             </TooltipTrigger>
             <TooltipContent className="w-56 font-normal">

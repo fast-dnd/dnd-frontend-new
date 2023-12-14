@@ -10,6 +10,7 @@ import { PiTrophyFill } from "react-icons/pi";
 
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
+import useGetWeb3Balance from "@/hooks/helpers/use-get-web3-balance";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { cn } from "@/utils/style-utils";
 
@@ -27,6 +28,11 @@ interface IMobileNavbarProps {
 const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const { isDefault, communityId } = useCommunity();
   const { data: currentCommunity } = useGetCurrentCommunity();
+
+  const rewardPoolBalance = useGetWeb3Balance({
+    tokenAccountAddress: currentCommunity?.rewardPool ?? "",
+    mintAddress: currentCommunity?.gameCurrency ?? "",
+  });
 
   const { user } = useAuth();
 
@@ -139,8 +145,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                 <div className="flex flex-col gap-1">
                   <p className="text-sm leading-none tracking-[1.05px]">Reward Pool</p>
                   <p className="text-sm font-bold leading-none tracking-[1px]">
-                    1000 {currentCommunity?.currencyName}
-                    {/* TODO: replace with reward pool size */}
+                    {rewardPoolBalance} {currentCommunity?.currencyName}
                   </p>
                 </div>
               </div>
