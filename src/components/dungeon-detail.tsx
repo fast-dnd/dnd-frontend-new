@@ -88,7 +88,6 @@ const DungeonDetail = ({
                       <Link
                         className="flex items-center gap-1 rounded-md border border-dashed border-gold bg-gold/10 fill-gold px-3 py-1.5 font-semibold text-gold"
                         href={champion.link || "#"}
-                        target="_blank"
                       >
                         NFT
                         <FiExternalLink />

@@ -144,10 +144,12 @@ const ProfileDropdown = () => {
                   </TooltipProvider>
                 </div>
               ) : (
-                <Button className="whitespace-nowrap">
+                <Button
+                  className="whitespace-nowrap"
+                  href={`https://jup.ag/swap/USDC-${currentCommunity?.gameCurrency}`}
+                >
                   ADD MORE {currentCommunity?.currencyName}
                 </Button>
-                // TODO: this should be a link to the web3 shop
               )}
 
               <div className="h-1 w-full bg-white/10" />

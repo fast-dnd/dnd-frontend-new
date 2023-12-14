@@ -153,10 +153,12 @@ const MobileProfile = ({}: {}) => {
                 </div>
               )}
             </div>
-            {/* // TODO: this should be a link to the web3 shop */}
             {currentCommunity && (
-              <Button className="w-fit whitespace-nowrap">
-                ADD MORE {currentCommunity?.currencyName}
+              <Button
+                className="w-fit whitespace-nowrap"
+                href={`https://jup.ag/swap/USDC-${currentCommunity.gameCurrency}`}
+              >
+                ADD MORE {currentCommunity.currencyName}
               </Button>
             )}
           </>
