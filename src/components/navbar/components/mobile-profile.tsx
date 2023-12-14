@@ -1,4 +1,3 @@
-import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { PenNib, Plugs, Star, UserCircle } from "@phosphor-icons/react";
@@ -7,7 +6,6 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaDice } from "react-icons/fa";
 import { toast } from "sonner";
-import { useOnClickOutside } from "usehooks-ts";
 
 import DiamondDMCurrencyIcon from "@/components/icons/diamond-dm-currency-icon";
 import GoldCoinIcon from "@/components/icons/gold-coin-icon";
@@ -15,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
+import useGetWeb3Balance from "@/hooks/helpers/use-get-web3-balance";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import useGetRating from "@/hooks/queries/use-get-rating";
 import { logout } from "@/utils/auth";
@@ -29,9 +28,10 @@ const MobileProfile = ({}: {}) => {
 
   const { data: currentCommunity } = useGetCurrentCommunity();
 
-  const ref = useRef<HTMLDivElement>(null);
-  const [openDropdown, setOpenDropdown] = useState(false);
-  useOnClickOutside(ref, () => setOpenDropdown(false));
+  const userBalance = useGetWeb3Balance({
+    tokenAccountAddress: publicKey?.toString() ?? "",
+    mintAddress: currentCommunity?.gameCurrency ?? "",
+  });
 
   const onSignOut = () => {
     logout();
@@ -51,6 +51,7 @@ const MobileProfile = ({}: {}) => {
       rank: rating?.rating.contentCreation,
     },
   ];
+
   if (!loggedIn) return <></>;
 
   return (
@@ -75,38 +76,45 @@ const MobileProfile = ({}: {}) => {
             width={70}
             height={70}
             alt="avatar"
-            className="rounded-full border-2 border-white/10 "
+            className="h-[70px] w-[70px] rounded-full border-2 border-white/10 "
           />
         </div>
-
         <div className="mb-10 flex w-full justify-end">
           <DialogClose>
             <AiOutlineClose />
           </DialogClose>
         </div>
-        <div className="absolute top-4 mb-2 flex gap-5">
-          {ratings.map(({ icon, rank }, index) => (
-            <div
-              key={index}
-              className="relative flex h-12 w-12 flex-col items-center justify-center rounded-full bg-[#232322]"
-            >
-              {icon}
-              <p className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 font-medium text-white/50">
-                {rank}
-              </p>
-            </div>
-          ))}
-        </div>
+        {ratings[0].rank && (
+          <div className="absolute top-4 mb-2 flex gap-5">
+            {ratings.map(({ icon, rank }, index) => (
+              <div
+                key={index}
+                className="relative flex h-12 w-12 flex-col items-center justify-center rounded-full bg-[#232322]"
+              >
+                {icon}
+                <p className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 font-medium text-white/50">
+                  {rank}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
         {isDefault ? (
           <>
-            <div className="h-0.5 w-full bg-black shadow-lobby" />
             <div className="flex w-full gap-2">
               <div className="flex basis-1/2 justify-end">
-                <div className="flex min-w-[80px] items-center justify-between gap-1 rounded-md bg-white/5 px-2 py-1">
+                <div className="flex min-w-[80px] items-center justify-between gap-2 rounded-md bg-white/5 px-2 py-1">
                   <GoldCoinIcon />
                   <div className="flex flex-1 items-center justify-center">
                     {user?.account.coins ?? "-"}
                   </div>
+                  {/* TODO: shop modal */}
+                  <Link
+                    href="/shop"
+                    className="rounded-lg bg-white/10 px-1.5 hover:opacity-70 active:opacity-90"
+                  >
+                    +
+                  </Link>
                 </div>
               </div>
               <div className="flex basis-1/2">
@@ -115,13 +123,16 @@ const MobileProfile = ({}: {}) => {
                   <div className="flex flex-1 items-center justify-center">
                     {user?.account.dmCurrency ?? "-"}
                   </div>
+                  {/* TODO: shop modal */}
+                  <Link
+                    href="/shop"
+                    className="rounded-lg bg-white/10 px-1.5 hover:opacity-70 active:opacity-90"
+                  >
+                    +
+                  </Link>
                 </div>
               </div>
             </div>
-            <button className="flex items-center gap-2 tracking-[1.2px]" onClick={onSignOut}>
-              <Plugs className="h-7 w-7" />
-              Sign out
-            </button>
           </>
         ) : (
           <>
@@ -138,26 +149,27 @@ const MobileProfile = ({}: {}) => {
                     alt={currentCommunity.name + " token image"}
                     className="rounded-full bg-primary-900 p-1"
                   />
-                  1000 {currentCommunity.currencyName}
-                  {/* TODO: replace with users current currency */}
+                  {userBalance} {currentCommunity.currencyName}
                 </div>
               )}
             </div>
-            <Button className="w-fit whitespace-nowrap">
-              ADD MORE {currentCommunity?.currencyName}
-            </Button>
             {/* // TODO: this should be a link to the web3 shop */}
-            <div className="h-0.5 w-full bg-black shadow-lobby" />
-            <Link href="/profile" className="flex items-center gap-2">
-              <UserCircle className="h-7 w-7" />
-              View Profile
-            </Link>
-            <button className="flex items-center gap-2 tracking-[1.2px]" onClick={onSignOut}>
-              <Plugs className="h-7 w-7" />
-              Disconnect Wallet
-            </button>
+            {currentCommunity && (
+              <Button className="w-fit whitespace-nowrap">
+                ADD MORE {currentCommunity?.currencyName}
+              </Button>
+            )}
           </>
         )}
+        <div className="h-0.5 w-full bg-black shadow-lobby" />{" "}
+        <Link href="/profile" className="flex items-center gap-2">
+          <UserCircle className="h-7 w-7" />
+          View Profile
+        </Link>
+        <button className="flex items-center gap-2 tracking-[1.2px]" onClick={onSignOut}>
+          <Plugs className="h-7 w-7" />
+          {isDefault ? "Sign out" : "Disconnect Wallet"}
+        </button>
       </DialogContent>
     </Dialog>
   );
