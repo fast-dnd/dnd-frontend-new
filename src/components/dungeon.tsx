@@ -8,6 +8,7 @@ import useCopy from "@/hooks/helpers/use-copy";
 import { IBaseDungeon } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
+import AddToFavorites from "./add-to-favorites";
 import DeleteModal from "./delete-modal";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
@@ -18,11 +19,20 @@ interface IDungeonProps {
   isAddedToCampaign?: boolean;
   isOwned?: boolean;
   showActions?: boolean;
+  addFavorite?: boolean;
 }
 
 export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
   (
-    { dungeon, setDungeonDetailId, addToCampaign, isAddedToCampaign, isOwned, showActions },
+    {
+      dungeon,
+      setDungeonDetailId,
+      addToCampaign,
+      isAddedToCampaign,
+      isOwned,
+      showActions,
+      addFavorite,
+    },
     ref,
   ) => {
     const onClick = () => {
@@ -79,6 +89,7 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
                 </span>
               )}
             </div>
+            {addFavorite && <AddToFavorites type="adventure" id={dungeon._id} />}
             {showActions && (
               <div className="mr-8 flex shrink-0 gap-4" onClick={(e) => e.stopPropagation()}>
                 <div
@@ -88,7 +99,7 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
                     onCopy(dungeon._id);
                   }}
                 >
-                  <p>{copied ? "Copied" : "Copy ID"}</p>{" "}
+                  <p>{copied ? "Copied" : "Copy ID"}</p>
                   {copied ? <GiCheckMark /> : <Copy variant="Bold" />}
                 </div>
                 <DeleteModal id={dungeon._id} type="adventure" />

@@ -6,6 +6,7 @@ import { GiCheckMark } from "react-icons/gi";
 import useCopy from "@/hooks/helpers/use-copy";
 import { ICampaign } from "@/types/campaign";
 
+import AddToFavorites from "./add-to-favorites";
 import DeleteModal from "./delete-modal";
 
 interface ICampaignProps {
@@ -13,10 +14,11 @@ interface ICampaignProps {
   setCampaignDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   isOwned?: boolean;
   showActions?: boolean;
+  addFavorite?: boolean;
 }
 
 export const Campaign = React.forwardRef<HTMLDivElement, ICampaignProps>(
-  ({ campaign, setCampaignDetailId, isOwned, showActions }, ref) => {
+  ({ campaign, setCampaignDetailId, isOwned, showActions, addFavorite }, ref) => {
     const { copied, onCopy } = useCopy();
 
     return (
@@ -44,6 +46,7 @@ export const Campaign = React.forwardRef<HTMLDivElement, ICampaignProps>(
                 </div>
               )}
             </div>
+            {addFavorite && <AddToFavorites type="campaign" id={campaign._id} />}
             {showActions && (
               <div className="mr-8 flex shrink-0 gap-4" onClick={(e) => e.stopPropagation()}>
                 <div

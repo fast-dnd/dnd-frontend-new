@@ -5,12 +5,19 @@ import { Dungeon } from "@/components/dungeon";
 import Skeleton from "@/components/ui/skeleton";
 import useGetCampaign from "@/hooks/queries/use-get-campaign";
 
+import AddToFavorites from "./add-to-favorites";
+
 interface ICampaignDetailProps {
-  campaignDetailId?: string | undefined;
+  campaignDetailId: string;
   setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  addFavorite?: boolean;
 }
 
-const CampaignDetail = ({ setDungeonDetailId, campaignDetailId }: ICampaignDetailProps) => {
+const CampaignDetail = ({
+  setDungeonDetailId,
+  campaignDetailId,
+  addFavorite,
+}: ICampaignDetailProps) => {
   const { data: campaign, isLoading } = useGetCampaign(campaignDetailId ?? "");
 
   if (isLoading)
@@ -40,7 +47,10 @@ const CampaignDetail = ({ setDungeonDetailId, campaignDetailId }: ICampaignDetai
           className="h-16 w-16 rounded-md lg:h-[200px] lg:w-[200px]"
         />
         <div className="flex w-full min-w-0 flex-col gap-4">
-          <p className="truncate text-2xl font-bold uppercase">{campaign.name}</p>
+          <div className="flex justify-between gap-4 pr-4">
+            <p className="truncate text-2xl font-bold uppercase">{campaign.name}</p>
+            {addFavorite && <AddToFavorites type="campaign" id={campaignDetailId} />}
+          </div>
           <p className="text-xl">{campaign.description}</p>
           <div className="mb-1 mt-auto flex w-full justify-between"></div>
         </div>
@@ -53,6 +63,7 @@ const CampaignDetail = ({ setDungeonDetailId, campaignDetailId }: ICampaignDetai
             key={dungeon._id}
             dungeon={dungeon}
             setDungeonDetailId={setDungeonDetailId}
+            addFavorite={addFavorite}
             // ref={lastDungeonRef}
           />
         ))}

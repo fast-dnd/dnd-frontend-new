@@ -15,6 +15,7 @@ interface ICampaignsProps {
   isOwned?: boolean;
   showActions?: boolean;
   searchName?: string;
+  addFavorite?: boolean;
 }
 
 const Campaigns = ({
@@ -23,6 +24,7 @@ const Campaigns = ({
   isOwned,
   showActions,
   searchName,
+  addFavorite,
 }: ICampaignsProps) => {
   const debouncedName = useDebounce<string | undefined>(searchName, 500);
 
@@ -62,6 +64,7 @@ const Campaigns = ({
             setCampaignDetailId={setCampaignDetailId}
             isOwned={isOwned}
             showActions={showActions}
+            addFavorite={addFavorite}
           />
         );
       }
@@ -72,6 +75,7 @@ const Campaigns = ({
           setCampaignDetailId={setCampaignDetailId}
           isOwned={isOwned}
           showActions={showActions}
+          addFavorite={addFavorite}
         />
       );
     }),

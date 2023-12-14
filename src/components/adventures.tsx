@@ -21,6 +21,7 @@ interface IAdventuresProps {
   isOwned?: boolean;
   showActions?: boolean;
   searchName?: string;
+  addFavorite?: boolean;
 }
 
 const Adventures = ({
@@ -31,6 +32,7 @@ const Adventures = ({
   isOwned,
   showActions,
   searchName,
+  addFavorite,
 }: IAdventuresProps) => {
   const debouncedName = useDebounce<string | undefined>(searchName, 500);
 
@@ -70,6 +72,7 @@ const Adventures = ({
             isAddedToCampaign={addedToCampaign?.some((added) => added._id === dungeon._id)}
             isOwned={isOwned}
             showActions={showActions}
+            addFavorite={addFavorite}
           />
         );
       }
@@ -82,6 +85,7 @@ const Adventures = ({
           isAddedToCampaign={addedToCampaign?.some((added) => added._id === dungeon._id)}
           isOwned={isOwned}
           showActions={showActions}
+          addFavorite={addFavorite}
         />
       );
     }),

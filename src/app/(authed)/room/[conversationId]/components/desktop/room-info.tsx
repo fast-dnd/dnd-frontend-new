@@ -55,6 +55,7 @@ const RoomInfo = ({ conversationId }: { conversationId: string }) => {
           selectedChampion={selectedChampion}
           takenChampions={takenChampions}
           onChangeChampion={onChangeChampion}
+          addFavorite
         />
       </div>
     </Box>

@@ -49,13 +49,14 @@ const CreateRoom = () => {
       )}
       {dungeonDetailId ? (
         <>
-          <DungeonDetail dungeonDetailId={dungeonDetailId} />
+          <DungeonDetail dungeonDetailId={dungeonDetailId} addFavorite />
           <CreateRoomFooter dungeonDetailId={dungeonDetailId} />
         </>
       ) : campaignDetailId ? (
         <CampaignDetail
           campaignDetailId={campaignDetailId}
           setDungeonDetailId={setDungeonDetailId}
+          addFavorite
         />
       ) : (
         <>
@@ -65,6 +66,7 @@ const CreateRoom = () => {
               setDungeonDetailId={setDungeonDetailId}
               isOwned={subTab === "owned"}
               searchName={searchName}
+              addFavorite
             />
           )}
           {activeBaseTab === "campaigns" && (
@@ -73,6 +75,7 @@ const CreateRoom = () => {
               setCampaignDetailId={setCampaignDetailId}
               isOwned={subTab === "owned"}
               searchName={searchName}
+              addFavorite
             />
           )}
           {subTab === "favourite" && <AddFavoriteFooter />}
