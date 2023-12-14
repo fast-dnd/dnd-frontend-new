@@ -124,12 +124,12 @@ const MobileProfile = ({}: {}) => {
                     {user?.account.dmCurrency ?? "-"}
                   </div>
                   {/* TODO: shop modal */}
-                  <Link
+                  {/* <Link
                     href="/shop"
                     className="rounded-lg bg-white/10 px-1.5 hover:opacity-70 active:opacity-90"
                   >
                     +
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>

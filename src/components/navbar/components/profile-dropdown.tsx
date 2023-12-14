@@ -131,15 +131,15 @@ const ProfileDropdown = () => {
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <div className="flex w-full items-center justify-between gap-2 rounded-lg bg-primary-900 px-1.5 py-2.5">
+                        <div className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary-900 px-1.5 py-3">
                           <DiamondDMCurrencyIcon className="h-5 w-5" />
                           <p className="font-bold">{user?.account.dmCurrency}</p>
-                          <Link
+                          {/* <Link
                             href="/shop"
                             className="rounded-lg bg-white/10 px-2 py-1 hover:opacity-70 active:opacity-90"
                           >
                             +
-                          </Link>
+                          </Link> */}
                         </div>
                       </TooltipTrigger>
                       <TooltipContent side="bottom">DM Coins, Cooming Soon!</TooltipContent>
