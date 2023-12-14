@@ -60,6 +60,7 @@ const MobileCreateRoom = ({
                 adventureDetailId={adventureDetailId}
                 closingId={closingAdventureId}
                 setAdventureDetailId={setAdventureDetailId}
+                addFavorite
               />
 
               <div
