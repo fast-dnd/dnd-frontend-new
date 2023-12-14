@@ -61,7 +61,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <label
             htmlFor={label}
             className={cn(
-              "w-fit pb-2 text-sm tracking-[0.07em] backdrop-blur-none",
+              "w-fit pb-2 text-sm tracking-[0.07em]",
               state === "error" && "text-error",
               state === "success" && "text-success",
               disabled && "opacity-50",

@@ -31,6 +31,8 @@ const MobileMyAccount = () => {
 
   const { account, statistics } = user;
 
+  console.log(publicKey?.toString());
+
   return (
     <div className="flex flex-1 flex-col gap-4">
       <div className="flex w-full gap-4">
@@ -45,8 +47,9 @@ const MobileMyAccount = () => {
         </div>
         <div className="flex w-full flex-col justify-between gap-4">
           <p className="truncate text-xl font-bold uppercase">
-            {isDefault ? account.username : publicKey?.toBase58().slice(0, 4)}...
-            {publicKey?.toBase58().slice(-4, -1)}
+            {isDefault
+              ? account.username
+              : `${publicKey?.toBase58().slice(0, 4)}...${publicKey?.toBase58().slice(-4, -1)}`}
           </p>
           {isDefault && <p className="text-xs text-primary">{account.properties.email}</p>}
           {isDefault ? (

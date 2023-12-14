@@ -54,8 +54,9 @@ const MyAccount = () => {
           <div className="flex h-full w-full min-w-0 flex-col justify-between gap-2.5">
             <div className="flex w-full flex-col gap-1">
               <p className="truncate text-xl font-bold uppercase">
-                {isDefault ? account.username : publicKey?.toBase58().slice(0, 4)}...
-                {publicKey?.toBase58().slice(-4, -1)}
+                {isDefault
+                  ? account.username
+                  : `${publicKey?.toBase58().slice(0, 4)}...${publicKey?.toBase58().slice(-4, -1)}`}
               </p>
             </div>
             {isDefault && <p>{account.properties.email}</p>}

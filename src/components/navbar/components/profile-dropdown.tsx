@@ -101,7 +101,10 @@ const ProfileDropdown = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: openDropdown ? 1 : 0 }}
           transition={{ duration: 0.3 }}
-          className="mt-16 flex flex-col gap-4 p-4 text-base tracking-[1.2px]"
+          className={cn(
+            "mt-16 flex flex-col gap-4 p-4 text-base tracking-[1.2px]",
+            !openDropdown && "hidden",
+          )}
         >
           {communityId && (
             <>
