@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
+import AddToFavorites from "@/components/add-to-favorites";
 import { ICampaign } from "@/types/campaign";
 import { cn } from "@/utils/style-utils";
 
@@ -15,6 +16,7 @@ interface IMobileCampaignProps {
   opening?: boolean;
   setOpening?: React.Dispatch<React.SetStateAction<boolean>>;
   animate?: boolean;
+  addFavorite?: boolean;
 }
 
 export const MobileCampaign = React.forwardRef<HTMLDivElement, IMobileCampaignProps>(
@@ -27,6 +29,7 @@ export const MobileCampaign = React.forwardRef<HTMLDivElement, IMobileCampaignPr
       opening = false,
       setOpening,
       animate = true,
+      addFavorite = false,
     },
     ref,
   ) => {
@@ -36,7 +39,7 @@ export const MobileCampaign = React.forwardRef<HTMLDivElement, IMobileCampaignPr
     return (
       <div
         className={cn(
-          "relative flex h-[104px] w-full shrink-0 rounded border border-transparent bg-black pl-[118px]",
+          "relative flex min-h-[104px] w-full shrink-0 rounded border border-transparent bg-black pl-[118px]",
           open && "pointer-events-none static",
           open && !opening && "bg-transparent",
           !!campaignDetailId && !open && !opening && "hidden",
@@ -82,22 +85,27 @@ export const MobileCampaign = React.forwardRef<HTMLDivElement, IMobileCampaignPr
 
         <div
           className={cn(
-            "z-10 flex w-full flex-col justify-between gap-3 py-3 opacity-100 transition-all duration-200",
+            "z-10 flex w-full flex-col justify-between gap-3 pb-1 pr-1 pt-2 opacity-100 transition-all duration-200",
             (open || closing) && !opening && "opacity-0",
           )}
         >
-          <p className="line-clamp-2 w-full break-words font-semibold">{campaign.name}</p>
+          <p className="line-clamp-2 w-full break-words font-semibold leading-tight">
+            {campaign.name}
+          </p>
 
-          <div className="flex gap-2">
-            <p className="font-medium">By:</p>
-            <Image
-              src={campaign.createdBy?.imageUrl || "/images/default-avatar.png"}
-              alt={campaign.createdBy?.username || ""}
-              width={20}
-              height={20}
-              className="shrink-0 rounded-full"
-            />
-            <span className="truncate text-sm font-light">{campaign.createdBy?.username}</span>
+          <div className="flex flex-col gap-1">
+            <div className={cn("flex items-center gap-2", !addFavorite && "pb-2")}>
+              <p className="leading-none">By:</p>
+              <Image
+                src={campaign.createdBy?.imageUrl || "/images/default-avatar.png"}
+                alt={campaign.createdBy?.username || ""}
+                width={20}
+                height={20}
+                className="h-5 w-5 shrink-0 rounded-full"
+              />
+              <span className="truncate text-sm font-light">{campaign.createdBy?.username}</span>
+            </div>
+            {addFavorite && <AddToFavorites type="campaign" id={campaign._id} />}
           </div>
         </div>
       </div>

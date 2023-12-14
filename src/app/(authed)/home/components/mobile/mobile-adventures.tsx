@@ -69,6 +69,7 @@ const MobileAdventures = ({
       opening={opening}
       setOpening={setOpening}
       animate={animate}
+      addFavorite
     />
   ));
 
@@ -88,6 +89,7 @@ const MobileAdventures = ({
             opening={opening}
             setOpening={setOpening}
             animate={animate}
+            addFavorite
           />
         );
       }
@@ -103,6 +105,7 @@ const MobileAdventures = ({
           opening={opening}
           setOpening={setOpening}
           animate={animate}
+          addFavorite
         />
       );
     }),

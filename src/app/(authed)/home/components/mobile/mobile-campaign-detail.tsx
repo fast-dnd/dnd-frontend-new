@@ -18,6 +18,7 @@ interface IMobileCampaignDetailProps {
   setAdventureDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
   onClose?: () => void;
   hideStartButton?: boolean;
+  addFavorite?: boolean;
 }
 
 const MobileCampaignDetail = ({
@@ -27,6 +28,7 @@ const MobileCampaignDetail = ({
   setAdventureDetailId,
   onClose,
   hideStartButton,
+  addFavorite,
 }: IMobileCampaignDetailProps) => {
   const { data: campaign, isLoading } = useGetCampaign(campaignDetailId ?? "");
   const [opening, setOpening] = useState(false);
@@ -89,6 +91,7 @@ const MobileCampaignDetail = ({
                   opening={opening}
                   setAdventureDetailId={setAdventureDetailId}
                   setOpening={setOpening}
+                  addFavorite
                 />
               ))}
             </div>

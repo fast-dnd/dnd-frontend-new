@@ -63,6 +63,7 @@ const MobileCampaigns = ({
             opening={opening}
             setOpening={setOpening}
             animate={animate}
+            addFavorite
           />
         );
       }
@@ -76,6 +77,7 @@ const MobileCampaigns = ({
           opening={opening}
           setOpening={setOpening}
           animate={animate}
+          addFavorite
         />
       );
     }),

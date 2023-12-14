@@ -23,7 +23,6 @@ const AddToFavorites = ({ type, id }: { type: "adventure" | "campaign"; id: stri
     if (type === "adventure") {
       if (!isAddingFavoriteDungeon) addFavoriteDungeon(id);
     } else if (!isAddingFavoriteCampaign) addFavoriteCampaign(id);
-    //FIXME when removing campaign from favorites it's stuck on isLoading, BE issue?
   };
 
   return (
@@ -33,7 +32,9 @@ const AddToFavorites = ({ type, id }: { type: "adventure" | "campaign"; id: stri
         onClick={addFavorite}
       >
         <BookmarkSimple size={20} weight={isFavorite ? "fill" : "regular"} />
-        <p className="text-sm">{isFavorite ? "Added to Favorites" : "Add to Favorites"}</p>
+        <p className="text-xs lg:text-sm">
+          {isFavorite ? "Added to Favorites" : "Add to Favorites"}
+        </p>
       </div>
     </div>
   );
