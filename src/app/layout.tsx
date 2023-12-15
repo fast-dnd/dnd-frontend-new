@@ -4,6 +4,7 @@ import Providers from "@/lib/providers";
 import { lexend } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
+import "@/styles/autofill-input.css";
 import "@/styles/globals.css";
 import "@/styles/scrollbar.css";
 import "@/styles/tailwind.css";
@@ -11,12 +12,11 @@ import "@/styles/zoom.css";
 
 import { Metadata } from "next";
 
+import Background from "@/components/background";
 import CookieBanner from "@/components/cookie-banner";
 import GoogleAnalytics from "@/components/google-analytics";
 import HotjarAnalytics from "@/components/hotjar-analytics";
 import DesktopNavbar from "@/components/navbar/desktop-navbar";
-
-import Background from "../components/background";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://play.v3rpg.com/"),

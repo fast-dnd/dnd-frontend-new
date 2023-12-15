@@ -1,6 +1,6 @@
-import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Transaction } from "@solana/web3.js";
+import bs58 from "bs58";
 
 import roomService from "@/services/room-service";
 

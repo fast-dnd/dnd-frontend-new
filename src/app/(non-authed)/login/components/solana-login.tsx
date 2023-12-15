@@ -1,9 +1,9 @@
 import { useCallback, useEffect } from "react";
 import Image from "next/image";
 import { Wallet } from "@phosphor-icons/react";
-import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useWallet } from "@solana/wallet-adapter-react";
+import bs58 from "bs58";
 import { AiOutlineClose } from "react-icons/ai";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -28,11 +28,11 @@ const SolanaLogin = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [solanaLogin, publicKey, signMessage, wallet]);
+  }, [publicKey, wallet, signMessage, solanaLogin]);
 
   useEffect(() => {
     if (publicKey) handleSignMessage();
-  }, [handleSignMessage, publicKey]);
+  }, [publicKey, handleSignMessage]);
 
   return (
     <Dialog>

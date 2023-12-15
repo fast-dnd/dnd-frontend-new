@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { decode, encode } from "@project-serum/anchor/dist/cjs/utils/bytes/bs58";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Transaction } from "@solana/web3.js";
 import { AxiosError } from "axios";
+import bs58 from "bs58";
 import { MdEdit } from "react-icons/md";
 import { z } from "zod";
 
@@ -59,10 +59,10 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
       if (publicKey) {
         createDungeonTx(txForDungeon, {
           onSuccess: async (data) => {
-            const transaction = Transaction.from(decode(data.transaction as string));
+            const transaction = Transaction.from(bs58.decode(data.transaction as string));
             const signedTx = await signTransaction!(transaction);
 
-            const serializedTx = encode(signedTx.serialize());
+            const serializedTx = bs58.encode(signedTx.serialize());
             createDungeon(
               {
                 ...dungeonFormDataWithoutTags,

@@ -54,7 +54,6 @@ export interface IEditRoom {
 export interface IEditChampion {
   conversationId: string;
   championId: string | undefined;
-  signMessage?: string;
   signature?: string;
   walletAddress?: PublicKey;
 }
