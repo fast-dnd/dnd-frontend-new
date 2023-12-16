@@ -46,7 +46,7 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
       </div>
 
       <div className="flex flex-col lg:hidden">
-        <MobileNavbar className="fixed z-20 h-16 items-start" />
+        <MobileNavbar className="fixed h-16 items-start" />
         <AnimationEffects />
         <MobileStory conversationId={conversationId} />
         <MobileControls conversationId={conversationId} />

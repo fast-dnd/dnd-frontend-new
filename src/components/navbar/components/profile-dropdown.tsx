@@ -19,6 +19,7 @@ import { cn } from "@/utils/style-utils";
 import DiamondDMCurrencyIcon from "../../icons/diamond-dm-currency-icon";
 import GoldCoinIcon from "../../icons/gold-coin-icon";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip";
+import ShopModal from "./shop-modal";
 
 const ProfileDropdown = () => {
   const { isDefault, communityId } = useCommunity();
@@ -28,6 +29,8 @@ const ProfileDropdown = () => {
   const { user } = useAuth();
 
   const { data: currentCommunity } = useGetCurrentCommunity();
+
+  const [shopOpen, setShopOpen] = useState(false);
 
   const userBalance = useGetWeb3Balance({
     tokenAccountAddress: publicKey?.toString() ?? "",
@@ -45,6 +48,7 @@ const ProfileDropdown = () => {
 
   return (
     <div className="relative flex flex-col" ref={ref}>
+      <ShopModal open={shopOpen} setOpen={setShopOpen} />
       <button
         className={cn(
           "z-20 flex h-[70px] w-72 cursor-pointer items-center justify-between gap-2 rounded-full border-2 border-white/20 bg-black p-2 transition-all duration-200 hover:border-2 hover:bg-neutral-800 hover:shadow-sm hover:shadow-white/20 active:opacity-90",
@@ -116,12 +120,12 @@ const ProfileDropdown = () => {
                         <div className="flex w-full items-center justify-between gap-2 rounded-lg bg-primary-900 px-1.5 py-2.5">
                           <GoldCoinIcon className="h-5 w-5" />
                           <p className="font-bold">{user?.account.coins}</p>
-                          <Link
-                            href="/shop"
-                            className="rounded-lg bg-white/10 px-2 py-1 hover:opacity-70 active:opacity-90"
+                          <div
+                            onClick={() => setShopOpen(true)}
+                            className="cursor-pointer rounded-lg bg-white/10 px-1.5 hover:opacity-70 active:opacity-90 lg:px-2 lg:py-1"
                           >
                             +
-                          </Link>
+                          </div>
                         </div>
                       </TooltipTrigger>
                       <TooltipContent side="bottom">Coins used for creating games</TooltipContent>

@@ -18,7 +18,11 @@ import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import useGetRating from "@/hooks/queries/use-get-rating";
 import { logout } from "@/utils/auth";
 
-const MobileProfile = ({}: {}) => {
+const MobileProfile = ({
+  setShopOpen,
+}: {
+  setShopOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { isDefault, communityId } = useCommunity();
 
   const { publicKey } = useWallet();
@@ -108,13 +112,12 @@ const MobileProfile = ({}: {}) => {
                   <div className="flex flex-1 items-center justify-center">
                     {user?.account.coins ?? "-"}
                   </div>
-                  {/* TODO: shop modal */}
-                  <Link
-                    href="/shop"
-                    className="rounded-lg bg-white/10 px-1.5 hover:opacity-70 active:opacity-90"
+                  <DialogClose
+                    onClick={() => setShopOpen(true)}
+                    className="rounded-lg bg-white/10 px-1.5 hover:opacity-70 active:opacity-90 lg:px-2 lg:py-1"
                   >
                     +
-                  </Link>
+                  </DialogClose>
                 </div>
               </div>
               <div className="flex basis-1/2">
