@@ -8,28 +8,31 @@ import useCopy from "@/hooks/helpers/use-copy";
 import { IBaseDungeon } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
+import AddToFavorites from "./add-to-favorites";
 import DeleteModal from "./delete-modal";
-import {
-  Tooltip,
-  TooltipArrow,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
-export const Dungeon = React.forwardRef<
-  HTMLDivElement,
-  {
-    dungeon: IBaseDungeon;
-    setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
-    addToCampaign?: (dungeon: IBaseDungeon) => void;
-    isAddedToCampaign?: boolean;
-    isOwned?: boolean;
-    showActions?: boolean;
-  }
->(
+interface IDungeonProps {
+  dungeon: IBaseDungeon;
+  setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  addToCampaign?: (dungeon: IBaseDungeon) => void;
+  isAddedToCampaign?: boolean;
+  isOwned?: boolean;
+  showActions?: boolean;
+  addFavorite?: boolean;
+}
+
+export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
   (
-    { dungeon, setDungeonDetailId, addToCampaign, isAddedToCampaign, isOwned, showActions },
+    {
+      dungeon,
+      setDungeonDetailId,
+      addToCampaign,
+      isAddedToCampaign,
+      isOwned,
+      showActions,
+      addFavorite,
+    },
     ref,
   ) => {
     const onClick = () => {
@@ -86,6 +89,7 @@ export const Dungeon = React.forwardRef<
                 </span>
               )}
             </div>
+            {addFavorite && <AddToFavorites type="adventure" id={dungeon._id} />}
             {showActions && (
               <div className="mr-8 flex shrink-0 gap-4" onClick={(e) => e.stopPropagation()}>
                 <div
@@ -95,7 +99,7 @@ export const Dungeon = React.forwardRef<
                     onCopy(dungeon._id);
                   }}
                 >
-                  <p>{copied ? "Copied" : "Copy ID"}</p>{" "}
+                  <p>{copied ? "Copied" : "Copy ID"}</p>
                   {copied ? <GiCheckMark /> : <Copy variant="Bold" />}
                 </div>
                 <DeleteModal id={dungeon._id} type="adventure" />
@@ -136,7 +140,6 @@ export const Dungeon = React.forwardRef<
                   </TooltipTrigger>
                   <TooltipContent className="border-transparent">
                     Max players in room
-                    <TooltipArrow className=" fill-select text-select" />
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -155,7 +158,6 @@ export const Dungeon = React.forwardRef<
                   </TooltipTrigger>
                   <TooltipContent className="border-transparent">
                     Rating (Number of reviews)
-                    <TooltipArrow className=" fill-select text-select" />
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>

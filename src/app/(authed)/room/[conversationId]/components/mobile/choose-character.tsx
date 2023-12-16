@@ -15,6 +15,16 @@ import { IChampion, IDungeonDetail, IMoveMapping } from "@/types/dungeon";
 import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
+interface IChooseCharacterProps {
+  dungeonData?: IDungeonDetail | undefined;
+  selectedChampion: IChampion | null | undefined;
+  currentIndex: number;
+  isTaken: (champion?: IChampion) => boolean;
+  takenBy: (champion?: IChampion) => IPlayer | undefined;
+  onChangeChampion: (champion: IChampion | undefined) => void;
+  setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
+}
+
 const ChooseCharacter = ({
   dungeonData,
   selectedChampion,
@@ -23,15 +33,7 @@ const ChooseCharacter = ({
   takenBy,
   onChangeChampion,
   setCurrentIndex,
-}: {
-  dungeonData?: IDungeonDetail | undefined;
-  selectedChampion: IChampion | null | undefined;
-  currentIndex: number;
-  isTaken: (champion?: IChampion) => boolean;
-  takenBy: (champion?: IChampion) => IPlayer | undefined;
-  onChangeChampion: (champion: IChampion | undefined) => void;
-  setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
-}) => {
+}: IChooseCharacterProps) => {
   const { width } = useWindowSize();
   const itemWidth = width - 52;
   const containerRef = useRef<HTMLUListElement>(null);
@@ -141,6 +143,15 @@ const ChooseCharacter = ({
 
 export default ChooseCharacter;
 
+interface ICharacterCardProps {
+  champion: IChampion;
+  index: number;
+  currentIndex: number;
+  isTaken: (champion?: IChampion) => boolean;
+  takenBy: (champion?: IChampion) => IPlayer | undefined;
+  onChangeChampion: (champion: IChampion | undefined) => void;
+}
+
 const CharacterCard = ({
   champion,
   index,
@@ -148,14 +159,7 @@ const CharacterCard = ({
   isTaken,
   takenBy,
   onChangeChampion,
-}: {
-  champion: IChampion;
-  index: number;
-  currentIndex: number;
-  isTaken: (champion?: IChampion) => boolean;
-  takenBy: (champion?: IChampion) => IPlayer | undefined;
-  onChangeChampion: (champion: IChampion | undefined) => void;
-}) => {
+}: ICharacterCardProps) => {
   const taker = isTaken(champion) ? takenBy(champion) : undefined;
 
   return (

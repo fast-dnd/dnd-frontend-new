@@ -4,7 +4,7 @@ import {
   accountSchema,
   couponSchema,
   profileSchema,
-  rankingSchema,
+  ratingSchema,
   statisticsSchema,
 } from "@/validations/account";
 
@@ -12,7 +12,7 @@ export type IAccount = z.infer<typeof accountSchema>;
 
 export type IStatistics = z.infer<typeof statisticsSchema>;
 
-export type IRanking = z.infer<typeof rankingSchema>;
+export type IRating = z.infer<typeof ratingSchema>;
 
 export type IProfile = z.infer<typeof profileSchema>;
 

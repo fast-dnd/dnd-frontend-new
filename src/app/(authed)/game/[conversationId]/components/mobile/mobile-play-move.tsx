@@ -18,9 +18,9 @@ import usePlayMove from "../../hooks/use-play-move";
 import usePlayMoveSocket from "../../hooks/use-play-move-socket";
 import { moveStore } from "../../stores/move-store";
 import PickPowerup from "../gameplay/pick-powerup";
-import { PlayMoveProps } from "../gameplay/play-move";
+import { IPlayMoveProps } from "../gameplay/play-move";
 
-const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: PlayMoveProps) => {
+const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMoveProps) => {
   usePlayMoveSocket(conversationId);
   const { onPlay, openedDetails, setOpenedDetails } = usePlayMove(
     conversationId,
@@ -32,6 +32,7 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: PlayMovePro
   const store = moveStore.use();
 
   if (!currentPlayer.champion) return <div>Something went wrong.</div>;
+
   return (
     <div
       className={cn(
@@ -167,17 +168,14 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: PlayMovePro
   );
 };
 
-const MoveDisplay = ({
-  move,
-  onClick,
-  className,
-  action,
-}: {
+interface IMoveDisplayProps {
   move: IDefaultMove | "free_will";
   onClick?: () => void;
   className?: string;
   action?: boolean;
-}) => {
+}
+
+const MoveDisplay = ({ move, onClick, className, action }: IMoveDisplayProps) => {
   return (
     <div
       className={cn(

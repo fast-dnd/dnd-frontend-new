@@ -3,10 +3,7 @@
 import { useMemo } from "react";
 import { WalletAdapterNetwork, WalletError } from "@solana/wallet-adapter-base";
 import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
-import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { PhantomWalletAdapter, SolflareWalletAdapter } from "@solana/wallet-adapter-wallets";
-
-import "@solana/wallet-adapter-react-ui/styles.css";
 
 import { env } from "@/utils/env.mjs";
 
@@ -26,7 +23,7 @@ const CustomWalletProvider = ({ children }: React.PropsWithChildren) => {
   return (
     <ConnectionProvider endpoint={env.NEXT_PUBLIC_WALLET_ENDPOINT}>
       <WalletProvider wallets={wallets} onError={walletConnectionError} autoConnect={true}>
-        <WalletModalProvider>{children}</WalletModalProvider>
+        {children}
       </WalletProvider>
     </ConnectionProvider>
   );

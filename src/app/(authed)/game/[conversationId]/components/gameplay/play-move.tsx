@@ -8,13 +8,13 @@ import MoveInput from "./move-input";
 import PickPowerup from "./pick-powerup";
 import RollDice from "./roll-dice";
 
-export interface PlayMoveProps {
+export interface IPlayMoveProps {
   roomData: IRoomDetail;
   conversationId: string;
   currentPlayer: IPlayer;
 }
 
-const PlayMove = ({ roomData, conversationId, currentPlayer }: PlayMoveProps) => {
+const PlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMoveProps) => {
   usePlayMoveSocket(conversationId);
   const { timeToDisplay } = useTimer(roomData);
   const store = moveStore.use();

@@ -3,13 +3,7 @@ import { useRouter } from "next/navigation";
 
 import GoBackButton from "@/components/go-back-button";
 import { Box } from "@/components/ui/box";
-import {
-  Tooltip,
-  TooltipArrow,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { IDungeonDetail } from "@/types/dungeon";
 
 import useLoadDungeonData from "../hooks/use-load-dungeon-data";
@@ -68,7 +62,6 @@ const FormStepWrapper = ({ isEditing, children, dungeonData }: IFormStepWrapperP
                 <li>Scenes: Min. 3 - Max. 4</li>
                 <li>Characters: Min. 1</li>
               </ul>
-              <TooltipArrow className=" fill-select text-select" />
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>

@@ -94,3 +94,7 @@ export const roomHistorySchema = z.object({
   rooms: z.array(roomSchema),
   total: z.number(),
 });
+
+export const getStartGameTxSchema = z.object({
+  transaction: z.string(),
+});

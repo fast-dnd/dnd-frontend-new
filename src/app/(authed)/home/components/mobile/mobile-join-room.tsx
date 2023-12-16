@@ -7,15 +7,13 @@ import { Input } from "@/components/ui/input";
 
 import useJoinRoom from "../../hooks/use-join-room";
 
-const MobileJoinRoom = ({
-  open,
-  setOpen,
-  show = true,
-}: {
+interface IMobileJoinRoomProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   show?: boolean;
-}) => {
+}
+
+const MobileJoinRoom = ({ open, setOpen, show = true }: IMobileJoinRoomProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [roomLink, setRoomLink] = useState<string>("");

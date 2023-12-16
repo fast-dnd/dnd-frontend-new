@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDebounce } from "usehooks-ts";
 
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetDungeons from "@/hooks/queries/use-get-dungeons";
@@ -7,20 +8,27 @@ import { cn } from "@/utils/style-utils";
 import { tabStore } from "../../stores/tab-store";
 import { MobileAdventure } from "./mobile-adventure";
 import MobileFilter from "./mobile-filter";
+import MobileSearch from "./mobile-search";
+
+interface IMobileAdventuresProps {
+  adventureDetailId?: string | undefined;
+  setAdventureDetailId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  closingId?: string | undefined;
+  animate?: boolean;
+}
 
 const MobileAdventures = ({
   adventureDetailId,
   setAdventureDetailId,
   closingId,
   animate,
-}: {
-  adventureDetailId: string | undefined;
-  setAdventureDetailId: React.Dispatch<React.SetStateAction<string | undefined>>;
-  closingId?: string | undefined;
-  animate?: boolean;
-}) => {
+}: IMobileAdventuresProps) => {
   const [featuredOpened, setFeaturedOpened] = useState(false);
   const [opening, setOpening] = useState(false);
+
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchName, setSearchName] = useState<string>();
+  const debouncedName = useDebounce<string | undefined>(searchName, 500);
 
   const [filter, setFilter] = useState(false);
   const subTab = tabStore.subTab.use();
@@ -38,7 +46,7 @@ const MobileAdventures = ({
     isFetchingNextPage,
     isError,
     isLoading,
-  } = useGetDungeons({ filter: subTab || "owned" });
+  } = useGetDungeons({ filter: subTab || "owned", name: debouncedName });
 
   const { lastObjectRef: lastAdventureRef } = useIntersectionObserver({
     isFetchingNextPage,
@@ -61,6 +69,7 @@ const MobileAdventures = ({
       opening={opening}
       setOpening={setOpening}
       animate={animate}
+      addFavorite
     />
   ));
 
@@ -80,6 +89,7 @@ const MobileAdventures = ({
             opening={opening}
             setOpening={setOpening}
             animate={animate}
+            addFavorite
           />
         );
       }
@@ -95,6 +105,7 @@ const MobileAdventures = ({
           opening={opening}
           setOpening={setOpening}
           animate={animate}
+          addFavorite
         />
       );
     }),
@@ -117,7 +128,7 @@ const MobileAdventures = ({
           <div className="flex flex-row gap-4 overflow-x-auto pr-4">{featuredContent}</div>
           <div
             className={cn(
-              "pointer-events-none absolute right-0 top-[158px] z-20 h-52 w-16 bg-gradient-to-l from-dark-900 to-transparent",
+              "pointer-events-none absolute right-0 z-20 h-60 w-16 bg-gradient-to-l from-dark-900 to-transparent",
               adventureDetailId && "hidden",
             )}
           />
@@ -127,12 +138,20 @@ const MobileAdventures = ({
       <div className="h-0.5 w-full bg-black shadow-lobby" />
 
       <div className={cn("flex flex-col gap-2 px-4 py-2")}>
-        <div className="flex items-center justify-between">
-          {isLoading ? (
-            <div className="h-5 w-40 rounded bg-gray-600" />
-          ) : (
-            <p className="text-sm font-medium uppercase">{subTab} ADVENTURES</p>
-          )}
+        <div className="relative flex items-center gap-2">
+          <div
+            className={cn(
+              "flex flex-1 opacity-100 transition-opacity duration-300",
+              searchOpen && "opacity-0",
+            )}
+          >
+            {isLoading ? (
+              <div className="h-5 w-40 rounded bg-gray-600" />
+            ) : (
+              <p className="text-sm font-medium uppercase">{subTab} ADVENTURES</p>
+            )}
+          </div>
+          <MobileSearch open={searchOpen} setOpen={setSearchOpen} setSearchName={setSearchName} />
           <MobileFilter open={filter} setOpen={setFilter} />
         </div>
         {isLoading ? (

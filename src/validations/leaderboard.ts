@@ -7,6 +7,7 @@ export const leaderboardUserSchema = z.object({
   imageUrl: z.string(),
   email: z.string(),
   rating: z.number(),
+  walletAddress: z.string().optional(),
 });
 
 export const leaderboardSchema = z.object({

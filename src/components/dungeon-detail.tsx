@@ -21,6 +21,7 @@ interface IDungeonDetailProps {
   selectedChampion?: IChampion | undefined;
   takenChampions?: IChampion[];
   onChangeChampion?: (champion: IChampion) => void;
+  addFavorite?: boolean;
 }
 
 const DungeonDetail = ({
@@ -28,6 +29,7 @@ const DungeonDetail = ({
   selectedChampion,
   takenChampions,
   onChangeChampion,
+  addFavorite,
 }: IDungeonDetailProps) => {
   const { data: dungeon, isLoading } = useGetDungeon(dungeonDetailId ?? "");
 
@@ -42,7 +44,7 @@ const DungeonDetail = ({
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto border-b-2 border-b-white/20 pr-4">
-      <Dungeon dungeon={dungeon} />
+      <Dungeon dungeon={dungeon} addFavorite={addFavorite} />
 
       <div className="my-8">
         {onChangeChampion ? (
@@ -86,7 +88,6 @@ const DungeonDetail = ({
                       <Link
                         className="flex items-center gap-1 rounded-md border border-dashed border-gold bg-gold/10 fill-gold px-3 py-1.5 font-semibold text-gold"
                         href={champion.link || "#"}
-                        target="_blank"
                       >
                         NFT
                         <FiExternalLink />

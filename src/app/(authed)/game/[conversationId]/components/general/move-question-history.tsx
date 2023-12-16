@@ -6,15 +6,17 @@ import { cn } from "@/utils/style-utils";
 import MoveList from "./move-list";
 import Question from "./question";
 
+interface IMoveQuestionHistoryProps {
+  moveHistory: IMove[][];
+  questionHistory: Partial<IQuestion>[];
+  thinking: boolean;
+}
+
 const MoveQuestionHistory = ({
   moveHistory,
   questionHistory,
   thinking,
-}: {
-  moveHistory: IMove[][];
-  questionHistory: Partial<IQuestion>[];
-  thinking: boolean;
-}) => {
+}: IMoveQuestionHistoryProps) => {
   const { autoBottomScrollDiv } = useAutoScrollToBottom([moveHistory, questionHistory, thinking]);
 
   const movesEmpty =

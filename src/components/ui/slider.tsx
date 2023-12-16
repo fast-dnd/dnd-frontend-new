@@ -18,7 +18,7 @@ const Slider = React.forwardRef<
     {label && (
       <div
         className={cn(
-          "w-fit text-sm tracking-[0.07em] backdrop-blur-none",
+          "w-fit text-sm tracking-[0.07em]",
           state === "error" && "text-error",
           state === "success" && "text-success",
           disabled && "opacity-50",

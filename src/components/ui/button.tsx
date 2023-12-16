@@ -12,12 +12,12 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "border border-primary bg-primary text-white hover:shadow-basic focus:ring-2 focus:ring-primary-200 focus:ring-offset-2 active:bg-primary-600 active:shadow-none disabled:border-transparent lg:text-black",
+          "border border-primary bg-primary text-white hover:shadow-basic focus:ring-2 focus:ring-primary-200 focus:ring-offset-2 active:bg-primary-600 active:shadow-none disabled:border-transparent",
         outline:
           "border-2 border-primary bg-transparent text-white hover:bg-primary focus:ring-2 focus:ring-primary-200 focus:ring-offset-2 active:border-primary-600 active:bg-transparent active:shadow-basic disabled:bg-transparent",
         ghost:
           "border border-transparent bg-transparent font-normal tracking-[0.08em] text-white/50 hover:text-white active:text-white/75",
-        google: "border-2 border-white bg-black hover:bg-white/10 active:bg-white/25",
+        google: "border-2 border-white/30 bg-white/10 hover:bg-white/20 active:bg-white/25",
         sidebar: "bg-white/5",
       },
       size: {
@@ -49,8 +49,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       return (
         <Link
           href={href}
-          className={cn(buttonVariants({ variant, className }))}
-          target={props.target}
+          className={cn(buttonVariants({ variant, className }), disabled && "opacity-50")}
+          target={props.target ?? "_blank"}
         >
           {children}
         </Link>
@@ -59,7 +59,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       return (
         <button
           disabled={isLoading || disabled}
-          className={cn(buttonVariants({ variant, className }))}
+          className={cn(buttonVariants({ variant, className }), disabled && "opacity-50")}
           ref={ref}
           {...props}
         >

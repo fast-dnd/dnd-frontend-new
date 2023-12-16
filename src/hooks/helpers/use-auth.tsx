@@ -1,22 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useLocalStorage } from "usehooks-ts";
 
-import { IProfile } from "@/types/account";
-import checkJWT from "@/utils/check-jwt";
+import useCheckJWT from "@/utils/check-jwt";
 
 import useGetAccount from "../queries/use-get-account";
 
 const useAuth = () => {
-  const [user, setUser] = useState<IProfile>();
-  const tokenExists = checkJWT();
+  const tokenExists = useCheckJWT();
+  const [_, setAccountId] = useLocalStorage("accountId", "");
 
-  const { refetch, isLoading } = useGetAccount({ tokenExists, setUser });
+  const { data: user, refetch, isLoading } = useGetAccount({ tokenExists });
 
   const loggedIn = !!(tokenExists && user);
   const loggingIn = (!user && tokenExists) || isLoading;
 
   useEffect(() => {
     if (tokenExists && !user) refetch();
-  }, [refetch, tokenExists, user]);
+    if (user?.account._id) setAccountId(user.account._id);
+  }, [refetch, setAccountId, tokenExists, user]);
 
   return { user, loggedIn, loggingIn };
 };

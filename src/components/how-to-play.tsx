@@ -3,7 +3,7 @@ import { BsFillLightningFill } from "react-icons/bs";
 
 import { cn } from "@/utils/style-utils";
 
-import MobileNavbar from "./mobile-navbar";
+import MobileNavbar from "./navbar/mobile-navbar";
 import { Box } from "./ui/box";
 
 interface IHowToPlayProps {

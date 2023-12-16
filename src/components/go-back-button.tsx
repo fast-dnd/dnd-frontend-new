@@ -4,17 +4,14 @@ import { AiOutlineLeft } from "react-icons/ai";
 
 import { cn } from "@/utils/style-utils";
 
-const GoBackButton = ({
-  onClick,
-  className,
-  text,
-  href,
-}: {
-  href?: string;
+interface IGoBackButtonProps {
   onClick?: () => void;
   className?: string;
   text?: string;
-}) => {
+  href?: string;
+}
+
+const GoBackButton = ({ onClick, className, text, href }: IGoBackButtonProps) => {
   const Comp = href ? Link : "div";
 
   return (

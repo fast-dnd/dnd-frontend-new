@@ -9,17 +9,14 @@ import { gameStore } from "../../stores/game-store";
 import AskQuestion from "../general/ask-question";
 import MoveQuestionHistory from "../general/move-question-history";
 
-const AskModal = ({
-  conversationId,
-  open,
-  onClose,
-  onOpen,
-}: {
+interface IAskModalProps {
   conversationId: string;
   open: boolean;
   onClose: () => void;
   onOpen: () => void;
-}) => {
+}
+
+const AskModal = ({ conversationId, open, onClose, onOpen }: IAskModalProps) => {
   const isMobileTablet = useMediaQuery("(max-width: 1024px)");
   const { roomData, moveHistory, questionHistory, canAsk, asking, setAsking } =
     useGeneral(conversationId);

@@ -4,13 +4,11 @@ import { IReward } from "@/types/reward";
 
 import { dungeonFormStore } from "../stores/dungeon-form-store";
 
-const SelectBgScreen = ({
-  setSelectedReward,
-  setSelectingBg,
-}: {
+interface ISelectBgScreenProps {
   setSelectedReward: React.Dispatch<React.SetStateAction<IReward | null>>;
   setSelectingBg: (selecting: boolean) => void;
-}) => {
+}
+const SelectBgScreen = ({ setSelectedReward, setSelectingBg }: ISelectBgScreenProps) => {
   const bgObs = dungeonFormStore.dungeonFormData.background;
   const bg = bgObs.use();
 

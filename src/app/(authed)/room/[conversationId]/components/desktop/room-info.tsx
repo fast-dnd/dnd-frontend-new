@@ -31,8 +31,14 @@ const RoomInfo = ({ conversationId }: { conversationId: string }) => {
 
   const onChangeChampion = (champion: IChampion) => {
     if (!takenChampions.some((champ) => champ._id === champion._id)) {
-      setSelectedChampion(champion);
-      updateRole({ conversationId, championId: champion._id });
+      updateRole(
+        { conversationId, championId: champion._id },
+        {
+          onSuccess: () => {
+            setSelectedChampion(champion);
+          },
+        },
+      );
     }
   };
 
@@ -49,6 +55,7 @@ const RoomInfo = ({ conversationId }: { conversationId: string }) => {
           selectedChampion={selectedChampion}
           takenChampions={takenChampions}
           onChangeChampion={onChangeChampion}
+          addFavorite
         />
       </div>
     </Box>

@@ -3,7 +3,7 @@
 import React from "react";
 
 import HowToPlay from "@/components/how-to-play";
-import MobileNavbar from "@/components/mobile-navbar";
+import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { cn } from "@/utils/style-utils";
 
 import AnimationEffects from "./components/animation-effects";

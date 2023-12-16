@@ -5,24 +5,25 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Game, Star1 } from "iconsax-react";
 
+import AddToFavorites from "@/components/add-to-favorites";
 import { IBaseDungeon } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
-export const MobileAdventure = React.forwardRef<
-  HTMLDivElement,
-  {
-    adventure: IBaseDungeon;
-    adventureDetailId?: string | undefined;
-    setAdventureDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
-    featured?: boolean;
-    closingId?: string | undefined;
-    featuredOpened?: boolean;
-    setFeaturedOpened?: React.Dispatch<React.SetStateAction<boolean>>;
-    opening?: boolean;
-    setOpening?: React.Dispatch<React.SetStateAction<boolean>>;
-    animate?: boolean;
-  }
->(
+interface IMobileAdventureProps {
+  adventure: IBaseDungeon;
+  adventureDetailId?: string | undefined;
+  setAdventureDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  featured?: boolean;
+  closingId?: string | undefined;
+  featuredOpened?: boolean;
+  setFeaturedOpened?: React.Dispatch<React.SetStateAction<boolean>>;
+  opening?: boolean;
+  setOpening?: React.Dispatch<React.SetStateAction<boolean>>;
+  animate?: boolean;
+  addFavorite?: boolean;
+}
+
+export const MobileAdventure = React.forwardRef<HTMLDivElement, IMobileAdventureProps>(
   (
     {
       adventure,
@@ -35,6 +36,7 @@ export const MobileAdventure = React.forwardRef<
       opening = false,
       setOpening,
       animate = true,
+      addFavorite = false,
     },
     ref,
   ) => {
@@ -44,8 +46,8 @@ export const MobileAdventure = React.forwardRef<
     return (
       <div
         className={cn(
-          "relative flex h-[104px] w-full shrink-0 rounded border border-transparent bg-black pl-[118px]",
-          featured && "h-52 w-48 justify-between p-3",
+          "relative flex min-h-[104px] w-full shrink-0 rounded border border-transparent bg-black pl-[118px]",
+          featured && "h-52 w-48 justify-between p-0",
           open && "pointer-events-none static",
           open && !opening && "bg-transparent",
           !featured && !!adventureDetailId && !open && !opening && "hidden",
@@ -109,7 +111,12 @@ export const MobileAdventure = React.forwardRef<
             (open || closing) && !opening && "opacity-0",
           )}
         >
-          <div className={cn("flex justify-between", !featured && "justify-start gap-10 pt-2")}>
+          <div
+            className={cn(
+              "flex justify-between px-3 pt-3",
+              !featured && "justify-start gap-10 px-0 pt-2",
+            )}
+          >
             <div className="flex items-center gap-2">
               <div className="flex h-5 w-5 items-center justify-center rounded bg-black/30">
                 <Game className="h-4 w-4" variant="Bold" color="#FF5A5A" />
@@ -126,17 +133,40 @@ export const MobileAdventure = React.forwardRef<
             </div>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <p className="line-clamp-2 break-words font-semibold">{adventure.name}</p>
-            <div className="flex bg-gradient-to-l from-black to-transparent to-30%">
-              <div className="-z-10 flex gap-2 overflow-x-hidden pb-2">
-                {adventure.tags.map((tag) => (
-                  <div key={tag} className="whitespace-nowrap text-xs capitalize opacity-70">
-                    {tag}
-                  </div>
-                ))}
+          <div className="flex flex-col gap-1">
+            <p
+              className={cn(
+                "line-clamp-1 break-words font-semibold",
+                featured && "line-clamp-2 px-3",
+              )}
+            >
+              {adventure.name}
+            </p>
+            {adventure.tags.length > 0 && (
+              <div
+                className={cn(
+                  "flex bg-gradient-to-l from-black/80 to-transparent to-20%",
+                  featured && "pl-3",
+                )}
+              >
+                <div className={cn("-z-10 flex gap-2 overflow-x-hidden", !addFavorite && "pb-2")}>
+                  {adventure.tags.map((tag) => (
+                    <div
+                      key={tag}
+                      className="whitespace-nowrap text-xs capitalize leading-none opacity-70"
+                    >
+                      {tag}
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+
+            {addFavorite && (
+              <div className={cn("py-1 pr-1", featured && "pl-1")}>
+                <AddToFavorites type="adventure" id={adventure._id} />
+              </div>
+            )}
           </div>
         </div>
       </div>

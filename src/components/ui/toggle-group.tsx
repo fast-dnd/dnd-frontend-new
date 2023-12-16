@@ -39,7 +39,7 @@ const ToggleGroup = React.forwardRef<
       {label && (
         <div
           className={cn(
-            "flex w-fit items-center gap-4 pb-2 text-sm tracking-[0.07em] backdrop-blur-none",
+            "flex w-fit items-center gap-4 pb-2 text-sm tracking-[0.07em]",
             state === "error" && "text-error",
             state === "success" && "text-success",
             disabled && "opacity-50",

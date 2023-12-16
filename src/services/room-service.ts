@@ -1,7 +1,12 @@
 import queryString from "query-string";
 
 import { ICreateRoom, IEditChampion, IEditRoom } from "@/types/room";
-import { roomDetailSchema, roomHistorySchema, roomSummarySchema } from "@/validations/room";
+import {
+  getStartGameTxSchema,
+  roomDetailSchema,
+  roomHistorySchema,
+  roomSummarySchema,
+} from "@/validations/room";
 
 import createApi, { PAGINATION_LIMIT } from "./api-factory";
 
@@ -34,7 +39,13 @@ const editRoom = async (data: IEditRoom) => {
   return await roomApi.patch(data.conversationId, data);
 };
 
-const startGame = async (data: { conversationId: string }) => {
+const getStartGameTx = async (data: { conversationId: string }) => {
+  return await roomApi
+    .get(`start-transaction/${data.conversationId}`)
+    .then((res) => getStartGameTxSchema.parse(res.data));
+};
+
+const startGame = async (data: { conversationId: string; transaction?: string }) => {
   return await roomApi.post("start", data);
 };
 
@@ -48,6 +59,7 @@ const roomService = {
   createRoom,
   joinRoom,
   editRoom,
+  getStartGameTx,
   startGame,
   editChampion,
 };

@@ -49,6 +49,9 @@ export const baseDungeonSchema = z.object({
   publiclySeen: z.boolean(),
   background: rewardSchema.nullable(),
   type: z.enum(["standard", "nft"]),
+  communityId: z.string().optional(),
+  creatorWalletAddress: z.string().optional(),
+  transaction: z.string().optional(),
 });
 
 export const dungeonSchema = baseDungeonSchema.extend({
@@ -74,6 +77,10 @@ export const dungeonForBackendSchema = dungeonDetailSchema
     background: z.string().nullable(),
     image: z.string().optional(),
   });
+
+export const dungeonTxResponseSchema = z.object({
+  transaction: z.string(),
+});
 
 export const dungeonResponseSchema = z.object({
   id: z.string(),

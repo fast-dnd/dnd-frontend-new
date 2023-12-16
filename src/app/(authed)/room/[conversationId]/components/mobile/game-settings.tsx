@@ -1,26 +1,26 @@
 import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
+import useCommunity from "@/hooks/helpers/use-community";
+import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IChampion } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
 import useOnRoomChange from "../../hooks/use-on-room-change";
+import useOnStartGame from "../../hooks/use-on-start-game";
 import usePlayerInfo from "../../hooks/use-player-info";
 import useRoomSocket from "../../hooks/use-room-socket";
-import useStartGame from "../../hooks/use-start-game";
 import DurationSlider from "./duration-slider";
 import ImageAudioToggle from "./image-audio-toggle";
 
-const GameSettings = ({
-  conversationId,
-  selectedChampion,
-  roomData,
-}: {
+interface IGameSettingsProps {
   conversationId: string;
   selectedChampion: IChampion | null | undefined;
   roomData: IRoomDetail | undefined;
-}) => {
+}
+
+const GameSettings = ({ conversationId, selectedChampion, roomData }: IGameSettingsProps) => {
   const { duration, setDuration } = usePlayerInfo(roomData);
 
   const { gameStarting } = useRoomSocket(conversationId);
@@ -29,6 +29,9 @@ const GameSettings = ({
 
   const isAdmin = accountId === roomData?.playerState[0].accountId;
 
+  const { isDefault } = useCommunity();
+  const { data: currentCommunity } = useGetCurrentCommunity();
+
   const { generateAudio, generateImages, setGenerateImages, setGenerateAudio } = useOnRoomChange({
     conversationId,
     duration,
@@ -36,7 +39,7 @@ const GameSettings = ({
     isAdmin,
   });
 
-  const { mutate: startGame, isLoading: isGameStarting } = useStartGame();
+  const { isGameStarting, onStartGame } = useOnStartGame({ conversationId });
 
   const canBegin = roomData?.playerState.every((player) => player.champion) ?? false;
 
@@ -73,9 +76,10 @@ const GameSettings = ({
         className="w-52 whitespace-nowrap"
         disabled={disabled || !canBegin}
         isLoading={isGameStarting || gameStarting}
-        onClick={() => startGame({ conversationId })}
+        onClick={onStartGame}
       >
-        PLAY ({roomData?.price} coins)
+        START ({roomData?.price.toFixed(isDefault ? 0 : 5)}{" "}
+        {isDefault ? "coins" : currentCommunity?.currencyName})
       </Button>
     </div>
   );

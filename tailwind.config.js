@@ -23,7 +23,6 @@ module.exports = {
         radialGradient: "radial-gradient(circle at 50%, #ffffff06, transparent 75%)",
       },
       colors: {
-        lobbyGradient: "linear-gradient(180deg, rgba(2, 4, 7, 0.00) 0%, #010306 59.88%);",
         primary: {
           50: "#FFEAEA",
           100: "#FFD6D6",

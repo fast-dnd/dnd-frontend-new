@@ -12,17 +12,18 @@ import { cn } from "@/utils/style-utils";
 import useTimer from "../../hooks/use-timer";
 import { gameStore } from "../../stores/game-store";
 
+interface IAdventureHeaderProps {
+  roomData: IRoomDetail;
+  adventure: IDungeonDetail;
+  currentPlayer: IPlayer;
+  progress: number;
+}
 const AdventureHeader = ({
   roomData,
   adventure,
   currentPlayer,
   progress,
-}: {
-  roomData: IRoomDetail;
-  adventure: IDungeonDetail;
-  currentPlayer: IPlayer;
-  progress: number;
-}) => {
+}: IAdventureHeaderProps) => {
   const { timeToDisplay } = useTimer(roomData);
   const statusUpdate = gameStore.statusUpdate.use();
 

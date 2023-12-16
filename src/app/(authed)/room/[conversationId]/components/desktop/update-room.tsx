@@ -5,14 +5,16 @@ import { useReadLocalStorage } from "usehooks-ts";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import useCommunity from "@/hooks/helpers/use-community";
+import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
 import { DungeonDuration, dungeonDurations } from "@/utils/dungeon-options";
 
 import useOnRoomChange from "../../hooks/use-on-room-change";
+import useOnStartGame from "../../hooks/use-on-start-game";
 import usePlayerInfo from "../../hooks/use-player-info";
 import useRoomSocket from "../../hooks/use-room-socket";
-import useStartGame from "../../hooks/use-start-game";
 
 const imagesAudio = [
   {
@@ -25,15 +27,13 @@ const imagesAudio = [
   },
 ];
 
-const UpdateRoom = ({
-  conversationId,
-  roomData,
-  dungeonData,
-}: {
+interface IUpdateRoomProps {
   conversationId: string;
   roomData: IRoomDetail;
   dungeonData: IDungeonDetail;
-}) => {
+}
+
+const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps) => {
   const { duration, setDuration } = usePlayerInfo(roomData);
 
   const { gameStarting } = useRoomSocket(conversationId);
@@ -42,6 +42,9 @@ const UpdateRoom = ({
 
   const isAdmin = accountId === roomData.playerState[0].accountId;
 
+  const { isDefault } = useCommunity();
+  const { data: currentCommunity } = useGetCurrentCommunity();
+
   const { setGenerateImages, setGenerateAudio, updatingRoom } = useOnRoomChange({
     conversationId,
     duration,
@@ -49,7 +52,7 @@ const UpdateRoom = ({
     isAdmin,
   });
 
-  const { mutate: startGame, isLoading: isGameStarting } = useStartGame();
+  const { isGameStarting, onStartGame } = useOnStartGame({ conversationId });
 
   const generateAudioImagesArray = () => {
     const audioImagesArray = [];
@@ -120,9 +123,10 @@ const UpdateRoom = ({
               className="px-8 uppercase"
               disabled={!isAdmin || !canBegin || gameStarting}
               isLoading={isGameStarting || gameStarting}
-              onClick={() => startGame({ conversationId })}
+              onClick={onStartGame}
             >
-              START ({roomData.price} coins)
+              START ({roomData.price.toFixed(isDefault ? 0 : 5)}{" "}
+              {isDefault ? "coins" : currentCommunity?.currencyName})
             </Button>
           </TooltipTrigger>
           {!canBegin && (

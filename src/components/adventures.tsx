@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useDebounce } from "usehooks-ts";
 
 import { Dungeon } from "@/components/dungeon";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,17 @@ import { IBaseDungeon } from "@/types/dungeon";
 
 import { SubTabType } from "@/app/(authed)/home/stores/tab-store";
 
+interface IAdventuresProps {
+  setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  filter?: SubTabType;
+  addToCampaign?: (dungeonName: IBaseDungeon) => void;
+  addedToCampaign?: IBaseDungeon[];
+  isOwned?: boolean;
+  showActions?: boolean;
+  searchName?: string;
+  addFavorite?: boolean;
+}
+
 const Adventures = ({
   setDungeonDetailId,
   filter,
@@ -19,14 +31,11 @@ const Adventures = ({
   addedToCampaign,
   isOwned,
   showActions,
-}: {
-  setDungeonDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  filter?: SubTabType;
-  addToCampaign?: (dungeonName: IBaseDungeon) => void;
-  addedToCampaign?: IBaseDungeon[];
-  isOwned?: boolean;
-  showActions?: boolean;
-}) => {
+  searchName,
+  addFavorite,
+}: IAdventuresProps) => {
+  const debouncedName = useDebounce<string | undefined>(searchName, 500);
+
   const {
     data: dungeonsData,
     hasNextPage,
@@ -34,14 +43,13 @@ const Adventures = ({
     isFetchingNextPage,
     isError,
     isLoading,
-  } = useGetDungeons({ filter: filter || "owned" });
+  } = useGetDungeons({ filter: filter || "owned", name: debouncedName });
 
   const { lastObjectRef: lastDungeonRef } = useIntersectionObserver({
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
   });
-
   if (isError) return <div>Something went wrong</div>;
 
   if (isLoading)
@@ -64,6 +72,7 @@ const Adventures = ({
             isAddedToCampaign={addedToCampaign?.some((added) => added._id === dungeon._id)}
             isOwned={isOwned}
             showActions={showActions}
+            addFavorite={addFavorite}
           />
         );
       }
@@ -76,6 +85,7 @@ const Adventures = ({
           isAddedToCampaign={addedToCampaign?.some((added) => added._id === dungeon._id)}
           isOwned={isOwned}
           showActions={showActions}
+          addFavorite={addFavorite}
         />
       );
     }),

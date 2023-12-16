@@ -1,5 +1,7 @@
 "use client";
 
+import { useDebounce } from "usehooks-ts";
+
 import { Campaign } from "@/components/campaign";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
@@ -7,17 +9,25 @@ import Spinner from "@/components/ui/spinner";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetCampaigns from "@/hooks/queries/use-get-campaigns";
 
+interface ICampaignsProps {
+  setCampaignDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  filter?: string;
+  isOwned?: boolean;
+  showActions?: boolean;
+  searchName?: string;
+  addFavorite?: boolean;
+}
+
 const Campaigns = ({
   setCampaignDetailId,
   filter,
   isOwned,
   showActions,
-}: {
-  setCampaignDetailId?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  filter?: string;
-  isOwned?: boolean;
-  showActions?: boolean;
-}) => {
+  searchName,
+  addFavorite,
+}: ICampaignsProps) => {
+  const debouncedName = useDebounce<string | undefined>(searchName, 500);
+
   const {
     data: campaignsData,
     hasNextPage,
@@ -25,7 +35,7 @@ const Campaigns = ({
     isFetchingNextPage,
     isError,
     isLoading,
-  } = useGetCampaigns({ filter: filter || "owned" });
+  } = useGetCampaigns({ filter: filter || "owned", name: debouncedName });
 
   const { lastObjectRef: lastCampaignRef } = useIntersectionObserver({
     isFetchingNextPage,
@@ -54,6 +64,7 @@ const Campaigns = ({
             setCampaignDetailId={setCampaignDetailId}
             isOwned={isOwned}
             showActions={showActions}
+            addFavorite={addFavorite}
           />
         );
       }
@@ -64,6 +75,7 @@ const Campaigns = ({
           setCampaignDetailId={setCampaignDetailId}
           isOwned={isOwned}
           showActions={showActions}
+          addFavorite={addFavorite}
         />
       );
     }),

@@ -6,7 +6,7 @@ import { GiCancel } from "react-icons/gi";
 import { cn } from "@/utils/style-utils";
 
 export const textAreaVariants = cva(
-  "mr-1 flex w-full overflow-auto bg-transparent outline-none placeholder:text-white/30 disabled:text-white/30",
+  "mr-1 flex w-full overflow-auto bg-transparent caret-primary outline-none placeholder:text-white/30 disabled:text-white/30",
 );
 
 export const textAreaContainerVariants = cva(
@@ -65,7 +65,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
           <label
             htmlFor={label}
             className={cn(
-              "w-fit pb-2 text-sm tracking-[0.07em] backdrop-blur-none",
+              "w-fit pb-2 text-sm tracking-[0.07em]",
               state === "error" && "text-error",
               state === "success" && "text-success",
               disabled && "opacity-50",

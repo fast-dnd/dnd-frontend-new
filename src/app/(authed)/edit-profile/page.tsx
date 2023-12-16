@@ -9,7 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FiUpload } from "react-icons/fi";
 
 import GoBackButton from "@/components/go-back-button";
-import MobileNavbar from "@/components/mobile-navbar";
+import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

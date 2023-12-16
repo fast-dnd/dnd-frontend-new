@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 
@@ -8,6 +9,8 @@ import TemplateSentences from "./template-sentences";
 
 const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
   const router = useRouter();
+
+  const [_, setAccountId] = useLocalStorage("accountId", "");
 
   const [loadingRoom, setLoadingRoom] = useState(false);
 
@@ -25,7 +28,7 @@ const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
       },
       {
         onSuccess: (data) => {
-          if (data.admin) localStorage.setItem("accountId", JSON.stringify(data.admin.accountId));
+          if (data.admin) setAccountId(data.admin.accountId);
           setLoadingRoom(true);
           router.push(`room/${data.conversationId}`);
         },
