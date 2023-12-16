@@ -185,6 +185,7 @@ const ProfileDropdown = () => {
               <Link
                 href="https://discord.com/invite/36chp8DnzC"
                 className="flex items-center gap-2"
+                target="_blank"
               >
                 <DiscordLogo className="h-7 w-7" />
                 Join us on Discord
