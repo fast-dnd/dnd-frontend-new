@@ -78,7 +78,8 @@ const GameSettings = ({ conversationId, selectedChampion, roomData }: IGameSetti
         isLoading={isGameStarting || gameStarting}
         onClick={onStartGame}
       >
-        START ({roomData?.price.toFixed(5)} {isDefault ? "coins" : currentCommunity?.currencyName})
+        START ({roomData?.price.toFixed(isDefault ? 0 : 5)}{" "}
+        {isDefault ? "coins" : currentCommunity?.currencyName})
       </Button>
     </div>
   );

@@ -46,7 +46,7 @@ const RoomItem = React.forwardRef<
             moveStore.set(getInitialMoveStoreData());
             gameStore.set(getInitialGameStoreData());
           }}
-          href={`/game/${room.conversationId}`}
+          href={`/${roomState.text.includes("CREATING") ? "room" : "game"}/${room.conversationId}`}
           aria-label="Transcript"
         >
           <Play variant="Bold" size={40} color="#FF5A5A" />

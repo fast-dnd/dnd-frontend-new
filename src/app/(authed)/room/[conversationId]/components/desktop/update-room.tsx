@@ -125,7 +125,7 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
               isLoading={isGameStarting || gameStarting}
               onClick={onStartGame}
             >
-              START ({roomData.price.toFixed(5)}{" "}
+              START ({roomData.price.toFixed(isDefault ? 0 : 5)}{" "}
               {isDefault ? "coins" : currentCommunity?.currencyName})
             </Button>
           </TooltipTrigger>
