@@ -2,9 +2,11 @@ import { useCallback, useEffect } from "react";
 import Image from "next/image";
 import { Wallet } from "@phosphor-icons/react";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { WalletError } from "@solana/wallet-adapter-base";
 import { useWallet } from "@solana/wallet-adapter-react";
 import bs58 from "bs58";
 import { AiOutlineClose } from "react-icons/ai";
+import { toast } from "sonner";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { jibril } from "@/utils/fonts";
@@ -26,7 +28,8 @@ const SolanaLogin = () => {
 
       solanaLogin({ signature, walletAddress: publicKey });
     } catch (error) {
-      console.log(error);
+      if (error instanceof WalletError) toast.error(error.message);
+      else console.log("Error signing message\n----------------------\n", error);
     }
   }, [publicKey, wallet, signMessage, solanaLogin]);
 

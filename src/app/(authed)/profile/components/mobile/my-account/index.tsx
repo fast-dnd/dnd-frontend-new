@@ -31,8 +31,6 @@ const MobileMyAccount = () => {
 
   const { account, statistics } = user;
 
-  console.log(publicKey?.toString());
-
   return (
     <div className="flex flex-1 flex-col gap-4">
       <div className="flex w-full gap-4">

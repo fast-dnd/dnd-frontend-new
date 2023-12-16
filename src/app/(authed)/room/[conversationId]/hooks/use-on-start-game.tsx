@@ -1,6 +1,8 @@
+import { WalletError } from "@solana/wallet-adapter-base";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Transaction } from "@solana/web3.js";
 import bs58 from "bs58";
+import { toast } from "sonner";
 
 import useCommunity from "@/hooks/helpers/use-community";
 import roomService from "@/services/room-service";
@@ -25,6 +27,7 @@ const useOnStartGame = ({ conversationId }: { conversationId: string }) => {
         const serializedTx = bs58.encode(signedTx.serialize());
         startGame({ conversationId, transaction: serializedTx });
       } catch (err) {
+        if (err instanceof WalletError) toast.error(err.message);
         console.log("Error starting game:\n--------------------------\n", err);
       }
     }

@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { WalletError } from "@solana/wallet-adapter-base";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Transaction } from "@solana/web3.js";
 import { AxiosError } from "axios";
 import bs58 from "bs58";
 import { MdEdit } from "react-icons/md";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import StatusModal, { StatusModalContent } from "@/components/status-modal";
@@ -105,7 +107,8 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
                 },
               );
             } catch (err) {
-              console.log("Error creating dungeon:\n--------------------------\n", err);
+              if (err instanceof WalletError) toast.error(err.message);
+              else console.log("Error creating dungeon:\n--------------------------\n", err);
             }
           },
           onError: (err) => {
