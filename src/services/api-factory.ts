@@ -55,8 +55,9 @@ const createApi = (options: IApiOptions) => {
 
 export default createApi;
 
-export const BACKEND_URL = "http://192.168.0.17:8080/";
-
-// export const BACKEND_URL = "https://api-dev.v3rpg.com/";
+export const BACKEND_URL =
+  process.env.VERCEL_ENV === "production"
+    ? "https://api-dev.v3rpg.com/"
+    : "https://api-dev-test.v3rpg.com/";
 
 export const PAGINATION_LIMIT = 5;
