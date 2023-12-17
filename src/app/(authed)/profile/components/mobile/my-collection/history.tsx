@@ -1,6 +1,6 @@
+import RoomItem from "@/components/common/room-item";
 import QuillIcon from "@/components/icons/quill-icon";
 import SkeletonIcon from "@/components/icons/skeleton-icon";
-import RoomItem from "@/components/room-item";
 import Spinner from "@/components/ui/spinner";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetRoomHistory from "@/hooks/queries/use-get-room-history";

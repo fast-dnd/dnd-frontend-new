@@ -1,5 +1,5 @@
-import Adventures from "@/components/adventures";
-import GoBackButton from "@/components/go-back-button";
+import Adventures from "@/components/common/adventures";
+import GoBackButton from "@/components/common/go-back-button";
 import { Box } from "@/components/ui/box";
 import { IBaseDungeon } from "@/types/dungeon";
 

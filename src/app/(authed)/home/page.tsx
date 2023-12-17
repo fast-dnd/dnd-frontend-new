@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import GameHistory from "@/components/game-history";
+import GameHistory from "@/components/common/game-history";
 import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { Box } from "@/components/ui/box";
 import useAuth from "@/hooks/helpers/use-auth";

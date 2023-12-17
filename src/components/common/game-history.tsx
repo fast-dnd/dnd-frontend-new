@@ -1,7 +1,7 @@
 "use client";
 
+import RoomItem from "@/components/common/room-item";
 import QuillIcon from "@/components/icons/quill-icon";
-import RoomItem from "@/components/room-item";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 import Spinner from "@/components/ui/spinner";

@@ -1,7 +1,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import queryString from "query-string";
 
-import { tabsWithIcons } from "@/components/tabs-with-icons";
+import { tabsWithIcons } from "@/components/common/tabs-with-icons";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 

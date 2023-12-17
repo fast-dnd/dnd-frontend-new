@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-import GoBackButton from "@/components/go-back-button";
+import GoBackButton from "@/components/common/go-back-button";
 import { Box } from "@/components/ui/box";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { IDungeonDetail } from "@/types/dungeon";

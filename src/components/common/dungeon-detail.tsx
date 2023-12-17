@@ -7,14 +7,14 @@ import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
 
-import { Dungeon } from "@/components/dungeon";
+import { Dungeon } from "@/components/common/dungeon";
 import Skeleton from "@/components/ui/skeleton";
 import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import { IChampion, IMoveMapping } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
-import HelmetIcon from "./icons/helmet-icon";
-import { Button } from "./ui/button";
+import HelmetIcon from "../icons/helmet-icon";
+import { Button } from "../ui/button";
 
 interface IDungeonDetailProps {
   dungeonDetailId: string;

@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 
-import Adventures from "@/components/adventures";
-import CampaignDetail from "@/components/campaign-detail";
-import Campaigns from "@/components/campaigns";
-import DungeonDetail from "@/components/dungeon-detail";
-import GameHistory from "@/components/game-history";
-import GoBackButton from "@/components/go-back-button";
-import Rewards from "@/components/rewards";
+import Adventures from "@/components/common/adventures";
+import CampaignDetail from "@/components/common/campaign-detail";
+import Campaigns from "@/components/common/campaigns";
+import DungeonDetail from "@/components/common/dungeon-detail";
+import GameHistory from "@/components/common/game-history";
+import GoBackButton from "@/components/common/go-back-button";
+import Rewards from "@/components/common/rewards";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";

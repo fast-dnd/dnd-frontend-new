@@ -1,7 +1,7 @@
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
 
-import Rewards from "@/components/rewards";
+import Rewards from "@/components/common/rewards";
 import { cn } from "@/utils/style-utils";
 
 import Adventures from "./adventures";

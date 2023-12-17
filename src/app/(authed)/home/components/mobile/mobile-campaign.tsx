@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-import AddToFavorites from "@/components/add-to-favorites";
+import AddToFavorites from "@/components/common/add-to-favorites";
 import { ICampaign } from "@/types/campaign";
 import { cn } from "@/utils/style-utils";
 

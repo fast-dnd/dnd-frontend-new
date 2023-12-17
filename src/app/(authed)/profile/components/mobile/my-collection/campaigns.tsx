@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Copy } from "iconsax-react";
 
-import DeleteModal from "@/components/delete-modal";
+import DeleteModal from "@/components/common/delete-modal";
 import Spinner from "@/components/ui/spinner";
 import useCopy from "@/hooks/helpers/use-copy";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
