@@ -7,6 +7,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import bs58 from "bs58";
 import { AiOutlineClose } from "react-icons/ai";
 import { toast } from "sonner";
+import { useWindowSize } from "usehooks-ts";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { jibril } from "@/utils/fonts";
@@ -15,6 +16,8 @@ import { cn } from "@/utils/style-utils";
 import useSolanaLogin from "../hooks/use-solana-login";
 
 const SolanaLogin = () => {
+  const { width } = useWindowSize();
+
   const { signMessage, wallet, publicKey, wallets, select, disconnect, connecting } = useWallet();
   const { mutate: solanaLogin } = useSolanaLogin();
 
@@ -88,7 +91,7 @@ const SolanaLogin = () => {
             <DialogClose key={wallet.adapter.name} asChild>
               <button
                 onClick={() => select(wallet.adapter.name)}
-                disabled={wallet.readyState !== "Installed"}
+                disabled={width !== 0 && width > 1024 && wallet.readyState !== "Installed"}
                 className={cn(
                   "flex w-full items-center justify-between rounded-md p-2 pr-6",
                   wallet.readyState === "Installed" && "hover:bg-white/10",
