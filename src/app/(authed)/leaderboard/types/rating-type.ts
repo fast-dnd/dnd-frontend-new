@@ -1,1 +1,1 @@
-export type RatingType = "gameplay" | "influencer" | "contentCreation";
+export type LeaderboardMetricsType = "gameplay" | "influencer" | "contentCreation";

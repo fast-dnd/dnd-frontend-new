@@ -34,11 +34,16 @@ export const statisticsSchema = z.object({
   totalGameplayHours: z.number(),
 });
 
-export const ratingSchema = z.object({
+export const leaderboardMetricsSchema = z.object({
   _id: z.string(),
   communityId: z.string(),
   accountId: z.string(),
   rating: z.object({
+    gameplay: z.number(),
+    influencer: z.number(),
+    contentCreation: z.number(),
+  }),
+  ranking: z.object({
     gameplay: z.number(),
     influencer: z.number(),
     contentCreation: z.number(),

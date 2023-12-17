@@ -15,7 +15,7 @@ import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
 import useGetWeb3Balance from "@/hooks/helpers/use-get-web3-balance";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
-import useGetRating from "@/hooks/queries/use-get-rating";
+import useGetLeaderboardMetrics from "@/hooks/queries/use-get-leaderboard-metrics";
 import { logout } from "@/utils/auth";
 
 const MobileProfile = ({
@@ -26,7 +26,7 @@ const MobileProfile = ({
   const { isDefault, communityId } = useCommunity();
 
   const { publicKey } = useWallet();
-  const { data: rating } = useGetRating();
+  const { data: leaderboardMetrics } = useGetLeaderboardMetrics();
 
   const { user, loggedIn } = useAuth();
 
@@ -44,15 +44,15 @@ const MobileProfile = ({
   const ratings = [
     {
       icon: <FaDice size={20} className="fill-white/50" />,
-      rank: rating?.rating.gameplay,
+      rank: leaderboardMetrics?.rating.gameplay,
     },
     {
       icon: <Star size={20} weight="fill" className="fill-white/50" />,
-      rank: rating?.rating.influencer,
+      rank: leaderboardMetrics?.rating.influencer,
     },
     {
       icon: <PenNib size={20} weight="fill" className="fill-white/50" />,
-      rank: rating?.rating.contentCreation,
+      rank: leaderboardMetrics?.rating.contentCreation,
     },
   ];
 

@@ -3,10 +3,10 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { PAGINATION_LIMIT } from "@/services/api-factory";
 import leaderboardService, { leaderboardKey } from "@/services/leaderboard-service";
 
-import { RatingType } from "../types/rating-type";
+import { LeaderboardMetricsType } from "../types/rating-type";
 
 interface IUseGetLeaderboardProps {
-  filter: RatingType;
+  filter: LeaderboardMetricsType;
   currUserRank?: number;
 }
 
