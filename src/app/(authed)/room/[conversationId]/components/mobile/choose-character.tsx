@@ -59,18 +59,18 @@ const ChooseCharacter = ({
     containerRef.current?.removeAttribute("data-dragging");
     animatedX.stop();
     const currentOffset = offsetX.get();
-    const velocity_delta = Math.abs(velocity) > itemWidth ? -Math.sign(velocity) : 0;
+    const velocityDelta = Math.abs(velocity) > itemWidth ? -Math.sign(velocity) : 0;
     const steps = Math.round(-dragOffset / itemWidth);
 
     if (
-      (steps === 0 && velocity_delta === 0) ||
+      (steps === 0 && velocityDelta === 0) ||
       (!canScrollPrev && dragOffset > 0) ||
       (!canScrollNext && dragOffset < 0)
     ) {
       animatedX.set(currentOffset);
       return;
     }
-    const combined = steps !== 0 ? currentIndex + steps : currentIndex + velocity_delta;
+    const combined = steps !== 0 ? currentIndex + steps : currentIndex + velocityDelta;
 
     const newIndex =
       combined < 0
