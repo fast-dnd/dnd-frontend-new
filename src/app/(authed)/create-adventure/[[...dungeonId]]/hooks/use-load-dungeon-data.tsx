@@ -19,7 +19,9 @@ const useLoadDungeonData = ({ dungeonData }: IUseLoadDungeonDataProps) => {
   const [aborting, setAborting] = useState(false);
 
   useEffect(() => {
-    if (dungeonFormData._id !== dungeonData?._id) {
+    if (!dungeonData && dungeonFormData._id) {
+      dungeonFormStore.dungeonFormData.set(getInitialDungeonFormData());
+    } else if (dungeonFormData._id !== dungeonData?._id) {
       if (dungeonData && !aborting) {
         // editing...
         dungeonFormStore.dungeonFormData.set({
