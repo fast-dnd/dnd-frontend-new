@@ -35,7 +35,6 @@ export const statisticsSchema = z.object({
 });
 
 export const leaderboardMetricsSchema = z.object({
-  _id: z.string(),
   communityId: z.string(),
   accountId: z.string(),
   rating: z.object({
