@@ -50,7 +50,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         <Link
           href={href}
           className={cn(buttonVariants({ variant, className }), disabled && "opacity-50")}
-          target={props.target ?? "_blank"}
+          target={props.target}
         >
           {children}
         </Link>

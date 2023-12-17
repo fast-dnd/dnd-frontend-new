@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { WalletAdapterNetwork, WalletError } from "@solana/wallet-adapter-base";
 import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
 import { PhantomWalletAdapter, SolflareWalletAdapter } from "@solana/wallet-adapter-wallets";
+import { toast } from "sonner";
 
 import { env } from "@/utils/env.mjs";
 
@@ -16,8 +17,7 @@ const CustomWalletProvider = ({ children }: React.PropsWithChildren) => {
   );
 
   const walletConnectionError = (error: WalletError) => {
-    console.log("Wallet Connection Error:\n", error);
-    console.log("Wallet Connection Error:\n", WalletError);
+    toast.error(`Error connecting to wallet:${error.message}`);
   };
 
   return (

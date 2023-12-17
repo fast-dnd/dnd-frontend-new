@@ -52,7 +52,9 @@ const deleteCampaign = async (campaignId: string) => {
 };
 
 const addFavorite = async (campaignId: string) => {
-  return await campaignApi.post("favourite", { campaignId });
+  return await campaignApi
+    .post<{ message: string }>("favourite", { campaignId })
+    .then((res) => res.data);
 };
 
 const addDungeonToCampaign = async (data: { campaignId: string; dungeonId: string }) => {

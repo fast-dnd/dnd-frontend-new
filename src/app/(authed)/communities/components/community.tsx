@@ -46,7 +46,7 @@ const Community = ({ community }: { community: ICommunity }) => {
       </div>
       <div className="px-4 lg:px-8">
         <Button variant="google" className="uppercase" onClick={onJoinCommunity}>
-          {communityId === community._id ? "JOINED" : `EXPLORE ${community.name}`}
+          {communityId === community._id ? "SELECTED" : `EXPLORE ${community.name}`}
         </Button>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { couponSchema, profileSchema, ratingSchema } from "@/validations/account";
+import { couponSchema, leaderboardMetricsSchema, profileSchema } from "@/validations/account";
 
 import createApi from "./api-factory";
 
@@ -16,17 +16,17 @@ const redeemCoupon = async (data: { code: string }) => {
   return await accountApi.post("coupon", data).then((res) => couponSchema.parse(res.data));
 };
 
-const getRating = async (communityId: string) => {
+const getLeaderboardMetrics = async (communityId: string) => {
   return await accountApi
-    .get(`rating?communityId=${communityId}`)
-    .then((res) => ratingSchema.parse(res.data));
+    .get(`leaderboard-metrics?communityId=${communityId}`)
+    .then((res) => leaderboardMetricsSchema.parse(res.data));
 };
 
 const accountService = {
   getAccount,
   editAccount,
   redeemCoupon,
-  getRating,
+  getLeaderboardMetrics,
 };
 
 export default accountService;

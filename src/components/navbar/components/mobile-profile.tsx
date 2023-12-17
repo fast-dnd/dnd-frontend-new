@@ -15,14 +15,18 @@ import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
 import useGetWeb3Balance from "@/hooks/helpers/use-get-web3-balance";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
-import useGetRating from "@/hooks/queries/use-get-rating";
+import useGetLeaderboardMetrics from "@/hooks/queries/use-get-leaderboard-metrics";
 import { logout } from "@/utils/auth";
 
-const MobileProfile = ({}: {}) => {
+const MobileProfile = ({
+  setShopOpen,
+}: {
+  setShopOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { isDefault, communityId } = useCommunity();
 
   const { publicKey } = useWallet();
-  const { data: rating } = useGetRating();
+  const { data: leaderboardMetrics } = useGetLeaderboardMetrics();
 
   const { user, loggedIn } = useAuth();
 
@@ -37,18 +41,18 @@ const MobileProfile = ({}: {}) => {
     logout();
     toast.success("Signed out successfully!");
   };
-  const ratings = [
+  const leaderboardMetricsArr = [
     {
       icon: <FaDice size={20} className="fill-white/50" />,
-      rank: rating?.rating.gameplay,
+      rank: leaderboardMetrics?.rating.gameplay,
     },
     {
       icon: <Star size={20} weight="fill" className="fill-white/50" />,
-      rank: rating?.rating.influencer,
+      rank: leaderboardMetrics?.rating.influencer,
     },
     {
       icon: <PenNib size={20} weight="fill" className="fill-white/50" />,
-      rank: rating?.rating.contentCreation,
+      rank: leaderboardMetrics?.rating.contentCreation,
     },
   ];
 
@@ -84,9 +88,9 @@ const MobileProfile = ({}: {}) => {
             <AiOutlineClose />
           </DialogClose>
         </div>
-        {ratings[0].rank && (
+        {leaderboardMetricsArr[0].rank && (
           <div className="absolute top-4 mb-2 flex gap-5">
-            {ratings.map(({ icon, rank }, index) => (
+            {leaderboardMetricsArr.map(({ icon, rank }, index) => (
               <div
                 key={index}
                 className="relative flex h-12 w-12 flex-col items-center justify-center rounded-full bg-[#232322]"
@@ -108,13 +112,12 @@ const MobileProfile = ({}: {}) => {
                   <div className="flex flex-1 items-center justify-center">
                     {user?.account.coins ?? "-"}
                   </div>
-                  {/* TODO: shop modal */}
-                  <Link
-                    href="/shop"
-                    className="rounded-lg bg-white/10 px-1.5 hover:opacity-70 active:opacity-90"
+                  <DialogClose
+                    onClick={() => setShopOpen(true)}
+                    className="rounded-lg bg-white/10 px-1.5 hover:opacity-70 active:opacity-90 lg:px-2 lg:py-1"
                   >
                     +
-                  </Link>
+                  </DialogClose>
                 </div>
               </div>
               <div className="flex basis-1/2">

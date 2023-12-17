@@ -21,6 +21,9 @@ module.exports = {
       },
       backgroundImage: {
         radialGradient: "radial-gradient(circle at 50%, #ffffff06, transparent 75%)",
+        coinRadialGradient:
+          "radial-gradient(50% 50% at 50% 50%, #DDA133 0%, rgba(221, 161, 51, 0.00) 94.22%)",
+        rewardGradient: "linear-gradient(97deg, #FBBC05 -11.66%, #977000 48.65%, #473500 91.92%)",
       },
       colors: {
         primary: {

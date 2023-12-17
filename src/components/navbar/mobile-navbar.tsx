@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,6 +20,7 @@ import SwordsIcon from "../icons/swords-icon";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import MobileProfile from "./components/mobile-profile";
+import ShopModal from "./components/shop-modal";
 
 interface IMobileNavbarProps {
   className?: string;
@@ -28,6 +30,7 @@ interface IMobileNavbarProps {
 const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const { isDefault, communityId } = useCommunity();
   const { data: currentCommunity } = useGetCurrentCommunity();
+  const [shopOpen, setShopOpen] = useState(false);
 
   const rewardPoolBalance = useGetWeb3Balance({
     tokenAccountAddress: currentCommunity?.rewardPool ?? "",
@@ -41,14 +44,17 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   return (
     <div
       className={cn(
-        "pointer-events-none flex h-16 w-full items-start justify-between bg-gradient-to-b from-black via-black/60 via-60% to-transparent px-4 pt-3 lg:hidden",
+        "pointer-events-none z-[55] flex h-16 w-full items-start justify-between bg-gradient-to-b from-black via-black/60 via-60% to-transparent px-4 pt-3 lg:hidden",
         className,
       )}
     >
       <div className="flex items-center gap-4">
         <BiChevronLeft
-          className={cn("pointer-events-auto mb-1 h-6 w-auto", !onClickBack && "hidden")}
-          onClick={onClickBack}
+          className={cn(
+            "pointer-events-auto mb-1 h-6 w-auto",
+            !onClickBack && !shopOpen && "hidden",
+          )}
+          onClick={shopOpen ? () => setShopOpen(false) : onClickBack}
         />
 
         <Link href="/home" className="pointer-events-auto">
@@ -56,7 +62,8 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
         </Link>
       </div>
       <div className="flex items-center gap-3">
-        <MobileProfile />
+        <MobileProfile setShopOpen={setShopOpen} />
+        <ShopModal open={shopOpen} setOpen={setShopOpen} />
         <Sheet>
           <SheetTrigger className="pointer-events-auto">
             <IoMdMenu className="h-8 w-8" />
@@ -126,6 +133,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                   variant="sidebar"
                   className="gap-4 py-4"
                   href="https://discord.com/invite/36chp8DnzC"
+                  target="_blank"
                 >
                   <FaDiscord className="h-5 w-5 shrink-0" />
                   <p className="flex-1 text-center">JOIN US</p>
@@ -134,7 +142,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
             </div>
 
             {!!currentCommunity && (
-              <div className="flex w-full items-center gap-2 border-t border-white/20 bg-gradient-to-r from-[#FBBC05] from-10% via-[#977000] via-50% to-[#473500] to-90% px-4 py-2">
+              <div className="flex w-full items-center gap-2 border-t border-white/20 bg-rewardGradient px-4 py-2">
                 <Image
                   src={currentCommunity?.rewardPoolImgUrl ?? ""}
                   width={34}
