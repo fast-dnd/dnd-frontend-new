@@ -2,7 +2,7 @@ import queryString from "query-string";
 
 import { leaderboardSchema } from "@/validations/leaderboard";
 
-import { LeaderboardMetricsType } from "@/app/(authed)/leaderboard/types/rating-type";
+import { LeaderboardMetricsType } from "@/app/(authed)/leaderboard/types/leaderboard-metrics-type";
 
 import createApi, { PAGINATION_LIMIT } from "./api-factory";
 

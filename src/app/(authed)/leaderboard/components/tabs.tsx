@@ -4,7 +4,7 @@ import { FaDice } from "react-icons/fa";
 import useGetLeaderboardMetrics from "@/hooks/queries/use-get-leaderboard-metrics";
 import { cn } from "@/utils/style-utils";
 
-import { LeaderboardMetricsType } from "../types/rating-type";
+import { LeaderboardMetricsType } from "../types/leaderboard-metrics-type";
 
 interface ITabsProps {
   selectedLeaderboardMetric: LeaderboardMetricsType;
@@ -14,7 +14,7 @@ interface ITabsProps {
 const Tabs = ({ selectedLeaderboardMetric, setSelectedLeaderboardMetric }: ITabsProps) => {
   const { data: leaderboardMetrics } = useGetLeaderboardMetrics();
 
-  const ratingTabValues = [
+  const leaderboardMetricsTabValues = [
     {
       name: "gameplay",
       icon: (
@@ -63,22 +63,25 @@ const Tabs = ({ selectedLeaderboardMetric, setSelectedLeaderboardMetric }: ITabs
 
   return (
     <div className="flex w-full">
-      {ratingTabValues.map((ratingTabValue, index) => (
+      {leaderboardMetricsTabValues.map((leaderboardMetricsTabValue, index) => (
         <div
           key={index}
           className={cn(
             "relative flex flex-1 cursor-pointer flex-col items-center gap-2 rounded-t-xl border-b-2 border-transparent py-3 transition-all duration-200",
-            ratingTabValue.name === selectedLeaderboardMetric && "border-primary bg-black",
+            leaderboardMetricsTabValue.name === selectedLeaderboardMetric &&
+              "border-primary bg-black",
           )}
-          onClick={() => setSelectedLeaderboardMetric(ratingTabValue.name)}
+          onClick={() => setSelectedLeaderboardMetric(leaderboardMetricsTabValue.name)}
         >
-          {ratingTabValue.icon}
-          <p className="text-3xl font-semibold lg:text-5xl">{ratingTabValue.rank}</p>
-          <p className="text-center text-sm font-light lg:text-base">{ratingTabValue.text}</p>
+          {leaderboardMetricsTabValue.icon}
+          <p className="text-3xl font-semibold lg:text-5xl">{leaderboardMetricsTabValue.rank}</p>
+          <p className="text-center text-sm font-light lg:text-base">
+            {leaderboardMetricsTabValue.text}
+          </p>
           <div
             className={cn(
               "absolute bottom-0 left-1/2 z-20 h-0 w-0 -translate-x-1/2 translate-y-[100%] border-x-[8px] border-t-[10px] border-x-transparent border-t-primary opacity-0 transition-opacity duration-200",
-              ratingTabValue.name === selectedLeaderboardMetric && "opacity-100",
+              leaderboardMetricsTabValue.name === selectedLeaderboardMetric && "opacity-100",
             )}
           />
         </div>

@@ -12,7 +12,7 @@ export type IAccount = z.infer<typeof accountSchema>;
 
 export type IStatistics = z.infer<typeof statisticsSchema>;
 
-export type IRating = z.infer<typeof leaderboardMetricsSchema>;
+export type ILeaderboardMetrics = z.infer<typeof leaderboardMetricsSchema>;
 
 export type IProfile = z.infer<typeof profileSchema>;
 

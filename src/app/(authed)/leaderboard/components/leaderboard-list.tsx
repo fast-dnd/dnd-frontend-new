@@ -9,7 +9,7 @@ import { cn } from "@/utils/style-utils";
 import { ILeaderBoard } from "@/validations/leaderboard";
 
 import useGetLeaderboard from "../hooks/use-get-leaderboard";
-import { LeaderboardMetricsType } from "../types/rating-type";
+import { LeaderboardMetricsType } from "../types/leaderboard-metrics-type";
 import LeaderboardUserCard from "./leaderboard-user";
 
 const LeaderboardList = ({

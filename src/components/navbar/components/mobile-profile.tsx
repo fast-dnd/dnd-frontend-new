@@ -41,7 +41,7 @@ const MobileProfile = ({
     logout();
     toast.success("Signed out successfully!");
   };
-  const ratings = [
+  const leaderboardMetricsArr = [
     {
       icon: <FaDice size={20} className="fill-white/50" />,
       rank: leaderboardMetrics?.rating.gameplay,
@@ -88,9 +88,9 @@ const MobileProfile = ({
             <AiOutlineClose />
           </DialogClose>
         </div>
-        {ratings[0].rank && (
+        {leaderboardMetricsArr[0].rank && (
           <div className="absolute top-4 mb-2 flex gap-5">
-            {ratings.map(({ icon, rank }, index) => (
+            {leaderboardMetricsArr.map(({ icon, rank }, index) => (
               <div
                 key={index}
                 className="relative flex h-12 w-12 flex-col items-center justify-center rounded-full bg-[#232322]"

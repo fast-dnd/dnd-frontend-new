@@ -8,7 +8,7 @@ import { Box } from "@/components/ui/box";
 
 import LeaderboardList from "./components/leaderboard-list";
 import Tabs from "./components/tabs";
-import { LeaderboardMetricsType } from "./types/rating-type";
+import { LeaderboardMetricsType } from "./types/leaderboard-metrics-type";
 
 const Leaderboard = () => {
   const router = useRouter();
