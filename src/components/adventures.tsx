@@ -11,6 +11,10 @@ import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetDungeons from "@/hooks/queries/use-get-dungeons";
 import { IBaseDungeon } from "@/types/dungeon";
 
+import {
+  dungeonFormStore,
+  getInitialDungeonFormData,
+} from "@/app/(authed)/create-adventure/[[...dungeonId]]/stores/dungeon-form-store";
 import { SubTabType } from "@/app/(authed)/home/stores/tab-store";
 
 interface IAdventuresProps {
@@ -148,7 +152,15 @@ const NoAdventures = () => (
         your first adventure. Fill its corridors with challenges, secrets, and tales that
         adventurers yearn to explore!
       </p>
-      <Button href="/create-adventure">CREATE NEW ADVENTURE</Button>
+      <Button
+        onClick={() => {
+          if (dungeonFormStore.dungeonFormData._id.get())
+            dungeonFormStore.dungeonFormData.set(getInitialDungeonFormData());
+        }}
+        href="/create-adventure"
+      >
+        CREATE NEW ADVENTURE
+      </Button>
     </div>
   </div>
 );
