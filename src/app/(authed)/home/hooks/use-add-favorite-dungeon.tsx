@@ -9,10 +9,10 @@ const useAddFavoriteDungeon = () => {
 
   return useMutation({
     mutationFn: dungeonService.addFavorite,
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries([dungeonKey]);
       queryClient.invalidateQueries([accountKey]);
-      toast.success("Adventure added to favorites");
+      toast.success(data.message);
     },
   });
 };

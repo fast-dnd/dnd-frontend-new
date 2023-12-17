@@ -71,7 +71,9 @@ const deleteDungeon = async (dungeonId: string) => {
 };
 
 const addFavorite = async (dungeonId: string) => {
-  return await dungeonApi.post("favourite", { dungeonId });
+  return await dungeonApi
+    .post<{ message: string }>("favourite", { dungeonId })
+    .then((res) => res.data);
 };
 
 const rateDungeon = async (data: IRateDungeon) => {

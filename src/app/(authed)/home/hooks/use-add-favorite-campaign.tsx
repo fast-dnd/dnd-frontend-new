@@ -9,10 +9,10 @@ const useAddFavoriteCampaign = () => {
 
   return useMutation({
     mutationFn: campaignService.addFavorite,
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries([campaignKey]);
       queryClient.invalidateQueries([accountKey]);
-      toast.success("Campaign added to favorites");
+      toast.success(data.message);
     },
   });
 };
