@@ -19,13 +19,6 @@ const useLoadDungeonData = ({ dungeonData }: IUseLoadDungeonDataProps) => {
   const [aborting, setAborting] = useState(false);
 
   useEffect(() => {
-    dungeonFormStore.currentStep.set("General information");
-    if (!dungeonData) {
-      dungeonFormStore.dungeonFormData.set(getInitialDungeonFormData());
-    }
-  }, [dungeonData]);
-
-  useEffect(() => {
     if (dungeonFormData._id !== dungeonData?._id) {
       if (dungeonData && !aborting) {
         // editing...
