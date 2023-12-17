@@ -39,6 +39,10 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
       <head>
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="theme-color" content="#FF5A5A" />
+        <meta
+          name="robots"
+          content={process.env.VERCEL_ENV === "production" ? "all" : "noindex,nofollow"}
+        />
       </head>
 
       <HotjarAnalytics />
