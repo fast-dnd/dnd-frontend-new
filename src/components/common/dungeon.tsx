@@ -49,8 +49,8 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
     return (
       <div
         className={cn(
-          "flex w-full cursor-pointer gap-8 rounded-md p-4 hover:bg-white/5",
-          isAddedToCampaign && "border-2 border-primary",
+          "flex w-full cursor-pointer gap-8 rounded-md border-2 border-transparent p-4 transition-all duration-200 hover:bg-white/5",
+          isAddedToCampaign && "border-primary",
         )}
         onClick={onClick}
         ref={ref}
