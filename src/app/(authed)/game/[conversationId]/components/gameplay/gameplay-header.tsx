@@ -2,7 +2,7 @@ import { CloseCircle } from "iconsax-react";
 import { AiOutlineExclamationCircle, AiOutlineQuestionCircle } from "react-icons/ai";
 
 import Spinner from "@/components/ui/spinner";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip } from "@/components/ui/tooltip";
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
@@ -29,34 +29,22 @@ const GamePlayHeader = ({ title }: { title: string }) => {
 
       <div className="flex shrink-0 items-center gap-4">
         <Spinner className={cn("m-0 h-5 w-5 shrink-0 opacity-0", loading && "opacity-50")} />
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger
-              onClick={onClickHowTo}
-              className="text-2xl text-white/50 transition-all duration-200 hover:text-white"
-              aria-label="How to play"
-            >
-              <AiOutlineQuestionCircle />
-            </TooltipTrigger>
-            <TooltipContent side="bottom" className="mt-2">
-              <p>How to play</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger
-              onClick={onClickFeedback}
-              className="text-2xl text-white/50 transition-all duration-200 hover:text-white"
-              aria-label="Feedback"
-            >
-              <AiOutlineExclamationCircle />
-            </TooltipTrigger>
-            <TooltipContent side="bottom" className="mt-2">
-              <p>Feedback</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip
+          content="How to play"
+          triggerClassName="text-2xl text-white/50 transition-all duration-200 hover:text-white"
+          position="bottom"
+        >
+          <AiOutlineQuestionCircle />
+        </Tooltip>
+
+        <Tooltip
+          content="Feedback"
+          triggerClassName="text-2xl text-white/50 transition-all duration-200 hover:text-white"
+          position="bottom"
+        >
+          <AiOutlineExclamationCircle />
+        </Tooltip>
+
         <div
           className="flex cursor-pointer gap-2 rounded-md bg-white/5 px-4 py-3 uppercase text-white/50 opacity-80 transition-all duration-200 hover:opacity-100"
           onClick={onClickHome}

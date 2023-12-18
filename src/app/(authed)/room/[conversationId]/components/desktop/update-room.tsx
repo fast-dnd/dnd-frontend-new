@@ -4,7 +4,7 @@ import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip } from "@/components/ui/tooltip";
 import useCommunity from "@/hooks/helpers/use-community";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IDungeonDetail } from "@/types/dungeon";
@@ -116,26 +116,17 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
         ))}
       </ToggleGroup>
 
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              className="px-8 uppercase"
-              disabled={!isAdmin || !canBegin || gameStarting}
-              isLoading={isGameStarting || gameStarting}
-              onClick={onStartGame}
-            >
-              START ({roomData.price.toFixed(isDefault ? 0 : 5)}{" "}
-              {isDefault ? "coins" : currentCommunity?.currencyName})
-            </Button>
-          </TooltipTrigger>
-          {!canBegin && (
-            <TooltipContent>
-              <p>Wait for all players to choose their role and avatar</p>
-            </TooltipContent>
-          )}
-        </Tooltip>
-      </TooltipProvider>
+      <Tooltip content="Wait for all players to choose their role and avatar" disabled={canBegin}>
+        <Button
+          className="px-8 uppercase"
+          disabled={!isAdmin || !canBegin || gameStarting}
+          isLoading={isGameStarting || gameStarting}
+          onClick={onStartGame}
+        >
+          START ({roomData.price.toFixed(isDefault ? 0 : 5)}{" "}
+          {isDefault ? "coins" : currentCommunity?.currencyName})
+        </Button>
+      </Tooltip>
     </div>
   );
 };

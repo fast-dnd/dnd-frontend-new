@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { useOnClickOutside } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
+import { Tooltip } from "@/components/ui/tooltip";
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
 import useGetWeb3Balance from "@/hooks/helpers/use-get-web3-balance";
@@ -18,7 +19,6 @@ import { cn } from "@/utils/style-utils";
 
 import DiamondDMCurrencyIcon from "../../icons/diamond-dm-currency-icon";
 import GoldCoinIcon from "../../icons/gold-coin-icon";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip";
 import ShopModal from "./shop-modal";
 
 const ProfileDropdown = () => {
@@ -114,41 +114,25 @@ const ProfileDropdown = () => {
             <>
               {isDefault ? (
                 <div className="flex items-center justify-between gap-2">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div className="flex w-full items-center justify-between gap-2 rounded-lg bg-primary-900 px-1.5 py-2.5">
-                          <GoldCoinIcon className="h-5 w-5" />
-                          <p className="font-bold">{user?.account.coins}</p>
-                          <div
-                            onClick={() => setShopOpen(true)}
-                            className="cursor-pointer rounded-lg bg-white/10 px-1.5 hover:opacity-70 active:opacity-90 lg:px-2 lg:py-1"
-                          >
-                            +
-                          </div>
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent side="bottom">Coins used for creating games</TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  <Tooltip content="Coins used for creating games" position="bottom">
+                    <div className="flex w-full items-center justify-between gap-2 rounded-lg bg-primary-900 px-1.5 py-2.5">
+                      <GoldCoinIcon className="h-5 w-5" />
+                      <p className="font-bold">{user?.account.coins}</p>
+                      <div
+                        onClick={() => setShopOpen(true)}
+                        className="cursor-pointer rounded-lg bg-white/10 px-1.5 hover:opacity-70 active:opacity-90 lg:px-2 lg:py-1"
+                      >
+                        +
+                      </div>
+                    </div>
+                  </Tooltip>
 
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary-900 px-1.5 py-3">
-                          <DiamondDMCurrencyIcon className="h-5 w-5" />
-                          <p className="font-bold">{user?.account.dmCurrency}</p>
-                          {/* <Link
-                            href="/shop"
-                            className="rounded-lg bg-white/10 px-2 py-1 hover:opacity-70 active:opacity-90"
-                          >
-                            +
-                          </Link> */}
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent side="bottom">DM Coins, Cooming Soon!</TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  <Tooltip content="DM Coins, Cooming Soon!" position="bottom" className="w-full">
+                    <div className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary-900 px-1.5 py-3">
+                      <DiamondDMCurrencyIcon className="h-5 w-5" />
+                      <p className="font-bold">{user?.account.dmCurrency}</p>
+                    </div>
+                  </Tooltip>
                 </div>
               ) : (
                 <Button

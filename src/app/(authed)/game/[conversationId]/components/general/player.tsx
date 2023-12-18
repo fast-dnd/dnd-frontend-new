@@ -4,7 +4,7 @@ import { HiSparkles } from "react-icons/hi";
 import { VscHeartFilled } from "react-icons/vsc";
 
 import SkullIcon from "@/components/icons/skull-icon";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip } from "@/components/ui/tooltip";
 import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
@@ -12,6 +12,28 @@ import { gameStore } from "../../stores/game-store";
 
 const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: boolean }) => {
   const statusUpdate = gameStore.statusUpdate.use();
+
+  const getClassName = (type: "health" | "bonus" | "mana") => {
+    const commonClassName =
+      "mr-4 flex cursor-default items-center gap-1 text-sm transition-colors duration-500 lg:gap-2 lg:text-lg ";
+
+    if (!currentPlayer || !statusUpdate) return commonClassName;
+
+    if (type === "health") {
+      if (statusUpdate.gainedHealth) return commonClassName + "text-green-500";
+      if (statusUpdate.lostHealth) return commonClassName + "text-red-500";
+    }
+
+    if (type === "bonus") {
+      if (statusUpdate.bonus) return commonClassName + "text-fuchsia-500";
+    }
+
+    if (type === "mana") {
+      if (statusUpdate.mana) return commonClassName + "text-cyan-500";
+    }
+
+    return commonClassName;
+  };
 
   return (
     <div className="relative flex gap-4 lg:gap-6">
@@ -50,68 +72,34 @@ const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: bo
         </p>
         <div className="flex lg:gap-4">
           <div>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger
-                  disabled={player.health <= 0}
-                  className={cn(
-                    "mr-4 flex cursor-default items-center gap-1 text-sm transition-colors duration-500 lg:gap-2 lg:text-lg",
-                    !!currentPlayer &&
-                      !!statusUpdate &&
-                      !!statusUpdate.gainedHealth &&
-                      "text-green-500",
-                    !!currentPlayer &&
-                      !!statusUpdate &&
-                      !!statusUpdate.lostHealth &&
-                      "text-red-500",
-                  )}
-                >
-                  <VscHeartFilled />
-                  <span className="mt-0.5">{Math.max(0, player.health)}</span>
-                </TooltipTrigger>
-                <TooltipContent className="max-lg:hidden">
-                  <p>Health</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Tooltip
+              content="Health - if it reaches 0, you lose"
+              disabled={player.health <= 0}
+              triggerClassName={getClassName("health")}
+            >
+              <VscHeartFilled />
+              <span className="mt-0.5">{Math.max(0, player.health)}</span>
+            </Tooltip>
           </div>
           <div>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger
-                  disabled={player.health <= 0}
-                  className={cn(
-                    "mr-4 flex cursor-default items-center gap-1 text-sm transition-colors duration-500 lg:gap-2 lg:text-lg",
-                    !!currentPlayer && !!statusUpdate && !!statusUpdate.bonus && "text-fuchsia-500",
-                  )}
-                >
-                  <BsFillLightningFill />
-                  <span className="mt-0.5">{player.bonusForNextRound}</span>
-                </TooltipTrigger>
-                <TooltipContent className="max-lg:hidden">
-                  <p>Bonus - will be applied on next roll</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Tooltip
+              content="Bonus - will be applied on next roll"
+              disabled={player.health <= 0}
+              triggerClassName={getClassName("bonus")}
+            >
+              <BsFillLightningFill />
+              <span className="mt-0.5">{player.bonusForNextRound}</span>
+            </Tooltip>
           </div>
           <div>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger
-                  disabled={player.health <= 0}
-                  className={cn(
-                    "mr-4 flex cursor-default items-center gap-1 text-sm transition-colors duration-500 lg:gap-2 lg:text-lg",
-                    !!currentPlayer && !!statusUpdate && !!statusUpdate.mana && "text-cyan-500",
-                  )}
-                >
-                  <HiSparkles />
-                  <span className="mt-0.5">{player.mana}</span>
-                </TooltipTrigger>
-                <TooltipContent className="max-lg:hidden">
-                  <p>Mana - can be used on any roll</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Tooltip
+              content="Mana - can be used on any roll"
+              disabled={player.health <= 0}
+              triggerClassName={getClassName("mana")}
+            >
+              <HiSparkles />
+              <span className="mt-0.5">{player.mana}</span>
+            </Tooltip>
           </div>
         </div>
       </div>

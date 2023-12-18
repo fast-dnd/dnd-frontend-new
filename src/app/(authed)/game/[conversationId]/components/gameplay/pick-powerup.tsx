@@ -1,15 +1,13 @@
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { HiSparkles } from "react-icons/hi";
-import { useMediaQuery } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip } from "@/components/ui/tooltip";
 import { cn } from "@/utils/style-utils";
 
 import { moveStore } from "../../stores/move-store";
 
 const PickPowerup = ({ currentMana }: { currentMana: number }) => {
-  const isMobileTablet = useMediaQuery("(max-width: 1024px)");
   const powerup = moveStore.powerup.use();
   const canPlay = moveStore.canPlay.use();
 
@@ -29,22 +27,17 @@ const PickPowerup = ({ currentMana }: { currentMana: number }) => {
       >
         <FiMinus />
       </Button>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger
-            disabled={isMobileTablet}
-            className="flex cursor-default items-center gap-1 text-xs font-semibold lg:gap-2.5 lg:text-xl"
-          >
-            <span className="mt-0.5">{powerup}</span> <HiSparkles />
-          </TooltipTrigger>
-          <TooltipContent>
-            <div className="flex flex-col items-center p-4 text-center">
-              <p className="text-lg font-semibold">Select mana boost</p>
-              <p>This will power up your luck</p>
-            </div>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <Tooltip
+        content={
+          <div className="flex flex-col items-center p-4 text-center">
+            <p className="text-lg font-semibold">Select mana boost</p>
+            <p>This will power up your luck</p>
+          </div>
+        }
+        triggerClassName="flex cursor-default items-center gap-1 text-xs font-semibold lg:gap-2.5 lg:text-xl"
+      >
+        <span className="mt-0.5">{powerup}</span> <HiSparkles />
+      </Tooltip>
 
       <Button
         variant="ghost"
