@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { AiOutlineClose } from "react-icons/ai";
 import { useMediaQuery } from "usehooks-ts";
@@ -7,6 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { jibril } from "@/utils/fonts";
 
+import useCreateCheckout from "../hooks/use-create-checkout";
+import useGetProducts from "../hooks/use-get-products";
+import useShowPaymentToast from "../hooks/use-show-payment-toast";
+
 const ShopModal = ({
   open,
   setOpen,
@@ -14,11 +19,20 @@ const ShopModal = ({
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const router = useRouter();
+
+  const { data: products } = useGetProducts();
+
+  const { mutate: createCheckout, isLoading } = useCreateCheckout();
+
   const isMobileTablet = useMediaQuery("(max-width: 1024px)");
+
+  useShowPaymentToast();
 
   const offers = [
     {
-      tokenAmount: 100,
+      tokenAmount: "100",
+      priceId: products?.products.find((product) => product.name === "100")?.default_price,
       price: 1,
       image: (
         <Image
@@ -31,7 +45,8 @@ const ShopModal = ({
       ),
     },
     {
-      tokenAmount: 550,
+      tokenAmount: "550",
+      priceId: products?.products.find((product) => product.name === "550")?.default_price,
       price: 5,
       image: (
         <Image
@@ -46,7 +61,8 @@ const ShopModal = ({
       discount: 10,
     },
     {
-      tokenAmount: 1200,
+      tokenAmount: "1200",
+      priceId: products?.products.find((product) => product.name === "1200")?.default_price,
       price: 10,
       image: (
         <Image
@@ -61,6 +77,17 @@ const ShopModal = ({
       discount: 20,
     },
   ];
+
+  const onCreateCheckout = async (tokenAmount: string) => {
+    const priceId = offers.find((offer) => offer.tokenAmount === tokenAmount)?.priceId;
+    if (!priceId) return;
+
+    createCheckout(
+      { priceId, quantity: 1 },
+      { onSuccess: (data) => router.push(data.session.url) },
+    );
+  };
+
   return (
     <Dialog
       open={open}
@@ -106,8 +133,14 @@ const ShopModal = ({
                 <p className="font-light leading-none lg:text-xl">Tokens</p>
               </div>
             </div>
-            {/* TODO */}
-            <Button className="max-lg:leading-none lg:w-64">${offer.price}</Button>
+
+            <Button
+              className="max-lg:leading-none lg:w-64"
+              onClick={() => onCreateCheckout(offer.tokenAmount)}
+              disabled={isLoading}
+            >
+              ${offer.price}
+            </Button>
           </div>
         ))}
       </DialogContent>
