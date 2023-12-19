@@ -10,7 +10,6 @@ import { jibril } from "@/utils/fonts";
 
 import useCreateCheckout from "../hooks/use-create-checkout";
 import useGetProducts from "../hooks/use-get-products";
-import useShowPaymentToast from "../hooks/use-show-payment-toast";
 
 const ShopModal = ({
   open,
@@ -26,8 +25,6 @@ const ShopModal = ({
   const { mutate: createCheckout, isLoading } = useCreateCheckout();
 
   const isMobileTablet = useMediaQuery("(max-width: 1024px)");
-
-  useShowPaymentToast();
 
   const offers = [
     {
