@@ -1,19 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+import { useIsClient } from "usehooks-ts";
 
 const useShowPaymentToast = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const initialized = useRef(false);
+  const isClient = useIsClient();
 
   useEffect(() => {
-    if (!initialized.current) {
-      initialized.current = true;
-      return;
-    }
+    if (!isClient) return;
 
     const payment = searchParams.get("payment");
 
@@ -25,7 +23,7 @@ const useShowPaymentToast = () => {
     const timeout = setTimeout(() => router.replace(pathname), 1000);
 
     return () => clearTimeout(timeout);
-  }, [pathname, router, searchParams]);
+  }, [isClient, pathname, router, searchParams]);
 
   return <div>useShowPaymentToast</div>;
 };
