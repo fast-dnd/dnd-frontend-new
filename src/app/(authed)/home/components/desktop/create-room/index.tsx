@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 
-import Adventures from "@/components/adventures";
-import CampaignDetail from "@/components/campaign-detail";
-import Campaigns from "@/components/campaigns";
-import DungeonDetail from "@/components/dungeon-detail";
-import GoBackButton from "@/components/go-back-button";
+import Adventures from "@/components/common/adventures";
+import CampaignDetail from "@/components/common/campaign-detail";
+import Campaigns from "@/components/common/campaigns";
+import DungeonDetail from "@/components/common/dungeon-detail";
+import GoBackButton from "@/components/common/go-back-button";
 import { Box } from "@/components/ui/box";
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";

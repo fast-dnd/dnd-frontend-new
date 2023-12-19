@@ -1,9 +1,8 @@
-import React from "react";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import { Tooltip } from "@/components/ui/tooltip";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { jibril } from "@/utils/fonts";
 
@@ -12,21 +11,15 @@ const ClaimRewardModal = () => {
 
   return (
     <Dialog>
-      <div className="w-full rounded-b-md text-sm font-bold tracking-wider transition-all duration-300 lg:rounded-md lg:border-2 lg:text-xl lg:tracking-normal">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild disabled>
-              <DialogTrigger asChild disabled>
-                <Button className="w-full uppercase" disabled>
-                  claim reward
-                </Button>
-              </DialogTrigger>
-            </TooltipTrigger>
-            <TooltipContent className="w-56 font-normal">
-              In case you were one of the 10 top players this week, you will receive a reward.
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+      <div className="w-full rounded-b-md text-sm font-bold tracking-wider transition-all duration-300 lg:rounded-md lg:text-xl lg:tracking-normal">
+        <Tooltip
+          content="In case you were one of the 10 top players this week, you will receive a reward."
+          triggerClassName="mx-0"
+        >
+          <Button className="w-full uppercase" disabled>
+            claim reward
+          </Button>
+        </Tooltip>
       </div>
       <DialogContent className="flex flex-col gap-12 border border-white/10 bg-black p-8">
         <div className="flex flex-col gap-4">

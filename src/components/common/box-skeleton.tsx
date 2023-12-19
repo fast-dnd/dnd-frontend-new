@@ -3,7 +3,7 @@ import React from "react";
 import { Box } from "@/components/ui/box";
 import Skeleton from "@/components/ui/skeleton";
 
-import MobileNavbar from "./navbar/mobile-navbar";
+import MobileNavbar from "../navbar/mobile-navbar";
 
 const BoxSkeleton = ({ title }: { title: string }) => {
   return (

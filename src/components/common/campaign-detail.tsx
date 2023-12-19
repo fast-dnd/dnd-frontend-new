@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-import { Dungeon } from "@/components/dungeon";
+import { Dungeon } from "@/components/common/dungeon";
 import Skeleton from "@/components/ui/skeleton";
 import useGetCampaign from "@/hooks/queries/use-get-campaign";
 

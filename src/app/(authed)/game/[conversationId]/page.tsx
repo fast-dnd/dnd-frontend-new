@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import HowToPlay from "@/components/how-to-play";
+import HowToPlay from "@/components/common/how-to-play";
 import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { cn } from "@/utils/style-utils";
 

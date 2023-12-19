@@ -8,7 +8,7 @@ import { MdEdit } from "react-icons/md";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import StatusModal, { StatusModalContent } from "@/components/status-modal";
+import StatusModal, { StatusModalContent } from "@/components/common/status-modal";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import useCommunity from "@/hooks/helpers/use-community";

@@ -3,7 +3,7 @@ import { GoGift } from "react-icons/go";
 
 import useRedeemCoupon from "@/hooks/mutations/use-redeem-coupon";
 
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
@@ -12,8 +12,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
-import { Input } from "./ui/input";
+} from "../ui/dialog";
+import { Input } from "../ui/input";
 
 const ClaimRewardModal = () => {
   const [code, setCode] = React.useState("");

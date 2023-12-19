@@ -3,7 +3,7 @@ import { Copy } from "iconsax-react";
 
 import useCopy from "@/hooks/helpers/use-copy";
 
-import HelmetIcon from "./icons/helmet-icon";
+import HelmetIcon from "../icons/helmet-icon";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,7 +11,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "./ui/alert-dialog";
+} from "../ui/alert-dialog";
 
 export type StatusModalContent =
   | {

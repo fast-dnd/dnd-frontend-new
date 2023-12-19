@@ -2,7 +2,7 @@
 
 import { useDebounce } from "usehooks-ts";
 
-import { Campaign } from "@/components/campaign";
+import { Campaign } from "@/components/common/campaign";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 import Spinner from "@/components/ui/spinner";

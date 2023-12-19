@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FiUpload } from "react-icons/fi";
 
-import GoBackButton from "@/components/go-back-button";
+import GoBackButton from "@/components/common/go-back-button";
 import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";

@@ -1,4 +1,4 @@
-import Rewards from "@/components/rewards";
+import Rewards from "@/components/common/rewards";
 import { Button } from "@/components/ui/button";
 import { IReward } from "@/types/reward";
 

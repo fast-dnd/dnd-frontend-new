@@ -13,7 +13,7 @@ import {
   getInitialDungeonFormData,
 } from "@/app/(authed)/create-adventure/[[...dungeonId]]/stores/dungeon-form-store";
 
-import ClaimRewardModal from "../claim-reward-modal";
+import ClaimRewardModal from "../common/claim-reward-modal";
 import ProfileDropdown from "./components/profile-dropdown";
 import RewardPool from "./components/reward-pool";
 

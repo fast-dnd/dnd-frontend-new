@@ -3,7 +3,7 @@
 import React from "react";
 import { useDebounce } from "usehooks-ts";
 
-import { Dungeon } from "@/components/dungeon";
+import { Dungeon } from "@/components/common/dungeon";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 import Spinner from "@/components/ui/spinner";

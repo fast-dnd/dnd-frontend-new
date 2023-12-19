@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Game, Star1 } from "iconsax-react";
 
-import AddToFavorites from "@/components/add-to-favorites";
+import AddToFavorites from "@/components/common/add-to-favorites";
 import { IBaseDungeon } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 

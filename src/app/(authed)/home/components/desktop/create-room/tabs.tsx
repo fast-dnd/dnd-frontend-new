@@ -1,6 +1,6 @@
 import React from "react";
 
-import { tabsWithIcons } from "@/components/tabs-with-icons";
+import { tabsWithIcons } from "@/components/common/tabs-with-icons";
 import { Input } from "@/components/ui/input";
 import {
   Select,

@@ -12,10 +12,10 @@ import "@/styles/zoom.css";
 
 import { Metadata } from "next";
 
-import Background from "@/components/background";
-import CookieBanner from "@/components/cookie-banner";
-import GoogleAnalytics from "@/components/google-analytics";
-import HotjarAnalytics from "@/components/hotjar-analytics";
+import Background from "@/components/common/background";
+import CookieBanner from "@/components/common/cookie-banner";
+import GoogleAnalytics from "@/components/common/google-analytics";
+import HotjarAnalytics from "@/components/common/hotjar-analytics";
 import DesktopNavbar from "@/components/navbar/desktop-navbar";
 
 export const metadata: Metadata = {
