@@ -1,44 +1,18 @@
-import { useCallback, useEffect } from "react";
 import Image from "next/image";
 import { Wallet } from "@phosphor-icons/react";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { WalletError } from "@solana/wallet-adapter-base";
 import { useWallet } from "@solana/wallet-adapter-react";
-import bs58 from "bs58";
 import { AiOutlineClose } from "react-icons/ai";
-import { toast } from "sonner";
 import { useWindowSize } from "usehooks-ts";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
-import useSolanaLogin from "../hooks/use-solana-login";
-
 const SolanaLogin = () => {
   const { width } = useWindowSize();
 
-  const { signMessage, wallet, publicKey, wallets, select, disconnect, connecting } = useWallet();
-  const { mutate: solanaLogin } = useSolanaLogin();
-
-  const handleSignMessage = useCallback(async () => {
-    if (!publicKey || !wallet || !signMessage) return;
-
-    try {
-      const encodedMessage = new TextEncoder().encode("I want to connect my wallet to v3rpg");
-      const signedMessage = await signMessage(encodedMessage);
-      const signature = bs58.encode(signedMessage);
-
-      solanaLogin({ signature, walletAddress: publicKey });
-    } catch (error) {
-      if (error instanceof WalletError) toast.error(error.message);
-      else console.log("Error signing message\n----------------------\n", error);
-    }
-  }, [publicKey, wallet, signMessage, solanaLogin]);
-
-  useEffect(() => {
-    if (publicKey) handleSignMessage();
-  }, [publicKey, handleSignMessage]);
+  const { publicKey, wallets, select, disconnect, connecting } = useWallet();
 
   return (
     <Dialog>
