@@ -1,9 +1,14 @@
 "use client";
 
+import { useCallback, useEffect } from "react";
 import Image from "next/image";
 import { useGoogleLogin } from "@react-oauth/google";
+import { WalletError } from "@solana/wallet-adapter-base";
+import { useWallet } from "@solana/wallet-adapter-react";
+import bs58 from "bs58";
 import { Game } from "iconsax-react";
 import { FaGoogle } from "react-icons/fa";
+import { toast } from "sonner";
 
 import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { Button } from "@/components/ui/button";
@@ -12,15 +17,36 @@ import { cn } from "@/utils/style-utils";
 import SolanaLogin from "./components/solana-login";
 import useLogin from "./hooks/use-login";
 import useSlides from "./hooks/use-slides";
+import useSolanaLogin from "./hooks/use-solana-login";
 import { slides } from "./utils/slides";
 
 const Login = () => {
   const [current, setCurrent] = useSlides();
+  const { signMessage, wallet, publicKey, wallets, select, disconnect, connecting } = useWallet();
   const { mutate: login } = useLogin();
+  const { mutate: solanaLogin } = useSolanaLogin();
 
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => login({ credential: tokenResponse.access_token }),
   });
+  const handleSignMessage = useCallback(async () => {
+    if (!publicKey || !wallet || !signMessage) return;
+
+    try {
+      const encodedMessage = new TextEncoder().encode("I want to connect my wallet to v3rpg");
+      const signedMessage = await signMessage(encodedMessage);
+      const signature = bs58.encode(signedMessage);
+
+      solanaLogin({ signature, walletAddress: publicKey });
+    } catch (error) {
+      if (error instanceof WalletError) toast.error(error.message);
+      else console.log("Error signing message\n----------------------\n", error);
+    }
+  }, [publicKey, wallet, signMessage, solanaLogin]);
+
+  useEffect(() => {
+    if (publicKey) handleSignMessage();
+  }, [publicKey, handleSignMessage]);
 
   return (
     <div className="fixed inset-0 flex h-full items-end justify-center">
