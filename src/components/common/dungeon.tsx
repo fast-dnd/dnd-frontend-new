@@ -123,7 +123,7 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
             <div className="flex flex-wrap gap-2 lg:gap-4">
               {dungeon.tags.map((tag) => (
                 <div key={tag} className="rounded-md border border-white/25">
-                  <p className="px-1.5 py-1 text-sm capitalize tracking-[2.1px] lg:px-3">{tag}</p>
+                  <p className="px-1.5 py-1 text-sm capitalize tracking-widest lg:px-3">{tag}</p>
                 </div>
               ))}
             </div>
