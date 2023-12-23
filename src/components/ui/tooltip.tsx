@@ -7,7 +7,7 @@ const tooltipArrowVariants = cva("absolute hidden border-[6px] group-hover:inlin
   variants: {
     position: {
       top: "bottom-full left-1/2 -translate-x-1/2 border-b-0 border-x-transparent border-t-black",
-      "top left":
+      "top align-right":
         "bottom-full left-1/2 -translate-x-1/2 border-b-0 border-x-transparent border-t-black",
       bottom: "left-1/2 top-full -translate-x-1/2 border-t-0 border-x-transparent border-b-black",
       left: "right-full top-1/2 -translate-y-1/2 border-r-0 border-y-transparent border-l-black",
@@ -25,7 +25,7 @@ const tooltipContentVariants = cva(
     variants: {
       position: {
         top: "bottom-[calc(100%+5px)] left-1/2 -translate-x-1/2",
-        "top left": "bottom-[calc(100%+5px)] -translate-x-2/3",
+        "top align-right": "bottom-[calc(100%+5px)] right-0",
         bottom: "left-1/2 top-[calc(100%+5px)] -translate-x-1/2",
         left: "right-[calc(100%+5px)] top-1/2 -translate-y-1/2",
         right: "left-[calc(100%+5px)] top-1/2 -translate-y-1/2",
