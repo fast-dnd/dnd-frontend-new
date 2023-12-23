@@ -136,7 +136,7 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
                   <p className="text-xl font-bold">{dungeon.maxPlayers}</p>
                 </div>
               </Tooltip>
-              <Tooltip content="Rating (Number of reviews)">
+              <Tooltip position="top left" content="Rating (Number of reviews)">
                 <div className="flex items-center gap-2">
                   <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
                     <Star1 variant="Bold" color="#FF5A5A" />
