@@ -50,7 +50,7 @@ export const baseDungeonSchema = z.object({
   background: rewardSchema.nullable(),
   type: z.enum(["standard", "nft"]),
   communityId: z.string().optional(),
-  creatorWalletAddress: z.string().optional(),
+  creatorWalletAddress: z.string().nullish(),
   transaction: z.string().optional(),
 });
 
@@ -65,6 +65,7 @@ export const dungeonDetailSchema = baseDungeonSchema.extend({
   realityLevel: z.number().min(0).max(100),
   actionLevel: z.number().min(0).max(100),
   misteryLevel: z.number().min(0).max(100),
+  adventureTreasuryAddress: z.string().optional(),
 });
 
 export const dungeonForBackendSchema = dungeonDetailSchema

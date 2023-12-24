@@ -20,6 +20,8 @@ import Tabs from "./tabs";
 const CreateRoom = () => {
   const { isDefault } = useCommunity();
 
+  const { loggedIn } = useAuth();
+
   const subTab = tabStore.subTab.use();
 
   const activeBaseTab = tabStore.baseTab.use();
@@ -34,7 +36,7 @@ const CreateRoom = () => {
     else if (dungeonDetailId) setDungeonDetailId(undefined);
     else if (campaignDetailId) setCampaignDetailId(undefined);
   };
-  const { loggedIn } = useAuth();
+
   return (
     <Box
       title="CREATE ROOM"

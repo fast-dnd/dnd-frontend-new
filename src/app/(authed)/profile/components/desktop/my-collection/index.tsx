@@ -29,7 +29,7 @@ const MyCollection = ({ activeTab }: { activeTab: Tab }) => {
       {!!dungeonDetailId && (
         <>
           <GoBackButton onClick={() => setDungeonDetailId(undefined)} />
-          <DungeonDetail dungeonDetailId={dungeonDetailId} />
+          <DungeonDetail dungeonDetailId={dungeonDetailId} isOwned />
           <div className="flex justify-end">
             <Button
               className="w-fit whitespace-nowrap"
