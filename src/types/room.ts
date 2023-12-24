@@ -1,7 +1,7 @@
 import { PublicKey } from "@solana/web3.js";
 import { z } from "zod";
 
-import { DungeonDuration } from "@/utils/dungeon-options";
+import { DungeonDuration } from "@/utils/dungeon/dungeon-options";
 import {
   defaultMoveSchema,
   gameStateSchema,

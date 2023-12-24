@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { dungeonDurationsArray } from "@/utils/dungeon-options";
+import { dungeonDurationsArray } from "@/utils/dungeon/dungeon-options";
 
 import { championSchema } from "./dungeon";
 

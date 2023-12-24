@@ -9,7 +9,7 @@ import useCommunity from "@/hooks/helpers/use-community";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
-import { DungeonDuration, dungeonDurations } from "@/utils/dungeon-options";
+import { DungeonDuration, dungeonDurations } from "@/utils/dungeon/dungeon-options";
 
 import useOnRoomChange from "../../hooks/use-on-room-change";
 import useOnStartGame from "../../hooks/use-on-start-game";

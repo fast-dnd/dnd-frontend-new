@@ -4,16 +4,14 @@ import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Game, Star1 } from "iconsax-react";
-import { AiFillHeart, AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import { FiChevronDown } from "react-icons/fi";
-import { GiNightSleep } from "react-icons/gi";
-import { GoPeople } from "react-icons/go";
-import { HiSparkles } from "react-icons/hi";
 
 import HelmetIcon from "@/components/icons/helmet-icon";
 import { Button } from "@/components/ui/button";
 import useGetDungeon from "@/hooks/queries/use-get-dungeon";
-import { IChampion, IMoveMapping } from "@/types/dungeon";
+import { IChampion } from "@/types/dungeon";
+import { moveMappingWithIcons } from "@/utils/dungeon/move-mapping-with-icons";
 import { cn } from "@/utils/style-utils";
 
 import useCreateRoom from "../../hooks/use-create-room";
@@ -40,6 +38,7 @@ const MobileAdventureDetail = ({
       dungeon: adventureDetailId,
     });
   };
+
   return (
     <AnimatePresence mode="wait">
       {!!adventureDetailId && !isLoading && !!adventure && (
@@ -177,7 +176,7 @@ const Champion = ({ champion }: { champion: IChampion }) => {
               collapsed: { opacity: 0, height: 0 },
             }}
             transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
-            className="bg-black pl-20 pr-2"
+            className="bg-black pl-[70px] pr-2"
           >
             <div className={cn("pointer-events-none flex flex-col")}>
               {moveMappingWithIcons(champion.moveMapping).map((move, index) => (
@@ -195,47 +194,6 @@ const Champion = ({ champion }: { champion: IChampion }) => {
       </AnimatePresence>
     </div>
   );
-};
-
-const moveMappingWithIcons = (moveMapping: IMoveMapping) => {
-  return [
-    {
-      header: "Heal action",
-      text: moveMapping.discover_health,
-      icon: (
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-primary bg-primary/10">
-          <AiFillHeart className="h-4 w-4 fill-primary" />
-        </div>
-      ),
-    },
-    {
-      header: "Round bonus action",
-      text: moveMapping.conversation_with_team,
-      icon: (
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-green-500 bg-primary/10">
-          <GoPeople className="h-4 w-4 fill-green-500" />
-        </div>
-      ),
-    },
-    {
-      header: "Mana action",
-      text: moveMapping.discover_mana,
-      icon: (
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-info bg-primary/10">
-          <HiSparkles className="h-4 w-4 fill-info" />
-        </div>
-      ),
-    },
-    {
-      header: "Rest action",
-      text: moveMapping.rest,
-      icon: (
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-purple-400 bg-primary/10">
-          <GiNightSleep className="h-4 w-4 fill-purple-400" />
-        </div>
-      ),
-    },
-  ];
 };
 
 export default MobileAdventureDetail;

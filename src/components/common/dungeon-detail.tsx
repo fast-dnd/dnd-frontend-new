@@ -1,16 +1,12 @@
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { AiFillHeart } from "react-icons/ai";
 import { FiExternalLink } from "react-icons/fi";
-import { GiNightSleep } from "react-icons/gi";
-import { GoPeople } from "react-icons/go";
-import { HiSparkles } from "react-icons/hi";
 
 import { Dungeon } from "@/components/common/dungeon";
 import Skeleton from "@/components/ui/skeleton";
 import useGetDungeon from "@/hooks/queries/use-get-dungeon";
-import { IChampion, IMoveMapping } from "@/types/dungeon";
+import { IChampion } from "@/types/dungeon";
+import { moveMappingWithIcons } from "@/utils/dungeon/move-mapping-with-icons";
 import { cn } from "@/utils/style-utils";
 
 import HelmetIcon from "../icons/helmet-icon";
@@ -32,8 +28,6 @@ const DungeonDetail = ({
   addFavorite,
 }: IDungeonDetailProps) => {
   const { data: dungeon, isLoading } = useGetDungeon(dungeonDetailId ?? "");
-
-  const [showActionsId, setShowActionsId] = useState<string>();
 
   if (isLoading) return <DungeonDetailSkeleton />;
 
@@ -135,43 +129,6 @@ const DungeonDetail = ({
 };
 
 export default DungeonDetail;
-
-const moveMappingWithIcons = (moveMapping: IMoveMapping) => {
-  return [
-    {
-      text: moveMapping.discover_health,
-      icon: (
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-primary bg-primary/10">
-          <AiFillHeart className="h-5 w-5 fill-primary" />
-        </div>
-      ),
-    },
-    {
-      text: moveMapping.conversation_with_team,
-      icon: (
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-green-500 bg-primary/10">
-          <GoPeople className="h-5 w-5 fill-green-500" />
-        </div>
-      ),
-    },
-    {
-      text: moveMapping.discover_mana,
-      icon: (
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-info bg-primary/10">
-          <HiSparkles className="h-5 w-5 fill-info" />
-        </div>
-      ),
-    },
-    {
-      text: moveMapping.rest,
-      icon: (
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-purple-400 bg-primary/10">
-          <GiNightSleep className="h-5 w-5 fill-purple-400" />
-        </div>
-      ),
-    },
-  ];
-};
 
 export const DungeonDetailSkeleton = () => {
   return (

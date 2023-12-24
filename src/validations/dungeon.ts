@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { dungeonDurationsArray, dungeonTags } from "@/utils/dungeon-options";
+import { dungeonDurationsArray, dungeonTags } from "@/utils/dungeon/dungeon-options";
 
 import { rewardSchema } from "./reward";
 

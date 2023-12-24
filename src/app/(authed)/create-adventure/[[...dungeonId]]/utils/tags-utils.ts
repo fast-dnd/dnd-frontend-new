@@ -1,5 +1,5 @@
 import { IDungeonDetail } from "@/types/dungeon";
-import { DungeonTag } from "@/utils/dungeon-options";
+import { DungeonTag } from "@/utils/dungeon/dungeon-options";
 
 export type TagsWithLabel = { label: DungeonTag; value: DungeonTag }[];
 
