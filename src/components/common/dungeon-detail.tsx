@@ -4,10 +4,6 @@ import { FiExternalLink } from "react-icons/fi";
 
 import { Dungeon } from "@/components/common/dungeon";
 import Skeleton from "@/components/ui/skeleton";
-import useCommunity from "@/hooks/helpers/use-community";
-import useGetWeb3Balance from "@/hooks/helpers/use-get-web3-balance";
-import useOnWithdrawAdventureCurrency from "@/hooks/mutations/use-withdraw-adventure-currency";
-import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import { IChampion } from "@/types/dungeon";
 import { moveMappingWithIcons } from "@/utils/dungeon/move-mapping-with-icons";
@@ -35,19 +31,6 @@ const DungeonDetail = ({
 }: IDungeonDetailProps) => {
   const { data: dungeon, isLoading } = useGetDungeon(dungeonDetailId ?? "");
 
-  const { isDefault } = useCommunity();
-  const { data: currentCommunity } = useGetCurrentCommunity();
-
-  const adventureBalance = useGetWeb3Balance({
-    tokenAccountAddress: dungeon?.adventureTreasuryAddress ?? "",
-    mintAddress: currentCommunity?.gameCurrency ?? "",
-  });
-
-  const { onWithdrawAdventureCurrency } = useOnWithdrawAdventureCurrency({
-    amount: adventureBalance,
-    dungeonId: dungeonDetailId,
-  });
-
   if (isLoading) return <DungeonDetailSkeleton />;
 
   if (!dungeon) return <div>Something went wrong</div>;
@@ -59,13 +42,7 @@ const DungeonDetail = ({
     <div className="flex flex-1 flex-col overflow-y-auto border-b-2 border-b-white/20 pr-4">
       <Dungeon dungeon={dungeon} addFavorite={addFavorite} />
 
-      <div className="flex w-full items-center justify-center">
-        {!isDefault && isOwned && (
-          <Button className="w-fit" onClick={onWithdrawAdventureCurrency}>
-            Withdraw {adventureBalance} {currentCommunity?.currencyName}
-          </Button>
-        )}
-      </div>
+      <div className="flex w-full items-center justify-center"></div>
 
       <div className="my-8">
         {onChangeChampion ? (

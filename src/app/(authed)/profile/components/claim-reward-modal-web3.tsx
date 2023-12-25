@@ -1,26 +1,45 @@
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
-import { Tooltip } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
+import useCommunity from "@/hooks/helpers/use-community";
+import useGetWeb3Balance from "@/hooks/helpers/use-get-web3-balance";
+import useOnWithdrawAdventureCurrency from "@/hooks/mutations/use-withdraw-adventure-currency";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
+import { IBaseDungeon } from "@/types/dungeon";
 import { jibril } from "@/utils/fonts";
+import { cn } from "@/utils/style-utils";
 
-const ClaimRewardModal = () => {
+interface IClaimRewardModalWeb3Props {
+  dungeon: IBaseDungeon;
+  isOwned?: boolean;
+}
+
+const ClaimRewardModalWeb3 = ({ dungeon, isOwned }: IClaimRewardModalWeb3Props) => {
+  const { isDefault } = useCommunity();
+
   const { data: currentCommunity } = useGetCurrentCommunity();
+
+  const adventureBalance = useGetWeb3Balance({
+    tokenAccountAddress: dungeon?.adventureTreasuryAddress ?? "",
+    mintAddress: currentCommunity?.gameCurrency ?? "",
+  });
+
+  const { onWithdrawAdventureCurrency } = useOnWithdrawAdventureCurrency({
+    amount: adventureBalance,
+    dungeonId: dungeon._id,
+  });
 
   return (
     <Dialog>
-      <div className="w-full rounded-b-md text-sm font-bold tracking-wider transition-all duration-300 lg:rounded-md lg:text-xl lg:tracking-normal">
-        <Tooltip
-          content="In case you were one of the 10 top players this week, you will receive a reward."
-          triggerClassName="mx-0"
+      <DialogTrigger asChild>
+        <Button
+          className={cn("w-fit", (isDefault || isOwned || adventureBalance === 0) && "hidden")}
+          onClick={(e) => e.stopPropagation()}
         >
-          <Button className="w-full uppercase" disabled>
-            claim reward
-          </Button>
-        </Tooltip>
-      </div>
+          Withdraw {adventureBalance} {currentCommunity?.currencyName}
+        </Button>
+      </DialogTrigger>
       <DialogContent className="flex flex-col gap-12 border border-white/10 bg-black p-8">
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-center gap-4">
@@ -47,18 +66,19 @@ const ClaimRewardModal = () => {
             className="absolute top-[25%] z-[-5]"
           />
           <p className="z-10 text-5xl" style={jibril.style}>
-            40
-            {/* TODO: replace this with reward from web3  */}
+            {adventureBalance}
           </p>
           <p className="z-10 text-3xl">{currentCommunity?.currencyName}</p>
         </div>
 
         <DialogFooter className="flex w-full items-center justify-center">
-          <Button className="w-56">CLAIM REWARD</Button>
+          <Button className="w-56" onClick={onWithdrawAdventureCurrency}>
+            CLAIM REWARD
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 };
 
-export default ClaimRewardModal;
+export default ClaimRewardModalWeb3;

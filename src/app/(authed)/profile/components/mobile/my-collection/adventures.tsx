@@ -12,6 +12,8 @@ import { cn } from "@/utils/style-utils";
 import { MobileAdventure } from "@/app/(authed)/home/components/mobile/mobile-adventure";
 import MobileAdventureDetail from "@/app/(authed)/home/components/mobile/mobile-adventure-detail";
 
+import ClaimRewardModalWeb3 from "../../claim-reward-modal-web3";
+
 const Adventures = () => {
   const [adventureDetailId, setAdventureDetailId] = useState<string>();
   const [closingId, setClosingId] = useState<string>();
@@ -172,6 +174,7 @@ const AdventureWrapper = ({
       </button>
       <DeleteModal id={adventure._id} type="adventure" />
     </div>
+    <ClaimRewardModalWeb3 dungeon={adventure} isOwned />
   </div>
 );
 
