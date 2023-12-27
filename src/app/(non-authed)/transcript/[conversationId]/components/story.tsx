@@ -16,6 +16,13 @@ const Story = ({ story, transcripts }: { story: ITranscriptStory; transcripts: I
         </div>
       </div>
 
+      {story.question && story.answer && story.playerAsking && (
+        <>
+          <ChatItem playerAsking={story.playerAsking} text={story.question} />
+          <ChatItem text={story.answer} />
+        </>
+      )}
+
       {story.movesInRound?.map((move) => {
         const player = transcripts.players.find(
           (player) => player.accountId === move.playerAccountId,
@@ -26,8 +33,6 @@ const Story = ({ story, transcripts }: { story: ITranscriptStory; transcripts: I
           <ChatItem key={player.accountId} player={player} text={move.action} dice={move.dice} />
         );
       })}
-
-      {story.question && story.answer && story.playerAsking && <ChatItem text={story.answer} />}
     </div>
   );
 };
