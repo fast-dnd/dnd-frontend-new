@@ -63,13 +63,16 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
 
         <div className="absolute inset-0 -z-10 bg-dark-900 pt-32">
           {!!dungeon?.imageUrl && (
-            <Image
-              src={dungeon.imageUrl}
-              alt=""
-              width={1024}
-              height={1024}
-              className="h-full object-cover blur-md"
-            />
+            <>
+              <Image
+                src={dungeon.imageUrl}
+                alt=""
+                width={1024}
+                height={1024}
+                className="h-full object-cover blur-md"
+              />
+              <div className="absolute inset-0 h-full w-full bg-dark-900/40" />
+            </>
           )}
         </div>
       </div>

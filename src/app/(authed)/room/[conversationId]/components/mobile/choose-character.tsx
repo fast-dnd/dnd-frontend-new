@@ -47,8 +47,8 @@ const ChooseCharacter = ({
 
           <MobileSwiper
             arrayLength={dungeonData.champions.length}
-            currentIndex={currentIndex}
             itemWidth={itemWidth}
+            currentIndex={currentIndex}
             setCurrentIndex={setCurrentIndex}
           >
             {dungeonData.champions.map((champion, index) => {
@@ -57,10 +57,6 @@ const ChooseCharacter = ({
                   layout
                   key={champion._id}
                   className="relative h-full shrink-0 select-none"
-                  transition={{
-                    ease: "easeInOut",
-                    duration: 0.4,
-                  }}
                 >
                   <CharacterCard
                     champion={champion}

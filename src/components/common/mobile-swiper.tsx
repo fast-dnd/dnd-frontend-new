@@ -19,13 +19,12 @@ const MobileSwiper = ({
   const containerRef = useRef<HTMLUListElement>(null);
   const offsetX = useMotionValue(-currentIndex * itemWidth);
   const animatedX = useSpring(offsetX, {
-    damping: 20,
-    stiffness: 150,
+    damping: 100,
+    stiffness: 1000,
   });
 
   useEffect(() => {
     offsetX.set(-currentIndex * itemWidth);
-    console.log(currentIndex, itemWidth, -currentIndex * itemWidth);
   }, [currentIndex, itemWidth, offsetX]);
 
   const canScrollPrev = currentIndex > 0;
@@ -61,7 +60,7 @@ const MobileSwiper = ({
       <div className="relative h-full">
         <motion.ul
           ref={containerRef}
-          className="flex h-full items-start"
+          className="z-10 flex h-full items-start"
           style={{
             x: animatedX,
           }}
