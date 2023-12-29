@@ -23,6 +23,7 @@ const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
       {
         generateAudio: false,
         generateImages: false,
+        generateRandomWords: false,
         dungeon: dungeonDetailId,
         templateSentences,
       },
@@ -37,13 +38,13 @@ const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
   };
 
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-center">
       <TemplateSentences
         templateSentences={templateSentences}
         setTemplateSentences={setTemplateSentences}
       />
       <Button
-        className="w-fit whitespace-nowrap"
+        className="w-fit whitespace-nowrap px-10 py-5"
         isLoading={isCreatingRoom || loadingRoom}
         onClick={onCreateRoom}
       >

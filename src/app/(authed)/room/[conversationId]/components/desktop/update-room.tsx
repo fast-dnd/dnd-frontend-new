@@ -3,6 +3,7 @@ import { BiImages } from "react-icons/bi";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip } from "@/components/ui/tooltip";
 import useCommunity from "@/hooks/helpers/use-community";
@@ -45,7 +46,13 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
   const { isDefault } = useCommunity();
   const { data: currentCommunity } = useGetCurrentCommunity();
 
-  const { setGenerateImages, setGenerateAudio, updatingRoom } = useOnRoomChange({
+  const {
+    setGenerateImages,
+    setGenerateAudio,
+    setGenerateRandomWords,
+    generateRandomWords,
+    updatingRoom,
+  } = useOnRoomChange({
     conversationId,
     duration,
     roomData,
@@ -115,6 +122,14 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
           </ToggleGroupItem>
         ))}
       </ToggleGroup>
+
+      <Checkbox
+        label="Generate random words"
+        className="bg-transparent"
+        checked={generateRandomWords}
+        onCheckedChange={(checked) => setGenerateRandomWords(checked as boolean)}
+        aria-label="Generate random words"
+      />
 
       <Tooltip content="Wait for all players to choose their role and avatar" disabled={canBegin}>
         <Button
