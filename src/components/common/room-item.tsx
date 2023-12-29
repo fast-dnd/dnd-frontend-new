@@ -73,7 +73,7 @@ const roomStateMap = (roomState: string, turn: number) => {
       } as const;
     case "GAMING":
       return {
-        text: `IN PROGRESS (TURN ${turn})`,
+        text: `IN PROGRESS (TURN ${turn + 1})`,
         color: "text-primary",
       } as const;
     case "WIN":

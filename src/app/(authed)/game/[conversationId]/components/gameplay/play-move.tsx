@@ -45,7 +45,11 @@ const PlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMoveProps) =
             </span>
             <span className="opacity-50"> - {timeToDisplay()} Left</span>
           </div>
-          <MoveInput champion={currentPlayer.champion} wordsChallenge={roomData.wordsChallenge} />
+          <MoveInput
+            champion={currentPlayer.champion}
+            wordsChallenge={roomData.wordsChallenge}
+            isWordsChallenge={roomData.generateRandomWords}
+          />
         </div>
         <div className="flex flex-col gap-6">
           <PickPowerup currentMana={currentPlayer.mana} />
