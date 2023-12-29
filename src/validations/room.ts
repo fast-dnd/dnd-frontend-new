@@ -17,6 +17,7 @@ export const defaultMoveSchema = z.enum(defaultMoves);
 
 export const moveTypeSchema = z.enum([...defaultMoves, "no_input", "free_will"]);
 
+// TODO: backend should replace this with 1D array
 export const wordsChallengeSchema = z.array(
   z.array(
     z.object({

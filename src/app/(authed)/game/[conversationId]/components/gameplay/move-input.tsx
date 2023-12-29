@@ -32,7 +32,6 @@ const MoveInput = ({ champion, wordsChallenge }: IMoveInputProps) => {
     ?.find((wordChallenge) => wordChallenge.accountId === accountId);
 
   useEffect(() => {
-    // TODO: dont do this if player already started filling the inputs
     if (wordChallengeForPlayer) {
       const wordChallengeInitialArray: string[] = [];
       wordChallengeForPlayer.words.forEach((word) => {
