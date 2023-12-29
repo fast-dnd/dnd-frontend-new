@@ -14,9 +14,9 @@ const Intro = ({ setCurrentStep }: IIntroProps) => {
   return (
     <motion.div
       className="flex h-full w-full"
-      initial={{ scale: 0 }}
-      animate={{ scale: "100%" }}
-      exit={{ scale: 0 }}
+      initial={{ scale: 0, y: "-50%" }}
+      animate={{ scale: "100%", y: "0%" }}
+      exit={{ scale: 0, y: "-50%" }}
       transition={{ duration: 0.5, type: "spring", bounce: 0.25 }}
     >
       <div className="relative flex w-1/2 flex-col items-center justify-center gap-6">
