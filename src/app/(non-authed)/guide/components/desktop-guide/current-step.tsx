@@ -23,20 +23,13 @@ const CurrentStep = ({ setCurrentStep, currentStep }: ICurrentStepProps) => {
           <ArrowLeft size={40} color="#ffffff50" className="mb-0.5" />
           <p className="text-xl text-white/50"> Back to menu</p>
         </button>
-        <motion.div
-          key={currentStep}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          <Image
-            src={`/images/how-to-play/desktop/step-${currentStep + 1}.png`}
-            alt={`step-${currentStep + 1}`}
-            width={739 * 1.5}
-            height={387 * 1.5}
-          />
-        </motion.div>
+
+        <Image
+          src={`/images/how-to-play/desktop/step-${currentStep + 1}.png`}
+          alt={`step-${currentStep + 1}`}
+          width={739 * 1.5}
+          height={387 * 1.5}
+        />
       </div>
 
       <div className="relative flex w-1/2 flex-col items-center justify-center gap-10">
@@ -79,21 +72,21 @@ const CurrentStep = ({ setCurrentStep, currentStep }: ICurrentStepProps) => {
           </button>
         )}
 
-        <button
-          className="absolute bottom-10 right-10 flex items-center gap-2 text-xl font-medium capitalize"
-          onClick={() => setCurrentStep(currentStep + 1)}
-        >
+        <div className="absolute bottom-10 right-10 text-xl font-medium capitalize">
           {currentStep === steps.length - 1 ? (
             <Button href="/home" className="px-8 py-4">
               Let&apos;s play
             </Button>
           ) : (
-            <>
+            <button
+              onClick={() => setCurrentStep(currentStep + 1)}
+              className="flex items-center gap-2 capitalize"
+            >
               NEXT: {steps[currentStep + 1].title}
               <CaretRight size={30} className="mb-1" />
-            </>
+            </button>
           )}
-        </button>
+        </div>
       </div>
     </>
   );

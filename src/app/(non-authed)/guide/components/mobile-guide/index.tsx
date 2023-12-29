@@ -5,6 +5,7 @@ import { useWindowSize } from "usehooks-ts";
 
 import MobileSwiper from "@/components/common/mobile-swiper";
 
+import Controls from "./controls";
 import Step from "./step";
 
 const MobileGuide = () => {
@@ -24,7 +25,7 @@ const MobileGuide = () => {
         ))}
       </MobileSwiper>
       <div className="z-10 px-4 pb-3">
-        <div className="h-3 w-full bg-white" />
+        <Controls currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
       </div>
     </div>
   );
