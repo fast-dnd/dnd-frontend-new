@@ -49,7 +49,11 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
       conversationId,
       mana: store.powerup,
       moveType: store.move ?? "free_will",
-      message: store.move ? "" : store.freeWill,
+      message: store.move
+        ? ""
+        : store.wordsChallenge
+        ? store.wordsChallenge.join(" ")
+        : store.freeWill,
       playerId: currentPlayer.accountId,
     };
 
@@ -62,6 +66,7 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
       submitMove(moveToPlay, {
         onSuccess: (res) => {
           moveStore.freeWill.set("");
+          moveStore.wordsChallenge.set([]);
           moveStore.roll.set(res);
           const rollTimeout = setTimeout(() => moveStore.buttonState.set("ROLLED"), 1500);
           const diceTimeout = setTimeout(

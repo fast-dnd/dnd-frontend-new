@@ -31,7 +31,9 @@ const RollDice = ({ conversationId, roomData, currentPlayer }: IRollDiceProps) =
         )}
       </div>
       <Button
-        disabled={!store.canPlay || (!store.move && !store.freeWill)}
+        disabled={
+          !store.canPlay || (!store.move && !store.freeWill && !store.wordsChallenge.length)
+        }
         className={cn(
           "h-12 px-0 normal-case",
           store.buttonState !== "DEFAULT" && "bg-white/5 text-white",

@@ -153,7 +153,10 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMovePr
                 <div className="flex w-full bg-primary px-6">
                   <Button
                     onClick={onPlay}
-                    disabled={!store.canPlay || (!store.move && !store.freeWill)}
+                    disabled={
+                      !store.canPlay ||
+                      (!store.move && !store.freeWill && !store.wordsChallenge.length)
+                    }
                     className="flex w-full items-center gap-1 rounded-none border-none py-1.5 text-xs"
                   >
                     <FaDice /> Roll the dice

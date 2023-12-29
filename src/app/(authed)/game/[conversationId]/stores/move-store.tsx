@@ -8,6 +8,7 @@ export interface IMoveStore {
   canPlay: boolean;
   buttonState: "DEFAULT" | "ROLLING" | "ROLLED";
   freeWill: string;
+  wordsChallenge: string[];
   powerup: number;
   dice: [number, number];
   move?: IDefaultMove;
@@ -19,6 +20,7 @@ export const initialMoveStoreData: IMoveStore = {
   canPlay: true,
   buttonState: "DEFAULT",
   freeWill: "",
+  wordsChallenge: [],
   powerup: 0,
   dice: [0, 0],
 };
