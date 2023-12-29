@@ -1,8 +1,5 @@
 "use client";
 
-import React from "react";
-
-import HowToPlay from "@/components/common/how-to-play";
 import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { cn } from "@/utils/style-utils";
 
@@ -19,16 +16,6 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
   const pageState = gameStore.pageState.use();
 
   if (pageState === "FEEDBACK") return <Feedback />;
-
-  if (pageState === "HOWTOPLAY")
-    return (
-      <div className="flex h-full min-h-0 flex-col gap-5 lg:pb-12">
-        <HowToPlay
-          onHideHowToPlay={() => gameStore.pageState.set("DEFAULT")}
-          hideText={"back to the game"}
-        />
-      </div>
-    );
 
   return (
     <>

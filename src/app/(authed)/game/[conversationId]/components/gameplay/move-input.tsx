@@ -34,14 +34,10 @@ const MoveInput = ({ champion, wordsChallenge, isWordsChallenge }: IMoveInputPro
 
   useEffect(() => {
     if (wordChallengeForPlayer) {
-      const wordChallengeInitialArray: string[] = [];
-      wordChallengeForPlayer.words.forEach((word) => {
-        wordChallengeInitialArray.push("");
-        wordChallengeInitialArray.push(word);
-      });
-      wordChallengeInitialArray.push("");
-
-      moveStore.wordsChallenge.set(wordChallengeInitialArray);
+      moveStore.wordsChallenge.set([
+        "",
+        ...wordChallengeForPlayer.words.flatMap((word) => [word, ""]),
+      ]);
     }
   }, [wordChallengeForPlayer]);
 

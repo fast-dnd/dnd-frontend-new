@@ -1,5 +1,5 @@
 import { CloseCircle } from "iconsax-react";
-import { AiOutlineExclamationCircle, AiOutlineQuestionCircle } from "react-icons/ai";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 import Spinner from "@/components/ui/spinner";
 import { Tooltip } from "@/components/ui/tooltip";
@@ -10,8 +10,8 @@ import { gameStore } from "../../stores/game-store";
 
 const GamePlayHeader = ({ title }: { title: string }) => {
   const onClickHome = () => gameStore.pageState.set("GOHOME");
-  const onClickHowTo = () => gameStore.pageState.set("HOWTOPLAY");
   const onClickFeedback = () => gameStore.pageState.set("FEEDBACK");
+
   const loading = gameStore.loadingText.use();
 
   return (
@@ -29,18 +29,12 @@ const GamePlayHeader = ({ title }: { title: string }) => {
 
       <div className="flex shrink-0 items-center gap-4">
         <Spinner className={cn("m-0 h-5 w-5 shrink-0 opacity-0", loading && "opacity-50")} />
-        <Tooltip
-          content="How to play"
-          triggerClassName="text-2xl text-white/50 transition-all duration-200 hover:text-white"
-          position="bottom"
-        >
-          <AiOutlineQuestionCircle />
-        </Tooltip>
 
         <Tooltip
           content="Feedback"
           triggerClassName="text-2xl text-white/50 transition-all duration-200 hover:text-white"
           position="bottom"
+          onClick={onClickFeedback}
         >
           <AiOutlineExclamationCircle />
         </Tooltip>
