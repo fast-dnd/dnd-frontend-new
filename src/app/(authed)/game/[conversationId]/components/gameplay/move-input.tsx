@@ -1,20 +1,48 @@
+import { Fragment, useEffect } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
+import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 import { IChampion } from "@/types/dungeon";
-import { IDefaultMove } from "@/types/room";
+import { IDefaultMove, IWordsChallenge } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
 import { moveStore } from "../../stores/move-store";
 
-const MoveInput = ({ champion }: { champion: IChampion | null | undefined }) => {
+interface IMoveInputProps {
+  champion: IChampion | null | undefined;
+  wordsChallenge: IWordsChallenge | undefined | null;
+}
+
+const MoveInput = ({ champion, wordsChallenge }: IMoveInputProps) => {
   const move = moveStore.move.use();
   const canPlay = moveStore.canPlay.use();
   const freeWill = moveStore.freeWill.use();
+  const wordsChallengeValues = moveStore.wordsChallenge.use();
+
+  const accountId = useReadLocalStorage<string>("accountId");
+
+  const wordChallengeForPlayer = wordsChallenge
+    ?.at(-1)
+    ?.find((wordChallenge) => wordChallenge.accountId === accountId);
+
+  useEffect(() => {
+    // TODO: dont do this if player already started filling the inputs
+    if (wordChallengeForPlayer) {
+      const wordChallengeInitialArray: string[] = [];
+      wordChallengeForPlayer.words.forEach((word) => {
+        wordChallengeInitialArray.push("");
+        wordChallengeInitialArray.push(word);
+      });
+
+      moveStore.wordsChallenge.set(wordChallengeInitialArray);
+    }
+  }, [wordChallengeForPlayer]);
 
   if (!champion) return <div>Something went wrong</div>;
 
@@ -37,17 +65,41 @@ const MoveInput = ({ champion }: { champion: IChampion | null | undefined }) => 
             </div>
           </div>
         ) : (
-          <TextArea
-            maxLength={300}
-            className="m-0 h-full border-white/50 focus-within:border-white"
-            placeholder="I found a secret tunnel and escape through it..."
-            disabled={!canPlay}
-            onChange={(e) => {
-              moveStore.freeWill.set(e.target.value);
-              moveStore.move.set(undefined);
-            }}
-            value={freeWill}
-          />
+          <>
+            {!!wordChallengeForPlayer ? (
+              <div className="flex items-center gap-4">
+                {wordChallengeForPlayer.words.map((word, index) => (
+                  <Fragment key={index}>
+                    <Input
+                      value={wordsChallengeValues[index * 2]}
+                      onChange={(e) => moveStore.wordsChallenge[index * 2].set(e.target.value)}
+                    />
+                    <p className="text-center">{word}</p>
+                  </Fragment>
+                ))}
+                <Input
+                  value={wordsChallengeValues[wordChallengeForPlayer.words.length * 2]}
+                  onChange={(e) =>
+                    moveStore.wordsChallenge[wordChallengeForPlayer.words.length * 2].set(
+                      e.target.value,
+                    )
+                  }
+                />
+              </div>
+            ) : (
+              <TextArea
+                maxLength={300}
+                className="m-0 h-full border-white/50 focus-within:border-white"
+                placeholder="I found a secret tunnel and escape through it..."
+                disabled={!canPlay}
+                onChange={(e) => {
+                  moveStore.freeWill.set(e.target.value);
+                  moveStore.move.set(undefined);
+                }}
+                value={freeWill}
+              />
+            )}
+          </>
         )}
       </div>
 
@@ -111,7 +163,7 @@ const MoveInput = ({ champion }: { champion: IChampion | null | undefined }) => 
           )}
           onClick={() => moveStore.move.set(undefined)}
         >
-          Use free will
+          {!!wordChallengeForPlayer ? "Word challenge" : "Use free will"}
         </Button>
       </div>
     </div>

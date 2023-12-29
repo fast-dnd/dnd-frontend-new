@@ -35,6 +35,7 @@ const MobileAdventureDetail = ({
     createRoom({
       generateAudio: false,
       generateImages: false,
+      generateRandomWords: false,
       dungeon: adventureDetailId,
     });
   };

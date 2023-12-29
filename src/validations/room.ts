@@ -17,6 +17,15 @@ export const defaultMoveSchema = z.enum(defaultMoves);
 
 export const moveTypeSchema = z.enum([...defaultMoves, "no_input", "free_will"]);
 
+export const wordsChallengeSchema = z.array(
+  z.array(
+    z.object({
+      accountId: z.string(),
+      words: z.array(z.string()),
+    }),
+  ),
+);
+
 export const moveSchema = z.object({
   playerAccountId: z.string(),
   playerName: z.string(),
@@ -78,6 +87,7 @@ export const roomDetailSchema = baseRoomSchema.extend({
   dungeonId: z.string(),
   maxPlayers: z.number(),
   maxRounds: z.number(),
+  wordsChallenge: wordsChallengeSchema.nullish(),
 });
 
 export const roomSchema = baseRoomSchema.extend({
