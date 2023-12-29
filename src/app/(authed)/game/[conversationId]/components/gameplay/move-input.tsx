@@ -17,9 +17,10 @@ import { moveStore } from "../../stores/move-store";
 interface IMoveInputProps {
   champion: IChampion | null | undefined;
   wordsChallenge: IWordsChallenge | undefined | null;
+  isWordsChallenge?: boolean;
 }
 
-const MoveInput = ({ champion, wordsChallenge }: IMoveInputProps) => {
+const MoveInput = ({ champion, wordsChallenge, isWordsChallenge }: IMoveInputProps) => {
   const move = moveStore.move.use();
   const canPlay = moveStore.canPlay.use();
   const freeWill = moveStore.freeWill.use();
@@ -38,6 +39,7 @@ const MoveInput = ({ champion, wordsChallenge }: IMoveInputProps) => {
         wordChallengeInitialArray.push("");
         wordChallengeInitialArray.push(word);
       });
+      wordChallengeInitialArray.push("");
 
       moveStore.wordsChallenge.set(wordChallengeInitialArray);
     }
@@ -65,26 +67,28 @@ const MoveInput = ({ champion, wordsChallenge }: IMoveInputProps) => {
           </div>
         ) : (
           <>
-            {!!wordChallengeForPlayer ? (
-              <div className="flex items-center gap-4">
-                {wordChallengeForPlayer.words.map((word, index) => (
-                  <Fragment key={index}>
-                    <Input
-                      value={wordsChallengeValues[index * 2]}
-                      onChange={(e) => moveStore.wordsChallenge[index * 2].set(e.target.value)}
-                    />
-                    <p className="text-center">{word}</p>
-                  </Fragment>
-                ))}
-                <Input
-                  value={wordsChallengeValues[wordChallengeForPlayer.words.length * 2]}
-                  onChange={(e) =>
-                    moveStore.wordsChallenge[wordChallengeForPlayer.words.length * 2].set(
-                      e.target.value,
-                    )
-                  }
-                />
-              </div>
+            {isWordsChallenge ? (
+              wordChallengeForPlayer && (
+                <div className="flex items-center gap-4">
+                  {wordChallengeForPlayer.words.map((word, index) => (
+                    <Fragment key={index}>
+                      <Input
+                        value={wordsChallengeValues[index * 2]}
+                        onChange={(e) => moveStore.wordsChallenge[index * 2].set(e.target.value)}
+                      />
+                      <p className="text-center">{word}</p>
+                    </Fragment>
+                  ))}
+                  <Input
+                    value={wordsChallengeValues[wordChallengeForPlayer.words.length * 2]}
+                    onChange={(e) =>
+                      moveStore.wordsChallenge[wordChallengeForPlayer.words.length * 2].set(
+                        e.target.value,
+                      )
+                    }
+                  />
+                </div>
+              )
             ) : (
               <TextArea
                 maxLength={300}
@@ -162,7 +166,7 @@ const MoveInput = ({ champion, wordsChallenge }: IMoveInputProps) => {
           )}
           onClick={() => moveStore.move.set(undefined)}
         >
-          {!!wordChallengeForPlayer ? "Word challenge" : "Use free will"}
+          {isWordsChallenge ? "Word challenge" : "Use free will"}
         </Button>
       </div>
     </div>

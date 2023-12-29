@@ -71,6 +71,7 @@ export const baseRoomSchema = z.object({
   roundEndsAt: z.string().nullish(),
   generateImages: z.boolean(),
   generateAudio: z.boolean(),
+  generateRandomWords: z.boolean().optional(), //TODO: remove optional after backend migration
   responseDetailsDepth: z.enum(dungeonDurationsArray),
   price: z.number(),
 });
