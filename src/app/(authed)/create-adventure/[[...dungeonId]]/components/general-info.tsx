@@ -12,7 +12,7 @@ import { TextArea } from "@/components/ui/text-area";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import UploadImage from "@/components/ui/upload-image";
 import { IReward } from "@/types/reward";
-import { DungeonDuration, dungeonDurations, dungeonTags } from "@/utils/dungeon-options";
+import { DungeonDuration, dungeonDurations, dungeonTags } from "@/utils/dungeon/dungeon-options";
 
 import { dungeonFormStore } from "../stores/dungeon-form-store";
 import tagsComboboxStyles from "../utils/tags-combobox-styles";

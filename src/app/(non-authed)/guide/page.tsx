@@ -1,10 +1,16 @@
-import HowToPlay from "@/components/common/how-to-play";
+import MobileNavbar from "@/components/navbar/mobile-navbar";
+
+import DesktopGuide from "./components/desktop-guide";
 
 const Guide = () => {
   return (
-    <div className="flex min-h-0 flex-1 flex-col items-center pb-12">
-      <HowToPlay />
-    </div>
+    <>
+      <DesktopGuide />
+
+      <div className="flex flex-col gap-4 pb-4 lg:hidden">
+        <MobileNavbar className="fixed h-16 items-start" />
+      </div>
+    </>
   );
 };
 

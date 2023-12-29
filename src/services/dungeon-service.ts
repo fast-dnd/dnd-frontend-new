@@ -80,6 +80,16 @@ const rateDungeon = async (data: IRateDungeon) => {
   return await dungeonApi.post("rate", data);
 };
 
+const withdrawTx = async (data: { dungeonId: string; amount: number }) => {
+  return await dungeonApi
+    .post<{ transaction: string }>("withdraw-transaction", data)
+    .then((res) => res.data);
+};
+
+const withdraw = async (data: { transaction: string }) => {
+  return await dungeonApi.post("withdraw", data);
+};
+
 const dungeonService = {
   getDungeons,
   getDungeon,
@@ -89,6 +99,8 @@ const dungeonService = {
   deleteDungeon,
   addFavorite,
   rateDungeon,
+  withdrawTx,
+  withdraw,
 };
 
 export default dungeonService;

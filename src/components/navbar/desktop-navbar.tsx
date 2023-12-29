@@ -47,21 +47,21 @@ const DesktopNavbar = () => {
             <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
           </>
         )}
-        <Link
-          href={loggedIn ? "/home" : "/login"}
-          className={cn(
-            "mt-1 border-b-4 border-transparent pb-1 transition-all duration-300 hover:border-primary/50",
-            loggedIn && pathname === "/home" && "border-primary",
-            !loggedIn && pathname === "/login" && "border-primary",
-            pathname === "/communities" && "hidden",
-          )}
-        >
-          {loggedIn ? "PLAY" : "LOG IN"}
-        </Link>
+
         {loggedIn && (
           <>
             {!!communityId && (
               <>
+                <Link
+                  href={loggedIn ? "/home" : "/login"}
+                  className={cn(
+                    "mt-1 border-b-4 border-transparent pb-1 transition-all duration-300 hover:border-primary/50",
+                    loggedIn && pathname === "/home" && "border-primary",
+                    !loggedIn && pathname === "/login" && "border-primary",
+                  )}
+                >
+                  {loggedIn ? "PLAY" : "LOG IN"}
+                </Link>
                 <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
                 <Link
                   href="/create-adventure"

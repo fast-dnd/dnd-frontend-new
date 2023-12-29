@@ -88,7 +88,7 @@ const MobileProfile = ({
             <AiOutlineClose />
           </DialogClose>
         </div>
-        {leaderboardMetricsArr[0].rank && (
+        {leaderboardMetricsArr[0].rank !== undefined && (
           <div className="absolute top-4 mb-2 flex gap-5">
             {leaderboardMetricsArr.map(({ icon, rank }, index) => (
               <div

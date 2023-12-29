@@ -22,13 +22,14 @@ import { slides } from "./utils/slides";
 
 const Login = () => {
   const [current, setCurrent] = useSlides();
-  const { signMessage, wallet, publicKey, wallets, select, disconnect, connecting } = useWallet();
+  const { signMessage, wallet, publicKey } = useWallet();
   const { mutate: login } = useLogin();
   const { mutate: solanaLogin } = useSolanaLogin();
 
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => login({ credential: tokenResponse.access_token }),
   });
+
   const handleSignMessage = useCallback(async () => {
     if (!publicKey || !wallet || !signMessage) return;
 
@@ -97,6 +98,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+
       <div className="relative hidden h-full w-full lg:flex">
         <div className="relative flex h-full w-1/2 shrink-0 grow-0">
           <div className="absolute inset-0 z-[-5] flex h-full w-full bg-gradient-to-b from-black via-black/10 via-35% to-black" />
@@ -144,24 +146,7 @@ const Login = () => {
                 </div>
               ))}
             </div>
-            <div className="flex flex-col items-center gap-3 lg:hidden">
-              <Button
-                variant="google"
-                className="w-fit gap-2 px-6 py-5"
-                onClick={() => googleLogin()}
-              >
-                <FaGoogle />
-                LOG IN WITH GOOGLE
-              </Button>
 
-              <div className="flex items-center">
-                <div className="h-1 w-20 rounded-md bg-white/25"></div>
-                <span className="px-5">OR</span>
-                <div className="h-1 w-20 rounded-md bg-white/25"></div>
-              </div>
-
-              <SolanaLogin />
-            </div>
             <div className="flex gap-3">
               {slides.map((_, i) => {
                 return (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { IRoomDetail } from "@/types/room";
-import { DungeonDuration } from "@/utils/dungeon-options";
+import { DungeonDuration } from "@/utils/dungeon/dungeon-options";
 
 import useUpdateRoom from "../hooks/use-update-room";
 

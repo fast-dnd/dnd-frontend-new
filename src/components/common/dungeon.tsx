@@ -8,6 +8,8 @@ import useCopy from "@/hooks/helpers/use-copy";
 import { IBaseDungeon } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
+import ClaimRewardModalWeb3 from "@/app/(authed)/profile/components/claim-reward-modal-web3";
+
 import { Tooltip } from "../ui/tooltip";
 import AddToFavorites from "./add-to-favorites";
 import DeleteModal from "./delete-modal";
@@ -119,11 +121,11 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
             </div>
           )}
           <p className="text-xl">{dungeon.description}</p>
-          <div className="mb-1 mt-auto flex w-full justify-between">
+          <div className="mb-1 mt-auto flex w-full items-center justify-between">
             <div className="flex flex-wrap gap-2 lg:gap-4">
               {dungeon.tags.map((tag) => (
                 <div key={tag} className="rounded-md border border-white/25">
-                  <p className="px-1.5 py-1 text-sm capitalize tracking-[2.1px] lg:px-3">{tag}</p>
+                  <p className="px-1.5 py-1 text-sm capitalize tracking-widest lg:px-3">{tag}</p>
                 </div>
               ))}
             </div>
@@ -136,7 +138,10 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
                   <p className="text-xl font-bold">{dungeon.maxPlayers}</p>
                 </div>
               </Tooltip>
-              <Tooltip content="Rating (Number of reviews)">
+              <Tooltip
+                contentClassName="left-auto translate-x-0 -right-3"
+                content="Rating (Number of reviews)"
+              >
                 <div className="flex items-center gap-2">
                   <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
                     <Star1 variant="Bold" color="#FF5A5A" />
@@ -146,6 +151,7 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
                   </p>
                 </div>
               </Tooltip>
+              <ClaimRewardModalWeb3 dungeon={dungeon} />
             </div>
           </div>
         </div>
