@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useReadLocalStorage } from "usehooks-ts";
 
 import MobileNavbar from "@/components/navbar/mobile-navbar";
 
@@ -15,6 +17,9 @@ import useChampionInfo from "./hooks/use-champion-info";
 const Room = ({ params }: { params: { conversationId: string } }) => {
   const conversationId = params.conversationId;
   const router = useRouter();
+  const accountId = useReadLocalStorage<string>("accountId");
+
+  const [gameModeSelected, setGameModeSelected] = useState(false);
 
   const {
     roomData,
@@ -27,9 +32,12 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
     setCurrentIndex,
   } = useChampionInfo({ conversationId });
 
+  const isAdmin = accountId === roomData?.playerState[0].accountId;
+
   const onClickBack = () => {
-    if (selectedChampion) onChangeChampion(selectedChampion);
-    else router.push("/home");
+    if (!selectedChampion) router.push("/home");
+    else if (!isAdmin || !gameModeSelected) onChangeChampion(selectedChampion);
+    else setGameModeSelected(false);
   };
 
   return (
@@ -58,6 +66,9 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
             roomData={roomData}
             selectedChampion={selectedChampion}
             conversationId={conversationId}
+            isAdmin={isAdmin}
+            gameModeSelected={gameModeSelected}
+            setGameModeSelected={setGameModeSelected}
           />
         </div>
 
