@@ -6,7 +6,7 @@ const useCopy = () => {
 
   const onCopy = (text: string) => {
     if (!navigator?.clipboard) {
-      console.warn("Clipboard not supported");
+      toast.warning("Clipboard not supported");
       return;
     }
 
