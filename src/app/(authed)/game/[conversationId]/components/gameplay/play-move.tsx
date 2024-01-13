@@ -36,7 +36,7 @@ const PlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMoveProps) =
         >
           <div
             className={cn(
-              "bg-white/5 px-4 py-2.5 text-xl uppercase tracking-[0.07em] lg:px-8",
+              "rounded-md bg-white/5 px-4 py-2.5 text-xl uppercase tracking-[0.07em] lg:px-8",
               !store.canPlay && "text-white/50",
             )}
           >

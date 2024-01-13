@@ -9,6 +9,7 @@ import Gameplay from "./components/gameplay";
 import General from "./components/general";
 import MobileControls from "./components/mobile/mobile-controls";
 import MobileStory from "./components/mobile/mobile-story";
+import RoundMission from "./components/round-mission";
 import { gameStore } from "./stores/game-store";
 
 const Game = ({ params }: { params: { conversationId: string } }) => {
@@ -26,8 +27,9 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
           <div className={cn("flex h-full w-[70%] flex-1")}>
             <Gameplay conversationId={conversationId} />
           </div>
-          <div className={cn("flex h-full min-h-0 w-[27%]")}>
+          <div className={cn("flex h-full min-h-0 w-[27%] flex-col gap-4")}>
             <General conversationId={conversationId} />
+            <RoundMission conversationId={conversationId} />
           </div>
         </div>
       </div>

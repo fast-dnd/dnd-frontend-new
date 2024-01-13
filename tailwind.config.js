@@ -38,6 +38,7 @@ module.exports = {
           700: "#B72D45",
           800: "#931C3B",
           900: "#171716",
+          wordChallenge: "#FE9090",
         },
         dark: {
           50: "#F0F0EF",

@@ -36,6 +36,7 @@ export interface InputProps
   successMessage?: string;
   errorMessage?: string;
   label?: string;
+  inputWrapperClassName?: string;
 }
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -51,12 +52,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       label,
       disabled,
       className,
+      inputWrapperClassName,
       ...props
     },
     ref,
   ) => {
     return (
-      <div className="flex w-full flex-col">
+      <div className={cn("flex w-full flex-col", inputWrapperClassName)}>
         {label && (
           <label
             htmlFor={label}
