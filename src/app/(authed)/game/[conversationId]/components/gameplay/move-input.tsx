@@ -66,23 +66,25 @@ const MoveInput = ({ champion, wordsChallenge, isWordsChallenge }: IMoveInputPro
           <>
             {isWordsChallenge ? (
               wordChallengeForPlayer && (
-                <div className="flex h-28 flex-1 items-center gap-4 overflow-y-auto rounded-md bg-black/60">
-                  <div className="flex w-[90%] flex-wrap items-center gap-2 p-4">
-                    {wordChallengeForPlayer.words.map((word, index) => (
+                <div className="flex h-28 w-full rounded-md bg-black/60 pr-2">
+                  <div className="flex h-full w-full flex-col overflow-y-auto p-4">
+                    <p>
+                      {wordChallengeForPlayer.words.map((word, index) => (
+                        <WordChallengeEntry
+                          key={JSON.stringify({ ...wordsChallenge, index })}
+                          index={index}
+                          word={word}
+                        />
+                      ))}
                       <WordChallengeEntry
-                        key={JSON.stringify({ ...wordsChallenge, index })}
-                        index={index}
-                        word={word}
+                        key={JSON.stringify({
+                          ...wordsChallenge,
+                          index: wordChallengeForPlayer.words.length,
+                        })}
+                        index={wordChallengeForPlayer.words.length}
+                        word="."
                       />
-                    ))}
-                    <WordChallengeEntry
-                      key={JSON.stringify({
-                        ...wordsChallenge,
-                        index: wordChallengeForPlayer.words.length,
-                      })}
-                      index={wordChallengeForPlayer.words.length}
-                      word="."
-                    />
+                    </p>
                   </div>
                 </div>
               )

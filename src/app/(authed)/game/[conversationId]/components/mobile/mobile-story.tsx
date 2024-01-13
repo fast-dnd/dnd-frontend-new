@@ -4,6 +4,7 @@ import useGetRoomData from "@/hooks/queries/use-get-room-data";
 import useGameplaySocket from "../../hooks/use-gameplay-socket";
 import useHandlePlayerStatusUpdate from "../../hooks/use-handle-player-status-update";
 import Stories from "../gameplay/stories";
+import RoundMission from "../round-mission";
 import AdventureHeader from "./adventure-header";
 
 const MobileStory = ({ conversationId }: { conversationId: string }) => {
@@ -23,8 +24,9 @@ const MobileStory = ({ conversationId }: { conversationId: string }) => {
         currentPlayer={currentPlayer}
         progress={(100 * (roomData.currentRound + 1)) / (roomData.maxRounds + 1)}
       />
-      <div className="mb-24 mt-32 p-4">
+      <div className="my-32 p-4">
         <Stories dungeonData={adventureData} roomData={roomData} lastStory={lastStory} />
+        <RoundMission conversationId={conversationId} />
       </div>
     </div>
   );

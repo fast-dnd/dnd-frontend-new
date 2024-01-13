@@ -21,7 +21,7 @@ const Stories = ({ roomData, dungeonData, lastStory }: IStoriesProps) => {
   const { autoBottomScrollDiv } = useAutoScrollToBottom([roomData, stories]);
 
   return (
-    <div className="flex w-full flex-1 flex-col gap-8 pr-4 lg:overflow-y-auto lg:pr-6">
+    <div className="flex w-full flex-1 flex-col gap-8 lg:overflow-y-auto lg:pr-6">
       <StoryList roomData={roomData} dungeonData={dungeonData} stories={stories} />
       <div ref={autoBottomScrollDiv} />
     </div>
@@ -48,17 +48,23 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
             className="flex w-full flex-col gap-4 rounded-md bg-black p-4 lg:gap-8 lg:p-6"
           >
             <div className="flex w-full items-center gap-1.5 lg:gap-3">
-              <div className="h-2 w-2 shrink-0 rotate-45 bg-white" />
+              <div className="h-2 w-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
               <p
-                className="mt-0.5 max-w-full font-semibold uppercase tracking-[0.2em] lg:line-clamp-2 lg:text-2xl"
+                className="mt-0.5 line-clamp-2 max-w-full text-2xl font-semibold uppercase tracking-[0.2em] max-lg:hidden"
                 style={jibril.style}
               >
-                <span className="whitespace-nowrap text-white/30 lg:text-white/40">
+                <span className="whitespace-nowrap text-white/40">
                   ROUND {i + 1}/{roomData.maxRounds + 1}
                 </span>
                 <span>&zwnj; {dungeonData.locations[Math.floor(i / 2)]?.name}</span>
               </p>
-              <div className="h-2 w-2 shrink-0 rotate-45 bg-white" />
+              <p className="mt-0.5 max-w-full font-semibold uppercase tracking-tight lg:hidden">
+                <span className="whitespace-nowrap text-white/30">
+                  ROUND {i + 1}/{roomData.maxRounds + 1}
+                </span>
+                <span>&zwnj; {dungeonData.locations[Math.floor(i / 2)]?.name}</span>
+              </p>
+              <div className="h-2 w-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
             </div>
 
             <div className="w-full">

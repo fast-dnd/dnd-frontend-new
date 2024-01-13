@@ -9,6 +9,7 @@ import "@/styles/globals.css";
 import "@/styles/scrollbar.css";
 import "@/styles/tailwind.css";
 import "@/styles/zoom.css";
+import "@/styles/content-editable.css";
 
 import { Metadata } from "next";
 
