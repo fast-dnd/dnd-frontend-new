@@ -27,6 +27,8 @@ const MoveInput = ({ champion, wordsChallenge, isWordsChallenge }: IMoveInputPro
 
   const accountId = useReadLocalStorage<string>("accountId");
 
+  /* TODO: just need last, wait for backend */
+
   const wordChallengeForPlayer = wordsChallenge
     ?.at(-1)
     ?.find((wordChallenge) => wordChallenge.accountId === accountId);

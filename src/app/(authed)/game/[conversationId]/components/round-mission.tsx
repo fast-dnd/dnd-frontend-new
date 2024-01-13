@@ -26,6 +26,7 @@ const RoundMission = ({ conversationId }: { conversationId: string }) => {
       <div className="flex flex-col gap-2 p-3">
         {dungeonData ? (
           <p className="text-sm font-semibold leading-tight">
+            {/* TODO: just need last, wait for backend */}
             {dungeonData.locations.at(-1)?.mission}
           </p>
         ) : (
