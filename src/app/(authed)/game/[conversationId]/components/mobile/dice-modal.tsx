@@ -66,7 +66,7 @@ const DiceModal = () => {
           className="flex gap-12"
         >
           {dice.map((roll, i) => (
-            <Die big key={i} roll={roll} />
+            <Die big key={i} roll={roll} animate={buttonState === "ROLLING"} />
           ))}
         </motion.div>
 
