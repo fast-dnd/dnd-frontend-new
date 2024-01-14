@@ -64,7 +64,7 @@ const WordChallengeEntry = ({ index, word }: { index: number; word: string }) =>
           StartIcon={() => <PenNib weight="bold" color="#ffffff50" />}
           placeholder="Add text..."
           className="mt-1 h-8 w-52 placeholder:italic lg:w-72"
-          inputWrapperClassName="w-52 inline-block"
+          inputWrapperClassName="w-52 lg:w-72 inline-block"
         />
       )}
 

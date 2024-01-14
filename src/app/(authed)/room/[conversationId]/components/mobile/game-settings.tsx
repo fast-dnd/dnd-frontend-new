@@ -1,4 +1,7 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IChampion } from "@/types/dungeon";
@@ -35,6 +38,8 @@ const GameSettings = ({
   const { gameStarting } = useRoomSocket(conversationId);
 
   const { isDefault } = useCommunity();
+  const { loggedIn } = useAuth();
+
   const { data: currentCommunity } = useGetCurrentCommunity();
 
   const {
@@ -56,6 +61,8 @@ const GameSettings = ({
   const canBegin = roomData?.playerState.every((player) => player.champion) ?? false;
 
   const disabled = !isAdmin || isGameStarting || gameStarting;
+
+  if (!loggedIn) return <div>Something went wrong.</div>;
 
   return (
     <>

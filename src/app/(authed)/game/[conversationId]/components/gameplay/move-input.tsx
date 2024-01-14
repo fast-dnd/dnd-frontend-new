@@ -68,7 +68,7 @@ const MoveInput = ({ champion, wordsChallenge, isWordsChallenge }: IMoveInputPro
               wordChallengeForPlayer && (
                 <div className="flex h-28 w-full rounded-md bg-black/60 pr-2">
                   <div className="flex h-full w-full flex-col overflow-y-auto p-4">
-                    <p>
+                    <div className="inline">
                       {wordChallengeForPlayer.words.map((word, index) => (
                         <WordChallengeEntry
                           key={JSON.stringify({ ...wordsChallenge, index })}
@@ -84,7 +84,7 @@ const MoveInput = ({ champion, wordsChallenge, isWordsChallenge }: IMoveInputPro
                         index={wordChallengeForPlayer.words.length}
                         word="."
                       />
-                    </p>
+                    </div>
                   </div>
                 </div>
               )

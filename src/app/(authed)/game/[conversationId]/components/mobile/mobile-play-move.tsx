@@ -147,8 +147,8 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMovePr
                   </p>
                 ) : roomData.generateRandomWords ? (
                   wordChallengeForPlayer && (
-                    <div className="flex h-full w-full flex-col">
-                      <p>
+                    <div className="flex h-full max-h-[200px] w-full flex-col overflow-y-auto">
+                      <div className="inline">
                         {wordChallengeForPlayer.words.map((word, index) => (
                           <WordChallengeEntry
                             key={JSON.stringify({ ...roomData.wordsChallenge, index })}
@@ -164,7 +164,7 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMovePr
                           index={wordChallengeForPlayer.words.length}
                           word="."
                         />
-                      </p>
+                      </div>
                     </div>
                   )
                 ) : (
