@@ -101,6 +101,7 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMovePr
               <div className="flex gap-2 overflow-x-auto pr-8">
                 <MoveDisplay
                   move="free_will"
+                  wordChallenge={!!wordChallengeForPlayer}
                   onClick={() => {
                     setOpenedDetails(true);
                     moveStore.move.set(undefined);
@@ -227,7 +228,7 @@ const MoveDisplay = ({ move, onClick, className, action, wordChallenge }: IMoveD
           <PiPenNibFill /> Free Will
         </>
       )}
-      {move === "free_will" && wordChallenge && <>COMPLETE A SENTENCE</>}
+      {move === "free_will" && wordChallenge && <>Complete a Sentence</>}
       {move === "discover_health" && (
         <>
           <AiFillHeart /> Heal {action && "action"}

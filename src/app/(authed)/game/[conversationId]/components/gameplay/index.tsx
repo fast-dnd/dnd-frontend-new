@@ -38,7 +38,7 @@ const Gameplay = (props: { conversationId: string }) => {
     <div className="flex h-full w-full flex-col">
       <GamePlayHeader title={dungeonData.name} />
 
-      <div className="flex min-h-0 flex-1 flex-col gap-8 rounded-b-md bg-glass p-5 backdrop-blur-2xl lg:px-12 lg:py-8">
+      <div className="flex min-h-0 flex-1 flex-col gap-8 overflow-y-hidden rounded-b-md bg-glass p-5 backdrop-blur-2xl lg:px-12 lg:py-8">
         <Stories roomData={roomData} dungeonData={dungeonData} lastStory={lastStory} />
         <PlayMove
           roomData={roomData}
