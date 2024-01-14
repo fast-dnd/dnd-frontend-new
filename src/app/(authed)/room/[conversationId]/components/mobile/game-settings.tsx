@@ -62,8 +62,6 @@ const GameSettings = ({
 
   const disabled = !isAdmin || isGameStarting || gameStarting;
 
-  if (!loggedIn) return <div>Something went wrong.</div>;
-
   return (
     <>
       <ChooseGamemode
@@ -106,8 +104,8 @@ const GameSettings = ({
           isLoading={isGameStarting || gameStarting}
           onClick={onStartGame}
         >
-          START ({roomData?.price.toFixed(isDefault ? 0 : 5)}{" "}
-          {isDefault ? "coins" : currentCommunity?.currencyName})
+          START ({roomData?.price.toFixed(loggedIn && isDefault ? 0 : 5)}{" "}
+          {loggedIn && isDefault ? "coins" : currentCommunity?.currencyName})
         </Button>
       </div>
     </>
