@@ -17,14 +17,11 @@ export const defaultMoveSchema = z.enum(defaultMoves);
 
 export const moveTypeSchema = z.enum([...defaultMoves, "no_input", "free_will"]);
 
-// TODO: backend should replace this with 1D array
 export const wordsChallengeSchema = z.array(
-  z.array(
-    z.object({
-      accountId: z.string(),
-      words: z.array(z.string()),
-    }),
-  ),
+  z.object({
+    accountId: z.string(),
+    words: z.array(z.string()),
+  }),
 );
 
 export const moveSchema = z.object({
@@ -71,9 +68,12 @@ export const baseRoomSchema = z.object({
   roundEndsAt: z.string().nullish(),
   generateImages: z.boolean(),
   generateAudio: z.boolean(),
-  generateRandomWords: z.boolean().optional(), //TODO: remove optional after backend migration
+  generateRandomWords: z.boolean(),
   responseDetailsDepth: z.enum(dungeonDurationsArray),
   price: z.number(),
+  location: z.object({
+    mission: z.string(),
+  }),
 });
 
 export const roomDetailSchema = baseRoomSchema.extend({

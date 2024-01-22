@@ -31,9 +31,9 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMovePr
     currentPlayer,
   );
 
-  const wordChallengeForPlayer = roomData.wordsChallenge
-    ?.at(-1)
-    ?.find((wordChallenge) => wordChallenge.accountId === accountId);
+  const wordChallengeForPlayer = roomData.wordsChallenge?.find(
+    (wordChallenge) => wordChallenge.accountId === accountId,
+  );
 
   const hide = roomData.state === "WIN" || roomData.state === "LOSE";
   const store = moveStore.use();
