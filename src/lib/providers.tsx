@@ -12,7 +12,7 @@ import "./legend-state";
 import { Toaster } from "sonner";
 
 import useAuthCheck from "@/hooks/helpers/use-auth-check";
-import useSetDefaultCommunity from "@/hooks/queries/use-set-default-community";
+import useSetDefaultCommunity from "@/hooks/helpers/use-set-default-community";
 import { env } from "@/utils/env.mjs";
 
 import CustomWalletProvider from "./wallet-provider";

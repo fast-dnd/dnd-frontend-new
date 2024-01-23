@@ -64,7 +64,6 @@ const CampaignDetail = ({
             dungeon={dungeon}
             setDungeonDetailId={setDungeonDetailId}
             addFavorite={addFavorite}
-            // ref={lastDungeonRef}
           />
         ))}
       </div>

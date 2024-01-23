@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import DungeonDetail from "@/components/common/dungeon-detail";
@@ -20,6 +20,14 @@ const RoomInfo = ({ conversationId }: { conversationId: string }) => {
   const { mutate: updateRole } = useUpdateRole();
 
   const [selectedChampion, setSelectedChampion] = useState<IChampion>();
+
+  useEffect(() => {
+    const champion = roomData?.playerState.find(
+      (player) => player.accountId === accountId,
+    )?.champion;
+
+    if (champion) setSelectedChampion(champion);
+  }, [accountId, roomData?.playerState]);
 
   if (isLoadingRoomData) return <RoomInfoSkeleton />;
 

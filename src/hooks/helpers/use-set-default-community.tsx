@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocalStorage } from "@solana/wallet-adapter-react";
+import { useLocalStorage } from "usehooks-ts";
 
 import communityService from "@/services/community-service";
 
