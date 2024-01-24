@@ -33,7 +33,7 @@ const ProfileDropdown = () => {
   const [shopOpen, setShopOpen] = useState(false);
 
   const userBalance = useGetWeb3Balance({
-    tokenAccountAddress: publicKey?.toString() ?? "",
+    accountAddress: publicKey?.toString() ?? "",
     mintAddress: currentCommunity?.gameCurrency ?? "",
   });
 

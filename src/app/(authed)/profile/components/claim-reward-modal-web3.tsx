@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import useCommunity from "@/hooks/helpers/use-community";
-import useGetWeb3Balance from "@/hooks/helpers/use-get-web3-balance";
+import useGetTokenAccountBalance from "@/hooks/helpers/use-get-token-account-balance"
 import useOnWithdrawAdventureCurrency from "@/hooks/mutations/use-withdraw-adventure-currency";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IBaseDungeon } from "@/types/dungeon";
@@ -20,10 +20,9 @@ const ClaimRewardModalWeb3 = ({ dungeon, isOwned }: IClaimRewardModalWeb3Props) 
 
   const { data: currentCommunity } = useGetCurrentCommunity();
 
-  const adventureBalance = useGetWeb3Balance({
-    tokenAccountAddress: dungeon?.adventureTreasuryAddress ?? "",
-    mintAddress: currentCommunity?.gameCurrency ?? "",
-  });
+  const adventureBalance = useGetTokenAccountBalance(
+    dungeon?.adventureTreasuryAddress ?? "",
+  );
 
   const { onWithdrawAdventureCurrency } = useOnWithdrawAdventureCurrency({
     amount: adventureBalance,
@@ -34,7 +33,7 @@ const ClaimRewardModalWeb3 = ({ dungeon, isOwned }: IClaimRewardModalWeb3Props) 
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          className={cn("w-fit", (isDefault || isOwned || adventureBalance === 0) && "hidden")}
+          className={cn("w-fit", (isDefault || isOwned) && "hidden")}
           onClick={(e) => e.stopPropagation()}
         >
           Withdraw {adventureBalance} {currentCommunity?.currencyName}
