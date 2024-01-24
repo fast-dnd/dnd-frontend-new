@@ -18,7 +18,7 @@ const tooltipArrowVariants = cva("absolute hidden border-[6px] group-hover:inlin
 });
 
 const tooltipContentVariants = cva(
-  "absolute z-50 hidden overflow-hidden whitespace-nowrap rounded bg-black px-3 py-1.5 text-sm text-white shadow-sm shadow-white/20 transition-all duration-200 group-hover:inline-block",
+  "absolute z-50 hidden overflow-hidden whitespace-nowrap rounded border border-white/20 bg-black px-3 py-1.5 text-sm text-white shadow-sm shadow-white/20 backdrop-blur-md transition-all duration-200 group-hover:inline-block",
   {
     variants: {
       position: {
