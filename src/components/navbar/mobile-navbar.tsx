@@ -33,7 +33,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const [shopOpen, setShopOpen] = useState(false);
 
   const rewardPoolBalance = useGetWeb3Balance({
-    tokenAccountAddress: currentCommunity?.rewardPool ?? "",
+    accountAddress: currentCommunity?.rewardPool ?? "",
     mintAddress: currentCommunity?.gameCurrency ?? "",
   });
 

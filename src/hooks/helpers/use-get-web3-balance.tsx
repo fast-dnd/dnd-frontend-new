@@ -4,19 +4,18 @@ import { PublicKey } from "@solana/web3.js";
 import { solanaConnection } from "@/utils/web3/connection";
 
 interface IUseGetWeb3BalanceProps {
-  tokenAccountAddress: string;
+  accountAddress: string;
   mintAddress: string;
 }
 
-const useGetWeb3Balance = ({ tokenAccountAddress, mintAddress }: IUseGetWeb3BalanceProps) => {
+const useGetWeb3Balance = ({ accountAddress, mintAddress }: IUseGetWeb3BalanceProps) => {
   const [balance, setBalance] = useState(0);
 
   useEffect(() => {
     const fetchBalance = async () => {
       try {
-        const publicKey = new PublicKey(tokenAccountAddress);
+        const publicKey = new PublicKey(accountAddress);
         const mint = new PublicKey(mintAddress);
-
         const tokenAmount = await solanaConnection.getParsedTokenAccountsByOwner(publicKey, {
           mint,
         });
@@ -32,7 +31,7 @@ const useGetWeb3Balance = ({ tokenAccountAddress, mintAddress }: IUseGetWeb3Bala
     };
 
     fetchBalance();
-  }, [tokenAccountAddress, mintAddress]);
+  }, [accountAddress, mintAddress]);
 
   return balance;
 };

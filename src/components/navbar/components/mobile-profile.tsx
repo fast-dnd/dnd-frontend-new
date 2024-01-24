@@ -33,7 +33,7 @@ const MobileProfile = ({
   const { data: currentCommunity } = useGetCurrentCommunity();
 
   const userBalance = useGetWeb3Balance({
-    tokenAccountAddress: publicKey?.toString() ?? "",
+    accountAddress: publicKey?.toString() ?? "",
     mintAddress: currentCommunity?.gameCurrency ?? "",
   });
 
