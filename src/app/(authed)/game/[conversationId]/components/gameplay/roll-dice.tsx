@@ -33,9 +33,12 @@ const RollDice = ({ conversationId, roomData, currentPlayer }: IRollDiceProps) =
         {((store.roll?.diceAfterBonus || 0) >= 2 || submitting) && (
           <>
             {store.buttonState === "ROLLING" &&
+              store.randomDice.map((roll, i) => <Die key={i} roll={roll} animate />)}
+
+            {store.buttonState === "ROLLED" &&
               store.dice.map((roll, i) => <Die key={i} roll={roll} />)}
 
-            {!!store.roll && store.buttonState !== "ROLLING" && <DiceBreakdown />}
+            {!!store.roll && store.buttonState === "DEFAULT" && <DiceBreakdown />}
           </>
         )}
       </div>
@@ -61,7 +64,12 @@ const RollDice = ({ conversationId, roomData, currentPlayer }: IRollDiceProps) =
         {store.buttonState === "DEFAULT" && (
           <div className="flex items-center justify-center gap-2">
             <div className="relative">
-              <FaDice className="" />
+              <FaDice
+                className={cn(
+                  "opacity-100 transition-opacity duration-200",
+                  animate && "opacity-0",
+                )}
+              />
               <div className="pointer-events-none absolute -left-14 -top-14">
                 <Lottie
                   options={{

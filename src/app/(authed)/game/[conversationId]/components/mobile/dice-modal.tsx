@@ -16,6 +16,7 @@ const DiceModal = () => {
   const [open, setOpen] = useState(false);
 
   const dice = moveStore.dice.use();
+  const randomDice = moveStore.randomDice.use();
   const buttonState = moveStore.buttonState.use();
   const roll = moveStore.roll.use();
   const aiDescription = moveStore.aiDescription.use();
@@ -65,7 +66,7 @@ const DiceModal = () => {
           }}
           className="flex gap-12"
         >
-          {dice.map((roll, i) => (
+          {(buttonState === "ROLLING" ? randomDice : dice).map((roll, i) => (
             <Die big key={i} roll={roll} animate={buttonState === "ROLLING"} />
           ))}
         </motion.div>

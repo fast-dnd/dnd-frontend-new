@@ -17,7 +17,6 @@ const usePlayMoveSocket = (conversationId: string) => {
           moveStore.canPlay.set(false);
           break;
         case "ROUND_STORY":
-          moveStore.buttonState.set("DEFAULT");
           moveStore.canPlay.set(true);
           moveStore.move.set(undefined);
           break;
