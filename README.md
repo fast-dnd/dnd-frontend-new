@@ -1,10 +1,12 @@
 # For local development:
 
-### 1. Install **pnpm**: `npm i -g pnpm`
+### 1. Use correct node version by running: `nvm use`
 
-### 2. Install dependencies: `pnpm i`
+### 2. Install **pnpm**: `npm i -g pnpm`
 
-### 3. Run locally: `pnpm run dev`
+### 3. Install dependencies: `pnpm i`
+
+### 4. Run locally: `pnpm run dev`
 
 # Deployed version:
 

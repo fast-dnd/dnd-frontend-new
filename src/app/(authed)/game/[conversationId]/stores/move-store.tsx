@@ -10,6 +10,7 @@ export interface IMoveStore {
   freeWill: string;
   wordsChallenge: string[];
   powerup: number;
+  randomDice: [number, number];
   dice: [number, number];
   move?: IDefaultMove;
   roll?: IPlayMoveResponse;
@@ -22,6 +23,7 @@ export const initialMoveStoreData: IMoveStore = {
   freeWill: "",
   wordsChallenge: [],
   powerup: 0,
+  randomDice: [1, 1],
   dice: [0, 0],
 };
 

@@ -16,14 +16,6 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
   const store = moveStore.use();
 
   useEffect(() => {
-    if (submitting) {
-      const timeout = setTimeout(() => moveStore.dice.set(generateRandomDice()), 200);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [submitting]);
-
-  useEffect(() => {
     if ((currentPlayer.mana || 0) < store.powerup) {
       moveStore.powerup.set(0);
     }
@@ -39,7 +31,6 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
       }
     } else if (!loadingText && store.buttonState !== "ROLLING") {
       moveStore.canPlay.set(true);
-      moveStore.buttonState.set("DEFAULT");
     }
     if (roomData.state === "WIN" || roomData.state === "LOSE") moveStore.canPlay.set(false);
   }, [currentPlayer, loadingText, roomData, store.buttonState, store.powerup]);
@@ -59,6 +50,8 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
 
     if (moveToPlay) {
       moveStore.buttonState.set("ROLLING");
+      const interval = setInterval(() => moveStore.randomDice.set(generateRandomDice()), 200);
+
       moveStore.roll.set(undefined);
       moveStore.aiDescription.set(undefined);
       moveStore.canPlay.set(false);
@@ -68,15 +61,20 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
           moveStore.freeWill.set("");
           moveStore.wordsChallenge.set([]);
           moveStore.roll.set(res);
-          const rollTimeout = setTimeout(() => moveStore.buttonState.set("ROLLED"), 1500);
-          const diceTimeout = setTimeout(
-            () => moveStore.dice.set(generateDice(res.diceAfterBonus)),
-            250,
-          );
+          moveStore.dice.set(generateDice(res.diceAfterBonus));
+
+          const rollTimeout = setTimeout(() => {
+            moveStore.buttonState.set("ROLLED");
+            clearInterval(interval);
+          }, 500);
+
+          const breakdownTimeout = setTimeout(() => {
+            moveStore.buttonState.set("DEFAULT");
+          }, 1500);
 
           return () => {
             clearTimeout(rollTimeout);
-            clearTimeout(diceTimeout);
+            clearTimeout(breakdownTimeout);
           };
         },
         onError: () => {
