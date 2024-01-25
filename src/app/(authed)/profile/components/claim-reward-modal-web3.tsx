@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import useCommunity from "@/hooks/helpers/use-community";
-import useGetTokenAccountBalance from "@/hooks/helpers/use-get-token-account-balance"
+import useGetTokenAccountBalance from "@/hooks/helpers/use-get-token-account-balance";
 import useOnWithdrawAdventureCurrency from "@/hooks/mutations/use-withdraw-adventure-currency";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IBaseDungeon } from "@/types/dungeon";
@@ -20,9 +20,7 @@ const ClaimRewardModalWeb3 = ({ dungeon, isOwned }: IClaimRewardModalWeb3Props) 
 
   const { data: currentCommunity } = useGetCurrentCommunity();
 
-  const adventureBalance = useGetTokenAccountBalance(
-    dungeon?.adventureTreasuryAddress ?? "",
-  );
+  const adventureBalance = useGetTokenAccountBalance(dungeon?.adventureTreasuryAddress ?? "");
 
   const { onWithdrawAdventureCurrency } = useOnWithdrawAdventureCurrency({
     amount: adventureBalance,
@@ -33,7 +31,7 @@ const ClaimRewardModalWeb3 = ({ dungeon, isOwned }: IClaimRewardModalWeb3Props) 
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          className={cn("w-fit", (isDefault || isOwned) && "hidden")}
+          className={cn("w-fit", (isDefault || !isOwned || adventureBalance === 0) && "hidden")}
           onClick={(e) => e.stopPropagation()}
         >
           Withdraw {adventureBalance} {currentCommunity?.currencyName}
@@ -47,13 +45,10 @@ const ClaimRewardModalWeb3 = ({ dungeon, isOwned }: IClaimRewardModalWeb3Props) 
               className="mt-1 text-sm uppercase tracking-widest lg:text-2xl lg:tracking-[6.4px]"
               style={jibril.style}
             >
-              CLAIM A REWARD
+              WITHDRAW FUNDS
             </p>
             <div className="h-2 w-2 shrink-0 rotate-45 bg-primary" />
           </div>
-          <p className="text-center text-sm font-light lg:w-[450px] lg:text-xl lg:tracking-[1.5px]">
-            Congrats! You have reached the top of the scoreboard and earned
-          </p>
         </div>
 
         <div className="flex h-32 w-full flex-col items-center justify-center gap-4">
@@ -71,8 +66,8 @@ const ClaimRewardModalWeb3 = ({ dungeon, isOwned }: IClaimRewardModalWeb3Props) 
         </div>
 
         <DialogFooter className="flex w-full items-center justify-center">
-          <Button className="w-56" onClick={onWithdrawAdventureCurrency}>
-            CLAIM REWARD
+          <Button className="w-64" onClick={onWithdrawAdventureCurrency}>
+            WITHDRAW FUNDS
           </Button>
         </DialogFooter>
       </DialogContent>
