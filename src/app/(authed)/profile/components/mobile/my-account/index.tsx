@@ -10,6 +10,7 @@ import Helmet2Icon from "@/components/icons/helmet2-icon";
 import SwordsIcon from "@/components/icons/swords-icon";
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
+import useGetWeb3Balance from "@/hooks/helpers/use-get-web3-balance";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 
 import MyAccountSkeleton from "./my-account-skeleton";
@@ -23,6 +24,11 @@ const MobileMyAccount = () => {
   const { publicKey, wallet } = useWallet();
 
   const { loggingIn, user } = useAuth();
+
+  const userBalance = useGetWeb3Balance({
+    accountAddress: publicKey?.toString() ?? "",
+    mintAddress: currentCommunity?.gameCurrency ?? "",
+  });
 
   if (loggingIn || isInitialLoading) return <MyAccountSkeleton />;
 
@@ -94,8 +100,8 @@ const MobileMyAccount = () => {
             <>
               <StatisticsCard
                 icon={<GoldCoinIcon />}
-                value={statistics.totalCoins}
-                name={`$${currentCommunity?.name}`}
+                value={userBalance}
+                name={`${currentCommunity?.currencyName}`}
               />
             </>
           )}
