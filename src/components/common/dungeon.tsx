@@ -151,7 +151,7 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
                   </p>
                 </div>
               </Tooltip>
-              <ClaimRewardModalWeb3 dungeon={dungeon} />
+              <ClaimRewardModalWeb3 dungeon={dungeon} isOwned={isOwned} />
             </div>
           </div>
         </div>
