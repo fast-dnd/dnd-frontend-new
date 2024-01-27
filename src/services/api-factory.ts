@@ -59,5 +59,4 @@ export const BACKEND_URL =
   process.env.VERCEL_ENV === "production"
     ? "https://api-dev.v3rpg.com/"
     : "https://api-dev-test.v3rpg.com/";
-
 export const PAGINATION_LIMIT = 5;
