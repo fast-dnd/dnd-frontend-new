@@ -57,7 +57,6 @@ export default createApi;
 
 export const BACKEND_URL =
   process.env.VERCEL_ENV === "production"
-    ? "http://localhost:8080/"
-    : "http://localhost:8080/";
-
+    ? "https://api-dev.v3rpg.com/"
+    : "https://api-dev-test.v3rpg.com/";
 export const PAGINATION_LIMIT = 5;
