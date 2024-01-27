@@ -37,7 +37,10 @@ const ClaimRewardModalWeb3 = ({ dungeon, isOwned }: IClaimRewardModalWeb3Props) 
           Withdraw {adventureBalance} {currentCommunity?.currencyName}
         </Button>
       </DialogTrigger>
-      <DialogContent className="flex flex-col gap-12 border border-white/10 bg-black p-8">
+      <DialogContent
+        className="flex flex-col gap-12 border border-white/10 bg-black p-8"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-center gap-4">
             <div className="h-2 w-2 shrink-0 rotate-45 bg-primary" />
@@ -66,7 +69,13 @@ const ClaimRewardModalWeb3 = ({ dungeon, isOwned }: IClaimRewardModalWeb3Props) 
         </div>
 
         <DialogFooter className="flex w-full items-center justify-center">
-          <Button className="w-64" onClick={onWithdrawAdventureCurrency}>
+          <Button
+            className="w-64"
+            onClick={(e) => {
+              e.stopPropagation();
+              onWithdrawAdventureCurrency();
+            }}
+          >
             WITHDRAW FUNDS
           </Button>
         </DialogFooter>
