@@ -11,7 +11,7 @@ import { PiTrophyFill } from "react-icons/pi";
 
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
-import useGetWeb3Balance from "@/hooks/helpers/use-get-web3-balance";
+import useGetTokenAccountBalance from "@/hooks/helpers/use-get-token-account-balance";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { cn } from "@/utils/style-utils";
 
@@ -32,10 +32,9 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const { data: currentCommunity } = useGetCurrentCommunity();
   const [shopOpen, setShopOpen] = useState(false);
 
-  const rewardPoolBalance = useGetWeb3Balance({
-    accountAddress: currentCommunity?.rewardPool ?? "",
-    mintAddress: currentCommunity?.gameCurrency ?? "",
-  });
+  const rewardPoolBalance = useGetTokenAccountBalance(
+    currentCommunity?.rewardPool ?? "",
+  );
 
   const { user } = useAuth();
 
