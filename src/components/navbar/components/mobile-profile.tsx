@@ -159,7 +159,7 @@ const MobileProfile = ({
             {currentCommunity && (
               <Button
                 className="w-fit whitespace-nowrap"
-                href={`https://jup.ag/swap/USDC-${currentCommunity.gameCurrency}`}
+                href={`https://jup.ag/swap/USDC-${currentCommunity.currencyName}`}
               >
                 ADD MORE {currentCommunity.currencyName}
               </Button>
