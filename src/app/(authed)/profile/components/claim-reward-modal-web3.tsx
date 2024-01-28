@@ -31,7 +31,7 @@ const ClaimRewardModalWeb3 = ({ dungeon, isOwned }: IClaimRewardModalWeb3Props) 
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          className={cn("w-fit", (isDefault || !isOwned || adventureBalance === 0) && "hidden")}
+          className={cn("w-fit", (isDefault || !isOwned) && "hidden")}
           onClick={(e) => e.stopPropagation()}
         >
           Withdraw {adventureBalance} {currentCommunity?.currencyName}
