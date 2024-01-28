@@ -145,14 +145,17 @@ const ProfileDropdown = () => {
 
               <div className="h-1 w-full bg-white/10" />
 
-              <Link href="/profile" className="flex items-center gap-2">
+              <Link href="/profile" className="flex items-center gap-2 hover:opacity-70">
                 <UserCircle className="h-7 w-7" />
                 View Profile
               </Link>
             </>
           )}
 
-          <button className="flex items-center gap-2 tracking-[1.2px]" onClick={onSignOut}>
+          <button
+            className="flex items-center gap-2 tracking-[1.2px] hover:opacity-70"
+            onClick={onSignOut}
+          >
             <Plugs className="h-7 w-7" />
             {isDefault ? "Logout" : "Disconnect Wallet"}
           </button>
@@ -161,14 +164,14 @@ const ProfileDropdown = () => {
             <>
               <div className="h-1 w-full bg-white/10" />
 
-              <Link href="/guide" className="flex items-center gap-2">
+              <Link href="/guide" className="flex items-center gap-2 hover:opacity-70">
                 <BookOpenText className="h-7 w-7" />
                 Guide
               </Link>
 
               <Link
                 href="https://discord.com/invite/36chp8DnzC"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 hover:opacity-70"
                 target="_blank"
               >
                 <DiscordLogo className="h-7 w-7" />

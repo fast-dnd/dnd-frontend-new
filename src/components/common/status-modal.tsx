@@ -3,6 +3,11 @@ import { Copy } from "iconsax-react";
 
 import useCopy from "@/hooks/helpers/use-copy";
 
+import {
+  dungeonFormStore,
+  getInitialDungeonFormData,
+} from "@/app/(authed)/create-adventure/[[...dungeonId]]/stores/dungeon-form-store";
+
 import HelmetIcon from "../icons/helmet-icon";
 import {
   AlertDialog,
@@ -49,6 +54,11 @@ const StatusModal = ({ open, type, content, onClose }: IStatusModalProps) => {
       onCopy(content.id);
       router.push("/profile");
     }
+    dungeonFormStore.set({
+      currentStep: "General information",
+      status: "LIST",
+      dungeonFormData: getInitialDungeonFormData(),
+    });
   };
 
   return (

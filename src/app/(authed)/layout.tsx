@@ -5,19 +5,16 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useIsClient } from "usehooks-ts";
 
 import useCommunity from "@/hooks/helpers/use-community";
+import { logout } from "@/utils/auth";
 
 const AuthedLayout = ({ children }: React.PropsWithChildren) => {
   const { isDefault } = useCommunity();
   const isClient = useIsClient();
-  const { connected, connecting, connect } = useWallet();
+  const { connected, connecting } = useWallet();
 
   useEffect(() => {
-    const conn = async () => {
-      if (isClient && !isDefault && !connecting && !connected) await connect();
-    };
-
-    conn();
-  }, [connect, connected, connecting, isClient, isDefault]);
+    if (isClient && !isDefault && !connecting && !connected) logout();
+  }, [connected, connecting, isClient, isDefault]);
 
   return <>{children}</>;
 };
