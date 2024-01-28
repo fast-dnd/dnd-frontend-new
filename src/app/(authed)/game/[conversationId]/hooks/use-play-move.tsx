@@ -42,7 +42,7 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
       moveType: store.move ?? "free_will",
       message: store.move
         ? ""
-        : store.wordsChallenge
+        : store.wordsChallenge.length > 0
         ? store.wordsChallenge.join(" ")
         : store.freeWill,
       playerId: currentPlayer.accountId,
