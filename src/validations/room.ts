@@ -24,6 +24,12 @@ export const wordsChallengeSchema = z.array(
   }),
 );
 
+export const affectedPlayerSchema = z.object({
+  accountId: z.string(),
+  health: z.number(),
+  bonus: z.number(),
+});
+
 export const moveSchema = z.object({
   playerAccountId: z.string(),
   playerName: z.string(),
@@ -34,6 +40,7 @@ export const moveSchema = z.object({
   mana: z.number(),
   aiRating: z.number(),
   aiDescription: z.string().nullable(),
+  affectsOthers: z.array(affectedPlayerSchema).nullable(),
 });
 
 export const questionSchema = z.object({

@@ -36,13 +36,15 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
   }, [currentPlayer, loadingText, roomData, store.buttonState, store.powerup]);
 
   const onPlay = () => {
+    console.log({ store });
+
     const moveToPlay: IPlayMove = {
       conversationId,
       mana: store.powerup,
       moveType: store.move ?? "free_will",
       message: store.move
         ? ""
-        : store.wordsChallenge
+        : store.wordsChallenge.length > 0
         ? store.wordsChallenge.join(" ")
         : store.freeWill,
       playerId: currentPlayer.accountId,
