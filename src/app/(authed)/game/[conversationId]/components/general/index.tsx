@@ -25,7 +25,7 @@ const General = ({ conversationId }: { conversationId: string }) => {
     <Box
       title="general"
       className="flex min-h-0 flex-1 flex-col py-5 lg:py-8"
-      wrapperClassName="h-full"
+      wrapperClassName="h-full min-h-0"
     >
       <div className="flex h-full min-h-0 w-full flex-col gap-4 overflow-y-auto px-5 lg:gap-8 lg:px-8">
         <Player player={currentPlayer} currentPlayer />
