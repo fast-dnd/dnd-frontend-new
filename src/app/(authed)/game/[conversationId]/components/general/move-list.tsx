@@ -30,8 +30,8 @@ const MoveList = ({ moves }: { moves: IMove[] }) => {
                     <p>
                       <span className="font-semibold">{move.playerName}</span> move{" "}
                       {affectedPlayer.health > 0 ? "increased" : "descreased"}{" "}
-                      <span className="font-semibold">{affectedPlayer.accountId}&apos;s</span>{" "}
-                      health by {Math.abs(affectedPlayer.health)}.
+                      <span className="font-semibold">{affectedPlayer.name}&apos;s</span> health by{" "}
+                      {Math.abs(affectedPlayer.health)}.
                     </p>
                   </div>
                 )}
@@ -40,8 +40,8 @@ const MoveList = ({ moves }: { moves: IMove[] }) => {
                     <p>
                       <span className="font-semibold">{move.playerName}</span> move{" "}
                       {affectedPlayer.bonus > 0 ? "increased" : "descreased"}{" "}
-                      <span className="font-semibold">{affectedPlayer.accountId}&apos;s</span> bonus
-                      by {Math.abs(affectedPlayer.bonus)}.
+                      <span className="font-semibold">{affectedPlayer.name}&apos;s</span> bonus by{" "}
+                      {Math.abs(affectedPlayer.bonus)}.
                     </p>
                   </div>
                 )}

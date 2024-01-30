@@ -25,6 +25,7 @@ export const wordsChallengeSchema = z.array(
 );
 
 export const affectedPlayerSchema = z.object({
+  name: z.string(),
   accountId: z.string(),
   health: z.number(),
   bonus: z.number(),
