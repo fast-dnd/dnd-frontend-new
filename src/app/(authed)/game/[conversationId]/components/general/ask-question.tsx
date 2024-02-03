@@ -30,7 +30,7 @@ const AskQuestion = ({ conversationId, canAsk, asking, setAsking }: IAskQuestion
         <Input
           disabled={!canAsk}
           label="Ask Bob"
-          value={question}
+          value={canAsk ? question : "You can only ask Bob once per turn"}
           className="m-0 flex-1"
           onChange={(e) => {
             setQuestion(e.target.value);

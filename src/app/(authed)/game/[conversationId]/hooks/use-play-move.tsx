@@ -36,8 +36,6 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
   }, [currentPlayer, loadingText, roomData, store.buttonState, store.powerup]);
 
   const onPlay = () => {
-    console.log({ store });
-
     const moveToPlay: IPlayMove = {
       conversationId,
       mana: store.powerup,
