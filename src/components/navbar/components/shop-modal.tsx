@@ -8,8 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { jibril } from "@/utils/fonts";
 
-import useCreateCheckout from "../hooks/use-create-checkout";
-import useGetProducts from "../hooks/use-get-products";
+import useCreateOrder from "../hooks/use-create-order";
 
 const ShopModal = ({
   open,
@@ -20,16 +19,14 @@ const ShopModal = ({
 }) => {
   const router = useRouter();
 
-  const { data: products } = useGetProducts();
-
-  const { mutate: createCheckout, isLoading } = useCreateCheckout();
+  const { mutate: createCheckout, isLoading } = useCreateOrder();
 
   const isMobileTablet = useMediaQuery("(max-width: 1024px)");
 
   const offers = [
     {
       tokenAmount: "100",
-      priceId: products?.products.find((product) => product.name === "100")?.default_price,
+      itemName: "COINS_50",
       price: 1,
       image: (
         <Image
@@ -43,7 +40,7 @@ const ShopModal = ({
     },
     {
       tokenAmount: "550",
-      priceId: products?.products.find((product) => product.name === "550")?.default_price,
+      itemName: "COINS_550",
       price: 5,
       image: (
         <Image
@@ -59,7 +56,7 @@ const ShopModal = ({
     },
     {
       tokenAmount: "1200",
-      priceId: products?.products.find((product) => product.name === "1200")?.default_price,
+      itemName: "COINS_1200",
       price: 10,
       image: (
         <Image
@@ -76,12 +73,14 @@ const ShopModal = ({
   ];
 
   const onCreateCheckout = async (tokenAmount: string) => {
-    const priceId = offers.find((offer) => offer.tokenAmount === tokenAmount)?.priceId;
-    if (!priceId) return;
+    const itemName = offers.find((offer) => offer.tokenAmount === tokenAmount)?.itemName;
+    if (!itemName) return;
 
     createCheckout(
-      { priceId, quantity: 1 },
-      { onSuccess: (data) => router.push(data.session.url) },
+      { itemName },
+      {
+        onSuccess: (data) => router.push(data.redirectUrl),
+      },
     );
   };
 

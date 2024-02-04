@@ -1,24 +1,17 @@
-import { checkoutSessionSchema, productsSchema } from "@/validations/stripe";
+import { checkoutSchema } from "@/validations/paypal";
 
 import createApi from "./api-factory";
 
-const stripeApi = createApi({ commonPrefix: "stripe" });
+const paypalApi = createApi({ commonPrefix: "paypal" });
 
-const getProducts = async () => {
-  return await stripeApi.get("products").then((res) => productsSchema.parse(res.data));
+const createOrder = async (data: { itemName: string }) => {
+  return await paypalApi.post("create-order", data).then((res) => checkoutSchema.parse(res.data));
 };
 
-const createCheckoutSession = async (data: { priceId: string; quantity?: number }) => {
-  return await stripeApi
-    .post("create-checkout-session", data)
-    .then((res) => checkoutSessionSchema.parse(res.data));
+const paypalService = {
+  createOrder,
 };
 
-const stripeService = {
-  getProducts,
-  createCheckoutSession,
-};
+export default paypalService;
 
-export default stripeService;
-
-export const stripeKey = "stripe";
+export const paypalKey = "paypal";
