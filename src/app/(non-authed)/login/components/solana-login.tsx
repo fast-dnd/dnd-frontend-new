@@ -14,9 +14,16 @@ const SolanaLogin = () => {
 
   const { publicKey, wallets, select, disconnect, connecting } = useWallet();
 
+  const isProd = process.env.VERCEL_ENV === "production";
+
   return (
     <Dialog>
-      <div className="w-full rounded-b-md bg-white text-sm font-bold tracking-wider text-black transition-all duration-300 lg:rounded-md lg:border-2 lg:border-white/30 lg:bg-white/10 lg:text-xl lg:tracking-normal lg:text-white lg:hover:bg-white/20 lg:active:bg-white/25">
+      <div
+        className={cn(
+          "w-full rounded-b-md bg-white text-sm font-bold tracking-wider text-black transition-all duration-300 lg:rounded-md lg:border-2 lg:border-white/30 lg:bg-white/10 lg:text-xl lg:tracking-normal lg:text-white lg:hover:bg-white/20 lg:active:bg-white/25",
+          isProd && "pointer-events-none opacity-50",
+        )}
+      >
         {connecting ? (
           <p className="flex w-full flex-row items-center justify-center px-4 py-3 uppercase max-lg:pl-36 lg:px-6 lg:py-5">
             Connecting...
@@ -32,9 +39,18 @@ const SolanaLogin = () => {
             <p>Disconnect wallet</p>
           </button>
         ) : (
-          <DialogTrigger className="flex w-full flex-row items-center justify-center gap-2 px-4 py-3 uppercase max-lg:pl-36 lg:px-6 lg:py-5">
-            <Wallet className="max-lg:hidden" />
-            CONNECT WALLET
+          <DialogTrigger
+            className="flex w-full flex-row items-center justify-center gap-2 px-4 py-3 uppercase max-lg:pl-36 lg:px-6 lg:py-5"
+            disabled={isProd}
+          >
+            {isProd ? (
+              "COMING SOON"
+            ) : (
+              <>
+                <Wallet className="max-lg:hidden" />
+                CONNECT WALLET
+              </>
+            )}
           </DialogTrigger>
         )}
       </div>
