@@ -6,6 +6,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useWindowSize } from "usehooks-ts";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { env } from "@/utils/env.mjs";
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
@@ -14,7 +15,7 @@ const SolanaLogin = () => {
 
   const { publicKey, wallets, select, disconnect, connecting } = useWallet();
 
-  const isProd = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
+  const isProd = env.NEXT_PUBLIC_VERCEL_ENV === "production";
 
   return (
     <Dialog>

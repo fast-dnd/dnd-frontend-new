@@ -18,6 +18,7 @@ import CookieBanner from "@/components/common/cookie-banner";
 import GoogleAnalytics from "@/components/common/google-analytics";
 import HotjarAnalytics from "@/components/common/hotjar-analytics";
 import DesktopNavbar from "@/components/navbar/desktop-navbar";
+import { env } from "@/utils/env.mjs";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://play.v3rpg.com/"),
@@ -42,7 +43,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
         <meta name="theme-color" content="#FF5A5A" />
         <meta
           name="robots"
-          content={process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ? "all" : "noindex,nofollow"}
+          content={env.NEXT_PUBLIC_VERCEL_ENV === "production" ? "all" : "noindex,nofollow"}
         />
       </head>
 

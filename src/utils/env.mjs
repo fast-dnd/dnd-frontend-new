@@ -8,6 +8,7 @@ export const env = createEnv({
     NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string().nonempty(),
     NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID: z.string().nonempty(),
     NEXT_PUBLIC_WALLET_ENDPOINT: z.string().nonempty(),
+    NEXT_PUBLIC_VERCEL_ENV: z.enum(["production", "preview", "development"]).optional(),
   },
   runtimeEnv: {
     NEXT_PUBLIC_HJID: process.env.NEXT_PUBLIC_HJID,
@@ -15,5 +16,6 @@ export const env = createEnv({
     NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
     NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID,
     NEXT_PUBLIC_WALLET_ENDPOINT: process.env.NEXT_PUBLIC_WALLET_ENDPOINT,
+    NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
   },
 });
