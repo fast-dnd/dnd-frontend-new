@@ -8,19 +8,21 @@ import { IPlayer, IRoomDetail } from "@/types/room";
 import { gameStore } from "../../stores/game-store";
 import Player from "../general/player";
 
+interface IPayerStatsModalProps {
+  roomData: IRoomDetail;
+  currentPlayer: IPlayer;
+  open: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}
+
 const PlayerStatsModal = ({
   roomData,
   currentPlayer,
   open,
   onOpen,
   onClose,
-}: {
-  roomData: IRoomDetail;
-  currentPlayer: IPlayer;
-  open: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-}) => {
+}: IPayerStatsModalProps) => {
   const isMobileTablet = useMediaQuery("(max-width: 1024px)");
 
   const pageState = gameStore.pageState.use();

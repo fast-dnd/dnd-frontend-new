@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import { IRoomDetail } from "@/types/room";
-import { DungeonDuration } from "@/utils/dungeon-options";
+import { DungeonDuration } from "@/utils/dungeon/dungeon-options";
 
 const usePlayerInfo = (roomData: IRoomDetail | undefined) => {
   const [avatarId, setAvatarId] = useState<string>();

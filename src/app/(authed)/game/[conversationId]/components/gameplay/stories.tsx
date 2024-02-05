@@ -1,39 +1,72 @@
+import { useState } from "react";
+
 import SkeletonIcon from "@/components/icons/skeleton-icon";
 import useAutoScrollToBottom from "@/hooks/helpers/use-auto-scroll-to-bottom";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
+import { jibril } from "@/utils/fonts";
 
 import useUpdateStories from "../../hooks/use-update-stories";
 import ImageModal from "../modals/image-modal";
 import StyledAudio from "./styled-audio";
 
-export interface StoriesProps {
+interface IStoriesProps {
   roomData: IRoomDetail;
   dungeonData: IDungeonDetail;
   lastStory?: string;
 }
 
-const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
+const Stories = ({ roomData, dungeonData, lastStory }: IStoriesProps) => {
   const { stories } = useUpdateStories({ roomData, lastStory });
   const { autoBottomScrollDiv } = useAutoScrollToBottom([roomData, stories]);
 
   return (
-    <div className="flex w-full flex-1 flex-col gap-8 pr-4 lg:overflow-y-auto lg:pr-6">
+    <div className="flex w-full flex-1 flex-col gap-8 lg:overflow-y-auto lg:pr-6">
+      <StoryList roomData={roomData} dungeonData={dungeonData} stories={stories} />
+      <div ref={autoBottomScrollDiv} />
+    </div>
+  );
+};
+
+interface IStoryListProps {
+  roomData: IRoomDetail;
+  dungeonData: IDungeonDetail;
+  stories: string[];
+}
+
+const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
+  const [openedMission, setOpenedMission] = useState(-1);
+
+  return (
+    <>
       {stories.map((story, i) => {
         const generatedImage = roomData.generatedImages[i];
 
         return (
-          <div key={i} className="flex w-full flex-col gap-8">
-            <div className="flex w-full items-center gap-8">
-              <div className="line-clamp-2 max-w-full text-lg font-semibold uppercase tracking-[0.2em] lg:flex lg:text-2xl">
-                <span className="mr-2 whitespace-nowrap text-white/30 lg:text-primary">
-                  TURN {i + 1}/{roomData.maxRounds + 1}
+          <div
+            key={i}
+            className="flex w-full flex-col gap-4 rounded-md bg-black p-4 lg:gap-8 lg:p-6"
+          >
+            <div className="flex w-full items-center gap-1.5 lg:gap-3">
+              <div className="h-2 w-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
+              <p
+                className="mt-0.5 line-clamp-2 max-w-full text-2xl font-semibold uppercase tracking-[0.2em] max-lg:hidden"
+                style={jibril.style}
+              >
+                <span className="whitespace-nowrap text-white/40">
+                  ROUND {i + 1}/{roomData.maxRounds + 1}
                 </span>
-                <span className="lg:truncate">
-                  {dungeonData.locations[Math.floor(i / 2)]?.name}
+                <span>&zwnj; {dungeonData.locations[Math.floor(i / 2)]?.name}</span>
+              </p>
+              <p className="mt-0.5 max-w-full font-semibold uppercase tracking-tight lg:hidden">
+                <span className="whitespace-nowrap text-white/30">
+                  ROUND {i + 1}/{roomData.maxRounds + 1}
                 </span>
-              </div>
+                <span>&zwnj; {dungeonData.locations[Math.floor(i / 2)]?.name}</span>
+              </p>
+              <div className="h-2 w-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
             </div>
+
             <div className="w-full">
               {roomData.generateImages && i % 2 === 0 && (
                 <div className="mb-4 flex aspect-video w-full shrink-0 justify-center lg:float-left lg:mr-6 lg:inline-block lg:aspect-square lg:h-72 lg:w-72">
@@ -59,8 +92,7 @@ const Stories = ({ roomData, dungeonData, lastStory }: StoriesProps) => {
           </div>
         );
       })}
-      <div ref={autoBottomScrollDiv} />
-    </div>
+    </>
   );
 };
 

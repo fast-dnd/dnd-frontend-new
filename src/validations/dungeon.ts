@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { dungeonDurationsArray, dungeonTags } from "@/utils/dungeon-options";
+import { dungeonDurationsArray, dungeonTags } from "@/utils/dungeon/dungeon-options";
 
 import { rewardSchema } from "./reward";
 
@@ -49,6 +49,10 @@ export const baseDungeonSchema = z.object({
   publiclySeen: z.boolean(),
   background: rewardSchema.nullable(),
   type: z.enum(["standard", "nft"]),
+  communityId: z.string().optional(),
+  creatorWalletAddress: z.string().nullish(),
+  transaction: z.string().optional(),
+  adventureTreasuryAddress: z.string().optional(),
 });
 
 export const dungeonSchema = baseDungeonSchema.extend({
@@ -74,6 +78,10 @@ export const dungeonForBackendSchema = dungeonDetailSchema
     background: z.string().nullable(),
     image: z.string().optional(),
   });
+
+export const dungeonTxResponseSchema = z.object({
+  transaction: z.string(),
+});
 
 export const dungeonResponseSchema = z.object({
   id: z.string(),

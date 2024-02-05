@@ -1,38 +1,79 @@
-"use client";
-
-import * as React from "react";
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import React from "react";
+import { cva, VariantProps } from "class-variance-authority";
 
 import { cn } from "@/utils/style-utils";
 
-const TooltipProvider = React.forwardRef<
-  React.ElementRef<typeof TooltipPrimitive.Provider>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>
->((props, ref) => (
-  <TooltipPrimitive.Provider delayDuration={200} skipDelayDuration={1000} {...props} />
-));
-TooltipProvider.displayName = TooltipPrimitive.Provider.displayName;
+const tooltipArrowVariants = cva(
+  "absolute hidden h-5 w-5 rotate-45 border border-l-0 border-white/20 bg-black shadow-sm shadow-white/20 group-hover:inline-block",
+  {
+    variants: {
+      position: {
+        top: "bottom-[calc(100%+5px)] left-1/2 -translate-x-1/2",
+        bottom: "left-1/2 top-[calc(100%+5px)] -translate-x-1/2",
+        left: "right-[calc(100%+5px)] top-1/2 -translate-y-1/2",
+        right: "left-[calc(100%+5px)] top-1/2 -translate-y-1/2",
+      },
+    },
+    defaultVariants: {
+      position: "top",
+    },
+  },
+);
 
-const Tooltip = TooltipPrimitive.Root;
+const tooltipContentVariants = cva(
+  "absolute z-50 hidden overflow-hidden whitespace-nowrap rounded border border-white/20 bg-black px-3 py-1.5 text-sm text-white shadow-sm shadow-white/20 backdrop-blur-md transition-all duration-200 group-hover:inline-block",
+  {
+    variants: {
+      position: {
+        top: "bottom-[calc(100%+15px)] left-1/2 -translate-x-1/2",
+        bottom: "left-1/2 top-[calc(100%+15px)] -translate-x-1/2",
+        left: "right-[calc(100%+15px)] top-1/2 -translate-y-1/2",
+        right: "left-[calc(100%+15px)] top-1/2 -translate-y-1/2",
+      },
+    },
+    defaultVariants: {
+      position: "top",
+    },
+  },
+);
 
-const TooltipTrigger = TooltipPrimitive.Trigger;
+interface ITooltipProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "content">,
+    VariantProps<typeof tooltipContentVariants> {
+  disabled?: boolean;
+  content: React.ReactNode;
+  contentClassName?: string;
+  triggerClassName?: string;
+  arrowClassName?: string;
+}
 
-const TooltipArrow = TooltipPrimitive.Arrow;
-
-const TooltipContent = React.forwardRef<
-  React.ElementRef<typeof TooltipPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
-  <TooltipPrimitive.Content
-    ref={ref}
-    sideOffset={sideOffset}
-    className={cn(
-      "z-50 overflow-hidden rounded-md border bg-select px-3 py-1.5 text-sm text-white shadow-md animate-in fade-in-50 data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1",
+export const Tooltip = React.forwardRef<HTMLDivElement, ITooltipProps>(
+  (
+    {
+      disabled,
+      position,
+      content,
       className,
-    )}
-    {...props}
-  />
-));
-TooltipContent.displayName = TooltipPrimitive.Content.displayName;
+      contentClassName,
+      triggerClassName,
+      arrowClassName,
+      children,
+      ...props
+    },
+    ref,
+  ) => (
+    <div className={cn("group relative cursor-pointer", className)} ref={ref} {...props}>
+      <div className={cn(triggerClassName)}>{children}</div>
+      {!disabled && (
+        <>
+          <div className={cn(tooltipContentVariants({ position }), contentClassName)}>
+            {content}
+          </div>
+          <span className={cn(tooltipArrowVariants({ position }), arrowClassName)} />
+        </>
+      )}
+    </div>
+  ),
+);
 
-export { Tooltip, TooltipTrigger, TooltipArrow, TooltipContent, TooltipProvider };
+Tooltip.displayName = "Tooltip";

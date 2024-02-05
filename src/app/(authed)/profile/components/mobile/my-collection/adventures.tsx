@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Copy } from "iconsax-react";
 
-import DeleteModal from "@/components/delete-modal";
+import DeleteModal from "@/components/common/delete-modal";
 import Spinner from "@/components/ui/spinner";
 import useCopy from "@/hooks/helpers/use-copy";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
@@ -11,6 +11,8 @@ import { cn } from "@/utils/style-utils";
 
 import { MobileAdventure } from "@/app/(authed)/home/components/mobile/mobile-adventure";
 import MobileAdventureDetail from "@/app/(authed)/home/components/mobile/mobile-adventure-detail";
+
+import ClaimRewardModalWeb3 from "../../claim-reward-modal-web3";
 
 const Adventures = () => {
   const [adventureDetailId, setAdventureDetailId] = useState<string>();
@@ -134,19 +136,21 @@ const Adventures = () => {
   );
 };
 
+interface IAdventureWrapperProps {
+  children: React.ReactNode;
+  adventure: IBaseDungeon;
+  adventureDetailId?: string | undefined;
+  opening: boolean;
+  onCopy: (text: string) => void;
+}
+
 const AdventureWrapper = ({
   children,
   adventure,
   adventureDetailId,
   opening,
   onCopy,
-}: {
-  children: React.ReactNode;
-  adventure: IBaseDungeon;
-  adventureDetailId?: string | undefined;
-  opening: boolean;
-  onCopy: (text: string) => void;
-}) => (
+}: IAdventureWrapperProps) => (
   <div
     className={cn(
       "flex flex-col gap-0.5",
@@ -170,6 +174,7 @@ const AdventureWrapper = ({
       </button>
       <DeleteModal id={adventure._id} type="adventure" />
     </div>
+    <ClaimRewardModalWeb3 dungeon={adventure} isOwned />
   </div>
 );
 

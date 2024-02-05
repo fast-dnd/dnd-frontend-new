@@ -1,9 +1,6 @@
 "use client";
 
-import React from "react";
-
-import HowToPlay from "@/components/how-to-play";
-import MobileNavbar from "@/components/mobile-navbar";
+import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { cn } from "@/utils/style-utils";
 
 import AnimationEffects from "./components/animation-effects";
@@ -12,6 +9,7 @@ import Gameplay from "./components/gameplay";
 import General from "./components/general";
 import MobileControls from "./components/mobile/mobile-controls";
 import MobileStory from "./components/mobile/mobile-story";
+import RoundMission from "./components/round-mission";
 import { gameStore } from "./stores/game-store";
 
 const Game = ({ params }: { params: { conversationId: string } }) => {
@@ -19,16 +17,6 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
   const pageState = gameStore.pageState.use();
 
   if (pageState === "FEEDBACK") return <Feedback />;
-
-  if (pageState === "HOWTOPLAY")
-    return (
-      <div className="flex h-full min-h-0 flex-col gap-5 lg:pb-12">
-        <HowToPlay
-          onHideHowToPlay={() => gameStore.pageState.set("DEFAULT")}
-          hideText={"back to the game"}
-        />
-      </div>
-    );
 
   return (
     <>
@@ -39,14 +27,15 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
           <div className={cn("flex h-full w-[70%] flex-1")}>
             <Gameplay conversationId={conversationId} />
           </div>
-          <div className={cn("flex h-full min-h-0 w-[27%]")}>
+          <div className={cn("flex h-full min-h-0 w-[27%] flex-col gap-4")}>
             <General conversationId={conversationId} />
+            <RoundMission conversationId={conversationId} />
           </div>
         </div>
       </div>
 
       <div className="flex flex-col lg:hidden">
-        <MobileNavbar className="fixed z-20 h-16 items-start" />
+        <MobileNavbar className="fixed h-16 items-start" />
         <AnimationEffects />
         <MobileStory conversationId={conversationId} />
         <MobileControls conversationId={conversationId} />

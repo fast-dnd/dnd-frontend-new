@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { dungeonDurationsArray } from "@/utils/dungeon-options";
+import { dungeonDurationsArray } from "@/utils/dungeon/dungeon-options";
 
 import { championSchema } from "./dungeon";
 
@@ -17,6 +17,20 @@ export const defaultMoveSchema = z.enum(defaultMoves);
 
 export const moveTypeSchema = z.enum([...defaultMoves, "no_input", "free_will"]);
 
+export const wordsChallengeSchema = z.array(
+  z.object({
+    accountId: z.string(),
+    words: z.array(z.string()),
+  }),
+);
+
+export const affectedPlayerSchema = z.object({
+  name: z.string(),
+  accountId: z.string(),
+  health: z.number(),
+  bonus: z.number(),
+});
+
 export const moveSchema = z.object({
   playerAccountId: z.string(),
   playerName: z.string(),
@@ -27,6 +41,7 @@ export const moveSchema = z.object({
   mana: z.number(),
   aiRating: z.number(),
   aiDescription: z.string().nullable(),
+  affectsOthers: z.array(affectedPlayerSchema).nullable(),
 });
 
 export const questionSchema = z.object({
@@ -61,8 +76,12 @@ export const baseRoomSchema = z.object({
   roundEndsAt: z.string().nullish(),
   generateImages: z.boolean(),
   generateAudio: z.boolean(),
+  generateRandomWords: z.boolean(),
   responseDetailsDepth: z.enum(dungeonDurationsArray),
   price: z.number(),
+  location: z.object({
+    mission: z.string(),
+  }),
 });
 
 export const roomDetailSchema = baseRoomSchema.extend({
@@ -78,6 +97,7 @@ export const roomDetailSchema = baseRoomSchema.extend({
   dungeonId: z.string(),
   maxPlayers: z.number(),
   maxRounds: z.number(),
+  wordsChallenge: wordsChallengeSchema.nullish(),
 });
 
 export const roomSchema = baseRoomSchema.extend({
@@ -93,4 +113,8 @@ export const roomSchema = baseRoomSchema.extend({
 export const roomHistorySchema = z.object({
   rooms: z.array(roomSchema),
   total: z.number(),
+});
+
+export const getStartGameTxSchema = z.object({
+  transaction: z.string(),
 });

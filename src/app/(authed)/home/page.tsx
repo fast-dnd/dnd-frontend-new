@@ -2,16 +2,21 @@
 
 import { useState } from "react";
 
-import GameHistory from "@/components/game-history";
-import MobileNavbar from "@/components/mobile-navbar";
+import GameHistory from "@/components/common/game-history";
+import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { Box } from "@/components/ui/box";
+import useAuth from "@/hooks/helpers/use-auth";
+import useCommunity from "@/hooks/helpers/use-community";
 
+import CommunityInfo from "./components/community-info";
 import CreateRoom from "./components/desktop/create-room";
 import JoinRoom from "./components/desktop/join-room";
 import MobileCreateRoom from "./components/mobile/mobile-create-room";
 import MobileJoinRoom from "./components/mobile/mobile-join-room";
+import useShowPaymentToast from "./hooks/use-show-payment-toast";
 
 const Page = () => {
+  const { isDefault } = useCommunity();
   const [join, setJoin] = useState(false);
 
   const [adventureDetailId, setAdventureDetailId] = useState<string>();
@@ -39,6 +44,9 @@ const Page = () => {
         setTimeout(() => setClosingCampaignId(undefined), 500);
       }
     : undefined;
+  const { loggedIn } = useAuth();
+
+  useShowPaymentToast();
 
   return (
     <>
@@ -58,7 +66,8 @@ const Page = () => {
         </div>
       </div>
       <div className="relative flex flex-col lg:hidden">
-        <MobileNavbar className="fixed z-[55] h-16 items-start" onClickBack={onClickBack} />
+        <MobileNavbar className="fixed h-16 items-start" onClickBack={onClickBack} />
+        {loggedIn && !isDefault && <CommunityInfo />}
         <MobileJoinRoom
           show={!adventureDetailId && !campaignDetailId}
           open={join}

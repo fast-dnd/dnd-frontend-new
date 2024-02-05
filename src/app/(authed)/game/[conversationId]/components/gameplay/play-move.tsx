@@ -8,13 +8,13 @@ import MoveInput from "./move-input";
 import PickPowerup from "./pick-powerup";
 import RollDice from "./roll-dice";
 
-export interface PlayMoveProps {
+export interface IPlayMoveProps {
   roomData: IRoomDetail;
   conversationId: string;
   currentPlayer: IPlayer;
 }
 
-const PlayMove = ({ roomData, conversationId, currentPlayer }: PlayMoveProps) => {
+const PlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMoveProps) => {
   usePlayMoveSocket(conversationId);
   const { timeToDisplay } = useTimer(roomData);
   const store = moveStore.use();
@@ -23,20 +23,20 @@ const PlayMove = ({ roomData, conversationId, currentPlayer }: PlayMoveProps) =>
     <>
       <div
         className={cn(
-          "flex w-full flex-col gap-8 lg:flex-row",
+          "flex w-full gap-8",
           (roomData.state === "WIN" || roomData.state === "LOSE" || currentPlayer.health <= 0) &&
             "hidden",
         )}
       >
         <div
           className={cn(
-            "flex h-full flex-1 flex-col gap-6",
+            "flex h-full min-w-[500px] flex-1 flex-col gap-6",
             store.buttonState !== "DEFAULT" && "hidden lg:flex",
           )}
         >
           <div
             className={cn(
-              "bg-white/5 px-4 py-2.5 text-xl uppercase tracking-[0.07em] lg:px-8",
+              "rounded-md bg-white/5 px-4 py-2.5 text-xl uppercase tracking-[0.07em] lg:px-8",
               !store.canPlay && "text-white/50",
             )}
           >
@@ -45,7 +45,11 @@ const PlayMove = ({ roomData, conversationId, currentPlayer }: PlayMoveProps) =>
             </span>
             <span className="opacity-50"> - {timeToDisplay()} Left</span>
           </div>
-          <MoveInput champion={currentPlayer.champion} />
+          <MoveInput
+            champion={currentPlayer.champion}
+            wordsChallenge={roomData.wordsChallenge}
+            isWordsChallenge={roomData.generateRandomWords}
+          />
         </div>
         <div className="flex flex-col gap-6">
           <PickPowerup currentMana={currentPlayer.mana} />

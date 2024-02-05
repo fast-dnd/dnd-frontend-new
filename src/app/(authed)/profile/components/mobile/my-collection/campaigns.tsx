@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Copy } from "iconsax-react";
 
-import DeleteModal from "@/components/delete-modal";
+import DeleteModal from "@/components/common/delete-modal";
 import Spinner from "@/components/ui/spinner";
 import useCopy from "@/hooks/helpers/use-copy";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
@@ -150,19 +150,21 @@ const Campaigns = () => {
 
 export default Campaigns;
 
+interface ICampaignWrapperProps {
+  children: React.ReactNode;
+  campaign: ICampaign;
+  campaignDetailId?: string | undefined;
+  opening: boolean;
+  onCopy: (text: string) => void;
+}
+
 const CampaignWrapper = ({
   children,
   campaign,
   campaignDetailId,
   opening,
   onCopy,
-}: {
-  children: React.ReactNode;
-  campaign: ICampaign;
-  campaignDetailId?: string | undefined;
-  opening: boolean;
-  onCopy: (text: string) => void;
-}) => (
+}: ICampaignWrapperProps) => (
   <div
     className={cn(
       "flex flex-col gap-0.5",

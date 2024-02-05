@@ -1,18 +1,22 @@
+import Image from "next/image";
+import { Brain, PenNib } from "@phosphor-icons/react";
 import { AiFillSound, AiFillStar } from "react-icons/ai";
 import { BiImages } from "react-icons/bi";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip } from "@/components/ui/tooltip";
+import useCommunity from "@/hooks/helpers/use-community";
+import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IDungeonDetail } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
-import { DungeonDuration, dungeonDurations } from "@/utils/dungeon-options";
+import { DungeonDuration, dungeonDurations } from "@/utils/dungeon/dungeon-options";
 
 import useOnRoomChange from "../../hooks/use-on-room-change";
+import useOnStartGame from "../../hooks/use-on-start-game";
 import usePlayerInfo from "../../hooks/use-player-info";
 import useRoomSocket from "../../hooks/use-room-socket";
-import useStartGame from "../../hooks/use-start-game";
 
 const imagesAudio = [
   {
@@ -25,15 +29,13 @@ const imagesAudio = [
   },
 ];
 
-const UpdateRoom = ({
-  conversationId,
-  roomData,
-  dungeonData,
-}: {
+interface IUpdateRoomProps {
   conversationId: string;
   roomData: IRoomDetail;
   dungeonData: IDungeonDetail;
-}) => {
+}
+
+const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps) => {
   const { duration, setDuration } = usePlayerInfo(roomData);
 
   const { gameStarting } = useRoomSocket(conversationId);
@@ -42,14 +44,23 @@ const UpdateRoom = ({
 
   const isAdmin = accountId === roomData.playerState[0].accountId;
 
-  const { setGenerateImages, setGenerateAudio, updatingRoom } = useOnRoomChange({
+  const { isDefault } = useCommunity();
+  const { data: currentCommunity } = useGetCurrentCommunity();
+
+  const {
+    setGenerateImages,
+    setGenerateAudio,
+    setGenerateRandomWords,
+    generateRandomWords,
+    updatingRoom,
+  } = useOnRoomChange({
     conversationId,
     duration,
     roomData,
     isAdmin,
   });
 
-  const { mutate: startGame, isLoading: isGameStarting } = useStartGame();
+  const { isGameStarting, onStartGame } = useOnStartGame({ conversationId });
 
   const generateAudioImagesArray = () => {
     const audioImagesArray = [];
@@ -74,8 +85,69 @@ const UpdateRoom = ({
       <ToggleGroup
         className="inline-flex w-full items-center justify-center"
         type="single"
-        onValueChange={(value) => setDuration(value as DungeonDuration)}
+        onValueChange={(value) => setGenerateRandomWords(value === "words")}
         label="Game mode"
+        value={roomData.generateRandomWords ? "words" : "regular"}
+        loading={updatingRoom && generateRandomWords !== roomData.generateRandomWords}
+        disabled={!isAdmin || isGameStarting || gameStarting}
+      >
+        <Tooltip
+          content={
+            <div className="flex w-fit flex-col">
+              <p className="text-xl font-bold">Regular Game</p>
+              <p className="mt-1 w-64 whitespace-break-spaces text-sm font-light">
+                Choose round outcome by writing your response completely freely.
+              </p>
+              <div className="rounded-md bg-black p-2">
+                <Image
+                  width={268}
+                  height={141}
+                  src="/images/regular-game-image.png"
+                  alt="Word Game Example"
+                  className="mt-5"
+                />
+              </div>
+            </div>
+          }
+          className="w-full"
+          contentClassName="drop-shadow-2xl backdrop-blur-md bg-black/75 p-4"
+        >
+          <ToggleGroupItem value="regular" className="relative px-4 lg:px-8">
+            <Brain />
+            Regular Game
+          </ToggleGroupItem>
+        </Tooltip>
+
+        <Tooltip
+          content={
+            <div className="flex w-fit flex-col">
+              <p className="text-xl font-bold">Word Game</p>
+              <p className="mt-1 w-64 whitespace-break-spaces text-sm font-light">
+                Get challenged by creating a meaningful sentence out of several predefined words.
+              </p>
+              <Image
+                width={268}
+                height={141}
+                src="/images/word-game-image.png"
+                alt="Word Game Example"
+                className="mt-5"
+              />
+            </div>
+          }
+          className="w-full"
+          contentClassName="drop-shadow-2xl backdrop-blur-md bg-black/75 p-4"
+        >
+          <ToggleGroupItem value="words" className="relative px-4 lg:px-8">
+            <PenNib />
+            Word Game
+          </ToggleGroupItem>
+        </Tooltip>
+      </ToggleGroup>
+      <ToggleGroup
+        className="inline-flex w-full items-center justify-center"
+        type="single"
+        onValueChange={(value) => setDuration(value as DungeonDuration)}
+        label="Game duration"
         value={roomData.responseDetailsDepth}
         loading={updatingRoom && duration !== roomData.responseDetailsDepth}
         disabled={!isAdmin || isGameStarting || gameStarting}
@@ -113,25 +185,17 @@ const UpdateRoom = ({
         ))}
       </ToggleGroup>
 
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              className="px-8 uppercase"
-              disabled={!isAdmin || !canBegin || gameStarting}
-              isLoading={isGameStarting || gameStarting}
-              onClick={() => startGame({ conversationId })}
-            >
-              START ({roomData.price} coins)
-            </Button>
-          </TooltipTrigger>
-          {!canBegin && (
-            <TooltipContent>
-              <p>Wait for all players to choose their role and avatar</p>
-            </TooltipContent>
-          )}
-        </Tooltip>
-      </TooltipProvider>
+      <Tooltip content="Wait for all players to choose their role and avatar" disabled={canBegin}>
+        <Button
+          className="px-8 uppercase"
+          disabled={!isAdmin || !canBegin || gameStarting}
+          isLoading={isGameStarting || gameStarting}
+          onClick={onStartGame}
+        >
+          START ({roomData.price.toFixed(isDefault ? 0 : 5)}{" "}
+          {isDefault ? "coins" : currentCommunity?.currencyName})
+        </Button>
+      </Tooltip>
     </div>
   );
 };

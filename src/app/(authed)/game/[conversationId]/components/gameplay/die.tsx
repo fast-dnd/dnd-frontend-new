@@ -2,7 +2,17 @@ import { cn } from "@/utils/style-utils";
 
 import { dieMap } from "../../utils/dice";
 
-const Die = ({ roll, big, small }: { roll: number; big?: boolean; small?: boolean }) => {
+const Die = ({
+  roll,
+  big,
+  small,
+  animate,
+}: {
+  roll: number;
+  big?: boolean;
+  small?: boolean;
+  animate?: boolean;
+}) => {
   const dieRows = dieMap[roll];
 
   if (!dieRows)
@@ -22,6 +32,7 @@ const Die = ({ roll, big, small }: { roll: number; big?: boolean; small?: boolea
         "flex h-14 w-14 flex-col rounded-lg bg-white p-1.5",
         big && "h-24 w-24",
         small && "h-9 w-9",
+        animate && "animate-spin duration-500",
       )}
     >
       {dieRows.map((row, i) => (

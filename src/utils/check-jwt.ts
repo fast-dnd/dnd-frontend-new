@@ -1,3 +1,5 @@
+import { useReadLocalStorage } from "usehooks-ts";
+
 const parseJwt = (token: string) => {
   try {
     return JSON.parse(window.atob(token.split(".")[1]));
@@ -6,10 +8,8 @@ const parseJwt = (token: string) => {
   }
 };
 
-const checkJWT = () => {
-  if (typeof window === "undefined") return false;
-
-  const token = localStorage.getItem("jwtToken");
+const useCheckJWT = () => {
+  const token = useReadLocalStorage<string>("jwtToken");
 
   if (!token) {
     return false;
@@ -22,4 +22,4 @@ const checkJWT = () => {
   return now < jwt.exp;
 };
 
-export default checkJWT;
+export default useCheckJWT;

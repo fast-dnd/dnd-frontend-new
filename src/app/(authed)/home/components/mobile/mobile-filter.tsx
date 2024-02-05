@@ -6,14 +6,14 @@ import { cn } from "@/utils/style-utils";
 
 import { subTabs, tabStore } from "../../stores/tab-store";
 
-const MobileFilter = ({
-  open,
-  setOpen,
-}: {
+interface IMobileFilterProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+}
+
+const MobileFilter = ({ open, setOpen }: IMobileFilterProps) => {
   const activeSubTab = tabStore.subTab.use();
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>

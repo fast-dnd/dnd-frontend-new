@@ -1,29 +1,41 @@
 import { useState } from "react";
+import { WalletError } from "@solana/wallet-adapter-base";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { Transaction } from "@solana/web3.js";
 import { AxiosError } from "axios";
+import bs58 from "bs58";
 import { MdEdit } from "react-icons/md";
+import { toast } from "sonner";
 import { z } from "zod";
 
-import StatusModal, { StatusModalContent } from "@/components/status-modal";
+import StatusModal, { StatusModalContent } from "@/components/common/status-modal";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
+import useCommunity from "@/hooks/helpers/use-community";
 import { IDungeonForBackend } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
 import useCreateDungeon from "../hooks/use-create-dungeon";
+import useCreateDungeonTx from "../hooks/use-create-dungeon-transaction";
 import useUpdateDungeon from "../hooks/use-update-dungeon";
 import { dungeonFormStore } from "../stores/dungeon-form-store";
 import { steps } from "../utils/step-utils";
 import { tagsRemoveLabel } from "../utils/tags-utils";
 
 const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
+  const { isDefault } = useCommunity();
+
+  const { publicKey, signTransaction } = useWallet();
+
   const { currentStep, dungeonFormData } = dungeonFormStore.use();
 
   const [modalContent, setModalContent] = useState<StatusModalContent>();
 
+  const { mutate: createDungeonTx } = useCreateDungeonTx();
   const { mutate: createDungeon, isLoading: isCreating } = useCreateDungeon();
   const { mutate: updateDungeon, isLoading: isUpdating } = useUpdateDungeon();
 
-  const onFinishForm = () => {
+  const onFinishForm = async () => {
     const dungeonFormDataWithoutTags: IDungeonForBackend = {
       ...dungeonFormData,
       image: dungeonFormData.imageUrl,
@@ -31,31 +43,82 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
       tags: tagsRemoveLabel(dungeonFormData.tags),
     };
 
+    const txForDungeon = {
+      name: dungeonFormDataWithoutTags.name,
+      payer: publicKey?.toString() ?? "",
+    };
+
     if (dungeonId) {
       updateDungeon(dungeonFormDataWithoutTags, {
         onSuccess: ({ id }) => {
           setModalContent({ state: "EDITED", id });
         },
-        onError: (data) => {
-          if (data instanceof AxiosError) {
-            const errorMessages = z.array(z.string()).parse(data?.response?.data);
+        onError: (err) => {
+          if (err instanceof AxiosError) {
+            const errorMessages = z.array(z.string()).parse(err?.response?.data);
             setModalContent({ errorMessages, state: "ERRORED" });
           }
         },
       });
     } else {
-      createDungeon(dungeonFormDataWithoutTags, {
-        onSuccess: ({ id }) => {
-          dungeonFormStore.dungeonFormData.set((prev) => ({ ...prev, id }));
-          setModalContent({ state: "CREATED", id });
-        },
-        onError: (data) => {
-          if (data instanceof AxiosError) {
-            const errorMessages = z.array(z.string()).parse(data?.response?.data);
-            setModalContent({ errorMessages, state: "ERRORED" });
-          }
-        },
-      });
+      if (isDefault) {
+        createDungeon(dungeonFormDataWithoutTags, {
+          onSuccess: ({ id }) => {
+            dungeonFormStore.dungeonFormData.set((prev) => ({ ...prev, id }));
+            setModalContent({ state: "CREATED", id });
+          },
+          onError: (err) => {
+            if (err instanceof AxiosError) {
+              const errorMessages = z.array(z.string()).parse(err?.response?.data);
+              setModalContent({ errorMessages, state: "ERRORED" });
+            }
+          },
+        });
+      } else if (publicKey && signTransaction) {
+        createDungeonTx(txForDungeon, {
+          onSuccess: async (data) => {
+            try {
+              const transaction = Transaction.from(bs58.decode(data.transaction as string));
+              const signedTx = await signTransaction(transaction);
+
+              const serializedTx = bs58.encode(signedTx.serialize());
+              createDungeon(
+                {
+                  ...dungeonFormDataWithoutTags,
+                  transaction: serializedTx,
+                  creatorWalletAddress: publicKey?.toString(),
+                },
+                {
+                  onSuccess: ({ id }) => {
+                    dungeonFormStore.dungeonFormData.set((prev) => ({
+                      ...prev,
+                      id,
+                      transaction: serializedTx,
+                      creatorWalletAddress: publicKey?.toString(),
+                    }));
+                    setModalContent({ state: "CREATED", id });
+                  },
+                  onError: (err) => {
+                    if (err instanceof AxiosError) {
+                      const errorMessages = z.array(z.string()).parse(err?.response?.data);
+                      setModalContent({ errorMessages, state: "ERRORED" });
+                    }
+                  },
+                },
+              );
+            } catch (err) {
+              if (err instanceof WalletError) toast.error(err.message);
+              else console.log("Error creating dungeon:\n--------------------------\n", err);
+            }
+          },
+          onError: (err) => {
+            if (err instanceof AxiosError) {
+              const errorMessages = z.array(z.string()).parse(err?.response?.data);
+              setModalContent({ errorMessages, state: "ERRORED" });
+            }
+          },
+        });
+      }
     }
   };
 

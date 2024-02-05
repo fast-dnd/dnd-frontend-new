@@ -26,7 +26,10 @@ const DiedModal = ({ state }: { state: IGameState }) => {
         if (!isOpen) close();
       }}
     >
-      <DialogContent className="flex flex-col max-lg:h-full max-lg:w-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900">
+      <DialogContent
+        alwaysOnTop
+        className="flex flex-col max-lg:h-full max-lg:w-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900"
+      >
         <div className="pointer-events-none absolute inset-0 h-full w-full bg-radialGradient lg:hidden">
           <div className="h-full w-full blur-xl" />
         </div>

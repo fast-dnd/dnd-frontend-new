@@ -3,7 +3,7 @@ import Image from "next/image";
 import { AxiosError } from "axios";
 import { z } from "zod";
 
-import StatusModal, { StatusModalContent } from "@/components/status-modal";
+import StatusModal, { StatusModalContent } from "@/components/common/status-modal";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";

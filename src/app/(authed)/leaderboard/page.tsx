@@ -3,17 +3,18 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import MobileNavbar from "@/components/mobile-navbar";
+import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { Box } from "@/components/ui/box";
 
 import LeaderboardList from "./components/leaderboard-list";
 import Tabs from "./components/tabs";
-import { RatingType } from "./types/rating-type";
+import { LeaderboardMetricsType } from "./types/leaderboard-metrics-type";
 
 const Leaderboard = () => {
   const router = useRouter();
 
-  const [selectedRating, setSelectedRating] = useState<RatingType>("gameplay");
+  const [selectedLeaderboardMetric, setSelectedLeaderboardMetric] =
+    useState<LeaderboardMetricsType>("gameplay");
 
   return (
     <>
@@ -23,16 +24,22 @@ const Leaderboard = () => {
         className="flex min-h-0 flex-1 p-8"
       >
         <div className="flex w-full flex-col">
-          <Tabs selectedRating={selectedRating} setSelectedRating={setSelectedRating} />
-          <LeaderboardList selectedRating={selectedRating} />
+          <Tabs
+            selectedLeaderboardMetric={selectedLeaderboardMetric}
+            setSelectedLeaderboardMetric={setSelectedLeaderboardMetric}
+          />
+          <LeaderboardList selectedLeaderboardMetric={selectedLeaderboardMetric} />
         </div>
       </Box>
 
       <div className="flex h-full min-h-0 flex-col lg:hidden">
         <MobileNavbar onClickBack={() => router.push("/home")} />
         <div className="flex min-h-0 flex-1 flex-col p-4">
-          <Tabs selectedRating={selectedRating} setSelectedRating={setSelectedRating} />
-          <LeaderboardList selectedRating={selectedRating} />
+          <Tabs
+            selectedLeaderboardMetric={selectedLeaderboardMetric}
+            setSelectedLeaderboardMetric={setSelectedLeaderboardMetric}
+          />
+          <LeaderboardList selectedLeaderboardMetric={selectedLeaderboardMetric} />
         </div>
       </div>
     </>

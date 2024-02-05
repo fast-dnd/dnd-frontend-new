@@ -11,13 +11,12 @@ import { IChampion } from "@/types/dungeon";
 import { IRoomDetail } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
-const MobileRoomInfo = ({
-  roomData,
-  selectedChampion,
-}: {
-  roomData: IRoomDetail | undefined;
+interface IMobileRoomInfoProps {
+  roomData?: IRoomDetail | undefined;
   selectedChampion: IChampion | null | undefined;
-}) => {
+}
+
+const MobileRoomInfo = ({ roomData, selectedChampion }: IMobileRoomInfoProps) => {
   const { copied, onCopy } = useCopy();
 
   return (

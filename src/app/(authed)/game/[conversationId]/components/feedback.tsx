@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineLeft } from "react-icons/ai";
 import { z } from "zod";
 
-import MobileNavbar from "@/components/mobile-navbar";
+import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/text-area";

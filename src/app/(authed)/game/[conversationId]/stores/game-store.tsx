@@ -11,15 +11,7 @@ export interface PlayerStatusUpdate {
 }
 
 export interface IGameStore {
-  pageState:
-    | "DEFAULT"
-    | "HOWTOPLAY"
-    | "FEEDBACK"
-    | "GOHOME"
-    | "DYING"
-    | "DIED"
-    | "GAMEOVER"
-    | "RATE";
+  pageState: "DEFAULT" | "FEEDBACK" | "GOHOME" | "DYING" | "DIED" | "GAMEOVER" | "RATE";
   reward: boolean;
   statusUpdate: PlayerStatusUpdate;
   loadingText: boolean;

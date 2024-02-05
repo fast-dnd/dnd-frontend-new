@@ -35,10 +35,11 @@ const DialogContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
     showCloseIcon?: boolean;
     fromBottom?: boolean;
+    alwaysOnTop?: boolean;
   }
->(({ showCloseIcon, className, children, fromBottom, ...props }, ref) => (
+>(({ showCloseIcon, className, children, fromBottom, alwaysOnTop, ...props }, ref) => (
   <DialogPortal>
-    <DialogOverlay />
+    <DialogOverlay className={cn(alwaysOnTop && "z-[100]")} onClick={(e) => e.stopPropagation()} />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
@@ -48,6 +49,7 @@ const DialogContent = React.forwardRef<
           "data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
         fromBottom &&
           "data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+        alwaysOnTop && "z-[100]",
         className,
       )}
       {...props}

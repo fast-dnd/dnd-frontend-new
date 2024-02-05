@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useReadLocalStorage } from "usehooks-ts";
 
-import DungeonDetail from "@/components/dungeon-detail";
-import GoBackButton from "@/components/go-back-button";
+import DungeonDetail from "@/components/common/dungeon-detail";
+import GoBackButton from "@/components/common/go-back-button";
 import { Box } from "@/components/ui/box";
 import useGetRoomData from "@/hooks/queries/use-get-room-data";
 import { IChampion } from "@/types/dungeon";
@@ -21,6 +21,14 @@ const RoomInfo = ({ conversationId }: { conversationId: string }) => {
 
   const [selectedChampion, setSelectedChampion] = useState<IChampion>();
 
+  useEffect(() => {
+    const champion = roomData?.playerState.find(
+      (player) => player.accountId === accountId,
+    )?.champion;
+
+    if (champion) setSelectedChampion(champion);
+  }, [accountId, roomData?.playerState]);
+
   if (isLoadingRoomData) return <RoomInfoSkeleton />;
 
   if (!roomData) return <div>Something went wrong</div>;
@@ -31,8 +39,14 @@ const RoomInfo = ({ conversationId }: { conversationId: string }) => {
 
   const onChangeChampion = (champion: IChampion) => {
     if (!takenChampions.some((champ) => champ._id === champion._id)) {
-      setSelectedChampion(champion);
-      updateRole({ conversationId, championId: champion._id });
+      updateRole(
+        { conversationId, championId: champion._id },
+        {
+          onSuccess: () => {
+            setSelectedChampion(champion);
+          },
+        },
+      );
     }
   };
 
@@ -49,6 +63,7 @@ const RoomInfo = ({ conversationId }: { conversationId: string }) => {
           selectedChampion={selectedChampion}
           takenChampions={takenChampions}
           onChangeChampion={onChangeChampion}
+          addFavorite
         />
       </div>
     </Box>

@@ -1,20 +1,20 @@
 import { PenNib, Star } from "@phosphor-icons/react";
 import { FaDice } from "react-icons/fa";
 
-import useAuth from "@/hooks/helpers/use-auth";
+import useGetLeaderboardMetrics from "@/hooks/queries/use-get-leaderboard-metrics";
 import { cn } from "@/utils/style-utils";
 
-import { RatingType } from "../types/rating-type";
+import { LeaderboardMetricsType } from "../types/leaderboard-metrics-type";
 
 interface ITabsProps {
-  selectedRating: RatingType;
-  setSelectedRating: React.Dispatch<React.SetStateAction<RatingType>>;
+  selectedLeaderboardMetric: LeaderboardMetricsType;
+  setSelectedLeaderboardMetric: React.Dispatch<React.SetStateAction<LeaderboardMetricsType>>;
 }
 
-const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
-  const { user } = useAuth();
+const Tabs = ({ selectedLeaderboardMetric, setSelectedLeaderboardMetric }: ITabsProps) => {
+  const { data: leaderboardMetrics } = useGetLeaderboardMetrics();
 
-  const ratingTabValues = [
+  const leaderboardMetricsTabValues = [
     {
       name: "gameplay",
       icon: (
@@ -22,11 +22,11 @@ const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
           size={24}
           className={cn(
             "transition-all duration-200",
-            selectedRating === "gameplay" && "text-primary",
+            selectedLeaderboardMetric === "gameplay" && "text-primary",
           )}
         />
       ),
-      rank: user?.ranking.gameplay.rating ?? "-",
+      rank: leaderboardMetrics?.rating.gameplay ?? "-",
       text: "Gameplay Rating",
     },
     {
@@ -37,11 +37,11 @@ const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
           weight="fill"
           className={cn(
             "transition-all duration-200",
-            selectedRating === "influencer" && "text-primary",
+            selectedLeaderboardMetric === "influencer" && "text-primary",
           )}
         />
       ),
-      rank: user?.ranking.influencer.rating ?? "-",
+      rank: leaderboardMetrics?.rating.influencer ?? "-",
       text: "Influencer Rating",
     },
     {
@@ -52,33 +52,36 @@ const Tabs = ({ selectedRating, setSelectedRating }: ITabsProps) => {
           weight="fill"
           className={cn(
             "transition-all duration-200",
-            selectedRating === "contentCreation" && "text-primary",
+            selectedLeaderboardMetric === "contentCreation" && "text-primary",
           )}
         />
       ),
-      rank: user?.ranking.contentCreation.rating ?? "-",
+      rank: leaderboardMetrics?.rating.contentCreation ?? "-",
       text: "Content Creation Rating",
     },
   ] as const;
 
   return (
     <div className="flex w-full">
-      {ratingTabValues.map((ratingTabValue, index) => (
+      {leaderboardMetricsTabValues.map((leaderboardMetricsTabValue, index) => (
         <div
           key={index}
           className={cn(
             "relative flex flex-1 cursor-pointer flex-col items-center gap-2 rounded-t-xl border-b-2 border-transparent py-3 transition-all duration-200",
-            ratingTabValue.name === selectedRating && "border-primary bg-black",
+            leaderboardMetricsTabValue.name === selectedLeaderboardMetric &&
+              "border-primary bg-black",
           )}
-          onClick={() => setSelectedRating(ratingTabValue.name)}
+          onClick={() => setSelectedLeaderboardMetric(leaderboardMetricsTabValue.name)}
         >
-          {ratingTabValue.icon}
-          <p className="text-3xl font-semibold lg:text-5xl">{ratingTabValue.rank}</p>
-          <p className="text-center text-sm font-light lg:text-base">{ratingTabValue.text}</p>
+          {leaderboardMetricsTabValue.icon}
+          <p className="text-3xl font-semibold lg:text-5xl">{leaderboardMetricsTabValue.rank}</p>
+          <p className="text-center text-sm font-light lg:text-base">
+            {leaderboardMetricsTabValue.text}
+          </p>
           <div
             className={cn(
               "absolute bottom-0 left-1/2 z-20 h-0 w-0 -translate-x-1/2 translate-y-[100%] border-x-[8px] border-t-[10px] border-x-transparent border-t-primary opacity-0 transition-opacity duration-200",
-              ratingTabValue.name === selectedRating && "opacity-100",
+              leaderboardMetricsTabValue.name === selectedLeaderboardMetric && "opacity-100",
             )}
           />
         </div>

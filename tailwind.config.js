@@ -21,9 +21,11 @@ module.exports = {
       },
       backgroundImage: {
         radialGradient: "radial-gradient(circle at 50%, #ffffff06, transparent 75%)",
+        coinRadialGradient:
+          "radial-gradient(50% 50% at 50% 50%, #DDA133 0%, rgba(221, 161, 51, 0.00) 94.22%)",
+        rewardGradient: "linear-gradient(97deg, #FBBC05 -11.66%, #977000 48.65%, #473500 91.92%)",
       },
       colors: {
-        lobbyGradient: "linear-gradient(180deg, rgba(2, 4, 7, 0.00) 0%, #010306 59.88%);",
         primary: {
           50: "#FFEAEA",
           100: "#FFD6D6",
@@ -36,6 +38,7 @@ module.exports = {
           700: "#B72D45",
           800: "#931C3B",
           900: "#171716",
+          wordChallenge: "#FE9090",
         },
         dark: {
           50: "#F0F0EF",

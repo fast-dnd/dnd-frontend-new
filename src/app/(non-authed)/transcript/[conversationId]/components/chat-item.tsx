@@ -9,44 +9,49 @@ import { cn } from "@/utils/style-utils";
 
 interface IChatItemProps {
   player?: ITranscriptPlayer;
-  text: string;
+  playerAsking?: Omit<ITranscriptPlayer, "accountId">;
   dice?: number;
+  text: string;
 }
 
-const ChatItem = ({ player, text, dice }: IChatItemProps) => {
+const ChatItem = ({ player, playerAsking, text, dice }: IChatItemProps) => {
+  const _player = player || playerAsking;
+
   return (
     <div className="flex flex-col gap-4 max-lg:px-4">
       <div className="ml-3 flex items-center gap-2">
-        {player ? (
+        {_player ? (
           <>
             <Image
-              src={player.imageUrl || "/images/default-avatar.png"}
+              src={_player.imageUrl || "/images/default-avatar.png"}
               width={32}
               height={32}
-              alt={`${player.name}'s avatar`}
+              alt={`${_player.name}'s avatar`}
               className="h-8 w-8 rounded-full border-2 border-white"
             />
-            <span className="font-semibold">{player.name}</span>
+            <span className="font-semibold">
+              {_player.name} {playerAsking && " asked Bob:"}
+            </span>
           </>
         ) : (
           <>
             <div className="flex h-8 w-8 items-center justify-center rounded-full border-white bg-primary pb-1">
               <Game variant="Bold" size={24} />
             </div>
-            <span className="font-semibold text-primary">Bob Thought</span>
+            <span className="font-semibold text-primary">Bob Answered</span>
           </>
         )}
       </div>
       <div
         className={cn(
           "relative mt-2 flex w-full flex-col gap-2 rounded-md p-4 font-light",
-          player ? "bg-white text-black" : "bg-primary text-white",
+          _player ? "bg-white text-black" : "bg-primary text-white",
         )}
       >
         <div
           className={cn(
             "absolute left-5 top-0 h-4 w-4 -translate-y-1/2 rotate-45",
-            player ? "bg-white" : "bg-primary",
+            _player ? "bg-white" : "bg-primary",
           )}
         />
         {text}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { IRoomDetail } from "@/types/room";
-import { DungeonDuration } from "@/utils/dungeon-options";
+import { DungeonDuration } from "@/utils/dungeon/dungeon-options";
 
 import useUpdateRoom from "../hooks/use-update-room";
 
@@ -20,6 +20,7 @@ const useOnRoomChange = ({
 }: IUseOnRoomChangeProps) => {
   const [generateImages, setGenerateImages] = useState<boolean>();
   const [generateAudio, setGenerateAudio] = useState<boolean>();
+  const [generateRandomWords, setGenerateRandomWords] = useState<boolean>();
 
   const { mutate: updateRoom, isLoading: updatingRoom } = useUpdateRoom(conversationId);
 
@@ -27,19 +28,31 @@ const useOnRoomChange = ({
     if (
       isAdmin &&
       !updatingRoom &&
-      (duration || generateImages !== undefined || generateAudio !== undefined)
+      (duration ||
+        generateImages !== undefined ||
+        generateAudio !== undefined ||
+        generateRandomWords !== undefined)
     )
       updateRoom({
         conversationId,
         responseDetailsDepth: duration || roomData?.responseDetailsDepth,
         generateImages,
         generateAudio,
+        generateRandomWords,
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [duration, generateImages, generateAudio]);
+  }, [duration, generateImages, generateAudio, generateRandomWords]);
 
-  return { generateImages, setGenerateImages, generateAudio, setGenerateAudio, updatingRoom };
+  return {
+    generateImages,
+    setGenerateImages,
+    generateAudio,
+    setGenerateAudio,
+    setGenerateRandomWords,
+    generateRandomWords,
+    updatingRoom,
+  };
 };
 
 export default useOnRoomChange;

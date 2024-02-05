@@ -1,20 +1,44 @@
+import { useEffect } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
+import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/text-area";
 import { IChampion } from "@/types/dungeon";
-import { IDefaultMove } from "@/types/room";
+import { IDefaultMove, IWordsChallenge } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
 import { moveStore } from "../../stores/move-store";
+import WordChallengeEntry from "./word-challenge-entry";
 
-const MoveInput = ({ champion }: { champion: IChampion | null | undefined }) => {
+interface IMoveInputProps {
+  champion: IChampion | null | undefined;
+  wordsChallenge: IWordsChallenge | undefined | null;
+  isWordsChallenge?: boolean;
+}
+
+const MoveInput = ({ champion, wordsChallenge, isWordsChallenge }: IMoveInputProps) => {
   const move = moveStore.move.use();
   const canPlay = moveStore.canPlay.use();
   const freeWill = moveStore.freeWill.use();
+
+  const accountId = useReadLocalStorage<string>("accountId");
+
+  const wordChallengeForPlayer = wordsChallenge?.find(
+    (wordChallenge) => wordChallenge.accountId === accountId,
+  );
+
+  useEffect(() => {
+    if (wordChallengeForPlayer) {
+      moveStore.wordsChallenge.set([
+        "",
+        ...wordChallengeForPlayer.words.flatMap((word) => [word, ""]),
+      ]);
+    }
+  }, [wordChallengeForPlayer]);
 
   if (!champion) return <div>Something went wrong</div>;
 
@@ -37,17 +61,45 @@ const MoveInput = ({ champion }: { champion: IChampion | null | undefined }) => 
             </div>
           </div>
         ) : (
-          <TextArea
-            maxLength={300}
-            className="m-0 h-full border-white/50 focus-within:border-white"
-            placeholder="I found a secret tunnel and escape through it..."
-            disabled={!canPlay}
-            onChange={(e) => {
-              moveStore.freeWill.set(e.target.value);
-              moveStore.move.set(undefined);
-            }}
-            value={freeWill}
-          />
+          <>
+            {isWordsChallenge ? (
+              wordChallengeForPlayer && (
+                <div className="flex h-28 w-full rounded-md bg-black/60 pr-2">
+                  <div className="flex h-full w-full flex-col overflow-y-auto p-4">
+                    <div className="inline">
+                      {wordChallengeForPlayer.words.map((word, index) => (
+                        <WordChallengeEntry
+                          key={JSON.stringify({ ...wordsChallenge, index })}
+                          index={index}
+                          word={word}
+                        />
+                      ))}
+                      <WordChallengeEntry
+                        key={JSON.stringify({
+                          ...wordsChallenge,
+                          index: wordChallengeForPlayer.words.length,
+                        })}
+                        index={wordChallengeForPlayer.words.length}
+                        word="."
+                      />
+                    </div>
+                  </div>
+                </div>
+              )
+            ) : (
+              <TextArea
+                maxLength={300}
+                className="m-0 h-full border-white/50 focus-within:border-white"
+                placeholder="I found a secret tunnel and escape through it..."
+                disabled={!canPlay}
+                onChange={(e) => {
+                  moveStore.freeWill.set(e.target.value);
+                  moveStore.move.set(undefined);
+                }}
+                value={freeWill}
+              />
+            )}
+          </>
         )}
       </div>
 
@@ -111,7 +163,7 @@ const MoveInput = ({ champion }: { champion: IChampion | null | undefined }) => 
           )}
           onClick={() => moveStore.move.set(undefined)}
         >
-          Use free will
+          {isWordsChallenge ? "Complete a Sentence" : "Use free will"}
         </Button>
       </div>
     </div>

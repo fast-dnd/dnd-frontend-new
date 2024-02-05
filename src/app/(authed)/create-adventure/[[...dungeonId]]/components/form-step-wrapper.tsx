@@ -1,15 +1,9 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-import GoBackButton from "@/components/go-back-button";
+import GoBackButton from "@/components/common/go-back-button";
 import { Box } from "@/components/ui/box";
-import {
-  Tooltip,
-  TooltipArrow,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip } from "@/components/ui/tooltip";
 import { IDungeonDetail } from "@/types/dungeon";
 
 import useLoadDungeonData from "../hooks/use-load-dungeon-data";
@@ -54,24 +48,20 @@ const FormStepWrapper = ({ isEditing, children, dungeonData }: IFormStepWrapperP
         <p className="w-full text-lg font-semibold uppercase leading-7 tracking-[0.15em] lg:text-[22px]">
           {currStep} {stepDescription && <span className="text-white/50">/ {stepDescription}</span>}
         </p>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="cursor-default whitespace-nowrap rounded-md border border-white/25 px-3 py-1.5 tracking-wider">
-                See requirements
-              </div>
-            </TooltipTrigger>
-            <TooltipContent className="border-transparent">
-              <ul className="list-inside list-disc">
-                <li>Title is required</li>
-                <li>Description is required</li>
-                <li>Scenes: Min. 3 - Max. 4</li>
-                <li>Characters: Min. 1</li>
-              </ul>
-              <TooltipArrow className=" fill-select text-select" />
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip
+          content={
+            <ul className="list-inside list-disc">
+              <li>Title is required</li>
+              <li>Description is required</li>
+              <li>Scenes: Min. 3 - Max. 4</li>
+              <li>Characters: Min. 1</li>
+            </ul>
+          }
+        >
+          <div className="cursor-default whitespace-nowrap rounded-md border border-white/25 px-3 py-1.5 tracking-wider">
+            See requirements
+          </div>
+        </Tooltip>
       </div>
       <div className="hidden w-full border-t border-white/20 lg:block" />
 

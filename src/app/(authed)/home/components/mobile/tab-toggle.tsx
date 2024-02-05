@@ -6,13 +6,12 @@ import { cn } from "@/utils/style-utils";
 
 import { baseTabs, tabStore } from "../../stores/tab-store";
 
-const TabToggle = ({
-  switching = false,
-  setSwitching,
-}: {
+interface ITabToggleProps {
   switching?: boolean;
   setSwitching?: (swtiching: boolean) => void;
-}) => {
+}
+
+const TabToggle = ({ switching = false, setSwitching }: ITabToggleProps) => {
   const activeBaseTab = tabStore.baseTab.use();
 
   return (

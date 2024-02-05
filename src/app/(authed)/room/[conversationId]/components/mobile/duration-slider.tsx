@@ -5,7 +5,7 @@ import { BsFillLightningFill } from "react-icons/bs";
 import { GiCheckMark } from "react-icons/gi";
 
 import SwordsIcon from "@/components/icons/swords-icon";
-import { DungeonDuration } from "@/utils/dungeon-options";
+import { DungeonDuration } from "@/utils/dungeon/dungeon-options";
 import { cn } from "@/utils/style-utils";
 
 const elements = [

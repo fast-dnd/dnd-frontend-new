@@ -1,14 +1,16 @@
 import { useCallback, useRef } from "react";
 
+interface IUseIntersectionObserverProps {
+  isFetchingNextPage: boolean;
+  fetchNextPage: () => void;
+  hasNextPage: boolean | undefined;
+}
+
 const useIntersectionObserver = ({
   isFetchingNextPage,
   fetchNextPage,
   hasNextPage,
-}: {
-  isFetchingNextPage: boolean;
-  fetchNextPage: () => void;
-  hasNextPage: boolean | undefined;
-}) => {
+}: IUseIntersectionObserverProps) => {
   const intObserver = useRef<IntersectionObserver | null>(null);
   const lastObjectRef = useCallback(
     (object: Element | null) => {

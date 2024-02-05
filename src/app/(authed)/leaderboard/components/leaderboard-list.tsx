@@ -3,25 +3,31 @@ import { CaretDoubleDown } from "@phosphor-icons/react";
 import { InfiniteData } from "@tanstack/react-query";
 
 import Spinner from "@/components/ui/spinner";
-import useAuth from "@/hooks/helpers/use-auth";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
+import useGetLeaderboardMetrics from "@/hooks/queries/use-get-leaderboard-metrics";
 import { cn } from "@/utils/style-utils";
 import { ILeaderBoard } from "@/validations/leaderboard";
 
 import useGetLeaderboard from "../hooks/use-get-leaderboard";
-import { RatingType } from "../types/rating-type";
+import { LeaderboardMetricsType } from "../types/leaderboard-metrics-type";
 import LeaderboardUserCard from "./leaderboard-user";
 
-const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => {
-  const { loggingIn, user } = useAuth();
-  const previousRef = useRef<InfiniteData<ILeaderBoard | undefined>>();
+const LeaderboardList = ({
+  selectedLeaderboardMetric,
+}: {
+  selectedLeaderboardMetric: LeaderboardMetricsType;
+}) => {
+  const { data: leaderboardMetrics, isLoading: isLoadingLeaderboardMetrics } =
+    useGetLeaderboardMetrics();
+
+  const previousRef = useRef<InfiniteData<ILeaderBoard>>();
 
   const scrollableRef = useRef<HTMLDivElement>(null);
   const {
     data: topLeaderboardData,
     isError: topIsError,
     isLoading: topIsLoading,
-  } = useGetLeaderboard({ filter: selectedRating });
+  } = useGetLeaderboard({ filter: selectedLeaderboardMetric });
 
   const {
     data: leaderboardData,
@@ -34,8 +40,8 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
     fetchPreviousPage,
     isFetchingPreviousPage,
   } = useGetLeaderboard({
-    filter: selectedRating,
-    currUserRank: user?.ranking[selectedRating].rank,
+    filter: selectedLeaderboardMetric,
+    currUserRank: leaderboardMetrics?.ranking[selectedLeaderboardMetric],
   });
 
   const { lastObjectRef: lastLeaderboardUserRef } = useIntersectionObserver({
@@ -53,8 +59,8 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
   useEffect(() => {
     if (
       leaderboardData &&
-      leaderboardData?.pages?.[0].leaderboard[0].accountId !==
-        previousRef.current?.pages?.[0]?.leaderboard[0].accountId &&
+      leaderboardData?.pages?.[0].leaderboard?.[0]?.accountId !==
+        previousRef.current?.pages?.[0]?.leaderboard?.[0]?.accountId &&
       scrollableRef.current
     ) {
       //prevent scrolling to top when loaded previous
@@ -67,7 +73,7 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
     previousRef.current = leaderboardData;
   }, [leaderboardData]);
 
-  if (loggingIn || isLoading || topIsLoading)
+  if (isLoadingLeaderboardMetrics || isLoading || topIsLoading)
     return (
       <div className="flex animate-pulse flex-col">
         {Array.from({ length: 10 }).map((_, i) => (
@@ -84,7 +90,7 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
       </div>
     );
 
-  if (!user || isError || topIsError) return <div>Something went wrong</div>;
+  if (!leaderboardMetrics || isError || topIsError) return <div>Something went wrong</div>;
 
   const topContent = topLeaderboardData?.pages[0].leaderboard
     .slice(0, 3)
@@ -92,7 +98,7 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
       <LeaderboardUserCard
         key={leaderboardUser.accountId}
         leaderboardUser={leaderboardUser}
-        isCurrUser={leaderboardUser.accountId === user.account._id}
+        isCurrUser={leaderboardUser.accountId === leaderboardMetrics.accountId}
         top3
       />
     ));
@@ -107,7 +113,7 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
               key={leaderboardUser.accountId}
               leaderboardUser={leaderboardUser}
               ref={firstLeaderboardUserRef}
-              isCurrUser={leaderboardUser.accountId === user.account._id}
+              isCurrUser={leaderboardUser.accountId === leaderboardMetrics.accountId}
             />
           );
         }
@@ -119,7 +125,7 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
               key={leaderboardUser.accountId}
               leaderboardUser={leaderboardUser}
               ref={lastLeaderboardUserRef}
-              isCurrUser={leaderboardUser.accountId === user.account._id}
+              isCurrUser={leaderboardUser.accountId === leaderboardMetrics.accountId}
             />
           );
         }
@@ -129,7 +135,7 @@ const LeaderboardList = ({ selectedRating }: { selectedRating: RatingType }) => 
         <LeaderboardUserCard
           leaderboardUser={leaderboardUser}
           key={leaderboardUser.accountId}
-          isCurrUser={leaderboardUser.accountId === user.account._id}
+          isCurrUser={leaderboardUser.accountId === leaderboardMetrics.accountId}
         />
       );
     }),

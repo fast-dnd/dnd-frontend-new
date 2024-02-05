@@ -3,15 +3,14 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { PAGINATION_LIMIT } from "@/services/api-factory";
 import leaderboardService, { leaderboardKey } from "@/services/leaderboard-service";
 
-import { RatingType } from "../types/rating-type";
+import { LeaderboardMetricsType } from "../types/leaderboard-metrics-type";
 
-const useGetLeaderboard = ({
-  filter,
-  currUserRank,
-}: {
-  filter: RatingType;
+interface IUseGetLeaderboardProps {
+  filter: LeaderboardMetricsType;
   currUserRank?: number;
-}) => {
+}
+
+const useGetLeaderboard = ({ filter, currUserRank }: IUseGetLeaderboardProps) => {
   return useInfiniteQuery({
     queryKey: [leaderboardKey, filter, currUserRank],
     queryFn: ({ pageParam = 1 }) =>
