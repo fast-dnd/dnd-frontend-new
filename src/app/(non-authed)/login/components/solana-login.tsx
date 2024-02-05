@@ -14,7 +14,7 @@ const SolanaLogin = () => {
 
   const { publicKey, wallets, select, disconnect, connecting } = useWallet();
 
-  const isProd = process.env.VERCEL_ENV === "production";
+  const isProd = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
 
   return (
     <Dialog>

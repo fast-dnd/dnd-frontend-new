@@ -4,7 +4,7 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      disallow: process.env.VERCEL_ENV === "production" ? "/" : undefined,
+      disallow: process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ? "/" : undefined,
     },
     sitemap: "https://acme.com/sitemap.xml",
   };
