@@ -26,7 +26,7 @@ const ShopModal = ({
   const offers = [
     {
       tokenAmount: "100",
-      itemName: "COINS_50",
+      itemName: "COINS_100",
       price: 1,
       image: (
         <Image
