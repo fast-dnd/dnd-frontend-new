@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { toast } from "sonner";
 
 import { logout } from "@/utils/auth";
+import { env } from "@/utils/env.mjs";
 
 const handleInterceptors = (apiInstance: AxiosInstance) => {
   apiInstance.defaults.headers.common["Content-Type"] = "application/json";
@@ -56,7 +57,7 @@ const createApi = (options: IApiOptions) => {
 export default createApi;
 
 export const BACKEND_URL =
-  process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
+  env.NEXT_PUBLIC_VERCEL_ENV === "production"
     ? "https://api-dev.v3rpg.com/"
     : "https://api-dev-test.v3rpg.com/";
 export const PAGINATION_LIMIT = 5;

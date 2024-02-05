@@ -49,8 +49,6 @@ const Login = () => {
     if (publicKey) handleSignMessage();
   }, [publicKey, handleSignMessage]);
 
-  console.log(process.env.NEXT_PUBLIC_VERCEL_ENV);
-
   return (
     <div className="fixed inset-0 flex h-full items-end justify-center">
       <div className="flex h-full w-full flex-col gap-8 lg:hidden">
