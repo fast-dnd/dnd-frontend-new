@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { DiscordLogo } from "@phosphor-icons/react";
 
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
@@ -103,6 +104,16 @@ const DesktopNavbar = () => {
           </>
         )}
       </div>
+      {!loggedIn && (
+        <Link
+          href="https://discord.com/invite/36chp8DnzC"
+          className="flex items-center gap-2 hover:opacity-70"
+          target="_blank"
+        >
+          <DiscordLogo className="h-7 w-7" />
+          Join us on Discord
+        </Link>
+      )}
     </div>
   );
 };

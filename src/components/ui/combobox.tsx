@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ElementRef } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 import Select, { Props as ReactSelectProps } from "react-select";
@@ -16,7 +16,7 @@ export interface ComboBoxProps extends ReactSelectProps {
 
 const animatedComponents = makeAnimated();
 
-const ComboBox = React.forwardRef<HTMLSelectElement, ComboBoxProps>(
+const ComboBox = React.forwardRef<ElementRef<Select>, ComboBoxProps>(
   (
     { animate, state, label, successMessage, errorMessage, isDisabled, className, ...props },
     ref,
@@ -35,11 +35,7 @@ const ComboBox = React.forwardRef<HTMLSelectElement, ComboBoxProps>(
             {label}
           </div>
         )}
-        <Select
-          ref={ref as any}
-          components={animate ? animatedComponents : props.components}
-          {...props}
-        />
+        <Select ref={ref} components={animate ? animatedComponents : props.components} {...props} />
         {successMessage && (
           <p className="inline-flex flex-row items-center justify-start gap-2 text-sm text-success">
             <AiFillCheckCircle /> {successMessage}
