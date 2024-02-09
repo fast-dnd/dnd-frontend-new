@@ -28,7 +28,7 @@ const ChampionsLocationsWrapper = ({ locationOrChampion }: IChampionsLocationsWr
   const { dungeonFormData } = dungeonFormStore.use();
 
   const isDisabledAddButton =
-    locationOrChampion === "Scene" && dungeonFormData.locations.length >= 4;
+    locationOrChampion === "Scene" && dungeonFormData.locations.length >= 5;
 
   const chmpLocObservable = dungeonFormStore.dungeonFormData[
     dungeonFormField
