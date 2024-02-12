@@ -21,7 +21,7 @@ const CustomWalletProvider = ({ children }: React.PropsWithChildren) => {
   };
 
   return (
-    <ConnectionProvider endpoint={env.NEXT_PUBLIC_WALLET_ENDPOINT}>
+    <ConnectionProvider endpoint={env.NEXT_PUBLIC_RPC_ENDPOINT}>
       <WalletProvider wallets={wallets} onError={walletConnectionError} autoConnect={true}>
         {children}
       </WalletProvider>
