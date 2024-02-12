@@ -1,5 +1,5 @@
 import { Connection } from "@solana/web3.js";
 
-import { env } from "../env.mjs";
+import { rpcNodeURL } from "./rpc-url";
 
-export const solanaConnection = new Connection(env.NEXT_PUBLIC_WALLET_ENDPOINT);
+export const solanaConnection = new Connection(rpcNodeURL);
