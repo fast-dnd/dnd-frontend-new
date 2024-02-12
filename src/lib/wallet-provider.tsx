@@ -6,7 +6,7 @@ import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react
 import { PhantomWalletAdapter, SolflareWalletAdapter } from "@solana/wallet-adapter-wallets";
 import { toast } from "sonner";
 
-import { env } from "@/utils/env.mjs";
+import { rpcNodeURL } from "@/utils/web3/rpc-url";
 
 const CustomWalletProvider = ({ children }: React.PropsWithChildren) => {
   const network = WalletAdapterNetwork.Devnet;
@@ -21,7 +21,7 @@ const CustomWalletProvider = ({ children }: React.PropsWithChildren) => {
   };
 
   return (
-    <ConnectionProvider endpoint={env.NEXT_PUBLIC_RPC_ENDPOINT}>
+    <ConnectionProvider endpoint={rpcNodeURL}>
       <WalletProvider wallets={wallets} onError={walletConnectionError} autoConnect={true}>
         {children}
       </WalletProvider>
