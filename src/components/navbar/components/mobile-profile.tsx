@@ -160,6 +160,7 @@ const MobileProfile = ({
               <Button
                 className="w-fit whitespace-nowrap"
                 href={`https://jup.ag/swap/USDC-${currentCommunity.currencyName}`}
+                target="_blank"
               >
                 ADD MORE {currentCommunity.currencyName}
               </Button>
