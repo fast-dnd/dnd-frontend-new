@@ -41,7 +41,7 @@ const CurrentStep = ({ setCurrentStep, currentStep }: ICurrentStepProps) => {
           exit={{ x: currentStep % 2 === 0 ? -50 : 50, opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="h-2 w-2 rotate-45 bg-primary" />
+          <div className="size-2 rotate-45 bg-primary" />
           <p
             className="max-w-[470px] text-center text-[44px] uppercase tracking-[18.26px]"
             style={jibril.style}
@@ -49,7 +49,7 @@ const CurrentStep = ({ setCurrentStep, currentStep }: ICurrentStepProps) => {
             {steps[currentStep].title}
           </p>
 
-          <div className="-ml-3 h-2 w-2 rotate-45 bg-primary" />
+          <div className="-ml-3 size-2 rotate-45 bg-primary" />
         </motion.div>
         <motion.div
           className="w-[550px] text-xl font-light"

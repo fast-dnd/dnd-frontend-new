@@ -33,18 +33,18 @@ const SortableItem = ({ i, item, onEdit, onDelete }: ISortableItemProps) => {
       </p>
       <div className="flex-1" />
       <MdDragIndicator
-        className="h-6 w-6 cursor-pointer text-white/75 transition-colors duration-300 hover:text-info lg:h-8 lg:w-8"
+        className="size-6 cursor-pointer text-white/75 transition-colors duration-300 hover:text-info lg:size-8"
         {...attributes}
         {...listeners}
       />
 
       <MdEdit
-        className="h-6 w-6 cursor-pointer text-white/75 transition-colors duration-300 hover:text-warning lg:h-8 lg:w-8"
+        className="size-6 cursor-pointer text-white/75 transition-colors duration-300 hover:text-warning lg:size-8"
         onClick={() => onEdit(i)}
       />
 
       <MdDelete
-        className="h-6 w-6 cursor-pointer text-white/75 transition-colors duration-300 hover:text-error lg:h-8 lg:w-8"
+        className="size-6 cursor-pointer text-white/75 transition-colors duration-300 hover:text-error lg:size-8"
         onClick={() => onDelete(i)}
       />
     </div>

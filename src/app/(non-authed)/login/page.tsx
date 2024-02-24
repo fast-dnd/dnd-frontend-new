@@ -51,7 +51,7 @@ const Login = () => {
 
   return (
     <div className="fixed inset-0 flex h-full items-end justify-center">
-      <div className="flex h-full w-full flex-col gap-8 lg:hidden">
+      <div className="flex size-full flex-col gap-8 lg:hidden">
         <MobileNavbar />
         <div className="flex w-full flex-col items-center gap-6 overflow-y-auto px-4">
           <p className="text-xl font-bold uppercase tracking-[2.8px]">Hop right in!</p>
@@ -99,10 +99,10 @@ const Login = () => {
         </div>
       </div>
 
-      <div className="relative hidden h-full w-full lg:flex">
+      <div className="relative hidden size-full lg:flex">
         <div className="relative flex h-full w-1/2 shrink-0 grow-0">
-          <div className="absolute inset-0 z-[-5] flex h-full w-full bg-gradient-to-b from-black via-black/10 via-35% to-black" />
-          <div className={`absolute inset-0 -z-10 h-full w-full`}>
+          <div className="absolute inset-0 z-[-5] flex size-full bg-gradient-to-b from-black via-black/10 via-35% to-black" />
+          <div className={`absolute inset-0 -z-10 size-full`}>
             <div
               className="flex h-full w-[300%] overflow-hidden transition duration-300 ease-out"
               style={{
@@ -117,7 +117,7 @@ const Login = () => {
                     width={0}
                     height={0}
                     sizes="100vw"
-                    className="h-full w-full object-cover"
+                    className="size-full object-cover"
                     quality={100}
                   />
                 </div>
@@ -166,7 +166,7 @@ const Login = () => {
         </div>
         <div className="relative flex h-full w-1/2 shrink-0 grow-0 flex-col items-center justify-center gap-14 bg-dark-900">
           <div className="flex w-[580px] gap-9">
-            <Game className="h-[75px] w-[75px] shrink-0 opacity-30" />
+            <Game className="size-[75px] shrink-0 opacity-30" />
 
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-4">
@@ -188,7 +188,7 @@ const Login = () => {
 
           <div className="mt-4 h-0.5 w-full bg-black shadow-lobby" />
           <div className="flex w-[580px] gap-9">
-            <Game className="h-[75px] w-[75px] shrink-0 opacity-30" />
+            <Game className="size-[75px] shrink-0 opacity-30" />
 
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-4">

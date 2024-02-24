@@ -93,7 +93,7 @@ const ShopModal = ({
     >
       <DialogContent
         fromBottom={isMobileTablet}
-        className="flex flex-col gap-4 bg-black p-4 shadow-none outline-none max-lg:inset-0 max-lg:h-full max-lg:w-full max-lg:max-w-full max-lg:translate-x-0 max-lg:translate-y-0 max-lg:overflow-y-auto max-lg:rounded-none max-lg:pt-20 max-lg:data-[state=closed]:duration-500 max-lg:data-[state=open]:duration-500 lg:flex-row lg:justify-center lg:gap-6 lg:bg-transparent lg:p-0"
+        className="flex flex-col gap-4 bg-black p-4 shadow-none outline-none max-lg:inset-0 max-lg:size-full max-lg:max-w-full max-lg:translate-x-0 max-lg:translate-y-0 max-lg:overflow-y-auto max-lg:rounded-none max-lg:pt-20 max-lg:data-[state=closed]:duration-500 max-lg:data-[state=open]:duration-500 lg:flex-row lg:justify-center lg:gap-6 lg:bg-transparent lg:p-0"
       >
         <div className="pointer-events-none absolute -top-10 flex w-full justify-between max-lg:hidden">
           <p className="text-xl font-bold uppercase">Purchase tokens</p>
@@ -115,8 +115,8 @@ const ShopModal = ({
 
             <div className="flex w-full items-center gap-4 lg:mt-6 lg:flex-col lg:gap-8">
               <div className="relative flex h-[78px] w-[88px] flex-col items-center lg:h-[170px] lg:w-full">
-                <div className="absolute h-[170px] w-[170px] rounded-full bg-dark-800 max-lg:hidden" />
-                <div className="absolute h-[69px] w-[69px] rounded-full bg-coinRadialGradient opacity-50 max-lg:-left-0.5 max-lg:-top-2 lg:h-[109px] lg:w-[109px] " />
+                <div className="absolute size-[170px] rounded-full bg-dark-800 max-lg:hidden" />
+                <div className="absolute size-[69px] rounded-full bg-coinRadialGradient opacity-50 max-lg:-left-0.5 max-lg:-top-2 lg:size-[109px] " />
                 <div className="absolute flex h-full w-40 items-center justify-end max-lg:right-0 lg:inset-0 lg:w-full lg:justify-center">
                   {offer.image}
                 </div>

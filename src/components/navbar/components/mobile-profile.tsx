@@ -66,7 +66,7 @@ const MobileProfile = ({
           width={32}
           height={32}
           alt="avatar"
-          className="h-8 w-8 rounded-full border-2 border-white/10 "
+          className="size-8 rounded-full border-2 border-white/10 "
         />
       </DialogTrigger>
       <DialogContent
@@ -80,7 +80,7 @@ const MobileProfile = ({
             width={70}
             height={70}
             alt="avatar"
-            className="h-[70px] w-[70px] rounded-full border-2 border-white/10 "
+            className="size-[70px] rounded-full border-2 border-white/10 "
           />
         </div>
         <div className="mb-10 flex w-full justify-end">
@@ -93,7 +93,7 @@ const MobileProfile = ({
             {leaderboardMetricsArr.map(({ icon, rank }, index) => (
               <div
                 key={index}
-                className="relative flex h-12 w-12 flex-col items-center justify-center rounded-full bg-[#232322]"
+                className="relative flex size-12 flex-col items-center justify-center rounded-full bg-[#232322]"
               >
                 {icon}
                 <p className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 font-medium text-white/50">
@@ -169,11 +169,11 @@ const MobileProfile = ({
         )}
         <div className="h-0.5 w-full bg-black shadow-lobby" />{" "}
         <Link href="/profile" className="flex items-center gap-2">
-          <UserCircle className="h-7 w-7" />
+          <UserCircle className="size-7" />
           View Profile
         </Link>
         <button className="flex items-center gap-2 tracking-[1.2px]" onClick={onSignOut}>
-          <Plugs className="h-7 w-7" />
+          <Plugs className="size-7" />
           {isDefault ? "Sign out" : "Disconnect Wallet"}
         </button>
       </DialogContent>

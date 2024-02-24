@@ -26,7 +26,7 @@ const HomeModal = () => {
         if (!isOpen) gameStore.pageState.set("DEFAULT");
       }}
     >
-      <DialogContent className="flex h-full w-full flex-col max-lg:max-w-full max-lg:bg-dark-900 lg:h-fit lg:w-fit">
+      <DialogContent className="flex size-full flex-col max-lg:max-w-full max-lg:bg-dark-900 lg:size-fit">
         <div className="pointer-events-none absolute inset-0 bg-radialGradient lg:hidden" />
         <DialogHeader className="justify-center max-lg:h-full">
           <DialogTitle>Leave the game?</DialogTitle>

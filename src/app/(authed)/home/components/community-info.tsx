@@ -21,7 +21,7 @@ const CommunityInfo = () => {
             alt={currentCommunity.name + " logo"}
             width={110}
             height={110}
-            className="rounded-full lg:h-[110px] lg:w-[110px]"
+            className="rounded-full lg:size-[110px]"
           />
         </div>
         <div className="flex flex-col">
@@ -50,7 +50,7 @@ const CommunityInfo = () => {
             alt={currentCommunity.name + " banner"}
             width={45}
             height={45}
-            className="h-[45px] w-[45px] rounded-full border-2 border-primary-900/25 bg-white"
+            className="size-[45px] rounded-full border-2 border-primary-900/25 bg-white"
           />
           <div className="flex flex-col">
             <p className="font-bold uppercase">WELCOME TO {currentCommunity.name}</p>

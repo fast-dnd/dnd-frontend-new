@@ -150,7 +150,7 @@ const EditProfileSkeleton = () => {
             <div className="h-7 w-28 animate-pulse rounded-lg bg-gray-600" />
 
             <div className="flex animate-pulse gap-5 lg:gap-8">
-              <div className="h-[170px] w-[170px] rounded-lg bg-gray-600" />
+              <div className="size-[170px] rounded-lg bg-gray-600" />
               <div className="flex flex-col gap-6 lg:gap-12">
                 <div className="flex flex-col gap-2">
                   <div className="h-7 w-40 rounded-lg bg-gray-600" />
@@ -170,7 +170,7 @@ const EditProfileSkeleton = () => {
             <div className="flex h-full flex-1 flex-col gap-6">
               <p className="font-medium">EDIT PROFILE PHOTO</p>
               <div className="flex items-center gap-3">
-                <div className="h-[100px] w-[100px] rounded-full bg-gray-600" />
+                <div className="size-[100px] rounded-full bg-gray-600" />
 
                 <div className="flex items-center gap-2 whitespace-nowrap rounded-md border border-white px-4 py-3 text-sm font-bold">
                   <FiUpload />

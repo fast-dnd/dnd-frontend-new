@@ -28,10 +28,10 @@ const DiedModal = ({ state }: { state: IGameState }) => {
     >
       <DialogContent
         alwaysOnTop
-        className="flex flex-col max-lg:h-full max-lg:w-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900"
+        className="flex flex-col max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900"
       >
-        <div className="pointer-events-none absolute inset-0 h-full w-full bg-radialGradient lg:hidden">
-          <div className="h-full w-full blur-xl" />
+        <div className="pointer-events-none absolute inset-0 size-full bg-radialGradient lg:hidden">
+          <div className="size-full blur-xl" />
         </div>
         <DialogHeader className="max-lg:h-full max-lg:justify-center">
           <ThemeTitle title="killed" />

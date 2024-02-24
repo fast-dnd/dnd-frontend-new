@@ -61,7 +61,7 @@ const ProfileDropdown = () => {
           width={45}
           height={45}
           alt="avatar"
-          className="h-fit w-fit rounded-full bg-white"
+          className="size-fit rounded-full bg-white"
         />
         {isDefault ? (
           <p className="font-medium">{user?.account.username ?? "-----------"}</p>
@@ -116,7 +116,7 @@ const ProfileDropdown = () => {
                 <div className="flex items-center justify-between gap-2">
                   <Tooltip content="Coins used for creating games" position="bottom">
                     <div className="flex w-full items-center justify-between gap-2 rounded-lg bg-primary-900 px-1.5 py-2.5">
-                      <GoldCoinIcon className="h-5 w-5" />
+                      <GoldCoinIcon className="size-5" />
                       <p className="font-bold">{user?.account.coins}</p>
                       <div
                         onClick={() => setShopOpen(true)}
@@ -129,7 +129,7 @@ const ProfileDropdown = () => {
 
                   <Tooltip content="DM Coins, Cooming Soon!" position="bottom" className="w-full">
                     <div className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary-900 px-1.5 py-3">
-                      <DiamondDMCurrencyIcon className="h-5 w-5" />
+                      <DiamondDMCurrencyIcon className="size-5" />
                       <p className="font-bold">{user?.account.dmCurrency}</p>
                     </div>
                   </Tooltip>
@@ -147,7 +147,7 @@ const ProfileDropdown = () => {
               <div className="h-1 w-full bg-white/10" />
 
               <Link href="/profile" className="flex items-center gap-2 hover:opacity-70">
-                <UserCircle className="h-7 w-7" />
+                <UserCircle className="size-7" />
                 View Profile
               </Link>
             </>
@@ -157,7 +157,7 @@ const ProfileDropdown = () => {
             className="flex items-center gap-2 tracking-[1.2px] hover:opacity-70"
             onClick={onSignOut}
           >
-            <Plugs className="h-7 w-7" />
+            <Plugs className="size-7" />
             {isDefault ? "Logout" : "Disconnect Wallet"}
           </button>
 
@@ -166,7 +166,7 @@ const ProfileDropdown = () => {
               <div className="h-1 w-full bg-white/10" />
 
               <Link href="/guide" className="flex items-center gap-2 hover:opacity-70">
-                <BookOpenText className="h-7 w-7" />
+                <BookOpenText className="size-7" />
                 Guide
               </Link>
 
@@ -175,7 +175,7 @@ const ProfileDropdown = () => {
                 className="flex items-center gap-2 hover:opacity-70"
                 target="_blank"
               >
-                <DiscordLogo className="h-7 w-7" />
+                <DiscordLogo className="size-7" />
                 Join us on Discord
               </Link>
             </>

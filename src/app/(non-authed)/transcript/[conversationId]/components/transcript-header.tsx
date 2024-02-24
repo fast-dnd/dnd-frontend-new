@@ -20,9 +20,9 @@ const TranscriptHeader = ({ transcripts }: { transcripts: ITranscript }) => {
         className="hidden items-center gap-4 text-3xl leading-none tracking-widest lg:flex"
         style={jibril.style}
       >
-        <div className="h-2 w-2 rotate-45 bg-primary" />
+        <div className="size-2 rotate-45 bg-primary" />
         <p className="max-w-[400px] truncate">{transcripts.title}</p>
-        <div className="h-2 w-2 rotate-45 bg-primary" />
+        <div className="size-2 rotate-45 bg-primary" />
       </div>
       <div className="lg:hidden">
         <p className="font-light">Transcript</p>
@@ -47,7 +47,7 @@ const TranscriptHeader = ({ transcripts }: { transcripts: ITranscript }) => {
                 width={26}
                 height={26}
                 alt={`player-${player.accountId}-avatar`}
-                className="h-[26px] w-[26px] rounded-full lg:h-[40px] lg:w-[40px]"
+                className="size-[26px] rounded-full lg:size-[40px]"
               />
             </div>
           ))}

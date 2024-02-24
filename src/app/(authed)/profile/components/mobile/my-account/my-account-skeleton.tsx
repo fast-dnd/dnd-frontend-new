@@ -6,7 +6,7 @@ const MyAccountSkeleton = () => {
       <div className="flex flex-col gap-8">
         <div className="flex animate-pulse items-center gap-4">
           <div className="flex h-[160px] min-w-[160px] items-center justify-center rounded-md bg-gray-600">
-            <SkeletonIcon className="h-12 w-12 text-gray-200" />
+            <SkeletonIcon className="size-12 text-gray-200" />
           </div>
           <div className="flex flex-1 flex-col gap-4">
             <div className="flex flex-col gap-3">

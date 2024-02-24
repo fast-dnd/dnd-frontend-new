@@ -69,9 +69,9 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
     <Box
       title="CAMPAIGN"
       wrapperClassName="h-full w-[30%]"
-      className="flex h-full min-h-0 w-full flex-col items-center justify-between overflow-y-auto p-8"
+      className="flex size-full min-h-0 flex-col items-center justify-between overflow-y-auto p-8"
     >
-      <div className="flex h-full w-full flex-col justify-between gap-6">
+      <div className="flex size-full flex-col justify-between gap-6">
         <div className="flex items-center gap-8">
           <div className="flex h-fit flex-1 flex-col gap-4">
             <Input
@@ -116,7 +116,7 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
                 alt={dungeon.name}
                 width={48}
                 height={48}
-                className="h-12 w-12"
+                className="size-12"
               />
               <p className="truncate">{dungeon.name}</p>
             </div>

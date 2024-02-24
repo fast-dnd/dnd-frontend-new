@@ -24,7 +24,7 @@ const MobileSearch = ({
           if (!open) setOpen(true);
         }}
       >
-        <MagnifyingGlass className="h-6 w-6 shrink-0" />
+        <MagnifyingGlass className="size-6 shrink-0" />
         <AnimatePresence>
           {open && (
             <>
@@ -51,7 +51,7 @@ const MobileSearch = ({
                 exit={{ opacity: 0, width: 0 }}
               >
                 <AiOutlineClose
-                  className="h-5 w-5"
+                  className="size-5"
                   onClick={() => {
                     setSearchName(undefined);
                     setOpen(false);

@@ -33,7 +33,7 @@ const GeneralInfo = () => {
         {isSelectingBg ? (
           <SelectBgScreen setSelectedReward={setSelectedReward} setSelectingBg={setSelectingBg} />
         ) : (
-          <div className="flex h-full w-full flex-col items-center gap-5 lg:flex-row lg:items-start lg:gap-8">
+          <div className="flex size-full flex-col items-center gap-5 lg:flex-row lg:items-start lg:gap-8">
             <div className="flex flex-col gap-4">
               <UploadImage
                 image={dungeonFormData.imageUrl.get()}
@@ -53,7 +53,7 @@ const GeneralInfo = () => {
               </div>
             </div>
 
-            <div className="flex h-full w-full flex-1 flex-col gap-5 lg:gap-8">
+            <div className="flex size-full flex-1 flex-col gap-5 lg:gap-8">
               <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
                 <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8">
                   <Input
@@ -109,7 +109,7 @@ const GeneralInfo = () => {
                         {selectedReward ? (
                           <>
                             <p>{selectedReward?.name}</p>
-                            <div className="h-2 w-2 rotate-45 bg-white/25" />
+                            <div className="size-2 rotate-45 bg-white/25" />
                             <p>{selectedReward?.rarity}</p>
                           </>
                         ) : (
@@ -160,7 +160,7 @@ const GeneralInfo = () => {
                     aria-label="Action level"
                   />
                 </div>
-                <div className="flex h-full w-full flex-col gap-5 lg:w-1/2 lg:gap-8">
+                <div className="flex size-full flex-col gap-5 lg:w-1/2 lg:gap-8">
                   <TextArea
                     label="Description"
                     fullHeight

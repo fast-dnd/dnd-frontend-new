@@ -12,7 +12,7 @@ const AnimationEffects = () => {
   return (
     <div
       className={cn(
-        "pointer-events-none fixed bottom-0 left-0 z-40 h-full min-h-0 w-full overflow-hidden",
+        "pointer-events-none fixed bottom-0 left-0 z-40 size-full min-h-0 overflow-hidden",
       )}
     >
       {["bg-gradient-to-r", "bg-gradient-to-l", "bg-gradient-to-t", "bg-gradient-to-b"].map(
@@ -20,7 +20,7 @@ const AnimationEffects = () => {
           <React.Fragment key={dir}>
             <div
               className={cn(
-                "absolute h-full w-full from-red-500 to-5% opacity-0",
+                "absolute size-full from-red-500 to-5% opacity-0",
                 isClient && "transition-all duration-500",
                 dir,
                 statusUpdate.lostHealth && "opacity-100",
@@ -28,7 +28,7 @@ const AnimationEffects = () => {
             />
             <div
               className={cn(
-                "absolute h-full w-full from-green-500 to-5% opacity-0",
+                "absolute size-full from-green-500 to-5% opacity-0",
                 isClient && "transition-all duration-500",
                 dir,
                 statusUpdate.gainedHealth && "opacity-100",

@@ -37,20 +37,20 @@ const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: bo
 
   return (
     <div className="relative flex gap-4 lg:gap-6">
-      <div className="relative h-16 w-16 shrink-0 lg:h-[90px] lg:w-[90px]">
+      <div className="relative size-16 shrink-0 lg:size-[90px]">
         <Image
           src={player.imageUrl || "/images/default-avatar.png"}
           alt={player.name}
           draggable={false}
           width={90}
           height={90}
-          className="h-full w-full max-lg:rounded-full max-lg:border max-lg:border-white/50"
+          className="size-full max-lg:rounded-full max-lg:border max-lg:border-white/50"
         />
         {player.health <= 0 && (
-          <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black/75 max-lg:rounded-full">
+          <div className="absolute left-0 top-0 flex size-full items-center justify-center bg-black/75 max-lg:rounded-full">
             <SkullIcon
               className={cn(
-                "h-1/2 w-1/2 lg:h-3/4 lg:w-3/4",
+                "size-1/2 lg:size-3/4",
                 !!currentPlayer && !!statusUpdate && statusUpdate.lostHealth && "fill-primary",
               )}
             />

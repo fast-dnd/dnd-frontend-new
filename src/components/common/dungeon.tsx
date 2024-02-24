@@ -57,12 +57,12 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
         onClick={onClick}
         ref={ref}
       >
-        <div className="relative h-[200px] w-[200px] shrink-0 rounded-md">
+        <div className="relative size-[200px] shrink-0 rounded-md">
           {isAddedToCampaign && (
             <>
-              <div className="absolute left-0 top-0 h-full w-full rounded-md bg-black/50" />
+              <div className="absolute left-0 top-0 size-full rounded-md bg-black/50" />
               <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                <FaCheck className="h-12 w-12 fill-primary" />
+                <FaCheck className="size-12 fill-primary" />
               </div>
             </>
           )}
@@ -71,7 +71,7 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
             alt={dungeon.name}
             width={200}
             height={200}
-            className="h-16 w-16 rounded-md lg:h-[200px] lg:w-[200px]"
+            className="size-16 rounded-md lg:size-[200px]"
           />
         </div>
         <div className="flex w-full min-w-0 flex-col gap-4">
@@ -115,7 +115,7 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
                 alt={dungeon.createdBy.username}
                 width={20}
                 height={20}
-                className="rounded-md lg:h-[20px] lg:w-[20px]"
+                className="rounded-md lg:size-[20px]"
               />
               <span className="truncate">{dungeon.createdBy.username}</span>
             </div>
@@ -132,7 +132,7 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
             <div className="flex items-center gap-8">
               <Tooltip content="Max players in room">
                 <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
+                  <div className="flex size-8 items-center justify-center rounded-md bg-primary/10">
                     <Game variant="Bold" color="#FF5A5A" />
                   </div>
                   <p className="text-xl font-bold">{dungeon.maxPlayers}</p>
@@ -143,7 +143,7 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
                 content="Rating (Number of reviews)"
               >
                 <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
+                  <div className="flex size-8 items-center justify-center rounded-md bg-primary/10">
                     <Star1 variant="Bold" color="#FF5A5A" />
                   </div>
                   <p className="text-xl font-bold">

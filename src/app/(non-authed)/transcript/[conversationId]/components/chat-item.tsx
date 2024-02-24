@@ -27,7 +27,7 @@ const ChatItem = ({ player, playerAsking, text, dice }: IChatItemProps) => {
               width={32}
               height={32}
               alt={`${_player.name}'s avatar`}
-              className="h-8 w-8 rounded-full border-2 border-white"
+              className="size-8 rounded-full border-2 border-white"
             />
             <span className="font-semibold">
               {_player.name} {playerAsking && " asked Bob:"}
@@ -35,7 +35,7 @@ const ChatItem = ({ player, playerAsking, text, dice }: IChatItemProps) => {
           </>
         ) : (
           <>
-            <div className="flex h-8 w-8 items-center justify-center rounded-full border-white bg-primary pb-1">
+            <div className="flex size-8 items-center justify-center rounded-full border-white bg-primary pb-1">
               <Game variant="Bold" size={24} />
             </div>
             <span className="font-semibold text-primary">Bob Answered</span>
@@ -50,7 +50,7 @@ const ChatItem = ({ player, playerAsking, text, dice }: IChatItemProps) => {
       >
         <div
           className={cn(
-            "absolute left-5 top-0 h-4 w-4 -translate-y-1/2 rotate-45",
+            "absolute left-5 top-0 size-4 -translate-y-1/2 rotate-45",
             _player ? "bg-white" : "bg-primary",
           )}
         />

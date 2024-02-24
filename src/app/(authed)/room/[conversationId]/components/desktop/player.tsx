@@ -11,7 +11,7 @@ const Player = ({ player }: { player: IPlayer }) => {
         width={83}
         height={83}
         alt={`player-${player.accountId}-avatar`}
-        className="h-[70px] w-[70px] rounded-md lg:h-[83px] lg:w-[83px]"
+        className="size-[70px] rounded-md lg:size-[83px]"
       />
 
       <div className="flex w-full min-w-0 flex-col justify-between">
@@ -23,7 +23,7 @@ const Player = ({ player }: { player: IPlayer }) => {
           </p>
         ) : (
           <div className="mb-2 flex items-center gap-2">
-            <Spinner className="m-0 h-5 w-5" />
+            <Spinner className="m-0 size-5" />
             <p className="mt-0.5">Choosing character...</p>
           </div>
         )}

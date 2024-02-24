@@ -8,9 +8,7 @@ import { cn } from "@/utils/style-utils";
 const RewardPool = () => {
   const { data: currentCommunity } = useGetCurrentCommunity();
 
-  const rewardPoolBalance = useGetTokenAccountBalance(
-    currentCommunity?.rewardPool ?? ""
-  );
+  const rewardPoolBalance = useGetTokenAccountBalance(currentCommunity?.rewardPool ?? "");
 
   return (
     <Tooltip
@@ -29,7 +27,7 @@ const RewardPool = () => {
             width={45}
             height={45}
             alt={currentCommunity?.name + " reward pool image"}
-            className="h-fit w-fit rounded-full"
+            className="size-fit rounded-full"
           />
           <div className="flex flex-col justify-between font-medium">
             Reward Pool

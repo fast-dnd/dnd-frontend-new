@@ -36,7 +36,7 @@ const PlayerStatsModal = ({
       }}
     >
       <DialogTrigger onClick={onOpen} className="flex items-center gap-2 text-xs uppercase">
-        <Coffee className="h-5 w-5" /> <p className="mt-0.5">player stats</p>
+        <Coffee className="size-5" /> <p className="mt-0.5">player stats</p>
       </DialogTrigger>
       <DialogContent
         fromBottom
@@ -44,11 +44,11 @@ const PlayerStatsModal = ({
       >
         <div className="flex h-14 w-full items-start justify-between bg-gradient-to-b from-black to-transparent p-4">
           <div className="flex items-center gap-2 text-xs font-medium uppercase">
-            <Coffee className="h-5 w-5" /> <p className="mt-0.5">player stats</p>
+            <Coffee className="size-5" /> <p className="mt-0.5">player stats</p>
           </div>
-          <AiOutlineClose className="h-4 w-4" onClick={onClose} />
+          <AiOutlineClose className="size-4" onClick={onClose} />
         </div>
-        <div className="flex h-full w-full flex-col gap-5 overflow-y-auto p-4">
+        <div className="flex size-full flex-col gap-5 overflow-y-auto p-4">
           {roomData.playerState
             .filter((player) => player.accountId !== currentPlayer.accountId)
             .map((player) => (

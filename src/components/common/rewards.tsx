@@ -34,7 +34,7 @@ const Rewards = ({ selectedReward, onSelectReward }: IRewardProps) => {
                 width={270}
                 height={150}
                 className={cn(
-                  "h-full w-full rounded-md",
+                  "size-full rounded-md",
                   selectedReward?._id === reward._id && "border-2 border-primary",
                 )}
                 onClick={() => onSelectReward?.(reward)}
@@ -61,7 +61,7 @@ const Rewards = ({ selectedReward, onSelectReward }: IRewardProps) => {
               alt={`Locked reward ${index + 1}`}
               width={270}
               height={150}
-              className="h-full w-full rounded-md blur-lg"
+              className="size-full rounded-md blur-lg"
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <Lock variant="Bold" size={60} className="opacity-50" />

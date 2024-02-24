@@ -14,7 +14,7 @@ const Coin = ({ silver = false }: ICoinProps) => {
       alt="dm-coin"
       height={40}
       width={40}
-      className={cn(silver ? "h-5 w-5" : "h-8 w-8")}
+      className={cn(silver ? "size-5" : "size-8")}
     />
   );
 };

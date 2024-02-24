@@ -17,18 +17,18 @@ const GamePlayHeader = ({ title }: { title: string }) => {
   return (
     <div className="flex w-full items-center justify-between gap-8 rounded-t-md bg-dark-900 px-12 py-6">
       <div className="flex min-w-0 flex-1 items-center gap-4">
-        <div className="h-2 w-2 shrink-0 rotate-45 bg-primary" />
+        <div className="size-2 shrink-0 rotate-45 bg-primary" />
         <p
           className="mt-1 truncate leading-none tracking-widest lg:text-xl lg:leading-7 lg:tracking-[0.2em]"
           style={jibril.style}
         >
           {title}
         </p>
-        <div className="h-2 w-2 shrink-0 rotate-45 bg-primary" />
+        <div className="size-2 shrink-0 rotate-45 bg-primary" />
       </div>
 
       <div className="flex shrink-0 items-center gap-4">
-        <Spinner className={cn("m-0 h-5 w-5 shrink-0 opacity-0", loading && "opacity-50")} />
+        <Spinner className={cn("m-0 size-5 shrink-0 opacity-0", loading && "opacity-50")} />
 
         <Tooltip
           content="Feedback"

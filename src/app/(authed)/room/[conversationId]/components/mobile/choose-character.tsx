@@ -99,7 +99,7 @@ const CharacterCard = ({
 
   return (
     <div className="h-full w-[calc(100vw_-_3.25rem)] px-1.5">
-      <div className="flex h-full w-full flex-col justify-between rounded-md bg-black/80">
+      <div className="flex size-full flex-col justify-between rounded-md bg-black/80">
         <div className="p-4">
           <p className="text-lg font-bold">{champion?.name}</p>
           <p className="line-clamp-5 font-light">{champion?.description}</p>
@@ -124,7 +124,7 @@ const CharacterCard = ({
               width={26}
               height={26}
               alt={`player-${taker.accountId}-avatar`}
-              className="h-[26px] w-[26px] rounded-full"
+              className="size-[26px] rounded-full"
             />
             TAKEN
           </div>
@@ -136,7 +136,7 @@ const CharacterCard = ({
             )}
             onClick={() => onChangeChampion?.(champion)}
           >
-            <HelmetIcon className="h-5 w-5" />
+            <HelmetIcon className="size-5" />
             SELECT THIS CHARACTER
           </Button>
         )}

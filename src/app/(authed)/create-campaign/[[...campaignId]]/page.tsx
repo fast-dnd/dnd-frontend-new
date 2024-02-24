@@ -20,8 +20,8 @@ const CreateCampaign = ({ params }: { params: { campaignId?: [string] } }) => {
     return <div className="flex justify-center overflow-y-auto pb-8"> Something went wrong. </div>;
 
   return (
-    <div className="h-full w-full overflow-y-auto">
-      <div className="flex h-full w-full justify-between gap-12 pb-12 lg:overflow-y-hidden">
+    <div className="size-full overflow-y-auto">
+      <div className="flex size-full justify-between gap-12 pb-12 lg:overflow-y-hidden">
         <SelectAdventuresCard isEditing={!!campaignId} />
 
         <RightCard campaignId={campaignId} />

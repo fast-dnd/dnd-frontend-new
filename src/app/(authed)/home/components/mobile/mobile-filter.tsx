@@ -17,7 +17,7 @@ const MobileFilter = ({ open, setOpen }: IMobileFilterProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[8%] bg-black">
+        <div className="flex size-10 items-center justify-center rounded-full border border-white/[8%] bg-black">
           <PiSlidersFill />
         </div>
       </DialogTrigger>
@@ -27,7 +27,7 @@ const MobileFilter = ({ open, setOpen }: IMobileFilterProps) => {
       >
         <div className="flex h-14 w-full items-start justify-between bg-gradient-to-b from-black to-transparent p-4">
           <span className="text-xs font-medium uppercase">Filters</span>
-          <AiOutlineClose className="h-4 w-4" onClick={() => setOpen(false)} />
+          <AiOutlineClose className="size-4" onClick={() => setOpen(false)} />
         </div>
         <div className="flex w-full flex-col">
           {subTabs.map((subTab) => (

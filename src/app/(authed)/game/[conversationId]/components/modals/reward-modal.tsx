@@ -34,7 +34,7 @@ const RewardModal = ({ conversationId }: { conversationId: string }) => {
     >
       <DialogContent
         alwaysOnTop
-        className="h-full w-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:h-fit lg:w-fit lg:max-w-[550px]"
+        className="size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:size-fit lg:max-w-[550px]"
       >
         <DialogHeader className="lg:px-0">
           <DialogTitle>You earned a reward!</DialogTitle>

@@ -43,14 +43,14 @@ const ClaimRewardModalWeb3 = ({ dungeon, isOwned }: IClaimRewardModalWeb3Props) 
       >
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-center gap-4">
-            <div className="h-2 w-2 shrink-0 rotate-45 bg-primary" />
+            <div className="size-2 shrink-0 rotate-45 bg-primary" />
             <p
               className="mt-1 text-sm uppercase tracking-widest lg:text-2xl lg:tracking-[6.4px]"
               style={jibril.style}
             >
               WITHDRAW FUNDS
             </p>
-            <div className="h-2 w-2 shrink-0 rotate-45 bg-primary" />
+            <div className="size-2 shrink-0 rotate-45 bg-primary" />
           </div>
         </div>
 

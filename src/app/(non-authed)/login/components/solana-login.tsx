@@ -55,7 +55,7 @@ const SolanaLogin = () => {
           </DialogTrigger>
         )}
       </div>
-      <DialogContent className="flex flex-col gap-12 bg-black p-4 max-lg:h-full max-lg:w-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:p-8">
+      <DialogContent className="z-[100] flex flex-col gap-12 bg-black p-4 max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:p-8">
         <div className="flex flex-col gap-4">
           <div className="flex justify-end lg:hidden">
             <DialogClose>
@@ -63,14 +63,14 @@ const SolanaLogin = () => {
             </DialogClose>
           </div>
           <div className="flex items-center justify-center gap-4">
-            <div className="h-2 w-2 shrink-0 rotate-45 bg-primary" />
+            <div className="size-2 shrink-0 rotate-45 bg-primary" />
             <p
               className="mt-1 text-lg uppercase tracking-widest lg:text-2xl lg:tracking-[6.4px]"
               style={jibril.style}
             >
               Connect a wallet
             </p>
-            <div className="h-2 w-2 shrink-0 rotate-45 bg-primary" />
+            <div className="size-2 shrink-0 rotate-45 bg-primary" />
           </div>
           <p className="text-center font-light lg:w-[450px] lg:text-xl lg:tracking-[1.5px]">
             Choose one of the options below to connect to <span className="font-bold">Solana</span>
@@ -94,7 +94,7 @@ const SolanaLogin = () => {
                     alt={wallet.adapter.name}
                     height={52}
                     width={52}
-                    className="max-lg:h-10 max-lg:w-10"
+                    className="max-lg:size-10"
                   />
                   <p className="text-xl font-medium tracking-[1.5px]">{wallet.adapter.name}</p>
                 </div>

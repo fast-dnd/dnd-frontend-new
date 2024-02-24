@@ -80,7 +80,7 @@ const Tabs = ({ selectedLeaderboardMetric, setSelectedLeaderboardMetric }: ITabs
           </p>
           <div
             className={cn(
-              "absolute bottom-0 left-1/2 z-20 h-0 w-0 -translate-x-1/2 translate-y-[100%] border-x-[8px] border-t-[10px] border-x-transparent border-t-primary opacity-0 transition-opacity duration-200",
+              "absolute bottom-0 left-1/2 z-20 size-0 -translate-x-1/2 translate-y-[100%] border-x-[8px] border-t-[10px] border-x-transparent border-t-primary opacity-0 transition-opacity duration-200",
               leaderboardMetricsTabValue.name === selectedLeaderboardMetric && "opacity-100",
             )}
           />

@@ -28,6 +28,7 @@ const Gameplay = (props: { conversationId: string }) => {
   const { currentPlayer } = useHandlePlayerStatusUpdate({ roomData });
 
   useHandleGameStateChange({ roomData });
+
   useEffect(() => {
     if (dungeonData) backgroundStore.set(dungeonData.background?.url || "");
   }, [dungeonData]);
@@ -35,7 +36,7 @@ const Gameplay = (props: { conversationId: string }) => {
   if (!roomData || !dungeonData || !currentPlayer) return <GameplaySkeleton />;
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex size-full flex-col">
       <GamePlayHeader title={dungeonData.name} />
 
       <div className="flex min-h-0 flex-1 flex-col gap-8 overflow-y-hidden rounded-b-md bg-glass p-5 backdrop-blur-2xl lg:px-12 lg:py-8">

@@ -38,7 +38,7 @@ const TabToggle = ({ tabs, activeTab, setActiveTab }: ITabToggleProps) => {
 
         <div
           className={cn(
-            "absolute inset-0 flex h-full w-full items-center justify-start p-0.5",
+            "absolute inset-0 flex size-full items-center justify-start p-0.5",
             activeTab === "MY COLLECTIONS" && "justify-end",
           )}
         >

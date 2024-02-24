@@ -31,7 +31,6 @@ const DesktopNavbar = () => {
         <Link href="/home">
           <Image src="/images/navbar-logo.png" width={203} height={70} alt="logo" />
         </Link>
-        {loggedIn && !!communityId && <ClaimRewardModal />}
       </div>
       <div className="flex items-center gap-6 text-2xl leading-7 tracking-[3.3px]">
         {loggedIn && !isDefault && !!communityId && (
@@ -45,7 +44,7 @@ const DesktopNavbar = () => {
             >
               COMMUNITIES
             </Link>
-            <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+            <div className="size-2 rotate-45 bg-white opacity-25" />
           </>
         )}
 
@@ -63,7 +62,7 @@ const DesktopNavbar = () => {
                 >
                   {loggedIn ? "PLAY" : "LOG IN"}
                 </Link>
-                <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+                <div className="size-2 rotate-45 bg-white opacity-25" />
                 <Link
                   href="/create-adventure"
                   onClick={() => {
@@ -81,7 +80,7 @@ const DesktopNavbar = () => {
                 >
                   CREATE ADVENTURE
                 </Link>
-                <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+                <div className="size-2 rotate-45 bg-white opacity-25" />
                 <Link
                   href="/leaderboard"
                   className={cn(
@@ -94,13 +93,14 @@ const DesktopNavbar = () => {
                 </Link>
                 {!isDefault && (
                   <>
-                    <div className="h-2 w-2 rotate-45 bg-white opacity-25" />
+                    <div className="size-2 rotate-45 bg-white opacity-25" />
                     <RewardPool />
                   </>
                 )}
               </>
             )}
             <ProfileDropdown />
+            {loggedIn && !!communityId && <ClaimRewardModal />}
           </>
         )}
       </div>
@@ -110,7 +110,7 @@ const DesktopNavbar = () => {
           className="flex items-center gap-2 hover:opacity-70"
           target="_blank"
         >
-          <DiscordLogo className="h-7 w-7" />
+          <DiscordLogo className="size-7" />
           Join us on Discord
         </Link>
       )}

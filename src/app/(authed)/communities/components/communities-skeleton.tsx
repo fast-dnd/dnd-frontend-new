@@ -41,12 +41,12 @@ const CommunitySkeleton = () => (
       <div className="relative h-24 lg:h-[215px] lg:w-[665px]">
         <div className="absolute inset-0 overflow-hidden rounded-t-lg">
           <div className="absolute flex h-24 w-full shrink-0 items-center justify-center rounded-t-md bg-gray-600 text-gray-200 lg:h-[215px] lg:w-[662px]">
-            <SkeletonIcon className="h-16 w-16 text-gray-200" />
+            <SkeletonIcon className="size-16 text-gray-200" />
           </div>
         </div>
 
         <div className="absolute -bottom-4 left-4 rounded-lg bg-white drop-shadow-[2px_2px_0px_#FF5A5A] lg:-bottom-8 lg:left-8 lg:drop-shadow-[4px_4px_0px_#FF5A5A]">
-          <SkeletonIcon className="h-[50px] w-[50px] rounded-full lg:h-[120px] lg:w-[120px]" />
+          <SkeletonIcon className="size-[50px] rounded-full lg:size-[120px]" />
         </div>
       </div>
 

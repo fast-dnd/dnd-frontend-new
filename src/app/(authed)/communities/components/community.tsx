@@ -25,7 +25,7 @@ const Community = ({ community }: { community: ICommunity }) => {
               alt={community.name + " banner"}
               width={665}
               height={665}
-              className="absolute h-full w-full object-cover"
+              className="absolute size-full object-cover"
             />
           </div>
 
@@ -35,7 +35,7 @@ const Community = ({ community }: { community: ICommunity }) => {
               alt={community.name + " logo"}
               width={120}
               height={120}
-              className="h-[50px] w-[50px] rounded-full lg:h-[120px] lg:w-[120px]"
+              className="size-[50px] rounded-full lg:size-[120px]"
             />
           </div>
         </div>

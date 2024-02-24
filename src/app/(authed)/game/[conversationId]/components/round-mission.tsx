@@ -12,11 +12,11 @@ const RoundMission = ({ conversationId }: { conversationId: string }) => {
       <div className="flex items-center">
         <div className="h-[1px] w-full bg-black shadow-lobby" />
         <div className="flex items-center gap-2">
-          <div className="h-1.5 w-1.5 shrink-0 rotate-45 bg-primary" />
+          <div className="size-1.5 shrink-0 rotate-45 bg-primary" />
           <p className="mt-1 text-xl uppercase tracking-widest text-primary" style={jibril.style}>
             QUEST
           </p>
-          <div className="h-1.5 w-1.5 shrink-0 rotate-45 bg-primary" />
+          <div className="size-1.5 shrink-0 rotate-45 bg-primary" />
         </div>
         <div className="h-[1px] w-full bg-black shadow-lobby" />
       </div>

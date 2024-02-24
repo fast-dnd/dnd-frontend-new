@@ -39,13 +39,13 @@ const MobileMyAccount = () => {
   return (
     <div className="flex flex-1 flex-col gap-4">
       <div className="flex w-full gap-4">
-        <div className="h-[130px] w-[130px] shrink-0">
+        <div className="size-[130px] shrink-0">
           <Image
             src={account.imageUrl || "/images/default-avatar.png"}
             width={130}
             height={130}
             alt="avatar"
-            className="h-[130px] w-[130px] rounded-md"
+            className="size-[130px] rounded-md"
           />
         </div>
         <div className="flex w-full flex-col justify-between gap-4">
@@ -114,22 +114,22 @@ const MobileMyAccount = () => {
         <p className="text-lg font-bold">PLAYER STATS</p>
         <div className="grid grid-cols-2 gap-x-4 gap-y-2">
           <StatisticsCard
-            icon={<Helmet2Icon className="h-2/3 w-2/3" />}
+            icon={<Helmet2Icon className="size-2/3" />}
             value={statistics.createdAdventuresCount}
             name="Created adventures"
           />
           <StatisticsCard
-            icon={<SwordsIcon className="h-2/3 w-2/3" />}
+            icon={<SwordsIcon className="size-2/3" />}
             value={statistics.createdCampaignsCount}
             name="Created campaigns"
           />
           <StatisticsCard
-            icon={<Game color="#FF5A5A" variant="Bold" className="h-2/3 w-2/3" />}
+            icon={<Game color="#FF5A5A" variant="Bold" className="size-2/3" />}
             value={statistics.totalGamesPlayed}
             name="Games played"
           />
           <StatisticsCard
-            icon={<Timer color="#FF5A5A" variant="Bold" className="h-2/3 w-2/3" />}
+            icon={<Timer color="#FF5A5A" variant="Bold" className="size-2/3" />}
             value={statistics.totalGameplayHours.toFixed(2)}
             name="Hours played"
           />
@@ -142,17 +142,17 @@ const MobileMyAccount = () => {
         <p className="text-lg font-bold">MASTER STATS</p>
         <div className="grid grid-cols-2 gap-x-4 gap-y-2">
           <StatisticsCard
-            icon={<Helmet2Icon className="h-2/3 w-2/3" />}
+            icon={<Helmet2Icon className="size-2/3" />}
             value={statistics.createdAdventuresCount}
             name="Created adventures"
           />
           <StatisticsCard
-            icon={<SwordsIcon className="h-2/3 w-2/3" />}
+            icon={<SwordsIcon className="size-2/3" />}
             value={statistics.createdCampaignsCount}
             name="Created campaigns"
           />
           <StatisticsCard
-            icon={<Star1 color="#FF5A5A" variant="Bold" className="h-2/3 w-2/3" />}
+            icon={<Star1 color="#FF5A5A" variant="Bold" className="size-2/3" />}
             value={
               statistics.totalAdventureRatings === 0
                 ? 0
@@ -161,7 +161,7 @@ const MobileMyAccount = () => {
             name="Avg. adventure rating"
           />
           <StatisticsCard
-            icon={<People color="#FF5A5A" variant="Bold" className="h-2/3 w-2/3" />}
+            icon={<People color="#FF5A5A" variant="Bold" className="size-2/3" />}
             value={statistics.totalAdventurePlayers}
             name="Adventure players"
           />

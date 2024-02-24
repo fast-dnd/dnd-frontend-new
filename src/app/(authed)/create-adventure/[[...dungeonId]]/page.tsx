@@ -26,7 +26,7 @@ const CreateDungeon = ({ params }: { params: { dungeonId?: [string] } }) => {
   if (isInitialLoading || !isClient) return <AdventureSkeletonLoading isEditing={!!dungeonId} />;
 
   return (
-    <div className="flex h-full min-h-0 w-full justify-between gap-12 pb-12">
+    <div className="flex size-full min-h-0 justify-between gap-12 pb-12">
       <div className="flex h-full basis-2/3">
         <FormStepWrapper isEditing={!!dungeonId} dungeonData={dungeonData}>
           {currentStep === "General information" && <GeneralInfo />}

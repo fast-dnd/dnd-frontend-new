@@ -24,14 +24,14 @@ export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
             titleClassName,
           )}
         >
-          <div className="h-2 w-2 rotate-45 bg-primary" />
+          <div className="size-2 rotate-45 bg-primary" />
           <p
             className="mt-1 max-w-[90%] truncate leading-none tracking-widest lg:text-xl lg:leading-7 lg:tracking-[0.2em]"
             style={jibril.style}
           >
             {title}
           </p>
-          <div className="h-2 w-2 rotate-45 bg-primary" />
+          <div className="size-2 rotate-45 bg-primary" />
         </div>
         <div className={cn(boxVariants({ className }))} ref={ref} {...props}>
           {children}

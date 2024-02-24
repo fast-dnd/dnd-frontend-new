@@ -11,8 +11,8 @@ export const moveMappingWithIcons = (moveMapping: IMoveMapping) => {
       header: "Heal action",
       text: moveMapping.discover_health,
       icon: (
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-primary bg-primary/10">
-          <AiFillHeart className="h-4 w-4 fill-primary" />
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-md border border-primary bg-primary/10">
+          <AiFillHeart className="size-4 fill-primary" />
         </div>
       ),
     },
@@ -20,8 +20,8 @@ export const moveMappingWithIcons = (moveMapping: IMoveMapping) => {
       header: "Round bonus action",
       text: moveMapping.conversation_with_team,
       icon: (
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-green-500 bg-primary/10">
-          <GoPeople className="h-4 w-4 fill-green-500" />
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-md border border-green-500 bg-primary/10">
+          <GoPeople className="size-4 fill-green-500" />
         </div>
       ),
     },
@@ -29,8 +29,8 @@ export const moveMappingWithIcons = (moveMapping: IMoveMapping) => {
       header: "Mana action",
       text: moveMapping.discover_mana,
       icon: (
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-info bg-primary/10">
-          <HiSparkles className="h-4 w-4 fill-info" />
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-md border border-info bg-primary/10">
+          <HiSparkles className="size-4 fill-info" />
         </div>
       ),
     },
@@ -38,8 +38,8 @@ export const moveMappingWithIcons = (moveMapping: IMoveMapping) => {
       header: "Rest action",
       text: moveMapping.rest,
       icon: (
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-purple-400 bg-primary/10">
-          <GiNightSleep className="h-4 w-4 fill-purple-400" />
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-md border border-purple-400 bg-primary/10">
+          <GiNightSleep className="size-4 fill-purple-400" />
         </div>
       ),
     },

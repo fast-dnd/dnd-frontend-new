@@ -44,7 +44,7 @@ const CampaignDetail = ({
           alt={campaign.name ?? ""}
           width={200}
           height={200}
-          className="h-16 w-16 rounded-md lg:h-[200px] lg:w-[200px]"
+          className="size-16 rounded-md lg:size-[200px]"
         />
         <div className="flex w-full min-w-0 flex-col gap-4">
           <div className="flex justify-between gap-4 pr-4">

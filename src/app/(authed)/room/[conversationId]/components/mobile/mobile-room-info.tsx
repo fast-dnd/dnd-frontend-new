@@ -42,7 +42,7 @@ const MobileRoomInfo = ({ roomData, selectedChampion }: IMobileRoomInfoProps) =>
               >
                 {player.champion && (
                   <>
-                    <div className="absolute h-full w-full rounded-full  bg-gradient-to-b from-black/0 to-black backdrop-blur-[1px]" />
+                    <div className="absolute size-full rounded-full bg-gradient-to-b  from-black/0 to-black backdrop-blur-[1px]" />
                     <GiCheckMark className="absolute left-1/4 top-1/4" />{" "}
                   </>
                 )}
@@ -51,7 +51,7 @@ const MobileRoomInfo = ({ roomData, selectedChampion }: IMobileRoomInfoProps) =>
                   width={30}
                   height={30}
                   alt={`player-${player.accountId}-avatar`}
-                  className="h-[30px] w-[30px] rounded-full"
+                  className="size-[30px] rounded-full"
                 />
               </div>
             ))}
@@ -68,7 +68,7 @@ const MobileRoomInfo = ({ roomData, selectedChampion }: IMobileRoomInfoProps) =>
                 <div className="relative min-w-fit rounded-full">
                   {player.champion && (
                     <>
-                      <div className="absolute h-full w-full rounded-full  bg-gradient-to-b from-black/0 to-black backdrop-blur-[1px]" />
+                      <div className="absolute size-full rounded-full bg-gradient-to-b  from-black/0 to-black backdrop-blur-[1px]" />
                       <GiCheckMark className="absolute left-1/3 top-1/3 h-auto w-[22px]" />
                     </>
                   )}
@@ -77,7 +77,7 @@ const MobileRoomInfo = ({ roomData, selectedChampion }: IMobileRoomInfoProps) =>
                     width={57}
                     height={57}
                     alt={`player-${player.accountId}-avatar`}
-                    className="h-[57px] w-[57px] rounded-full border border-white"
+                    className="size-[57px] rounded-full border border-white"
                   />
                 </div>
                 <div className="flex flex-col justify-center">

@@ -127,7 +127,7 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
       titleClassName="hidden"
       title=""
       wrapperClassName="basis-1/3"
-      className="flex h-full w-full flex-col items-center justify-between rounded-t-md p-8"
+      className="flex size-full flex-col items-center justify-between rounded-t-md p-8"
     >
       <div className="flex w-full flex-col justify-between gap-6">
         {steps.map((step) => (

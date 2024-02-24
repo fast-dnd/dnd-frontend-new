@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
+import { getAssociatedTokenAddressSync } from "@solana/spl-token";
 import { PublicKey } from "@solana/web3.js";
 
 import { solanaConnection } from "@/utils/web3/connection";
-import {
-  getAssociatedTokenAddressSync,
-} from "@solana/spl-token";
 
 interface IUseGetWeb3BalanceProps {
   accountAddress: string;

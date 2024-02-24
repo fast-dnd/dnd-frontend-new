@@ -13,7 +13,7 @@ interface IIntroProps {
 const Intro = ({ setCurrentStep }: IIntroProps) => {
   return (
     <motion.div
-      className="flex h-full w-full"
+      className="flex size-full"
       initial={{ scale: 0, y: "-50%" }}
       animate={{ scale: "100%", y: "0%" }}
       exit={{ scale: 0, y: "-50%" }}
@@ -25,9 +25,9 @@ const Intro = ({ setCurrentStep }: IIntroProps) => {
           alt="intro"
           width={2048}
           height={2048}
-          className="absolute inset-0 z-0 h-full w-full rounded-xl object-cover"
+          className="absolute inset-0 z-0 size-full rounded-xl object-cover"
         />
-        <div className="absolute inset-0 h-full w-full bg-black/50" />
+        <div className="absolute inset-0 size-full bg-black/50" />
         <p className="z-20 text-[44px] font-semibold uppercase tracking-[4.4px]">HOW TO PLAY?</p>
         <p className="z-20 w-96 text-center text-xl">
           Learn all the tips and tricks of the V3RPG storytelling game.
@@ -46,7 +46,7 @@ const Intro = ({ setCurrentStep }: IIntroProps) => {
             style={jibril.style}
             onClick={() => setCurrentStep(index)}
           >
-            <div className="h-2 w-2 rotate-45 bg-primary" />
+            <div className="size-2 rotate-45 bg-primary" />
             {step.title}
           </Button>
         ))}

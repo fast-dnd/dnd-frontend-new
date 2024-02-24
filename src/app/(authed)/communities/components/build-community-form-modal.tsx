@@ -1,5 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { DialogClose } from "@radix-ui/react-dialog";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { AiOutlineClose } from "react-icons/ai";
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -30,20 +32,25 @@ const BuildCommunityFormModal = () => {
           BUILD&nbsp;<span className="max-lg:hidden">YOUR&nbsp;</span>COMMUNITY
         </Button>
       </DialogTrigger>
-      <DialogContent className="mt-8 flex flex-col gap-6 bg-black p-4 max-lg:h-full max-lg:w-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:mt-0 lg:gap-12 lg:p-8">
+      <DialogContent className="z-[100] flex flex-col gap-6 bg-black p-4 max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:mt-0 lg:gap-12 lg:p-8">
         <div className="flex flex-col gap-4">
+          <div className="flex justify-end lg:hidden">
+            <DialogClose>
+              <AiOutlineClose />
+            </DialogClose>
+          </div>
           <div className="mt-4 flex lg:hidden">
             <p>BUILD COMMUNITY</p>
           </div>
           <div className="hidden items-center justify-center gap-4 lg:flex">
-            <div className="h-2 w-2 shrink-0 rotate-45 bg-primary" />
+            <div className="size-2 shrink-0 rotate-45 bg-primary" />
             <p
               className="mt-1 text-lg uppercase tracking-widest lg:text-3xl lg:tracking-[6.4px]"
               style={jibril.style}
             >
               BUILD COMMUNITY
             </p>
-            <div className="h-2 w-2 shrink-0 rotate-45 bg-primary" />
+            <div className="size-2 shrink-0 rotate-45 bg-primary" />
           </div>
         </div>
 

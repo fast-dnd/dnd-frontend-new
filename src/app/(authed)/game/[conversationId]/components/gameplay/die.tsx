@@ -19,9 +19,9 @@ const Die = ({
     return (
       <div
         className={cn(
-          "flex h-14 w-14 flex-col rounded-lg bg-white p-1.5",
-          big && "h-24 w-24",
-          small && "h-9 w-9",
+          "flex size-14 flex-col rounded-lg bg-white p-1.5",
+          big && "size-24",
+          small && "size-9",
         )}
       />
     );
@@ -29,9 +29,9 @@ const Die = ({
   return (
     <div
       className={cn(
-        "flex h-14 w-14 flex-col rounded-lg bg-white p-1.5",
-        big && "h-24 w-24",
-        small && "h-9 w-9",
+        "flex size-14 flex-col rounded-lg bg-white p-1.5",
+        big && "size-24",
+        small && "size-9",
         animate && "animate-spin duration-500",
       )}
     >
@@ -47,9 +47,9 @@ const Die = ({
             >
               <div
                 className={cn(
-                  "h-2 w-2 rounded-full bg-black",
-                  big && "h-3.5 w-3.5",
-                  small && "h-[5.25px] w-[5.25px]",
+                  "size-2 rounded-full bg-black",
+                  big && "size-3.5",
+                  small && "size-[5.25px]",
                 )}
               />
             </div>

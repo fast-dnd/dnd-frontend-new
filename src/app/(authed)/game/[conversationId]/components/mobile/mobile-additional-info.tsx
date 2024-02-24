@@ -37,7 +37,7 @@ const MobileAdditionalInfo = ({
     <div className="pointer-events-none relative z-10 flex h-32 w-full gap-3">
       <div
         className={cn(
-          "absolute inset-0 -z-10 h-full w-full bg-gradient-to-l from-black/30 to-black to-45% opacity-0 backdrop-blur transition-all duration-500",
+          "absolute inset-0 -z-10 size-full bg-gradient-to-l from-black/30 to-black to-45% opacity-0 backdrop-blur transition-all duration-500",
           open && "opacity-100",
         )}
       />
@@ -57,7 +57,7 @@ const MobileAdditionalInfo = ({
       </div>
       <div
         className={cn(
-          "relative flex h-full w-full flex-col justify-center gap-5 opacity-0 transition-all duration-500",
+          "relative flex size-full flex-col justify-center gap-5 opacity-0 transition-all duration-500",
           open && "pointer-events-auto opacity-100",
         )}
       >
@@ -81,7 +81,7 @@ const MobileAdditionalInfo = ({
         <div
           className={cn(
             "flex flex-col gap-4",
-            diceStats && "absolute inset-0 h-full w-full pb-4 pt-3.5",
+            diceStats && "absolute inset-0 size-full pb-4 pt-3.5",
             !roll && "pointer-events-none opacity-40",
           )}
         >
@@ -95,11 +95,11 @@ const MobileAdditionalInfo = ({
             onClick={() => setDiceStats(true)}
             className="flex items-center gap-2 text-xs uppercase"
           >
-            <FaDice className="h-5 w-5" /> <p className="mt-0.5">dice roll stats</p>
+            <FaDice className="size-5" /> <p className="mt-0.5">dice roll stats</p>
           </motion.div>
           <div
             className={cn(
-              "pointer-events-none absolute inset-0 flex h-full w-full gap-8 pl-4 pt-[50px] opacity-0 transition-opacity duration-500",
+              "pointer-events-none absolute inset-0 flex size-full gap-8 pl-4 pt-[50px] opacity-0 transition-opacity duration-500",
               diceStats && "pointer-events-auto relative pt-0 opacity-100",
             )}
           >

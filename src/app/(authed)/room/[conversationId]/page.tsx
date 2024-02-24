@@ -82,7 +82,7 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
                 height={1024}
                 className="h-full object-cover blur-md"
               />
-              <div className="absolute inset-0 h-full w-full bg-dark-900/40" />
+              <div className="absolute inset-0 size-full bg-dark-900/40" />
             </>
           )}
         </div>
