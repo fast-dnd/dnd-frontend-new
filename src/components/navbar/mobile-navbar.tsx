@@ -15,6 +15,7 @@ import useGetTokenAccountBalance from "@/hooks/helpers/use-get-token-account-bal
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { cn } from "@/utils/style-utils";
 
+import ClaimRewardModal from "../common/claim-reward-modal";
 import QuillIcon from "../icons/quill-icon";
 import SwordsIcon from "../icons/swords-icon";
 import { Button } from "../ui/button";
@@ -34,7 +35,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
 
   const rewardPoolBalance = useGetTokenAccountBalance(currentCommunity?.rewardPool ?? "");
 
-  const { user } = useAuth();
+  const { user, loggedIn } = useAuth();
 
   const pathname = usePathname();
 
@@ -97,6 +98,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                       <SwordsIcon className="size-5 shrink-0 fill-white" />
                       <p className="flex-1 text-center">play</p>
                     </Button>
+                    {loggedIn && !!communityId && <ClaimRewardModal />}
                     <Button
                       className="gap-4 py-4"
                       href="/leaderboard"

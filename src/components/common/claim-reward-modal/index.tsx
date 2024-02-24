@@ -2,6 +2,7 @@ import { Gift } from "@phosphor-icons/react";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { AiOutlineClose } from "react-icons/ai";
 
+import { Button } from "@/components/ui/button";
 import useCommunity from "@/hooks/helpers/use-community";
 import { jibril } from "@/utils/fonts";
 
@@ -14,10 +15,16 @@ const ClaimRewardModal = () => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className="max-lg:hidden">
         <button className="flex cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black p-4 transition-all duration-200 hover:bg-[#1B1B1B]">
           <Gift size={32} />
         </button>
+      </DialogTrigger>
+      <DialogTrigger asChild className="lg:hidden">
+        <Button className="gap-4 py-4" variant="sidebar">
+          <Gift className="size-5 shrink-0 fill-white" />
+          <p className="flex-1 text-center">claim reward</p>
+        </Button>
       </DialogTrigger>
       <DialogContent className="z-[100] flex flex-col gap-12 bg-black p-4 max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:p-8">
         <div className="flex flex-col gap-4">
