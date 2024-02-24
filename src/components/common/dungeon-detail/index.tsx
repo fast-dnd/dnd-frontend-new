@@ -133,57 +133,58 @@ const DungeonDetail = ({
               </div>
             </div>
           ))}
-          <div
-            className={cn(
-              "flex h-fit min-w-0 basis-1/3 flex-col justify-between gap-4 rounded-md border-2 border-white bg-white/10 p-6 transition-all duration-200",
-              customChampion && "border-gold",
-              customChampion?._id === selectedChampion?._id && " bg-black/50",
-            )}
-          >
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <HelmetIcon className="shrink-0" />
-                {customChampion && (
-                  <NewTagChip className="absolute bottom-0 right-0 h-8 w-auto ring-0" />
-                )}
-              </div>
-              <div className="flex flex-col gap-1">
-                <div className="flex w-full justify-between">
-                  <p className={cn("truncate text-xl font-semibold")}>
-                    {customChampion ? customChampion.name : "CREATE YOUR OWN HERO"}
+          {conversationId && (
+            <div
+              className={cn(
+                "flex h-fit min-w-0 basis-1/3 flex-col justify-between gap-4 rounded-md border-2 border-white bg-white/10 p-6 transition-all duration-200",
+                customChampion && "border-gold",
+                customChampion?._id === selectedChampion?._id && " bg-black/50",
+              )}
+            >
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <HelmetIcon className="shrink-0" />
+                  {customChampion && (
+                    <NewTagChip className="absolute bottom-0 right-0 h-8 w-auto ring-0" />
+                  )}
+                </div>
+                <div className="flex flex-col gap-1">
+                  <div className="flex w-full justify-between">
+                    <p className={cn("truncate text-xl font-semibold")}>
+                      {customChampion ? customChampion.name : "CREATE YOUR OWN HERO"}
+                    </p>
+                  </div>
+                  <p className="line-clamp-3 font-light">
+                    {customChampion
+                      ? customChampion.description
+                      : "Give your character distinctive traits and abilities to enhance the thrill and challenge of your gaming experience. Transform your play with a character that's truly your own."}
                   </p>
                 </div>
-                <p className="line-clamp-3 font-light">
-                  {customChampion
-                    ? customChampion.description
-                    : "Give your character distinctive traits and abilities to enhance the thrill and challenge of your gaming experience. Transform your play with a character that's truly your own."}
-                </p>
               </div>
-            </div>
-            {customChampion && (
-              <div className="flex flex-col gap-4">
-                <p className="font-medium tracking-wide">ACTIONS</p>
-                <div className="grid grid-cols-2 gap-x-3 gap-y-2">
-                  {moveMappingWithIcons(customChampion.moveMapping).map((move, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      {move.icon}
-                      <div className="flex h-[72px] items-center">
-                        <p className="line-clamp-3 font-light hover:line-clamp-4">{move.text}</p>
+              {customChampion && (
+                <div className="flex flex-col gap-4">
+                  <p className="font-medium tracking-wide">ACTIONS</p>
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+                    {moveMappingWithIcons(customChampion.moveMapping).map((move, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        {move.icon}
+                        <div className="flex h-[72px] items-center">
+                          <p className="line-clamp-3 font-light hover:line-clamp-4">{move.text}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-            {conversationId && (
+              )}
+
               <CreateHeroModal
                 conversationId={conversationId}
                 onChangeChampion={onChangeChampion}
                 selectedChampion={selectedChampion}
                 takenChampions={takenChampions}
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
