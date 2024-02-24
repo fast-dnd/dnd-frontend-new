@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
+import { IChampion } from "@/types/dungeon";
 
 import useCreateRoom from "../../../hooks/use-create-room";
 import TemplateSentences from "./template-sentences";
@@ -11,7 +12,10 @@ const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
   const router = useRouter();
 
   const [_, setAccountId] = useLocalStorage("accountId", "");
-
+  const [customChampion, setCustomChampion] = useLocalStorage<IChampion | null>(
+    "customChampion",
+    null,
+  );
   const [loadingRoom, setLoadingRoom] = useState(false);
 
   const { mutate: createRoom, isLoading: isCreatingRoom } = useCreateRoom();
@@ -31,6 +35,7 @@ const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
         onSuccess: (data) => {
           if (data.admin) setAccountId(data.admin.accountId);
           setLoadingRoom(true);
+          setCustomChampion(null);
           router.push(`room/${data.conversationId}`);
         },
       },

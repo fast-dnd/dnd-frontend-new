@@ -54,6 +54,7 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
         </div>
         <div className="mt-32 flex h-full">
           <ChooseCharacter
+            conversationId={conversationId}
             dungeonData={dungeon}
             selectedChampion={selectedChampion}
             currentIndex={currentIndex}

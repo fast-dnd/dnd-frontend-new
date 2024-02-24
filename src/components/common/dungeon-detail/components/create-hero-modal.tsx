@@ -64,10 +64,10 @@ const CreateHeroModal = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <div className="space-x-4">
+      <div className="lg:space-x-4">
         {customChampion && (
           <button
-            className="rounded-lg  bg-white px-6 py-3  font-semibold text-black transition-all duration-200"
+            className="rounded-lg  bg-white px-6 py-3 font-semibold text-black transition-all duration-200 max-lg:hidden"
             disabled={isTaken(customChampion)}
             onClick={() => onChangeChampion?.(customChampion)}
           >
@@ -79,20 +79,20 @@ const CreateHeroModal = ({
           </button>
         )}
 
-        <DialogTrigger>
+        <DialogTrigger asChild>
           {customChampion ? (
-            <button className="rounded-lg border-2 border-white bg-transparent px-6 py-3 font-semibold text-white transition-all duration-200 hover:bg-white hover:text-black">
-              EDIT HERO
+            <button className="border-white bg-white px-4 py-3 font-semibold text-black transition-all duration-200 hover:bg-white hover:text-black max-lg:h-full max-lg:rounded-bl-md lg:rounded-lg lg:border-2 lg:bg-transparent lg:px-6 lg:text-white">
+              EDIT <span className="max-lg:hidden">HERO</span>
             </button>
           ) : (
-            <Button variant="primary" className="w-fit gap-2">
+            <Button variant="primary" className="w-fit gap-2 max-lg:w-full max-lg:rounded-t-none">
               <PlusCircle />
               CREATE YOUR OWN HERO
             </Button>
           )}
         </DialogTrigger>
       </div>
-      <DialogContent className="z-[100] flex flex-col gap-12 bg-black p-4 max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:p-8">
+      <DialogContent className="z-[100] flex flex-col gap-12 bg-black p-4 max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900/90 lg:p-8">
         <div className="flex flex-col gap-4">
           <div className="flex justify-end lg:hidden">
             <DialogClose>
@@ -102,7 +102,7 @@ const CreateHeroModal = ({
           <div className="flex items-center justify-center gap-4">
             <div className="size-2 shrink-0 rotate-45 bg-primary" />
             <p
-              className="mt-1 text-lg uppercase tracking-widest lg:text-2xl lg:tracking-[6.4px]"
+              className="mt-1 text-center uppercase tracking-widest lg:text-2xl lg:tracking-[6.4px]"
               style={jibril.style}
             >
               CREATE YOUR OWN HERO
@@ -111,7 +111,10 @@ const CreateHeroModal = ({
           </div>
         </div>
 
-        <form className="flex w-full flex-col gap-4 px-6" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="flex w-full flex-col gap-2 px-3 max-lg:overflow-y-auto lg:gap-4 lg:px-6"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <Input
             className="p-2"
             label="Character Name"
@@ -121,13 +124,14 @@ const CreateHeroModal = ({
             errorMessage={errors?.name?.message}
           />
           <Input
-            className="mb-12 p-2"
+            className="mb-6 p-2"
             label="Character Description"
             placeholder="What is the character like? Their traits..."
             {...register("description")}
             state={errors?.description ? "error" : undefined}
             errorMessage={errors?.description?.message}
           />
+          <div className="h-0.5 w-full bg-black shadow-lobby" />
 
           <Input
             className="p-2"
@@ -170,7 +174,7 @@ const CreateHeroModal = ({
             errorMessage={errors?.moveMapping?.rest?.message}
           />
 
-          <div className="flex items-center justify-center">
+          <div className="flex max-lg:pb-4">
             <Button isLoading={isLoading}>ADD NEW HERO</Button>
           </div>
         </form>

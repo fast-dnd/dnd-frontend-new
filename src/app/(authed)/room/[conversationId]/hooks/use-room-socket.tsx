@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import { useLocalStorage } from "usehooks-ts";
 
 import { socketIO } from "@/lib/socket";
 import { roomKey } from "@/services/room-service";
+import { IChampion } from "@/types/dungeon";
 import { roomDetailSchema } from "@/validations/room";
 
 import {
@@ -19,6 +21,10 @@ import { IRoomSocketEvent } from "../types/events";
 
 const useRoomSocket = (conversationId: string) => {
   const queryClient = useQueryClient();
+  const [customChampion, setCustomChampion] = useLocalStorage<IChampion | null>(
+    "customChampion",
+    null,
+  );
 
   const router = useRouter();
 
@@ -39,6 +45,7 @@ const useRoomSocket = (conversationId: string) => {
           moveStore.set(getInitialMoveStoreData());
           gameStore.set(getInitialGameStoreData());
           router.push(`/game/${conversationId}`);
+          setCustomChampion(null);
           break;
       }
     };
