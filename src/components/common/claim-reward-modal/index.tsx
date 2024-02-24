@@ -42,7 +42,7 @@ const ClaimRewardModal = () => {
                 Enter coupon coude to redeem <span className="font-bold">rewards</span>
               </>
             ) : (
-              "Congrats! You can claim the following rewards:"
+              "You can claim the following rewards:"
             )}
           </p>
         </div>

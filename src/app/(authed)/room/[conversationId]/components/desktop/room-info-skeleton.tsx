@@ -1,4 +1,4 @@
-import { DungeonDetailSkeleton } from "@/components/common/dungeon-detail";
+import { DungeonDetailSkeleton } from "@/components/common/dungeon-detail/components/dungeon-detail-skeleton";
 import { Box } from "@/components/ui/box";
 
 const RoomInfoSkeleton = () => {

@@ -24,6 +24,10 @@ const Web3 = () => {
 
   if (!adventuresData) return null;
 
+  if (adventuresData.pages[0].total === 0) {
+    return <p className="text-center">You don&apos;t have any dungeons yet</p>;
+  }
+
   const content = adventuresData.pages.map((page) =>
     page.dungeons.map((adventure, i) => {
       if (page.dungeons.length === i + 1) {
@@ -49,8 +53,6 @@ const AdventureClaim = React.forwardRef<HTMLDivElement, { adventure: IDungeon }>
       dungeonId: adventure._id,
     });
 
-    if (adventureBalance === 0) return null;
-
     return (
       <div className="flex w-full items-center justify-between" ref={ref}>
         <div className="flex gap-2">
@@ -69,8 +71,9 @@ const AdventureClaim = React.forwardRef<HTMLDivElement, { adventure: IDungeon }>
           </div>
         </div>
         <button
-          className="rounded-lg bg-white px-6 py-3 font-semibold text-black transition-all duration-200 hover:opacity-75"
+          className="pointer-events-none rounded-lg bg-white px-6 py-3 font-semibold text-black transition-all duration-200 hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-50"
           onClick={onWithdrawAdventureCurrency}
+          disabled={adventureBalance === 0}
         >
           CLAIM
         </button>
