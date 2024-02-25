@@ -9,6 +9,7 @@ import Gameplay from "./components/gameplay";
 import General from "./components/general";
 import MobileControls from "./components/mobile/mobile-controls";
 import MobileStory from "./components/mobile/mobile-story";
+import RecommendedAdventures from "./components/recomended-adventures";
 import RoundMission from "./components/round-mission";
 import { gameStore } from "./stores/game-store";
 
@@ -24,8 +25,9 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
         <AnimationEffects />
 
         <div className="flex min-h-0 w-full min-w-0 flex-1 flex-row gap-12 overflow-y-auto py-0">
-          <div className={cn("flex h-full w-[70%] flex-1")}>
+          <div className={cn("flex h-full w-[70%] flex-1 flex-col gap-4")}>
             <Gameplay conversationId={conversationId} />
+            <RecommendedAdventures conversationId={conversationId} />
           </div>
           <div className={cn("flex h-full min-h-0 w-[27%] flex-col gap-4")}>
             <General conversationId={conversationId} />

@@ -110,7 +110,6 @@ const MoveInput = ({ champion, wordsChallenge, isWordsChallenge }: IMoveInputPro
             disabled={!canPlay}
             className={cn(
               "size-9 bg-white/5 px-2 text-dark-200 hover:text-primary active:text-primary",
-
               move === "discover_health" && "border-primary text-primary",
             )}
             onClick={() => moveStore.move.set("discover_health")}
@@ -123,7 +122,6 @@ const MoveInput = ({ champion, wordsChallenge, isWordsChallenge }: IMoveInputPro
             disabled={!canPlay}
             className={cn(
               "size-9 bg-white/5 px-2 text-dark-200 hover:text-cyan-500 active:text-cyan-500",
-
               move === "discover_mana" && "border-cyan-500 text-cyan-500",
             )}
             onClick={() => moveStore.move.set("discover_mana")}
@@ -136,7 +134,6 @@ const MoveInput = ({ champion, wordsChallenge, isWordsChallenge }: IMoveInputPro
             disabled={!canPlay}
             className={cn(
               "size-9 bg-white/5 px-2 text-dark-200 hover:text-green-500 active:text-green-500",
-
               move === "conversation_with_team" && "border-green-500 text-green-500",
             )}
             onClick={() => moveStore.move.set("conversation_with_team")}
@@ -149,7 +146,6 @@ const MoveInput = ({ champion, wordsChallenge, isWordsChallenge }: IMoveInputPro
             disabled={!canPlay}
             className={cn(
               "size-9 bg-white/5 px-2 text-dark-200 hover:text-purple-400 active:text-purple-400",
-
               move === "rest" && "border-purple-400 text-purple-400",
             )}
             onClick={() => moveStore.move.set("rest")}
