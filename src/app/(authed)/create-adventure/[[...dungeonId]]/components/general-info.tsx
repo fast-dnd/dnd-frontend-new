@@ -3,8 +3,11 @@ import { BsFillImageFill } from "react-icons/bs";
 
 import "./location";
 
+import { EyeClosed } from "@phosphor-icons/react";
+import { Eye } from "iconsax-react";
+
+import ToggleSwitch from "@/components/common/toggle-switch";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -40,17 +43,14 @@ const GeneralInfo = () => {
                 setImage={(image) => dungeonFormData.imageUrl.set(image)}
                 defaultImage={dungeonFormData.imageUrl.get()}
               />
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  className="bg-transparent"
-                  checked={publiclySeen}
-                  onCheckedChange={(checked) =>
-                    dungeonFormData.publiclySeen.set(checked as boolean)
-                  }
-                  aria-label="Publicly seen"
-                />
-                Public adventure
-              </div>
+              <ToggleSwitch
+                on={!publiclySeen}
+                setOn={(checked) => dungeonFormData.publiclySeen.set(!checked)}
+                items={[
+                  { text: "Public", icon: <Eye size={14} /> },
+                  { text: "Private", icon: <EyeClosed size={14} /> },
+                ]}
+              />
             </div>
 
             <div className="flex size-full flex-1 flex-col gap-5 lg:gap-8">
