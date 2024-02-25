@@ -24,7 +24,7 @@ const Skeleton = ({ amount = 1, small = false }: ISkeletonProps) => {
           <div
             className={cn(
               "flex h-[200px] w-full items-center justify-center rounded bg-gray-600 lg:w-[200px] lg:shrink-0",
-              small && "size-20 lg:w-20",
+              small && "max-h-20 max-w-20 lg:w-20",
             )}
           >
             <SkeletonIcon className={cn("size-12 text-gray-200", small && "size-12")} />
