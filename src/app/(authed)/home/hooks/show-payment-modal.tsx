@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useIsClient, useMediaQuery } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { jibril } from "@/utils/fonts";
 
 const ShowPaymentModal = () => {
@@ -20,13 +20,17 @@ const ShowPaymentModal = () => {
   const isClient = useIsClient();
 
   const [open, setOpen] = useState(false);
+  const [amount, setAmount] = useState(0);
 
   useEffect(() => {
     if (!isClient) return;
 
     const payment = searchParams.get("payment");
+    const _amount = searchParams.get("amount");
 
     if (!payment) return;
+
+    if (_amount) setAmount(parseInt(_amount));
 
     if (payment === "success") setOpen(true);
     else if (payment === "cancel") toast.error("Payment cancelled");
@@ -44,41 +48,39 @@ const ShowPaymentModal = () => {
       }}
     >
       <DialogContent
-        className="z-[100] flex flex-col bg-[#1D1D1C] p-4 max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:p-8"
+        className="flex flex-col gap-4 bg-black p-4 shadow-none outline-none max-lg:inset-0 max-lg:size-full max-lg:max-w-full max-lg:translate-x-0 max-lg:translate-y-0 max-lg:overflow-y-auto max-lg:rounded-none max-lg:pt-20 max-lg:data-[state=closed]:duration-500 max-lg:data-[state=open]:duration-500 lg:justify-center lg:gap-6 lg:bg-transparent lg:p-0"
         fromBottom={isMobileTablet}
       >
-        <div className="flex flex-col gap-4">
-          <div className="flex justify-end lg:hidden">
-            <DialogClose>
-              <AiOutlineClose />
-            </DialogClose>
-          </div>
-          <div className="relative mt-44 flex w-96 flex-col items-center justify-center gap-2 text-xl">
-            <Image
-              src="/images/payment-modal-animation.png"
-              alt="reward animation"
-              width={316}
-              height={563}
-              className="absolute bottom-[-80%] right-[10%] z-[-5] h-[563px] w-[316px]"
-            />
+        <div className="pointer-events-none absolute -top-10 flex w-full justify-end max-lg:hidden">
+          <DialogClose className="pointer-events-auto">
+            <AiOutlineClose size={20} />
+          </DialogClose>
+        </div>
+        <div className="relative flex flex-col items-center justify-between gap-2 rounded-lg p-3 max-lg:h-full lg:gap-9 lg:bg-dark-900 lg:p-6">
+          <Image
+            src="/images/payment-modal-animation.png"
+            alt="reward animation"
+            width={316}
+            height={563}
+            className="pointer-events-none absolute bottom-0 h-[563px] w-[316px] lg:bottom-8"
+          />
+          <div className="relative mt-44 flex w-96 max-w-full flex-col items-center justify-end gap-2 text-xl max-lg:h-full">
             You have purchased
             <p
-              className="mt-1 bg-gradient-to-r from-[#FBBC05] from-5% via-[#977000] via-70% to-[#473500] to-95% bg-clip-text text-lg uppercase text-transparent lg:text-5xl"
+              className="mt-1 bg-gradient-to-r from-[#FBBC05] from-5% via-[#977000] via-70% to-[#473500] to-95% bg-clip-text text-5xl uppercase text-transparent"
               style={jibril.style}
             >
-              100
+              {amount}
             </p>
             Tokens
           </div>
-        </div>
 
-        <DialogFooter>
           <DialogClose>
             <Button className="whitespace-nowrap px-8 py-3 uppercase max-lg:w-52">
               START PLAYING
             </Button>
           </DialogClose>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );
