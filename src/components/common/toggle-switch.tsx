@@ -45,7 +45,7 @@ const ToggleSwitch = ({ on, setOn, items }: IToggleSwitchProps) => {
           layout
           transition={{
             type: "spring",
-            stiffness: 200,
+            stiffness: 150,
             damping: 20,
           }}
         />
