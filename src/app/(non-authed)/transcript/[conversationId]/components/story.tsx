@@ -12,7 +12,9 @@ const Story = ({ story, transcripts }: { story: ITranscriptStory; transcripts: I
       <div className="flex flex-col gap-6 max-lg:px-4">
         <div className="flex flex-col gap-1">
           <p className="text-lg font-bold lg:text-2xl">{story.title}</p>
-          <p className="font-light leading-4 lg:leading-5">{story.storyChunk}</p>
+          <p className="font-light leading-4 lg:leading-5" style={{ whiteSpace: "pre-wrap" }}>
+            {story.storyChunk}
+          </p>
         </div>
       </div>
 

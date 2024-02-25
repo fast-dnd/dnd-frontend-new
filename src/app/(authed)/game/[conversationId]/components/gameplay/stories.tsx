@@ -82,7 +82,7 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
                     <StyledAudio audio={roomData.generatedAudio[i]} />
                   </div>
                 )}
-                {story}
+                <p style={{ whiteSpace: "pre-line" }}>{story}</p>
               </div>
             </div>
           </div>

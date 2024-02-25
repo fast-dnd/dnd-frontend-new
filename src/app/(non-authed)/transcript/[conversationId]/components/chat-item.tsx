@@ -54,7 +54,7 @@ const ChatItem = ({ player, playerAsking, text, dice }: IChatItemProps) => {
             _player ? "bg-white" : "bg-primary",
           )}
         />
-        {text}
+        <div style={{ whiteSpace: "pre-wrap" }}>{text}</div>
         {dice && (
           <div className="flex items-center gap-1 font-medium text-primary">
             <FaDice className="min-h-[14px] min-w-[22px] fill-primary" />
