@@ -40,6 +40,7 @@ const Game = ({ params }: { params: { conversationId: string } }) => {
         <MobileNavbar className="fixed h-16 items-start" />
         <AnimationEffects />
         <MobileStory conversationId={conversationId} />
+        <RecommendedAdventures conversationId={conversationId} />
         <MobileControls conversationId={conversationId} />
       </div>
     </>
