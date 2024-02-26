@@ -71,7 +71,7 @@ const AdventureClaim = React.forwardRef<HTMLDivElement, { adventure: IDungeon }>
           </div>
         </div>
         <button
-          className="pointer-events-none rounded-lg bg-white px-6 py-3 font-semibold text-black transition-all duration-200 hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-lg bg-white px-6 py-3 font-semibold text-black transition-all duration-200 hover:opacity-75 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
           onClick={onWithdrawAdventureCurrency}
           disabled={adventureBalance === 0}
         >

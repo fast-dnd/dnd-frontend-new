@@ -8,8 +8,6 @@ import useCopy from "@/hooks/helpers/use-copy";
 import { IBaseDungeon } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
-import ClaimRewardModalWeb3 from "@/app/(authed)/profile/components/claim-reward-modal-web3";
-
 import { Tooltip } from "../ui/tooltip";
 import AddToFavorites from "./add-to-favorites";
 import DeleteModal from "./delete-modal";
@@ -151,7 +149,6 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
                   </p>
                 </div>
               </Tooltip>
-              <ClaimRewardModalWeb3 dungeon={dungeon} isOwned={isOwned} />
             </div>
           </div>
         </div>
