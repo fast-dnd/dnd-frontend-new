@@ -49,7 +49,7 @@ const ShowPaymentModal = () => {
       }}
     >
       <DialogContent
-        className="flex flex-col gap-4 bg-black p-4 shadow-none outline-none max-lg:inset-0 max-lg:size-full max-lg:max-w-full max-lg:translate-x-0 max-lg:translate-y-0 max-lg:overflow-y-auto max-lg:rounded-none max-lg:pt-20 max-lg:data-[state=closed]:duration-500 max-lg:data-[state=open]:duration-500 lg:justify-center lg:gap-6 lg:bg-transparent lg:p-0"
+        className="flex flex-col gap-4 bg-black p-0 shadow-none outline-none max-lg:inset-0 max-lg:size-full max-lg:max-w-full max-lg:translate-x-0 max-lg:translate-y-0 max-lg:overflow-y-auto max-lg:rounded-none max-lg:pt-20 max-lg:data-[state=closed]:duration-500 max-lg:data-[state=open]:duration-500 lg:justify-center lg:gap-6 lg:bg-transparent"
         fromBottom={isMobileTablet}
       >
         <div className="pointer-events-none absolute -top-10 flex w-full justify-end max-lg:hidden">
@@ -58,7 +58,7 @@ const ShowPaymentModal = () => {
           </DialogClose>
         </div>
         <div className="relative flex flex-col items-center justify-between gap-2 rounded-lg p-3 max-lg:h-full lg:gap-9 lg:bg-dark-900 lg:p-6">
-          <div className="pointer-events-none">
+          <div className="pointer-events-none absolute bottom-0 h-[150%] w-full ">
             <Lottie
               options={{
                 loop: true,
@@ -68,12 +68,10 @@ const ShowPaymentModal = () => {
                   preserveAspectRatio: "xMidYMid slice",
                 },
               }}
-              height={316}
-              width={563}
             />
           </div>
 
-          <div className="relative flex w-96 max-w-full flex-col items-center justify-end gap-2 text-xl max-lg:h-full">
+          <div className="relative z-10 mt-80 flex w-[512px] max-w-full flex-col items-center justify-end gap-2 text-xl max-lg:h-full">
             You have purchased
             <p
               className="mt-1 bg-gradient-to-r from-[#FBBC05] from-5% via-[#977000] via-70% to-[#473500] to-95% bg-clip-text text-5xl uppercase text-transparent"
@@ -84,7 +82,7 @@ const ShowPaymentModal = () => {
             Tokens
           </div>
 
-          <DialogClose>
+          <DialogClose className="z-10 max-lg:pb-4">
             <Button className="whitespace-nowrap px-8 py-3 uppercase max-lg:w-52">
               START PLAYING
             </Button>
