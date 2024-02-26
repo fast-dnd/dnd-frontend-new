@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { AiOutlineClose } from "react-icons/ai";
+import Lottie from "react-lottie";
 import { toast } from "sonner";
 import { useIsClient, useMediaQuery } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { jibril } from "@/utils/fonts";
+import animationData from "@/utils/lotties/coin-animation.json";
 
 const ShowPaymentModal = () => {
   const isMobileTablet = useMediaQuery("(max-width: 1024px)");
@@ -57,14 +58,22 @@ const ShowPaymentModal = () => {
           </DialogClose>
         </div>
         <div className="relative flex flex-col items-center justify-between gap-2 rounded-lg p-3 max-lg:h-full lg:gap-9 lg:bg-dark-900 lg:p-6">
-          <Image
-            src="/images/payment-modal-animation.png"
-            alt="reward animation"
-            width={316}
-            height={563}
-            className="pointer-events-none absolute bottom-0 h-[563px] w-[316px] lg:bottom-8"
-          />
-          <div className="relative mt-44 flex w-96 max-w-full flex-col items-center justify-end gap-2 text-xl max-lg:h-full">
+          <div className="pointer-events-none">
+            <Lottie
+              options={{
+                loop: true,
+                autoplay: true,
+                animationData,
+                rendererSettings: {
+                  preserveAspectRatio: "xMidYMid slice",
+                },
+              }}
+              height={316}
+              width={563}
+            />
+          </div>
+
+          <div className="relative flex w-96 max-w-full flex-col items-center justify-end gap-2 text-xl max-lg:h-full">
             You have purchased
             <p
               className="mt-1 bg-gradient-to-r from-[#FBBC05] from-5% via-[#977000] via-70% to-[#473500] to-95% bg-clip-text text-5xl uppercase text-transparent"
