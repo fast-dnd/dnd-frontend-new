@@ -6,7 +6,7 @@ import { AiOutlineLeft } from "react-icons/ai";
 const MobileWIP = () => {
   return (
     <div className="absolute inset-0 z-10 flex w-full flex-col items-center justify-between overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 z-[-5] h-full w-full bg-gradient-to-b from-black via-black/10 via-35% to-black">
+      <div className="pointer-events-none absolute inset-0 z-[-5] size-full bg-gradient-to-b from-black via-black/10 via-35% to-black">
         <Image
           src={"/images/bg-mobile-wip.png"}
           alt={""}

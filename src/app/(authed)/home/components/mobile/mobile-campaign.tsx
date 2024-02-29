@@ -101,7 +101,7 @@ export const MobileCampaign = React.forwardRef<HTMLDivElement, IMobileCampaignPr
                 alt={campaign.createdBy?.username || ""}
                 width={20}
                 height={20}
-                className="h-5 w-5 shrink-0 rounded-full"
+                className="size-5 shrink-0 rounded-full"
               />
               <span className="truncate text-sm font-light">{campaign.createdBy?.username}</span>
             </div>

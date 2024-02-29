@@ -36,8 +36,8 @@ const TabToggle = ({ switching = false, setSwitching }: ITabToggleProps) => {
               }
             }}
           >
-            {tab === "adventures" && <HelmetIcon className="h-4 w-4" />}
-            {tab === "campaigns" && <SwordsIcon className="h-4 w-4 fill-white" />}
+            {tab === "adventures" && <HelmetIcon className="size-4" />}
+            {tab === "campaigns" && <SwordsIcon className="size-4 fill-white" />}
 
             {tab}
           </div>
@@ -45,7 +45,7 @@ const TabToggle = ({ switching = false, setSwitching }: ITabToggleProps) => {
 
         <div
           className={cn(
-            "absolute inset-0 flex h-full w-full items-center justify-start p-0.5",
+            "absolute inset-0 flex size-full items-center justify-start p-0.5",
             activeBaseTab === "campaigns" && "justify-end",
           )}
         >

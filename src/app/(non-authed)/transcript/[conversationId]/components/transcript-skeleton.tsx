@@ -80,7 +80,7 @@ const TranscriptSkeleton = () => {
             <p className="hidden font-medium lg:block">Players</p>
             <div className="flex items-center -space-x-2">
               {Array.from({ length: 3 }).map((_, index) => (
-                <div key={index} className="h-8 w-8 rounded-full bg-gray-600" />
+                <div key={index} className="size-8 rounded-full bg-gray-600" />
               ))}
             </div>
             <hr className="h-7 w-1 border-l border-white/20" />

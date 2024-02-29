@@ -36,7 +36,7 @@ const Slider = React.forwardRef<
         <SliderPrimitive.Range className="absolute h-full bg-white lg:bg-primary" />
       </SliderPrimitive.Track>
       <SliderPrimitive.Thumb
-        className="block h-3 w-3 rounded-full bg-white ring-offset-white transition-colors focus-visible:bg-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 lg:h-4 lg:w-4 lg:focus-visible:bg-primary"
+        className="block size-3 rounded-full bg-white ring-offset-white transition-colors focus-visible:bg-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 lg:size-4 lg:focus-visible:bg-primary"
         aria-label={props["aria-label"]}
       />
     </SliderPrimitive.Root>

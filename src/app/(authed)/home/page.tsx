@@ -13,7 +13,7 @@ import CreateRoom from "./components/desktop/create-room";
 import JoinRoom from "./components/desktop/join-room";
 import MobileCreateRoom from "./components/mobile/mobile-create-room";
 import MobileJoinRoom from "./components/mobile/mobile-join-room";
-import useShowPaymentToast from "./hooks/use-show-payment-toast";
+import ShowPaymentModal from "./hooks/show-payment-modal";
 
 const Page = () => {
   const { isDefault } = useCommunity();
@@ -45,8 +45,6 @@ const Page = () => {
       }
     : undefined;
   const { loggedIn } = useAuth();
-
-  useShowPaymentToast();
 
   return (
     <>
@@ -83,6 +81,7 @@ const Page = () => {
           closingCampaignId={closingCampaignId}
         />
       </div>
+      <ShowPaymentModal />
     </>
   );
 };

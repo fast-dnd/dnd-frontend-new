@@ -50,7 +50,7 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMovePr
     >
       <div
         className={cn(
-          "pointer-events-none absolute inset-0 z-20 h-full w-full bg-black opacity-0 transition-all duration-200",
+          "pointer-events-none absolute inset-0 z-20 size-full bg-black opacity-0 transition-all duration-200",
           !store.canPlay && "opacity-60",
         )}
       />
@@ -148,7 +148,7 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMovePr
                   </p>
                 ) : roomData.generateRandomWords ? (
                   wordChallengeForPlayer && (
-                    <div className="flex h-full max-h-[200px] w-full flex-col overflow-y-auto">
+                    <div className="flex size-full max-h-[200px] flex-col overflow-y-auto">
                       <div className="inline">
                         {wordChallengeForPlayer.words.map((word, index) => (
                           <WordChallengeEntry

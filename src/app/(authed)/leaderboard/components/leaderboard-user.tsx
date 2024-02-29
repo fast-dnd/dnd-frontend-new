@@ -40,7 +40,7 @@ const LeaderboardUserCard = React.forwardRef<
           width={36}
           height={36}
           alt={`player-${leaderboardUser.accountId}-avatar`}
-          className="h-[36px] w-[36px] rounded-full border-2 border-white/30"
+          className="size-[36px] rounded-full border-2 border-white/30"
         />
         <p className={cn("font-light", !top3 && "-ml-2")}>
           {leaderboardUser.walletAddress

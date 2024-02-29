@@ -2,15 +2,15 @@ import SkeletonIcon from "@/components/icons/skeleton-icon";
 
 const GameplaySkeleton = () => {
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex size-full flex-col">
       <div className="flex w-full items-center justify-between gap-8 rounded-t-md bg-dark-900 px-12 py-6">
         <div className="flex min-w-0 flex-1 animate-pulse items-center gap-4">
           <div className="h-8 w-1/3 rounded-lg bg-gray-700" />
         </div>
 
         <div className="flex shrink-0 animate-pulse items-center gap-4">
-          <div className="h-6 w-6 rounded-xl bg-gray-700" />
-          <div className="h-6 w-6 rounded-xl bg-gray-700" />
+          <div className="size-6 rounded-xl bg-gray-700" />
+          <div className="size-6 rounded-xl bg-gray-700" />
           <div className="h-12 w-48 rounded-lg bg-gray-700" />
         </div>
       </div>
@@ -19,8 +19,8 @@ const GameplaySkeleton = () => {
         <div className="flex w-full animate-pulse flex-col gap-8">
           <div className="h-8 w-[480px] shrink-0 rounded-lg bg-gray-600" />
           <div className="flex gap-6">
-            <div className="flex h-72 w-72 shrink-0 items-center justify-center rounded-lg bg-gray-600">
-              <SkeletonIcon className="h-24 w-24 text-gray-200" />
+            <div className="flex size-72 shrink-0 items-center justify-center rounded-lg bg-gray-600">
+              <SkeletonIcon className="size-24 text-gray-200" />
             </div>
             <div className="flex w-full flex-col gap-5">
               <div className="my-3 ml-6 h-6 w-72 rounded-lg bg-gray-600" />
@@ -54,8 +54,8 @@ const GameplaySkeleton = () => {
 
           <div className="h-8 w-[480px] shrink-0 rounded-lg bg-gray-600" />
           <div className="flex gap-6">
-            <div className="flex h-72 w-72 shrink-0 items-center justify-center rounded-lg bg-gray-600">
-              <SkeletonIcon className="h-24 w-24 text-gray-200" />
+            <div className="flex size-72 shrink-0 items-center justify-center rounded-lg bg-gray-600">
+              <SkeletonIcon className="size-24 text-gray-200" />
             </div>
             <div className="flex w-full flex-col gap-5">
               <div className="my-3 ml-6 h-6 w-72 rounded-lg bg-gray-600" />

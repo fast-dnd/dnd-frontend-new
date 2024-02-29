@@ -55,10 +55,10 @@ const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
     >
       <DialogContent
         alwaysOnTop
-        className="flex h-full w-full flex-col p-4 max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:max-h-[800px] lg:w-fit lg:max-w-[550px]"
+        className="flex size-full flex-col p-4 max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:max-h-[800px] lg:w-fit lg:max-w-[550px]"
       >
-        <div className="pointer-events-none absolute inset-0 h-full w-full -translate-y-1/3 bg-radialGradient lg:hidden">
-          <div className="h-full w-full blur-xl" />
+        <div className="pointer-events-none absolute inset-0 size-full -translate-y-1/3 bg-radialGradient lg:hidden">
+          <div className="size-full blur-xl" />
         </div>
         <DialogHeader>
           <ThemeTitle title={result === "WIN" ? "victory" : "defeat"} blue={result === "WIN"} />

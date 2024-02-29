@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import SkeletonIcon from "@/components/icons/skeleton-icon";
 import useAutoScrollToBottom from "@/hooks/helpers/use-auto-scroll-to-bottom";
 import { IDungeonDetail } from "@/types/dungeon";
@@ -35,8 +33,6 @@ interface IStoryListProps {
 }
 
 const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
-  const [openedMission, setOpenedMission] = useState(-1);
-
   return (
     <>
       {stories.map((story, i) => {
@@ -45,10 +41,10 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
         return (
           <div
             key={i}
-            className="flex w-full flex-col gap-4 rounded-md bg-black p-4 lg:gap-8 lg:p-6"
+            className="flex w-full flex-col gap-4 rounded-md bg-primary-900 p-4 lg:gap-8 lg:p-6"
           >
             <div className="flex w-full items-center gap-1.5 lg:gap-3">
-              <div className="h-2 w-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
+              <div className="size-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
               <p
                 className="mt-0.5 line-clamp-2 max-w-full text-2xl font-semibold uppercase tracking-[0.2em] max-lg:hidden"
                 style={jibril.style}
@@ -64,17 +60,17 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
                 </span>
                 <span>&zwnj; {dungeonData.locations[Math.floor(i / 2)]?.name}</span>
               </p>
-              <div className="h-2 w-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
+              <div className="size-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
             </div>
 
             <div className="w-full">
               {roomData.generateImages && i % 2 === 0 && (
-                <div className="mb-4 flex aspect-video w-full shrink-0 justify-center lg:float-left lg:mr-6 lg:inline-block lg:aspect-square lg:h-72 lg:w-72">
+                <div className="mb-4 flex aspect-video w-full shrink-0 justify-center lg:float-left lg:mr-6 lg:inline-block lg:aspect-square lg:size-72">
                   {generatedImage && generatedImage.length > 0 ? (
                     <ImageModal image={generatedImage} />
                   ) : (
-                    <div className="flex h-full w-full animate-pulse items-center justify-center rounded bg-gray-600">
-                      <SkeletonIcon className="h-24 w-24 text-gray-200" />
+                    <div className="flex size-full animate-pulse items-center justify-center rounded bg-gray-600">
+                      <SkeletonIcon className="size-24 text-gray-200" />
                     </div>
                   )}
                 </div>
@@ -86,7 +82,7 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
                     <StyledAudio audio={roomData.generatedAudio[i]} />
                   </div>
                 )}
-                {story}
+                <p className="whitespace-pre-wrap">{story}</p>
               </div>
             </div>
           </div>

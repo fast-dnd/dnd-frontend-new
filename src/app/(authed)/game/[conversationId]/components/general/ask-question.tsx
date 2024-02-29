@@ -45,7 +45,7 @@ const AskQuestion = ({ conversationId, canAsk, asking, setAsking }: IAskQuestion
         isLoading={asking}
         aria-label="Send"
       >
-        {!asking && <IoMdSend className="h-10 w-10" />}
+        {!asking && <IoMdSend className="size-10" />}
       </Button>
     </form>
   );

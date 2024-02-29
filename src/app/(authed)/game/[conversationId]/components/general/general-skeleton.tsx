@@ -8,10 +8,10 @@ const GeneralSkeleton = () => {
       className="flex h-full flex-col overflow-y-hidden p-5 lg:p-8"
       wrapperClassName="h-full min-h-0"
     >
-      <div className="flex h-full w-full animate-pulse flex-col gap-4 lg:gap-8">
+      <div className="flex size-full animate-pulse flex-col gap-4 lg:gap-8">
         <div className="flex gap-4 lg:gap-6">
-          <div className="flex h-[90px] w-[90px] shrink-0 items-center justify-center rounded-md bg-gray-600">
-            <SkeletonIcon className="h-12 w-12 text-gray-200" />
+          <div className="flex size-[90px] shrink-0 items-center justify-center rounded-md bg-gray-600">
+            <SkeletonIcon className="size-12 text-gray-200" />
           </div>
           <div className="flex w-full flex-col justify-between lg:gap-1.5">
             <div className="-mt-1 h-5 w-36 rounded-lg bg-gray-600" />

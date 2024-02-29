@@ -79,12 +79,12 @@ const LeaderboardList = ({
         {Array.from({ length: 10 }).map((_, i) => (
           <div key={i} className="flex w-full justify-between bg-black/20 p-2">
             <div className="flex items-center gap-4">
-              <div className="h-2 w-2 rounded-lg bg-gray-600" />
+              <div className="size-2 rounded-lg bg-gray-600" />
 
-              <div className="h-9 w-9 rounded-full bg-gray-600" />
+              <div className="size-9 rounded-full bg-gray-600" />
               <div className="h-5 w-32 rounded-full bg-gray-600" />
             </div>
-            <div className="h-5 w-5 rounded-lg bg-gray-600" />
+            <div className="size-5 rounded-lg bg-gray-600" />
           </div>
         ))}
       </div>
@@ -153,7 +153,7 @@ const LeaderboardList = ({
         {content}
         {isFetchingNextPage && (
           <div className="flex h-10 justify-center">
-            <Spinner className="m-0 h-8 w-8" />
+            <Spinner className="m-0 size-8" />
           </div>
         )}
       </div>

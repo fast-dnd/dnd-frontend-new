@@ -50,7 +50,7 @@ const startGame = async (data: { conversationId: string; transaction?: string })
 };
 
 const editChampion = async (data: IEditChampion) => {
-  return await roomApi.put("player/champion/edit", data);
+  return await roomApi.put("player/champion/edit", data).then((res) => res.data);
 };
 
 const roomService = {

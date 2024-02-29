@@ -27,7 +27,7 @@ const JoinEditInfo = ({ conversationId }: { conversationId: string }) => {
   return (
     <Box
       title=""
-      className="mb-4 flex h-full min-h-0 w-full flex-1 flex-col justify-between gap-5 overflow-y-auto rounded-t-md p-8 text-sm lg:mb-0 lg:gap-8"
+      className="mb-4 flex size-full min-h-0 flex-1 flex-col justify-between gap-5 overflow-y-auto rounded-t-md p-8 text-sm lg:mb-0 lg:gap-8"
       wrapperClassName="h-full w-[27%]"
       titleClassName="hidden"
     >

@@ -27,11 +27,9 @@ const ImageAudioToggle = ({ generate, setGenerate, disabled, type }: ImageAudioT
         >
           {generate ? "ON" : "OFF"}
         </div>
-        <div className={cn("absolute top-0 flex h-full w-full items-center justify-start py-0.5")}>
+        <div className={cn("absolute top-0 flex size-full items-center justify-start py-0.5")}>
           <motion.div
-            className={cn(
-              "absolute flex h-[35px] w-[35px] items-center justify-center rounded-full",
-            )}
+            className={cn("absolute flex size-[35px] items-center justify-center rounded-full")}
             animate={{
               left: generate ? "auto" : "2px",
               right: generate ? "2px" : "auto",
@@ -42,9 +40,9 @@ const ImageAudioToggle = ({ generate, setGenerate, disabled, type }: ImageAudioT
             }}
           >
             {type === "Image" ? (
-              <ImageIcon className="h-5 w-5" variant="Bold" />
+              <ImageIcon className="size-5" variant="Bold" />
             ) : (
-              <Headphone className="h-5 w-5" variant="Bold" />
+              <Headphone className="size-5" variant="Bold" />
             )}
           </motion.div>
         </div>

@@ -37,7 +37,7 @@ const CookieBanner = () => {
     >
       <div className="flex min-w-fit flex-col justify-between gap-4 lg:w-2/3 lg:flex-row lg:gap-20">
         <div className="flex items-center justify-center gap-8">
-          <div className="h-2 w-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
+          <div className="size-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
           <div className="max-lg:text-center max-lg:text-xs lg:tracking-wide">
             <p className="font-bold">We use cookies to enhance your browsing experience.</p>
             <br />
@@ -60,7 +60,7 @@ const CookieBanner = () => {
               Decline <span className="max-lg:hidden">Cookies</span>
             </button>
           </div>
-          <div className="h-2 w-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
+          <div className="size-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
         </div>
       </div>
     </div>

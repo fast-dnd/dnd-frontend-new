@@ -4,7 +4,7 @@ import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/style-utils";
 
 const tooltipArrowVariants = cva(
-  "absolute hidden h-5 w-5 rotate-45 border border-l-0 border-white/20 bg-black shadow-sm shadow-white/20 group-hover:inline-block",
+  "absolute hidden size-5 rotate-45 border border-l-0 border-white/20 bg-black shadow-sm shadow-white/20 group-hover:inline-block",
   {
     variants: {
       position: {

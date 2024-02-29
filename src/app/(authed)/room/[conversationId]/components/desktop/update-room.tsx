@@ -160,7 +160,7 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
           >
             {duration.value === dungeonData.recommendedResponseDetailsDepth && (
               <div className="absolute right-1 top-1">
-                <AiFillStar className="h-3 w-3 text-primary" />
+                <AiFillStar className="size-3 text-primary" />
               </div>
             )}
             {duration.icon({})}

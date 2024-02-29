@@ -56,7 +56,7 @@ const MobileSwiper = ({
   };
 
   return (
-    <motion.div className="h-full w-full">
+    <motion.div className="size-full">
       <div className="relative h-full">
         <motion.ul
           ref={containerRef}

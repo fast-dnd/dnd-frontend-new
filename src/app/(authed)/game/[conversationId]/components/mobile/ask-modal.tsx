@@ -37,7 +37,7 @@ const AskModal = ({ conversationId, open, onClose, onOpen }: IAskModalProps) => 
         onClick={onOpen}
         className="flex items-center gap-2 text-xs font-medium uppercase text-primary"
       >
-        <Game className="h-5 w-5" /> <p className="mt-0.5">ask bob</p>
+        <Game className="size-5" /> <p className="mt-0.5">ask bob</p>
       </DialogTrigger>
       <DialogContent
         fromBottom
@@ -45,10 +45,10 @@ const AskModal = ({ conversationId, open, onClose, onOpen }: IAskModalProps) => 
       >
         <div className="pointer-events-none absolute inset-0 z-10 flex h-16 w-full items-start justify-between rounded-t-lg border-t border-white/20 bg-gradient-to-t from-transparent to-black to-60% px-4 pt-2">
           <div className="flex items-center gap-2 text-xs font-medium uppercase">
-            <Game className="h-5 w-5" /> <p className="mt-0.5">ask bob</p>
+            <Game className="size-5" /> <p className="mt-0.5">ask bob</p>
           </div>
           <button autoFocus onClick={onClose}>
-            <AiOutlineClose className="pointer-events-auto h-4 w-4" />
+            <AiOutlineClose className="pointer-events-auto size-4" />
           </button>
         </div>
         <MoveQuestionHistory

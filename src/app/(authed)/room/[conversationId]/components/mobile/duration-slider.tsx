@@ -83,8 +83,8 @@ const DurationSlider = ({ disabled, duration, setDuration }: IDurationSliderProp
           onClick={() => onSelectDuration(index)}
         >
           {duration === element.title && (
-            <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-br-md bg-primary">
-              <GiCheckMark className="h-6 w-6" />
+            <div className="absolute left-0 top-0 flex size-8 items-center justify-center rounded-br-md bg-primary">
+              <GiCheckMark className="size-6" />
             </div>
           )}
           <element.icon

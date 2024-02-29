@@ -7,7 +7,7 @@ import MobileNavbar from "../navbar/mobile-navbar";
 
 const BoxSkeleton = ({ title }: { title: string }) => {
   return (
-    <div className="h-full w-full lg:mt-0">
+    <div className="size-full lg:mt-0">
       <MobileNavbar />
       <div className="flex h-full justify-center overflow-y-hidden pt-8 lg:p-0">
         <div className="flex flex-col gap-8">

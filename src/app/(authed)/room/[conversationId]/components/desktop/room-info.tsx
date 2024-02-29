@@ -59,6 +59,7 @@ const RoomInfo = ({ conversationId }: { conversationId: string }) => {
       <GoBackButton className="mb-0" href="/home" />
       <div className="flex min-h-0 w-full flex-1 flex-col gap-5 lg:gap-8 lg:overflow-y-auto">
         <DungeonDetail
+          conversationId={conversationId}
           dungeonDetailId={roomData.dungeonId}
           selectedChampion={selectedChampion}
           takenChampions={takenChampions}

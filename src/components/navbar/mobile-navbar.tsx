@@ -15,6 +15,7 @@ import useGetTokenAccountBalance from "@/hooks/helpers/use-get-token-account-bal
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { cn } from "@/utils/style-utils";
 
+import ClaimRewardModal from "../common/claim-reward-modal";
 import QuillIcon from "../icons/quill-icon";
 import SwordsIcon from "../icons/swords-icon";
 import { Button } from "../ui/button";
@@ -32,11 +33,9 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const { data: currentCommunity } = useGetCurrentCommunity();
   const [shopOpen, setShopOpen] = useState(false);
 
-  const rewardPoolBalance = useGetTokenAccountBalance(
-    currentCommunity?.rewardPool ?? "",
-  );
+  const rewardPoolBalance = useGetTokenAccountBalance(currentCommunity?.rewardPool ?? "");
 
-  const { user } = useAuth();
+  const { user, loggedIn } = useAuth();
 
   const pathname = usePathname();
 
@@ -65,7 +64,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
         <ShopModal open={shopOpen} setOpen={setShopOpen} />
         <Sheet>
           <SheetTrigger className="pointer-events-auto">
-            <IoMdMenu className="h-8 w-8" />
+            <IoMdMenu className="size-8" />
           </SheetTrigger>
           <SheetContent
             className={cn(
@@ -85,7 +84,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                         href="/communities"
                         variant={pathname === "/communities" ? "primary" : "sidebar"}
                       >
-                        <FaUsers className="h-5 w-5 shrink-0 fill-white" />
+                        <FaUsers className="size-5 shrink-0 fill-white" />
                         <p className="flex-1 text-center">Communities</p>
                       </Button>
                     )}
@@ -96,16 +95,17 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                       variant={pathname === "/home" ? "primary" : "sidebar"}
                       disabled={!communityId}
                     >
-                      <SwordsIcon className="h-5 w-5 shrink-0 fill-white" />
+                      <SwordsIcon className="size-5 shrink-0 fill-white" />
                       <p className="flex-1 text-center">play</p>
                     </Button>
+                    {loggedIn && !!communityId && <ClaimRewardModal />}
                     <Button
                       className="gap-4 py-4"
                       href="/leaderboard"
                       variant={pathname === "/leaderboard" ? "primary" : "sidebar"}
                       disabled={!communityId}
                     >
-                      <PiTrophyFill className="h-5 w-5 shrink-0" />
+                      <PiTrophyFill className="size-5 shrink-0" />
                       <p className="flex-1 text-center">Leaderboard</p>
                     </Button>
                     <Button
@@ -114,7 +114,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                       href="/profile?activeTab=GAME HISTORY"
                       disabled={!communityId}
                     >
-                      <QuillIcon className="h-5 w-5 shrink-0 fill-white" fillOpacity={1} />
+                      <QuillIcon className="size-5 shrink-0 fill-white" fillOpacity={1} />
                       <p className="flex-1 text-center">GAME HISTORY</p>
                     </Button>
                   </>
@@ -134,7 +134,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                   href="https://discord.com/invite/36chp8DnzC"
                   target="_blank"
                 >
-                  <FaDiscord className="h-5 w-5 shrink-0" />
+                  <FaDiscord className="size-5 shrink-0" />
                   <p className="flex-1 text-center">JOIN US</p>
                 </Button>
               </div>

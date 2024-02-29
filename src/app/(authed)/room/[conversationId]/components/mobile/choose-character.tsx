@@ -6,8 +6,9 @@ import { AiFillHeart } from "react-icons/ai";
 import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
 import { HiSparkles } from "react-icons/hi";
-import { useWindowSize } from "usehooks-ts";
+import { useReadLocalStorage, useWindowSize } from "usehooks-ts";
 
+import CreateHeroModal from "@/components/common/dungeon-detail/components/create-hero-modal";
 import MobileSwiper from "@/components/common/mobile-swiper";
 import HelmetIcon from "@/components/icons/helmet-icon";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
 interface IChooseCharacterProps {
+  conversationId: string;
   dungeonData?: IDungeonDetail | undefined;
   selectedChampion: IChampion | null | undefined;
   currentIndex: number;
@@ -26,6 +28,7 @@ interface IChooseCharacterProps {
 }
 
 const ChooseCharacter = ({
+  conversationId,
   dungeonData,
   selectedChampion,
   currentIndex,
@@ -37,6 +40,8 @@ const ChooseCharacter = ({
   const { width } = useWindowSize();
   const itemWidth = width - 52;
 
+  const customChampion = useReadLocalStorage<IChampion | null>("customChampion");
+
   if (!dungeonData) return <div></div>;
 
   return (
@@ -46,7 +51,7 @@ const ChooseCharacter = ({
           <p className="uppercase">Choose your Character</p>
 
           <MobileSwiper
-            arrayLength={dungeonData.champions.length}
+            arrayLength={dungeonData.champions.length + 1}
             itemWidth={itemWidth}
             currentIndex={currentIndex}
             setCurrentIndex={setCurrentIndex}
@@ -69,6 +74,15 @@ const ChooseCharacter = ({
                 </motion.li>
               );
             })}
+            <motion.li layout className="relative h-full shrink-0 select-none">
+              <CustomCharacterCard
+                conversationId={conversationId}
+                champion={customChampion}
+                currentIndex={currentIndex}
+                index={dungeonData.champions.length}
+                onChangeChampion={onChangeChampion}
+              />
+            </motion.li>
           </MobileSwiper>
         </div>
       )}
@@ -99,7 +113,7 @@ const CharacterCard = ({
 
   return (
     <div className="h-full w-[calc(100vw_-_3.25rem)] px-1.5">
-      <div className="flex h-full w-full flex-col justify-between rounded-md bg-black/80">
+      <div className="flex size-full flex-col justify-between rounded-md bg-black/80">
         <div className="p-4">
           <p className="text-lg font-bold">{champion?.name}</p>
           <p className="line-clamp-5 font-light">{champion?.description}</p>
@@ -124,7 +138,7 @@ const CharacterCard = ({
               width={26}
               height={26}
               alt={`player-${taker.accountId}-avatar`}
-              className="h-[26px] w-[26px] rounded-full"
+              className="size-[26px] rounded-full"
             />
             TAKEN
           </div>
@@ -136,11 +150,91 @@ const CharacterCard = ({
             )}
             onClick={() => onChangeChampion?.(champion)}
           >
-            <HelmetIcon className="h-5 w-5" />
+            <HelmetIcon className="size-5" />
             SELECT THIS CHARACTER
           </Button>
         )}
       </div>
+    </div>
+  );
+};
+interface ICustomCharacterProps {
+  conversationId: string;
+  champion: IChampion | null;
+  index: number;
+  currentIndex: number;
+  onChangeChampion: (champion: IChampion | undefined) => void;
+}
+
+const CustomCharacterCard = ({
+  conversationId,
+  champion,
+  index,
+  currentIndex,
+  onChangeChampion,
+}: ICustomCharacterProps) => {
+  return (
+    <div className="h-full w-[calc(100vw_-_3.25rem)] px-1.5">
+      {!champion && (
+        <div className="flex size-full flex-col justify-between rounded-md bg-black/80">
+          <div className="flex flex-col p-4">
+            <div className="my-4 flex w-full justify-center">
+              <Image
+                src={"/images/custom-character.png"}
+                width={300}
+                height={162}
+                alt="characters"
+                className="max-w-full"
+              />
+            </div>
+            <p className="text-lg font-bold">Create Your Own Hero</p>
+            <p className="line-clamp-5 font-light">
+              Give your character distinctive traits and abilities to enhance the thrill and
+              challenge of your gaming experience. Transform your play with a character that&apos;s
+              truly your own.
+            </p>
+          </div>
+          <CreateHeroModal conversationId={conversationId} />
+        </div>
+      )}
+
+      {!!champion && (
+        <div className="relative flex size-full flex-col justify-between rounded-md bg-black/80">
+          <div className="absolute right-2 top-2 rounded-md bg-gold px-1.5 py-0.5 text-xs font-bold text-dark-900">
+            NEW
+          </div>
+          <div className="p-4">
+            <p className="text-lg font-bold">{champion?.name}</p>
+            <p className="line-clamp-5 font-light">{champion?.description}</p>
+            <div className="mt-4 flex flex-col gap-2">
+              {champion?.moveMapping &&
+                moveMappingWithIcons(champion.moveMapping).map((move, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    {move.icon}
+                    <div className="flex flex-col gap-1">
+                      <p className="font-semibold">{move.title}</p>
+                      <p className="line-clamp-1 font-light">{move.text}</p>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+          <div className="flex">
+            <CreateHeroModal conversationId={conversationId} />
+
+            <Button
+              className={cn(
+                "flex gap-1.5 rounded-none rounded-br-md",
+                index !== currentIndex && "pointer-events-none",
+              )}
+              onClick={() => onChangeChampion?.(champion)}
+            >
+              <HelmetIcon className="size-5 shrink-0" />
+              SELECT CUSTOM
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

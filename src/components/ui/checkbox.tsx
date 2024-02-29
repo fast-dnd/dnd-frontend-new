@@ -10,7 +10,7 @@ import { GiCancel } from "react-icons/gi";
 import { cn } from "@/utils/style-utils";
 
 export const checkboxVariants = cva(
-  "peer h-4 w-4 shrink-0 rounded-sm border-2 border-white/40 ring-gray-600 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-white data-[state=checked]:bg-transparent data-[state=checked]:text-white",
+  "peer size-4 shrink-0 rounded-sm border-2 border-white/40 ring-gray-600 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-white data-[state=checked]:bg-transparent data-[state=checked]:text-white",
 );
 
 export const checkboxContainerVariants = cva(

@@ -45,7 +45,7 @@ const MobileJoinRoom = ({ open, setOpen, show = true }: IMobileJoinRoomProps) =>
             </DialogTrigger>
             <DialogContent
               fromBottom
-              className="inset-0 flex h-full w-full max-w-full translate-x-0 translate-y-0 flex-col rounded-none bg-dark-900 p-4 data-[state=closed]:duration-500 data-[state=open]:duration-500"
+              className="inset-0 flex size-full max-w-full translate-x-0 translate-y-0 flex-col rounded-none bg-dark-900 p-4 data-[state=closed]:duration-500 data-[state=open]:duration-500"
             >
               <div className="flex flex-1 items-center">
                 <Input

@@ -43,20 +43,20 @@ const MyAccount = () => {
     <Box
       title="MY ACCOUNT"
       wrapperClassName="flex h-full w-[30%]"
-      className="flex h-full w-full flex-col gap-8 overflow-y-auto p-8"
+      className="flex size-full flex-col gap-8 overflow-y-auto p-8"
     >
       <div className="flex w-full flex-col gap-8">
         <div className="flex items-center gap-4">
-          <div className="h-[100px] w-[100px] shrink-0">
+          <div className="size-[100px] shrink-0">
             <Image
               src={account.imageUrl || "/images/default-avatar.png"}
               width={100}
               height={100}
               alt="avatar"
-              className="h-[100px] w-[100px] rounded-md"
+              className="size-[100px] rounded-md"
             />
           </div>
-          <div className="flex h-full w-full min-w-0 flex-col justify-between gap-2.5">
+          <div className="flex size-full min-w-0 flex-col justify-between gap-2.5">
             <div className="flex w-full flex-col gap-1">
               <p className="truncate text-xl font-bold uppercase">
                 {isDefault

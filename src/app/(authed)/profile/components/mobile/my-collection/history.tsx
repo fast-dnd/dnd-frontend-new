@@ -28,8 +28,8 @@ const History = () => {
         <div className={cn("flex flex-col gap-4 overflow-hidden")}>
           {Array.from({ length: 3 }, (_, i) => (
             <div key={i} className="flex gap-4 bg-transparent">
-              <div className="flex h-[100px] w-[100px] items-center justify-center rounded-md bg-gray-600">
-                <SkeletonIcon className="h-20 w-20 text-gray-200" />
+              <div className="flex size-[100px] items-center justify-center rounded-md bg-gray-600">
+                <SkeletonIcon className="size-20 text-gray-200" />
               </div>
               <div className="flex flex-col gap-4">
                 <div className="h-7 w-32 rounded-lg bg-gray-600" />
@@ -44,7 +44,7 @@ const History = () => {
 
   if (isError) {
     return (
-      <div className="flex h-full w-full items-center justify-center">
+      <div className="flex size-full items-center justify-center">
         <div className="text-5xl text-white">Something went wrong</div>
       </div>
     );
@@ -67,7 +67,7 @@ const History = () => {
 
       {isFetchingNextPage && (
         <div className="flex h-10 justify-center">
-          <Spinner className="m-0 h-8 w-8" />
+          <Spinner className="m-0 size-8" />
         </div>
       )}
     </div>

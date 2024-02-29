@@ -62,16 +62,16 @@ const MobileAdventureDetail = ({
               <div className="flex flex-col gap-2 px-4">
                 <div className="flex gap-6">
                   <div className="flex items-center gap-1">
-                    <div className="flex h-6 w-6 items-center justify-center rounded bg-black">
-                      <Game className="h-4 w-4" variant="Bold" color="#FF5A5A" />
+                    <div className="flex size-6 items-center justify-center rounded bg-black">
+                      <Game className="size-4" variant="Bold" color="#FF5A5A" />
                     </div>
                     <p className="rounded-md bg-dark-900/20 px-2 py-0.5 text-sm font-bold">
                       {adventure.maxPlayers}
                     </p>
                   </div>
                   <div className="flex items-center gap-1">
-                    <div className="flex h-6 w-6 items-center justify-center rounded bg-black">
-                      <Star1 className="h-4 w-4" variant="Bold" color="#FF5A5A" />
+                    <div className="flex size-6 items-center justify-center rounded bg-black">
+                      <Star1 className="size-4" variant="Bold" color="#FF5A5A" />
                     </div>
                     <p className="rounded-md bg-dark-900/20 px-2 py-0.5 text-sm font-bold">
                       {adventure.rating + " (" + adventure.numOfRatings + ")"}
@@ -149,7 +149,7 @@ const Champion = ({ champion }: { champion: IChampion }) => {
   return (
     <div className="rounded-md bg-black py-4">
       <motion.header className="flex gap-4 bg-black px-4">
-        <HelmetIcon className="h-10 w-10 shrink-0" />
+        <HelmetIcon className="size-10 shrink-0" />
         <div className="flex w-full min-w-0 flex-col justify-between gap-4">
           <div className="flex flex-col gap-1">
             <p className="w-full truncate break-words font-bold">{champion.name}</p>

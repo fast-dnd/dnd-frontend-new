@@ -101,7 +101,7 @@ const Adventures = ({
       {content}
       {isFetchingNextPage && (
         <div className="flex h-10 justify-center">
-          <Spinner className="m-0 h-8 w-8" />
+          <Spinner className="m-0 size-8" />
         </div>
       )}
     </div>

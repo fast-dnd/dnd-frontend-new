@@ -56,7 +56,7 @@ const RateModal = ({ dungeon, conversationId }: IRateModalProps) => {
         className="max-lg:bottom-0 max-lg:left-0 max-lg:top-auto max-lg:h-fit max-lg:w-full max-lg:max-w-full max-lg:translate-x-0 max-lg:translate-y-0 max-lg:rounded-none max-lg:rounded-t-md max-lg:p-0 "
       >
         <DialogHeader className="relative max-lg:items-start max-lg:gap-2 max-lg:p-6">
-          <AiOutlineClose className="absolute right-3 top-4 h-4 w-4 lg:hidden" onClick={close} />
+          <AiOutlineClose className="absolute right-3 top-4 size-4 lg:hidden" onClick={close} />
           <DialogTitle className="line-clamp-3 break-words uppercase">
             RATE YOUR ADVENTURE
             <span className="max-lg:hidden">IN {dungeon.name}</span>
@@ -83,7 +83,7 @@ const RateModal = ({ dungeon, conversationId }: IRateModalProps) => {
                   else setRating(i + 1);
                 }}
                 className={cn(
-                  "h-12 w-12 fill-transparent text-warning transition-all duration-200 lg:text-primary",
+                  "size-12 fill-transparent text-warning transition-all duration-200 lg:text-primary",
                   hovered === undefined
                     ? rating >= i + 1 && "fill-warning lg:fill-primary"
                     : hovered >= i + 1 && "lg:fill-primary",

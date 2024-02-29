@@ -20,7 +20,7 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
 
   if (!transcripts) {
     return (
-      <div className="flex h-full w-full items-center justify-center">
+      <div className="flex size-full items-center justify-center">
         <Link href="/home" className="text-center text-6xl underline">
           Go home
         </Link>

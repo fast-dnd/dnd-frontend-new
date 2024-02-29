@@ -16,6 +16,8 @@ import {
   wordsChallengeSchema,
 } from "@/validations/room";
 
+import { IChampion } from "./dungeon";
+
 export type IGameState = z.infer<typeof gameStateSchema>;
 
 export type IDefaultMove = z.infer<typeof defaultMoveSchema>;
@@ -58,7 +60,12 @@ export interface IEditRoom {
 
 export interface IEditChampion {
   conversationId: string;
-  championId: string | undefined;
+  championId?: string | undefined;
   signature?: string;
   walletAddress?: PublicKey;
+  customChampion?: {
+    name: string;
+    description: string;
+    moveMapping: IChampion["moveMapping"];
+  };
 }

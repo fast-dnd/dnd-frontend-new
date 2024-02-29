@@ -47,7 +47,7 @@ const ToggleGroup = React.forwardRef<
           )}
         >
           {label}
-          {loading && <Spinner className="m-0 h-3 w-3 opacity-75" />}
+          {loading && <Spinner className="m-0 size-3 opacity-75" />}
         </div>
       )}
       <ToggleGroupPrimitive.Root

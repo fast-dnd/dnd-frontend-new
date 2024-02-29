@@ -108,7 +108,7 @@ const GamemodeCard = ({
 }: IGamemodeCardProps) => {
   return (
     <div className="h-full w-[calc(100vw_-_3.25rem)] px-1.5">
-      <div className="flex h-full w-full flex-col justify-between rounded-md bg-black/80">
+      <div className="flex size-full flex-col justify-between rounded-md bg-black/80">
         <div className="flex flex-1 flex-col items-center gap-3 p-4">
           <Image draggable={false} src={imageUrl} alt="example" width={262} height={249} />
           <div className="flex flex-col gap-1">

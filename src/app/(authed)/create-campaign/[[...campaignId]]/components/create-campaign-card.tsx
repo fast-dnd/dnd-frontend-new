@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Image from "next/image";
+import { Eye, EyeClosed } from "@phosphor-icons/react";
 import { AxiosError } from "axios";
 import { z } from "zod";
 
 import StatusModal, { StatusModalContent } from "@/components/common/status-modal";
+import ToggleSwitch from "@/components/common/toggle-switch";
 import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 import UploadImage from "@/components/ui/upload-image";
@@ -69,9 +70,9 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
     <Box
       title="CAMPAIGN"
       wrapperClassName="h-full w-[30%]"
-      className="flex h-full min-h-0 w-full flex-col items-center justify-between overflow-y-auto p-8"
+      className="flex size-full min-h-0 flex-col items-center justify-between overflow-y-auto p-8"
     >
-      <div className="flex h-full w-full flex-col justify-between gap-6">
+      <div className="flex size-full flex-col justify-between gap-6">
         <div className="flex items-center gap-8">
           <div className="flex h-fit flex-1 flex-col gap-4">
             <Input
@@ -81,17 +82,14 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
               value={name}
               onChange={(e) => campaignFormStore.name.set(e.target.value)}
             />
-            <div className="flex items-center gap-2">
-              <Checkbox
-                className="bg-transparent"
-                checked={publiclySeen}
-                onCheckedChange={(checked) =>
-                  campaignFormStore.publiclySeen.set(checked as boolean)
-                }
-                aria-label="Publicly seen"
-              />
-              Public campaign
-            </div>
+            <ToggleSwitch
+              on={!publiclySeen}
+              setOn={(checked) => campaignFormStore.publiclySeen.set(!checked)}
+              items={[
+                { text: "Public", icon: <Eye size={14} /> },
+                { text: "Private", icon: <EyeClosed size={14} /> },
+              ]}
+            />
           </div>
           <UploadImage
             image={image}
@@ -116,7 +114,7 @@ const RightCard = ({ campaignId }: { campaignId: string | undefined }) => {
                 alt={dungeon.name}
                 width={48}
                 height={48}
-                className="h-12 w-12"
+                className="size-12"
               />
               <p className="truncate">{dungeon.name}</p>
             </div>

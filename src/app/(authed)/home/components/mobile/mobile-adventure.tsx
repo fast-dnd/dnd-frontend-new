@@ -118,14 +118,14 @@ export const MobileAdventure = React.forwardRef<HTMLDivElement, IMobileAdventure
             )}
           >
             <div className="flex items-center gap-2">
-              <div className="flex h-5 w-5 items-center justify-center rounded bg-black/30">
-                <Game className="h-4 w-4" variant="Bold" color="#FF5A5A" />
+              <div className="flex size-5 items-center justify-center rounded bg-black/30">
+                <Game className="size-4" variant="Bold" color="#FF5A5A" />
               </div>
               <p className="text-sm font-bold">{adventure.maxPlayers}</p>
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex h-5 w-5 items-center justify-center rounded bg-black/30">
-                <Star1 className="h-4 w-4" variant="Bold" color="#FF5A5A" />
+              <div className="flex size-5 items-center justify-center rounded bg-black/30">
+                <Star1 className="size-4" variant="Bold" color="#FF5A5A" />
               </div>
               <p className="whitespace-nowrap text-sm font-bold">
                 {adventure.rating + " (" + adventure.numOfRatings + ")"}

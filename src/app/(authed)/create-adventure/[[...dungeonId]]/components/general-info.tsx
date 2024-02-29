@@ -3,8 +3,11 @@ import { BsFillImageFill } from "react-icons/bs";
 
 import "./location";
 
+import { EyeClosed } from "@phosphor-icons/react";
+import { Eye } from "iconsax-react";
+
+import ToggleSwitch from "@/components/common/toggle-switch";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { ComboBox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -33,27 +36,24 @@ const GeneralInfo = () => {
         {isSelectingBg ? (
           <SelectBgScreen setSelectedReward={setSelectedReward} setSelectingBg={setSelectingBg} />
         ) : (
-          <div className="flex h-full w-full flex-col items-center gap-5 lg:flex-row lg:items-start lg:gap-8">
+          <div className="flex size-full flex-col items-center gap-5 lg:flex-row lg:items-start lg:gap-8">
             <div className="flex flex-col gap-4">
               <UploadImage
                 image={dungeonFormData.imageUrl.get()}
                 setImage={(image) => dungeonFormData.imageUrl.set(image)}
                 defaultImage={dungeonFormData.imageUrl.get()}
               />
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  className="bg-transparent"
-                  checked={publiclySeen}
-                  onCheckedChange={(checked) =>
-                    dungeonFormData.publiclySeen.set(checked as boolean)
-                  }
-                  aria-label="Publicly seen"
-                />
-                Public adventure
-              </div>
+              <ToggleSwitch
+                on={!publiclySeen}
+                setOn={(checked) => dungeonFormData.publiclySeen.set(!checked)}
+                items={[
+                  { text: "Public", icon: <Eye size={14} /> },
+                  { text: "Private", icon: <EyeClosed size={14} /> },
+                ]}
+              />
             </div>
 
-            <div className="flex h-full w-full flex-1 flex-col gap-5 lg:gap-8">
+            <div className="flex size-full flex-1 flex-col gap-5 lg:gap-8">
               <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
                 <div className="flex w-full flex-col gap-5 lg:w-1/2 lg:gap-8">
                   <Input
@@ -109,7 +109,7 @@ const GeneralInfo = () => {
                         {selectedReward ? (
                           <>
                             <p>{selectedReward?.name}</p>
-                            <div className="h-2 w-2 rotate-45 bg-white/25" />
+                            <div className="size-2 rotate-45 bg-white/25" />
                             <p>{selectedReward?.rarity}</p>
                           </>
                         ) : (
@@ -160,7 +160,7 @@ const GeneralInfo = () => {
                     aria-label="Action level"
                   />
                 </div>
-                <div className="flex h-full w-full flex-col gap-5 lg:w-1/2 lg:gap-8">
+                <div className="flex size-full flex-col gap-5 lg:w-1/2 lg:gap-8">
                   <TextArea
                     label="Description"
                     fullHeight
