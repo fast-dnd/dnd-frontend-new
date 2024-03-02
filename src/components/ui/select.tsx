@@ -72,7 +72,7 @@ const SelectTrigger = React.forwardRef<
       >
         {children}
         <SelectPrimitive.Icon asChild>
-          <FiChevronDown className="" />
+          <FiChevronDown className="min-h-4 min-w-4" />
         </SelectPrimitive.Icon>
       </SelectPrimitive.Trigger>
       {successMessage && (

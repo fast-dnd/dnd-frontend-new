@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { DungeonDuration } from "@/utils/dungeon/dungeon-options";
 import {
+  aiModelSchema,
   defaultMoveSchema,
   gameStateSchema,
   moveSchema,
@@ -21,6 +22,8 @@ import { IChampion } from "./dungeon";
 export type IGameState = z.infer<typeof gameStateSchema>;
 
 export type IDefaultMove = z.infer<typeof defaultMoveSchema>;
+
+export type IAiModel = z.infer<typeof aiModelSchema>;
 
 export type IMoveType = z.infer<typeof moveTypeSchema>;
 
@@ -56,6 +59,7 @@ export interface IEditRoom {
   generateImages?: boolean;
   generateAudio?: boolean;
   generateRandomWords?: boolean;
+  aiModel?: IAiModel;
 }
 
 export interface IEditChampion {

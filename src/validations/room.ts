@@ -17,6 +17,13 @@ export const defaultMoveSchema = z.enum(defaultMoves);
 
 export const moveTypeSchema = z.enum([...defaultMoves, "no_input", "free_will"]);
 
+export const aiModelSchema = z.enum([
+  "fire_bartender",
+  "mage_senator",
+  "sweet_lama",
+  "moustache_dictator",
+]);
+
 export const wordsChallengeSchema = z.array(
   z.object({
     accountId: z.string(),
@@ -72,6 +79,7 @@ export const roomSummarySchema = z.object({
 });
 
 export const baseRoomSchema = z.object({
+  aiModel: aiModelSchema,
   state: gameStateSchema,
   roundEndsAt: z.string().nullish(),
   generateImages: z.boolean(),
