@@ -20,6 +20,7 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
   const accountId = useReadLocalStorage<string>("accountId");
 
   const [gameModeSelected, setGameModeSelected] = useState(false);
+  const [aiModelSelected, setAiModelSelected] = useState(false);
 
   const {
     roomData,
@@ -37,7 +38,8 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
   const onClickBack = () => {
     if (!selectedChampion) router.push("/home");
     else if (!isAdmin || !gameModeSelected) onChangeChampion(selectedChampion);
-    else setGameModeSelected(false);
+    else if (!aiModelSelected) setGameModeSelected(false);
+    else setAiModelSelected(false);
   };
 
   return (
@@ -50,7 +52,13 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
       <div className="relative flex flex-1 flex-col lg:hidden">
         <div className="fixed top-0 z-10 w-full">
           <MobileNavbar className="bg-black" onClickBack={onClickBack} />
-          <MobileRoomInfo roomData={roomData} selectedChampion={selectedChampion} />
+          <MobileRoomInfo
+            roomData={roomData}
+            selectedChampion={selectedChampion}
+            isAdmin={isAdmin}
+            gameModeSelected={gameModeSelected}
+            aiModelSelected={aiModelSelected}
+          />
         </div>
         <div className="mt-32 flex h-full">
           <ChooseCharacter
@@ -69,7 +77,9 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
             conversationId={conversationId}
             isAdmin={isAdmin}
             gameModeSelected={gameModeSelected}
+            aiModelSelected={aiModelSelected}
             setGameModeSelected={setGameModeSelected}
+            setAiModelSelected={setAiModelSelected}
           />
         </div>
 
