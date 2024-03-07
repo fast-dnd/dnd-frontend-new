@@ -14,9 +14,18 @@ import { cn } from "@/utils/style-utils";
 interface IMobileRoomInfoProps {
   roomData?: IRoomDetail | undefined;
   selectedChampion: IChampion | null | undefined;
+  isAdmin: boolean;
+  gameModeSelected: boolean;
+  aiModelSelected: boolean;
 }
 
-const MobileRoomInfo = ({ roomData, selectedChampion }: IMobileRoomInfoProps) => {
+const MobileRoomInfo = ({
+  roomData,
+  selectedChampion,
+  isAdmin,
+  gameModeSelected,
+  aiModelSelected,
+}: IMobileRoomInfoProps) => {
   const { copied, onCopy } = useCopy();
 
   return (
@@ -104,7 +113,12 @@ const MobileRoomInfo = ({ roomData, selectedChampion }: IMobileRoomInfoProps) =>
       <hr
         className={cn(
           "absolute bottom-0 left-0 border-primary transition-all duration-500",
-          selectedChampion ? "w-[70%]" : "w-[30%]",
+          !isAdmin && "w-[30%]",
+          !isAdmin && selectedChampion && "w-[70%]",
+          isAdmin && "w-1/5",
+          isAdmin && selectedChampion && "w-2/5",
+          isAdmin && gameModeSelected && "w-3/5",
+          isAdmin && aiModelSelected && "w-4/5",
         )}
       />
     </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { IRoomDetail } from "@/types/room";
+import { IAiModel, IRoomDetail } from "@/types/room";
 import { DungeonDuration } from "@/utils/dungeon/dungeon-options";
 
 import useUpdateRoom from "../hooks/use-update-room";
@@ -21,6 +21,7 @@ const useOnRoomChange = ({
   const [generateImages, setGenerateImages] = useState<boolean>();
   const [generateAudio, setGenerateAudio] = useState<boolean>();
   const [generateRandomWords, setGenerateRandomWords] = useState<boolean>();
+  const [aiModel, setAiModel] = useState<IAiModel>();
 
   const { mutate: updateRoom, isLoading: updatingRoom } = useUpdateRoom(conversationId);
 
@@ -31,7 +32,8 @@ const useOnRoomChange = ({
       (duration ||
         generateImages !== undefined ||
         generateAudio !== undefined ||
-        generateRandomWords !== undefined)
+        generateRandomWords !== undefined ||
+        aiModel !== undefined)
     )
       updateRoom({
         conversationId,
@@ -39,19 +41,22 @@ const useOnRoomChange = ({
         generateImages,
         generateAudio,
         generateRandomWords,
+        aiModel,
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [duration, generateImages, generateAudio, generateRandomWords]);
+  }, [duration, generateImages, generateAudio, generateRandomWords, aiModel]);
 
   return {
     generateImages,
     setGenerateImages,
     generateAudio,
     setGenerateAudio,
-    setGenerateRandomWords,
     generateRandomWords,
+    setGenerateRandomWords,
     updatingRoom,
+    aiModel,
+    setAiModel,
   };
 };
 

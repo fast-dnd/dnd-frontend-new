@@ -146,7 +146,11 @@ const ProfileDropdown = () => {
 
               <div className="h-1 w-full bg-white/10" />
 
-              <Link href="/profile" className="flex items-center gap-2 hover:opacity-70">
+              <Link
+                href="/profile"
+                className="flex items-center gap-2 hover:opacity-70"
+                onClick={() => setOpenDropdown(false)}
+              >
                 <UserCircle className="size-7" />
                 View Profile
               </Link>
@@ -165,7 +169,11 @@ const ProfileDropdown = () => {
             <>
               <div className="h-1 w-full bg-white/10" />
 
-              <Link href="/guide" className="flex items-center gap-2 hover:opacity-70">
+              <Link
+                href="/guide"
+                className="flex items-center gap-2 hover:opacity-70"
+                onClick={() => setOpenDropdown(false)}
+              >
                 <BookOpenText className="size-7" />
                 Guide
               </Link>

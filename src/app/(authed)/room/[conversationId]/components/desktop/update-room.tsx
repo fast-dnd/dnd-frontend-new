@@ -5,12 +5,21 @@ import { BiImages } from "react-icons/bi";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip } from "@/components/ui/tooltip";
 import useCommunity from "@/hooks/helpers/use-community";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IDungeonDetail } from "@/types/dungeon";
-import { IRoomDetail } from "@/types/room";
+import { IAiModel, IRoomDetail } from "@/types/room";
+import { aiModels } from "@/utils/ai-models";
 import { DungeonDuration, dungeonDurations } from "@/utils/dungeon/dungeon-options";
 
 import useOnRoomChange from "../../hooks/use-on-room-change";
@@ -50,6 +59,7 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
   const {
     setGenerateImages,
     setGenerateAudio,
+    setAiModel,
     setGenerateRandomWords,
     generateRandomWords,
     updatingRoom,
@@ -79,8 +89,11 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
 
   const canBegin = roomData.playerState.every((player) => player.champion) ?? false;
 
+  const selectedAiModel = aiModels.find((aiModel) => aiModel.aiModel === roomData.aiModel)!;
+
   return (
     <div className="flex flex-col gap-4">
+      <div className="h-0.5 bg-black/35 shadow-lobby" />
       <p className="text-lg font-semibold">GAME SETTINGS</p>
       <ToggleGroup
         className="inline-flex w-full items-center justify-center"
@@ -184,6 +197,55 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
           </ToggleGroupItem>
         ))}
       </ToggleGroup>
+
+      <div className="h-0.5 bg-black/35 shadow-lobby" />
+
+      <p className="text-lg font-semibold">AI MODEL</p>
+
+      <Select value={roomData.aiModel} onValueChange={(value) => setAiModel(value as IAiModel)}>
+        <SelectTrigger className="w-full bg-black p-3" aria-label="Select ai model">
+          <SelectValue placeholder="Select AI model">
+            <div className="flex flex-row items-center gap-4">
+              <Image
+                src={selectedAiModel.imgUrl}
+                alt={selectedAiModel.aiModel}
+                width={80}
+                height={80}
+                className="size-20 rounded-lg"
+              />
+              <div className="flex flex-col gap-1 text-start">
+                <p className="text-xl font-semibold">{selectedAiModel.name}</p>
+                <p className="text-sm">{selectedAiModel.longDescription}</p>
+              </div>
+            </div>
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent className="bg-black opacity-100">
+          <SelectGroup>
+            {aiModels.map((aiModel) => (
+              <SelectItem
+                key={aiModel.aiModel}
+                value={aiModel.aiModel}
+                className="bg-[#151515] focus:bg-white/20"
+              >
+                <div className="flex flex-row items-center gap-4">
+                  <Image
+                    src={aiModel.imgUrl}
+                    alt={aiModel.aiModel}
+                    width={36}
+                    height={36}
+                    className="size-9 rounded-lg"
+                  />
+                  <div className="flex flex-col">
+                    <p className="font-semibold">{aiModel.name}</p>
+                    <p className="text-sm">{aiModel.description}</p>
+                  </div>
+                </div>
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
 
       <Tooltip content="Wait for all players to choose their role and avatar" disabled={canBegin}>
         <Button

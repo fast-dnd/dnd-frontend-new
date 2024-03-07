@@ -72,7 +72,7 @@ const SelectTrigger = React.forwardRef<
       >
         {children}
         <SelectPrimitive.Icon asChild>
-          <FiChevronDown className="" />
+          <FiChevronDown className="min-h-4 min-w-4" />
         </SelectPrimitive.Icon>
       </SelectPrimitive.Trigger>
       {successMessage && (
@@ -98,7 +98,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        "relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-select text-white shadow-md duration-300 animate-in fade-in-80",
+        "select relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-select text-white shadow-md duration-300 animate-in fade-in-80",
         position === "popper" && "translate-y-1",
         className,
       )}
@@ -107,7 +107,7 @@ const SelectContent = React.forwardRef<
     >
       <SelectPrimitive.Viewport
         className={cn(
-          "p-1",
+          "select p-1",
           position === "popper" &&
             "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]",
         )}

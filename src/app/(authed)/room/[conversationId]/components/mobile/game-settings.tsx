@@ -12,6 +12,7 @@ import useOnRoomChange from "../../hooks/use-on-room-change";
 import useOnStartGame from "../../hooks/use-on-start-game";
 import usePlayerInfo from "../../hooks/use-player-info";
 import useRoomSocket from "../../hooks/use-room-socket";
+import ChooseAiModel from "./choose-ai-model";
 import ChooseGamemode from "./choose-gamemode";
 import DurationSlider from "./duration-slider";
 import ImageAudioToggle from "./image-audio-toggle";
@@ -22,7 +23,9 @@ interface IGameSettingsProps {
   roomData: IRoomDetail | undefined;
   isAdmin: boolean;
   gameModeSelected: boolean;
+  aiModelSelected: boolean;
   setGameModeSelected: React.Dispatch<React.SetStateAction<boolean>>;
+  setAiModelSelected: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const GameSettings = ({
@@ -31,7 +34,9 @@ const GameSettings = ({
   roomData,
   isAdmin,
   gameModeSelected,
+  aiModelSelected,
   setGameModeSelected,
+  setAiModelSelected,
 }: IGameSettingsProps) => {
   const { duration, setDuration } = usePlayerInfo(roomData);
 
@@ -45,7 +50,7 @@ const GameSettings = ({
   const {
     generateAudio,
     generateImages,
-    generateRandomWords,
+    setAiModel,
     setGenerateImages,
     setGenerateAudio,
     setGenerateRandomWords,
@@ -71,11 +76,20 @@ const GameSettings = ({
         setGameModeSelected={setGameModeSelected}
         setGenerateRandomWords={setGenerateRandomWords}
       />
+      <ChooseAiModel
+        selectedChampion={selectedChampion}
+        isAdmin={isAdmin}
+        roomData={roomData}
+        gameModeSelected={gameModeSelected}
+        aiModelSelected={aiModelSelected}
+        setAiModelSelected={setAiModelSelected}
+        setAiModel={setAiModel}
+      />
       <div
         className={cn(
           "flex flex-1 flex-col items-center gap-8 py-4 text-sm",
           !selectedChampion && "hidden",
-          isAdmin && !gameModeSelected && "hidden",
+          isAdmin && (!gameModeSelected || !aiModelSelected) && "hidden",
         )}
       >
         <div className="flex w-full flex-1 flex-col items-center justify-center gap-4">
