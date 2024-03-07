@@ -33,6 +33,7 @@ export const championSchema = z.object({
 export const baseDungeonSchema = z.object({
   _id: z.string(),
   name: z.string(),
+  web3name: z.string().optional(),
   description: z.string(),
   recommendedResponseDetailsDepth: z.enum(dungeonDurationsArray),
   tags: z.array(z.enum(dungeonTags)),
@@ -81,6 +82,7 @@ export const dungeonForBackendSchema = dungeonDetailSchema
 
 export const dungeonTxResponseSchema = z.object({
   transaction: z.string(),
+  web3name: z.string()
 });
 
 export const dungeonResponseSchema = z.object({

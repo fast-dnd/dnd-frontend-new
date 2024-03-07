@@ -78,6 +78,7 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
         createDungeonTx(txForDungeon, {
           onSuccess: async (data) => {
             try {
+              const web3name = data.web3name;
               const transaction = Transaction.from(bs58.decode(data.transaction as string));
               const signedTx = await signTransaction(transaction);
 
@@ -85,6 +86,7 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
               createDungeon(
                 {
                   ...dungeonFormDataWithoutTags,
+                  web3name,
                   transaction: serializedTx,
                   creatorWalletAddress: publicKey?.toString(),
                 },
