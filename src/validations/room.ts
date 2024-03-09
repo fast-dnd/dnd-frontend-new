@@ -18,10 +18,15 @@ export const defaultMoveSchema = z.enum(defaultMoves);
 export const moveTypeSchema = z.enum([...defaultMoves, "no_input", "free_will"]);
 
 export const aiModelSchema = z.enum([
-  "fire_bartender",
-  "mage_senator",
-  "sweet_lama",
-  "moustache_dictator",
+  "bartender_bob",
+  "wizard_uncle_bob",
+  "lama_farmer_bob",
+  "philosopher_bob",
+  "hacker_bob",
+  "zookeeper_bob",
+  "safari_guide_bob",
+  "adventurer_bob",
+  "artist_bob",
 ]);
 
 export const wordsChallengeSchema = z.array(
