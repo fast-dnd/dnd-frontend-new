@@ -15,7 +15,7 @@ const GameplaySkeleton = () => {
         </div>
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col gap-8 overflow-y-hidden rounded-b-md bg-glass p-5 backdrop-blur-2xl lg:px-12 lg:py-8">
+      <div className="flex min-h-0 flex-1 flex-col gap-8 overflow-y-hidden rounded-b-md bg-glass p-5 backdrop-blur-xl lg:px-12 lg:py-8">
         <div className="flex w-full animate-pulse flex-col gap-8">
           <div className="h-8 w-[480px] shrink-0 rounded-lg bg-gray-600" />
           <div className="flex gap-6">

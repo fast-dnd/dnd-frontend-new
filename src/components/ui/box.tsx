@@ -4,7 +4,7 @@ import { cva, VariantProps } from "class-variance-authority";
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
-export const boxVariants = cva("rounded-b-md bg-glass backdrop-blur-2xl");
+export const boxVariants = cva("rounded-b-md bg-glass backdrop-blur-xl");
 
 export interface BoxProps
   extends React.HTMLAttributes<HTMLDivElement>,
