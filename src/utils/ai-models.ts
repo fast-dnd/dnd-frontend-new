@@ -24,6 +24,14 @@ export const aiModels = [
       "Philosopher Bob, enlightened by OCT NOUS HERMES, delves deep into the essence of storytelling, offering insights and wisdom that provoke thought and ignite the imagination.",
   },
   {
+    name: "Stoned Bob (Nous Hermes)",
+    aiModel: "stoned_bob",
+    imgUrl: "https://dnd-images-bucket.s3.amazonaws.com/aiBobHippi.jpeg",
+    description: "Bob is totally stoned and tells bizzare stories.",
+    longDescription:
+      "Stoned Bob, enlightened by OCT NOUS HERMES, likes bizzaro fiction and nonsense which makes him great for story telling.",
+  },
+  {
     name: "Zookeeper Bob (MythoMax)",
     aiModel: "zookeeper_bob",
     imgUrl: "https://dnd-images-bucket.s3.amazonaws.com/zookeeper.jpeg",
