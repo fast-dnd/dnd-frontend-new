@@ -6,7 +6,6 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useWindowSize } from "usehooks-ts";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { env } from "@/utils/env.mjs";
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
@@ -14,8 +13,6 @@ const SolanaLogin = () => {
   const { width } = useWindowSize();
 
   const { publicKey, wallets, select, disconnect, connecting } = useWallet();
-
-  const isProd = env.NEXT_PUBLIC_VERCEL_ENV === "production";
 
   return (
     <Dialog>
@@ -44,14 +41,8 @@ const SolanaLogin = () => {
             className="flex w-full flex-row items-center justify-center gap-2 px-4 py-3 uppercase max-lg:pl-36 lg:px-6 lg:py-5"
             disabled={isProd}
           >
-            {isProd ? (
-              "COMING SOON"
-            ) : (
-              <>
-                <Wallet className="max-lg:hidden" />
-                CONNECT WALLET
-              </>
-            )}
+            <Wallet className="max-lg:hidden" />
+            CONNECT WALLET
           </DialogTrigger>
         )}
       </div>
