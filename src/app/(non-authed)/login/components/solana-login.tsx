@@ -19,7 +19,6 @@ const SolanaLogin = () => {
       <div
         className={cn(
           "w-full rounded-b-md bg-white text-sm font-bold tracking-wider text-black transition-all duration-300 lg:rounded-md lg:border-2 lg:border-white/30 lg:bg-white/10 lg:text-xl lg:tracking-normal lg:text-white lg:hover:bg-white/20 lg:active:bg-white/25",
-          isProd && "pointer-events-none opacity-50",
         )}
       >
         {connecting ? (
