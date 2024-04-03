@@ -37,10 +37,7 @@ const SolanaLogin = () => {
             <p>Disconnect wallet</p>
           </button>
         ) : (
-          <DialogTrigger
-            className="flex w-full flex-row items-center justify-center gap-2 px-4 py-3 uppercase max-lg:pl-36 lg:px-6 lg:py-5"
-            disabled={isProd}
-          >
+          <DialogTrigger className="flex w-full flex-row items-center justify-center gap-2 px-4 py-3 uppercase max-lg:pl-36 lg:px-6 lg:py-5">
             <Wallet className="max-lg:hidden" />
             CONNECT WALLET
           </DialogTrigger>
