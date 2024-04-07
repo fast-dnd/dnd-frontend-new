@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DiscordLogo } from "@phosphor-icons/react";
+import { DiscordLogo, InstagramLogo, TwitterLogo } from "@phosphor-icons/react";
 
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
@@ -30,6 +30,27 @@ const DesktopNavbar = () => {
       <div className="flex items-center gap-12">
         <Link href="/home">
           <Image src="/images/navbar-logo.png" width={203} height={70} alt="logo" />
+        </Link>
+        <Link
+          href="https://discord.com/invite/36chp8DnzC"
+          className="flex items-center gap-2 hover:opacity-70"
+          target="_blank"
+        >
+          <DiscordLogo className="size-7" />
+        </Link>
+        <Link
+          href="https://www.instagram.com/game.v3rpg/"
+          className="flex items-center gap-2 hover:opacity-70"
+          target="_blank"
+        >
+          <InstagramLogo className="size-7" />
+        </Link>
+        <Link
+          href="https://twitter.com/v3rpg"
+          className="flex items-center gap-2 hover:opacity-70"
+          target="_blank"
+        >
+          <TwitterLogo className="size-7" />
         </Link>
       </div>
       <div className="flex items-center gap-6 text-2xl leading-7 tracking-[3.3px]">
