@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { DiscordLogo, InstagramLogo, TwitterLogo } from "@phosphor-icons/react";
 import { BiChevronLeft } from "react-icons/bi";
 import { FaDiscord, FaUsers } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
@@ -57,6 +58,15 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
 
         <Link href="/home" className="pointer-events-auto">
           <Image src="/images/navbar-logo.png" width={94} height={32} alt="logo" />
+        </Link>
+        <Link href="https://discord.com/invite/36chp8DnzC" className="pointer-events-auto">
+          <DiscordLogo className="size-4" />
+        </Link>
+        <Link href="https://www.instagram.com/game.v3rpg/" className="pointer-events-auto">
+          <InstagramLogo className="size-4" />
+        </Link>
+        <Link href="https://twitter.com/v3rpg" className="pointer-events-auto">
+          <TwitterLogo className="size-4" />
         </Link>
       </div>
       <div className="flex items-center gap-3">
