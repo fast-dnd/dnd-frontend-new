@@ -39,7 +39,7 @@ const CreateRoom = () => {
 
   return (
     <Box
-      title="CREATE ROOM"
+      title="CHOOSE ADVENTURE"
       className="flex min-h-0 w-full flex-1 flex-col gap-8 overflow-y-auto p-4 lg:p-8"
       wrapperClassName="w-3/4 min-w-0"
     >

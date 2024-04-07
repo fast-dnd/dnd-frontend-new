@@ -53,7 +53,7 @@ const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
         isLoading={isCreatingRoom || loadingRoom}
         onClick={onCreateRoom}
       >
-        CREATE ROOM
+        CLICK TO START
       </Button>
     </div>
   );
