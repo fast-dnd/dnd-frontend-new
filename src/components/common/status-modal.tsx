@@ -54,11 +54,13 @@ const StatusModal = ({ open, type, content, onClose }: IStatusModalProps) => {
       onCopy(content.id);
       router.push("/profile");
     }
-    dungeonFormStore.set({
-      currentStep: "General information",
-      status: "LIST",
-      dungeonFormData: getInitialDungeonFormData(),
-    });
+    if (!(content.state === "ERRORED")) {
+      dungeonFormStore.set({
+        currentStep: "General information",
+        status: "LIST",
+        dungeonFormData: getInitialDungeonFormData(),
+      });
+    }
   };
 
   return (
