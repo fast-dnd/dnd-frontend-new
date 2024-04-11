@@ -6,7 +6,6 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useWindowSize } from "usehooks-ts";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { env } from "@/utils/env.mjs";
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
@@ -15,14 +14,11 @@ const SolanaLogin = () => {
 
   const { publicKey, wallets, select, disconnect, connecting } = useWallet();
 
-  const isProd = env.NEXT_PUBLIC_VERCEL_ENV === "production";
-
   return (
     <Dialog>
       <div
         className={cn(
           "w-full rounded-b-md bg-white text-sm font-bold tracking-wider text-black transition-all duration-300 lg:rounded-md lg:border-2 lg:border-white/30 lg:bg-white/10 lg:text-xl lg:tracking-normal lg:text-white lg:hover:bg-white/20 lg:active:bg-white/25",
-          isProd && "pointer-events-none opacity-50",
         )}
       >
         {connecting ? (
@@ -40,18 +36,9 @@ const SolanaLogin = () => {
             <p>Disconnect wallet</p>
           </button>
         ) : (
-          <DialogTrigger
-            className="flex w-full flex-row items-center justify-center gap-2 px-4 py-3 uppercase max-lg:pl-36 lg:px-6 lg:py-5"
-            disabled={isProd}
-          >
-            {isProd ? (
-              "COMING SOON"
-            ) : (
-              <>
-                <Wallet className="max-lg:hidden" />
-                CONNECT WALLET
-              </>
-            )}
+          <DialogTrigger className="flex w-full flex-row items-center justify-center gap-2 px-4 py-3 uppercase max-lg:pl-36 lg:px-6 lg:py-5">
+            <Wallet className="max-lg:hidden" />
+            CONNECT WALLET
           </DialogTrigger>
         )}
       </div>

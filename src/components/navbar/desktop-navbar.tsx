@@ -9,11 +9,6 @@ import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
 import { cn } from "@/utils/style-utils";
 
-import {
-  dungeonFormStore,
-  getInitialDungeonFormData,
-} from "@/app/(authed)/create-adventure/[[...dungeonId]]/stores/dungeon-form-store";
-
 import ClaimRewardModal from "../common/claim-reward-modal";
 import ProfileDropdown from "./components/profile-dropdown";
 import RewardPool from "./components/reward-pool";
@@ -83,24 +78,7 @@ const DesktopNavbar = () => {
                 >
                   {loggedIn ? "PLAY" : "LOG IN"}
                 </Link>
-                <div className="size-2 rotate-45 bg-white opacity-25" />
-                <Link
-                  href="/create-adventure"
-                  onClick={() => {
-                    if (
-                      pathname !== "/create-adventure" &&
-                      dungeonFormStore.dungeonFormData._id.get()
-                    )
-                      dungeonFormStore.dungeonFormData.set(getInitialDungeonFormData());
-                  }}
-                  className={cn(
-                    "mt-1 border-b-4 border-transparent pb-1 transition-all duration-300 hover:border-primary/50",
-                    pathname === "/create-adventure" && "border-primary",
-                    !communityId && "hidden",
-                  )}
-                >
-                  CREATE ADVENTURE
-                </Link>
+
                 <div className="size-2 rotate-45 bg-white opacity-25" />
                 <Link
                   href="/leaderboard"
