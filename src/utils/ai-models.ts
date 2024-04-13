@@ -8,14 +8,6 @@ export const aiModels = [
       "Bartender Bob, powered by OPA GPT-3, serves up stories with the ease of a seasoned mixologist, blending genres and emotions into a perfect narrative cocktail.",
   },
   {
-    name: "Wizard Uncle Bob (Mixtral)",
-    aiModel: "wizard_uncle_bob",
-    imgUrl: "https://dnd-images-bucket.s3.amazonaws.com/wizard.jpeg",
-    description: "Casts spells with words",
-    longDescription:
-      "Wizard Uncle Bob, wielding the magic of OCT OCT MIXTRAL, crafts tales that enchant and mesmerize, taking listeners on journeys through mystical lands and magical adventures.",
-  },
-  {
     name: "Philosopher Bob (Nous Hermes)",
     aiModel: "philosopher_bob",
     imgUrl: "https://dnd-images-bucket.s3.amazonaws.com/philosopher.jpeg",
