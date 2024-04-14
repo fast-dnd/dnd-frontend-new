@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { Smiley } from "@phosphor-icons/react";
+import EmojiPicker, { Theme } from "emoji-picker-react";
 import { AiFillHeart } from "react-icons/ai";
 import { GiNightSleep } from "react-icons/gi";
 import { GoPeople } from "react-icons/go";
@@ -6,6 +8,7 @@ import { HiSparkles } from "react-icons/hi";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { TextArea } from "@/components/ui/text-area";
 import { IChampion } from "@/types/dungeon";
 import { IDefaultMove, IWordsChallenge } from "@/types/room";
@@ -44,7 +47,7 @@ const MoveInput = ({ champion, wordsChallenge, isWordsChallenge }: IMoveInputPro
 
   return (
     <div className="flex h-60 flex-col gap-4 lg:h-full">
-      <div className="flex flex-1">
+      <div className="relative flex flex-1">
         {move ? (
           <div
             className={cn(
@@ -87,17 +90,35 @@ const MoveInput = ({ champion, wordsChallenge, isWordsChallenge }: IMoveInputPro
                 </div>
               )
             ) : (
-              <TextArea
-                maxLength={300}
-                className="m-0 h-full border-white/50 focus-within:border-white"
-                placeholder="I found a secret tunnel and escape through it..."
-                disabled={!canPlay}
-                onChange={(e) => {
-                  moveStore.freeWill.set(e.target.value);
-                  moveStore.move.set(undefined);
-                }}
-                value={freeWill}
-              />
+              <>
+                <TextArea
+                  maxLength={300}
+                  className="m-0 h-full border-white/50 focus-within:border-white"
+                  placeholder="I found a secret tunnel and escape through it..."
+                  disabled={!canPlay}
+                  onChange={(e) => {
+                    moveStore.freeWill.set(e.target.value);
+                    moveStore.move.set(undefined);
+                  }}
+                  value={freeWill}
+                />
+
+                <Popover>
+                  <PopoverTrigger className="absolute bottom-2 right-2" asChild>
+                    <div className="rounded-lg transition-all duration-300 hover:bg-white/10">
+                      <Smiley size={32} />
+                    </div>
+                  </PopoverTrigger>
+                  <PopoverContent className="border-transparent bg-transparent shadow-none">
+                    <EmojiPicker
+                      theme={Theme.DARK}
+                      onEmojiClick={(emoji) => {
+                        moveStore.freeWill.set(freeWill + emoji.emoji);
+                      }}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </>
             )}
           </>
         )}
