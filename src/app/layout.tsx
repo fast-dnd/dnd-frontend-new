@@ -11,6 +11,7 @@ import "@/styles/tailwind.css";
 import "@/styles/zoom.css";
 import "@/styles/content-editable.css";
 
+import { Suspense } from "react";
 import { Metadata } from "next";
 
 import Background from "@/components/common/background";
@@ -48,7 +49,9 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
       </head>
 
       <HotjarAnalytics />
-      <GoogleAnalytics />
+      <Suspense>
+        <GoogleAnalytics />
+      </Suspense>
 
       <body className={cn("flex flex-col overflow-auto bg-dark-900", lexend.className)}>
         <Providers>
