@@ -54,7 +54,7 @@ const useRoomSocket = (conversationId: string) => {
     return () => {
       socketIO.off(conversationId, onEvent);
     };
-  }, [conversationId, queryClient, router]);
+  }, [conversationId, queryClient, router, setCustomChampion]);
 
   return { gameStarting };
 };
