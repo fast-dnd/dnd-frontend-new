@@ -28,6 +28,7 @@ export const aiModelSchema = z.enum([
   "adventurer_bob",
   "artist_bob",
   "stoned_bob",
+  "pepe_bob",
 ]);
 
 export const wordsChallengeSchema = z.array(
