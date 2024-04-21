@@ -53,7 +53,7 @@ const FormStepWrapper = ({ isEditing, children, dungeonData }: IFormStepWrapperP
             <ul className="list-inside list-disc">
               <li>Title is required</li>
               <li>Description is required</li>
-              <li>Scenes: Min. 3 - Max. 4</li>
+              <li>Scenes: Min. 3 - Max. 5</li>
               <li>Characters: Min. 1</li>
             </ul>
           }
