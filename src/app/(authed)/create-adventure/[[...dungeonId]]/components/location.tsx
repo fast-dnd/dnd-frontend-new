@@ -45,14 +45,6 @@ const Location = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
                 state={locationErrors?.mission ? "error" : undefined}
                 errorMessage={locationErrors?.mission?.message}
               />
-              <TextArea
-                label="Scene transition"
-                placeholder="Describe the way players found them selves in this state e.g., 'After walking through the dense forests of South America players found an ancient city of Akuma...'"
-                className="m-0 h-full"
-                {...register("transition")}
-                state={locationErrors?.transition ? "error" : undefined}
-                errorMessage={locationErrors?.transition?.message}
-              />
             </div>
           </>
         );
