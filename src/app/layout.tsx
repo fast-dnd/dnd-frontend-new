@@ -5,13 +5,12 @@ import { lexend } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
 import "@/styles/autofill-input.css";
+import "@/styles/content-editable.css";
 import "@/styles/globals.css";
 import "@/styles/scrollbar.css";
 import "@/styles/tailwind.css";
 import "@/styles/zoom.css";
-import "@/styles/content-editable.css";
 
-import { Suspense } from "react";
 import { Metadata } from "next";
 
 import Background from "@/components/common/background";
@@ -49,9 +48,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
       </head>
 
       <HotjarAnalytics />
-      <Suspense>
-        <GoogleAnalytics />
-      </Suspense>
+      <GoogleAnalytics />
 
       <body className={cn("flex flex-col overflow-auto bg-dark-900", lexend.className)}>
         <Providers>
