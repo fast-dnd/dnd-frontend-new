@@ -9,7 +9,6 @@ export const locationSchema = z.object({
   name: z.string(),
   description: z.string(),
   mission: z.string(),
-  transition: z.string(),
 });
 
 export const moveMappingSchema = z.object({
@@ -82,7 +81,7 @@ export const dungeonForBackendSchema = dungeonDetailSchema
 
 export const dungeonTxResponseSchema = z.object({
   transaction: z.string(),
-  web3name: z.string()
+  web3name: z.string(),
 });
 
 export const dungeonResponseSchema = z.object({
