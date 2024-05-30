@@ -4,6 +4,7 @@ import { AiFillSound, AiFillStar } from "react-icons/ai";
 import { BiImages } from "react-icons/bi";
 import { useReadLocalStorage } from "usehooks-ts";
 
+import GoldCoinIcon from "@/components/icons/gold-coin-icon";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -254,8 +255,13 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
           isLoading={isGameStarting || gameStarting}
           onClick={onStartGame}
         >
-          START ({roomData.price.toFixed(isDefault ? 0 : 5)}{" "}
-          {isDefault ? "coins" : currentCommunity?.currencyName})
+          START{" "}
+          {roomData.price > 0 && (
+            <>
+              {roomData.price.toFixed(isDefault ? 0 : 5)}{" "}
+              {isDefault ? <GoldCoinIcon className="size-5" /> : currentCommunity?.currencyName}
+            </>
+          )}
         </Button>
       </Tooltip>
     </div>
