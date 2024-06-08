@@ -1,16 +1,20 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { useLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import { ICommunity } from "@/types/community";
 
 const Community = ({ community }: { community: ICommunity }) => {
+  const queryClient = useQueryClient();
+
   const router = useRouter();
 
   const [communityId, setCommunityId] = useLocalStorage<string | null>("communityId", null);
 
   const onJoinCommunity = () => {
+    queryClient.invalidateQueries();
     setCommunityId(community._id);
     router.push("/home");
   };
