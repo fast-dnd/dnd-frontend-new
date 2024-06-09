@@ -12,7 +12,7 @@ const RewardPool = () => {
 
   return (
     <Tooltip
-      content="The 10 top players on the scoreboard will receive rewards from the reward pool."
+      content="Higher you climb the leaderboard more chance you have to receive part of reward pool. Reward pool is going up whenever someone plays adventures in this community"
       contentClassName="w-56 tracking-[1.02px] whitespace-normal"
       position="bottom"
     >

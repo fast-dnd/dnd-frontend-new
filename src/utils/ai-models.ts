@@ -16,10 +16,18 @@ export const aiModels = [
       "Stoned Bob, likes bizzaro fiction and nonsense which makes him great for story telling.",
   },
   {
-    name: "Pepe Bob (Dank memer chat)",
+    name: "Pepe Bob (Dank memer)",
     aiModel: "pepe_bob",
     imgUrl: "https://dnd-images-bucket.s3.amazonaws.com/lepepe_aiNarrator.jpeg",
     description: "Bob is a classic dunk memer",
     longDescription: "Pepe Bob, memes and cringes.",
+  },
+  {
+    name: "Retardio Zoomer Bob",
+    aiModel: "retardio_bob",
+    imgUrl:
+      "https://dnd-images-bucket.s3.amazonaws.com/DwYEXSK8ugrE2KbbvQqm2R2WBNTP1t5bA8cYhgw3NAhU_lg.jpeg",
+    description: "Bob is on shroomioz",
+    longDescription: "Shroomz Shroomz Shroomz.",
   },
 ];
