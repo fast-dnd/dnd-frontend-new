@@ -8,7 +8,7 @@ const TranscriptSkeleton = () => {
       <div className="hidden h-full min-h-0 justify-center pb-10 lg:flex">
         <Box
           title="TRANSCRIPT"
-          wrapperClassName="w-3/5 min-h-0 h-full"
+          wrapperClassName="w-3/5 min-h-0 h-full w-full"
           className="h-full overflow-y-hidden p-12"
         >
           <div className="flex animate-pulse flex-col gap-8 pr-4">

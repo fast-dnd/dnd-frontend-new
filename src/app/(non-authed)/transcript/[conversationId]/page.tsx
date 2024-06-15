@@ -31,11 +31,11 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
 
   return (
     <>
-      <div className="my-16 hidden min-h-0 w-[1200px] max-w-7xl flex-1 flex-col self-center lg:flex">
+      <div className="my-16 hidden min-h-0 w-[1800px] max-w-fit flex-1 flex-col self-center lg:flex">
         <TranscriptHeader transcripts={transcripts} />
         <div className="relative flex min-h-0 w-full flex-1 flex-col overflow-y-scroll border-2 border-black bg-black/60 backdrop-blur-sm">
           <div className="relative mx-auto w-full flex-1 flex-col">
-            <div className="mx-auto my-6 flex max-w-[900px] flex-1 flex-col gap-6">
+            <div className="mx-auto my-6 flex max-w-[1600px] flex-1 flex-col gap-6">
               {transcripts.story.map((story, index) => (
                 <Story key={index} story={story} transcripts={transcripts} />
               ))}
