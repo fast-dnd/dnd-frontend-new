@@ -24,18 +24,18 @@ const ChatItem = ({ player, playerAsking, text, dice }: IChatItemProps) => {
           <>
             <Image
               src={_player.imageUrl || "/images/default-avatar.png"}
-              width={32}
-              height={32}
+              width={64}
+              height={64}
               alt={`${_player.name}'s avatar`}
               className="size-8 rounded-full border-2 border-white"
             />
-            <span className="font-semibold">
+            <span className="text-2xl">
               {_player.name} {playerAsking && " asked Bob:"}
             </span>
           </>
         ) : (
           <>
-            <div className="flex size-8 items-center justify-center rounded-full border-white bg-primary pb-1">
+            <div className="flex size-8 items-center justify-center whitespace-pre-wrap rounded-full border-white bg-primary pb-1 text-2xl">
               <Game variant="Bold" size={24} />
             </div>
             <span className="font-semibold text-primary">Bob Answered</span>
@@ -44,7 +44,7 @@ const ChatItem = ({ player, playerAsking, text, dice }: IChatItemProps) => {
       </div>
       <div
         className={cn(
-          "relative mt-2 flex w-full flex-col gap-2 rounded-md p-4 font-light",
+          "relative mt-2 flex w-full flex-col gap-2 rounded-md p-4 text-2xl font-light",
           _player ? "bg-white text-black" : "bg-primary text-white",
         )}
       >
@@ -56,7 +56,7 @@ const ChatItem = ({ player, playerAsking, text, dice }: IChatItemProps) => {
         />
         <p className="whitespace-pre-wrap">{text}</p>
         {dice && (
-          <div className="flex items-center gap-1 font-medium text-primary">
+          <div className="flex items-center gap-1 text-2xl text-primary">
             <FaDice className="min-h-[14px] min-w-[22px] fill-primary" />
             Rolled: {dice}
           </div>
