@@ -1,3 +1,5 @@
+import Markdown from "react-markdown";
+
 import SkeletonIcon from "@/components/icons/skeleton-icon";
 import useAutoScrollToBottom from "@/hooks/helpers/use-auto-scroll-to-bottom";
 import { IDungeonDetail } from "@/types/dungeon";
@@ -82,7 +84,7 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
                     <StyledAudio audio={roomData.generatedAudio[i]} />
                   </div>
                 )}
-                <p className="whitespace-pre-wrap">{story}</p>
+                <Markdown className="markdown">{story}</Markdown>
               </div>
             </div>
           </div>
