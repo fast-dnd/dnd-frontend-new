@@ -1,5 +1,7 @@
 "use client";
 
+import Markdown from "react-markdown";
+
 import { ITranscript, ITranscriptStory } from "@/types/transcript";
 
 import ChatItem from "./chat-item";
@@ -12,7 +14,8 @@ const Story = ({ story, transcripts }: { story: ITranscriptStory; transcripts: I
       <div className="flex flex-col gap-6 max-lg:px-4">
         <div className="flex flex-col gap-1">
           <p className="text-lg font-bold lg:text-4xl">{story.title}</p>
-          <p className="whitespace-pre-wrap text-2xl	">{story.storyChunk}</p>
+          <Markdown className="markdown">{story.storyChunk}</Markdown>
+          {/* <p className="whitespace-pre-wrap text-2xl">{story.storyChunk}</p> */}
         </div>
       </div>
 
