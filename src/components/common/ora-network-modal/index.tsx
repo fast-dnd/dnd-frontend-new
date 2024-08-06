@@ -186,7 +186,15 @@ const handleOraNetworkClick = async (selectedNetwork: string) => {
         const web3 = new Web3(window.ethereum);
 
         try {
-          const txObject = prepareTransaction(selectedAccount, networkChoice, "123");
+          const aiJudgeQuery = await oraService.getAiJudgeQuery(
+            "a1227079-2577-4c32-a32a-59232361fd2e",
+          );
+          const txObject = prepareTransaction(
+            selectedAccount,
+            networkChoice,
+            "a1227079-2577-4c32-a32a-59232361fd2e",
+            aiJudgeQuery.query,
+          );
           const beSignedTx = await oraService.validateTx(txObject);
           console.log("Backend Signed Tx:", beSignedTx);
           const rawTransaction = bs58.decode(beSignedTx.transaction);
@@ -214,16 +222,16 @@ function prepareTransaction(
   selectedAccount: any,
   networkChoice: NetworkName,
   conversationId: string,
+  query: string,
 ): any {
   const web3 = new Web3(window.ethereum);
 
   const contractAddress = contractAddresses[networkChoice];
   const contract = new web3.eth.Contract(oraAbi, contractAddress);
   const modelId = 11;
-  const prompt = "Hello, what is your name?";
 
   // Encode the transaction data
-  const txData = contract.methods.calculateAIResult(modelId, prompt).encodeABI();
+  const txData = contract.methods.calculateAIResult(modelId, query).encodeABI();
 
   const txObject = {
     to: contractAddress,

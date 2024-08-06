@@ -1,5 +1,8 @@
 import { IOraValidate } from "@/types/ora-network";
-import { validateOraTxResponseSchema } from "@/validations/ora-network";
+import {
+  validateOraAiJudgeQueryResponseSchema,
+  validateOraTxResponseSchema,
+} from "@/validations/ora-network";
 
 import createApi from "./api-factory";
 
@@ -11,8 +14,15 @@ const validateTx = async (data: IOraValidate) => {
     .then((res) => validateOraTxResponseSchema.parse(res.data));
 };
 
+const getAiJudgeQuery = async (conversationId: string) => {
+  return await oraNetworkApi
+    .get("query/" + conversationId)
+    .then((res) => validateOraAiJudgeQueryResponseSchema.parse(res.data));
+};
+
 const oraNetworkService = {
   validateTx,
+  getAiJudgeQuery,
 };
 
 export default oraNetworkService;
