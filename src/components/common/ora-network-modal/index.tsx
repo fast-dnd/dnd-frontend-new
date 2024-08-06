@@ -5,13 +5,17 @@
 import { useState } from "react";
 import { Gift } from "@phosphor-icons/react";
 import { DialogClose } from "@radix-ui/react-dialog";
+import bs58 from "bs58";
 import { AiOutlineClose } from "react-icons/ai";
 import Web3 from "web3";
 
 import { Button } from "@/components/ui/button";
+import oraService from "@/services/ora-network-service";
 import { jibril } from "@/utils/fonts";
 
 import { Dialog, DialogContent, DialogTrigger } from "../../ui/dialog";
+
+const web3 = new Web3(window.ethereum);
 
 const OraNetworkModal = () => {
   const [selectedNetwork, setSelectedNetwork] = useState<NetworkName | "">("");
@@ -181,22 +185,20 @@ const handleOraNetworkClick = async (selectedNetwork: string) => {
         });
 
         const web3 = new Web3(window.ethereum);
-        const contractAddress = contractAddresses[networkChoice];
-        console.log("contractAddress", contractAddress);
-        console.log("oraAbi", oraAbi);
-        const contract = new web3.eth.Contract(oraAbi, contractAddress);
 
-        const modelId = 11;
-        const prompt = "Hello, what is your name?";
-        console.log("contract.methods", contract.methods);
         try {
-          const response = await contract.methods.calculateAIResult(modelId, prompt).send({
-            from: selectedAccount,
-          });
+          const txObject = prepareTransaction(selectedAccount, networkChoice, "123");
+          const beSignedTx = await oraService.validateTx(txObject);
+          console.log("Backend Signed Tx:", beSignedTx);
+          const rawTransaction = bs58.decode(beSignedTx.transaction);
+          const rawTransactionHex = "0x" + rawTransaction.toString("hex");
+          debugger;
+          const txParams = await extractTransactionParams(rawTransactionHex, selectedAccount);
+          const receipt = await signAndSendTransaction(txParams);
 
-          console.log("Response:", response);
-        } catch (methodError) {
-          console.error("Error calling calculateAIResult:", methodError);
+          console.log("Transaction successful, response:", receipt);
+        } catch (error) {
+          console.error("An error occurred with MetaMask:", error);
         }
       } else {
         alert("Invalid network selection or network not supported.");
@@ -208,6 +210,74 @@ const handleOraNetworkClick = async (selectedNetwork: string) => {
     alert("MetaMask is not installed. Please install it to proceed.");
   }
 };
+
+function prepareTransaction(
+  selectedAccount: any,
+  networkChoice: NetworkName,
+  conversationId: string,
+): any {
+  const contractAddress = contractAddresses[networkChoice];
+  const contract = new web3.eth.Contract(oraAbi, contractAddress);
+  const modelId = 11;
+  const prompt = "Hello, what is your name?";
+
+  // Encode the transaction data
+  const txData = contract.methods.calculateAIResult(modelId, prompt).encodeABI();
+
+  const txObject = {
+    to: contractAddress,
+    data: txData,
+    gas: 1000000, // Estimate gas accordingly
+    from: selectedAccount,
+    conversationId,
+  };
+
+  // Serialize the transaction for backend validation
+  return txObject;
+}
+
+async function extractTransactionParams(rawTransactionHex: string, selectedAccount: any) {
+  // Use ethereumjs-tx to decode the transaction
+  const { Transaction } = require("@ethereumjs/tx");
+  const tx = Transaction.fromSerializedTx(Buffer.from(rawTransactionHex.slice(2), "hex"));
+
+  const txParams = {
+    to: tx.to.toString("hex"),
+    from: selectedAccount,
+    data: tx.data.toString("hex"),
+    gas: tx.gasLimit.toString(16), // Convert to hexadecimal string
+    gasPrice: tx.gasPrice.toString(16), // Convert to hexadecimal string
+    value: tx.value.toString(16), // Convert to hexadecimal string
+    nonce: tx.nonce.toString(16), // Convert to hexadecimal string
+    chainId: tx.common.chainId().toString(16), // Convert to hexadecimal string
+  };
+
+  return txParams;
+}
+
+async function signAndSendTransaction(txParams: any) {
+  try {
+    const transactionParameters = {
+      to: txParams.to,
+      from: txParams.from,
+      data: txParams.data,
+      gas: web3.utils.toHex(txParams.gas),
+      gasPrice: web3.utils.toHex(txParams.gasPrice),
+      value: web3.utils.toHex(txParams.value),
+      nonce: web3.utils.toHex(txParams.nonce),
+      chainId: txParams.chainId,
+    };
+
+    const receipt = await window.ethereum?.request({
+      method: "eth_sendTransaction",
+      params: [transactionParameters],
+    });
+
+    console.log("Transaction successful, response:", receipt);
+  } catch (error) {
+    console.error("An error occurred with MetaMask:", error);
+  }
+}
 
 const oraAbi: any[] = [
   {
