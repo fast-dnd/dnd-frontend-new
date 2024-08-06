@@ -3,6 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useState } from "react";
+import { TransactionFactory } from "@ethereumjs/tx";
 import { Gift } from "@phosphor-icons/react";
 import { DialogClose } from "@radix-ui/react-dialog";
 import bs58 from "bs58";
@@ -14,8 +15,6 @@ import oraService from "@/services/ora-network-service";
 import { jibril } from "@/utils/fonts";
 
 import { Dialog, DialogContent, DialogTrigger } from "../../ui/dialog";
-
-const web3 = new Web3(window.ethereum);
 
 const OraNetworkModal = () => {
   const [selectedNetwork, setSelectedNetwork] = useState<NetworkName | "">("");
@@ -204,7 +203,7 @@ const handleOraNetworkClick = async (selectedNetwork: string) => {
         alert("Invalid network selection or network not supported.");
       }
     } catch (error) {
-      console.error("An error occurred with MetaMask:", error);
+      console.error("An error occurred whille handling ora network click:", error);
     }
   } else {
     alert("MetaMask is not installed. Please install it to proceed.");
@@ -216,6 +215,8 @@ function prepareTransaction(
   networkChoice: NetworkName,
   conversationId: string,
 ): any {
+  const web3 = new Web3(window.ethereum);
+
   const contractAddress = contractAddresses[networkChoice];
   const contract = new web3.eth.Contract(oraAbi, contractAddress);
   const modelId = 11;
@@ -238,15 +239,14 @@ function prepareTransaction(
 
 async function extractTransactionParams(rawTransactionHex: string, selectedAccount: any) {
   // Use ethereumjs-tx to decode the transaction
-  const { Transaction } = require("@ethereumjs/tx");
-  const tx = Transaction.fromSerializedTx(Buffer.from(rawTransactionHex.slice(2), "hex"));
+  // @ts-ignore
+  const tx = TransactionFactory.fromSerializedData(Buffer.from(rawTransactionHex.slice(2), "hex"));
 
   const txParams = {
-    to: tx.to.toString("hex"),
+    to: tx.to?.toString(),
     from: selectedAccount,
-    data: tx.data.toString("hex"),
+    data: tx.data.toString(),
     gas: tx.gasLimit.toString(16), // Convert to hexadecimal string
-    gasPrice: tx.gasPrice.toString(16), // Convert to hexadecimal string
     value: tx.value.toString(16), // Convert to hexadecimal string
     nonce: tx.nonce.toString(16), // Convert to hexadecimal string
     chainId: tx.common.chainId().toString(16), // Convert to hexadecimal string
@@ -257,12 +257,13 @@ async function extractTransactionParams(rawTransactionHex: string, selectedAccou
 
 async function signAndSendTransaction(txParams: any) {
   try {
+    const web3 = new Web3(window.ethereum);
+
     const transactionParameters = {
       to: txParams.to,
       from: txParams.from,
       data: txParams.data,
       gas: web3.utils.toHex(txParams.gas),
-      gasPrice: web3.utils.toHex(txParams.gasPrice),
       value: web3.utils.toHex(txParams.value),
       nonce: web3.utils.toHex(txParams.nonce),
       chainId: txParams.chainId,
@@ -275,7 +276,7 @@ async function signAndSendTransaction(txParams: any) {
 
     console.log("Transaction successful, response:", receipt);
   } catch (error) {
-    console.error("An error occurred with MetaMask:", error);
+    console.error("An error occurred with while signing tranasction:", error);
   }
 }
 
