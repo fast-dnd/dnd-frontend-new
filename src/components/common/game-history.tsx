@@ -8,8 +8,6 @@ import Spinner from "@/components/ui/spinner";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetRoomHistory from "@/hooks/queries/use-get-room-history";
 
-import OraNetworkModal from "./ora-network-modal";
-
 const GameHistory = ({ showFull = false }) => {
   const {
     data: roomsData,
@@ -53,7 +51,6 @@ const GameHistory = ({ showFull = false }) => {
         {!showFull && (
           <>
             <Button href="/profile?activeTab=GAME HISTORY">SHOW ENTIRE GAME HISTORY</Button>
-            <OraNetworkModal />
           </>
         )}
       </div>

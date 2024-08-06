@@ -16,7 +16,11 @@ import { jibril } from "@/utils/fonts";
 
 import { Dialog, DialogContent, DialogTrigger } from "../../ui/dialog";
 
-const OraNetworkModal = () => {
+type OraNetworkModalProps = {
+  conversationId: string; // Assuming conversationId is a string
+};
+
+const OraNetworkModal = ({ conversationId }: OraNetworkModalProps) => {
   const [selectedNetwork, setSelectedNetwork] = useState<NetworkName | "">("");
 
   const handleNetworkSelection = (network: NetworkName) => {
@@ -69,7 +73,7 @@ const OraNetworkModal = () => {
             ))}
           </div>
           <Button
-            onClick={() => handleOraNetworkClick(selectedNetwork)}
+            onClick={() => handleOraNetworkClick(selectedNetwork, conversationId)}
             className="hover:bg-primary-dark bg-primary"
             disabled={!selectedNetwork}
           >
@@ -168,7 +172,7 @@ const NetworkButton: React.FC<NetworkButtonProps> = ({ networkName, onClick, isS
   );
 };
 
-const handleOraNetworkClick = async (selectedNetwork: string) => {
+const handleOraNetworkClick = async (selectedNetwork: string, conversationId: string) => {
   if (typeof window.ethereum !== "undefined") {
     try {
       await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -186,20 +190,17 @@ const handleOraNetworkClick = async (selectedNetwork: string) => {
         const web3 = new Web3(window.ethereum);
 
         try {
-          const aiJudgeQuery = await oraService.getAiJudgeQuery(
-            "a1227079-2577-4c32-a32a-59232361fd2e",
-          );
+          const aiJudgeQuery = await oraService.getAiJudgeQuery(conversationId);
           const txObject = prepareTransaction(
             selectedAccount,
             networkChoice,
-            "a1227079-2577-4c32-a32a-59232361fd2e",
+            conversationId,
             aiJudgeQuery.query,
           );
           const beSignedTx = await oraService.validateTx(txObject);
           console.log("Backend Signed Tx:", beSignedTx);
           const rawTransaction = bs58.decode(beSignedTx.transaction);
           const rawTransactionHex = "0x" + rawTransaction.toString("hex");
-          debugger;
           const txParams = await extractTransactionParams(rawTransactionHex, selectedAccount);
           const receipt = await signAndSendTransaction(txParams);
 

@@ -14,6 +14,8 @@ import {
   moveStore,
 } from "@/app/(authed)/game/[conversationId]/stores/move-store";
 
+import OraNetworkModal from "./ora-network-modal";
+
 const RoomItem = React.forwardRef<
   HTMLDivElement,
   {
@@ -56,6 +58,7 @@ const RoomItem = React.forwardRef<
           <Book1 variant="Bold" size={40} />
         </Link>
       )}
+      <OraNetworkModal conversationId={room.conversationId} />
     </div>
   );
 });
