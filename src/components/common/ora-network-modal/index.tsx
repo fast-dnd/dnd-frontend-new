@@ -4,7 +4,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useState } from "react";
 import { TransactionFactory } from "@ethereumjs/tx";
-import { Gift } from "@phosphor-icons/react";
+import { Knife } from "@phosphor-icons/react";
 import { DialogClose } from "@radix-ui/react-dialog";
 import bs58 from "bs58";
 import { AiOutlineClose } from "react-icons/ai";
@@ -30,12 +30,12 @@ const OraNetworkModal = ({ conversationId }: OraNetworkModalProps) => {
     <Dialog>
       <DialogTrigger asChild className="max-lg:hidden">
         <button className="flex cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black p-4 transition-all duration-200 hover:bg-[#1B1B1B]">
-          <Gift size={32} />
+          <Knife size={32} />
         </button>
       </DialogTrigger>
       <DialogTrigger asChild className="lg:hidden">
         <Button className="gap-4 py-4" variant="sidebar">
-          <Gift className="size-5 shrink-0 fill-white" />
+          <Knife className="size-5 shrink-0 fill-white" />
           <p className="flex-1 text-center">claim reward</p>
         </Button>
       </DialogTrigger>
