@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable tailwindcss/no-custom-classname */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TransactionFactory } from "@ethereumjs/tx";
 import { Knife } from "@phosphor-icons/react";
 import { DialogClose } from "@radix-ui/react-dialog";
@@ -15,6 +15,7 @@ import oraService from "@/services/ora-network-service";
 import { jibril } from "@/utils/fonts";
 
 import { Dialog, DialogContent, DialogTrigger } from "../../ui/dialog";
+import Collapsible from "./collapsible";
 
 type OraNetworkModalProps = {
   conversationId: string; // Assuming conversationId is a string
@@ -22,6 +23,25 @@ type OraNetworkModalProps = {
 
 const OraNetworkModal = ({ conversationId }: OraNetworkModalProps) => {
   const [selectedNetwork, setSelectedNetwork] = useState<NetworkName | "">("");
+  const [aiJudgeQuery, setAiJudgeQuery] = useState<string>(""); // State to store the AI Judge query
+  const [loading, setLoading] = useState<boolean>(true); // State to manage loading state
+
+  useEffect(() => {
+    const fetchAiJudgeQuery = async () => {
+      try {
+        setLoading(true);
+        const aiJudgeResponse = await oraService.getAiJudgeQuery(conversationId);
+        console.log(aiJudgeResponse.query);
+        setAiJudgeQuery(aiJudgeResponse.query);
+      } catch (error) {
+        console.error("Failed to fetch AI Judge query:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAiJudgeQuery();
+  }, [conversationId]);
 
   const handleNetworkSelection = (network: NetworkName) => {
     setSelectedNetwork(network);
@@ -62,6 +82,17 @@ const OraNetworkModal = ({ conversationId }: OraNetworkModalProps) => {
             By selecting network and executing transaction given transcript will be evaulated by AI
             Judge and depending on its rating you will climb ORA network leaderboard !
           </p>
+          <Collapsible title="See query that will be sent ti AI Judge ">
+            {loading ? (
+              <p className="text-center font-light lg:text-xl lg:tracking-[1.5px]">
+                Loading AI Judge Query...
+              </p>
+            ) : (
+              <p className="text-center font-light lg:text-xl lg:tracking-[1.5px]">
+                {aiJudgeQuery}
+              </p>
+            )}
+          </Collapsible>
           <div className="mt-4 flex flex-wrap justify-center gap-4">
             {Object.entries(networks).map(([name, id]) => (
               <NetworkButton
@@ -73,7 +104,7 @@ const OraNetworkModal = ({ conversationId }: OraNetworkModalProps) => {
             ))}
           </div>
           <Button
-            onClick={() => handleOraNetworkClick(selectedNetwork, conversationId)}
+            onClick={() => handleOraNetworkClick(selectedNetwork, conversationId, aiJudgeQuery)}
             className="hover:bg-primary-dark bg-primary"
             disabled={!selectedNetwork}
           >
@@ -172,7 +203,11 @@ const NetworkButton: React.FC<NetworkButtonProps> = ({ networkName, onClick, isS
   );
 };
 
-const handleOraNetworkClick = async (selectedNetwork: string, conversationId: string) => {
+const handleOraNetworkClick = async (
+  selectedNetwork: string,
+  conversationId: string,
+  aiJudgeQuery: string,
+) => {
   if (typeof window.ethereum !== "undefined") {
     try {
       await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -190,12 +225,11 @@ const handleOraNetworkClick = async (selectedNetwork: string, conversationId: st
         const web3 = new Web3(window.ethereum);
 
         try {
-          const aiJudgeQuery = await oraService.getAiJudgeQuery(conversationId);
           const txObject = prepareTransaction(
             selectedAccount,
             networkChoice,
             conversationId,
-            aiJudgeQuery.query,
+            aiJudgeQuery,
           );
           const beSignedTx = await oraService.validateTx(txObject);
           console.log("Backend Signed Tx:", beSignedTx);
