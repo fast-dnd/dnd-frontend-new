@@ -145,11 +145,11 @@ const networkLogos: { [key in NetworkName]: string } = {
   Mantle: "/images/logos/mantle-logo.png",
 };
 const networks: Record<NetworkName, string> = {
-  Ethereum: "0x1",
+  Ethereum: "0xaa36a7", //0x1
   // "Ethereum Sepolia": "0xaa36a7",
   Optimism: "0xa",
   // "Optimism Sepolia": "0xaa37dc",
-  Arbitrum: "0xa4b1",
+  Arbitrum: "0x66eee", //"0xa4b1",
   // "Arbitrum Sepolia Testnet": "0x66eee",
   Manta: "0xa9",
   // "Manta Sepolia Testnet": "0x34816e",
@@ -160,11 +160,11 @@ const networks: Record<NetworkName, string> = {
 };
 
 const contractAddresses: { [key in NetworkName]: string } = {
-  Ethereum: "0x61423153f111BCFB28dd264aBA8d9b5C452228D2",
+  Ethereum: "0x696c83111a49eBb94267ecf4DDF6E220D5A80129", //0x61423153f111BCFB28dd264aBA8d9b5C452228D2
   // "Ethereum Sepolia": "0x696c83111a49eBb94267ecf4DDF6E220D5A80129",
   Optimism: "0xBC24514E541d5CBAAC1DD155187A171a593e5CF6",
   // "Optimism Sepolia": "0xf6919ebb1bFdD282c4edc386bFE3Dea1a1D8AC16",
-  Arbitrum: "0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD",
+  Arbitrum: "0xBC24514E541d5CBAAC1DD155187A171a593e5CF6", //0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD
   // "Arbitrum Sepolia Testnet": "0xBC24514E541d5CBAAC1DD155187A171a593e5CF6",
   Manta: "0x523622DfEd0243B0DF80CC9275764B0f432D33E3",
   // "Manta Sepolia Testnet": "0x3bfD1Cc919bfeC7795b600E764aDa001b58f122a",
@@ -284,11 +284,10 @@ async function extractTransactionParams(rawTransactionHex: string, selectedAccou
   // Use ethereumjs-tx to decode the transaction
   // @ts-ignore
   const tx = TransactionFactory.fromSerializedData(Buffer.from(rawTransactionHex.slice(2), "hex"));
-
   const txParams = {
     to: tx.to?.toString(),
     from: selectedAccount,
-    data: tx.data.toString(),
+    data: Buffer.from(tx.data).toString("hex"),
     gas: tx.gasLimit.toString(16), // Convert to hexadecimal string
     value: tx.value.toString(16), // Convert to hexadecimal string
     nonce: tx.nonce.toString(16), // Convert to hexadecimal string
@@ -306,11 +305,12 @@ async function signAndSendTransaction(txParams: any) {
       to: txParams.to,
       from: txParams.from,
       data: txParams.data,
-      gas: web3.utils.toHex(txParams.gas),
-      value: web3.utils.toHex(txParams.value),
-      nonce: web3.utils.toHex(txParams.nonce),
+      // gas: web3.utils.toHex(txParams.gas),
+      // value: web3.utils.toHex(txParams.value),
+      // nonce: web3.utils.toHex(txParams.nonce),
       chainId: txParams.chainId,
     };
+    console.log("transactionParameters", transactionParameters);
 
     const receipt = await window.ethereum?.request({
       method: "eth_sendTransaction",
