@@ -123,12 +123,12 @@ type NetworkName =
   // | "Optimism Sepolia"
   | "Arbitrum"
   // | "Arbitrum Sepolia Testnet"
-  | "Manta"
+  // | "Manta"
   // | "Manta Sepolia Testnet"
   | "Linea"
-  | "Base"
-  | "Polygon"
-  | "Mantle";
+  // | "Base"
+  | "Polygon";
+// | "Mantle";
 
 const networkLogos: { [key in NetworkName]: string } = {
   Ethereum: "/images/logos/ethereum-eth-logo.png",
@@ -137,12 +137,12 @@ const networkLogos: { [key in NetworkName]: string } = {
   // "Optimism Sepolia": "/images/logos/optimism-ethereum-op-logo.png",
   Arbitrum: "/images/logos/arbitrum-arb-logo.png",
   // "Arbitrum Sepolia Testnet": "/images/logos/ethereum-eth-logo.png",
-  Manta: "/images/logos/manta-logo.png",
+  // Manta: "/images/logos/manta-logo.png",
   // "Manta Sepolia Testnet": "/images/logos/ethereum-eth-logo.png",
   Linea: "/images/logos/linea-logo.png",
-  Base: "/images/logos/base-network-logo.png",
+  // Base: "/images/logos/base-network-logo.png",
   Polygon: "/images/logos/polygon-logo.png",
-  Mantle: "/images/logos/mantle-logo.png",
+  // Mantle: "/images/logos/mantle-logo.png",
 };
 const networks: Record<NetworkName, string> = {
   Ethereum: "0xaa36a7", //0x1
@@ -151,12 +151,12 @@ const networks: Record<NetworkName, string> = {
   // "Optimism Sepolia": "0xaa37dc",
   Arbitrum: "0x66eee", //"0xa4b1",
   // "Arbitrum Sepolia Testnet": "0x66eee",
-  Manta: "0xa9",
+  // Manta: "0xa9",
   // "Manta Sepolia Testnet": "0x34816e",
   Linea: "0xe708",
-  Base: "0x2105",
+  // Base: "0x2105",
   Polygon: "0x89",
-  Mantle: "0x1388",
+  // Mantle: "0x1388",
 };
 
 const contractAddresses: { [key in NetworkName]: string } = {
@@ -166,12 +166,12 @@ const contractAddresses: { [key in NetworkName]: string } = {
   // "Optimism Sepolia": "0xf6919ebb1bFdD282c4edc386bFE3Dea1a1D8AC16",
   Arbitrum: "0xBC24514E541d5CBAAC1DD155187A171a593e5CF6", //0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD
   // "Arbitrum Sepolia Testnet": "0xBC24514E541d5CBAAC1DD155187A171a593e5CF6",
-  Manta: "0x523622DfEd0243B0DF80CC9275764B0f432D33E3",
+  // Manta: "0x523622DfEd0243B0DF80CC9275764B0f432D33E3",
   // "Manta Sepolia Testnet": "0x3bfD1Cc919bfeC7795b600E764aDa001b58f122a",
   Linea: "0xb880D47D3894D99157B52A7F869aB3B1E2D4349d",
-  Base: "0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD",
+  // Base: "0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD",
   Polygon: "0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD",
-  Mantle: "0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD",
+  // Mantle: "0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD",
 };
 
 interface NetworkButtonProps {
@@ -222,10 +222,8 @@ const handleOraNetworkClick = async (
           params: [{ chainId: networks[networkChoice] }],
         });
 
-        const web3 = new Web3(window.ethereum);
-
         try {
-          const txObject = prepareTransaction(
+          const txObject = prepareAiTxForBe(
             selectedAccount,
             networkChoice,
             conversationId,
@@ -235,8 +233,13 @@ const handleOraNetworkClick = async (
           console.log("Backend Signed Tx:", beSignedTx);
           const rawTransaction = bs58.decode(beSignedTx.transaction);
           const rawTransactionHex = "0x" + rawTransaction.toString("hex");
-          const txParams = await extractTransactionParams(rawTransactionHex, selectedAccount);
-          const receipt = await signAndSendTransaction(txParams);
+          const fee = await estimateFee(networkChoice, 11);
+          const aiQueryTxParams = await extractAiQueryTransactionParams(
+            rawTransactionHex,
+            selectedAccount,
+            fee,
+          );
+          const receipt = await signAndSendTransaction(aiQueryTxParams);
 
           console.log("Transaction successful, response:", receipt);
         } catch (error) {
@@ -253,7 +256,7 @@ const handleOraNetworkClick = async (
   }
 };
 
-function prepareTransaction(
+function prepareAiTxForBe(
   selectedAccount: any,
   networkChoice: NetworkName,
   conversationId: string,
@@ -271,7 +274,6 @@ function prepareTransaction(
   const txObject = {
     to: contractAddress,
     data: txData,
-    gas: 1000000, // Estimate gas accordingly
     from: selectedAccount,
     conversationId,
   };
@@ -280,7 +282,31 @@ function prepareTransaction(
   return txObject;
 }
 
-async function extractTransactionParams(rawTransactionHex: string, selectedAccount: any) {
+async function estimateFee(networkChoice: NetworkName, modelId: number): Promise<any> {
+  const web3 = new Web3(window.ethereum);
+
+  const contractAddress = contractAddresses[networkChoice];
+  const contract = new web3.eth.Contract(oraAbi, contractAddress);
+
+  try {
+    // Call the estimateFee method on the contract
+    const estimatedFee: string = await contract.methods.estimateFee(modelId).call();
+
+    console.log("Estimated Fee in Wei:", estimatedFee);
+    const feeInEther = web3.utils.fromWei(estimatedFee, "ether");
+    console.log("Estimated Fee in Ether:", feeInEther);
+    return feeInEther;
+  } catch (error) {
+    console.error("Error estimating fee:", error);
+    throw error; // Optionally rethrow the error if you want to handle it elsewhere
+  }
+}
+
+async function extractAiQueryTransactionParams(
+  rawTransactionHex: string,
+  selectedAccount: any,
+  estimatedFee: string,
+) {
   // Use ethereumjs-tx to decode the transaction
   // @ts-ignore
   const tx = TransactionFactory.fromSerializedData(Buffer.from(rawTransactionHex.slice(2), "hex"));
@@ -288,10 +314,8 @@ async function extractTransactionParams(rawTransactionHex: string, selectedAccou
     to: tx.to?.toString(),
     from: selectedAccount,
     data: Buffer.from(tx.data).toString("hex"),
-    gas: tx.gasLimit.toString(16), // Convert to hexadecimal string
-    value: tx.value.toString(16), // Convert to hexadecimal string
-    nonce: tx.nonce.toString(16), // Convert to hexadecimal string
-    chainId: tx.common.chainId().toString(16), // Convert to hexadecimal string
+    value: estimatedFee,
+    chainId: tx.common.chainId().toString(16),
   };
 
   return txParams;
@@ -299,16 +323,12 @@ async function extractTransactionParams(rawTransactionHex: string, selectedAccou
 
 async function signAndSendTransaction(txParams: any) {
   try {
-    const web3 = new Web3(window.ethereum);
-
     const transactionParameters = {
       to: txParams.to,
       from: txParams.from,
       data: txParams.data,
-      // gas: web3.utils.toHex(txParams.gas),
-      // value: web3.utils.toHex(txParams.value),
-      // nonce: web3.utils.toHex(txParams.nonce),
       chainId: txParams.chainId,
+      value: txParams.value,
     };
     console.log("transactionParameters", transactionParameters);
 
