@@ -3,10 +3,8 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useEffect, useState } from "react";
-import { TransactionFactory } from "@ethereumjs/tx";
 import { Knife } from "@phosphor-icons/react";
 import { DialogClose } from "@radix-ui/react-dialog";
-import bs58 from "bs58";
 import { AiOutlineClose } from "react-icons/ai";
 import Web3 from "web3";
 
@@ -223,25 +221,11 @@ const handleOraNetworkClick = async (
         });
 
         try {
-          const txObject = prepareAiTxForBe(
-            selectedAccount,
-            networkChoice,
-            conversationId,
-            aiJudgeQuery,
-          );
-          const beSignedTx = await oraService.validateTx(txObject);
-          console.log("Backend Signed Tx:", beSignedTx);
-          const rawTransaction = bs58.decode(beSignedTx.transaction);
-          const rawTransactionHex = "0x" + rawTransaction.toString("hex");
           const fee = await estimateFee(networkChoice, 11);
-          const aiQueryTxParams = await extractAiQueryTransactionParams(
-            rawTransactionHex,
-            selectedAccount,
-            fee,
-          );
-          const receipt = await signAndSendTransaction(aiQueryTxParams);
 
-          console.log("Transaction successful, response:", receipt);
+          const tx = await calculateAiTx(selectedAccount, networkChoice, aiJudgeQuery, fee);
+
+          console.log("Transaction successful, response:", tx);
         } catch (error) {
           console.error("An error occurred with MetaMask:", error);
         }
@@ -256,11 +240,11 @@ const handleOraNetworkClick = async (
   }
 };
 
-function prepareAiTxForBe(
+function calculateAiTx(
   selectedAccount: any,
   networkChoice: NetworkName,
-  conversationId: string,
   query: string,
+  estimatedFee: string,
 ): any {
   const web3 = new Web3(window.ethereum);
 
@@ -269,77 +253,27 @@ function prepareAiTxForBe(
   const modelId = 11;
 
   // Encode the transaction data
-  const txData = contract.methods.calculateAIResult(modelId, query).encodeABI();
-
-  const txObject = {
-    to: contractAddress,
-    data: txData,
+  const tx = contract.methods.calculateAIResult(modelId, query).send({
     from: selectedAccount,
-    conversationId,
-  };
+    value: estimatedFee,
+  });
 
   // Serialize the transaction for backend validation
-  return txObject;
+  return tx;
 }
 
-async function estimateFee(networkChoice: NetworkName, modelId: number): Promise<any> {
+async function estimateFee(networkChoice: NetworkName, modelId: number): Promise<string> {
   const web3 = new Web3(window.ethereum);
 
   const contractAddress = contractAddresses[networkChoice];
   const contract = new web3.eth.Contract(oraAbi, contractAddress);
 
   try {
-    // Call the estimateFee method on the contract
     const estimatedFee: string = await contract.methods.estimateFee(modelId).call();
-
-    console.log("Estimated Fee in Wei:", estimatedFee);
-    const feeInEther = web3.utils.fromWei(estimatedFee, "ether");
-    console.log("Estimated Fee in Ether:", feeInEther);
-    return feeInEther;
+    return estimatedFee;
   } catch (error) {
     console.error("Error estimating fee:", error);
     throw error; // Optionally rethrow the error if you want to handle it elsewhere
-  }
-}
-
-async function extractAiQueryTransactionParams(
-  rawTransactionHex: string,
-  selectedAccount: any,
-  estimatedFee: string,
-) {
-  // Use ethereumjs-tx to decode the transaction
-  // @ts-ignore
-  const tx = TransactionFactory.fromSerializedData(Buffer.from(rawTransactionHex.slice(2), "hex"));
-  const txParams = {
-    to: tx.to?.toString(),
-    from: selectedAccount,
-    data: Buffer.from(tx.data).toString("hex"),
-    value: estimatedFee,
-    chainId: tx.common.chainId().toString(16),
-  };
-
-  return txParams;
-}
-
-async function signAndSendTransaction(txParams: any) {
-  try {
-    const transactionParameters = {
-      to: txParams.to,
-      from: txParams.from,
-      data: txParams.data,
-      chainId: txParams.chainId,
-      value: txParams.value,
-    };
-    console.log("transactionParameters", transactionParameters);
-
-    const receipt = await window.ethereum?.request({
-      method: "eth_sendTransaction",
-      params: [transactionParameters],
-    });
-
-    console.log("Transaction successful, response:", receipt);
-  } catch (error) {
-    console.error("An error occurred with while signing tranasction:", error);
   }
 }
 
