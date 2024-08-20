@@ -1,4 +1,5 @@
-export interface IOraValidate {
+export interface IOraCommitToTxHash {
   conversationId: string;
-  txData: any;
+  communityId: string;
+  txHash: any;
 }

@@ -23,7 +23,6 @@ const RoomItem = React.forwardRef<
   }
 >(({ room }, ref) => {
   const roomState = roomStateMap(room.state, room.turn);
-
   return (
     <div
       key={room.conversationId}
@@ -58,7 +57,11 @@ const RoomItem = React.forwardRef<
           <Book1 variant="Bold" size={40} />
         </Link>
       )}
-      <OraNetworkModal conversationId={room.conversationId} />
+      <OraNetworkModal
+        conversationId={room.conversationId}
+        aiJudgeQuery={room.aiJudgeQuery}
+        aiJudgeProcessedQuery={room.aiJudgeProcessedQuery}
+      />
     </div>
   );
 });

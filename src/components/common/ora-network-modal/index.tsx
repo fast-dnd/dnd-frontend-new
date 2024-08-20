@@ -3,34 +3,53 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useEffect, useState } from "react";
-import { Knife } from "@phosphor-icons/react";
+import { Check, CheckCircle, Sword } from "@phosphor-icons/react";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { AiOutlineClose } from "react-icons/ai";
 import Web3 from "web3";
 
 import { Button } from "@/components/ui/button";
 import oraService from "@/services/ora-network-service";
+import tournamentService from "@/services/tournaments-service";
+import { IOraCommitToTxHash } from "@/types/ora-network";
 import { jibril } from "@/utils/fonts";
 
 import { Dialog, DialogContent, DialogTrigger } from "../../ui/dialog";
 import Collapsible from "./collapsible";
 
 type OraNetworkModalProps = {
-  conversationId: string; // Assuming conversationId is a string
+  conversationId: string;
+  aiJudgeQuery: string | undefined;
+  aiJudgeProcessedQuery: boolean | undefined;
 };
 
-const OraNetworkModal = ({ conversationId }: OraNetworkModalProps) => {
+const OraNetworkModal = ({
+  conversationId,
+  aiJudgeQuery,
+  aiJudgeProcessedQuery,
+}: OraNetworkModalProps) => {
   const [selectedNetwork, setSelectedNetwork] = useState<NetworkName | "">("");
-  const [aiJudgeQuery, setAiJudgeQuery] = useState<string>(""); // State to store the AI Judge query
-  const [loading, setLoading] = useState<boolean>(true); // State to manage loading state
+  const [selectedCommunity, setSelectedCommunity] = useState<string>("");
+  const [communities, setCommunities] = useState<any[]>([]);
+  const [selectedAiJudgeQuery, setAiJudgeQuery] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchAiJudgeQuery = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const aiJudgeResponse = await oraService.getAiJudgeQuery(conversationId);
-        console.log(aiJudgeResponse.query);
-        setAiJudgeQuery(aiJudgeResponse.query);
+        if (!aiJudgeQuery) {
+          const aiJudgeResponse = await oraService.getAiJudgeQuery(conversationId);
+          setAiJudgeQuery(aiJudgeResponse.query);
+        } else {
+          setAiJudgeQuery(aiJudgeQuery);
+        }
+        const tournamentResponse = await tournamentService.getLatestTournament(); // No conversationId passed
+        console.log(tournamentResponse);
+        setCommunities(tournamentResponse.communities);
+        if (tournamentResponse.communities.length > 0) {
+          setSelectedCommunity(tournamentResponse.communities[0]._id);
+        }
       } catch (error) {
         console.error("Failed to fetch AI Judge query:", error);
       } finally {
@@ -38,7 +57,7 @@ const OraNetworkModal = ({ conversationId }: OraNetworkModalProps) => {
       }
     };
 
-    fetchAiJudgeQuery();
+    fetchData();
   }, [conversationId]);
 
   const handleNetworkSelection = (network: NetworkName) => {
@@ -47,13 +66,24 @@ const OraNetworkModal = ({ conversationId }: OraNetworkModalProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild className="max-lg:hidden">
-        <button className="flex cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black p-4 transition-all duration-200 hover:bg-[#1B1B1B]">
-          <Knife size={32} />
+        <button
+          className="flex cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black p-4 transition-all duration-200 hover:bg-[#1B1B1B]"
+          disabled={aiJudgeProcessedQuery}
+        >
+          {aiJudgeProcessedQuery ? (
+            <CheckCircle size={32} color="green" />
+          ) : (
+            <Sword size={32} color="orange" />
+          )}
         </button>
       </DialogTrigger>
       <DialogTrigger asChild className="lg:hidden">
         <Button className="gap-4 py-4" variant="sidebar">
-          <Knife className="size-5 shrink-0 fill-white" />
+          {aiJudgeProcessedQuery ? (
+            <CheckCircle size={32} color="green" />
+          ) : (
+            <Sword size={32} color="orange" />
+          )}{" "}
           <p className="flex-1 text-center">claim reward</p>
         </Button>
       </DialogTrigger>
@@ -70,7 +100,7 @@ const OraNetworkModal = ({ conversationId }: OraNetworkModalProps) => {
               className="mt-1 text-lg uppercase tracking-widest lg:text-2xl lg:tracking-[6.4px]"
               style={jibril.style}
             >
-              Participate in ORA network Leaderboard
+              Participate in ORA Network Community battles
             </p>
             <div className="size-2 shrink-0 rotate-45 bg-primary" />
           </div>
@@ -87,13 +117,31 @@ const OraNetworkModal = ({ conversationId }: OraNetworkModalProps) => {
               </p>
             ) : (
               <p className="text-center font-light lg:text-xl lg:tracking-[1.5px]">
-                {aiJudgeQuery}
+                {selectedAiJudgeQuery}
               </p>
             )}
           </Collapsible>
+          <p className="ml-2 text-center font-light lg:text-xl lg:tracking-[1.5px]">
+            Select community :
+          </p>
+          <div className="mt-4 flex flex-wrap justify-center gap-4">
+            {communities.map((community) => (
+              <CommunitySelectionButton
+                key={community._id}
+                communityId={community._id}
+                communityName={community.name}
+                onClick={() => setSelectedCommunity(community._id)}
+                communityLogoImgUrl={community.logoImageUrl}
+                isSelected={selectedCommunity === community._id}
+              />
+            ))}
+          </div>
+          <p className="ml-2 text-center font-light lg:text-xl lg:tracking-[1.5px]">
+            Select payment network :
+          </p>
           <div className="mt-4 flex flex-wrap justify-center gap-4">
             {Object.entries(networks).map(([name, id]) => (
-              <NetworkButton
+              <NetworkSelectionButton
                 networkName={name as NetworkName}
                 onClick={() => handleNetworkSelection(name as NetworkName)}
                 networkLogos={networkLogos}
@@ -102,9 +150,16 @@ const OraNetworkModal = ({ conversationId }: OraNetworkModalProps) => {
             ))}
           </div>
           <Button
-            onClick={() => handleOraNetworkClick(selectedNetwork, conversationId, aiJudgeQuery)}
+            onClick={() =>
+              handleOraNetworkClick(
+                selectedNetwork,
+                conversationId,
+                selectedCommunity,
+                selectedAiJudgeQuery,
+              )
+            }
             className="hover:bg-primary-dark bg-primary"
-            disabled={!selectedNetwork}
+            disabled={!selectedNetwork || !selectedCommunity}
           >
             Pay to Compete
           </Button>
@@ -179,7 +234,11 @@ interface NetworkButtonProps {
   isSelected: boolean;
 }
 
-const NetworkButton: React.FC<NetworkButtonProps> = ({ networkName, onClick, isSelected }) => {
+const NetworkSelectionButton: React.FC<NetworkButtonProps> = ({
+  networkName,
+  onClick,
+  isSelected,
+}) => {
   const selectedClass = isSelected ? "ring-4 ring-primary-light" : "";
   return (
     <div className={`network-button-container mt-4 flex justify-center ${selectedClass}`}>
@@ -201,9 +260,46 @@ const NetworkButton: React.FC<NetworkButtonProps> = ({ networkName, onClick, isS
   );
 };
 
+interface CommunityButtonProps {
+  communityId: string;
+  communityName: string;
+  communityLogoImgUrl: string;
+  onClick: (communityId: string) => void;
+  isSelected: boolean;
+}
+
+const CommunitySelectionButton: React.FC<CommunityButtonProps> = ({
+  communityId,
+  communityName,
+  communityLogoImgUrl,
+  onClick,
+  isSelected,
+}) => {
+  const selectedClass = isSelected ? "ring-4 ring-primary-light" : "";
+  return (
+    <div className={`network-button-container mt-4 flex justify-center ${selectedClass}`}>
+      <button
+        onClick={() => onClick(communityId)}
+        className={`network-button hover:bg-primary-dark transform transition duration-300 ease-in-out hover:scale-110 ${
+          isSelected ? "bg-selected" : "bg-normal"
+        }`}
+      >
+        <img
+          src={communityLogoImgUrl}
+          alt={`${communityName} logo`}
+          style={{ width: "100px", height: "100px", objectFit: "contain" }}
+          className="community-logo"
+        />
+        <span className="community-name">{communityName}</span>
+      </button>
+    </div>
+  );
+};
+
 const handleOraNetworkClick = async (
   selectedNetwork: string,
   conversationId: string,
+  communityId: string,
   aiJudgeQuery: string,
 ) => {
   if (typeof window.ethereum !== "undefined") {
@@ -222,9 +318,14 @@ const handleOraNetworkClick = async (
 
         try {
           const fee = await estimateFee(networkChoice, 11);
-
           const tx = await calculateAiTx(selectedAccount, networkChoice, aiJudgeQuery, fee);
-
+          const txHash = tx.transactionHash;
+          let commitData: IOraCommitToTxHash = {
+            conversationId,
+            communityId,
+            txHash,
+          };
+          await oraService.commitToTxHash(commitData);
           console.log("Transaction successful, response:", tx);
         } catch (error) {
           console.error("An error occurred with MetaMask:", error);

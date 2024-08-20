@@ -1,4 +1,4 @@
-import { IOraValidate } from "@/types/ora-network";
+import { IOraCommitToTxHash } from "@/types/ora-network";
 import {
   validateOraAiJudgeQueryResponseSchema,
   validateOraTxResponseSchema,
@@ -8,9 +8,9 @@ import createApi from "./api-factory";
 
 const oraNetworkApi = createApi({ commonPrefix: "ora" });
 
-const validateTx = async (data: IOraValidate) => {
+const commitToTxHash = async (data: IOraCommitToTxHash) => {
   return await oraNetworkApi
-    .post("transaction", data)
+    .post("commitment", data)
     .then((res) => validateOraTxResponseSchema.parse(res.data));
 };
 
@@ -21,7 +21,7 @@ const getAiJudgeQuery = async (conversationId: string) => {
 };
 
 const oraNetworkService = {
-  validateTx,
+  commitToTxHash,
   getAiJudgeQuery,
 };
 

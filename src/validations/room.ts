@@ -124,6 +124,10 @@ export const roomSchema = baseRoomSchema.extend({
   }),
   turn: z.number(),
   conversationId: z.string(),
+  aiJudgeQuery: z.string().optional(),
+  aiJudgeProcessedQuery: z.boolean().optional(),
+  aiJudgeQueryTxHash: z.string().optional(),
+  aiJudgeCommunitId: z.string().optional(),
 });
 
 export const roomHistorySchema = z.object({
