@@ -39,45 +39,50 @@ const Tournament = () => {
 
   return (
     <div className="relative flex flex-col">
-      <h1>{name}</h1>
-      <h2>Season {season}</h2>
-      <div className="overflow-y-auto overscroll-auto bg-black/20">
-        <table className="w-full bg-gray-800 text-white">
-          <thead>
-            <tr>
-              <th className="px-4 py-2 text-left">Community</th>
-              <th className="px-4 py-2 text-center">Engagement</th>
-            </tr>
-          </thead>
-          <tbody>
-            {communities.map((community: any) => (
-              <tr
-                key={community._id}
-                className={cn("cursor-pointer", {
-                  "bg-gray-500": selectedCommunity?._id === community._id, // Highlight if selected
-                  "bg-gray-700": selectedCommunity?._id !== community._id,
-                })}
-                onClick={() => handleSelectCommunity(community)}
-              >
-                <td className="px-4 py-2">
-                  <img
-                    src={community.logoImageUrl}
-                    alt={community.name}
-                    className="mr-2 inline-block h-8 w-8"
-                  />
-                  {community.name}
-                </td>
-                <td className="px-4 py-2 text-center">{community.engagement}</td>
+      <div className="mb-4 flex flex-col items-center rounded-t-md bg-dark-900 py-6">
+        <h1 className="text-2xl font-bold tracking-wide text-white">{name}</h1>
+        <h2 className="text-lg font-semibold text-gray-400">Season {season}</h2>
+      </div>
+      <div className="flex w-full flex-col">
+        <div className="relative flex items-center justify-center gap-4 rounded-t-md bg-dark-900 px-4 py-6"></div>
+        <div className="overflow-y-auto overscroll-auto bg-dark-800">
+          <table className="w-full bg-dark-900 text-white">
+            <thead>
+              <tr className="border-b border-white/50">
+                <th className="px-4 py-2 text-left">Community</th>
+                <th className="px-4 py-2 text-center">Engagement</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {communities.map((community: any) => (
+                <tr
+                  key={community._id}
+                  className={cn("cursor-pointer", {
+                    "bg-blue-800": selectedCommunity?._id === community._id, // Highlight if selected
+                    "bg-gray-900": selectedCommunity?._id !== community._id,
+                  })}
+                  onClick={() => handleSelectCommunity(community)}
+                >
+                  <td className="flex items-center px-4 py-2">
+                    <img
+                      src={community.logoImageUrl}
+                      alt={community.name}
+                      className="mr-2 inline-block h-8 w-8"
+                    />
+                    {community.name}
+                  </td>
+                  <td className="px-4 py-2 text-center">{community.engagement}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <br />
       <Box
         wrapperClassName="lg:flex flex-1 hidden min-h-screen w-full max-w-none flex-1 flex-col self-center pb-12"
         title={`${selectedCommunity ? selectedCommunity.name : ""} RANKINGS`}
-        className="flex h-full min-h-screen w-full flex-1 p-8"
+        className="flex  min-h-screen w-full flex-1"
       >
         <div className="flex h-full w-full flex-col">
           <TournamentLeaderboardList communityId={selectedCommunity ? selectedCommunity._id : ""} />

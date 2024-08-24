@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { CaretDoubleDown } from "@phosphor-icons/react";
 import { InfiniteData } from "@tanstack/react-query";
 
 import Spinner from "@/components/ui/spinner";
@@ -136,11 +135,6 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
           </div>
         )}
       </div>
-      <div className="absolute bottom-0 left-1/2 z-20 flex flex-col items-center gap-1">
-        <CaretDoubleDown size={10} color="#fff" weight="bold" />
-        <p className="text-xs font-medium">{leaderboardData.pages[0].total}</p>
-      </div>
-      <div className="pointer-events-none fixed bottom-4 h-16 w-full bg-gradient-to-t from-dark-900 to-transparent lg:h-32 lg:w-[calc(100%-4rem)]" />
     </div>
   );
 };
