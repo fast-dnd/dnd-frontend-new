@@ -82,17 +82,15 @@ const Tournament = () => {
             <CommunityLeaderboard communities={communities} />
           </div>
         </div>
-        <Box
+        {/* <Box
           wrapperClassName="lg:flex flex-col"
           title={"LEADERBOARD"}
           className="flex min-h-screen flex-1"
-        >
-          <div className="flex h-full w-full flex-col">
-            <TournamentLeaderboardList
-              communityId={selectedCommunity ? selectedCommunity._id : ""}
-            />
-          </div>
-        </Box>
+        > */}
+        <div className="flex h-full w-full flex-col">
+          <TournamentLeaderboardList communityId={selectedCommunity ? selectedCommunity._id : ""} />
+        </div>
+        {/* </Box> */}
       </div>
       <div className="flex h-full min-h-0 flex-col lg:hidden">
         <MobileNavbar onClickBack={() => router.push("/home")} />

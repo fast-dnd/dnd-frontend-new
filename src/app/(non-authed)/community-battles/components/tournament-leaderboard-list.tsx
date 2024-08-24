@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useRef } from "react";
 import { InfiniteData } from "@tanstack/react-query";
 
@@ -7,17 +9,10 @@ import { cn } from "@/utils/style-utils";
 import { ILeaderBoard } from "@/validations/leaderboard";
 
 import useGetTournamentLeaderboard from "../hooks/use-get-leaderboard";
-import LeaderboardUserCard from "./tournament-leaderboard-user";
 
 const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => {
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
   const scrollableRef = useRef<HTMLDivElement>(null);
-
-  const {
-    data: topLeaderboardData,
-    isError: topIsError,
-    isLoading: topIsLoading,
-  } = useGetTournamentLeaderboard({ communityId });
 
   const {
     data: leaderboardData,
@@ -53,16 +48,13 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
       scrollableRef.current
     ) {
       //prevent scrolling to top when loaded previous
-      const numOfUsers = leaderboardData.pages[0].leaderboard.filter(
-        (user) => user.rank > 3,
-      ).length;
+      const numOfUsers = leaderboardData.pages[0].leaderboard.length;
       scrollableRef.current.scrollTop += numOfUsers * 52; // each leaderboard user is 52px
     }
-
     previousRef.current = leaderboardData;
   }, [leaderboardData]);
 
-  if (isLoading || topIsLoading)
+  if (isLoading)
     return (
       <div className="flex animate-pulse flex-col">
         {Array.from({ length: 10 }).map((_, i) => (
@@ -79,49 +71,88 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
       </div>
     );
 
-  if (isError || topIsError) return <div>Something went wrong</div>;
+  if (isError) return <div>Something went wrong</div>;
 
-  const topContent = topLeaderboardData?.pages[0].leaderboard
-    .slice(0, 3)
-    .map((leaderboardUser) => (
-      <LeaderboardUserCard key={leaderboardUser.accountId} leaderboardUser={leaderboardUser} top3 />
-    ));
+  const content = (
+    <div className="relative flex flex-col items-center bg-white/5 p-6">
+      <div className="h-[40rem] w-full overflow-y-auto">
+        {" "}
+        {/* Increased height to 40rem */}
+        <table className="min-w-full table-auto text-left text-white">
+          <thead className="bg-gray-800 text-gold">
+            <tr>
+              <th className="px-4 py-2">Rank</th>
+              <th className="px-4 py-2">User</th>
+              <th className="px-4 py-2">Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            {leaderboardData?.pages.flatMap((page, pageIndex) =>
+              page.leaderboard.map((leaderboardUser, userIndex) => {
+                const overallIndex = pageIndex * page.leaderboard.length + userIndex + 1;
+                const isLastItem =
+                  pageIndex === leaderboardData.pages.length - 1 &&
+                  userIndex === page.leaderboard.length - 1;
 
-  const content = leaderboardData?.pages.map((page, index) =>
-    page.leaderboard.map((leaderboardUser, i) => {
-      if (leaderboardUser.rank <= 3) return null;
-      if (index === 0) {
-        if (i === 0) {
-          return (
-            <LeaderboardUserCard
-              key={leaderboardUser.accountId}
-              leaderboardUser={leaderboardUser}
-              ref={firstLeaderboardUserRef}
-            />
-          );
-        }
-      }
-      if (index === leaderboardData.pages.length - 1) {
-        if (page.leaderboard.length - 1 === i) {
-          return (
-            <LeaderboardUserCard
-              key={leaderboardUser.accountId}
-              leaderboardUser={leaderboardUser}
-              ref={lastLeaderboardUserRef}
-            />
-          );
-        }
-      }
+                return (
+                  <tr
+                    key={leaderboardUser.accountId}
+                    className="bg-gray-700 hover:bg-gray-600"
+                    ref={isLastItem ? lastLeaderboardUserRef : null} // Use the ref here
+                  >
+                    <td className="px-4 py-2">{overallIndex}</td>
+                    <td className="px-4 py-2">
+                      <div className="flex items-center space-x-4">
+                        <img
+                          src={leaderboardUser.imageUrl || "/images/default-avatar.png"}
+                          alt={leaderboardUser.username}
+                          className="h-12 w-12 rounded-full"
+                        />
+                        <span>{leaderboardUser.username}</span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-2">{leaderboardUser.rating}</td>
+                  </tr>
+                );
+              }),
+            )}
 
-      return (
-        <LeaderboardUserCard leaderboardUser={leaderboardUser} key={leaderboardUser.accountId} />
-      );
-    }),
+            {/* Render placeholders if there are fewer than 10 users */}
+            {Array.from({
+              length: Math.max(
+                0,
+                10 - leaderboardData?.pages.flatMap((page) => page.leaderboard).length,
+              ),
+            }).map((_, index) => (
+              <tr key={`placeholder-${index}`} className="bg-gray-700 hover:bg-gray-600">
+                <td className="px-4 py-2">
+                  {leaderboardData?.pages.flatMap((page) => page.leaderboard).length + index + 1}
+                </td>
+                <td className="px-4 py-2">
+                  <div className="h-12 w-12 bg-gray-600"></div>
+                </td>
+                <td className="px-4 py-2">
+                  <div className="h-12 w-12 bg-gray-600"></div>
+                </td>
+              </tr>
+            ))}
+
+            {/* Spinner for loading more data */}
+            {isFetchingNextPage && (
+              <tr className="bg-gray-700 hover:bg-gray-600">
+                <td className="px-4 py-2 text-center">
+                  <Spinner className="m-0 size-8" />
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 
   return (
     <div className={cn("relative flex h-full min-h-screen flex-1 flex-col overflow-hidden")}>
-      <div className="border-b border-b-black">{topContent}</div>
       <div
         className={cn(
           "flex h-full min-h-screen flex-1 flex-col overflow-y-auto overscroll-auto bg-black/20 pb-4",
