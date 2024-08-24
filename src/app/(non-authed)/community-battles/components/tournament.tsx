@@ -20,15 +20,29 @@ const Tournament = () => {
   }, [data]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="mb-4 flex flex-col items-center rounded-t-md py-6">
+        <h1 className="text-4xl font-bold tracking-wide text-white">Loading...</h1>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error loading tournament data.</div>;
+    return (
+      <div className="mb-4 flex flex-col items-center rounded-t-md py-6">
+        <h1 className="text-4xl font-bold tracking-wide text-white">
+          Error loading tournament data
+        </h1>
+      </div>
+    );
   }
 
   if (!data) {
-    return <div>No data found.</div>;
+    return (
+      <div className="mb-4 flex flex-col items-center rounded-t-md py-6">
+        <h1 className="text-4xl font-bold tracking-wide text-white">No data found </h1>
+      </div>
+    );
   }
 
   const { name, season, communities } = data;

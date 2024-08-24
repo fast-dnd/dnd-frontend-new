@@ -35,15 +35,9 @@ const TournamentLeaderboardUserCard = React.forwardRef<
           alt={`player-${leaderboardUser.accountId}-avatar`}
           className="size-[36px] rounded-full border-2 border-white/30"
         />
-        <p className={cn("font-light", !top3 && "-ml-2")}>
-          {leaderboardUser.walletAddress
-            ? leaderboardUser.walletAddress.slice(0, 3) +
-              "..." +
-              leaderboardUser.walletAddress.slice(-3)
-            : leaderboardUser.username}
-        </p>
+        <p className={cn("px-6 py-4 text-lg", !top3 && "-ml-2")}>{leaderboardUser.username}</p>
       </div>
-      <p className="text-lg font-bold">{leaderboardUser.rating}</p>
+      <p className="px-6 py-4 text-lg font-bold">{leaderboardUser.rating}</p>
     </div>
   );
 });
