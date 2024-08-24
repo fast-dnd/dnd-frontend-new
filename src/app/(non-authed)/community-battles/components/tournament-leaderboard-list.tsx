@@ -121,7 +121,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
 
   return (
     <div className={cn("relative flex h-full min-h-screen flex-1 flex-col overflow-hidden")}>
-      <div className="border-b border-b-white/50">{topContent}</div>
+      <div className="border-b border-b-black">{topContent}</div>
       <div
         className={cn(
           "flex h-full min-h-screen flex-1 flex-col overflow-y-auto overscroll-auto bg-black/20 pb-4",
