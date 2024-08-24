@@ -39,14 +39,13 @@ const Tournament = () => {
 
   return (
     <div className="relative flex flex-col">
-      <div className="mb-4 flex flex-col items-center rounded-t-md bg-dark-900 py-6">
-        <h1 className="text-2xl font-bold tracking-wide text-white">{name}</h1>
-        <h2 className="text-lg font-semibold text-gray-400">Season {season}</h2>
+      <div className="mb-4 flex flex-col items-center rounded-t-md py-6">
+        <h1 className="text-4xl font-bold tracking-wide text-white">{name}</h1>
+        <h2 className="text-2xl font-semibold text-gray-400">Season {season}</h2>
       </div>
       <div className="flex w-full flex-col">
-        <div className="relative flex items-center justify-center gap-4 rounded-t-md bg-dark-900 px-4 py-6"></div>
         <div className="overflow-y-auto overscroll-auto bg-dark-800">
-          <table className="w-full bg-dark-900 text-white">
+          <table className="w-full bg-dark-800 text-white">
             <thead>
               <tr className="border-b border-white/50">
                 <th className="px-6 py-4 text-left text-lg">Community</th>
@@ -58,8 +57,8 @@ const Tournament = () => {
                 <tr
                   key={community._id}
                   className={cn("cursor-pointer", {
-                    "bg-blue-800": selectedCommunity?._id === community._id, // Highlight if selected
-                    "bg-gray-900": selectedCommunity?._id !== community._id,
+                    "bg-gray-700": selectedCommunity?._id === community._id, // Highlight if selected
+                    "bg-dark-900": selectedCommunity?._id !== community._id,
                   })}
                   onClick={() => handleSelectCommunity(community)}
                 >
