@@ -49,8 +49,8 @@ const Tournament = () => {
           <table className="w-full bg-dark-900 text-white">
             <thead>
               <tr className="border-b border-white/50">
-                <th className="px-4 py-2 text-left">Community</th>
-                <th className="px-4 py-2 text-center">Engagement</th>
+                <th className="px-6 py-4 text-left text-lg">Community</th>
+                <th className="px-6 py-4 text-center text-lg">Engagement</th>
               </tr>
             </thead>
             <tbody>
@@ -63,15 +63,15 @@ const Tournament = () => {
                   })}
                   onClick={() => handleSelectCommunity(community)}
                 >
-                  <td className="flex items-center px-4 py-2">
+                  <td className="flex items-center px-6 py-4 text-lg">
                     <img
                       src={community.logoImageUrl}
                       alt={community.name}
-                      className="mr-2 inline-block h-8 w-8"
+                      className="mr-4 inline-block h-12 w-12"
                     />
                     {community.name}
                   </td>
-                  <td className="px-4 py-2 text-center">{community.engagement}</td>
+                  <td className="px-6 py-4 text-center text-lg">{community.engagement}</td>
                 </tr>
               ))}
             </tbody>
