@@ -78,6 +78,17 @@ const DesktopNavbar = () => {
                 >
                   {loggedIn ? "PLAY" : "LOG IN"}
                 </Link>
+                <div className="size-2 rotate-45 bg-white opacity-25" />
+                <Link
+                  href="/community-battles"
+                  className={cn(
+                    "mt-1 border-b-4 border-transparent pb-1 transition-all duration-300 hover:border-primary/50",
+                    pathname === "/community-battles" && "border-primary",
+                    !communityId && "hidden",
+                  )}
+                >
+                  COMMUNITY BATTLES
+                </Link>
 
                 <div className="size-2 rotate-45 bg-white opacity-25" />
                 <Link
@@ -88,7 +99,7 @@ const DesktopNavbar = () => {
                     !communityId && "hidden",
                   )}
                 >
-                  LEADERBOARD
+                  HEROIC RANKINGS
                 </Link>
                 {!isDefault && (
                   <>
