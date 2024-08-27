@@ -60,7 +60,10 @@ const RoomItem = React.forwardRef<
       <OraNetworkModal
         conversationId={room.conversationId}
         aiJudgeQuery={room.aiJudgeQuery}
-        aiJudgeProcessedQuery={room.aiJudgeProcessedQuery}
+        aiJudgeQueryNormalized={room.aiJudgeQueryNormalized}
+        aiJudgeProcessedQuery={
+          room.aiJudgeQueryTxHash != null && room.aiJudgeQueryTxHash != undefined
+        }
       />
     </div>
   );

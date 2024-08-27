@@ -6,4 +6,5 @@ export const validateOraTxResponseSchema = z.object({
 
 export const validateOraAiJudgeQueryResponseSchema = z.object({
   query: z.string(),
+  queryNormalized: z.string(),
 });

@@ -22,21 +22,23 @@ import Collapsible from "./collapsible";
 type OraNetworkModalProps = {
   conversationId: string;
   aiJudgeQuery: string | undefined;
+  aiJudgeQueryNormalized: string | undefined;
   aiJudgeProcessedQuery: boolean | undefined;
 };
 
 const OraNetworkModal = ({
   conversationId,
   aiJudgeQuery,
+  aiJudgeQueryNormalized,
   aiJudgeProcessedQuery,
 }: OraNetworkModalProps) => {
   const [selectedNetwork, setSelectedNetwork] = useState<NetworkName | "">("");
   const [selectedCommunity, setSelectedCommunity] = useState<string>("");
   const [communities, setCommunities] = useState<any[]>([]);
   const [selectedAiJudgeQuery, setAiJudgeQuery] = useState<string>("");
+  const [selectedAiJudgeQueryNormalized, setAiJudgeQueryNormalized] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [transactionStatus, setTransactionStatus] = useState("idle"); // 'idle', 'loading', 'success', 'error'
-  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,8 +47,10 @@ const OraNetworkModal = ({
         if (!aiJudgeQuery) {
           const aiJudgeResponse = await oraService.getAiJudgeQuery(conversationId);
           setAiJudgeQuery(aiJudgeResponse.query);
+          setAiJudgeQueryNormalized(aiJudgeResponse.queryNormalized);
         } else {
-          setAiJudgeQuery(aiJudgeQuery);
+          setAiJudgeQuery(aiJudgeQuery || "");
+          setAiJudgeQueryNormalized(aiJudgeQueryNormalized || "");
         }
         const tournamentResponse = await tournamentService.getLatestTournament(); // No conversationId passed
         console.log(tournamentResponse);
@@ -222,7 +226,7 @@ const OraNetworkModal = ({
                   selectedNetwork,
                   conversationId,
                   selectedCommunity,
-                  selectedAiJudgeQuery,
+                  selectedAiJudgeQueryNormalized,
                 )
               }
               className="hover:bg-primary-dark bg-primary"
