@@ -76,7 +76,6 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
   const content = (
     <div className="relative flex flex-col items-center bg-white/5 p-6">
       <div className="h-[40rem] w-full overflow-y-auto">
-        {" "}
         {/* Increased height to 40rem */}
         <table className="min-w-full table-auto text-left text-white">
           <thead className="bg-gray-800 text-gold">
@@ -155,7 +154,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
     <div className={cn("relative flex h-full min-h-screen flex-1 flex-col overflow-hidden")}>
       <div
         className={cn(
-          "flex h-full min-h-screen flex-1 flex-col overflow-y-auto overscroll-auto bg-black/20 pb-4",
+          "flex h-full min-h-screen flex-1 flex-col overflow-y-auto overscroll-auto bg-dark-900 pb-4",
         )}
         ref={scrollableRef}
       >

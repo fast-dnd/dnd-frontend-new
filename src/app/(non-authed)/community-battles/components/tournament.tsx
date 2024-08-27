@@ -1,10 +1,6 @@
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
-import router from "next/router";
-
-import MobileNavbar from "@/components/navbar/mobile-navbar";
-import { Box } from "@/components/ui/box";
 
 import useGetTournament from "../hooks/use-get-tournament";
 import CommunityCarosel from "./community-carosel";
@@ -73,28 +69,16 @@ const Tournament = () => {
           <h1 className="mt-4 text-6xl font-semibold">{`${prize} ${prizeToken}`}</h1>
         </div>
       </div>
-      <div className="relative flex flex-row gap-4">
-        <div className="h-full w-1/4 flex-shrink-0">
-          <div className="mb-4 flex flex-1 flex-col">
+      <div className="relative flex h-full flex-row gap-4">
+        <div className="flex h-full w-1/4 flex-shrink-0 flex-col justify-between">
+          <div className="mb-4 flex-1">
             <CommunityCarosel selectedCommunity={selectedCommunity} />
           </div>
-          <div className="flex flex-1 flex-col">
+          <div className="flex-1">
             <CommunityLeaderboard communities={communities} />
           </div>
         </div>
-        {/* <Box
-          wrapperClassName="lg:flex flex-col"
-          title={"LEADERBOARD"}
-          className="flex min-h-screen flex-1"
-        > */}
         <div className="flex h-full w-full flex-col">
-          <TournamentLeaderboardList communityId={selectedCommunity ? selectedCommunity._id : ""} />
-        </div>
-        {/* </Box> */}
-      </div>
-      <div className="flex h-full min-h-0 flex-col lg:hidden">
-        <MobileNavbar onClickBack={() => router.push("/home")} />
-        <div className="flex min-h-0 flex-1 flex-col p-4">
           <TournamentLeaderboardList communityId={selectedCommunity ? selectedCommunity._id : ""} />
         </div>
       </div>
