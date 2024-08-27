@@ -1,18 +1,20 @@
+/* eslint-disable tailwindcss/no-contradicting-classname */
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useEffect, useState } from "react";
-import { Check, CheckCircle, Sword } from "@phosphor-icons/react";
-import { DialogClose } from "@radix-ui/react-dialog";
-import { AiOutlineClose } from "react-icons/ai";
+import { CheckCircle, Sword } from "@phosphor-icons/react";
+import { toast } from "sonner";
 import Web3 from "web3";
 
 import { Button } from "@/components/ui/button";
+import Spinner from "@/components/ui/spinner";
 import oraService from "@/services/ora-network-service";
 import tournamentService from "@/services/tournaments-service";
 import { IOraCommitToTxHash } from "@/types/ora-network";
 import { jibril } from "@/utils/fonts";
+import { cn } from "@/utils/style-utils";
 
 import { Dialog, DialogContent, DialogTrigger } from "../../ui/dialog";
 import Collapsible from "./collapsible";
@@ -33,6 +35,8 @@ const OraNetworkModal = ({
   const [communities, setCommunities] = useState<any[]>([]);
   const [selectedAiJudgeQuery, setAiJudgeQuery] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
+  const [transactionStatus, setTransactionStatus] = useState("idle"); // 'idle', 'loading', 'success', 'error'
+  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,6 +67,55 @@ const OraNetworkModal = ({
   const handleNetworkSelection = (network: NetworkName) => {
     setSelectedNetwork(network);
   };
+  const handleOraNetworkClick = async (
+    selectedNetwork: string,
+    conversationId: string,
+    communityId: string,
+    aiJudgeQuery: string,
+  ) => {
+    if (typeof window.ethereum !== "undefined") {
+      try {
+        setTransactionStatus("loading"); // Start loading spinner
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        const accounts = await window.ethereum.request({ method: "eth_accounts" });
+        const selectedAccount = accounts[0];
+
+        const networkChoice = selectedNetwork as NetworkName;
+
+        if (networkChoice && networks[networkChoice]) {
+          await window.ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ chainId: networks[networkChoice] }],
+          });
+
+          try {
+            const fee = await estimateFee(networkChoice, 11);
+            let tx = await calculateAiTx(selectedAccount, networkChoice, aiJudgeQuery, fee);
+            const txHash = tx.transactionHash;
+            let commitData: IOraCommitToTxHash = {
+              conversationId,
+              communityId,
+              txHash,
+            };
+            tx = await oraService.commitToTxHash(commitData);
+            setTransactionStatus("success");
+            toast.success(`Transaction successful : ${tx}`);
+          } catch (error) {
+            setTransactionStatus("error");
+            toast.error(`An error occurred with MetaMask: ${error}`);
+          }
+        } else {
+          toast.error("Invalid network selection or network not supported.");
+        }
+      } catch (error) {
+        setTransactionStatus("error");
+        toast.error(`An error occurred whille creating transaction: ${error}`);
+      }
+    } else {
+      toast.error(`MetaMask is not installed. Please install it to proceed`);
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild className="max-lg:hidden">
@@ -88,82 +141,97 @@ const OraNetworkModal = ({
         </Button>
       </DialogTrigger>
       <DialogContent className="z-[100] flex flex-col gap-12 bg-black p-4 max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:p-8">
-        <div className="flex flex-col gap-4">
-          <div className="flex justify-end lg:hidden">
-            <DialogClose>
-              <AiOutlineClose />
-            </DialogClose>
+        {transactionStatus === "loading" && (
+          <div className="flex items-center justify-center">
+            <Spinner className={cn("m-0 size-5 shrink-0 opacity-0", true && "opacity-50")} />
           </div>
-          <div className="flex items-center justify-center gap-4">
-            <div className="size-2 shrink-0 rotate-45 bg-primary" />
-            <p
-              className="mt-1 text-lg uppercase tracking-widest lg:text-2xl lg:tracking-[6.4px]"
-              style={jibril.style}
-            >
-              Participate in ORA Network Community battles
+        )}
+        {transactionStatus === "success" && (
+          <div className="flex items-center justify-center text-green-500">
+            <span className="material-icons">check_circle</span>
+            Transaction successfully created. System will be processing it soon.
+          </div>
+        )}
+        {transactionStatus === "error" && (
+          <div className="flex items-center justify-center text-red-500">
+            <span className="material-icons">Transaction failed.</span>
+          </div>
+        )}
+        {transactionStatus === "idle" && (
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-center gap-4">
+              <div className="size-2 shrink-0 rotate-45 bg-primary" />
+              <p
+                className="mt-1 text-lg uppercase tracking-widest lg:text-2xl lg:tracking-[6.4px]"
+                style={jibril.style}
+              >
+                Participate in ORA Network Community battles
+              </p>
+              <div className="size-2 shrink-0 rotate-45 bg-primary" />
+            </div>
+            <br />
+            <br />
+            <p className="ml-2 text-center font-light lg:text-xl lg:tracking-[1.5px]">
+              By selecting network and executing transaction given transcript will be evaulated by
+              AI Judge and depending on its rating you will climb ORA network leaderboard !
             </p>
-            <div className="size-2 shrink-0 rotate-45 bg-primary" />
+            <div className="mt-10">
+              <Collapsible title="Query">
+                {loading ? (
+                  <p className="text-center font-light lg:text-xl lg:tracking-[1.5px]">
+                    Loading AI Judge Query...
+                  </p>
+                ) : (
+                  <p className="text-center font-light lg:text-xl lg:tracking-[1.5px]">
+                    {selectedAiJudgeQuery}
+                  </p>
+                )}
+              </Collapsible>
+            </div>
+            <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
+              Select community :
+            </p>
+            <div className="mt-4 flex flex-wrap justify-center gap-4">
+              {communities.map((community) => (
+                <CommunitySelectionButton
+                  key={community._id}
+                  communityId={community._id}
+                  communityName={community.name}
+                  onClick={() => setSelectedCommunity(community._id)}
+                  communityLogoImgUrl={community.logoImageUrl}
+                  isSelected={selectedCommunity === community._id}
+                />
+              ))}
+            </div>
+            <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
+              Select payment network :
+            </p>
+            <div className="mt-4 flex flex-wrap justify-center gap-4">
+              {Object.entries(networks).map(([name, id]) => (
+                <NetworkSelectionButton
+                  networkName={name as NetworkName}
+                  onClick={() => handleNetworkSelection(name as NetworkName)}
+                  networkLogos={networkLogos}
+                  isSelected={selectedNetwork === name}
+                />
+              ))}
+            </div>
+            <Button
+              onClick={() =>
+                handleOraNetworkClick(
+                  selectedNetwork,
+                  conversationId,
+                  selectedCommunity,
+                  selectedAiJudgeQuery,
+                )
+              }
+              className="hover:bg-primary-dark bg-primary"
+              disabled={!selectedNetwork || !selectedCommunity}
+            >
+              Pay to Compete
+            </Button>
           </div>
-          <br />
-          <br />
-          <p className="ml-2 text-center font-light lg:text-xl lg:tracking-[1.5px]">
-            By selecting network and executing transaction given transcript will be evaulated by AI
-            Judge and depending on its rating you will climb ORA network leaderboard !
-          </p>
-          <Collapsible title="See query that will be sent ti AI Judge ">
-            {loading ? (
-              <p className="text-center font-light lg:text-xl lg:tracking-[1.5px]">
-                Loading AI Judge Query...
-              </p>
-            ) : (
-              <p className="text-center font-light lg:text-xl lg:tracking-[1.5px]">
-                {selectedAiJudgeQuery}
-              </p>
-            )}
-          </Collapsible>
-          <p className="ml-2 text-center font-light lg:text-xl lg:tracking-[1.5px]">
-            Select community :
-          </p>
-          <div className="mt-4 flex flex-wrap justify-center gap-4">
-            {communities.map((community) => (
-              <CommunitySelectionButton
-                key={community._id}
-                communityId={community._id}
-                communityName={community.name}
-                onClick={() => setSelectedCommunity(community._id)}
-                communityLogoImgUrl={community.logoImageUrl}
-                isSelected={selectedCommunity === community._id}
-              />
-            ))}
-          </div>
-          <p className="ml-2 text-center font-light lg:text-xl lg:tracking-[1.5px]">
-            Select payment network :
-          </p>
-          <div className="mt-4 flex flex-wrap justify-center gap-4">
-            {Object.entries(networks).map(([name, id]) => (
-              <NetworkSelectionButton
-                networkName={name as NetworkName}
-                onClick={() => handleNetworkSelection(name as NetworkName)}
-                networkLogos={networkLogos}
-                isSelected={selectedNetwork === name}
-              />
-            ))}
-          </div>
-          <Button
-            onClick={() =>
-              handleOraNetworkClick(
-                selectedNetwork,
-                conversationId,
-                selectedCommunity,
-                selectedAiJudgeQuery,
-              )
-            }
-            className="hover:bg-primary-dark bg-primary"
-            disabled={!selectedNetwork || !selectedCommunity}
-          >
-            Pay to Compete
-          </Button>
-        </div>
+        )}
       </DialogContent>
     </Dialog>
   );
@@ -239,14 +307,17 @@ const NetworkSelectionButton: React.FC<NetworkButtonProps> = ({
   onClick,
   isSelected,
 }) => {
-  const selectedClass = isSelected ? "ring-4 ring-primary-light" : "";
   return (
-    <div className={`network-button-container mt-4 flex justify-center ${selectedClass}`}>
+    <div className={`network-button-container relative mt-4 flex justify-center`}>
+      {isSelected && (
+        <CheckCircle
+          className=" absolute -top-7 text-green-500"
+          size={24} // Adjust the size as nee ded
+        />
+      )}
       <button
         onClick={() => onClick(networkName)}
-        className={`network-button hover:bg-primary-dark transform transition duration-300 ease-in-out hover:scale-110 ${
-          isSelected ? "bg-selected" : "bg-normal"
-        }`}
+        className={`network-button duration-2000 transition ease-in-out `}
       >
         <img
           src={networkLogos[networkName]}
@@ -275,14 +346,17 @@ const CommunitySelectionButton: React.FC<CommunityButtonProps> = ({
   onClick,
   isSelected,
 }) => {
-  const selectedClass = isSelected ? "ring-4 ring-primary-light" : "";
   return (
-    <div className={`network-button-container mt-4 flex justify-center ${selectedClass}`}>
+    <div className={`community-button-container relative mt-4 flex justify-center `}>
+      {isSelected && (
+        <CheckCircle
+          className="absolute -top-7 text-green-500"
+          size={24} // Adjust the size as nee ded
+        />
+      )}
       <button
         onClick={() => onClick(communityId)}
-        className={`network-button hover:bg-primary-dark transform transition duration-300 ease-in-out hover:scale-110 ${
-          isSelected ? "bg-selected" : "bg-normal"
-        }`}
+        className={`community-button transition duration-300 ease-in-out `}
       >
         <img
           src={communityLogoImgUrl}
@@ -294,51 +368,6 @@ const CommunitySelectionButton: React.FC<CommunityButtonProps> = ({
       </button>
     </div>
   );
-};
-
-const handleOraNetworkClick = async (
-  selectedNetwork: string,
-  conversationId: string,
-  communityId: string,
-  aiJudgeQuery: string,
-) => {
-  if (typeof window.ethereum !== "undefined") {
-    try {
-      await window.ethereum.request({ method: "eth_requestAccounts" });
-      const accounts = await window.ethereum.request({ method: "eth_accounts" });
-      const selectedAccount = accounts[0];
-
-      const networkChoice = selectedNetwork as NetworkName;
-
-      if (networkChoice && networks[networkChoice]) {
-        await window.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: networks[networkChoice] }],
-        });
-
-        try {
-          const fee = await estimateFee(networkChoice, 11);
-          const tx = await calculateAiTx(selectedAccount, networkChoice, aiJudgeQuery, fee);
-          const txHash = tx.transactionHash;
-          let commitData: IOraCommitToTxHash = {
-            conversationId,
-            communityId,
-            txHash,
-          };
-          await oraService.commitToTxHash(commitData);
-          console.log("Transaction successful, response:", tx);
-        } catch (error) {
-          console.error("An error occurred with MetaMask:", error);
-        }
-      } else {
-        alert("Invalid network selection or network not supported.");
-      }
-    } catch (error) {
-      console.error("An error occurred whille handling ora network click:", error);
-    }
-  } else {
-    alert("MetaMask is not installed. Please install it to proceed.");
-  }
 };
 
 function calculateAiTx(
