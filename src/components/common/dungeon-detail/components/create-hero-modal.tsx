@@ -9,6 +9,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import UploadImage from "@/components/ui/upload-image";
 import { IChampion } from "@/types/dungeon";
 import { jibril } from "@/utils/fonts";
 
@@ -84,7 +85,7 @@ const CreateHeroModal = ({
           ) : (
             <Button variant="primary" className="w-fit gap-2 max-lg:w-full max-lg:rounded-t-none">
               <PlusCircle />
-              CREATE YOUR OWN HERO
+              CREATE YOUR OWN CHARACTER
             </Button>
           )}
         </DialogTrigger>
@@ -102,7 +103,7 @@ const CreateHeroModal = ({
               className="mt-1 text-center uppercase tracking-widest lg:text-2xl lg:tracking-[6.4px]"
               style={jibril.style}
             >
-              CREATE YOUR OWN HERO
+              CREATE YOUR OWN CHARACTER
             </p>
             <div className="size-2 shrink-0 rotate-45 bg-primary" />
           </div>
@@ -112,26 +113,33 @@ const CreateHeroModal = ({
           className="flex w-full flex-col gap-2 px-3 max-lg:overflow-y-auto lg:gap-4 lg:px-6"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Input
-            className="p-2"
-            label="Character Name"
-            placeholder="e.g. “Chieftain Olaf”, “Princess Maya”..."
-            {...register("name")}
-            state={errors?.name ? "error" : undefined}
-            errorMessage={errors?.name?.message}
-          />
-          <Input
-            className="mb-6 p-2"
-            label="Character Description"
-            placeholder="What is the character like? Their traits..."
-            {...register("description")}
-            state={errors?.description ? "error" : undefined}
-            errorMessage={errors?.description?.message}
-          />
-          <div className="h-0.5 w-full bg-black shadow-lobby" />
+          <div className="flex flex-col items-center justify-center">
+            <UploadImage
+              image="/images/default-avatar.png"
+              defaultImage="/images/default-avatar.png"
+              setImage={(image) => (customChampion ? (customChampion.imageUrl = image) : "")}
+            />
+            <Input
+              className="p-2"
+              label="Character Name"
+              placeholder="e.g. “Chieftain Olaf”, “Princess Maya”..."
+              {...register("name")}
+              state={errors?.name ? "error" : undefined}
+              errorMessage={errors?.name?.message}
+            />
+            <Input
+              className="mb-6 p-2"
+              label="Character Description"
+              placeholder="What is the character like? Their traits..."
+              {...register("description")}
+              state={errors?.description ? "error" : undefined}
+              errorMessage={errors?.description?.message}
+            />
+            <div className="h-0.5 w-full bg-black shadow-lobby" />
 
-          <div className="flex max-lg:pb-4">
-            <Button isLoading={isLoading}>ADD NEW HERO</Button>
+            <div className="flex max-lg:pb-4">
+              <Button isLoading={isLoading}>ADD NEW HERO</Button>
+            </div>
           </div>
         </form>
       </DialogContent>

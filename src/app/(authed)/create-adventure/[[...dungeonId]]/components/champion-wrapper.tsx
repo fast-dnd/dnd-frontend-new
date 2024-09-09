@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldErrors, SubmitHandler, useForm, UseFormRegister } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
+import UploadImage from "@/components/ui/upload-image";
 
 import { championSchema, IChampionSchema } from "../schemas/champion-schema";
 import { dungeonFormStore } from "../stores/dungeon-form-store";
@@ -67,8 +68,20 @@ const ChampionWrapper = ({ children, editIndex, setEditIndex }: IChampionWrapper
 
   return (
     <form className="flex h-full flex-col gap-8 lg:w-full" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex h-full flex-col gap-5 lg:gap-8">
-        {typeof children === "function" ? children({ register, errors }) : children}
+      <div className="flex size-full lg:flex-row lg:items-start lg:gap-8">
+        <UploadImage
+          image={dungeonFormStore.dungeonFormData.champions[editIndex].imageUrl.get()}
+          defaultImage={
+            dungeonFormStore.dungeonFormData.champions[editIndex].imageUrl.get() ||
+            "/images/default-avatar.png"
+          }
+          setImage={(image) =>
+            dungeonFormStore.dungeonFormData.champions[editIndex].imageUrl.set(image)
+          }
+        />
+        <div className="flex h-full w-full flex-col gap-5 lg:gap-8">
+          {typeof children === "function" ? children({ register, errors }) : children}
+        </div>
       </div>
 
       <div className="flex flex-row justify-between gap-8 lg:justify-end">

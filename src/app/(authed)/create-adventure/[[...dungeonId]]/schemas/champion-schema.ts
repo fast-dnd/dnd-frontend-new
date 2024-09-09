@@ -6,6 +6,7 @@ export const championSchema = z.object({
     .string()
     .min(1, "Description is required")
     .min(5, "Description must be at least 5 characters"),
+  imageUrl: z.string().optional().nullable(),
 });
 
 export type IChampionSchema = z.infer<typeof championSchema>;

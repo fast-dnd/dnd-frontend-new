@@ -52,7 +52,9 @@ const DungeonDetail = ({
 
       <div className="my-8">
         {onChangeChampion ? (
-          <div className="w-full text-center text-2xl font-bold leading-9">SELECT YOUR HERO</div>
+          <div className="w-full text-center text-2xl font-bold leading-9">
+            SELECT YOUR CHARACTER
+          </div>
         ) : (
           <p>CHARACTERS</p>
         )}
@@ -76,7 +78,13 @@ const DungeonDetail = ({
                     className="size-24"
                   />
                 ) : (
-                  <HelmetIcon className="shrink-0" />
+                  <Image
+                    src={champion.imageUrl || "/images/default-avatar.png"}
+                    alt={champion.name}
+                    width={84}
+                    height={84}
+                    className="size-24 rounded-full"
+                  />
                 )}
                 <div className="flex flex-col gap-1">
                   <div className="flex w-full justify-between">

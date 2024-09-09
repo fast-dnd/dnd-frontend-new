@@ -8,7 +8,7 @@ const RoundMission = ({ conversationId }: { conversationId: string }) => {
   const { data: roomData } = useGetRoomData(conversationId);
 
   return (
-    <div className="flex w-full flex-col rounded-lg bg-white/[0.03] pt-2 max-lg:rounded-md lg:bg-primary-900 lg:pt-4">
+    <div className="flex w-full flex-col rounded-lg bg-white/[0.03] pt-2 max-lg:rounded-md lg:bg-dark-800 lg:pt-4">
       <div className="flex items-center">
         <div className="h-[1px] w-full bg-black shadow-lobby" />
         <div className="flex items-center gap-2">
