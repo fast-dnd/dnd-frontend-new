@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useReadLocalStorage } from "usehooks-ts";
 
@@ -76,21 +75,6 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
             aiModelSelected={aiModelSelected}
             setAiModelSelected={setAiModelSelected}
           />
-        </div>
-
-        <div className="absolute inset-0 -z-10 bg-dark-900 pt-32">
-          {!!dungeon?.imageUrl && (
-            <>
-              <Image
-                src={dungeon.imageUrl}
-                alt=""
-                width={1024}
-                height={1024}
-                className="h-full object-cover blur-md"
-              />
-              <div className="absolute inset-0 size-full bg-dark-900/40" />
-            </>
-          )}
         </div>
       </div>
     </>

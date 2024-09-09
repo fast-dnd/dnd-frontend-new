@@ -1,13 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Game, Star1 } from "iconsax-react";
 import { AiOutlineClose } from "react-icons/ai";
-import { FiChevronDown } from "react-icons/fi";
 
-import HelmetIcon from "@/components/icons/helmet-icon";
 import { Button } from "@/components/ui/button";
 import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import { IChampion } from "@/types/dungeon";
@@ -132,7 +129,7 @@ const MobileAdventureDetail = ({
               onClick={onCreateRoom}
               className="pointer-events-auto flex w-fit gap-2"
             >
-              Start the game
+              CLICK TO START
             </Button>
           </motion.div>
         </>
@@ -142,55 +139,23 @@ const MobileAdventureDetail = ({
 };
 
 const Champion = ({ champion }: { champion: IChampion }) => {
-  const [actions, setActions] = useState(false);
-
   return (
     <div className="rounded-md bg-black py-4">
       <motion.header className="flex gap-4 bg-black px-4">
-        <HelmetIcon className="size-10 shrink-0" />
+        <Image
+          src={champion.imageUrl || "/images/default-avatar.png"}
+          alt={champion.name}
+          width={84}
+          height={84}
+          className="size-24 rounded-full"
+        />{" "}
         <div className="flex w-full min-w-0 flex-col justify-between gap-4">
           <div className="flex flex-col gap-1">
             <p className="w-full truncate break-words font-bold">{champion.name}</p>
             <p className="w-full break-words text-sm font-light">{champion.description}</p>
           </div>
-          <div
-            onClick={() => setActions(!actions)}
-            className="flex select-none items-center gap-1 font-bold"
-          >
-            Character&apos;s Actions
-            <FiChevronDown
-              className={cn("transition-transform duration-300", actions && "rotate-180")}
-            />
-          </div>
         </div>
       </motion.header>
-      <AnimatePresence initial={false}>
-        {actions && (
-          <motion.section
-            initial="collapsed"
-            animate="open"
-            exit="collapsed"
-            variants={{
-              open: { opacity: 1, height: "auto" },
-              collapsed: { opacity: 0, height: 0 },
-            }}
-            transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
-            className="bg-black pl-[70px] pr-2"
-          >
-            {/* <div className={cn("pointer-events-none flex flex-col")}>
-              {moveMappingWithIcons(champion.moveMapping).map((move, index) => (
-                <div key={index} className={cn("pointer-events-none mt-4 flex items-center gap-3")}>
-                  {move.icon}
-                  <div className="flex flex-col justify-center">
-                    <p className="text-sm font-bold">{move.header}:</p>
-                    <p className="line-clamp-3 text-sm font-light">{move.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div> */}
-          </motion.section>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

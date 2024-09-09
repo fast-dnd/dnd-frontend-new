@@ -1,7 +1,8 @@
+/* eslint-disable tailwindcss/no-contradicting-classname */
 "use client";
 
+import GoldCoinIcon from "@/components/icons/gold-coin-icon";
 import { Button } from "@/components/ui/button";
-import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IChampion } from "@/types/dungeon";
@@ -38,7 +39,6 @@ const GameSettings = ({
   const { gameStarting } = useRoomSocket(conversationId);
 
   const { isDefault } = useCommunity();
-  const { loggedIn } = useAuth();
 
   const { data: currentCommunity } = useGetCurrentCommunity();
 
@@ -92,16 +92,22 @@ const GameSettings = ({
             />
           </div>
         </div>
-
-        <Button
-          className="w-52 whitespace-nowrap"
-          disabled={disabled || !canBegin}
-          isLoading={isGameStarting || gameStarting}
-          onClick={onStartGame}
-        >
-          START ({roomData?.price.toFixed(loggedIn && isDefault ? 0 : 5)}{" "}
-          {loggedIn && isDefault ? "coins" : currentCommunity?.currencyName})
-        </Button>
+        <div className="flex w-full justify-center">
+          <Button
+            className="w-full whitespace-nowrap"
+            disabled={disabled || !canBegin}
+            isLoading={isGameStarting || gameStarting}
+            onClick={onStartGame}
+          >
+            START{" "}
+            {roomData && roomData.price > 0 && (
+              <>
+                {roomData?.price.toFixed(isDefault ? 0 : 5)}{" "}
+                {isDefault ? <GoldCoinIcon className="size-5" /> : currentCommunity?.currencyName}
+              </>
+            )}
+          </Button>
+        </div>
       </div>
     </>
   );

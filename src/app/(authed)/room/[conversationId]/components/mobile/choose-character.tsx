@@ -113,21 +113,20 @@ const CharacterCard = ({
 
   return (
     <div className="h-full w-[calc(100vw_-_3.25rem)] px-1.5">
-      <div className="flex size-full flex-col justify-between rounded-md bg-black/80">
-        <div className="p-4">
-          <p className="text-lg font-bold">{champion?.name}</p>
-          <p className="line-clamp-5 font-light">{champion?.description}</p>
-          <div className="mt-4 flex flex-col gap-2">
-            {/* {champion?.moveMapping &&
-              moveMappingWithIcons(champion.moveMapping).map((move, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  {move.icon}
-                  <div className="flex flex-col gap-1">
-                    <p className="font-semibold">{move.title}</p>
-                    <p className="line-clamp-1 font-light">{move.text}</p>
-                  </div>
-                </div>
-              ))} */}
+      <div className="flex h-full flex-col justify-between rounded-md bg-black/80">
+        <div className="flex flex-col items-center p-4">
+          <p className="text-center text-3xl font-bold">{champion?.name}</p>
+          <div className="mt-2 flex items-start  py-5">
+            <p className="line-clamp-5 font-light">{champion?.description}</p>
+          </div>
+          <div className="mt-6 flex justify-center">
+            <Image
+              src={champion.imageUrl || "/images/default-avatar.png"}
+              alt={champion.name}
+              width={200}
+              height={200}
+              className="rounded-full"
+            />
           </div>
         </div>
 
