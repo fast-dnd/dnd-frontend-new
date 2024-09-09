@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DiscordLogo, InstagramLogo, TwitterLogo } from "@phosphor-icons/react";
+import { DiscordLogo, InstagramLogo, MusicNote, TwitterLogo } from "@phosphor-icons/react";
 import { BiChevronLeft } from "react-icons/bi";
 import { FaDiscord, FaUsers } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
@@ -40,6 +40,32 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
 
   const pathname = usePathname();
 
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+
+  let audio: any;
+
+  useEffect(() => {
+    audio = new Audio("/sounds/background-music.mp3");
+    audio.loop = true;
+
+    if (isMusicPlaying) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio = null;
+      }
+    };
+  }, [isMusicPlaying]);
+
+  const toggleMusic = () => {
+    setIsMusicPlaying(!isMusicPlaying);
+  };
+
   return (
     <div
       className={cn(
@@ -68,6 +94,16 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
         <Link href="https://twitter.com/v3rpg" className="pointer-events-auto">
           <TwitterLogo className="size-4" />
         </Link>
+        <button
+          onClick={toggleMusic}
+          className="pointer-events-auto flex items-center gap-2 hover:opacity-70"
+        >
+          {isMusicPlaying ? (
+            <MusicNote className="size-4" color="green" />
+          ) : (
+            <MusicNote className="size-4" color="white" />
+          )}
+        </button>
       </div>
       <div className="flex items-center gap-3">
         <MobileProfile setShopOpen={setShopOpen} />
