@@ -7,31 +7,78 @@ interface CommunityLeaderboardProps {
 
 const CommunityLeaderboard: React.FC<CommunityLeaderboardProps> = ({ communities }) => {
   return (
-    <div className="relative flex flex-col items-center bg-white/5 p-6">
-      <p className="mb-4 text-4xl font-bold tracking-wide">Community Leaderboard</p>
+    <div
+      style={{
+        // backgroundColor: "#1c1c1c",
+        padding: "24px",
+        borderRadius: "10px",
+        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
+      }}
+      className="relative flex flex-col items-center"
+    >
+      <p
+        style={{
+          marginBottom: "24px",
+          fontSize: "2.5rem",
+          fontWeight: "bold",
+          color: "gold",
+          textAlign: "center",
+        }}
+      >
+        Community Leaderboard
+      </p>
       <div className="w-full overflow-x-auto">
-        <table className="min-w-full table-auto text-left text-white">
-          <thead className="bg-gray-800 text-gold">
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "separate",
+            borderSpacing: "0 0.5em",
+          }}
+          className="min-w-full table-auto text-left text-white"
+        >
+          <thead style={{ backgroundColor: "#252525" }}>
             <tr>
-              <th className="px-4 py-2">Rank</th>
-              <th className="px-4 py-2">Logo</th>
-              <th className="px-4 py-2">Name</th>
-              <th className="px-4 py-2">Engagement</th>
+              <th style={{ padding: "16px", textTransform: "uppercase", fontWeight: 700 }}>Rank</th>
+              <th style={{ padding: "16px", textTransform: "uppercase", fontWeight: 700 }}>Logo</th>
+              <th style={{ padding: "16px", textTransform: "uppercase", fontWeight: 700 }}>Name</th>
+              <th style={{ padding: "16px", textTransform: "uppercase", fontWeight: 700 }}>
+                Engagement
+              </th>
             </tr>
           </thead>
           <tbody>
             {communities.map((community, index) => (
-              <tr key={community._id} className="bg-gray-700 hover:bg-gray-600">
-                <td className="px-4 py-2">{index + 1}</td>
-                <td className="px-4 py-2">
+              <tr
+                key={community._id}
+                style={{
+                  backgroundColor: "#2d2d2d",
+                  transition: "background-color 0.3s ease",
+                  borderRadius: "10px",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#3a3a3a")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#2d2d2d")}
+              >
+                <td style={{ padding: "16px", fontSize: "1.25rem", fontWeight: "600" }}>
+                  {index + 1}
+                </td>
+                <td style={{ padding: "16px" }}>
                   <img
                     src={community.logoImageUrl}
                     alt={community.name}
-                    className="h-12 w-12 rounded-full"
+                    style={{
+                      height: "48px",
+                      width: "48px",
+                      borderRadius: "50%",
+                      transition: "transform 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
                   />
                 </td>
-                <td className="px-4 py-2">{community.name}</td>
-                <td className="px-4 py-2">{community.engagement}</td>
+                <td style={{ padding: "16px", fontSize: "1.1rem" }}>{community.name}</td>
+                <td style={{ padding: "16px", fontSize: "1.1rem", fontWeight: "600" }}>
+                  {community.engagement}
+                </td>
               </tr>
             ))}
           </tbody>

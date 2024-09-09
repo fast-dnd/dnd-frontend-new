@@ -51,8 +51,8 @@ const Tournament = () => {
   };
 
   return (
-    <div className="relative flex flex-col gap-4">
-      <div className="relative flex w-full  flex-row justify-between bg-white/5 p-8">
+    <div className="relative flex flex-col gap-4 ">
+      <div className="relative flex w-full  flex-row justify-between  p-8">
         <div className="mb-4 flex flex-col items-center rounded-t-md p-6">
           <h1 className="mb-4 text-4xl font-bold tracking-wide text-gold">{name}</h1>
           <h2 className="mb-4 text-2xl font-semibold">Season {season}</h2>

@@ -53,6 +53,9 @@ module.exports = {
           800: "#303030",
           900: "#0d0b12",
         },
+        custom: {
+          1: "#1c1c1c",
+        },
         success: "#51DA88",
         error: "#DA5151",
         warning: "#F5AF45",
