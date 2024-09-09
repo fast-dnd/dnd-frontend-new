@@ -4,15 +4,11 @@ import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 
 import { IChampionSchema } from "../schemas/champion-schema";
-import ChampionLocationWrapper, { IChampionLocationProps } from "./champion-location-wrapper";
+import ChampionWrapper, { IChampionProps } from "./champion-wrapper";
 
-const Champion = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
+const Champion = ({ editIndex, setEditIndex }: IChampionProps) => {
   return (
-    <ChampionLocationWrapper
-      editIndex={editIndex}
-      setEditIndex={setEditIndex}
-      locationOrChampion="Character"
-    >
+    <ChampionWrapper editIndex={editIndex} setEditIndex={setEditIndex}>
       {({ register, errors }) => {
         const championErrors = errors as FieldErrors<IChampionSchema>;
 
@@ -42,7 +38,7 @@ const Champion = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
           </>
         );
       }}
-    </ChampionLocationWrapper>
+    </ChampionWrapper>
   );
 };
 
