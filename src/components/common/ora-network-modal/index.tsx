@@ -19,7 +19,6 @@ import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
 import { Dialog, DialogContent, DialogTrigger } from "../../ui/dialog";
-import Collapsible from "./collapsible";
 
 type OraNetworkModalProps = {
   conversationId: string;
