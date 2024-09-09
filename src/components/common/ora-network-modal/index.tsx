@@ -182,7 +182,8 @@ const OraNetworkModal = ({
               By selecting network and executing transaction given transcript will be evaulated by
               AI Judge and depending on its rating you will climb ORA network leaderboard !
             </p>
-            <div className="mt-10">
+            {/* TODO: Return query to be seen somehow */}
+            {/* <div className="mt-10">
               <Collapsible title="Query">
                 {loading ? (
                   <p className="text-center font-light lg:text-xl lg:tracking-[1.5px]">
@@ -194,7 +195,7 @@ const OraNetworkModal = ({
                   </p>
                 )}
               </Collapsible>
-            </div>
+            </div> */}
             <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
               Select community :
             </p>
@@ -211,7 +212,7 @@ const OraNetworkModal = ({
               ))}
             </div>
             <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
-              Select payment network :
+              Select payment chain :
             </p>
             <div className="mt-4 flex flex-wrap justify-center gap-4">
               {Object.entries(networks).map(([name, id]) => (
