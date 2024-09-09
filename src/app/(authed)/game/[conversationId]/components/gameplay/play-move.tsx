@@ -41,14 +41,14 @@ const PlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMoveProps) =
             )}
           >
             <span className="font-semibold">
-              Type or select <span className="hidden lg:inline"> your move</span>
+              Type <span className="hidden lg:inline"> your move</span>
             </span>
             <span className="opacity-50"> - {timeToDisplay()} Left</span>
           </div>
           <MoveInput
             champion={currentPlayer.champion}
+            gameMode={currentPlayer.gameMode}
             wordsChallenge={roomData.wordsChallenge}
-            isWordsChallenge={roomData.generateRandomWords}
           />
         </div>
         <div className="flex flex-col gap-6">

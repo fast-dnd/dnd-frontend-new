@@ -14,7 +14,7 @@ const RoundMission = ({ conversationId }: { conversationId: string }) => {
         <div className="flex items-center gap-2">
           <div className="size-1.5 shrink-0 rotate-45 bg-primary" />
           <p className="mt-1 text-xl uppercase tracking-widest text-primary" style={jibril.style}>
-            QUEST
+            NOTE/DIRECTION
           </p>
           <div className="size-1.5 shrink-0 rotate-45 bg-primary" />
         </div>

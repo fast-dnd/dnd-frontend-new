@@ -13,7 +13,6 @@ import useOnStartGame from "../../hooks/use-on-start-game";
 import usePlayerInfo from "../../hooks/use-player-info";
 import useRoomSocket from "../../hooks/use-room-socket";
 import ChooseAiModel from "./choose-ai-model";
-import ChooseGamemode from "./choose-gamemode";
 import DurationSlider from "./duration-slider";
 import ImageAudioToggle from "./image-audio-toggle";
 
@@ -22,9 +21,7 @@ interface IGameSettingsProps {
   selectedChampion: IChampion | null | undefined;
   roomData: IRoomDetail | undefined;
   isAdmin: boolean;
-  gameModeSelected: boolean;
   aiModelSelected: boolean;
-  setGameModeSelected: React.Dispatch<React.SetStateAction<boolean>>;
   setAiModelSelected: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -33,9 +30,7 @@ const GameSettings = ({
   selectedChampion,
   roomData,
   isAdmin,
-  gameModeSelected,
   aiModelSelected,
-  setGameModeSelected,
   setAiModelSelected,
 }: IGameSettingsProps) => {
   const { duration, setDuration } = usePlayerInfo(roomData);
@@ -47,19 +42,13 @@ const GameSettings = ({
 
   const { data: currentCommunity } = useGetCurrentCommunity();
 
-  const {
-    generateAudio,
-    generateImages,
-    setAiModel,
-    setGenerateImages,
-    setGenerateAudio,
-    setGenerateRandomWords,
-  } = useOnRoomChange({
-    conversationId,
-    duration,
-    roomData,
-    isAdmin,
-  });
+  const { generateAudio, generateImages, setAiModel, setGenerateImages, setGenerateAudio } =
+    useOnRoomChange({
+      conversationId,
+      duration,
+      roomData,
+      isAdmin,
+    });
 
   const { isGameStarting, onStartGame } = useOnStartGame({ conversationId });
 
@@ -69,18 +58,10 @@ const GameSettings = ({
 
   return (
     <>
-      <ChooseGamemode
-        selectedChampion={selectedChampion}
-        isAdmin={isAdmin}
-        gameModeSelected={gameModeSelected}
-        setGameModeSelected={setGameModeSelected}
-        setGenerateRandomWords={setGenerateRandomWords}
-      />
       <ChooseAiModel
         selectedChampion={selectedChampion}
         isAdmin={isAdmin}
         roomData={roomData}
-        gameModeSelected={gameModeSelected}
         aiModelSelected={aiModelSelected}
         setAiModelSelected={setAiModelSelected}
         setAiModel={setAiModel}
@@ -89,7 +70,7 @@ const GameSettings = ({
         className={cn(
           "flex flex-1 flex-col items-center gap-8 py-4 text-sm",
           !selectedChampion && "hidden",
-          isAdmin && (!gameModeSelected || !aiModelSelected) && "hidden",
+          isAdmin && !aiModelSelected && "hidden",
         )}
       >
         <div className="flex w-full flex-1 flex-col items-center justify-center gap-4">

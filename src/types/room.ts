@@ -4,10 +4,9 @@ import { z } from "zod";
 import { DungeonDuration } from "@/utils/dungeon/dungeon-options";
 import {
   aiModelSchema,
-  defaultMoveSchema,
+  gameModeSchema,
   gameStateSchema,
   moveSchema,
-  moveTypeSchema,
   playerSchema,
   questionSchema,
   roomDetailSchema,
@@ -17,15 +16,9 @@ import {
   wordsChallengeSchema,
 } from "@/validations/room";
 
-import { IChampion } from "./dungeon";
-
 export type IGameState = z.infer<typeof gameStateSchema>;
 
-export type IDefaultMove = z.infer<typeof defaultMoveSchema>;
-
 export type IAiModel = z.infer<typeof aiModelSchema>;
-
-export type IMoveType = z.infer<typeof moveTypeSchema>;
 
 export type IMove = z.infer<typeof moveSchema>;
 
@@ -45,10 +38,11 @@ export type IRoomArrayElement = z.infer<typeof roomSummarySchema>;
 
 export type IRoomArray = z.infer<typeof roomHistorySchema>;
 
+export type IGameMode = z.infer<typeof gameModeSchema>;
+
 export interface ICreateRoom {
   generateImages: boolean;
   generateAudio: boolean;
-  generateRandomWords: boolean;
   templateSentences?: string;
   dungeon?: string;
 }
@@ -58,7 +52,6 @@ export interface IEditRoom {
   responseDetailsDepth?: DungeonDuration;
   generateImages?: boolean;
   generateAudio?: boolean;
-  generateRandomWords?: boolean;
   aiModel?: IAiModel;
 }
 
@@ -70,6 +63,5 @@ export interface IEditChampion {
   customChampion?: {
     name: string;
     description: string;
-    moveMapping: IChampion["moveMapping"];
   };
 }

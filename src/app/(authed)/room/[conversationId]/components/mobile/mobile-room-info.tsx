@@ -15,7 +15,6 @@ interface IMobileRoomInfoProps {
   roomData?: IRoomDetail | undefined;
   selectedChampion: IChampion | null | undefined;
   isAdmin: boolean;
-  gameModeSelected: boolean;
   aiModelSelected: boolean;
 }
 
@@ -23,7 +22,6 @@ const MobileRoomInfo = ({
   roomData,
   selectedChampion,
   isAdmin,
-  gameModeSelected,
   aiModelSelected,
 }: IMobileRoomInfoProps) => {
   const { copied, onCopy } = useCopy();
@@ -117,7 +115,6 @@ const MobileRoomInfo = ({
           !isAdmin && selectedChampion && "w-[70%]",
           isAdmin && "w-1/5",
           isAdmin && selectedChampion && "w-2/5",
-          isAdmin && gameModeSelected && "w-3/5",
           isAdmin && aiModelSelected && "w-4/5",
         )}
       />

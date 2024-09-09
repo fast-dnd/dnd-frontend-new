@@ -28,36 +28,6 @@ const Champion = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
                 errorMessage={championErrors?.name?.message}
               />
             </div>
-            <div className="grid grid-cols-2 gap-6">
-              <Input
-                label="Heal action"
-                placeholder="e.g., 'Heals through a mystical aura.'"
-                {...register("moveMapping.discover_health")}
-                state={championErrors?.moveMapping?.discover_health ? "error" : undefined}
-                errorMessage={championErrors?.moveMapping?.discover_health?.message}
-              />
-              <Input
-                label="Team action"
-                placeholder="e.g., 'Inspires through courageous words.'"
-                {...register("moveMapping.conversation_with_team")}
-                state={championErrors?.moveMapping?.conversation_with_team ? "error" : undefined}
-                errorMessage={championErrors?.moveMapping?.conversation_with_team?.message}
-              />
-              <Input
-                label="Mana action"
-                placeholder="e.g., 'Channels cosmic energy.'"
-                {...register("moveMapping.discover_mana")}
-                state={championErrors?.moveMapping?.discover_mana ? "error" : undefined}
-                errorMessage={championErrors?.moveMapping?.discover_mana?.message}
-              />
-              <Input
-                label="Rest action"
-                placeholder="e.g., 'Meditates under the stars.'"
-                {...register("moveMapping.rest")}
-                state={championErrors?.moveMapping?.rest ? "error" : undefined}
-                errorMessage={championErrors?.moveMapping?.rest?.message}
-              />
-            </div>
 
             <div className="flex min-h-0 lg:h-full">
               <TextArea

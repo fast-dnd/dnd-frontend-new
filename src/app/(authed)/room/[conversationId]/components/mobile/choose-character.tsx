@@ -2,17 +2,17 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { AiFillHeart } from "react-icons/ai";
-import { GiNightSleep } from "react-icons/gi";
-import { GoPeople } from "react-icons/go";
-import { HiSparkles } from "react-icons/hi";
+// import { AiFillHeart } from "react-icons/ai";
+// import { GiNightSleep } from "react-icons/gi";
+// import { GoPeople } from "react-icons/go";
+// import { HiSparkles } from "react-icons/hi";
 import { useReadLocalStorage, useWindowSize } from "usehooks-ts";
 
 import CreateHeroModal from "@/components/common/dungeon-detail/components/create-hero-modal";
 import MobileSwiper from "@/components/common/mobile-swiper";
 import HelmetIcon from "@/components/icons/helmet-icon";
 import { Button } from "@/components/ui/button";
-import { IChampion, IDungeonDetail, IMoveMapping } from "@/types/dungeon";
+import { IChampion, IDungeonDetail } from "@/types/dungeon";
 import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
 
@@ -118,7 +118,7 @@ const CharacterCard = ({
           <p className="text-lg font-bold">{champion?.name}</p>
           <p className="line-clamp-5 font-light">{champion?.description}</p>
           <div className="mt-4 flex flex-col gap-2">
-            {champion?.moveMapping &&
+            {/* {champion?.moveMapping &&
               moveMappingWithIcons(champion.moveMapping).map((move, i) => (
                 <div key={i} className="flex items-center gap-3">
                   {move.icon}
@@ -127,7 +127,7 @@ const CharacterCard = ({
                     <p className="line-clamp-1 font-light">{move.text}</p>
                   </div>
                 </div>
-              ))}
+              ))} */}
           </div>
         </div>
 
@@ -207,7 +207,7 @@ const CustomCharacterCard = ({
             <p className="text-lg font-bold">{champion?.name}</p>
             <p className="line-clamp-5 font-light">{champion?.description}</p>
             <div className="mt-4 flex flex-col gap-2">
-              {champion?.moveMapping &&
+              {/* {champion?.moveMapping &&
                 moveMappingWithIcons(champion.moveMapping).map((move, i) => (
                   <div key={i} className="flex items-center gap-3">
                     {move.icon}
@@ -216,7 +216,7 @@ const CustomCharacterCard = ({
                       <p className="line-clamp-1 font-light">{move.text}</p>
                     </div>
                   </div>
-                ))}
+                ))} */}
             </div>
           </div>
           <div className="flex">
@@ -239,46 +239,46 @@ const CustomCharacterCard = ({
   );
 };
 
-const moveMappingWithIcons = (moveMapping: IMoveMapping) => {
-  const commonDivClasses = "flex h-10 w-10 shrink-0 items-center justify-center rounded-md border";
-  const commonIconClasses = "h-6 w-6 shrink-0";
+// const moveMappingWithIcons = (moveMapping: IMoveMapping) => {
+//   const commonDivClasses = "flex h-10 w-10 shrink-0 items-center justify-center rounded-md border";
+//   const commonIconClasses = "h-6 w-6 shrink-0";
 
-  return [
-    {
-      title: "Heal Action",
-      text: moveMapping.discover_health,
-      icon: (
-        <div className={cn(commonDivClasses, "border-primary bg-white/5 p-2")}>
-          <AiFillHeart className={cn(commonIconClasses, "fill-primary")} />
-        </div>
-      ),
-    },
-    {
-      title: "Mana Action",
-      text: moveMapping.discover_mana,
-      icon: (
-        <div className={cn(commonDivClasses, "border-info bg-white/5 p-2")}>
-          <HiSparkles className={cn(commonIconClasses, "fill-info")} />
-        </div>
-      ),
-    },
-    {
-      title: "Bonus Round Action",
-      text: moveMapping.conversation_with_team,
-      icon: (
-        <div className={cn(commonDivClasses, "border-green-500 bg-white/5 p-2")}>
-          <GoPeople className={cn(commonIconClasses, "fill-green-500")} />
-        </div>
-      ),
-    },
-    {
-      title: "Rest Action",
-      text: moveMapping.rest,
-      icon: (
-        <div className={cn(commonDivClasses, "border-purple-400 bg-white/5 p-2")}>
-          <GiNightSleep className={cn(commonIconClasses, "fill-purple-400")} />
-        </div>
-      ),
-    },
-  ];
-};
+//   return [
+//     {
+//       title: "Heal Action",
+//       text: moveMapping.discover_health,
+//       icon: (
+//         <div className={cn(commonDivClasses, "border-primary bg-white/5 p-2")}>
+//           <AiFillHeart className={cn(commonIconClasses, "fill-primary")} />
+//         </div>
+//       ),
+//     },
+//     {
+//       title: "Mana Action",
+//       text: moveMapping.discover_mana,
+//       icon: (
+//         <div className={cn(commonDivClasses, "border-info bg-white/5 p-2")}>
+//           <HiSparkles className={cn(commonIconClasses, "fill-info")} />
+//         </div>
+//       ),
+//     },
+//     {
+//       title: "Bonus Round Action",
+//       text: moveMapping.conversation_with_team,
+//       icon: (
+//         <div className={cn(commonDivClasses, "border-green-500 bg-white/5 p-2")}>
+//           <GoPeople className={cn(commonIconClasses, "fill-green-500")} />
+//         </div>
+//       ),
+//     },
+//     {
+//       title: "Rest Action",
+//       text: moveMapping.rest,
+//       icon: (
+//         <div className={cn(commonDivClasses, "border-purple-400 bg-white/5 p-2")}>
+//           <GiNightSleep className={cn(commonIconClasses, "fill-purple-400")} />
+//         </div>
+//       ),
+//     },
+//   ];
+// };

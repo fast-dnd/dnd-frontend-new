@@ -11,7 +11,6 @@ import HelmetIcon from "@/components/icons/helmet-icon";
 import { Button } from "@/components/ui/button";
 import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import { IChampion } from "@/types/dungeon";
-import { moveMappingWithIcons } from "@/utils/dungeon/move-mapping-with-icons";
 import { cn } from "@/utils/style-utils";
 
 import useCreateRoom from "../../hooks/use-create-room";
@@ -35,7 +34,6 @@ const MobileAdventureDetail = ({
     createRoom({
       generateAudio: false,
       generateImages: false,
-      generateRandomWords: false,
       dungeon: adventureDetailId,
     });
   };
@@ -179,7 +177,7 @@ const Champion = ({ champion }: { champion: IChampion }) => {
             transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
             className="bg-black pl-[70px] pr-2"
           >
-            <div className={cn("pointer-events-none flex flex-col")}>
+            {/* <div className={cn("pointer-events-none flex flex-col")}>
               {moveMappingWithIcons(champion.moveMapping).map((move, index) => (
                 <div key={index} className={cn("pointer-events-none mt-4 flex items-center gap-3")}>
                   {move.icon}
@@ -189,7 +187,7 @@ const Champion = ({ champion }: { champion: IChampion }) => {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
           </motion.section>
         )}
       </AnimatePresence>

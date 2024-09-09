@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { IPlayMove } from "@/types/game";
 import { IPlayer, IRoomDetail } from "@/types/room";
@@ -9,8 +9,6 @@ import { generateDice, generateRandomDice } from "../utils/dice";
 import useSubmitMove from "./use-submit-move";
 
 const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlayer: IPlayer) => {
-  const [openedDetails, setOpenedDetails] = useState(false);
-
   const loadingText = gameStore.loadingText.use();
   const { mutate: submitMove, isLoading: submitting } = useSubmitMove();
   const store = moveStore.use();
@@ -27,7 +25,6 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
       );
       if (currentPlayerMove) {
         moveStore.canPlay.set(false);
-        setOpenedDetails(false);
       }
     } else if (!loadingText && store.buttonState !== "ROLLING") {
       moveStore.canPlay.set(true);
@@ -39,12 +36,7 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
     const moveToPlay: IPlayMove = {
       conversationId,
       mana: store.powerup,
-      moveType: store.move ?? "free_will",
-      message: store.move
-        ? ""
-        : store.wordsChallenge.length > 0
-        ? store.wordsChallenge.join(" ")
-        : store.freeWill,
+      message: store.wordsChallenge.length > 0 ? store.wordsChallenge.join(" ") : store.freeWill,
       playerId: currentPlayer.accountId,
     };
 
@@ -55,7 +47,6 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
       moveStore.roll.set(undefined);
       moveStore.aiDescription.set(undefined);
       moveStore.canPlay.set(false);
-      setOpenedDetails(false);
       submitMove(moveToPlay, {
         onSuccess: (res) => {
           moveStore.freeWill.set("");
@@ -85,6 +76,6 @@ const usePlayMove = (conversationId: string, roomData: IRoomDetail, currentPlaye
     }
   };
 
-  return { onPlay, submitting, openedDetails, setOpenedDetails };
+  return { onPlay, submitting };
 };
 export default usePlayMove;

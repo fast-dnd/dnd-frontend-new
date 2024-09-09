@@ -27,7 +27,6 @@ const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
       {
         generateAudio: false,
         generateImages: false,
-        generateRandomWords: false,
         dungeon: dungeonDetailId,
         templateSentences,
       },

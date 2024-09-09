@@ -19,7 +19,6 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
   const router = useRouter();
   const accountId = useReadLocalStorage<string>("accountId");
 
-  const [gameModeSelected, setGameModeSelected] = useState(false);
   const [aiModelSelected, setAiModelSelected] = useState(false);
 
   const {
@@ -37,8 +36,7 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
 
   const onClickBack = () => {
     if (!selectedChampion) router.push("/home");
-    else if (!isAdmin || !gameModeSelected) onChangeChampion(selectedChampion);
-    else if (!aiModelSelected) setGameModeSelected(false);
+    else if (!isAdmin) onChangeChampion(selectedChampion);
     else setAiModelSelected(false);
   };
 
@@ -56,7 +54,6 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
             roomData={roomData}
             selectedChampion={selectedChampion}
             isAdmin={isAdmin}
-            gameModeSelected={gameModeSelected}
             aiModelSelected={aiModelSelected}
           />
         </div>
@@ -76,9 +73,7 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
             selectedChampion={selectedChampion}
             conversationId={conversationId}
             isAdmin={isAdmin}
-            gameModeSelected={gameModeSelected}
             aiModelSelected={aiModelSelected}
-            setGameModeSelected={setGameModeSelected}
             setAiModelSelected={setAiModelSelected}
           />
         </div>

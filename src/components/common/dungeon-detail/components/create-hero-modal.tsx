@@ -3,10 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircle } from "@phosphor-icons/react";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { AiFillHeart, AiOutlineClose } from "react-icons/ai";
-import { GiNightSleep } from "react-icons/gi";
-import { GoPeople } from "react-icons/go";
-import { HiSparkles } from "react-icons/hi";
+import { AiOutlineClose } from "react-icons/ai";
 import { useLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
@@ -132,47 +129,6 @@ const CreateHeroModal = ({
             errorMessage={errors?.description?.message}
           />
           <div className="h-0.5 w-full bg-black shadow-lobby" />
-
-          <Input
-            className="p-2"
-            label="Heal Action"
-            placeholder="How will the hero be healed..."
-            {...register("moveMapping.discover_health")}
-            StartIcon={AiFillHeart}
-            startIconProps={{ className: "text-[#FF5A5A]" }}
-            state={errors?.moveMapping?.discover_health ? "error" : undefined}
-            errorMessage={errors?.moveMapping?.discover_health?.message}
-          />
-          <Input
-            className="p-2"
-            label="Mana Action"
-            placeholder="A skill unique to the hero..."
-            {...register("moveMapping.discover_mana")}
-            StartIcon={HiSparkles}
-            startIconProps={{ className: "text-[#71CCFF]" }}
-            state={errors?.moveMapping?.discover_mana ? "error" : undefined}
-            errorMessage={errors?.moveMapping?.discover_mana?.message}
-          />
-          <Input
-            className="p-2"
-            label="Round Bonus Action"
-            placeholder="A skill that helps the team..."
-            {...register("moveMapping.conversation_with_team")}
-            StartIcon={GoPeople}
-            startIconProps={{ className: "text-[#93DA87]" }}
-            state={errors?.moveMapping?.conversation_with_team ? "error" : undefined}
-            errorMessage={errors?.moveMapping?.conversation_with_team?.message}
-          />
-          <Input
-            className="p-2"
-            label="Rest Action"
-            placeholder="Let the hero energize..."
-            {...register("moveMapping.rest")}
-            StartIcon={GiNightSleep}
-            startIconProps={{ className: "text-[#D58CE1]" }}
-            state={errors?.moveMapping?.rest ? "error" : undefined}
-            errorMessage={errors?.moveMapping?.rest?.message}
-          />
 
           <div className="flex max-lg:pb-4">
             <Button isLoading={isLoading}>ADD NEW HERO</Button>

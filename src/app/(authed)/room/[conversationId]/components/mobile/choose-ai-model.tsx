@@ -15,7 +15,6 @@ interface IAiModelProps {
   selectedChampion: IChampion | null | undefined;
   isAdmin: boolean;
   roomData: IRoomDetail | undefined;
-  gameModeSelected: boolean;
   aiModelSelected: boolean;
   setAiModelSelected: React.Dispatch<React.SetStateAction<boolean>>;
   setAiModel: React.Dispatch<React.SetStateAction<IAiModel | undefined>>;
@@ -25,7 +24,6 @@ const ChooseAiModel = ({
   selectedChampion,
   isAdmin,
   roomData,
-  gameModeSelected,
   aiModelSelected,
   setAiModelSelected,
   setAiModel,
@@ -33,11 +31,11 @@ const ChooseAiModel = ({
   if (!roomData) return <>Something went wrong...</>;
   return (
     <>
-      {isAdmin && selectedChampion && gameModeSelected && !aiModelSelected && (
+      {isAdmin && selectedChampion && !aiModelSelected && (
         <div
           className={cn(
             "flex flex-1 flex-col items-center justify-between gap-4 overflow-hidden p-4 text-sm",
-            (!selectedChampion || !gameModeSelected) && "hidden",
+            !selectedChampion && "hidden",
             (!isAdmin || aiModelSelected) && "hidden",
           )}
         >
