@@ -21,6 +21,8 @@ const MoveInput = ({ champion, gameMode, wordsChallenge }: IMoveInputProps) => {
   const canPlay = moveStore.canPlay.use();
   const freeWill = moveStore.freeWill.use();
 
+  const maxCharacters = 250;
+
   gameMode = gameMode ? gameMode : "normal";
   const accountId = useReadLocalStorage<string>("accountId");
 
@@ -72,13 +74,21 @@ const MoveInput = ({ champion, gameMode, wordsChallenge }: IMoveInputProps) => {
               )
             ) : (
               <>
+                <span className="absolute right-2 top-2 text-xs text-white/50">
+                  {freeWill.length}/{maxCharacters}
+                </span>
                 <TextArea
-                  maxLength={300}
+                  maxLength={maxCharacters}
                   className="m-0 h-full border-white/50 focus-within:border-white"
                   placeholder="I found a secret tunnel and escape through it..."
                   disabled={!canPlay}
                   onChange={(e) => {
-                    moveStore.freeWill.set(e.target.value);
+                    const inputText = e.target.value;
+
+                    // Trim the input to the max number of characters
+                    const trimmedText = inputText.slice(0, maxCharacters);
+
+                    moveStore.freeWill.set(trimmedText);
                   }}
                   value={freeWill}
                 />
