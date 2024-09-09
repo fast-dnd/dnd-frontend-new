@@ -38,8 +38,8 @@ const Location = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
                 errorMessage={locationErrors?.description?.message}
               />
               <TextArea
-                label="Scene mission"
-                placeholder="What's the main objective here? e.g., 'Recover the lost magical orb'"
+                label="Note for players"
+                placeholder="What's the main objective in this scene. How you intend them to behave? e.g., 'Recover the lost magical orb'"
                 className="m-0 h-full"
                 {...register("mission")}
                 state={locationErrors?.mission ? "error" : undefined}
