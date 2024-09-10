@@ -54,8 +54,9 @@ const Tournament = () => {
   };
 
   return (
-    <div className="relative flex flex-col gap-2">
-      <div className="relative flex w-full  flex-row justify-between p-8">
+    <div className={cn("max-h-90 flex flex-col gap-2")}>
+      {" "}
+      <div className="relative flex w-full  flex-row justify-between p-2">
         <div className="mb-4 flex flex-col items-center rounded-t-md ">
           <h1 className="mb-4 text-4xl font-bold tracking-wide text-gold" style={jibril.style}>
             {name}
@@ -69,7 +70,7 @@ const Tournament = () => {
           selectedCommunity={selectedCommunity}
           handleSelectCommunity={handleSelectCommunity}
         />
-        <div className="relative mt-2 flex flex-col items-center rounded-t-md ">
+        <div className="mt- relative flex flex-col items-center rounded-t-md ">
           <h1
             className="mb-4 text-4xl font-semibold text-gold"
             style={jibril.style}
@@ -77,13 +78,8 @@ const Tournament = () => {
           <h1 className="mt-4 text-6xl font-semibold">{`${prize} ${prizeToken}`}</h1>
         </div>
       </div>
-      <div className="relative flex h-full flex-row gap-4">
-        <div
-          className={cn(
-            "glass-effect-2",
-            "flex h-full max-h-screen min-h-screen w-1/4 flex-shrink-0 flex-col",
-          )}
-        >
+      <div className="relative mt-3 flex h-full flex-row gap-4">
+        <div className={cn("flex h-full max-h-screen min-h-screen w-1/4 flex-shrink-0 flex-col")}>
           <div className="mb-4 ">
             <CommunityCarosel selectedCommunity={selectedCommunity} />
           </div>
@@ -91,9 +87,7 @@ const Tournament = () => {
             <CommunityLeaderboard communities={communities} />
           </div>
         </div>
-        <div
-          className={cn("glass-effect-2", "flex h-full max-h-screen min-h-screen w-full flex-col")}
-        >
+        <div className={cn("flex h-full max-h-screen min-h-screen w-full flex-col")}>
           <TournamentLeaderboardList communityId={selectedCommunity ? selectedCommunity._id : ""} />
         </div>
       </div>

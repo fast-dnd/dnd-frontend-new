@@ -54,3 +54,15 @@ body {
 .glass-effect-2 {
   background: linear-gradient(to bottom, rgba(23, 106, 168, 0.1), rgba(255, 255, 255, 0.05));
 }
+
+.relative-flex-container {
+  display: flex;
+  flex-direction: row;
+  height: 150vh; /* Set parent height to viewport height */
+  overflow-y: auto; /* Handle overflow */
+}
+
+.relative-flex-container > * {
+  flex: 1 1 auto; /* Ensure children take up equal space */
+  overflow-y: auto; /* Handle overflow in children */
+}
