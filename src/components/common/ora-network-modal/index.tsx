@@ -5,7 +5,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useEffect, useState } from "react";
-import { CheckCircle, CurrencyCircleDollar, EyeClosed, Sword } from "@phosphor-icons/react";
+import { ArrowFatDown, Confetti, CurrencyCircleDollar, Hash, Sword } from "@phosphor-icons/react";
 import { toast } from "sonner";
 import Web3 from "web3";
 
@@ -138,9 +138,9 @@ const OraNetworkModal = ({
           {roomState === "GAMING" ? (
             <Sword size={32} color="white" />
           ) : roomState === "LOSE" ? (
-            <EyeClosed size={32} color="white" />
+            <Hash size={32} color="white" />
           ) : roomState === "WIN" && aiJudgeProcessedQuery ? (
-            <CheckCircle size={32} color="green" />
+            <Confetti size={32} color="green" />
           ) : (
             <CurrencyCircleDollar size={32} color="green" />
           )}
@@ -314,7 +314,7 @@ const NetworkSelectionButton: React.FC<NetworkButtonProps> = ({
   return (
     <div className={`network-button-container relative mt-4 flex justify-center`}>
       {isSelected && (
-        <CheckCircle
+        <ArrowFatDown
           className=" absolute -top-7 text-green-500"
           size={24} // Adjust the size as nee ded
         />
@@ -353,7 +353,7 @@ const CommunitySelectionButton: React.FC<CommunityButtonProps> = ({
   return (
     <div className={`community-button-container relative mt-4 flex justify-center `}>
       {isSelected && (
-        <CheckCircle
+        <ArrowFatDown
           className="absolute -top-7 text-green-500"
           size={24} // Adjust the size as nee ded
         />
