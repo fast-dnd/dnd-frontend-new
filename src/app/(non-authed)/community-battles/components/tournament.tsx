@@ -2,6 +2,9 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 
+import { jibril } from "@/utils/fonts";
+import { cn } from "@/utils/style-utils";
+
 import useGetTournament from "../hooks/use-get-tournament";
 import CommunityCarosel from "./community-carosel";
 import CommunityLeaderboard from "./community-leaderboard";
@@ -51,10 +54,13 @@ const Tournament = () => {
   };
 
   return (
-    <div className="relative flex flex-col gap-4">
-      <div className="relative flex w-full  flex-row justify-between bg-white/5 p-8">
-        <div className="mb-4 flex flex-col items-center rounded-t-md p-6">
-          <h1 className="mb-4 text-4xl font-bold tracking-wide text-gold">{name}</h1>
+    <div className={cn("max-h-90 flex flex-col gap-2")}>
+      {" "}
+      <div className="relative flex w-full  flex-row justify-between p-2">
+        <div className="mb-4 flex flex-col items-center rounded-t-md ">
+          <h1 className="mb-4 text-4xl font-bold tracking-wide text-gold" style={jibril.style}>
+            {name}
+          </h1>
           <h2 className="mb-4 text-2xl font-semibold">Season {season}</h2>
           <h2 className="text-2xl font-semibold">Starts: {formatDate(startDate)}</h2>
           <h2 className="text-2xl font-semibold">Ends: {formatDate(endDate)}</h2>
@@ -64,21 +70,24 @@ const Tournament = () => {
           selectedCommunity={selectedCommunity}
           handleSelectCommunity={handleSelectCommunity}
         />
-        <div className="relative mt-2 flex flex-col items-center rounded-t-md p-6">
-          <h1 className="mb-4 text-4xl font-semibold text-gold">{`Ultimate battle prize`}</h1>
+        <div className="mt- relative flex flex-col items-center rounded-t-md ">
+          <h1
+            className="mb-4 text-4xl font-semibold text-gold"
+            style={jibril.style}
+          >{`Ultimate battle prize`}</h1>
           <h1 className="mt-4 text-6xl font-semibold">{`${prize} ${prizeToken}`}</h1>
         </div>
       </div>
-      <div className="relative flex h-full flex-row gap-4">
-        <div className="flex h-full w-1/4 flex-shrink-0 flex-col justify-between">
-          <div className="mb-4 flex-1">
+      <div className="relative mt-3 flex h-full flex-row gap-4">
+        <div className={cn("flex h-full max-h-screen min-h-screen w-1/4 flex-shrink-0 flex-col")}>
+          <div className="mb-4 ">
             <CommunityCarosel selectedCommunity={selectedCommunity} />
           </div>
-          <div className="flex-1">
+          <div>
             <CommunityLeaderboard communities={communities} />
           </div>
         </div>
-        <div className="flex h-full w-full flex-col">
+        <div className={cn("flex h-full max-h-screen min-h-screen w-full flex-col")}>
           <TournamentLeaderboardList communityId={selectedCommunity ? selectedCommunity._id : ""} />
         </div>
       </div>

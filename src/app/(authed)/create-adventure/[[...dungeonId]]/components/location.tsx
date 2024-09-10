@@ -4,15 +4,11 @@ import { Input } from "@/components/ui/input";
 import { TextArea } from "@/components/ui/text-area";
 
 import { ILocationSchema } from "../schemas/location-schema";
-import ChampionLocationWrapper, { IChampionLocationProps } from "./champion-location-wrapper";
+import LocationWrapper, { ILocationProps } from "./location-wrapper";
 
-const Location = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
+const Location = ({ editIndex, setEditIndex }: ILocationProps) => {
   return (
-    <ChampionLocationWrapper
-      editIndex={editIndex}
-      setEditIndex={setEditIndex}
-      locationOrChampion="Scene"
-    >
+    <LocationWrapper editIndex={editIndex} setEditIndex={setEditIndex}>
       {({ register, errors }) => {
         const locationErrors = errors as FieldErrors<ILocationSchema>;
 
@@ -38,8 +34,8 @@ const Location = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
                 errorMessage={locationErrors?.description?.message}
               />
               <TextArea
-                label="Scene mission"
-                placeholder="What's the main objective here? e.g., 'Recover the lost magical orb'"
+                label="Note for players"
+                placeholder="What's the main objective in this scene. How you intend them to behave? e.g., 'Recover the lost magical orb'"
                 className="m-0 h-full"
                 {...register("mission")}
                 state={locationErrors?.mission ? "error" : undefined}
@@ -49,7 +45,7 @@ const Location = ({ editIndex, setEditIndex }: IChampionLocationProps) => {
           </>
         );
       }}
-    </ChampionLocationWrapper>
+    </LocationWrapper>
   );
 };
 

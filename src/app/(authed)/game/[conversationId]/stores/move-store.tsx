@@ -1,7 +1,6 @@
 import { observable } from "@legendapp/state";
 
 import { IPlayMoveResponse } from "@/types/game";
-import { IDefaultMove } from "@/types/room";
 import { deepClone } from "@/utils/clone";
 
 export interface IMoveStore {
@@ -12,7 +11,6 @@ export interface IMoveStore {
   powerup: number;
   randomDice: [number, number];
   dice: [number, number];
-  move?: IDefaultMove;
   roll?: IPlayMoveResponse;
   aiDescription?: string;
 }

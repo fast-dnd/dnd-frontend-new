@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useReadLocalStorage } from "usehooks-ts";
 
@@ -19,7 +18,6 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
   const router = useRouter();
   const accountId = useReadLocalStorage<string>("accountId");
 
-  const [gameModeSelected, setGameModeSelected] = useState(false);
   const [aiModelSelected, setAiModelSelected] = useState(false);
 
   const {
@@ -37,8 +35,7 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
 
   const onClickBack = () => {
     if (!selectedChampion) router.push("/home");
-    else if (!isAdmin || !gameModeSelected) onChangeChampion(selectedChampion);
-    else if (!aiModelSelected) setGameModeSelected(false);
+    else if (!isAdmin) onChangeChampion(selectedChampion);
     else setAiModelSelected(false);
   };
 
@@ -56,7 +53,6 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
             roomData={roomData}
             selectedChampion={selectedChampion}
             isAdmin={isAdmin}
-            gameModeSelected={gameModeSelected}
             aiModelSelected={aiModelSelected}
           />
         </div>
@@ -76,26 +72,9 @@ const Room = ({ params }: { params: { conversationId: string } }) => {
             selectedChampion={selectedChampion}
             conversationId={conversationId}
             isAdmin={isAdmin}
-            gameModeSelected={gameModeSelected}
             aiModelSelected={aiModelSelected}
-            setGameModeSelected={setGameModeSelected}
             setAiModelSelected={setAiModelSelected}
           />
-        </div>
-
-        <div className="absolute inset-0 -z-10 bg-dark-900 pt-32">
-          {!!dungeon?.imageUrl && (
-            <>
-              <Image
-                src={dungeon.imageUrl}
-                alt=""
-                width={1024}
-                height={1024}
-                className="h-full object-cover blur-md"
-              />
-              <div className="absolute inset-0 size-full bg-dark-900/40" />
-            </>
-          )}
         </div>
       </div>
     </>
