@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 
+import { jibril } from "@/utils/fonts";
+
 interface CommunityLeaderboardProps {
   communities: Array<any>;
 }
@@ -12,7 +14,7 @@ const CommunityLeaderboard: React.FC<CommunityLeaderboardProps> = ({ communities
         // backgroundColor: "#1c1c1c",
         padding: "24px",
         borderRadius: "10px",
-        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
+        // boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
       }}
       className="relative flex flex-col items-center"
     >
@@ -20,6 +22,7 @@ const CommunityLeaderboard: React.FC<CommunityLeaderboardProps> = ({ communities
         style={{
           marginBottom: "24px",
           fontSize: "2.5rem",
+          fontFamily: jibril.style.fontFamily,
           fontWeight: "bold",
           color: "gold",
           textAlign: "center",

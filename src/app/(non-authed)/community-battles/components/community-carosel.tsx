@@ -12,7 +12,7 @@ const CommunityCarousel: React.FC<CommunityCarouselProps> = ({ selectedCommunity
     return null;
   }
   return (
-    <div className="flex  w-full flex-col items-center   p-4">
+    <div className="flex w-full flex-col items-center rounded-lg border-4 border-transparent bg-gradient-to-r from-gray-800 via-purple-700 to-gray-800 p-4">
       {/* Community Image and Name */}
       <div className="flex w-full flex-col items-center">
         <img

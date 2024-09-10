@@ -17,6 +17,7 @@ import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { cn } from "@/utils/style-utils";
 
 import ClaimRewardModal from "../common/claim-reward-modal";
+import MusicSettingsModal from "../common/music-settings-modal";
 import QuillIcon from "../icons/quill-icon";
 import SwordsIcon from "../icons/swords-icon";
 import { Button } from "../ui/button";
@@ -39,32 +40,6 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
   const { user, loggedIn } = useAuth();
 
   const pathname = usePathname();
-
-  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
-
-  let audio: any;
-
-  useEffect(() => {
-    audio = new Audio("/sounds/background-music.mp3");
-    audio.loop = true;
-
-    if (isMusicPlaying) {
-      audio.play();
-    } else {
-      audio.pause();
-    }
-
-    return () => {
-      if (audio) {
-        audio.pause();
-        audio = null;
-      }
-    };
-  }, [isMusicPlaying]);
-
-  const toggleMusic = () => {
-    setIsMusicPlaying(!isMusicPlaying);
-  };
 
   return (
     <div
@@ -94,16 +69,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
         <Link href="https://twitter.com/v3rpg" className="pointer-events-auto">
           <TwitterLogo className="size-4" />
         </Link>
-        <button
-          onClick={toggleMusic}
-          className="pointer-events-auto flex items-center gap-2 hover:opacity-70"
-        >
-          {isMusicPlaying ? (
-            <MusicNote className="size-4" color="green" />
-          ) : (
-            <MusicNote className="size-4" color="white" />
-          )}
-        </button>
+        <MusicSettingsModal></MusicSettingsModal>
       </div>
       <div className="flex items-center gap-3">
         <MobileProfile setShopOpen={setShopOpen} />

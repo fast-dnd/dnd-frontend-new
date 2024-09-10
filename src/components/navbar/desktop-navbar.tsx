@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,6 +10,7 @@ import useCommunity from "@/hooks/helpers/use-community";
 import { cn } from "@/utils/style-utils";
 
 import ClaimRewardModal from "../common/claim-reward-modal";
+import MusicSettingsModal from "../common/music-settings-modal";
 import ProfileDropdown from "./components/profile-dropdown";
 import RewardPool from "./components/reward-pool";
 
@@ -20,32 +20,6 @@ const DesktopNavbar = () => {
   const pathname = usePathname();
 
   const { loggedIn } = useAuth();
-
-  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
-
-  let audio: any;
-
-  useEffect(() => {
-    audio = new Audio("/sounds/background-music.mp3");
-    audio.loop = true;
-
-    if (isMusicPlaying) {
-      audio.play();
-    } else {
-      audio.pause();
-    }
-
-    return () => {
-      if (audio) {
-        audio.pause();
-        audio = null;
-      }
-    };
-  }, [isMusicPlaying]);
-
-  const toggleMusic = () => {
-    setIsMusicPlaying(!isMusicPlaying);
-  };
 
   return (
     <div className="z-10 hidden w-full items-center justify-between gap-12 py-10 lg:flex">
@@ -74,13 +48,7 @@ const DesktopNavbar = () => {
         >
           <TwitterLogo className="size-7" />
         </Link>
-        <button onClick={toggleMusic} className="flex items-center gap-2 hover:opacity-70">
-          {isMusicPlaying ? (
-            <MusicNote className="size-7" color="green" />
-          ) : (
-            <MusicNote className="size-7" color="white" />
-          )}
-        </button>
+        <MusicSettingsModal></MusicSettingsModal>
       </div>
       <div className="flex items-center gap-6 text-2xl leading-7 tracking-[3.3px]">
         {loggedIn && !isDefault && !!communityId && (
@@ -97,7 +65,6 @@ const DesktopNavbar = () => {
             <div className="size-2 rotate-45 bg-white opacity-25" />
           </>
         )}
-
         {loggedIn && (
           <>
             {!!communityId && (
