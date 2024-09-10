@@ -71,13 +71,7 @@ const GameHistory = ({ showFull = false }: { showFull?: boolean }) => {
             )}
             {!showFull && (
               <div className="mt-auto">
-                <Button
-                  className="whitespace-nowrap"
-                  href="/profile?activeTab=GAME HISTORY"
-                  variant="outline"
-                >
-                  SHOW ENTIRE GAME HISTORY
-                </Button>
+                <Button href="/profile?activeTab=GAME HISTORY">SHOW ENTIRE GAME HISTORY</Button>
               </div>
             )}
           </>

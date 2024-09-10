@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Brain, PenNib } from "@phosphor-icons/react";
 import { AiFillSound, AiFillStar } from "react-icons/ai";
 import { BiImages } from "react-icons/bi";
 import { useReadLocalStorage } from "usehooks-ts";
@@ -57,14 +56,7 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
   const { isDefault } = useCommunity();
   const { data: currentCommunity } = useGetCurrentCommunity();
 
-  const {
-    setGenerateImages,
-    setGenerateAudio,
-    setAiModel,
-    setGenerateRandomWords,
-    generateRandomWords,
-    updatingRoom,
-  } = useOnRoomChange({
+  const { setGenerateImages, setGenerateAudio, setAiModel, updatingRoom } = useOnRoomChange({
     conversationId,
     duration,
     roomData,
@@ -96,67 +88,6 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
     <div className="flex flex-col gap-4">
       <div className="h-0.5 bg-black/35 shadow-lobby" />
       <p className="text-lg font-semibold">GAME SETTINGS</p>
-      <ToggleGroup
-        className="inline-flex w-full items-center justify-center"
-        type="single"
-        onValueChange={(value) => setGenerateRandomWords(value === "words")}
-        label="Game mode"
-        value={roomData.generateRandomWords ? "words" : "regular"}
-        loading={updatingRoom && generateRandomWords !== roomData.generateRandomWords}
-        disabled={!isAdmin || isGameStarting || gameStarting}
-      >
-        <Tooltip
-          content={
-            <div className="flex w-fit flex-col">
-              <p className="text-xl font-bold">Regular Game</p>
-              <p className="mt-1 w-64 whitespace-break-spaces text-sm font-light">
-                Choose round outcome by writing your response completely freely.
-              </p>
-              <div className="rounded-md bg-black p-2">
-                <Image
-                  width={268}
-                  height={141}
-                  src="/images/regular-game-image.png"
-                  alt="Word Game Example"
-                  className="mt-5"
-                />
-              </div>
-            </div>
-          }
-          className="w-full"
-          contentClassName="drop-shadow-2xl backdrop-blur-md bg-black/75 p-4"
-        >
-          <ToggleGroupItem value="regular" className="relative px-4 lg:px-8">
-            <Brain />
-            Regular Game
-          </ToggleGroupItem>
-        </Tooltip>
-
-        <Tooltip
-          content={
-            <div className="flex w-fit flex-col">
-              <p className="text-xl font-bold">Word Game</p>
-              <p className="mt-1 w-64 whitespace-break-spaces text-sm font-light">
-                Get challenged by creating a meaningful sentence out of several predefined words.
-              </p>
-              <Image
-                width={268}
-                height={141}
-                src="/images/word-game-image.png"
-                alt="Word Game Example"
-                className="mt-5"
-              />
-            </div>
-          }
-          className="w-full"
-          contentClassName="drop-shadow-2xl backdrop-blur-md bg-black/75 p-4"
-        >
-          <ToggleGroupItem value="words" className="relative px-4 lg:px-8">
-            <PenNib />
-            Word Game
-          </ToggleGroupItem>
-        </Tooltip>
-      </ToggleGroup>
       <ToggleGroup
         className="inline-flex w-full items-center justify-center"
         type="single"

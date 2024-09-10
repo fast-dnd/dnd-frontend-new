@@ -7,7 +7,6 @@ import { Dungeon } from "@/components/common/dungeon";
 import NewTagChip from "@/components/icons/new-tag-chip";
 import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import { IChampion } from "@/types/dungeon";
-import { moveMappingWithIcons } from "@/utils/dungeon/move-mapping-with-icons";
 import { cn } from "@/utils/style-utils";
 
 import HelmetIcon from "../../icons/helmet-icon";
@@ -53,7 +52,9 @@ const DungeonDetail = ({
 
       <div className="my-8">
         {onChangeChampion ? (
-          <div className="w-full text-center text-2xl font-bold leading-9">SELECT YOUR HERO</div>
+          <div className="w-full text-center text-2xl font-bold leading-9">
+            SELECT YOUR CHARACTER
+          </div>
         ) : (
           <p>CHARACTERS</p>
         )}
@@ -77,7 +78,13 @@ const DungeonDetail = ({
                     className="size-24"
                   />
                 ) : (
-                  <HelmetIcon className="shrink-0" />
+                  <Image
+                    src={champion.imageUrl || "/images/default-avatar.png"}
+                    alt={champion.name}
+                    width={84}
+                    height={84}
+                    className="size-24 rounded-full"
+                  />
                 )}
                 <div className="flex flex-col gap-1">
                   <div className="flex w-full justify-between">
@@ -105,17 +112,6 @@ const DungeonDetail = ({
                 </div>
               </div>
               <div className="flex flex-col gap-4">
-                <p className="font-medium tracking-wide">ACTIONS</p>
-                <div className="grid grid-cols-2 gap-x-3 gap-y-2">
-                  {moveMappingWithIcons(champion.moveMapping).map((move, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      {move.icon}
-                      <div className="flex h-[72px] items-center">
-                        <p className="line-clamp-3 font-light hover:line-clamp-4">{move.text}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
                 {onChangeChampion && (
                   <Button
                     variant="primary"
@@ -161,21 +157,7 @@ const DungeonDetail = ({
                   </p>
                 </div>
               </div>
-              {customChampion && (
-                <div className="flex flex-col gap-4">
-                  <p className="font-medium tracking-wide">ACTIONS</p>
-                  <div className="grid grid-cols-2 gap-x-3 gap-y-2">
-                    {moveMappingWithIcons(customChampion.moveMapping).map((move, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        {move.icon}
-                        <div className="flex h-[72px] items-center">
-                          <p className="line-clamp-3 font-light hover:line-clamp-4">{move.text}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+              {customChampion && <div className="flex flex-col gap-4"></div>}
 
               <CreateHeroModal
                 conversationId={conversationId}

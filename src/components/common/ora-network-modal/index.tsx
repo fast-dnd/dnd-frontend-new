@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable tailwindcss/no-contradicting-classname */
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useEffect, useState } from "react";
-import { CheckCircle, Sword } from "@phosphor-icons/react";
+import { CheckCircle, CurrencyCircleDollar, EyeClosed, Sword } from "@phosphor-icons/react";
 import { toast } from "sonner";
 import Web3 from "web3";
 
@@ -13,17 +14,18 @@ import Spinner from "@/components/ui/spinner";
 import oraService from "@/services/ora-network-service";
 import tournamentService from "@/services/tournaments-service";
 import { IOraCommitToTxHash } from "@/types/ora-network";
+import { IGameState } from "@/types/room";
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
 import { Dialog, DialogContent, DialogTrigger } from "../../ui/dialog";
-import Collapsible from "./collapsible";
 
 type OraNetworkModalProps = {
   conversationId: string;
   aiJudgeQuery: string | undefined;
   aiJudgeQueryNormalized: string | undefined;
   aiJudgeProcessedQuery: boolean | undefined;
+  roomState: IGameState;
 };
 
 const OraNetworkModal = ({
@@ -31,6 +33,7 @@ const OraNetworkModal = ({
   aiJudgeQuery,
   aiJudgeQueryNormalized,
   aiJudgeProcessedQuery,
+  roomState,
 }: OraNetworkModalProps) => {
   const [selectedNetwork, setSelectedNetwork] = useState<NetworkName | "">("");
   const [selectedCommunity, setSelectedCommunity] = useState<string>("");
@@ -44,6 +47,10 @@ const OraNetworkModal = ({
     const fetchData = async () => {
       try {
         setLoading(true);
+        if (roomState === "GAMING" || roomState === "LOSE") {
+          setLoading(false); // Stop loading if early return
+          return;
+        }
         if (!aiJudgeQuery) {
           const aiJudgeResponse = await oraService.getAiJudgeQuery(conversationId);
           setAiJudgeQuery(aiJudgeResponse.query);
@@ -71,6 +78,7 @@ const OraNetworkModal = ({
   const handleNetworkSelection = (network: NetworkName) => {
     setSelectedNetwork(network);
   };
+
   const handleOraNetworkClick = async (
     selectedNetwork: string,
     conversationId: string,
@@ -125,24 +133,18 @@ const OraNetworkModal = ({
       <DialogTrigger asChild className="max-lg:hidden">
         <button
           className="flex cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black p-4 transition-all duration-200 hover:bg-[#1B1B1B]"
-          disabled={aiJudgeProcessedQuery}
+          disabled={aiJudgeProcessedQuery || roomState === "GAMING" || roomState == "LOSE"}
         >
-          {aiJudgeProcessedQuery ? (
+          {roomState === "GAMING" ? (
+            <Sword size={32} color="white" />
+          ) : roomState === "LOSE" ? (
+            <EyeClosed size={32} color="white" />
+          ) : roomState === "WIN" && aiJudgeProcessedQuery ? (
             <CheckCircle size={32} color="green" />
           ) : (
-            <Sword size={32} color="orange" />
+            <CurrencyCircleDollar size={32} color="green" />
           )}
         </button>
-      </DialogTrigger>
-      <DialogTrigger asChild className="lg:hidden">
-        <Button className="gap-4 py-4" variant="sidebar">
-          {aiJudgeProcessedQuery ? (
-            <CheckCircle size={32} color="green" />
-          ) : (
-            <Sword size={32} color="orange" />
-          )}{" "}
-          <p className="flex-1 text-center">claim reward</p>
-        </Button>
       </DialogTrigger>
       <DialogContent className="z-[100] flex flex-col gap-12 bg-black p-4 max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:p-8">
         {transactionStatus === "loading" && (
@@ -179,7 +181,8 @@ const OraNetworkModal = ({
               By selecting network and executing transaction given transcript will be evaulated by
               AI Judge and depending on its rating you will climb ORA network leaderboard !
             </p>
-            <div className="mt-10">
+            {/* TODO: Return query to be seen somehow */}
+            {/* <div className="mt-10">
               <Collapsible title="Query">
                 {loading ? (
                   <p className="text-center font-light lg:text-xl lg:tracking-[1.5px]">
@@ -191,7 +194,7 @@ const OraNetworkModal = ({
                   </p>
                 )}
               </Collapsible>
-            </div>
+            </div> */}
             <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
               Select community :
             </p>
@@ -208,7 +211,7 @@ const OraNetworkModal = ({
               ))}
             </div>
             <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
-              Select payment network :
+              Select payment chain :
             </p>
             <div className="mt-4 flex flex-wrap justify-center gap-4">
               {Object.entries(networks).map(([name, id]) => (
@@ -242,60 +245,57 @@ const OraNetworkModal = ({
 };
 
 type NetworkName =
-  | "Ethereum"
-  // | "Ethereum Sepolia"
-  | "Optimism"
+  // | "Optimism"
   // | "Optimism Sepolia"
-  | "Arbitrum"
-  // | "Arbitrum Sepolia Testnet"
-  // | "Manta"
-  // | "Manta Sepolia Testnet"
-  | "Linea"
-  // | "Base"
-  | "Polygon";
+  "Arbitrum" | "ArbitrumSepoliaTestnet";
+// | "Manta"
+// | "Manta Sepolia Testnet"
+// | "Linea"
+// | "Base"
+// | "Polygon";
 // | "Mantle";
 
 const networkLogos: { [key in NetworkName]: string } = {
-  Ethereum: "/images/logos/ethereum-eth-logo.png",
+  // Ethereum: "/images/logos/ethereum-eth-logo.png",
   // "Ethereum Sepolia": "/images/logos/ethereum-eth-logo.png",
-  Optimism: "/images/logos/optimism-ethereum-op-logo.png",
+  // Optimism: "/images/logos/optimism-ethereum-op-logo.png",
   // "Optimism Sepolia": "/images/logos/optimism-ethereum-op-logo.png",
   Arbitrum: "/images/logos/arbitrum-arb-logo.png",
-  // "Arbitrum Sepolia Testnet": "/images/logos/ethereum-eth-logo.png",
+  ArbitrumSepoliaTestnet: "/images/logos/arbitrum-arb-logo.png",
   // Manta: "/images/logos/manta-logo.png",
   // "Manta Sepolia Testnet": "/images/logos/ethereum-eth-logo.png",
-  Linea: "/images/logos/linea-logo.png",
+  // Linea: "/images/logos/linea-logo.png",
   // Base: "/images/logos/base-network-logo.png",
-  Polygon: "/images/logos/polygon-logo.png",
+  // Polygon: "/images/logos/polygon-logo.png",
   // Mantle: "/images/logos/mantle-logo.png",
 };
 const networks: Record<NetworkName, string> = {
-  Ethereum: "0xaa36a7", //0x1
+  // Ethereum: "0xaa36a7", //0x1
   // "Ethereum Sepolia": "0xaa36a7",
-  Optimism: "0xa",
+  // Optimism: "0xa",
   // "Optimism Sepolia": "0xaa37dc",
   Arbitrum: "0x66eee", //"0xa4b1",
-  // "Arbitrum Sepolia Testnet": "0x66eee",
+  ArbitrumSepoliaTestnet: "0x66eee",
   // Manta: "0xa9",
   // "Manta Sepolia Testnet": "0x34816e",
-  Linea: "0xe708",
+  // Linea: "0xe708",
   // Base: "0x2105",
-  Polygon: "0x89",
+  // Polygon: "0x89",
   // Mantle: "0x1388",
 };
 
 const contractAddresses: { [key in NetworkName]: string } = {
-  Ethereum: "0x696c83111a49eBb94267ecf4DDF6E220D5A80129", //0x61423153f111BCFB28dd264aBA8d9b5C452228D2
+  // Ethereum: "0x696c83111a49eBb94267ecf4DDF6E220D5A80129", //0x61423153f111BCFB28dd264aBA8d9b5C452228D2
   // "Ethereum Sepolia": "0x696c83111a49eBb94267ecf4DDF6E220D5A80129",
-  Optimism: "0xBC24514E541d5CBAAC1DD155187A171a593e5CF6",
+  // Optimism: "0xBC24514E541d5CBAAC1DD155187A171a593e5CF6",
   // "Optimism Sepolia": "0xf6919ebb1bFdD282c4edc386bFE3Dea1a1D8AC16",
-  Arbitrum: "0xBC24514E541d5CBAAC1DD155187A171a593e5CF6", //0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD
-  // "Arbitrum Sepolia Testnet": "0xBC24514E541d5CBAAC1DD155187A171a593e5CF6",
+  Arbitrum: "0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD", //0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD
+  ArbitrumSepoliaTestnet: "0xBC24514E541d5CBAAC1DD155187A171a593e5CF6",
   // Manta: "0x523622DfEd0243B0DF80CC9275764B0f432D33E3",
   // "Manta Sepolia Testnet": "0x3bfD1Cc919bfeC7795b600E764aDa001b58f122a",
-  Linea: "0xb880D47D3894D99157B52A7F869aB3B1E2D4349d",
+  // Linea: "0xb880D47D3894D99157B52A7F869aB3B1E2D4349d",
   // Base: "0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD",
-  Polygon: "0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD",
+  // Polygon: "0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD",
   // Mantle: "0xC3287BDEF03b925A7C7f54791EDADCD88e632CcD",
 };
 
@@ -329,7 +329,7 @@ const NetworkSelectionButton: React.FC<NetworkButtonProps> = ({
           style={{ width: "100px", height: "100px", objectFit: "contain" }}
           className="network-logo"
         />
-        <span className="network-name">{networkName}</span>
+        <span className="network-name">{networkName == "Arbitrum" ? "Mainnet" : "Testnet"}</span>
       </button>
     </div>
   );

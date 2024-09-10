@@ -3,13 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DiscordLogo, InstagramLogo, TwitterLogo } from "@phosphor-icons/react";
+import { DiscordLogo, InstagramLogo, MusicNote, TwitterLogo } from "@phosphor-icons/react";
 
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
 import { cn } from "@/utils/style-utils";
 
 import ClaimRewardModal from "../common/claim-reward-modal";
+import MusicSettingsModal from "../common/music-settings-modal";
 import ProfileDropdown from "./components/profile-dropdown";
 import RewardPool from "./components/reward-pool";
 
@@ -47,6 +48,7 @@ const DesktopNavbar = () => {
         >
           <TwitterLogo className="size-7" />
         </Link>
+        <MusicSettingsModal></MusicSettingsModal>
       </div>
       <div className="flex items-center gap-6 text-2xl leading-7 tracking-[3.3px]">
         {loggedIn && !isDefault && !!communityId && (
@@ -63,7 +65,6 @@ const DesktopNavbar = () => {
             <div className="size-2 rotate-45 bg-white opacity-25" />
           </>
         )}
-
         {loggedIn && (
           <>
             {!!communityId && (

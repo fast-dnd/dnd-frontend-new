@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 
+import { jibril } from "@/utils/fonts";
+
 interface CommunityTrackProps {
   communities: Array<any>;
   selectedCommunity: any;
@@ -17,7 +19,9 @@ const CommunityTrack: React.FC<CommunityTrackProps> = ({
   }
   return (
     <div className="relative flex flex-col items-center p-6">
-      <p className="mb-4 text-4xl font-bold tracking-wide text-gold">Communities</p>
+      <p className="mb-4 text-4xl font-bold tracking-wide text-gold" style={jibril.style}>
+        Communities
+      </p>
       <div className="mt-2 flex space-x-6 overflow-x-auto">
         {communities.map((community) => (
           <div

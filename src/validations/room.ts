@@ -6,17 +6,6 @@ import { championSchema } from "./dungeon";
 
 export const gameStateSchema = z.enum(["CREATING", "GAMING", "WIN", "LOSE"]);
 
-export const defaultMoves = [
-  "discover_health",
-  "discover_mana",
-  "conversation_with_team",
-  "rest",
-] as const;
-
-export const defaultMoveSchema = z.enum(defaultMoves);
-
-export const moveTypeSchema = z.enum([...defaultMoves, "no_input", "free_will"]);
-
 export const aiModelSchema = z.enum([
   "bartender_bob",
   "wizard_uncle_bob",
@@ -30,6 +19,22 @@ export const aiModelSchema = z.enum([
   "stoned_bob",
   "pepe_bob",
   "retardio_bob",
+]);
+
+export const gameModeSchema = z.enum([
+  "normal",
+  "only_emoji",
+  "random_words",
+  "smart",
+  "aggressive",
+  "rap_battle",
+  "stupid",
+  "emotional",
+  "sarcastic",
+  "mysterious",
+  "heroic",
+  "lazy",
+  "flashy",
 ]);
 
 export const wordsChallengeSchema = z.array(
@@ -50,7 +55,6 @@ export const moveSchema = z.object({
   playerAccountId: z.string(),
   playerName: z.string(),
   playerChampion: z.string().nullish(),
-  moveType: moveTypeSchema,
   action: z.string(),
   dice: z.number(),
   mana: z.number(),
@@ -72,6 +76,7 @@ export const playerSchema = z.object({
   imageUrl: z.string(),
   champion: championSchema.nullish(),
   bonusForNextRound: z.number(),
+  gameMode: gameModeSchema.nullish(),
   name: z.string(),
   accountLevel: z.number(),
   health: z.number(),
@@ -92,7 +97,6 @@ export const baseRoomSchema = z.object({
   roundEndsAt: z.string().nullish(),
   generateImages: z.boolean(),
   generateAudio: z.boolean(),
-  generateRandomWords: z.boolean(),
   responseDetailsDepth: z.enum(dungeonDurationsArray),
   price: z.number(),
   location: z.object({

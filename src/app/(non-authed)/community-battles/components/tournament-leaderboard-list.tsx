@@ -74,15 +74,27 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
   if (isError) return <div>Something went wrong</div>;
 
   const content = (
-    <div className="relative flex flex-col items-center bg-white/5 p-6">
-      <div className="h-[40rem] w-full overflow-y-auto">
-        {/* Increased height to 40rem */}
-        <table className="min-w-full table-auto text-left text-white">
-          <thead className="bg-gray-800 text-gold">
+    <div className="h-full w-full flex-grow flex-col items-center px-1">
+      <div className=" w-full overflow-y-auto">
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "separate",
+            borderSpacing: "0 0.5em",
+          }}
+          className="h-full w-full min-w-full table-auto  text-left text-white"
+        >
+          <thead
+            style={{
+              backgroundColor: "#252525",
+              textTransform: "uppercase",
+              fontWeight: 700,
+            }}
+          >
             <tr>
-              <th className="px-4 py-2">Rank</th>
-              <th className="px-4 py-2">User</th>
-              <th className="px-4 py-2">Rating</th>
+              <th style={{ padding: "16px" }}>Rank</th>
+              <th style={{ padding: "16px" }}>User</th>
+              <th style={{ padding: "16px" }}>Rating</th>
             </tr>
           </thead>
           <tbody>
@@ -96,21 +108,38 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
                 return (
                   <tr
                     key={leaderboardUser.accountId}
-                    className="bg-gray-700 hover:bg-gray-600"
+                    style={{
+                      backgroundColor: "#2d2d2d",
+                      transition: "background-color 0.3s ease",
+                      borderRadius: "10px",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#3a3a3a")}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#2d2d2d")}
                     ref={isLastItem ? lastLeaderboardUserRef : null} // Use the ref here
                   >
-                    <td className="px-4 py-2">{overallIndex}</td>
-                    <td className="px-4 py-2">
+                    <td style={{ padding: "16px", fontSize: "1.25rem", fontWeight: "600" }}>
+                      {overallIndex}
+                    </td>
+                    <td style={{ padding: "16px" }}>
                       <div className="flex items-center space-x-4">
                         <img
                           src={leaderboardUser.imageUrl || "/images/default-avatar.png"}
                           alt={leaderboardUser.username}
-                          className="h-12 w-12 rounded-full"
+                          style={{
+                            height: "48px",
+                            width: "48px",
+                            borderRadius: "50%",
+                            transition: "transform 0.3s ease",
+                          }}
+                          onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")}
+                          onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
                         />
-                        <span>{leaderboardUser.username}</span>
+                        <span style={{ fontSize: "1.1rem" }}>{leaderboardUser.username}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-2">{leaderboardUser.rating}</td>
+                    <td style={{ padding: "16px", fontSize: "1.1rem", fontWeight: "600" }}>
+                      {leaderboardUser.rating}
+                    </td>
                   </tr>
                 );
               }),
@@ -123,23 +152,46 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
                 10 - leaderboardData?.pages.flatMap((page) => page.leaderboard).length,
               ),
             }).map((_, index) => (
-              <tr key={`placeholder-${index}`} className="bg-gray-700 hover:bg-gray-600">
-                <td className="px-4 py-2">
+              <tr
+                key={`placeholder-${index}`}
+                style={{
+                  backgroundColor: "#2d2d2d",
+                  transition: "background-color 0.3s ease",
+                  borderRadius: "10px",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#3a3a3a")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#2d2d2d")}
+              >
+                <td style={{ padding: "16px" }}>
                   {leaderboardData?.pages.flatMap((page) => page.leaderboard).length + index + 1}
                 </td>
-                <td className="px-4 py-2">
-                  <div className="h-12 w-12 bg-gray-600"></div>
+                <td style={{ padding: "16px" }}>
+                  <div
+                    style={{
+                      height: "48px",
+                      width: "48px",
+                      backgroundColor: "#3a3a3a",
+                      borderRadius: "50%",
+                    }}
+                  ></div>
                 </td>
-                <td className="px-4 py-2">
-                  <div className="h-12 w-12 bg-gray-600"></div>
+                <td style={{ padding: "16px" }}>
+                  <div style={{ height: "16px", width: "100%", backgroundColor: "#3a3a3a" }}></div>
                 </td>
               </tr>
             ))}
 
             {/* Spinner for loading more data */}
             {isFetchingNextPage && (
-              <tr className="bg-gray-700 hover:bg-gray-600">
-                <td className="px-4 py-2 text-center">
+              <tr
+                style={{
+                  backgroundColor: "#2d2d2d",
+                  transition: "background-color 0.3s ease",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#3a3a3a")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#2d2d2d")}
+              >
+                <td style={{ padding: "16px", textAlign: "center" }}>
                   <Spinner className="m-0 size-8" />
                 </td>
               </tr>
@@ -153,9 +205,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
   return (
     <div className={cn("relative flex h-full min-h-screen flex-1 flex-col overflow-hidden")}>
       <div
-        className={cn(
-          "flex h-full min-h-screen flex-1 flex-col overflow-y-auto overscroll-auto bg-dark-900 pb-4",
-        )}
+        className={cn("flex h-full min-h-screen flex-1 flex-col overflow-y-auto overscroll-auto  ")}
         ref={scrollableRef}
       >
         {content}

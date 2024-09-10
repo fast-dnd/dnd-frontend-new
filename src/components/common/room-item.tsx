@@ -64,6 +64,7 @@ const RoomItem = React.forwardRef<
         aiJudgeProcessedQuery={
           room.aiJudgeQueryTxHash != null && room.aiJudgeQueryTxHash != undefined
         }
+        roomState={room.state}
       />
     </div>
   );
