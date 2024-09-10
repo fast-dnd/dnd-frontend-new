@@ -76,6 +76,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
   const content = (
     <div className="h-full w-full flex-grow flex-col items-center px-1">
       <div className="h-[50rem] w-full overflow-y-auto">
+
         <table
           style={{
             width: "100%",
@@ -209,6 +210,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
     <div className={cn("relative flex h-full min-h-screen flex-1 flex-col overflow-hidden")}>
       <div
         className={cn("flex h-full min-h-screen flex-1 flex-col  overscroll-auto  ")}
+
         ref={scrollableRef}
       >
         {content}
