@@ -75,7 +75,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
 
   const content = (
     <div className="h-full w-full flex-grow flex-col items-center px-1">
-      <div className=" w-full overflow-y-auto">
+      <div className="h-[50rem] w-full overflow-y-auto">
         <table
           style={{
             width: "100%",
@@ -89,6 +89,9 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
               backgroundColor: "#252525",
               textTransform: "uppercase",
               fontWeight: 700,
+              position: "sticky", // Makes the header sticky
+              top: 0, // Sticks to the top of the container
+              zIndex: 10, // Ensures the header stays above the body content
             }}
           >
             <tr>

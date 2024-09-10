@@ -20,8 +20,8 @@ const CommunityLeaderboard: React.FC<CommunityLeaderboardProps> = ({ communities
     >
       <p
         style={{
-          marginBottom: "24px",
-          fontSize: "2.5rem",
+          marginBottom: "12px",
+          fontSize: "2rem",
           fontFamily: jibril.style.fontFamily,
           fontWeight: "bold",
           color: "gold",

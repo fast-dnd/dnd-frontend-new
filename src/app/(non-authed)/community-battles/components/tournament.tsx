@@ -54,8 +54,8 @@ const Tournament = () => {
 
   return (
     <div className="relative flex flex-col gap-4 ">
-      <div className="relative flex w-full  flex-row justify-between  p-8">
-        <div className="mb-4 flex flex-col items-center rounded-t-md p-6">
+      <div className="relative flex w-full  flex-row justify-between p-8">
+        <div className="mb-4 flex flex-col items-center rounded-t-md ">
           <h1 className="mb-4 text-4xl font-bold tracking-wide text-gold" style={jibril.style}>
             {name}
           </h1>
@@ -68,7 +68,7 @@ const Tournament = () => {
           selectedCommunity={selectedCommunity}
           handleSelectCommunity={handleSelectCommunity}
         />
-        <div className="relative mt-2 flex flex-col items-center rounded-t-md p-6">
+        <div className="relative mt-2 flex flex-col items-center rounded-t-md ">
           <h1
             className="mb-4 text-4xl font-semibold text-gold"
             style={jibril.style}
@@ -77,11 +77,11 @@ const Tournament = () => {
         </div>
       </div>
       <div className="relative flex h-full flex-row gap-4">
-        <div className="flex h-full w-1/4 flex-shrink-0 flex-col justify-between">
-          <div className="mb-4 flex-1">
+        <div className="flex h-full w-1/4 flex-shrink-0 flex-col ">
+          <div className="mb-4 ">
             <CommunityCarosel selectedCommunity={selectedCommunity} />
           </div>
-          <div className="flex-1">
+          <div className="">
             <CommunityLeaderboard communities={communities} />
           </div>
         </div>
