@@ -2,6 +2,7 @@
 import React from "react";
 
 import { jibril } from "@/utils/fonts";
+import { cn } from "@/utils/style-utils";
 
 interface CommunityLeaderboardProps {
   communities: Array<any>;
@@ -16,7 +17,7 @@ const CommunityLeaderboard: React.FC<CommunityLeaderboardProps> = ({ communities
         borderRadius: "10px",
         // boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
       }}
-      className="relative flex flex-col items-center"
+      className={cn("glass-effect-2", "relative flex flex-col items-center")}
     >
       <p
         style={{

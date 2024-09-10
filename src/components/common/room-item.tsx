@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Book1, Play } from "iconsax-react";
 
 import { IRoom } from "@/types/room";
+import { cn } from "@/utils/style-utils";
 
 import {
   gameStore,
@@ -25,8 +26,11 @@ const RoomItem = React.forwardRef<
   const roomState = roomStateMap(room.state, room.turn);
   return (
     <div
+      className={cn(
+        "glass-effect",
+        "flex w-full items-center justify-between gap-4 rounded-md p-0 pr-2 transition-colors duration-300 hover:bg-white/10 max-lg:bg-black lg:p-2",
+      )}
       key={room.conversationId}
-      className="flex w-full items-center justify-between gap-4 rounded-md p-0 pr-2 transition-colors duration-300 hover:bg-white/10 max-lg:bg-black lg:p-2"
       ref={ref}
     >
       <Image

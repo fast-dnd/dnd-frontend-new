@@ -208,7 +208,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
   return (
     <div className={cn("relative flex h-full min-h-screen flex-1 flex-col overflow-hidden")}>
       <div
-        className={cn("flex h-full min-h-screen flex-1 flex-col overflow-y-auto overscroll-auto  ")}
+        className={cn("flex h-full min-h-screen flex-1 flex-col  overscroll-auto  ")}
         ref={scrollableRef}
       >
         {content}

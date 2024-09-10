@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 import { jibril } from "@/utils/fonts";
+import { cn } from "@/utils/style-utils";
 
 import useGetTournament from "../hooks/use-get-tournament";
 import CommunityCarosel from "./community-carosel";
@@ -53,7 +54,7 @@ const Tournament = () => {
   };
 
   return (
-    <div className="relative flex flex-col gap-4 ">
+    <div className="relative flex flex-col gap-2">
       <div className="relative flex w-full  flex-row justify-between p-8">
         <div className="mb-4 flex flex-col items-center rounded-t-md ">
           <h1 className="mb-4 text-4xl font-bold tracking-wide text-gold" style={jibril.style}>
@@ -77,15 +78,22 @@ const Tournament = () => {
         </div>
       </div>
       <div className="relative flex h-full flex-row gap-4">
-        <div className="flex h-full w-1/4 flex-shrink-0 flex-col ">
+        <div
+          className={cn(
+            "glass-effect-2",
+            "flex h-full max-h-screen min-h-screen w-1/4 flex-shrink-0 flex-col",
+          )}
+        >
           <div className="mb-4 ">
             <CommunityCarosel selectedCommunity={selectedCommunity} />
           </div>
-          <div className="">
+          <div>
             <CommunityLeaderboard communities={communities} />
           </div>
         </div>
-        <div className="flex h-full w-full flex-col">
+        <div
+          className={cn("glass-effect-2", "flex h-full max-h-screen min-h-screen w-full flex-col")}
+        >
           <TournamentLeaderboardList communityId={selectedCommunity ? selectedCommunity._id : ""} />
         </div>
       </div>
