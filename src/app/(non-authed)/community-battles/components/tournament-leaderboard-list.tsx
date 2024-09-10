@@ -57,7 +57,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
   if (isLoading)
     return (
       <div className="flex animate-pulse flex-col">
-        {Array.from({ length: 10 }).map((_, i) => (
+        {Array.from({ length: 7 }).map((_, i) => (
           <div key={i} className="flex w-full justify-between bg-black/20 p-2">
             <div className="flex items-center gap-4">
               <div className="size-2 rounded-lg bg-gray-600" />
@@ -75,7 +75,8 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
 
   const content = (
     <div className="h-full w-full flex-grow flex-col items-center px-1">
-      <div className=" w-full overflow-y-auto">
+      <div className="h-[50rem] w-full overflow-y-auto">
+
         <table
           style={{
             width: "100%",
@@ -89,6 +90,9 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
               backgroundColor: "#252525",
               textTransform: "uppercase",
               fontWeight: 700,
+              position: "sticky", // Makes the header sticky
+              top: 0, // Sticks to the top of the container
+              zIndex: 10, // Ensures the header stays above the body content
             }}
           >
             <tr>
@@ -149,7 +153,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
             {Array.from({
               length: Math.max(
                 0,
-                10 - leaderboardData?.pages.flatMap((page) => page.leaderboard).length,
+                7 - leaderboardData?.pages.flatMap((page) => page.leaderboard).length,
               ),
             }).map((_, index) => (
               <tr
@@ -205,7 +209,8 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
   return (
     <div className={cn("relative flex h-full min-h-screen flex-1 flex-col overflow-hidden")}>
       <div
-        className={cn("flex h-full min-h-screen flex-1 flex-col overflow-y-auto overscroll-auto  ")}
+        className={cn("flex h-full min-h-screen flex-1 flex-col  overscroll-auto  ")}
+
         ref={scrollableRef}
       >
         {content}

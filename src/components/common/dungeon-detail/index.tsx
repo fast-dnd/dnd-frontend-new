@@ -63,7 +63,8 @@ const DungeonDetail = ({
             <div
               key={champion._id}
               className={cn(
-                "flex min-w-0 basis-1/3 flex-col justify-between gap-4 rounded-md border-2 border-white bg-white/10 p-6 transition-all duration-200",
+                "glass-effect",
+                "flex min-w-0 basis-1/3 flex-col justify-between gap-4 rounded-md p-6 transition-all duration-200",
                 champion.type === "nft" && "border-gold",
                 champion._id === selectedChampion?._id && "border-primary bg-black/50",
               )}
