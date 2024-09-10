@@ -18,8 +18,8 @@ const soundtracks = [
 
 const MusicSettingsModal = () => {
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
-  const [musicVolume, setMusicVolume] = useState(0);
-  const [soundVolume, setSoundVolume] = useState(0);
+  const [musicVolume, setMusicVolume] = useState(40);
+  const [soundVolume, setSoundVolume] = useState(20);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(() =>
     Math.floor(Math.random() * soundtracks.length),
   ); // Start with a random track
