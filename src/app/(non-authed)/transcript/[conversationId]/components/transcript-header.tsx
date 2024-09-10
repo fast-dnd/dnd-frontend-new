@@ -15,7 +15,7 @@ const TranscriptHeader = ({ transcripts }: { transcripts: ITranscript }) => {
   const { scrollYProgress } = useScroll();
 
   return (
-    <div className="z-10 flex w-full items-center justify-between bg-black px-4 pb-5 pt-8 max-lg:fixed max-lg:mt-[45px] lg:rounded-t-md lg:px-6 lg:py-9">
+    <div className="z-10 flex w-full items-center justify-between bg-dark-800 px-4 pb-5 pt-8 max-lg:fixed max-lg:mt-[45px] lg:rounded-t-md lg:px-6 lg:py-9">
       <div
         className="hidden items-center gap-4 text-3xl leading-none tracking-widest lg:flex"
         style={jibril.style}

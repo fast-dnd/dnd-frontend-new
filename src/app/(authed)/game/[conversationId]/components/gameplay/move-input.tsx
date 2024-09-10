@@ -50,7 +50,7 @@ const MoveInput = ({ champion, gameMode, wordsChallenge }: IMoveInputProps) => {
           <>
             {isWordsChallenge ? (
               wordChallengeForPlayer && (
-                <div className="flex h-28 w-full rounded-md bg-black/60 pr-2">
+                <div className="flex w-full rounded-md border border-white/50 pr-2 focus-within:border-white">
                   <div className="flex size-full flex-col overflow-y-auto p-4">
                     <div className="inline">
                       {wordChallengeForPlayer.words.map((word, index) => (

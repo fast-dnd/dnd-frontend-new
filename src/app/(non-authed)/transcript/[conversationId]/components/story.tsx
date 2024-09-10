@@ -9,12 +9,12 @@ import ImageModal from "./image-modal";
 
 const Story = ({ story, transcripts }: { story: ITranscriptStory; transcripts: ITranscript }) => {
   return (
-    <div className="flex flex-col gap-6 rounded-md bg-black p-1 pb-6 lg:p-8">
+    <div className="flex flex-col gap-6 rounded-md bg-dark-900 p-1 pb-6 lg:p-8">
       {story.image && <ImageModal image={story.image} />}
       <div className="flex flex-col gap-6 max-lg:px-4">
         <div className="flex flex-col gap-1">
           <p className="text-lg font-bold lg:text-4xl">{story.title}</p>
-          <Markdown className="markdown">{story.storyChunk}</Markdown>
+          <Markdown className="markdown text-xl">{story.storyChunk}</Markdown>
         </div>
       </div>
 
