@@ -74,16 +74,15 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
   if (isError) return <div>Something went wrong</div>;
 
   const content = (
-    <div className="relative flex flex-col items-center p-6">
-      <div className="h-[40rem] w-full overflow-y-auto">
-        {/* Increased height to 40rem */}
+    <div className="h-full w-full flex-grow flex-col items-center px-1">
+      <div className=" w-full overflow-y-auto">
         <table
           style={{
             width: "100%",
             borderCollapse: "separate",
             borderSpacing: "0 0.5em",
           }}
-          className="min-w-full table-auto text-left text-white"
+          className="h-full w-full min-w-full table-auto  text-left text-white"
         >
           <thead
             style={{
@@ -206,9 +205,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
   return (
     <div className={cn("relative flex h-full min-h-screen flex-1 flex-col overflow-hidden")}>
       <div
-        className={cn(
-          "flex h-full min-h-screen flex-1 flex-col overflow-y-auto overscroll-auto bg-dark-900 pb-4",
-        )}
+        className={cn("flex h-full min-h-screen flex-1 flex-col overflow-y-auto overscroll-auto  ")}
         ref={scrollableRef}
       >
         {content}
