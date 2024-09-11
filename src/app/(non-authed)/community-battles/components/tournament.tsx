@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
@@ -10,6 +11,7 @@ import CommunityCarosel from "./community-carosel";
 import CommunityLeaderboard from "./community-leaderboard";
 import CommunityTrack from "./community-track";
 import TournamentLeaderboardList from "./tournament-leaderboard-list";
+import TournamentSkeleton from "./tournament-skeleton.tsx";
 
 const Tournament = () => {
   const { data, isLoading, error } = useGetTournament();
@@ -22,11 +24,7 @@ const Tournament = () => {
   }, [data]);
 
   if (isLoading) {
-    return (
-      <div className="mb-4 flex flex-col items-center rounded-t-md py-6">
-        <h1 className="text-4xl font-bold tracking-wide text-white">Loading...</h1>
-      </div>
-    );
+    return <TournamentSkeleton />;
   }
 
   if (error) {
