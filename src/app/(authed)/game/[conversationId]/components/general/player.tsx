@@ -50,7 +50,7 @@ const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: bo
           draggable={false}
           width={90}
           height={90}
-          className="size-24 rounded-full"
+          className="size-full rounded-full max-lg:rounded-full max-lg:border max-lg:border-white/50"
         />
         {player.health <= 0 && (
           <div className="absolute left-0 top-0 flex size-full items-center justify-center bg-black/75 max-lg:rounded-full">

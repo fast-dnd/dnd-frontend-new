@@ -54,9 +54,9 @@ const Tournament = () => {
   };
 
   return (
-    <div className={cn("max-h-90 flex flex-col gap-2")}>
+    <div className={cn("max-h-90 flex min-h-0 flex-col gap-2")}>
       {" "}
-      <div className="relative flex w-full  flex-row justify-between p-2">
+      <div className="min-h-0flex-row relative flex w-full justify-between p-2">
         <div className="mb-4 flex flex-col items-center rounded-t-md ">
           <h1 className="mb-4 text-4xl font-bold tracking-wide text-gold" style={jibril.style}>
             {name}
