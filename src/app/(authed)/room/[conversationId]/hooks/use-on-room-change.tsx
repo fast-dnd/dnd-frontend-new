@@ -20,7 +20,6 @@ const useOnRoomChange = ({
 }: IUseOnRoomChangeProps) => {
   const [generateImages, setGenerateImages] = useState<boolean>();
   const [generateAudio, setGenerateAudio] = useState<boolean>();
-  const [generateRandomWords, setGenerateRandomWords] = useState<boolean>();
   const [aiModel, setAiModel] = useState<IAiModel>();
 
   const { mutate: updateRoom, isLoading: updatingRoom } = useUpdateRoom(conversationId);
@@ -32,7 +31,6 @@ const useOnRoomChange = ({
       (duration ||
         generateImages !== undefined ||
         generateAudio !== undefined ||
-        generateRandomWords !== undefined ||
         aiModel !== undefined)
     )
       updateRoom({
@@ -40,20 +38,17 @@ const useOnRoomChange = ({
         responseDetailsDepth: duration || roomData?.responseDetailsDepth,
         generateImages,
         generateAudio,
-        generateRandomWords,
         aiModel,
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [duration, generateImages, generateAudio, generateRandomWords, aiModel]);
+  }, [duration, generateImages, generateAudio, aiModel]);
 
   return {
     generateImages,
     setGenerateImages,
     generateAudio,
     setGenerateAudio,
-    generateRandomWords,
-    setGenerateRandomWords,
     updatingRoom,
     aiModel,
     setAiModel,

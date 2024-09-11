@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Image from "next/image";
 import { BsFillLightningFill } from "react-icons/bs";
 import { HiSparkles } from "react-icons/hi";
@@ -12,6 +13,11 @@ import { gameStore } from "../../stores/game-store";
 
 const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: boolean }) => {
   const statusUpdate = gameStore.statusUpdate.use();
+  const [isDescriptionVisible, setDescriptionVisible] = useState(false);
+
+  const toggleDescription = () => {
+    setDescriptionVisible(!isDescriptionVisible);
+  };
 
   const getClassName = (type: "health" | "bonus" | "mana") => {
     const commonClassName =
@@ -39,12 +45,12 @@ const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: bo
     <div className="relative flex gap-4 lg:gap-6">
       <div className="relative size-16 shrink-0 lg:size-[90px]">
         <Image
-          src={player.imageUrl || "/images/default-avatar.png"}
+          src={player.champion?.imageUrl || player.imageUrl || "/images/default-avatar.png"}
           alt={player.name}
           draggable={false}
           width={90}
           height={90}
-          className="size-full max-lg:rounded-full max-lg:border max-lg:border-white/50"
+          className="size-full rounded-full max-lg:rounded-full max-lg:border max-lg:border-white/50"
         />
         {player.health <= 0 && (
           <div className="absolute left-0 top-0 flex size-full items-center justify-center bg-black/75 max-lg:rounded-full">
@@ -67,9 +73,43 @@ const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: bo
         <p className="-mt-1 truncate font-bold uppercase tracking-[0.07em] lg:text-xl">
           {player.name}
         </p>
-        <p className="-mt-0.5 truncate text-xs tracking-[0.15em] lg:text-base lg:font-light">
-          {player.champion?.name}
-        </p>
+        <div className="flex cursor-pointer items-center" onClick={toggleDescription}>
+          <p className="-mt-0.5 truncate text-xl tracking-[0.15em]">{player.champion?.name}</p>
+          <span className="ml-2">
+            {isDescriptionVisible ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 15l7-7 7 7"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            )}
+          </span>
+        </div>
+        {isDescriptionVisible && <p className="-mt-0.5 text-lg ">{player.champion?.description}</p>}
         <div className="flex lg:gap-4">
           <div>
             <Tooltip

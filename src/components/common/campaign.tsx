@@ -5,6 +5,7 @@ import { GiCheckMark } from "react-icons/gi";
 
 import useCopy from "@/hooks/helpers/use-copy";
 import { ICampaign } from "@/types/campaign";
+import { cn } from "@/utils/style-utils";
 
 import AddToFavorites from "./add-to-favorites";
 import DeleteModal from "./delete-modal";
@@ -23,7 +24,10 @@ export const Campaign = React.forwardRef<HTMLDivElement, ICampaignProps>(
 
     return (
       <div
-        className="flex w-full cursor-pointer gap-8 rounded-md p-4 hover:bg-white/5"
+        className={cn(
+          "glass-effect",
+          "flex w-full cursor-pointer gap-8 rounded-md p-4 hover:bg-white/5",
+        )}
         ref={ref}
         onClick={() => setCampaignDetailId && setCampaignDetailId(campaign._id)}
       >

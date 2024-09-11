@@ -15,7 +15,7 @@ const GamePlayHeader = ({ title }: { title: string }) => {
   const loading = gameStore.loadingText.use();
 
   return (
-    <div className="flex w-full items-center justify-between gap-8 rounded-t-md bg-dark-900 px-12 py-6">
+    <div className="flex w-full items-center justify-between gap-8 rounded-t-md bg-dark-800 px-12 py-6">
       <div className="flex min-w-0 flex-1 items-center gap-4">
         <div className="size-2 shrink-0 rotate-45 bg-primary" />
         <p

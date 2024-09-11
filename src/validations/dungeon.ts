@@ -11,19 +11,11 @@ export const locationSchema = z.object({
   mission: z.string(),
 });
 
-export const moveMappingSchema = z.object({
-  conversation_with_team: z.string(),
-  discover_health: z.string(),
-  discover_mana: z.string(),
-  rest: z.string(),
-});
-
 export const championSchema = z.object({
   _id: z.string(),
   name: z.string(),
   description: z.string(),
   type: z.enum(["standard", "nft"]),
-  moveMapping: moveMappingSchema,
   label: z.string().optional(),
   imageUrl: z.string().nullish(),
   link: z.string().nullish(),

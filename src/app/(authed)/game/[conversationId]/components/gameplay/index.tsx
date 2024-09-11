@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import useGetRoomData from "@/hooks/queries/use-get-room-data";
 import { backgroundStore } from "@/stores/background-store";
+import { cn } from "@/utils/style-utils";
 
 import useGameplaySocket from "../../hooks/use-gameplay-socket";
 import useHandleGameStateChange from "../../hooks/use-handle-game-state-change";
@@ -34,7 +35,7 @@ const Gameplay = ({ conversationId }: { conversationId: string }) => {
   if (!roomData || !dungeonData || !currentPlayer) return <GameplaySkeleton />;
 
   return (
-    <div className="flex min-h-[100px] flex-1 flex-col">
+    <div className={cn("glass-effect-2", "flex min-h-[100px] flex-1 flex-col")}>
       <GamePlayHeader title={dungeonData.name} />
 
       <div className="flex min-h-0 flex-1 flex-col gap-8 overflow-y-hidden rounded-b-md bg-glass p-5 backdrop-blur-xl lg:px-12 lg:py-8">

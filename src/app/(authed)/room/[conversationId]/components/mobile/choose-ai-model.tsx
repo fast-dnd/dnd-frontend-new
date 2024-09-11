@@ -2,7 +2,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { AiOutlineClose } from "react-icons/ai";
-import { FiChevronDown } from "react-icons/fi";
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -15,7 +14,6 @@ interface IAiModelProps {
   selectedChampion: IChampion | null | undefined;
   isAdmin: boolean;
   roomData: IRoomDetail | undefined;
-  gameModeSelected: boolean;
   aiModelSelected: boolean;
   setAiModelSelected: React.Dispatch<React.SetStateAction<boolean>>;
   setAiModel: React.Dispatch<React.SetStateAction<IAiModel | undefined>>;
@@ -25,7 +23,6 @@ const ChooseAiModel = ({
   selectedChampion,
   isAdmin,
   roomData,
-  gameModeSelected,
   aiModelSelected,
   setAiModelSelected,
   setAiModel,
@@ -33,20 +30,22 @@ const ChooseAiModel = ({
   if (!roomData) return <>Something went wrong...</>;
   return (
     <>
-      {isAdmin && selectedChampion && gameModeSelected && !aiModelSelected && (
+      {isAdmin && selectedChampion && !aiModelSelected && (
         <div
           className={cn(
             "flex flex-1 flex-col items-center justify-between gap-4 overflow-hidden p-4 text-sm",
-            (!selectedChampion || !gameModeSelected) && "hidden",
+            !selectedChampion && "hidden",
             (!isAdmin || aiModelSelected) && "hidden",
           )}
         >
-          <div className="flex flex-col gap-4">
-            <p className="uppercase">Ai model</p>
+          <div className="flex flex-col items-center gap-4">
+            <p className="uppercase">AI MODEL</p>
             <ChooseAiModelModal roomData={roomData} setAiModel={setAiModel} />
           </div>
-          <div className="flex justify-center">
-            <Button onClick={() => setAiModelSelected(true)}>PLAY</Button>
+          <div className="flex w-full justify-center">
+            <Button className="w-full" onClick={() => setAiModelSelected(true)}>
+              PLAY
+            </Button>
           </div>
         </div>
       )}
@@ -68,20 +67,26 @@ const ChooseAiModelModal = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <div className="flex items-center gap-3 rounded-md bg-black p-3">
-          <Image
-            src={selectedAiModel.imgUrl}
-            alt={selectedAiModel.aiModel}
-            width={80}
-            height={80}
-            className="size-20 rounded-md"
-          />
-          <div className="flex flex-col gap-1 text-start">
-            <div className="flex items-center justify-between">
-              <p className="text-xl font-semibold tracking-tighter">{selectedAiModel.name}</p>
-              <FiChevronDown size={20} />
+        <div className="h-full w-[calc(100vw_-_3.25rem)] px-1.5">
+          <div className="flex h-full flex-col justify-between rounded-md bg-black/80">
+            <div className="flex flex-col items-center p-4">
+              <p className="text-center text-3xl font-bold">{selectedAiModel?.name}</p>
+
+              <div className="mt-2 flex items-start py-5">
+                <p className="line-clamp-5 font-light">{selectedAiModel?.longDescription}</p>
+              </div>
+
+              {/* Image in the center */}
+              <div className="mt-6 flex justify-center">
+                <Image
+                  src={selectedAiModel.imgUrl || "/images/default-avatar.png"}
+                  alt={selectedAiModel.name}
+                  width={200}
+                  height={200}
+                  className="rounded-full"
+                />
+              </div>
             </div>
-            <p className="text-sm font-light opacity-80">{selectedAiModel.longDescription}</p>
           </div>
         </div>
       </DialogTrigger>

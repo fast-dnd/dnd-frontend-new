@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Book1, Play } from "iconsax-react";
 
 import { IRoom } from "@/types/room";
+import { cn } from "@/utils/style-utils";
 
 import {
   gameStore,
@@ -14,6 +15,8 @@ import {
   moveStore,
 } from "@/app/(authed)/game/[conversationId]/stores/move-store";
 
+import OraNetworkModal from "./ora-network-modal";
+
 const RoomItem = React.forwardRef<
   HTMLDivElement,
   {
@@ -21,11 +24,13 @@ const RoomItem = React.forwardRef<
   }
 >(({ room }, ref) => {
   const roomState = roomStateMap(room.state, room.turn);
-
   return (
     <div
+      className={cn(
+        "glass-effect",
+        "flex w-full items-center justify-between gap-4 rounded-md p-0 pr-2 transition-colors duration-300 hover:bg-white/10 max-lg:bg-black lg:p-2",
+      )}
       key={room.conversationId}
-      className="flex w-full items-center justify-between gap-4 rounded-md p-0 pr-2 transition-colors duration-300 hover:bg-white/10 max-lg:bg-black lg:p-2"
       ref={ref}
     >
       <Image
@@ -56,6 +61,15 @@ const RoomItem = React.forwardRef<
           <Book1 variant="Bold" size={40} />
         </Link>
       )}
+      <OraNetworkModal
+        conversationId={room.conversationId}
+        aiJudgeQuery={room.aiJudgeQuery}
+        aiJudgeQueryNormalized={room.aiJudgeQueryNormalized}
+        aiJudgeProcessedQuery={
+          room.aiJudgeQueryTxHash != null && room.aiJudgeQueryTxHash != undefined
+        }
+        roomState={room.state}
+      />
     </div>
   );
 });
