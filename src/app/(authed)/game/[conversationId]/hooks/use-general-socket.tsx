@@ -41,11 +41,7 @@ const useGeneralSocket = (conversationId: string) => {
           break;
         case "PLAYER_MOVE":
           queryClient.invalidateQueries([roomKey, conversationId]);
-          if (
-            event.data.accountId === accountId &&
-            event.data.aiDescriptionForRating &&
-            event.data.moveType === "free_will"
-          )
+          if (event.data.accountId === accountId && event.data.aiDescriptionForRating)
             moveStore.aiDescription.set(event.data.aiDescriptionForRating);
           break;
         case "REQUEST_SENT_TO_DM":
