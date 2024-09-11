@@ -4,7 +4,6 @@ import React from "react";
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
-
 interface CommunityLeaderboardProps {
   communities: Array<any>;
 }

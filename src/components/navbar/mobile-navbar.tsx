@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DiscordLogo, InstagramLogo, MusicNote, TwitterLogo } from "@phosphor-icons/react";
+import { DiscordLogo, InstagramLogo, TwitterLogo } from "@phosphor-icons/react";
 import { BiChevronLeft } from "react-icons/bi";
 import { FaDiscord, FaUsers } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";

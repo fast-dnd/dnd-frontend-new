@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DiscordLogo, InstagramLogo, MusicNote, TwitterLogo } from "@phosphor-icons/react";
+import { DiscordLogo, InstagramLogo, TwitterLogo } from "@phosphor-icons/react";
 
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
