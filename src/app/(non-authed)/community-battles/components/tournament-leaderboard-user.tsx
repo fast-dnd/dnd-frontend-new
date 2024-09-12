@@ -17,7 +17,7 @@ const TournamentLeaderboardUserCard = React.forwardRef<
   };
 
   return (
-    <div className={cn("relative flex w-full justify-between px-4 py-2")} ref={ref}>
+    <div className={cn("relative flex w-full justify-between px-4 py-1")} ref={ref}>
       <div className={cn("flex items-center gap-4 pl-2")}>
         <p className="font-medium">{leaderboardUser.rank}</p>
         <Image

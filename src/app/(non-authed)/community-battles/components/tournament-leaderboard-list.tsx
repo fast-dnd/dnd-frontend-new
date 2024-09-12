@@ -56,8 +56,8 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
 
   if (isLoading)
     return (
-      <div className="flex animate-pulse flex-col">
-        {Array.from({ length: 7 }).map((_, i) => (
+      <div className="flex flex-col">
+        {Array.from({ length: 10 }).map((_, i) => (
           <div key={i} className="flex w-full justify-between bg-black/20 p-2">
             <div className="flex items-center gap-4">
               <div className="size-2 rounded-lg bg-gray-600" />
@@ -75,7 +75,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
 
   const content = (
     <div className="h-full w-full grow flex-col items-center px-1">
-      <div className="h-[50rem] w-full overflow-y-auto">
+      <div className=" w-full overflow-y-auto">
         <table
           style={{
             width: "100%",
@@ -123,7 +123,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
                     <td style={{ padding: "16px", fontSize: "1.25rem", fontWeight: "600" }}>
                       {overallIndex}
                     </td>
-                    <td style={{ padding: "16px" }}>
+                    <td style={{ padding: "2px" }}>
                       <div className="flex items-center space-x-4">
                         <img
                           src={leaderboardUser.imageUrl || "/images/default-avatar.png"}
@@ -152,14 +152,14 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
             {Array.from({
               length: Math.max(
                 0,
-                7 - leaderboardData?.pages.flatMap((page) => page.leaderboard).length,
+                10 - leaderboardData?.pages.flatMap((page) => page.leaderboard).length,
               ),
             }).map((_, index) => (
               <tr
                 key={`placeholder-${index}`}
                 style={{
                   backgroundColor: "#2d2d2d",
-                  transition: "background-color 0.3s ease",
+                  // transition: "background-color 0.3s ease",
                   borderRadius: "10px",
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#3a3a3a")}

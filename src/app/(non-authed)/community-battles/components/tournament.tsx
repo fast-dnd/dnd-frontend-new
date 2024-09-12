@@ -52,9 +52,13 @@ const Tournament = () => {
   };
 
   return (
-    <div className={cn("max-h-90 flex min-h-0 flex-col gap-2")}>
+    <div
+      className={cn(
+        "hidden min-h-0 flex-1 flex-col gap-12 overflow-y-auto px-5 pb-12 lg:flex lg:flex-col lg:px-0",
+      )}
+    >
       {" "}
-      <div className="min-h-0flex-row relative flex w-full justify-between p-2">
+      <div className="relative flex w-full flex-1 flex-row justify-between p-2">
         <div className="mb-4 flex flex-col items-center rounded-t-md ">
           <h1 className="mb-4 text-4xl font-bold tracking-wide text-gold" style={jibril.style}>
             {name}
@@ -76,7 +80,7 @@ const Tournament = () => {
           <h1 className="mt-4 text-6xl font-semibold">{`${prize} ${prizeToken}`}</h1>
         </div>
       </div>
-      <div className="relative mt-3 flex h-full flex-row gap-4">
+      <div className="relative mt-3 flex h-full flex-row gap-4 ">
         <div className={cn("flex h-full max-h-screen min-h-screen w-1/4 flex-shrink-0 flex-col")}>
           <div className="mb-4 ">
             <CommunityCarosel selectedCommunity={selectedCommunity} />
