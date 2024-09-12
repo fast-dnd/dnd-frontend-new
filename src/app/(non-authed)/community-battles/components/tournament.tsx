@@ -11,7 +11,7 @@ import CommunityCarosel from "./community-carosel";
 import CommunityLeaderboard from "./community-leaderboard";
 import CommunityTrack from "./community-track";
 import TournamentLeaderboardList from "./tournament-leaderboard-list";
-import TournamentSkeleton from "./tournament-skeleton.tsx";
+import TournamentSkeleton from "./tournament-skeleton";
 
 const Tournament = () => {
   const { data, isLoading, error } = useGetTournament();
