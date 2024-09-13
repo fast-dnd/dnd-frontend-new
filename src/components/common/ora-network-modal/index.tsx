@@ -148,19 +148,36 @@ const OraNetworkModal = ({
       </DialogTrigger>
       <DialogContent className="z-[100] flex flex-col gap-12 bg-black p-4 max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:p-8">
         {transactionStatus === "loading" && (
-          <div className="flex items-center justify-center">
-            <Spinner className={cn("m-0 size-5 shrink-0 opacity-0", true && "opacity-50")} />
+          <div className="relative flex flex-col items-center justify-center text-xl">
+            <p>Transaction in progress</p>
+            <img
+              src="/images/transaction-in-progress.png"
+              alt="ora logo"
+              style={{ width: "200px", height: "200px", objectFit: "contain" }}
+              className="ora-logo"
+            />
           </div>
         )}
         {transactionStatus === "success" && (
-          <div className="flex items-center justify-center text-green-500">
-            <span className="material-icons">check_circle</span>
-            Transaction successfully created. System will be processing it soon.
+          <div className="flex flex-col items-center justify-center text-xl text-green-500">
+            <p>Transaction successfully created. System will be processing it soon.</p>
+            <img
+              src="/images/transaction-passed.png"
+              alt="ora logo"
+              style={{ width: "200px", height: "200px", objectFit: "contain" }}
+              className="ora-logo"
+            />
           </div>
         )}
         {transactionStatus === "error" && (
-          <div className="flex items-center justify-center text-red-500">
-            <span className="material-icons">Transaction failed.</span>
+          <div className="flex flex-col items-center justify-center text-xl text-red-500">
+            <p>Transaction failed. Please try again</p>
+            <img
+              src="/images/transaction-failed.png"
+              alt="ora logo"
+              style={{ width: "200px", height: "200px", objectFit: "contain" }}
+              className="ora-logo"
+            />
           </div>
         )}
         {transactionStatus === "idle" && (
