@@ -10,7 +10,6 @@ import { toast } from "sonner";
 import Web3 from "web3";
 
 import { Button } from "@/components/ui/button";
-import Spinner from "@/components/ui/spinner";
 import oraService from "@/services/ora-network-service";
 import tournamentService from "@/services/tournaments-service";
 import { IOraCommitToTxHash } from "@/types/ora-network";
