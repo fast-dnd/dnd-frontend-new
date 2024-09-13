@@ -324,7 +324,7 @@ const NetworkSelectionButton: React.FC<NetworkButtonProps> = ({
       )}
       <button
         onClick={() => onClick(networkName)}
-        className={`network-button duration-2000 transition ease-in-out `}
+        className={`network-button duration-2000 flex flex-col items-center transition ease-in-out `}
       >
         <img
           src={networkLogos[networkName]}
@@ -332,7 +332,9 @@ const NetworkSelectionButton: React.FC<NetworkButtonProps> = ({
           style={{ width: "100px", height: "100px", objectFit: "contain" }}
           className="network-logo"
         />
-        <span className="network-name">{networkName == "Arbitrum" ? "Mainnet" : "Testnet"}</span>
+        <span className="network-name">
+          {networkName == "Arbitrum" ? "Mainnet(x1.3 multiplier)" : "Testnet"}
+        </span>
       </button>
     </div>
   );
@@ -377,12 +379,12 @@ const CommunitySelectionButton: React.FC<CommunityButtonProps> = ({
   );
 };
 
-function calculateAiTx(
+async function calculateAiTx(
   selectedAccount: any,
   networkChoice: NetworkName,
   query: string,
   estimatedFee: string,
-): any {
+): Promise<any> {
   const web3 = new Web3(window.ethereum);
 
   const contractAddress = contractAddresses[networkChoice];
@@ -390,7 +392,7 @@ function calculateAiTx(
   const modelId = 11;
 
   // Encode the transaction data
-  const tx = contract.methods.calculateAIResult(modelId, query).send({
+  const tx = await contract.methods.calculateAIResult(modelId, query).send({
     from: selectedAccount,
     value: estimatedFee,
   });
