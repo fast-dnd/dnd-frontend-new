@@ -171,15 +171,15 @@ const OraNetworkModal = ({
                 className="mt-1 text-lg uppercase tracking-widest lg:text-2xl lg:tracking-[6.4px]"
                 style={jibril.style}
               >
-                Participate in ORA Network Community battles
+                Participate in Community battles
               </p>
               <div className="size-2 shrink-0 rotate-45 bg-primary" />
             </div>
             <br />
             <br />
             <p className="ml-2 text-center font-light lg:text-xl lg:tracking-[1.5px]">
-              By selecting network and executing transaction given transcript will be evaulated by
-              AI Judge and depending on its rating you will climb ORA network leaderboard !
+              By executing transaction selected transcript will be evaulated by AI Judge and
+              depending on its rating you will climb in selected community leaderboard
             </p>
             {/* TODO: Return query to be seen somehow */}
             {/* <div className="mt-10">
@@ -195,33 +195,36 @@ const OraNetworkModal = ({
                 )}
               </Collapsible>
             </div> */}
-            <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
-              Select community :
-            </p>
-            <div className="mt-4 flex flex-wrap justify-center gap-4">
-              {communities.map((community) => (
-                <CommunitySelectionButton
-                  key={community._id}
-                  communityId={community._id}
-                  communityName={community.name}
-                  onClick={() => setSelectedCommunity(community._id)}
-                  communityLogoImgUrl={community.logoImageUrl}
-                  isSelected={selectedCommunity === community._id}
-                />
-              ))}
-            </div>
-            <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
-              Select payment chain :
-            </p>
-            <div className="mt-4 flex flex-wrap justify-center gap-4">
-              {Object.entries(networks).map(([name, id]) => (
-                <NetworkSelectionButton
-                  networkName={name as NetworkName}
-                  onClick={() => handleNetworkSelection(name as NetworkName)}
-                  networkLogos={networkLogos}
-                  isSelected={selectedNetwork === name}
-                />
-              ))}
+
+            <div className={cn("glass-effect-2", "relative flex flex-col items-center")}>
+              <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
+                Select community :
+              </p>
+              <div className="mt-4 flex flex-wrap justify-center gap-4">
+                {communities.map((community) => (
+                  <CommunitySelectionButton
+                    key={community._id}
+                    communityId={community._id}
+                    communityName={community.name}
+                    onClick={() => setSelectedCommunity(community._id)}
+                    communityLogoImgUrl={community.logoImageUrl}
+                    isSelected={selectedCommunity === community._id}
+                  />
+                ))}
+              </div>
+              <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
+                Select payment chain :
+              </p>
+              <div className="mt-4 flex flex-wrap justify-center gap-4">
+                {Object.entries(networks).map(([name, id]) => (
+                  <NetworkSelectionButton
+                    networkName={name as NetworkName}
+                    onClick={() => handleNetworkSelection(name as NetworkName)}
+                    networkLogos={networkLogos}
+                    isSelected={selectedNetwork === name}
+                  />
+                ))}
+              </div>
             </div>
             <Button
               onClick={() =>
@@ -235,7 +238,7 @@ const OraNetworkModal = ({
               className="hover:bg-primary-dark bg-primary"
               disabled={!selectedNetwork || !selectedCommunity}
             >
-              Pay to Compete
+              Compete
             </Button>
           </div>
         )}
