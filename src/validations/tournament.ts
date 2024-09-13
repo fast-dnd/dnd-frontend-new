@@ -6,6 +6,7 @@ export const tournamentCommunitySchema = z.object({
   description: z.string(),
   logoImageUrl: z.string(),
   cardImageUrl: z.string(),
+  twitterUrl: z.string(),
   engagement: z.number(),
   prize: z.number(),
   prizeToken: z.string(),

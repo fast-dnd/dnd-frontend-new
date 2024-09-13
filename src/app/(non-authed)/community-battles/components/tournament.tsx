@@ -77,7 +77,24 @@ const Tournament = () => {
             className="mb-4 text-4xl font-semibold text-gold"
             style={jibril.style}
           >{`Ultimate battle prize`}</h1>
-          <h1 className="mt-4 text-6xl font-semibold">{`${prize} ${prizeToken}`}</h1>
+          <h1 className="mt-4 font-mono text-6xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(0,255,255,0.8)]">
+            {`${prize} ${prizeToken}`}
+          </h1>
+          <a href="https://www.ora.io/" target="_blank" rel="noopener noreferrer">
+            <div className="flex flex-col items-center">
+              <div className="flex flex-row items-center ">
+                <h1 className="text-center text-lg font-bold tracking-wide text-white">
+                  Powered by Ora Protocol
+                </h1>
+                <img
+                  src="/images/logos/ora-logo.png"
+                  alt="ora logo"
+                  style={{ width: "40px", height: "40px", objectFit: "contain" }}
+                  className="ora-logo"
+                />
+              </div>
+            </div>
+          </a>
         </div>
       </div>
       <div className="relative mt-3 flex h-full flex-row gap-4 ">
