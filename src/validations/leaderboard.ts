@@ -8,6 +8,16 @@ export const leaderboardUserSchema = z.object({
   email: z.string(),
   rating: z.number(),
   walletAddress: z.string().optional(),
+  transactions: z
+    .array(
+      z.object({
+        txHash: z.string(),
+        chain: z.string(),
+        createdAt: z.string(),
+        rating: z.number(),
+      }),
+    )
+    .optional(),
 });
 
 export const leaderboardSchema = z.object({

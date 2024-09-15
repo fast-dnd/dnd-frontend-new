@@ -9,6 +9,7 @@ import { cn } from "@/utils/style-utils";
 import { ILeaderBoard } from "@/validations/leaderboard";
 
 import useGetTournamentLeaderboard from "../hooks/use-get-leaderboard";
+import OraTransactionsModel from "./ora-transactions-modal";
 
 const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => {
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
@@ -97,6 +98,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
             <tr>
               <th style={{ padding: "16px" }}>Rank</th>
               <th style={{ padding: "16px" }}>User</th>
+              <th style={{ padding: "16px" }}>Transactions</th>
               <th style={{ padding: "16px" }}>Rating</th>
             </tr>
           </thead>
@@ -141,8 +143,17 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
                       </div>
                     </td>
                     <td style={{ padding: "16px", fontSize: "1.1rem", fontWeight: "600" }}>
-                      {leaderboardUser.rating}
+                      <OraTransactionsModel
+                        imageUrl={leaderboardUser.imageUrl}
+                        username={leaderboardUser.username}
+                        rating={leaderboardUser.rating}
+                        transactions={leaderboardUser.transactions}
+                        rank={leaderboardUser.rank}
+                      />
                     </td>
+                    <td style={{ padding: "16px", fontSize: "1.1rem", fontWeight: "600" }}>
+                      {leaderboardUser.rating}
+                    </td>{" "}
                   </tr>
                 );
               }),
@@ -177,6 +188,9 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
                       borderRadius: "50%",
                     }}
                   ></div>
+                </td>
+                <td style={{ padding: "16px" }}>
+                  <div style={{ height: "16px", width: "100%", backgroundColor: "#3a3a3a" }}></div>
                 </td>
                 <td style={{ padding: "16px" }}>
                   <div style={{ height: "16px", width: "100%", backgroundColor: "#3a3a3a" }}></div>
