@@ -52,37 +52,39 @@ const OraTransactionsModal = ({
       </DialogTrigger>
       <DialogContent className="z-50 flex flex-col gap-4 rounded-lg bg-black p-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-start justify-between">
           {/* Rank */}
-          <div className="text-left">
+          <div className="self-start text-left">
             <h2 className="text-xl font-bold">#{rank}</h2>
           </div>
-          {/* Username */}
-          <div className="flex-1 text-center">
+          {/* Username + image */}
+          <div className="flex flex-1 flex-col items-center text-center">
             <p className="text-2xl font-bold">{username}</p>
+            <img
+              src={imageUrl || "/images/default-avatar.png"}
+              alt="User Avatar"
+              style={{
+                height: "80px",
+                width: "80px",
+                borderRadius: "50%",
+                marginTop: "10px", // Some margin between username and image
+                transition: "transform 0.3s ease",
+              }}
+            />
           </div>
           {/* Rating */}
-          <div className="text-right">
+          <div className="self-start text-right">
             <p className="text-sm text-gray-300">Rating: {rating}</p>
           </div>
         </div>
         <div className="flex flex-col items-center justify-between">
-          <img
-            src={imageUrl || "/images/default-avatar.png"}
-            style={{
-              height: "80px",
-              width: "80px",
-              borderRadius: "50%",
-              transition: "transform 0.3s ease",
-            }}
-          />
           {/* Transactions Table */}
           <div className="mt-4 w-full">
             {currentTransactions.length > 0 ? (
-              <table className="w-full text-left">
+              <table className="text-large w-full text-2xl">
                 <thead>
                   <tr className="text-gray-400">
-                    <th className="px-4 py-2">Provisioned</th>
+                    <th className="px-4 py-2">Created At</th>
                     <th className="px-4 py-2">Chain</th>
                     <th className="px-4 py-2">Transaction Hash</th>
                     <th className="px-4 py-2">Rating</th>
@@ -92,15 +94,15 @@ const OraTransactionsModal = ({
                   {currentTransactions.map((transaction, index) => (
                     <tr key={index}>
                       <td className="px-4 py-2">
-                        {new Date(transaction.createdAt).toLocaleDateString("en-CA")}
-                      </td>{" "}
+                        {new Date(transaction.createdAt).toISOString().split("T")[0]}
+                      </td>
                       <td className="px-4 py-2">
                         <img
                           src={getChainImage(transaction.chain as NetworkName)}
                           alt={transaction.chain}
                           style={{ height: "24px" }}
                         />
-                      </td>{" "}
+                      </td>
                       <td className="px-4 py-2">
                         <a
                           href={`https://sepolia.arbiscan.io/tx/${transaction.txHash}`}
