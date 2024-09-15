@@ -95,6 +95,17 @@ const Tournament = () => {
               </div>
             </div>
           </a>
+          <br />
+          <a
+            href="https://www.alchemy.com/faucets/arbitrum-sepolia"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center space-x-2"
+          >
+            <h1 className="text-center text-lg font-bold tracking-wide text-blue-500 group-hover:underline">
+              Click here to get free Arbitrum tokens
+            </h1>
+          </a>
         </div>
       </div>
       <div className="relative mt-3 flex h-full flex-row gap-4 ">

@@ -74,7 +74,7 @@ const OraTransactionsModal = ({
           </div>
           {/* Rating */}
           <div className="self-start text-right">
-            <p className="text-sm text-gray-300">Rating: {rating}</p>
+            <p className="text-medium text-gray-300">Rating: {rating}</p>
           </div>
         </div>
         <div className="flex flex-col items-center justify-between">
@@ -100,7 +100,7 @@ const OraTransactionsModal = ({
                         <img
                           src={getChainImage(transaction.chain as NetworkName)}
                           alt={transaction.chain}
-                          style={{ height: "24px" }}
+                          style={{ height: "32px" }}
                         />
                       </td>
                       <td className="px-4 py-2">
