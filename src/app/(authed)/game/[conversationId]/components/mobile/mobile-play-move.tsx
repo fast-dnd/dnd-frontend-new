@@ -161,6 +161,38 @@ const MoveDisplay = ({ onClick, className, wordChallenge, gameMode }: IMoveDispl
           <p>Use only emojis to express your move.</p>
         </div>
       )}
+      {gameMode === "overly_descriptive" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Overly descriptive mode" className="text-2xl">
+            🎨
+          </span>
+          <p className="text-xl">
+            Add excessive detail to your move, describing the color, texture, and smell. Brevity
+            will be penalized!
+          </p>
+        </div>
+      )}
+      {gameMode === "vagueness" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Vagueness mode" className="text-2xl">
+            🌀
+          </span>
+          <p className="text-xl">
+            Keep your move vague and open to interpretation. The more ambiguous, the better your
+            rating!
+          </p>
+        </div>
+      )}
+      {gameMode === "three_languages" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Multilingual mode" className="text-2xl">
+            🌍
+          </span>
+          <p className="text-xl">
+            Declare your move in at least 3 different languages to earn a higher rating.
+          </p>
+        </div>
+      )}
       {gameMode === "random_words" && (
         <div className="flex items-center space-x-2">
           <span role="img" aria-label="Random words mode">
