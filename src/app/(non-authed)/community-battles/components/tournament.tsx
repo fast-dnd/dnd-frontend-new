@@ -99,7 +99,7 @@ const Tournament = () => {
       </div>
       <div className="relative mt-3 flex h-full flex-row gap-4 ">
         <div className={cn("flex h-full max-h-screen min-h-screen w-1/4 flex-shrink-0 flex-col")}>
-          <div className="mb-4 ">
+          <div className="mb-12 flex flex-col ">
             <CommunityCarosel selectedCommunity={selectedCommunity} />
           </div>
           <div>
