@@ -10,7 +10,6 @@ import { toast } from "sonner";
 import Web3 from "web3";
 
 import { Button } from "@/components/ui/button";
-import Spinner from "@/components/ui/spinner";
 import oraService from "@/services/ora-network-service";
 import tournamentService from "@/services/tournaments-service";
 import { IOraCommitToTxHash } from "@/types/ora-network";
@@ -148,19 +147,36 @@ const OraNetworkModal = ({
       </DialogTrigger>
       <DialogContent className="z-[100] flex flex-col gap-12 bg-black p-4 max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:p-8">
         {transactionStatus === "loading" && (
-          <div className="flex items-center justify-center">
-            <Spinner className={cn("m-0 size-5 shrink-0 opacity-0", true && "opacity-50")} />
+          <div className="relative flex flex-col items-center justify-center text-xl">
+            <p>Transaction in progress</p>
+            <img
+              src="/images/transaction-in-progress.png"
+              alt="ora logo"
+              style={{ width: "200px", height: "200px", objectFit: "contain" }}
+              className="ora-logo  animate-pulse"
+            />
           </div>
         )}
         {transactionStatus === "success" && (
-          <div className="flex items-center justify-center text-green-500">
-            <span className="material-icons">check_circle</span>
-            Transaction successfully created. System will be processing it soon.
+          <div className="flex flex-col items-center justify-center text-xl text-green-500">
+            <p>Transaction successfully created. System will be processing it soon.</p>
+            <img
+              src="/images/transaction-passed.png"
+              alt="ora logo"
+              style={{ width: "200px", height: "200px", objectFit: "contain" }}
+              className="ora-logo"
+            />
           </div>
         )}
         {transactionStatus === "error" && (
-          <div className="flex items-center justify-center text-red-500">
-            <span className="material-icons">Transaction failed.</span>
+          <div className="flex flex-col items-center justify-center text-xl text-red-500">
+            <p>Transaction failed. Please try again</p>
+            <img
+              src="/images/transaction-failed.png"
+              alt="ora logo"
+              style={{ width: "200px", height: "200px", objectFit: "contain" }}
+              className="ora-logo"
+            />
           </div>
         )}
         {transactionStatus === "idle" && (
@@ -171,15 +187,15 @@ const OraNetworkModal = ({
                 className="mt-1 text-lg uppercase tracking-widest lg:text-2xl lg:tracking-[6.4px]"
                 style={jibril.style}
               >
-                Participate in ORA Network Community battles
+                Participate in Community battles
               </p>
               <div className="size-2 shrink-0 rotate-45 bg-primary" />
             </div>
             <br />
             <br />
             <p className="ml-2 text-center font-light lg:text-xl lg:tracking-[1.5px]">
-              By selecting network and executing transaction given transcript will be evaulated by
-              AI Judge and depending on its rating you will climb ORA network leaderboard !
+              By executing transaction selected transcript will be evaulated by AI Judge and
+              depending on its rating you will climb in selected community leaderboard
             </p>
             {/* TODO: Return query to be seen somehow */}
             {/* <div className="mt-10">
@@ -195,33 +211,36 @@ const OraNetworkModal = ({
                 )}
               </Collapsible>
             </div> */}
-            <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
-              Select community :
-            </p>
-            <div className="mt-4 flex flex-wrap justify-center gap-4">
-              {communities.map((community) => (
-                <CommunitySelectionButton
-                  key={community._id}
-                  communityId={community._id}
-                  communityName={community.name}
-                  onClick={() => setSelectedCommunity(community._id)}
-                  communityLogoImgUrl={community.logoImageUrl}
-                  isSelected={selectedCommunity === community._id}
-                />
-              ))}
-            </div>
-            <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
-              Select payment chain :
-            </p>
-            <div className="mt-4 flex flex-wrap justify-center gap-4">
-              {Object.entries(networks).map(([name, id]) => (
-                <NetworkSelectionButton
-                  networkName={name as NetworkName}
-                  onClick={() => handleNetworkSelection(name as NetworkName)}
-                  networkLogos={networkLogos}
-                  isSelected={selectedNetwork === name}
-                />
-              ))}
+
+            <div className={cn("glass-effect-2", "relative flex flex-col items-center")}>
+              <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
+                Select community :
+              </p>
+              <div className="mt-4 flex flex-wrap justify-center gap-4">
+                {communities.map((community) => (
+                  <CommunitySelectionButton
+                    key={community._id}
+                    communityId={community._id}
+                    communityName={community.name}
+                    onClick={() => setSelectedCommunity(community._id)}
+                    communityLogoImgUrl={community.logoImageUrl}
+                    isSelected={selectedCommunity === community._id}
+                  />
+                ))}
+              </div>
+              <p className="ml-2 mt-10 text-center font-light lg:text-xl lg:tracking-[1.5px]">
+                Select payment chain :
+              </p>
+              <div className="mt-4 flex flex-wrap justify-center gap-4">
+                {Object.entries(networks).map(([name, id]) => (
+                  <NetworkSelectionButton
+                    networkName={name as NetworkName}
+                    onClick={() => handleNetworkSelection(name as NetworkName)}
+                    networkLogos={networkLogos}
+                    isSelected={selectedNetwork === name}
+                  />
+                ))}
+              </div>
             </div>
             <Button
               onClick={() =>
@@ -235,7 +254,7 @@ const OraNetworkModal = ({
               className="hover:bg-primary-dark bg-primary"
               disabled={!selectedNetwork || !selectedCommunity}
             >
-              Pay to Compete
+              Compete
             </Button>
           </div>
         )}
@@ -321,7 +340,7 @@ const NetworkSelectionButton: React.FC<NetworkButtonProps> = ({
       )}
       <button
         onClick={() => onClick(networkName)}
-        className={`network-button duration-2000 transition ease-in-out `}
+        className={`network-button duration-2000 flex flex-col items-center transition ease-in-out `}
       >
         <img
           src={networkLogos[networkName]}
@@ -329,7 +348,9 @@ const NetworkSelectionButton: React.FC<NetworkButtonProps> = ({
           style={{ width: "100px", height: "100px", objectFit: "contain" }}
           className="network-logo"
         />
-        <span className="network-name">{networkName == "Arbitrum" ? "Mainnet" : "Testnet"}</span>
+        <span className="network-name">
+          {networkName == "Arbitrum" ? "Mainnet(x1.3 multiplier)" : "Testnet"}
+        </span>
       </button>
     </div>
   );
@@ -374,12 +395,12 @@ const CommunitySelectionButton: React.FC<CommunityButtonProps> = ({
   );
 };
 
-function calculateAiTx(
+async function calculateAiTx(
   selectedAccount: any,
   networkChoice: NetworkName,
   query: string,
   estimatedFee: string,
-): any {
+): Promise<any> {
   const web3 = new Web3(window.ethereum);
 
   const contractAddress = contractAddresses[networkChoice];
@@ -387,7 +408,7 @@ function calculateAiTx(
   const modelId = 11;
 
   // Encode the transaction data
-  const tx = contract.methods.calculateAIResult(modelId, query).send({
+  const tx = await contract.methods.calculateAIResult(modelId, query).send({
     from: selectedAccount,
     value: estimatedFee,
   });

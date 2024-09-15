@@ -9,6 +9,7 @@ import { cn } from "@/utils/style-utils";
 import { ILeaderBoard } from "@/validations/leaderboard";
 
 import useGetTournamentLeaderboard from "../hooks/use-get-leaderboard";
+import OraTransactionsModel from "./ora-transactions-modal";
 
 const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => {
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
@@ -56,8 +57,8 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
 
   if (isLoading)
     return (
-      <div className="flex animate-pulse flex-col">
-        {Array.from({ length: 7 }).map((_, i) => (
+      <div className="flex flex-col">
+        {Array.from({ length: 10 }).map((_, i) => (
           <div key={i} className="flex w-full justify-between bg-black/20 p-2">
             <div className="flex items-center gap-4">
               <div className="size-2 rounded-lg bg-gray-600" />
@@ -75,29 +76,14 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
 
   const content = (
     <div className="h-full w-full grow flex-col items-center px-1">
-      <div className="h-[50rem] w-full overflow-y-auto">
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "separate",
-            borderSpacing: "0 0.5em",
-          }}
-          className="h-full w-full min-w-full table-auto  text-left text-white"
-        >
-          <thead
-            style={{
-              backgroundColor: "#252525",
-              textTransform: "uppercase",
-              fontWeight: 700,
-              position: "sticky", // Makes the header sticky
-              top: 0, // Sticks to the top of the container
-              zIndex: 10, // Ensures the header stays above the body content
-            }}
-          >
+      <div className="w-full overflow-y-auto">
+        <table className="h-full w-full min-w-full table-auto text-left text-white">
+          <thead className="sticky top-0 z-10  font-bold uppercase">
             <tr>
-              <th style={{ padding: "16px" }}>Rank</th>
-              <th style={{ padding: "16px" }}>User</th>
-              <th style={{ padding: "16px" }}>Rating</th>
+              <th className="px-4 py-2">Rank</th>
+              <th className="px-4 py-2">User</th>
+              <th className="px-4 py-2">Transactions</th>
+              <th className="px-4 py-2">Rating</th>
             </tr>
           </thead>
           <tbody>
@@ -111,38 +97,30 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
                 return (
                   <tr
                     key={leaderboardUser.accountId}
-                    style={{
-                      backgroundColor: "#2d2d2d",
-                      transition: "background-color 0.3s ease",
-                      borderRadius: "10px",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#3a3a3a")}
-                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#2d2d2d")}
-                    ref={isLastItem ? lastLeaderboardUserRef : null} // Use the ref here
+                    ref={isLastItem ? lastLeaderboardUserRef : null}
+                    className="border-b border-gray-700"
                   >
-                    <td style={{ padding: "16px", fontSize: "1.25rem", fontWeight: "600" }}>
-                      {overallIndex}
-                    </td>
-                    <td style={{ padding: "16px" }}>
+                    <td className="px-4 py-2 font-semibold">{overallIndex}</td>
+                    <td className="px-4 py-2">
                       <div className="flex items-center space-x-4">
                         <img
                           src={leaderboardUser.imageUrl || "/images/default-avatar.png"}
                           alt={leaderboardUser.username}
-                          style={{
-                            height: "48px",
-                            width: "48px",
-                            borderRadius: "50%",
-                            transition: "transform 0.3s ease",
-                          }}
-                          onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")}
-                          onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                          className="h-12 w-12 rounded-full"
                         />
-                        <span style={{ fontSize: "1.1rem" }}>{leaderboardUser.username}</span>
+                        <span className="text-lg">{leaderboardUser.username}</span>
                       </div>
                     </td>
-                    <td style={{ padding: "16px", fontSize: "1.1rem", fontWeight: "600" }}>
-                      {leaderboardUser.rating}
+                    <td className="px-4 py-2 font-semibold">
+                      <OraTransactionsModel
+                        imageUrl={leaderboardUser.imageUrl}
+                        username={leaderboardUser.username}
+                        rating={leaderboardUser.rating}
+                        transactions={leaderboardUser.transactions}
+                        rank={leaderboardUser.rank}
+                      />
                     </td>
+                    <td className="px-4 py-2 font-semibold">{leaderboardUser.rating}</td>
                   </tr>
                 );
               }),
@@ -152,49 +130,29 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
             {Array.from({
               length: Math.max(
                 0,
-                7 - leaderboardData?.pages.flatMap((page) => page.leaderboard).length,
+                10 - leaderboardData?.pages.flatMap((page) => page.leaderboard).length,
               ),
             }).map((_, index) => (
-              <tr
-                key={`placeholder-${index}`}
-                style={{
-                  backgroundColor: "#2d2d2d",
-                  transition: "background-color 0.3s ease",
-                  borderRadius: "10px",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#3a3a3a")}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#2d2d2d")}
-              >
-                <td style={{ padding: "16px" }}>
+              <tr key={`placeholder-${index}`} className="border-b border-gray-700">
+                <td className="px-4 py-2">
                   {leaderboardData?.pages.flatMap((page) => page.leaderboard).length + index + 1}
                 </td>
-                <td style={{ padding: "16px" }}>
-                  <div
-                    style={{
-                      height: "48px",
-                      width: "48px",
-                      backgroundColor: "#3a3a3a",
-                      borderRadius: "50%",
-                    }}
-                  ></div>
+                <td className="px-4 py-2">
+                  <div className="h-12 w-12 "></div>
                 </td>
-                <td style={{ padding: "16px" }}>
-                  <div style={{ height: "16px", width: "100%", backgroundColor: "#3a3a3a" }}></div>
+                <td className="px-4 py-2">
+                  <div className="h-4 w-full"></div>
+                </td>
+                <td className="px-4 py-2">
+                  <div className="h-4 w-full "></div>
                 </td>
               </tr>
             ))}
 
             {/* Spinner for loading more data */}
             {isFetchingNextPage && (
-              <tr
-                style={{
-                  backgroundColor: "#2d2d2d",
-                  transition: "background-color 0.3s ease",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#3a3a3a")}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#2d2d2d")}
-              >
-                <td style={{ padding: "16px", textAlign: "center" }}>
+              <tr className="border-b border-gray-700">
+                <td className="px-4 py-2 text-center">
                   <Spinner className="m-0 size-8" />
                 </td>
               </tr>
@@ -206,7 +164,12 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
   );
 
   return (
-    <div className={cn("relative flex h-full min-h-screen flex-1 flex-col overflow-hidden")}>
+    <div
+      className={cn(
+        "glass-effect-2",
+        "relative flex h-full min-h-screen flex-1 flex-col overflow-hidden",
+      )}
+    >
       <div
         className={cn("flex h-full min-h-screen flex-1 flex-col  overscroll-auto  ")}
         ref={scrollableRef}

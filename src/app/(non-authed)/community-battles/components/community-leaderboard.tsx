@@ -10,79 +10,36 @@ interface CommunityLeaderboardProps {
 
 const CommunityLeaderboard: React.FC<CommunityLeaderboardProps> = ({ communities }) => {
   return (
-    <div
-      style={{
-        // backgroundColor: "#1c1c1c",
-        padding: "24px",
-        borderRadius: "10px",
-        // boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
-      }}
-      className={cn("glass-effect-2", "relative flex flex-col items-center")}
-    >
+    <div className={cn("glass-effect-2", "relative flex flex-col items-center rounded-lg p-6")}>
       <p
-        style={{
-          marginBottom: "12px",
-          fontSize: "2rem",
-          fontFamily: jibril.style.fontFamily,
-          fontWeight: "bold",
-          color: "gold",
-          textAlign: "center",
-        }}
+        className="mb-3 text-center text-3xl font-bold text-gold"
+        style={{ fontFamily: jibril.style.fontFamily }}
       >
         Community Leaderboard
       </p>
       <div className="w-full overflow-x-auto">
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "separate",
-            borderSpacing: "0 0.5em",
-          }}
-          className="min-w-full table-auto text-left text-white"
-        >
-          <thead style={{ backgroundColor: "#252525" }}>
+        <table className="min-w-full table-auto text-left text-white">
+          <thead className="">
             <tr>
-              <th style={{ padding: "16px", textTransform: "uppercase", fontWeight: 700 }}>Rank</th>
-              <th style={{ padding: "16px", textTransform: "uppercase", fontWeight: 700 }}>Logo</th>
-              <th style={{ padding: "16px", textTransform: "uppercase", fontWeight: 700 }}>Name</th>
-              <th style={{ padding: "16px", textTransform: "uppercase", fontWeight: 700 }}>
-                Engagement
-              </th>
+              <th className="px-4 py-2 font-bold uppercase">Rank</th>
+              <th className="px-4 py-2 font-bold uppercase">Logo</th>
+              <th className="px-4 py-2 font-bold uppercase">Name</th>
+              <th className="px-4 py-2 font-bold uppercase">Engagement</th>
             </tr>
           </thead>
           <tbody>
             {communities.map((community, index) => (
-              <tr
-                key={community._id}
-                style={{
-                  backgroundColor: "#2d2d2d",
-                  transition: "background-color 0.3s ease",
-                  borderRadius: "10px",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#3a3a3a")}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#2d2d2d")}
-              >
-                <td style={{ padding: "16px", fontSize: "1.25rem", fontWeight: "600" }}>
-                  {index + 1}
-                </td>
-                <td style={{ padding: "16px" }}>
+              <tr key={community._id} className="border-b border-gray-700">
+                <td className="px-4 py-2 text-xl font-semibold">{index + 1}</td>
+                <td className="px-4 py-2">
                   <img
                     src={community.logoImageUrl}
                     alt={community.name}
-                    style={{
-                      height: "48px",
-                      width: "48px",
-                      borderRadius: "50%",
-                      transition: "transform 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                    className="h-12 w-12 rounded-full"
                   />
                 </td>
-                <td style={{ padding: "16px", fontSize: "1.1rem" }}>{community.name}</td>
-                <td style={{ padding: "16px", fontSize: "1.1rem", fontWeight: "600" }}>
-                  {community.engagement}
-                </td>
+                <td className="px-4 py-2 text-lg">{community.name}</td>
+                <td className="px-4 py-2 text-lg font-semibold">{community.engagement}</td>
               </tr>
             ))}
           </tbody>

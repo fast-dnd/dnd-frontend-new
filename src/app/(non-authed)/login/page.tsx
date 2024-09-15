@@ -14,7 +14,7 @@ import MobileNavbar from "@/components/navbar/mobile-navbar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 
-import SolanaLogin from "./components/solana-login";
+// import SolanaLogin from "./components/solana-login";
 import useLogin from "./hooks/use-login";
 import useSlides from "./hooks/use-slides";
 import useSolanaLogin from "./hooks/use-solana-login";
@@ -58,7 +58,9 @@ const Login = () => {
           <div className="flex w-full flex-col gap-8 pb-8">
             <div className="relative flex w-full flex-col rounded-md border border-white/10 bg-black">
               <div className="flex w-full flex-col gap-3 p-4 pl-[108px]">
-                <p className="font-semibold uppercase leading-none tracking-[2.2px]">Casual play</p>
+                <p className="font-semibold uppercase leading-none tracking-[2.2px]">
+                  HOP RIGHT IN{" "}
+                </p>
                 <p className="min-h-[32px] text-sm font-light leading-[112%] tracking-[1px]">
                   Engage in AI storytelling, play with your friends or create your own stories.
                 </p>
@@ -77,7 +79,7 @@ const Login = () => {
                 className="absolute -left-4 bottom-[-1px]"
               />
             </div>
-            <div className="relative flex w-full flex-col rounded-md border border-white/10 bg-black">
+            {/* <div className="relative flex w-full flex-col rounded-md border border-white/10 bg-black">
               <div className="flex w-full flex-col gap-3 p-4 pl-[108px]">
                 <p className="font-semibold uppercase leading-none tracking-[2.2px]">
                   Compete & earn
@@ -94,7 +96,7 @@ const Login = () => {
                 height={172}
                 className="absolute -left-4 bottom-0"
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -170,7 +172,7 @@ const Login = () => {
 
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-4">
-                <p className="text-4xl font-semibold uppercase">Casual play</p>
+                <p className="text-4xl font-semibold uppercase">HOP RIGHT IN</p>
                 <p className=" text-xl tracking-[1.5px]">
                   Engage in AI storytelling, play with your friends or create your own stories.
                 </p>
@@ -187,7 +189,7 @@ const Login = () => {
           </div>
 
           <div className="mt-4 h-0.5 w-full bg-black shadow-lobby" />
-          <div className="flex w-[580px] gap-9">
+          {/* <div className="flex w-[580px] gap-9">
             <Game className="size-[75px] shrink-0 opacity-30" />
 
             <div className="flex flex-col gap-8">
@@ -199,7 +201,7 @@ const Login = () => {
               </div>
               <SolanaLogin />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

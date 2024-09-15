@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
@@ -10,6 +11,7 @@ import CommunityCarosel from "./community-carosel";
 import CommunityLeaderboard from "./community-leaderboard";
 import CommunityTrack from "./community-track";
 import TournamentLeaderboardList from "./tournament-leaderboard-list";
+import TournamentSkeleton from "./tournament-skeleton";
 
 const Tournament = () => {
   const { data, isLoading, error } = useGetTournament();
@@ -22,11 +24,7 @@ const Tournament = () => {
   }, [data]);
 
   if (isLoading) {
-    return (
-      <div className="mb-4 flex flex-col items-center rounded-t-md py-6">
-        <h1 className="text-4xl font-bold tracking-wide text-white">Loading...</h1>
-      </div>
-    );
+    return <TournamentSkeleton />;
   }
 
   if (error) {
@@ -54,9 +52,13 @@ const Tournament = () => {
   };
 
   return (
-    <div className={cn("max-h-90 flex min-h-0 flex-col gap-2")}>
+    <div
+      className={cn(
+        "hidden min-h-0 flex-1 flex-col gap-12 overflow-y-auto px-5 pb-12 lg:flex lg:flex-col lg:px-0",
+      )}
+    >
       {" "}
-      <div className="min-h-0flex-row relative flex w-full justify-between p-2">
+      <div className="relative flex w-full flex-1 flex-row justify-between p-2">
         <div className="mb-4 flex flex-col items-center rounded-t-md ">
           <h1 className="mb-4 text-4xl font-bold tracking-wide text-gold" style={jibril.style}>
             {name}
@@ -75,12 +77,40 @@ const Tournament = () => {
             className="mb-4 text-4xl font-semibold text-gold"
             style={jibril.style}
           >{`Ultimate battle prize`}</h1>
-          <h1 className="mt-4 text-6xl font-semibold">{`${prize} ${prizeToken}`}</h1>
+          <h1 className="mt-4 font-mono text-6xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(0,255,255,0.8)]">
+            {`${prize} ${prizeToken}`}
+          </h1>
+          <a href="https://www.ora.io/" target="_blank" rel="noopener noreferrer">
+            <div className="flex flex-col items-center">
+              <div className="flex flex-row items-center ">
+                <h1 className="text-center text-lg font-bold tracking-wide text-white">
+                  Powered by Ora Protocol
+                </h1>
+                <img
+                  src="/images/logos/ora-logo.png"
+                  alt="ora logo"
+                  style={{ width: "40px", height: "40px", objectFit: "contain" }}
+                  className="ora-logo"
+                />
+              </div>
+            </div>
+          </a>
+          <br />
+          <a
+            href="https://www.alchemy.com/faucets/arbitrum-sepolia"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center space-x-2"
+          >
+            <h1 className="text-center text-lg font-bold tracking-wide text-blue-500 group-hover:underline">
+              Click here to get free Arbitrum tokens
+            </h1>
+          </a>
         </div>
       </div>
-      <div className="relative mt-3 flex h-full flex-row gap-4">
+      <div className="relative mt-3 flex h-full flex-row gap-4 ">
         <div className={cn("flex h-full max-h-screen min-h-screen w-1/4 flex-shrink-0 flex-col")}>
-          <div className="mb-4 ">
+          <div className="mb-12 flex flex-col ">
             <CommunityCarosel selectedCommunity={selectedCommunity} />
           </div>
           <div>
