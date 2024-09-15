@@ -153,7 +153,7 @@ const OraNetworkModal = ({
               src="/images/transaction-in-progress.png"
               alt="ora logo"
               style={{ width: "200px", height: "200px", objectFit: "contain" }}
-              className="ora-logo"
+              className="ora-logo  animate-pulse"
             />
           </div>
         )}
