@@ -39,11 +39,10 @@ const steps = [
     title: "actions",
     description: (
       <p className="text-sm font-light leading-tight">
-        In the game, you&apos;ll encounter two types of actions: <br />
+        In the game, you&apos;ll encounter challenges while executing actions.
         <br />
-        <span className="font-bold">Default actions </span>can impact your character&apos;s stats,
-        such as health, mana, and round bonuses, though they might not significantly alter the
-        story.
+        <span className="font-bold">All actions </span>can impact your character&apos;s stats, such
+        as health, mana, and round bonuses.
       </p>
     ),
   },
@@ -62,9 +61,10 @@ const steps = [
     title: "actions",
     description: (
       <p className="text-sm font-light leading-tight">
-        Free will actions, on the other hand, won&apos;t modify your stats (unless, unfortunately,
-        you meet a tragic fate or get injured), but they provide you with the power to influence the
-        story&apos;s direction and express your character.
+        Each turn you will get a different challenge. It can be to say something in specific
+        emotion, or to encorporate anchor words in move. You need to think and execute move in the
+        vein of your character but also do it with specific limitation. Bob loves this challenges
+        and will give better rating to moves that obey them !
       </p>
     ),
   },

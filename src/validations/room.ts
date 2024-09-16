@@ -24,6 +24,9 @@ export const aiModelSchema = z.enum([
 export const gameModeSchema = z.enum([
   "normal",
   "only_emoji",
+  "overly_descriptive",
+  "vagueness",
+  "three_languages",
   "random_words",
   "smart",
   "aggressive",

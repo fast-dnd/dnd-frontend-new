@@ -8,18 +8,19 @@ export const steps = [
     title: "actions",
     description: (
       <div>
-        In the game, you&apos;ll encounter two types of actions:
+        In the game, you&apos;ll encounter challenges while executing actions:
         <ul className="mt-4 list-disc pl-6">
           <li>
-            <b className="font-bold">Default actions</b> can impact your character&apos;s stats,
-            such as health, mana, and round bonuses, though they might not significantly alter the
-            story.
+            <b className="font-bold">Normal action</b> No limitations on your move, you can say
+            whatever you want but it needs to match your character.
           </li>
           <li>
-            <b className="font-bold">Free will actions</b>, on the other hand, won&apos;t modify
-            your stats (unless, unfortunately, you meet a tragic fate or get injured), but they
-            provide you with the power to influence the story&apos;s direction and express your
-            character.
+            <b className="font-bold">Emotionaly driven action</b> Bob will give boost to move that
+            is played in desired emotion that he requires.
+          </li>
+          <li>
+            <b className="font-bold">Random words action</b> Bob will set 2 anchor words which you
+            need to add in your action.
           </li>
         </ul>
       </div>
@@ -30,9 +31,9 @@ export const steps = [
     description: (
       <>
         <p>
-          Both free will and default actions can lead to either positive or negative outcomes. If
-          you succeed in action you will get the positive effect in various degrees depending on how
-          high you rolled (including the dice roll modifiers).
+          Actions can lead to either positive or negative outcomes. If you succeed in action you
+          will get the positive effect in various degrees depending on how high you rolled
+          (including the dice roll modifiers).
         </p>
         <p className="mt-6">
           But, if your roll is a low number (including dice roll modifiers), our Dungeon Master Bob

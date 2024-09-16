@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable tailwindcss/no-contradicting-classname */
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
@@ -195,8 +196,14 @@ const OraNetworkModal = ({
             <br />
             <p className="ml-2 text-center font-light lg:text-xl lg:tracking-[1.5px]">
               By executing transaction selected transcript will be evaulated by AI Judge and
-              depending on its rating you will climb in selected community leaderboard
+              depending on its rating you will climb in selected community leaderboard.
             </p>
+            <ul className="list-inside list-disc font-light lg:text-sm lg:tracking-[1.5px]">
+              <li>1st transaction of the day gets 100% of AI Judge value.</li>
+              <li>2nd transaction of the day gets 30% of AI Judge value.</li>
+              <li>3rd transaction of the day gets 10% of AI Judge value.</li>
+              <li>All subsequent transactions get exponentially lower.</li>
+            </ul>
             {/* TODO: Return query to be seen somehow */}
             {/* <div className="mt-10">
               <Collapsible title="Query">
