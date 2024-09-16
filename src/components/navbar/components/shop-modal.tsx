@@ -24,20 +24,20 @@ const ShopModal = ({
   const isMobileTablet = useMediaQuery("(max-width: 1024px)");
 
   const offers = [
-    {
-      tokenAmount: "100",
-      itemName: "COINS_100",
-      price: 1,
-      image: (
-        <Image
-          src={"/images/coins-small.png"}
-          alt="coins-small"
-          width={172}
-          height={83}
-          className="z-10 mb-2 aspect-auto shrink-0 max-lg:w-[108px]"
-        />
-      ),
-    },
+    // {
+    //   tokenAmount: "100",
+    //   itemName: "COINS_100",
+    //   price: 1,
+    //   image: (
+    //     <Image
+    //       src={"/images/coins-small.png"}
+    //       alt="coins-small"
+    //       width={172}
+    //       height={83}
+    //       className="z-10 mb-2 aspect-auto shrink-0 max-lg:w-[108px]"
+    //     />
+    //   ),
+    // },
     {
       tokenAmount: "550",
       itemName: "COINS_550",
