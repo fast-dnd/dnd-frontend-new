@@ -15,7 +15,7 @@ import {
   moveStore,
 } from "@/app/(authed)/game/[conversationId]/stores/move-store";
 
-import OraNetworkModal from "./ora-network-modal";
+// import OraNetworkModal from "./ora-network-modal";
 
 const RoomItem = React.forwardRef<
   HTMLDivElement,
@@ -61,7 +61,7 @@ const RoomItem = React.forwardRef<
           <Book1 variant="Bold" size={40} />
         </Link>
       )}
-      <OraNetworkModal
+      {/* <OraNetworkModal
         conversationId={room.conversationId}
         aiJudgeQuery={room.aiJudgeQuery}
         aiJudgeQueryNormalized={room.aiJudgeQueryNormalized}
@@ -69,7 +69,7 @@ const RoomItem = React.forwardRef<
           room.aiJudgeQueryTxHash != null && room.aiJudgeQueryTxHash != undefined
         }
         roomState={room.state}
-      />
+      /> */}
     </div>
   );
 });
