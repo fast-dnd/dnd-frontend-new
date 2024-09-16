@@ -1,19 +1,14 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { AiFillHeart, AiOutlineLeft } from "react-icons/ai";
 import { FaDice } from "react-icons/fa";
-import { GiNightSleep } from "react-icons/gi";
-import { GoPeople } from "react-icons/go";
-import { HiSparkles } from "react-icons/hi";
-import { PiPenNibFill } from "react-icons/pi";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/text-area";
-import { IDefaultMove } from "@/types/room";
 import { cn } from "@/utils/style-utils";
-import { defaultMoves } from "@/validations/room";
+import { gameModeSchema } from "@/validations/room";
 
 import usePlayMove from "../../hooks/use-play-move";
 import usePlayMoveSocket from "../../hooks/use-play-move-socket";
@@ -25,11 +20,7 @@ import WordChallengeEntry from "../gameplay/word-challenge-entry";
 const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMoveProps) => {
   usePlayMoveSocket(conversationId);
   const accountId = useReadLocalStorage<string>("accountId");
-  const { onPlay, openedDetails, setOpenedDetails } = usePlayMove(
-    conversationId,
-    roomData,
-    currentPlayer,
-  );
+  const { onPlay } = usePlayMove(conversationId, roomData, currentPlayer);
 
   const wordChallengeForPlayer = roomData.wordsChallenge?.find(
     (wordChallenge) => wordChallenge.accountId === accountId,
@@ -56,146 +47,82 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMovePr
       />
       <motion.header className="relative flex h-7 pl-4 pt-3">
         <AnimatePresence>
-          {!openedDetails && (
-            <motion.p
-              initial={{ x: 50, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -50, opacity: 0 }}
-              key="0"
-              className="absolute text-xs font-medium uppercase tracking-wide"
-            >
-              Take action
-            </motion.p>
-          )}
-          {openedDetails && (
-            <motion.div
-              initial={{ x: 50, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -50, opacity: 0 }}
-              key="1"
-              className="absolute flex w-full items-center gap-3"
-            >
-              <AiOutlineLeft onClick={() => setOpenedDetails(false)} />
-              <MoveDisplay
-                action
-                move={store.move || "free_will"}
-                wordChallenge={!!wordChallengeForPlayer}
-                className="border-0 p-0 uppercase"
-              />
-            </motion.div>
-          )}
+          <motion.div
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -50, opacity: 0 }}
+            key="1"
+            className="absolute flex w-full items-center gap-3"
+          >
+            <MoveDisplay
+              wordChallenge={!!wordChallengeForPlayer}
+              className="border-0 p-0 uppercase"
+              gameMode={currentPlayer.gameMode}
+            />
+          </motion.div>
         </AnimatePresence>
       </motion.header>
       <motion.section className="relative h-fit min-h-[58px]">
         <AnimatePresence>
-          {!openedDetails && (
-            <motion.div
-              key="0"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute z-10 flex w-full flex-col gap-3 py-3 pl-4"
-            >
-              <div className="absolute right-0 h-full w-12 bg-gradient-to-l from-black to-transparent" />
-
-              <div className="flex gap-2 overflow-x-auto pr-8">
-                <MoveDisplay
-                  move="free_will"
-                  wordChallenge={!!wordChallengeForPlayer}
-                  onClick={() => {
-                    setOpenedDetails(true);
-                    moveStore.move.set(undefined);
+          <motion.div
+            key="1"
+            initial="collapsed"
+            animate="open"
+            exit="collapsed"
+            variants={{
+              open: { opacity: 1, height: "auto" },
+              collapsed: { opacity: 0, height: 0 },
+            }}
+            transition={{ duration: 0.2 }}
+            className="flex w-full flex-col justify-between gap-2"
+          >
+            <div className="flex w-full flex-col gap-3 px-4 pt-3">
+              {currentPlayer.gameMode == gameModeSchema.Enum.random_words ? (
+                wordChallengeForPlayer && (
+                  <div className="flex size-full max-h-[200px] flex-col overflow-y-auto">
+                    <div className="inline">
+                      {wordChallengeForPlayer.words.map((word, index) => (
+                        <WordChallengeEntry
+                          key={JSON.stringify({ ...roomData.wordsChallenge, index })}
+                          index={index}
+                          word={word}
+                        />
+                      ))}
+                      <WordChallengeEntry
+                        key={JSON.stringify({
+                          ...roomData.wordsChallenge,
+                          index: wordChallengeForPlayer.words.length,
+                        })}
+                        index={wordChallengeForPlayer.words.length}
+                        word="."
+                      />
+                    </div>
+                  </div>
+                )
+              ) : (
+                <TextArea
+                  placeholder="Write your response and roll the dice..."
+                  className="m-0 w-full border-0 p-0 text-xs"
+                  value={store.freeWill}
+                  onChange={(e) => {
+                    moveStore.freeWill.set(e.target.value);
                   }}
                 />
-                {defaultMoves.map((move) => (
-                  <MoveDisplay
-                    key={move}
-                    move={move}
-                    onClick={() => {
-                      moveStore.move.set(move);
-                      setOpenedDetails(true);
-                    }}
-                  />
-                ))}
+              )}
+            </div>
+            <div className="flex border border-gray-800">
+              <PickPowerup currentMana={currentPlayer.mana} />
+              <div className="flex w-full bg-primary px-6">
+                <Button
+                  onClick={onPlay}
+                  disabled={!store.canPlay || (!store.freeWill && !store.wordsChallenge.length)}
+                  className="flex w-full items-center gap-1 rounded-none border-none py-1.5 text-xs"
+                >
+                  <FaDice /> Roll the dice
+                </Button>
               </div>
-            </motion.div>
-          )}
-          {openedDetails && (
-            <motion.div
-              key="1"
-              initial="collapsed"
-              animate="open"
-              exit="collapsed"
-              variants={{
-                open: { opacity: 1, height: "auto" },
-                collapsed: { opacity: 0, height: 0 },
-              }}
-              transition={{ duration: 0.2 }}
-              className="flex w-full flex-col justify-between gap-2"
-            >
-              <div className="flex w-full flex-col gap-3 px-4 pt-3">
-                {store.move ? (
-                  <p
-                    className={cn(
-                      "text-xs",
-                      store.move === "discover_health" && "text-primary",
-                      store.move === "discover_mana" && "text-cyan-500",
-                      store.move === "conversation_with_team" && "text-green-500",
-                      store.move === "rest" && "text-purple-400",
-                    )}
-                  >
-                    {currentPlayer.champion.moveMapping[store.move]}
-                  </p>
-                ) : roomData.generateRandomWords ? (
-                  wordChallengeForPlayer && (
-                    <div className="flex size-full max-h-[200px] flex-col overflow-y-auto">
-                      <div className="inline">
-                        {wordChallengeForPlayer.words.map((word, index) => (
-                          <WordChallengeEntry
-                            key={JSON.stringify({ ...roomData.wordsChallenge, index })}
-                            index={index}
-                            word={word}
-                          />
-                        ))}
-                        <WordChallengeEntry
-                          key={JSON.stringify({
-                            ...roomData.wordsChallenge,
-                            index: wordChallengeForPlayer.words.length,
-                          })}
-                          index={wordChallengeForPlayer.words.length}
-                          word="."
-                        />
-                      </div>
-                    </div>
-                  )
-                ) : (
-                  <TextArea
-                    placeholder="Write your response and roll the dice..."
-                    className="m-0 w-full border-0 p-0 text-xs"
-                    value={store.freeWill}
-                    onChange={(e) => {
-                      moveStore.freeWill.set(e.target.value);
-                    }}
-                  />
-                )}
-              </div>
-              <div className="flex border border-gray-800">
-                <PickPowerup currentMana={currentPlayer.mana} />
-                <div className="flex w-full bg-primary px-6">
-                  <Button
-                    onClick={onPlay}
-                    disabled={
-                      !store.canPlay ||
-                      (!store.move && !store.freeWill && !store.wordsChallenge.length)
-                    }
-                    className="flex w-full items-center gap-1 rounded-none border-none py-1.5 text-xs"
-                  >
-                    <FaDice /> Roll the dice
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-          )}
+            </div>
+          </motion.div>
         </AnimatePresence>
       </motion.section>
     </div>
@@ -203,51 +130,156 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMovePr
 };
 
 interface IMoveDisplayProps {
-  move: IDefaultMove | "free_will";
   onClick?: () => void;
   className?: string;
-  action?: boolean;
   wordChallenge?: boolean;
+  gameMode: string | null | undefined;
 }
 
-const MoveDisplay = ({ move, onClick, className, action, wordChallenge }: IMoveDisplayProps) => {
+const MoveDisplay = ({ onClick, className, wordChallenge, gameMode }: IMoveDisplayProps) => {
   return (
     <div
       className={cn(
         "flex shrink-0 items-center gap-2 rounded-md border border-white p-2 text-xs font-medium",
-        move === "discover_health" && "border-primary text-primary",
-        move === "discover_mana" && "border-cyan-500 text-cyan-500",
-        move === "conversation_with_team" && "border-green-500 text-green-500",
-        move === "rest" && "border-purple-400 text-purple-400",
         className,
       )}
       onClick={onClick}
     >
-      {move === "free_will" && !wordChallenge && (
-        <>
-          <PiPenNibFill /> Free Will
-        </>
+      {gameMode === "normal" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Normal mode">
+            ✍️
+          </span>
+          <p>Write your move normally without any restrictions.</p>
+        </div>
       )}
-      {move === "free_will" && wordChallenge && <>Complete a Sentence</>}
-      {move === "discover_health" && (
-        <>
-          <AiFillHeart /> Heal {action && "action"}
-        </>
+      {gameMode === "only_emoji" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Emoji mode">
+            😃
+          </span>
+          <p>Use only emojis to express your move.</p>
+        </div>
       )}
-      {move === "discover_mana" && (
-        <>
-          <HiSparkles /> Mana {action && "action"}
-        </>
+      {gameMode === "overly_descriptive" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Overly descriptive mode" className="text-2xl">
+            🎨
+          </span>
+          <p className="text-xl">
+            Add excessive detail to your move, describing the color, texture, and smell. Brevity
+            will be penalized!
+          </p>
+        </div>
       )}
-      {move === "conversation_with_team" && (
-        <>
-          <GoPeople /> Round bonus {action && "action"}
-        </>
+      {gameMode === "vagueness" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Vagueness mode" className="text-2xl">
+            🌀
+          </span>
+          <p className="text-xl">
+            Keep your move vague and open to interpretation. The more ambiguous, the better your
+            rating!
+          </p>
+        </div>
       )}
-      {move === "rest" && (
-        <>
-          <GiNightSleep /> Rest {action && "action"}
-        </>
+      {gameMode === "three_languages" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Multilingual mode" className="text-2xl">
+            🌍
+          </span>
+          <p className="text-xl">
+            Declare your move in at least 3 different languages to earn a higher rating.
+          </p>
+        </div>
+      )}
+      {gameMode === "random_words" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Random words mode">
+            🎲
+          </span>
+          <p>Incorporate random words into your move.</p>
+        </div>
+      )}
+      {gameMode === "smart" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Smart move">
+            🧠
+          </span>
+          <p>Outsmart your opponent with a clever, strategic move.</p>
+        </div>
+      )}
+      {gameMode === "aggressive" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Aggressive move">
+            💥
+          </span>
+          <p>Take a bold, forceful action with no hesitation.</p>
+        </div>
+      )}
+      {gameMode === "rap_battle" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Rap battle move">
+            🎤
+          </span>
+          <p>Deliver your move in the form of rhymes and rhythm. Get ready to rap your way out!</p>
+        </div>
+      )}
+      {gameMode === "stupid" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Stupid move">
+            🧟
+          </span>
+          <p>Make a move that’s completely random and nonsensical. No brainpower required.</p>
+        </div>
+      )}
+      {gameMode === "emotional" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Emotional move">
+            😢
+          </span>
+          <p>Pour your feelings into the move — sad, happy, or overwhelmed.</p>
+        </div>
+      )}
+      {gameMode === "sarcastic" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Sarcastic move">
+            🙄
+          </span>
+          <p>Express your move with maximum sarcasm and wit.</p>
+        </div>
+      )}
+      {gameMode === "mysterious" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Mysterious move">
+            🕵️‍♂️
+          </span>
+          <p>Be vague, cryptic, and leave your opponent guessing.</p>
+        </div>
+      )}
+      {gameMode === "heroic" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Heroic move">
+            🦸
+          </span>
+          <p>Make a courageous, heroic move as if you're saving the day.</p>
+        </div>
+      )}
+      {gameMode === "lazy" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Lazy move">
+            😴
+          </span>
+          <p>Barely move, or move as little as possible with minimal effort.</p>
+        </div>
+      )}
+      {gameMode === "flashy" && (
+        <div className="flex items-center space-x-2">
+          <span role="img" aria-label="Flashy move">
+            ✨
+          </span>
+          <p>Execute a move with flair and style. Impress everyone, even if it doesn't work.</p>
+        </div>
       )}
     </div>
   );

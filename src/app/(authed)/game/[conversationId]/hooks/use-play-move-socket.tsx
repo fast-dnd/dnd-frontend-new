@@ -10,7 +10,6 @@ const usePlayMoveSocket = (conversationId: string) => {
     const onEvent = (event: IGameplaySocketEvent) => {
       switch (event.event) {
         case "GAME_ENDED":
-          moveStore.move.set(undefined);
           moveStore.buttonState.set("ROLLED");
         case "ROUND_STORY_CHUNK":
         case "REQUEST_SENT_TO_DM":
@@ -18,7 +17,6 @@ const usePlayMoveSocket = (conversationId: string) => {
           break;
         case "ROUND_STORY":
           moveStore.canPlay.set(true);
-          moveStore.move.set(undefined);
           break;
       }
     };

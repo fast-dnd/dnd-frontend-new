@@ -1,7 +1,8 @@
+/* eslint-disable tailwindcss/no-contradicting-classname */
 "use client";
 
+import GoldCoinIcon from "@/components/icons/gold-coin-icon";
 import { Button } from "@/components/ui/button";
-import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IChampion } from "@/types/dungeon";
@@ -13,7 +14,6 @@ import useOnStartGame from "../../hooks/use-on-start-game";
 import usePlayerInfo from "../../hooks/use-player-info";
 import useRoomSocket from "../../hooks/use-room-socket";
 import ChooseAiModel from "./choose-ai-model";
-import ChooseGamemode from "./choose-gamemode";
 import DurationSlider from "./duration-slider";
 import ImageAudioToggle from "./image-audio-toggle";
 
@@ -22,9 +22,7 @@ interface IGameSettingsProps {
   selectedChampion: IChampion | null | undefined;
   roomData: IRoomDetail | undefined;
   isAdmin: boolean;
-  gameModeSelected: boolean;
   aiModelSelected: boolean;
-  setGameModeSelected: React.Dispatch<React.SetStateAction<boolean>>;
   setAiModelSelected: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -33,9 +31,7 @@ const GameSettings = ({
   selectedChampion,
   roomData,
   isAdmin,
-  gameModeSelected,
   aiModelSelected,
-  setGameModeSelected,
   setAiModelSelected,
 }: IGameSettingsProps) => {
   const { duration, setDuration } = usePlayerInfo(roomData);
@@ -43,23 +39,16 @@ const GameSettings = ({
   const { gameStarting } = useRoomSocket(conversationId);
 
   const { isDefault } = useCommunity();
-  const { loggedIn } = useAuth();
 
   const { data: currentCommunity } = useGetCurrentCommunity();
 
-  const {
-    generateAudio,
-    generateImages,
-    setAiModel,
-    setGenerateImages,
-    setGenerateAudio,
-    setGenerateRandomWords,
-  } = useOnRoomChange({
-    conversationId,
-    duration,
-    roomData,
-    isAdmin,
-  });
+  const { generateAudio, generateImages, setAiModel, setGenerateImages, setGenerateAudio } =
+    useOnRoomChange({
+      conversationId,
+      duration,
+      roomData,
+      isAdmin,
+    });
 
   const { isGameStarting, onStartGame } = useOnStartGame({ conversationId });
 
@@ -69,18 +58,10 @@ const GameSettings = ({
 
   return (
     <>
-      <ChooseGamemode
-        selectedChampion={selectedChampion}
-        isAdmin={isAdmin}
-        gameModeSelected={gameModeSelected}
-        setGameModeSelected={setGameModeSelected}
-        setGenerateRandomWords={setGenerateRandomWords}
-      />
       <ChooseAiModel
         selectedChampion={selectedChampion}
         isAdmin={isAdmin}
         roomData={roomData}
-        gameModeSelected={gameModeSelected}
         aiModelSelected={aiModelSelected}
         setAiModelSelected={setAiModelSelected}
         setAiModel={setAiModel}
@@ -89,7 +70,7 @@ const GameSettings = ({
         className={cn(
           "flex flex-1 flex-col items-center gap-8 py-4 text-sm",
           !selectedChampion && "hidden",
-          isAdmin && (!gameModeSelected || !aiModelSelected) && "hidden",
+          isAdmin && !aiModelSelected && "hidden",
         )}
       >
         <div className="flex w-full flex-1 flex-col items-center justify-center gap-4">
@@ -111,16 +92,22 @@ const GameSettings = ({
             />
           </div>
         </div>
-
-        <Button
-          className="w-52 whitespace-nowrap"
-          disabled={disabled || !canBegin}
-          isLoading={isGameStarting || gameStarting}
-          onClick={onStartGame}
-        >
-          START ({roomData?.price.toFixed(loggedIn && isDefault ? 0 : 5)}{" "}
-          {loggedIn && isDefault ? "coins" : currentCommunity?.currencyName})
-        </Button>
+        <div className="flex w-full justify-center">
+          <Button
+            className="w-full whitespace-nowrap"
+            disabled={disabled || !canBegin}
+            isLoading={isGameStarting || gameStarting}
+            onClick={onStartGame}
+          >
+            START{" "}
+            {roomData && roomData.price > 0 && (
+              <>
+                {roomData?.price.toFixed(isDefault ? 0 : 5)}{" "}
+                {isDefault ? <GoldCoinIcon className="size-5" /> : currentCommunity?.currencyName}
+              </>
+            )}
+          </Button>
+        </div>
       </div>
     </>
   );

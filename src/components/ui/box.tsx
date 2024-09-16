@@ -17,10 +17,10 @@ export interface BoxProps
 export const Box = React.forwardRef<HTMLDivElement, BoxProps>(
   ({ wrapperClassName, titleClassName, className, children, title, ...props }, ref) => {
     return (
-      <div className={cn("flex w-full flex-col", wrapperClassName)}>
+      <div className={cn("glass-effect-2", "flex w-full flex-col", wrapperClassName)}>
         <div
           className={cn(
-            "relative flex items-center justify-center gap-4 rounded-t-md bg-dark-900 px-4 py-6",
+            "relative flex items-center justify-center gap-4 rounded-t-md bg-dark-800 px-4 py-6",
             titleClassName,
           )}
         >

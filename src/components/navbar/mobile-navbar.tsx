@@ -17,6 +17,7 @@ import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { cn } from "@/utils/style-utils";
 
 import ClaimRewardModal from "../common/claim-reward-modal";
+import MusicSettingsModal from "../common/music-settings-modal";
 import QuillIcon from "../icons/quill-icon";
 import SwordsIcon from "../icons/swords-icon";
 import { Button } from "../ui/button";
@@ -68,6 +69,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
         <Link href="https://twitter.com/v3rpg" className="pointer-events-auto">
           <TwitterLogo className="size-4" />
         </Link>
+        <MusicSettingsModal></MusicSettingsModal>
       </div>
       <div className="flex items-center gap-3">
         <MobileProfile setShopOpen={setShopOpen} />

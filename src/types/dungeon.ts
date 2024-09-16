@@ -8,7 +8,6 @@ import {
   dungeonSchema,
   dungeonTxResponseSchema,
   locationSchema,
-  moveMappingSchema,
   rateDungeonSchema,
 } from "@/validations/dungeon";
 
@@ -27,8 +26,6 @@ export type IDungeonForBackend = z.infer<typeof dungeonForBackendSchema>;
 export type IDungeonResponse = z.infer<typeof dungeonTxResponseSchema>;
 
 export type IRateDungeon = z.infer<typeof rateDungeonSchema>;
-
-export type IMoveMapping = z.infer<typeof moveMappingSchema>;
 
 export interface IDungeonTxForBackend {
   name: string;

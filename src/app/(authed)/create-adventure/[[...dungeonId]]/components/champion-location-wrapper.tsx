@@ -51,7 +51,8 @@ const ChampionLocationWrapper = ({
 
   const onSubmit: SubmitHandler<ILocationSchema | IChampionSchema> = (data) => {
     if (status === "CREATING") {
-      if ("moveMapping" in data)
+      if (!("mission" in data))
+        // Assuming only locations have a 'mission'
         dungeonFormStore.dungeonFormData.champions.set((prev) => [
           ...prev,
           { ...data, _id: "", type: "standard" },
@@ -60,7 +61,8 @@ const ChampionLocationWrapper = ({
         dungeonFormStore.dungeonFormData.locations.set((prev) => [...prev, { ...data, _id: "" }]);
     } else if (status === "EDITING") {
       const _id = chmpLocData._id;
-      if ("moveMapping" in data)
+      if (!("mission" in data))
+        // Assuming only locations have a 'mission'
         dungeonFormStore.dungeonFormData.champions[editIndex].set({
           ...data,
           _id,

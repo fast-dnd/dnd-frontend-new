@@ -22,12 +22,4 @@ export const aiModels = [
     description: "Bob is a classic dunk memer",
     longDescription: "Pepe Bob, memes and cringes.",
   },
-  {
-    name: "Retardio Zoomer Bob",
-    aiModel: "retardio_bob",
-    imgUrl:
-      "https://dnd-images-bucket.s3.amazonaws.com/DwYEXSK8ugrE2KbbvQqm2R2WBNTP1t5bA8cYhgw3NAhU_lg.jpeg",
-    description: "Bob is on shroomioz",
-    longDescription: "Shroomz Shroomz Shroomz.",
-  },
 ];

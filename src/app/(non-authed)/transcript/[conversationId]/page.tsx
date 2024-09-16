@@ -33,7 +33,7 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
     <>
       <div className="my-16 hidden min-h-0 w-[1800px] max-w-fit flex-1 flex-col self-center lg:flex">
         <TranscriptHeader transcripts={transcripts} />
-        <div className="relative flex min-h-0 w-full flex-1 flex-col overflow-y-scroll border-2 border-black bg-black/60 backdrop-blur-sm">
+        <div className="relative flex min-h-0 w-full flex-1 flex-col overflow-y-scroll border-2 border-black bg-dark-900 backdrop-blur-sm">
           <div className="relative mx-auto w-full flex-1 flex-col">
             <div className="mx-auto my-6 flex max-w-[1600px] flex-1 flex-col gap-6">
               {transcripts.story.map((story, index) => (
@@ -46,7 +46,7 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
       </div>
 
       <div className="flex flex-1 flex-col lg:hidden">
-        <MobileNavbar onClickBack={() => router.push("/home")} className="fixed z-10 bg-black" />
+        <MobileNavbar onClickBack={() => router.push("/home")} className="fixed z-10 bg-dark-900" />
         <TranscriptHeader transcripts={transcripts} />
         <div className="mt-44 flex flex-col gap-6 px-4 pb-6">
           {transcripts.story.map((story, index) => (

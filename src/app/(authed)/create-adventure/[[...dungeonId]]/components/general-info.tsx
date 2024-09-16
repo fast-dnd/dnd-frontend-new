@@ -41,7 +41,7 @@ const GeneralInfo = () => {
               <UploadImage
                 image={dungeonFormData.imageUrl.get()}
                 setImage={(image) => dungeonFormData.imageUrl.set(image)}
-                defaultImage={dungeonFormData.imageUrl.get()}
+                defaultImage={dungeonFormData.imageUrl.get() || "/images/default-dungeon.png"}
               />
               <ToggleSwitch
                 on={!publiclySeen}
