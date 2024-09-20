@@ -77,7 +77,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
   const content = (
     <div className="w-full grow flex-col items-center px-1">
       <div className="w-full overflow-y-auto">
-        <table className=" w-full table-auto text-left text-white">
+        <table className="mb-2 w-full table-auto text-left text-white">
           <thead className="sticky top-0 z-10  font-bold uppercase">
             <tr>
               <th className="px-4 py-2">Rank</th>
