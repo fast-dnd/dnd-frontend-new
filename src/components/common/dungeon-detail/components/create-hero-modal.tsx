@@ -9,7 +9,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import UploadImage from "@/components/ui/upload-image";
+// import UploadImage from "@/components/ui/upload-image";
 import { IChampion } from "@/types/dungeon";
 import { jibril } from "@/utils/fonts";
 
@@ -39,6 +39,7 @@ const CreateHeroModal = ({
   );
 
   const {
+    setValue,
     register,
     handleSubmit,
     formState: { errors },
@@ -80,12 +81,12 @@ const CreateHeroModal = ({
         <DialogTrigger asChild>
           {customChampion ? (
             <button className="border-white bg-white px-4 py-3 font-semibold text-black transition-all duration-200 hover:bg-white hover:text-black max-lg:h-full max-lg:rounded-bl-md lg:rounded-lg lg:border-2 lg:bg-transparent lg:px-6 lg:text-white">
-              EDIT <span className="max-lg:hidden">HERO</span>
+              EDIT <span className="max-lg:hidden">CHARACTER</span>
             </button>
           ) : (
             <Button variant="primary" className="w-fit gap-2 max-lg:w-full max-lg:rounded-t-none">
               <PlusCircle />
-              CREATE YOUR OWN CHARACTER
+              CRAFT NEW
             </Button>
           )}
         </DialogTrigger>
@@ -114,11 +115,23 @@ const CreateHeroModal = ({
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col items-center justify-center">
-            <UploadImage
-              image="/images/default-avatar.png"
+            {/* <UploadImage
+              image={
+                customChampion && customChampion.imageUrl != undefined
+                  ? customChampion.imageUrl
+                  : ""
+              }
               defaultImage="/images/default-avatar.png"
-              setImage={(image) => (customChampion ? (customChampion.imageUrl = image) : "")}
-            />
+              setImage={(image) => {
+                console.log("GOT IMAGE:", image);
+                setValue("imageUrl", image);
+                register("imageUrl");
+                if (customChampion) {
+                  customChampion.imageUrl = image;
+                  setCustomChampion(customChampion);
+                }
+              }}
+            /> */}
             <Input
               className="p-2"
               label="Character Name"
