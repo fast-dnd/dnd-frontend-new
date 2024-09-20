@@ -75,9 +75,9 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
   if (isError) return <div>Something went wrong</div>;
 
   const content = (
-    <div className="h-full w-full grow flex-col items-center px-1">
+    <div className="w-full grow flex-col items-center px-1">
       <div className="w-full overflow-y-auto">
-        <table className="h-full w-full min-w-full table-auto text-left text-white">
+        <table className=" w-full table-auto text-left text-white">
           <thead className="sticky top-0 z-10  font-bold uppercase">
             <tr>
               <th className="px-4 py-2">Rank</th>
@@ -164,16 +164,8 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
   );
 
   return (
-    <div
-      className={cn(
-        "glass-effect-2",
-        "relative flex h-full min-h-screen flex-1 flex-col overflow-hidden",
-      )}
-    >
-      <div
-        className={cn("flex h-full min-h-screen flex-1 flex-col  overscroll-auto  ")}
-        ref={scrollableRef}
-      >
+    <div className={cn("glass-effect-2", "relative flex  flex-1 flex-col overflow-hidden")}>
+      <div className={cn("flex  flex-1 flex-col  overscroll-auto  ")} ref={scrollableRef}>
         {content}
         {isFetchingNextPage && (
           <div className="flex h-10 justify-center">
