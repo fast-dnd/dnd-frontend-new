@@ -9,8 +9,10 @@ const Leaderboard = () => {
   const router = useRouter();
   return (
     <>
-      {/* <Tournament /> */}
-      <img src="/images/fft-soon.png" alt="ora logo" style={{ objectFit: "contain" }} />
+      {
+        /* <Tournament /> */
+        <img src="/images/fft-soon.png" alt="ora logo" style={{ objectFit: "contain" }} />
+      }
     </>
   );
 };

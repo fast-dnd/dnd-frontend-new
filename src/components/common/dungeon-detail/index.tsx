@@ -4,12 +4,10 @@ import { FiExternalLink } from "react-icons/fi";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import { Dungeon } from "@/components/common/dungeon";
-import NewTagChip from "@/components/icons/new-tag-chip";
 import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import { IChampion } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
-import HelmetIcon from "../../icons/helmet-icon";
 import { Button } from "../../ui/button";
 import CreateHeroModal from "./components/create-hero-modal";
 import { DungeonDetailSkeleton } from "./components/dungeon-detail-skeleton";
@@ -66,7 +64,7 @@ const DungeonDetail = ({
                 "glass-effect",
                 "flex min-w-0 basis-1/3 flex-col justify-between gap-4 rounded-md p-6 transition-all duration-200",
                 champion.type === "nft" && "border-gold",
-                champion._id === selectedChampion?._id && "border-primary bg-black/50",
+                champion._id === selectedChampion?._id && "border-primary bg-black/100",
               )}
             >
               <div className="flex items-center gap-4">
@@ -133,22 +131,28 @@ const DungeonDetail = ({
           {conversationId && (
             <div
               className={cn(
-                "flex h-fit min-w-0 basis-1/3 flex-col justify-between gap-4 rounded-md border-2 border-white bg-white/10 p-6 transition-all duration-200",
+                "glass-effect",
+                "flex h-fit min-w-0 basis-1/3 flex-col justify-between gap-4 rounded-md p-6 transition-all duration-200",
                 customChampion && "border-gold",
-                customChampion?._id === selectedChampion?._id && " bg-black/50",
+                customChampion?._id === selectedChampion?._id && " bg-black/100",
               )}
             >
               <div className="flex items-center gap-4">
-                <div className="relative">
-                  <HelmetIcon className="shrink-0" />
-                  {customChampion && (
-                    <NewTagChip className="absolute bottom-0 right-0 h-8 w-auto ring-0" />
-                  )}
-                </div>
+                <Image
+                  src={
+                    customChampion && customChampion.imageUrl
+                      ? customChampion.imageUrl
+                      : "/images/default-avatar.png"
+                  }
+                  alt={customChampion ? customChampion.name : ""}
+                  width={84}
+                  height={84}
+                  className="size-24 rounded-full"
+                />
                 <div className="flex flex-col gap-1">
                   <div className="flex w-full justify-between">
                     <p className={cn("truncate text-xl font-semibold")}>
-                      {customChampion ? customChampion.name : "CREATE YOUR OWN HERO"}
+                      {customChampion ? customChampion.name : "CREATE YOUR OWN CHARACTER"}
                     </p>
                   </div>
                   <p className="line-clamp-3 font-light">

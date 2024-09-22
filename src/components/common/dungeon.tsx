@@ -53,6 +53,9 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
           "flex w-full cursor-pointer gap-8 rounded-md border-2 border-transparent p-4 transition-all duration-200 hover:bg-white/5",
           isAddedToCampaign && "border-primary",
         )}
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='30' viewBox='0 0 1000 120'%3E%3Cg fill='none' stroke='%23222' stroke-width='10' %3E%3Cpath d='M-500 75c0 0 125-30 250-30S0 75 0 75s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 45c0 0 125-30 250-30S0 45 0 45s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 105c0 0 125-30 250-30S0 105 0 105s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 15c0 0 125-30 250-30S0 15 0 15s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500-15c0 0 125-30 250-30S0-15 0-15s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 135c0 0 125-30 250-30S0 135 0 135s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3C/g%3E%3C/svg%3E")`,
+        }}
         onClick={onClick}
         ref={ref}
       >
@@ -76,7 +79,7 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
         <div className="flex w-full min-w-0 flex-col gap-4">
           <div className="flex w-full items-center justify-between gap-4">
             <div className="flex min-w-0 flex-1 items-center gap-8 truncate text-2xl font-bold uppercase">
-              <p className={cn(dungeon.type === "nft" && "text-gold")}>{dungeon.name}</p>
+              <p>{dungeon.name}</p>
               {isOwned && (
                 <div className="rounded-md border border-white/25">
                   <p className="px-3 py-1 text-sm capitalize">
