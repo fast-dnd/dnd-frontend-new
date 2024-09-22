@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -6,7 +7,14 @@ import { useRouter } from "next/navigation";
 
 const Leaderboard = () => {
   const router = useRouter();
-  return <>{/* <Tournament /> */}</>;
+  return (
+    <>
+      {
+        /* <Tournament /> */
+        <img src="/images/fft-soon.png" alt="ora logo" style={{ objectFit: "contain" }} />
+      }
+    </>
+  );
 };
 
 export default Leaderboard;
