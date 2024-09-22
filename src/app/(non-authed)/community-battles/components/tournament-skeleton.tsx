@@ -41,9 +41,9 @@ const TournamentSkeleton = () => {
           <div className="h-64 w-full rounded-lg bg-gray-600" />
         </div>
 
-        <div className={cn("flex h-full max-h-screen min-h-screen w-full flex-col")}>
+        <div className={cn("flex min-h-screen w-full flex-col")}>
           {/* Skeleton for TournamentLeaderboardList */}
-          <div className="h-full w-full rounded-lg bg-gray-600" />
+          <div className="w-full rounded-lg bg-gray-600" />
         </div>
       </div>
     </div>
