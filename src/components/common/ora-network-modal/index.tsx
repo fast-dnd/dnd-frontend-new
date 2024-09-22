@@ -6,7 +6,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useEffect, useState } from "react";
-import { ArrowFatDown, Confetti, CurrencyCircleDollar, Hash, Sword } from "@phosphor-icons/react";
+import { ArrowFatDown, Confetti, CurrencyCircleDollar } from "@phosphor-icons/react";
 import { toast } from "sonner";
 import Web3 from "web3";
 
@@ -42,6 +42,11 @@ const OraNetworkModal = ({
   const [selectedAiJudgeQueryNormalized, setAiJudgeQueryNormalized] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [transactionStatus, setTransactionStatus] = useState("idle"); // 'idle', 'loading', 'success', 'error'
+  const [isAdditionalDescriptionVisible, setIsAdditionalDescriptionVisible] = useState(false);
+
+  const toggleAdditionalDescription = () => {
+    setIsAdditionalDescriptionVisible(!isAdditionalDescriptionVisible);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -131,20 +136,19 @@ const OraNetworkModal = ({
   return (
     <Dialog>
       <DialogTrigger asChild className="max-lg:hidden">
-        <button
-          className="flex cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black p-4 transition-all duration-200 hover:bg-[#1B1B1B]"
-          disabled={aiJudgeProcessedQuery || roomState === "GAMING" || roomState == "LOSE"}
-        >
-          {roomState === "GAMING" ? (
-            <Sword size={32} color="white" />
-          ) : roomState === "LOSE" ? (
-            <Hash size={32} color="white" />
-          ) : roomState === "WIN" && aiJudgeProcessedQuery ? (
-            <Confetti size={32} color="green" />
-          ) : (
-            <CurrencyCircleDollar size={32} color="green" />
-          )}
-        </button>
+        {roomState === "WIN" && !aiJudgeProcessedQuery ? (
+          <button
+            className={cn(
+              "flex cursor-pointer items-center justify-center rounded-full p-4 transition-all duration-200",
+              "duration-2000 animate-pulse", // bg-black for WIN without aiJudgeProcessedQuery
+            )}
+            disabled={aiJudgeProcessedQuery}
+          >
+            <CurrencyCircleDollar size={40} color="green" />
+          </button>
+        ) : roomState === "WIN" && aiJudgeProcessedQuery ? (
+          <Confetti size={32} color="green" />
+        ) : null}
       </DialogTrigger>
       <DialogContent className="z-[100] flex flex-col gap-12 bg-black p-4 max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:p-8">
         {transactionStatus === "loading" && (
@@ -198,12 +202,51 @@ const OraNetworkModal = ({
               By executing transaction selected transcript will be evaulated by AI Judge and
               depending on its rating you will climb in selected community leaderboard.
             </p>
-            <ul className="list-inside list-disc font-light lg:text-sm lg:tracking-[1.5px]">
-              <li>1st transaction of the day gets 100% of AI Judge value.</li>
-              <li>2nd transaction of the day gets 30% of AI Judge value.</li>
-              <li>3rd transaction of the day gets 10% of AI Judge value.</li>
-              <li>All subsequent transactions get exponentially lower.</li>
-            </ul>
+            <div className="flex cursor-pointer" onClick={toggleAdditionalDescription}>
+              <p className="-mt-0.5 truncate text-xl tracking-[0.15em]">Additional Information</p>
+              <span className="ml-2">
+                {isAdditionalDescriptionVisible ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="h-5 w-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 15l7-7 7 7"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="h-5 w-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                )}
+              </span>
+            </div>
+            {isAdditionalDescriptionVisible && (
+              <ul className="lg:text-mid list-inside list-disc font-light lg:tracking-[1.5px]">
+                <li>1st transaction of the day gets 100% of AI Judge value.</li>
+                <li>2nd transaction of the day gets 30% of AI Judge value.</li>
+                <li>3rd transaction of the day gets 10% of AI Judge value.</li>
+                <li>All subsequent transactions get exponentially lower.</li>
+              </ul>
+            )}
+
             {/* TODO: Return query to be seen somehow */}
             {/* <div className="mt-10">
               <Collapsible title="Query">

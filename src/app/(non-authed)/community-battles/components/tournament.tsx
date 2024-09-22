@@ -52,13 +52,9 @@ const Tournament = () => {
   };
 
   return (
-    <div
-      className={cn(
-        "hidden min-h-0 flex-1 flex-col gap-12 overflow-y-auto px-5 pb-12 lg:flex lg:flex-col lg:px-0",
-      )}
-    >
+    <div className={cn("flex min-h-0 w-full flex-1 flex-col gap-8 overflow-y-auto p-4 lg:p-8")}>
       {" "}
-      <div className="relative flex w-full flex-1 flex-row justify-between p-2">
+      <div className="relative flex w-full  flex-row justify-between p-2">
         <div className="mb-4 flex flex-col items-center rounded-t-md ">
           <h1 className="mb-4 text-4xl font-bold tracking-wide text-gold" style={jibril.style}>
             {name}
@@ -72,7 +68,7 @@ const Tournament = () => {
           selectedCommunity={selectedCommunity}
           handleSelectCommunity={handleSelectCommunity}
         />
-        <div className="mt- relative flex flex-col items-center rounded-t-md ">
+        <div className="relative mt-4 flex flex-col items-center rounded-t-md ">
           <h1
             className="mb-4 text-4xl font-semibold text-gold"
             style={jibril.style}
@@ -108,8 +104,8 @@ const Tournament = () => {
           </a>
         </div>
       </div>
-      <div className="relative mt-3 flex h-full flex-row gap-4 ">
-        <div className={cn("flex h-full max-h-screen min-h-screen w-1/4 flex-shrink-0 flex-col")}>
+      <div className="relative mt-3 flex flex-row gap-4 ">
+        <div className={cn("flex  w-1/4 flex-shrink-0 flex-col")}>
           <div className="mb-12 flex flex-col ">
             <CommunityCarosel selectedCommunity={selectedCommunity} />
           </div>
@@ -117,7 +113,7 @@ const Tournament = () => {
             <CommunityLeaderboard communities={communities} />
           </div>
         </div>
-        <div className={cn("flex h-full max-h-screen min-h-screen w-full flex-col")}>
+        <div className={cn("w-full ")}>
           <TournamentLeaderboardList communityId={selectedCommunity ? selectedCommunity._id : ""} />
         </div>
       </div>
