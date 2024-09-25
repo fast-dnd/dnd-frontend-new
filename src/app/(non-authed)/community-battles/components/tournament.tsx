@@ -86,7 +86,6 @@ const Tournament = () => {
                   src="/images/logos/ora-logo.png"
                   alt="ora logo"
                   style={{ width: "40px", height: "40px", objectFit: "contain" }}
-                  className="ora-logo"
                 />
               </div>
             </div>

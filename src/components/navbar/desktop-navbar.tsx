@@ -90,6 +90,17 @@ const DesktopNavbar = () => {
                 >
                   COMMUNITY BATTLES
                 </Link>
+                <div className="size-2 rotate-45 bg-white opacity-25" />
+                <Link
+                  href="/ai-box"
+                  className={cn(
+                    "mt-1 border-b-4 border-transparent pb-1 transition-all duration-300 hover:border-primary/50",
+                    pathname === "/ai-box" && "border-primary",
+                    !communityId && "hidden",
+                  )}
+                >
+                  AI BOX
+                </Link>
 
                 <div className="size-2 rotate-45 bg-white opacity-25" />
                 <Link
