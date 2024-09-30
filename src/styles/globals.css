@@ -66,3 +66,12 @@ body {
   flex: 1 1 auto; /* Ensure children take up equal space */
   overflow-y: auto; /* Handle overflow in children */
 }
+
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

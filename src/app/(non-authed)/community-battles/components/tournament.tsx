@@ -52,7 +52,11 @@ const Tournament = () => {
   };
 
   return (
-    <div className={cn("flex min-h-0 w-full flex-1 flex-col gap-8 overflow-y-auto p-4 lg:p-8")}>
+    <div
+      className={cn(
+        "no-scrollbar flex min-h-0 w-full flex-1 flex-col gap-8 overflow-hidden p-4 lg:p-8 ",
+      )}
+    >
       {" "}
       <div className="relative flex w-full  flex-row justify-between p-2">
         <div className="mb-4 flex flex-col items-center rounded-t-md ">
