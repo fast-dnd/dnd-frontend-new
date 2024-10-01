@@ -18,8 +18,14 @@ export const aiBoxSchema = z.object({
   handicap: z.string(),
   prompt: z.string().nullable(),
   oraQuery: z.string().nullable(),
+  aiJudgeQueryTxHash: z.string().nullable(),
   rating: z.number(),
   transactions: z.array(txSchema),
+});
+
+export const aiBoxPromptSchema = z.object({
+  prompt: z.string(),
+  oraQuery: z.string(),
 });
 
 export type IAiBox = z.infer<typeof aiBoxSchema>;

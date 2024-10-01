@@ -3,9 +3,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import EmojiPicker, { Theme } from "emoji-picker-react";
-import { IoMdSend } from "react-icons/io";
 
-import { Button } from "@/components/ui/button";
+import OraAiBoxPromptModal from "@/components/common/ora-network-modal/aibox-modal";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { TextArea } from "@/components/ui/text-area";
 import { jibril } from "@/utils/fonts";
@@ -27,6 +26,9 @@ const AiBox = () => {
     if (data) {
       if (data.epoch) {
         setSelectedEpoch(data.epoch);
+      }
+      if (data.prompt) {
+        setPlayerPrompt(data.prompt);
       }
     }
   }, [data]);
@@ -83,6 +85,7 @@ const AiBox = () => {
                   const trimmedText = inputText.slice(0, maxCharacters);
                   setPlayerPrompt(trimmedText);
                 }}
+                disabled={data.aiJudgeQueryTxHash ? true : false}
                 value={playerPrompt}
                 style={{ minHeight: "100px" }} // Increase TextArea size by default
               />
@@ -97,23 +100,26 @@ const AiBox = () => {
                     </div>
                   </PopoverTrigger>
                   <PopoverContent className="border-transparent bg-white/5 shadow-none">
-                    <EmojiPicker
-                      theme={Theme.DARK}
-                      onEmojiClick={(emoji) => {
-                        setPlayerPrompt(playerPrompt + emoji.emoji);
-                      }}
-                    />
+                    {data.aiJudgeQueryTxHash ? (
+                      false
+                    ) : true ? (
+                      <EmojiPicker
+                        theme={Theme.DARK}
+                        onEmojiClick={(emoji) => {
+                          setPlayerPrompt(playerPrompt + emoji.emoji);
+                        }}
+                      />
+                    ) : (
+                      <></>
+                    )}
                   </PopoverContent>
                 </Popover>
 
-                <Button
-                  type="submit"
-                  variant="ghost"
-                  className="flex items-center justify-center text-primary"
-                  aria-label="Send"
-                >
-                  <IoMdSend className="text-3xl" /> {/* Ensure consistent size with emoji */}
-                </Button>
+                <OraAiBoxPromptModal
+                  aiBoxId={data.aiBoxId}
+                  prompt={playerPrompt}
+                  shouldPop={data.aiJudgeQueryTxHash ? false : true}
+                />
               </div>
             </div>
           </div>

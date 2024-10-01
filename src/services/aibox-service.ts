@@ -1,6 +1,6 @@
 import queryString from "query-string";
 
-import { aiBoxSchema } from "@/validations/aibox";
+import { aiBoxPromptSchema, aiBoxSchema } from "@/validations/aibox";
 import { leaderboardSchema } from "@/validations/leaderboard";
 
 import createApi, { PAGINATION_LIMIT } from "./api-factory";
@@ -29,9 +29,16 @@ const getLatestAiBox = async () => {
   return await aiBoxApi.get("latest").then((res) => aiBoxSchema.parse(res.data));
 };
 
+const submitPrompt = async (aiBoxId: string, prompt: string) => {
+  return await aiBoxApi
+    .post(`/prompt/${aiBoxId}`, { prompt })
+    .then((res) => aiBoxPromptSchema.parse(res.data));
+};
+
 const aiBoxService = {
   getAiBoxLeaderboard,
   getLatestAiBox,
+  submitPrompt,
 };
 
 export default aiBoxService;
