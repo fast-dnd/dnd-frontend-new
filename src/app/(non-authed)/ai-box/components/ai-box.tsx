@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EmojiPicker, { Theme } from "emoji-picker-react";
 import { IoMdSend } from "react-icons/io";
 
@@ -11,14 +11,25 @@ import { TextArea } from "@/components/ui/text-area";
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
-import useGetTournament from "../hooks/use-get-tournament";
+import useGetAiBox from "../hooks/use-get-aibox";
 import AiBoxSkeleton from "./ai-box-skeleton";
 import BoxLeaderboardList from "./box-leaderboard-list";
+import TimerComponent from "./timer";
 
 const AiBox = () => {
-  const { data, isLoading, error } = useGetTournament();
-  const maxCharacters = 250;
+  const { data, isLoading, error } = useGetAiBox();
+
   const [playerPrompt, setPlayerPrompt] = useState<string>("");
+  const [selectedEpoch, setSelectedEpoch] = useState<number>(1);
+  const maxCharacters = 250;
+
+  useEffect(() => {
+    if (data) {
+      if (data.epoch) {
+        setSelectedEpoch(data.epoch);
+      }
+    }
+  }, [data]);
 
   if (isLoading) {
     return <AiBoxSkeleton />;
@@ -40,29 +51,21 @@ const AiBox = () => {
     );
   }
 
-  const query = "How would you design a spaceshuttle?";
-  const prize = "5";
-  const prizeToken = "USDT";
-  const timeRemaining = "4h";
-
   return (
-    <div
-      className={cn(
-        "no-scrollbar flex min-h-0 w-full flex-1 flex-col gap-8 overflow-hidden p-4 lg:p-8",
-      )}
-    >
+    <div className={cn("no-scrollbar flex min-h-0 w-full flex-1 flex-col overflow-hidden p-2 ")}>
       <div className="relative flex w-full flex-row justify-between gap-2 p-2">
         <div
           className={cn(
-            "mb-4 flex w-1/2 flex-col items-center justify-center rounded-t-md  p-4 shadow-lg backdrop-blur-lg",
+            "mb-4 flex w-2/5 flex-col items-center justify-center rounded-t-md  p-4 shadow-lg backdrop-blur-lg",
           )}
         >
           <p className="text-2xl font-semibold text-gold" style={jibril.style}>
             Query of the day:
           </p>
-
-          <p className="mb-4 text-xl font-bold tracking-wide text-white">{query}</p>
-
+          <p className="mb-2 text-xl font-bold tracking-wide text-white">
+            {data.query + data.handicap}
+          </p>
+          <TimerComponent endDate={data.endDate} currentEpoch={data.epoch} />
           <div className="flex w-full flex-col gap-1">
             <div className="relative flex flex-1">
               <span className="absolute right-1 top-1 text-xs text-white/50">
@@ -78,7 +81,6 @@ const AiBox = () => {
 
                   // Trim the input to the max number of characters
                   const trimmedText = inputText.slice(0, maxCharacters);
-
                   setPlayerPrompt(trimmedText);
                 }}
                 value={playerPrompt}
@@ -117,21 +119,20 @@ const AiBox = () => {
           </div>
         </div>
         <div className={cn("flex flex-1 flex-col gap-4 rounded-lg  p-4 shadow-md")}>
-          <h3 className="mb-2 text-center text-xl font-semibold text-gold">How Does It Work?</h3>
-          <p className="mb-1 text-base">
+          <h3 className="mb-2 text-center text-xl font-semibold text-gold">How it works?</h3>
+          <p className="mb-1 text-center text-base">
             Each day is a new chance to <strong>win rewards</strong> inside of the{" "}
             <strong>AI-BOX</strong>.
           </p>
-          <p className=" text-base">
+          <p className=" text-center text-base">
             <strong>Step 1:</strong> Think, respond to the query the <strong>best you can</strong>.
           </p>
-          <p className="text-base">
-            <strong>Step 2:</strong> Pray for the <strong>decentralized AI judge</strong> to give
-            you the <strong>best rating</strong>.
+          <p className="text-center text-base">
+            <strong>Step 2:</strong> Submit response and <strong>decentralized AI judge</strong>{" "}
+            will give <strong>rating</strong> to it.
           </p>
-          <p className="text-base">
-            <strong>Step 3:</strong> The player with the <strong>highest rating</strong> gets the
-            prize.
+          <p className="text-center text-base">
+            The player with the <strong>highest rating</strong> gets the prize.
           </p>
         </div>
         <div style={{ height: "80%" }} className={cn("glass-effect-2", "flex flex-row gap-6")}>
@@ -155,7 +156,7 @@ const AiBox = () => {
               style={jibril.style}
             >{`Todays prize`}</h1>
             <h1 className=" font-mono text-6xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(0,255,255,0.8)]">
-              {`${prize} ${prizeToken}`}
+              {data.prize + " " + data.prizeToken}
             </h1>
             <a href="https://www.ora.io/" target="_blank" rel="noopener noreferrer">
               <div className="flex flex-col items-center">
@@ -175,7 +176,23 @@ const AiBox = () => {
         </div>
       </div>
       <div className={cn("w-full ")}>
-        <BoxLeaderboardList communityId={"66c4b4997b711a1c9fa667a6"} />
+        <div className="mb-2 flex space-x-2">
+          {Array.from({ length: Math.min(data.epoch, 3) }, (_, index) => {
+            const epochValue = data.epoch - index;
+            return (
+              <button
+                key={epochValue}
+                className={`rounded px-3 py-1 ${
+                  selectedEpoch === epochValue ? "bg-gold text-black" : "bg-gray-700 text-white"
+                }`}
+                onClick={() => setSelectedEpoch(epochValue)}
+              >
+                Day {epochValue}
+              </button>
+            );
+          })}
+        </div>
+        <BoxLeaderboardList epoch={selectedEpoch} />
       </div>
     </div>
   );

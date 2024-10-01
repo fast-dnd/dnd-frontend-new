@@ -1,17 +1,16 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 
+import aiBoxService, { aiBoxKey } from "@/services/aibox-service";
 import { PAGINATION_LIMIT } from "@/services/api-factory";
-import tournamentService, { tournamentKey } from "@/services/tournament-service";
 
-interface IUseGetTournamentLeaderboardProps {
-  communityId: string;
+interface IUseGetAiBoxLeaderboardProps {
+  epoch: number;
 }
 
-const useGetTournamentLeaderboard = ({ communityId }: IUseGetTournamentLeaderboardProps) => {
+const useGetAiBoxLeaderboard = ({ epoch }: IUseGetAiBoxLeaderboardProps) => {
   return useInfiniteQuery({
-    queryKey: [tournamentKey, communityId],
-    queryFn: ({ pageParam = 1 }) =>
-      tournamentService.getTournamentLeaderboard({ communityId, pageParam }),
+    queryKey: [aiBoxKey, epoch],
+    queryFn: ({ pageParam = 1 }) => aiBoxService.getAiBoxLeaderboard({ epoch, pageParam }),
     getNextPageParam: (lastPage, allPages) => {
       const nextPage =
         lastPage.leaderboard.length === PAGINATION_LIMIT ? allPages.length + 1 : undefined;
@@ -32,4 +31,4 @@ const useGetTournamentLeaderboard = ({ communityId }: IUseGetTournamentLeaderboa
   });
 };
 
-export default useGetTournamentLeaderboard;
+export default useGetAiBoxLeaderboard;

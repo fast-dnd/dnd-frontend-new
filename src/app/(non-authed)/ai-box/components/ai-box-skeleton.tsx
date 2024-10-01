@@ -26,10 +26,7 @@ const AiBoxSkeleton = () => {
         </div>
 
         {/* Right Section - Prize Information Skeleton */}
-        <div
-          style={{ height: "80%" }}
-          className={cn("glass-effect-2 flex flex-col items-center gap-4 p-4")}
-        >
+        <div style={{ height: "80%" }} className={cn("flex flex-col items-center gap-4 p-4")}>
           <div className="h-40 w-32 rounded-lg bg-gray-600" /> {/* Skeleton for Image */}
           <div className="mt-4 h-8 w-48 rounded-lg bg-gray-600" /> {/* Skeleton for Prize Title */}
           <div className="mt-4 h-16 w-48 rounded-lg bg-gray-600" /> {/* Skeleton for Prize Value */}

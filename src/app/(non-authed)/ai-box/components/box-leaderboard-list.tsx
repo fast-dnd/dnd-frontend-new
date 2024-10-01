@@ -8,10 +8,9 @@ import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import { cn } from "@/utils/style-utils";
 import { ILeaderBoard } from "@/validations/leaderboard";
 
-import useGetTournamentLeaderboard from "../hooks/use-get-leaderboard";
-import OraTransactionsModel from "./ora-transactions-modal";
+import useGetAiBoxLeaderboard from "../hooks/use-get-leaderboard";
 
-const BoxLeaderboardList = ({ communityId }: { communityId: string }) => {
+const BoxLeaderboardList = ({ epoch }: { epoch: number }) => {
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
   const scrollableRef = useRef<HTMLDivElement>(null);
 
@@ -25,8 +24,8 @@ const BoxLeaderboardList = ({ communityId }: { communityId: string }) => {
     hasPreviousPage,
     fetchPreviousPage,
     isFetchingPreviousPage,
-  } = useGetTournamentLeaderboard({
-    communityId,
+  } = useGetAiBoxLeaderboard({
+    epoch,
   });
 
   const { lastObjectRef: lastLeaderboardUserRef } = useIntersectionObserver({
@@ -82,7 +81,7 @@ const BoxLeaderboardList = ({ communityId }: { communityId: string }) => {
             <tr>
               <th className="px-4 py-2">Rank</th>
               <th className="px-4 py-2">User</th>
-              <th className="px-4 py-2">Transactions</th>
+              <th className="px-4 py-2">Transaction</th>
               <th className="px-4 py-2">Rating</th>
             </tr>
           </thead>
@@ -112,13 +111,30 @@ const BoxLeaderboardList = ({ communityId }: { communityId: string }) => {
                       </div>
                     </td>
                     <td className="px-4 py-2 font-semibold">
-                      <OraTransactionsModel
-                        imageUrl={leaderboardUser.imageUrl}
-                        username={leaderboardUser.username}
-                        rating={leaderboardUser.rating}
-                        transactions={leaderboardUser.transactions}
-                        rank={leaderboardUser.rank}
-                      />
+                      {leaderboardUser.transactions && leaderboardUser.transactions.length > 0 ? (
+                        <>
+                          <img
+                            src={getChainImage(
+                              leaderboardUser.transactions[0].chain as NetworkName,
+                            )}
+                            alt={leaderboardUser.transactions[0].chain}
+                            style={{ height: "32px" }}
+                          />
+                          <a
+                            href={`https://sepolia.arbiscan.io/tx/${leaderboardUser.transactions[0].txHash}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 hover:underline"
+                          >
+                            {`${leaderboardUser.transactions[0].txHash.slice(
+                              0,
+                              3,
+                            )}...${leaderboardUser.transactions[0].txHash.slice(-3)}`}
+                          </a>
+                        </>
+                      ) : (
+                        <span className="text-gray-500">No transactions</span>
+                      )}
                     </td>
                     <td className="px-4 py-2 font-semibold">{leaderboardUser.rating}</td>
                   </tr>
@@ -175,6 +191,19 @@ const BoxLeaderboardList = ({ communityId }: { communityId: string }) => {
       </div>
     </div>
   );
+};
+
+type NetworkName = "Arbitrum" | "ArbitrumSepoliaTestnet";
+
+const getChainImage = (chainName: NetworkName) => {
+  switch (chainName) {
+    case "Arbitrum":
+    case "ArbitrumSepoliaTestnet":
+      return "/images/logos/arbitrum-arb-logo.png";
+    // Add more cases here if you have other chains
+    default:
+      return "/images/logos/default-logo.png"; // A default image if chain is unrecognized
+  }
 };
 
 export default BoxLeaderboardList;

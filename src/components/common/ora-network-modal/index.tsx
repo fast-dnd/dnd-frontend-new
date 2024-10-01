@@ -12,7 +12,7 @@ import Web3 from "web3";
 
 import { Button } from "@/components/ui/button";
 import oraService from "@/services/ora-network-service";
-import tournamentService from "@/services/tournaments-service";
+import tournamentService from "@/services/tournament-service";
 import { IOraCommitToTxHash } from "@/types/ora-network";
 import { IGameState } from "@/types/room";
 import { jibril } from "@/utils/fonts";
