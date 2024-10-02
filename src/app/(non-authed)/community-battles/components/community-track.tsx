@@ -19,7 +19,7 @@ const CommunityTrack: React.FC<CommunityTrackProps> = ({
   }
   return (
     <div className="relative flex flex-col items-center ">
-      <p className="mb-4 text-4xl font-bold tracking-wide text-gold" style={jibril.style}>
+      <p className="mb-4 text-4xl font-bold tracking-wide text-red-400" style={jibril.style}>
         Communities
       </p>
       <div className="mt-2 flex space-x-6 overflow-x-auto">

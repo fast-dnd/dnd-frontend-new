@@ -131,7 +131,7 @@ const BoxLeaderboardList = ({ epoch }: { epoch: number }) => {
                             href={`https://sepolia.arbiscan.io/tx/${leaderboardUser.transactions[0].txHash}#eventlog`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-500 hover:underline"
+                            className="text-red-400 hover:underline"
                           >
                             {`${leaderboardUser.transactions[0].txHash.slice(
                               0,

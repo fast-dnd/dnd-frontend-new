@@ -61,7 +61,7 @@ const AiBox = () => {
             "mb-4 flex w-2/5 flex-col items-center justify-center rounded-t-md  p-4 shadow-lg backdrop-blur-lg",
           )}
         >
-          <p className="text-2xl font-semibold text-gold" style={jibril.style}>
+          <p className="text-2xl font-semibold text-red-400" style={jibril.style}>
             Query of the day:
           </p>
           <p className="mb-2 text-xl font-bold tracking-wide text-white">
@@ -125,7 +125,7 @@ const AiBox = () => {
           </div>
         </div>
         <div className={cn("flex flex-1 flex-col gap-4 rounded-lg  p-4 shadow-md")}>
-          <h3 className="mb-2 text-center text-xl font-semibold text-gold">How it works?</h3>
+          <h3 className="mb-2 text-center text-xl font-semibold text-red-400">How it works?</h3>
           <p className="mb-1 text-center text-base">
             Each day is a new chance to <strong>win rewards</strong> inside of the{" "}
             <strong>AI-BOX</strong>.
@@ -159,7 +159,7 @@ const AiBox = () => {
           />
           <div className="relative mt-4 flex flex-col items-center rounded-t-md p-2">
             <h1
-              className="mb-4 text-4xl font-semibold text-gold"
+              className="mb-4 text-4xl font-semibold text-red-400"
               style={jibril.style}
             >{`Todays prize`}</h1>
             <h1 className=" font-mono text-6xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(0,255,255,0.8)]">
@@ -185,7 +185,7 @@ const AiBox = () => {
               rel="noopener noreferrer"
               className="group flex items-center space-x-2"
             >
-              <p className="text-center text-lg font-bold tracking-wide text-blue-500 group-hover:underline">
+              <p className="text-center text-lg font-bold tracking-wide text-red-400 group-hover:underline">
                 Click to get free testnet tokens on Arbitrum
               </p>
             </a>
@@ -200,7 +200,7 @@ const AiBox = () => {
               <button
                 key={epochValue}
                 className={`rounded px-3 py-1 ${
-                  selectedEpoch === epochValue ? "bg-gold text-black" : "bg-gray-700 text-white"
+                  selectedEpoch === epochValue ? "bg-red-400 text-black" : "bg-gray-700 text-white"
                 }`}
                 onClick={() => setSelectedEpoch(epochValue)}
               >

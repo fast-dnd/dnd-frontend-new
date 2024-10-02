@@ -151,7 +151,7 @@ const OraAiBoxPromptModal = ({ aiBoxId, prompt, shouldPop }: OraAiBoxPromptModal
             </div>
           )}
           {transactionStatus === "error" && (
-            <div className="flex flex-col items-center justify-center text-xl text-red-500">
+            <div className="flex flex-col items-center justify-center text-xl text-red-400">
               <p>Transaction failed. Please try again</p>
               <img
                 src="/images/transaction-failed.png"

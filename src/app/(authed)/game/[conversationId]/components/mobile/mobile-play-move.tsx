@@ -54,11 +54,7 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMovePr
             key="1"
             className="absolute flex w-full items-center gap-3"
           >
-            <MoveDisplay
-              wordChallenge={!!wordChallengeForPlayer}
-              className="border-0 p-0 uppercase"
-              gameMode={currentPlayer.gameMode}
-            />
+            <MoveDisplay className="border-0 p-0 uppercase" gameMode={currentPlayer.gameMode} />
           </motion.div>
         </AnimatePresence>
       </motion.header>
@@ -132,11 +128,10 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMovePr
 interface IMoveDisplayProps {
   onClick?: () => void;
   className?: string;
-  wordChallenge?: boolean;
   gameMode: string | null | undefined;
 }
 
-const MoveDisplay = ({ onClick, className, wordChallenge, gameMode }: IMoveDisplayProps) => {
+const MoveDisplay = ({ onClick, className, gameMode }: IMoveDisplayProps) => {
   return (
     <div
       className={cn(
@@ -146,139 +141,162 @@ const MoveDisplay = ({ onClick, className, wordChallenge, gameMode }: IMoveDispl
       onClick={onClick}
     >
       {gameMode === "normal" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Normal mode">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Normal mode" className="text-xs">
             ✍️
           </span>
-          <p>Write your move normally without any restrictions.</p>
+          <p className="text-[10px] leading-tight">
+            Write your move normally without any restrictions.
+          </p>
         </div>
       )}
       {gameMode === "only_emoji" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Emoji mode">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Emoji mode" className="text-xs">
             😃
           </span>
-          <p>Use only emojis to express your move.</p>
+          <p className="text-[10px] leading-tight">Use only emojis to express your move.</p>
         </div>
       )}
       {gameMode === "overly_descriptive" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Overly descriptive mode" className="text-2xl">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Overly descriptive mode" className="text-xs">
             🎨
           </span>
-          <p className="text-xl">
+          <p className="text-[10px] leading-tight">
             Add excessive detail to your move, describing the color, texture, and smell. Brevity
             will be penalized!
           </p>
         </div>
       )}
       {gameMode === "vagueness" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Vagueness mode" className="text-2xl">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Vagueness mode" className="text-xs">
             🌀
           </span>
-          <p className="text-xl">
+          <p className="text-[10px] leading-tight">
             Keep your move vague and open to interpretation. The more ambiguous, the better your
             rating!
           </p>
         </div>
       )}
       {gameMode === "three_languages" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Multilingual mode" className="text-2xl">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Multilingual mode" className="text-xs">
             🌍
           </span>
-          <p className="text-xl">
+          <p className="text-[10px] leading-tight">
+            {" "}
             Declare your move in at least 3 different languages to earn a higher rating.
           </p>
         </div>
       )}
       {gameMode === "random_words" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Random words mode">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Random words mode" className="text-xs">
             🎲
           </span>
-          <p>Incorporate random words into your move.</p>
+          <p className="text-[10px] leading-tight">Incorporate random words into your move.</p>
         </div>
       )}
       {gameMode === "smart" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Smart move">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Smart move" className="text-xs">
             🧠
           </span>
-          <p>Outsmart your opponent with a clever, strategic move.</p>
+          <p className="text-[10px] leading-tight">
+            Outsmart your opponent with a clever, strategic move.
+          </p>
         </div>
       )}
       {gameMode === "aggressive" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Aggressive move">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Aggressive move" className="text-xs">
             💥
           </span>
-          <p>Take a bold, forceful action with no hesitation.</p>
+          <p className="text-[10px] leading-tight">
+            Take a bold, forceful action with no hesitation.
+          </p>
         </div>
       )}
       {gameMode === "rap_battle" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Rap battle move">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Rap battle move" className="text-xs">
             🎤
           </span>
-          <p>Deliver your move in the form of rhymes and rhythm. Get ready to rap your way out!</p>
+          <p className="text-[10px] leading-tight">
+            Deliver your move in the form of rhymes and rhythm. Get ready to rap your way out!
+          </p>
         </div>
       )}
       {gameMode === "stupid" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Stupid move">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Stupid move" className="text-xs">
             🧟
           </span>
-          <p>Make a move that’s completely random and nonsensical. No brainpower required.</p>
+          <p className="text-[10px] leading-tight">
+            Make a move that’s completely random and nonsensical. No brainpower required.
+          </p>
         </div>
       )}
       {gameMode === "emotional" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Emotional move">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Emotional move" className="text-xs">
             😢
           </span>
-          <p>Pour your feelings into the move — sad, happy, or overwhelmed.</p>
+          <p className="text-[10px] leading-tight">
+            Pour your feelings into the move — sad, happy, or overwhelmed.
+          </p>
         </div>
       )}
       {gameMode === "sarcastic" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Sarcastic move">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Sarcastic move" className="text-xs">
             🙄
           </span>
-          <p>Express your move with maximum sarcasm and wit.</p>
+          <p className="text-[10px] leading-tight">
+            Express your move with maximum sarcasm and wit.
+          </p>
         </div>
       )}
       {gameMode === "mysterious" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Mysterious move">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Mysterious move" className="text-xs">
             🕵️‍♂️
           </span>
-          <p>Be vague, cryptic, and leave your opponent guessing.</p>
+          <p className="text-[10px] leading-tight">
+            Be vague, cryptic, and leave your opponent guessing.
+          </p>
         </div>
       )}
       {gameMode === "heroic" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Heroic move">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Heroic move" className="text-xs">
             🦸
           </span>
-          <p>Make a courageous, heroic move as if you're saving the day.</p>
+          <p className="text-[10px] leading-tight">
+            Make a courageous, heroic move as if you're saving the day.
+          </p>
         </div>
       )}
       {gameMode === "lazy" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Lazy move">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Lazy move" className="text-xs">
             😴
           </span>
-          <p>Barely move, or move as little as possible with minimal effort.</p>
+          <p className="text-[10px] leading-tight">
+            Barely move, or move as little as possible with minimal effort.
+          </p>
         </div>
       )}
       {gameMode === "flashy" && (
-        <div className="flex items-center space-x-2">
-          <span role="img" aria-label="Flashy move">
+        <div className="flex flex-wrap items-center space-x-2">
+          <span role="img" aria-label="Flashy move" className="text-xs">
             ✨
           </span>
-          <p>Execute a move with flair and style. Impress everyone, even if it doesn't work.</p>
+          <p className="text-[10px] leading-tight">
+            Execute a move with flair and style. Impress everyone, even if it doesn't work.
+          </p>
         </div>
       )}
     </div>
