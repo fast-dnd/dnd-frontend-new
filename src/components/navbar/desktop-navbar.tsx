@@ -91,7 +91,7 @@ const DesktopNavbar = () => {
                   >
                     COMMUNITY BATTLES
                   </Link>
-                  <span className="py-0.2 text-red absolute -top-7 right-6  translate-x-1/2 transform rounded-md px-1.5 text-[10px] font-bold text-red-600">
+                  <span className="py-0.2 text-red absolute -top-7 right-6  translate-x-1/2 rounded-md px-1.5 text-[10px] font-bold text-red-600">
                     {" "}
                     BETA
                   </span>
@@ -108,7 +108,7 @@ const DesktopNavbar = () => {
                   >
                     AI BOX
                   </Link>
-                  <span className="py-0.2 rounded-mdpx-1.5 absolute -top-7 right-6 translate-x-1/2  transform text-[10px] font-bold text-red-600">
+                  <span className="py-0.2 rounded-mdpx-1.5 absolute -top-7 right-6 translate-x-1/2  text-[10px] font-bold text-red-600">
                     BETA
                   </span>
                 </div>
