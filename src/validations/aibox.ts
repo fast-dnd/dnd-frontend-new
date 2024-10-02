@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const txSchema = z.object({
   createdAt: z.string(),
-  chain: z.number(),
+  chain: z.string(),
   txHash: z.string(),
   rating: z.number(),
 });

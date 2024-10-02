@@ -105,7 +105,7 @@ const OraTransactionsModal = ({
                       </td>
                       <td className="px-4 py-2">
                         <a
-                          href={`https://sepolia.arbiscan.io/tx/${transaction.txHash}`}
+                          href={`https://sepolia.arbiscan.io/tx/${transaction.txHash}#eventlog`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-500 hover:underline"

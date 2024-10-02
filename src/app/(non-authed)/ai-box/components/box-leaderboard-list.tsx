@@ -110,18 +110,18 @@ const BoxLeaderboardList = ({ epoch }: { epoch: number }) => {
                         <span className="text-lg">{leaderboardUser.username}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-2 font-semibold">
+                    <td className="flex flex-row gap-2 px-4 py-2 font-semibold">
                       {leaderboardUser.transactions && leaderboardUser.transactions.length > 0 ? (
                         <>
                           <img
                             src={getChainImage(
                               leaderboardUser.transactions[0].chain as NetworkName,
                             )}
-                            alt={leaderboardUser.transactions[0].chain}
-                            style={{ height: "32px" }}
+                            // alt={leaderboardUser.transactions[0].chain}
+                            style={{ height: "25px" }}
                           />
                           <a
-                            href={`https://sepolia.arbiscan.io/tx/${leaderboardUser.transactions[0].txHash}`}
+                            href={`https://sepolia.arbiscan.io/tx/${leaderboardUser.transactions[0].txHash}#eventlog`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-500 hover:underline"
