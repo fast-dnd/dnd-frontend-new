@@ -39,7 +39,6 @@ const OraAiBoxPromptModal = ({ aiBoxId, prompt, shouldPop }: OraAiBoxPromptModal
     const fetchData = async () => {
       try {
         const res = await aiBoxService.submitPrompt(aiBoxId, prompt);
-        console.log("Helloowww");
         setAiJudgeQueryNormalized(res.oraQuery);
       } catch (error) {
         console.error("Failed to fetch ai judge query:", error);

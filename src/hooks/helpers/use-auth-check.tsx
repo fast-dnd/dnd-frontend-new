@@ -20,7 +20,7 @@ const useAuthCheck = () => {
   useEffect(() => {
     if (!pathname) return;
 
-    const nonAuthURLs = ["/guide", "/transcript", "/mobile-wip"];
+    const nonAuthURLs = ["/guide", "/transcript", "/ai-box", "/community-battles", "/mobile-wip"];
     const isNonAuthURL = nonAuthURLs.some((url) => pathname.includes(url));
 
     if (isNonAuthURL) return;

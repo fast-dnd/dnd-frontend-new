@@ -76,7 +76,7 @@ const AiBox = () => {
 
               <TextArea
                 maxLength={maxCharacters}
-                className="m-0 h-full w-full rounded-lg border border-white/30 bg-white/5 p-4 text-white placeholder-white/50 focus-within:border-white focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="m-0 mt-1 h-full w-full rounded-lg border border-white/30 bg-white/5 p-4 text-white placeholder-white/50 focus-within:border-white focus:outline-none focus:ring-2 focus:ring-white/50"
                 placeholder="I would try to ..."
                 onChange={(e) => {
                   const inputText = e.target.value;
@@ -131,7 +131,8 @@ const AiBox = () => {
             <strong>AI-BOX</strong>.
           </p>
           <p className=" text-center text-base">
-            <strong>Step 1:</strong> Think, respond to the query the <strong>best you can</strong>.
+            <strong>Step 1:</strong> Think, then respond to the query the{" "}
+            <strong>best you can</strong>.
           </p>
           <p className="text-center text-base">
             <strong>Step 2:</strong> Submit response and <strong>decentralized AI judge</strong>{" "}
@@ -185,7 +186,7 @@ const AiBox = () => {
               className="group flex items-center space-x-2"
             >
               <p className="text-center text-lg font-bold tracking-wide text-blue-500 group-hover:underline">
-                Click here to get free testnet tokens on Arbitrum
+                Click to get free testnet tokens on Arbitrum
               </p>
             </a>
           </div>

@@ -48,7 +48,7 @@ const OraTransactionsModal = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="rounded-full border-black">See all transactions</button>
+        <button className="rounded-full border-black text-blue-500">See all transactions</button>
       </DialogTrigger>
       <DialogContent className="z-50 flex flex-col gap-4 rounded-lg bg-black p-6">
         {/* Header */}

@@ -102,7 +102,7 @@ const Tournament = () => {
             className="group flex items-center space-x-2"
           >
             <p className="text-center text-lg font-bold tracking-wide text-blue-500 group-hover:underline">
-              Click here to get free testnet tokens on Arbitrum
+              Click to get free testnet tokens on Arbitrum
             </p>
           </a>
         </div>

@@ -74,10 +74,11 @@ const BoxLeaderboardList = ({ epoch }: { epoch: number }) => {
   if (isError) return <div>Something went wrong</div>;
 
   const content = (
-    <div className="w-full grow flex-col items-center px-1">
-      <div className="w-full overflow-y-auto">
+    <div className="flex w-full flex-1 flex-col items-center px-1">
+      <div className="w-full flex-1 overflow-y-auto" style={{ maxHeight: "600px" }}>
         <table className="mb-2 w-full table-auto text-left text-white">
-          <thead className="sticky top-0 z-10  font-bold uppercase">
+          <thead className="sticky top-0 z-20 bg-[#1a1d2e] font-bold uppercase text-white">
+            {" "}
             <tr>
               <th className="px-4 py-2">Rank</th>
               <th className="px-4 py-2">User</th>
@@ -88,7 +89,13 @@ const BoxLeaderboardList = ({ epoch }: { epoch: number }) => {
           <tbody>
             {leaderboardData?.pages.flatMap((page, pageIndex) =>
               page.leaderboard.map((leaderboardUser, userIndex) => {
-                const overallIndex = pageIndex * page.leaderboard.length + userIndex + 1;
+                const overallIndex =
+                  leaderboardData.pages
+                    .slice(0, pageIndex)
+                    .reduce((acc, p) => acc + p.leaderboard.length, 0) +
+                  userIndex +
+                  1;
+
                 const isLastItem =
                   pageIndex === leaderboardData.pages.length - 1 &&
                   userIndex === page.leaderboard.length - 1;
@@ -181,7 +188,7 @@ const BoxLeaderboardList = ({ epoch }: { epoch: number }) => {
 
   return (
     <div className={cn("glass-effect-2", "relative flex  flex-1 flex-col overflow-hidden")}>
-      <div className={cn("flex  flex-1 flex-col  overscroll-auto  ")} ref={scrollableRef}>
+      <div className={cn("flex flex-1 flex-col overscroll-auto")} ref={scrollableRef}>
         {content}
         {isFetchingNextPage && (
           <div className="flex h-10 justify-center">
