@@ -178,6 +178,16 @@ const AiBox = () => {
                 </div>
               </div>
             </a>
+            <a
+              href="https://www.alchemy.com/faucets/arbitrum-sepolia"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center space-x-2"
+            >
+              <p className="text-center text-lg font-bold tracking-wide text-blue-500 group-hover:underline">
+                Click here to get free testnet tokens on Arbitrum
+              </p>
+            </a>
           </div>
         </div>
       </div>

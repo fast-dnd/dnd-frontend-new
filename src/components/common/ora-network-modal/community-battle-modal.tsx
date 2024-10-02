@@ -72,7 +72,7 @@ const OraCommunityBattlesPromptModal = ({
     };
 
     fetchData();
-  }, [conversationId]);
+  }, [conversationId, isOpen]);
 
   const handleNetworkSelection = (network: NetworkName) => {
     setSelectedNetwork(network);
@@ -110,7 +110,7 @@ const OraCommunityBattlesPromptModal = ({
             };
             tx = await oraService.cbCommitToTxHash(commitData);
             setTransactionStatus("success");
-            toast.success(`Transaction successful : ${tx}`);
+            toast.success(`Transaction successful`);
           } catch (error) {
             setTransactionStatus("error");
             toast.error(`An error occurred with MetaMask: ${error}`);
@@ -159,7 +159,7 @@ const OraCommunityBattlesPromptModal = ({
           )}
           {transactionStatus === "success" && (
             <div className="flex flex-col items-center justify-center text-xl text-green-500">
-              <p>Transaction successfully created. System will be processing it soon.</p>
+              <p>Transaction successfully created. System will be processing it soon. (~1min)</p>
               <img
                 src="/images/transaction-passed.png"
                 alt="ora logo"
@@ -279,6 +279,7 @@ const OraCommunityBattlesPromptModal = ({
                 <div className="mt-4 flex flex-wrap justify-center gap-4">
                   {Object.entries(networks).map(([name, id]) => (
                     <NetworkSelectionButton
+                      key={id}
                       networkName={name as NetworkName}
                       onClick={() => handleNetworkSelection(name as NetworkName)}
                       networkLogos={networkLogos}

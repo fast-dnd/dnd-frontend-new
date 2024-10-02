@@ -29,7 +29,7 @@ export const networks: Record<NetworkName, string> = {
   // "Ethereum Sepolia": "0xaa36a7",
   // Optimism: "0xa",
   // "Optimism Sepolia": "0xaa37dc",
-  Arbitrum: "0x66eee", //"0xa4b1",
+  Arbitrum: "0xa4b1", //"0xa4b1",
   ArbitrumSepoliaTestnet: "0x66eee",
   // Manta: "0xa9",
   // "Manta Sepolia Testnet": "0x34816e",

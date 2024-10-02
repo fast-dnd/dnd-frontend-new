@@ -101,9 +101,9 @@ const Tournament = () => {
             rel="noopener noreferrer"
             className="group flex items-center space-x-2"
           >
-            <h1 className="text-center text-lg font-bold tracking-wide text-blue-500 group-hover:underline">
-              Click here to get free Arbitrum tokens
-            </h1>
+            <p className="text-center text-lg font-bold tracking-wide text-blue-500 group-hover:underline">
+              Click here to get free testnet tokens on Arbitrum
+            </p>
           </a>
         </div>
       </div>
