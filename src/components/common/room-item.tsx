@@ -15,7 +15,7 @@ import {
   moveStore,
 } from "@/app/(authed)/game/[conversationId]/stores/move-store";
 
-import OraNetworkModal from "./ora-network-modal";
+import OraCommunityBattlesPromptModal from "./ora-network-modal/community-battle-modal";
 
 const RoomItem = React.forwardRef<
   HTMLDivElement,
@@ -48,7 +48,7 @@ const RoomItem = React.forwardRef<
         <p className={`text-sm uppercase ${roomState.color}`}>{roomState.text}</p>
       </div>
 
-      <OraNetworkModal
+      <OraCommunityBattlesPromptModal
         conversationId={room.conversationId}
         aiJudgeQuery={room.aiJudgeQuery}
         aiJudgeQueryNormalized={room.aiJudgeQueryNormalized}

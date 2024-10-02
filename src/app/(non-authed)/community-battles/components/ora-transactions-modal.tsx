@@ -48,7 +48,7 @@ const OraTransactionsModal = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="rounded-full border-black">See all transactions</button>
+        <button className="rounded-full border-black text-red-400">See all transactions</button>
       </DialogTrigger>
       <DialogContent className="z-50 flex flex-col gap-4 rounded-lg bg-black p-6">
         {/* Header */}
@@ -105,10 +105,10 @@ const OraTransactionsModal = ({
                       </td>
                       <td className="px-4 py-2">
                         <a
-                          href={`https://sepolia.arbiscan.io/tx/${transaction.txHash}`}
+                          href={`https://sepolia.arbiscan.io/tx/${transaction.txHash}#eventlog`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-500 hover:underline"
+                          className="text-red-400 hover:underline"
                         >
                           {`${transaction.txHash.slice(0, 3)}...${transaction.txHash.slice(-3)}`}
                         </a>
