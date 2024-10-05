@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Box2 } from "@/components/ui/box2";
+import { Box } from "@/components/ui/box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -16,7 +16,7 @@ const JoinRoom = () => {
   const onJoinRoom = () => joinRoom({ link: roomLink });
 
   return (
-    <Box2 title="JOIN ROOM" className="flex flex-col gap-8 p-8">
+    <Box title="JOIN ROOM" className="flex flex-col gap-8 p-8">
       <Input
         label="Room ID"
         placeholder="ex. clean-thoughtless-evening"
@@ -30,7 +30,7 @@ const JoinRoom = () => {
       >
         JOIN
       </Button>
-    </Box2>
+    </Box>
   );
 };
 
