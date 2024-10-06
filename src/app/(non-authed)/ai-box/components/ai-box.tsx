@@ -2,10 +2,12 @@
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
+import { ArrowClockwise } from "@phosphor-icons/react";
 import EmojiPicker, { Theme } from "emoji-picker-react";
 
 import OraAiBoxPromptModal from "@/components/common/ora-network-modal/aibox-modal";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import Spinner from "@/components/ui/spinner"; // Importing Spinner component
 import { TextArea } from "@/components/ui/text-area";
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
@@ -16,7 +18,7 @@ import BoxLeaderboardList from "./box-leaderboard-list";
 import TimerComponent from "./timer";
 
 const AiBox = () => {
-  const { data, isLoading, error } = useGetAiBox();
+  const { data, isLoading, error, refetch, isFetching } = useGetAiBox();
 
   const [playerPrompt, setPlayerPrompt] = useState<string>("");
   const [selectedEpoch, setSelectedEpoch] = useState<number>(1);
@@ -32,6 +34,10 @@ const AiBox = () => {
       }
     }
   }, [data]);
+
+  // useEffect(() => {
+  //   refetch();
+  // }, []);
 
   if (isLoading) {
     return <AiBoxSkeleton />;
@@ -61,6 +67,18 @@ const AiBox = () => {
             "mb-4 flex w-2/5 flex-col items-center justify-center rounded-t-md  p-4 shadow-lg backdrop-blur-lg",
           )}
         >
+          {isFetching ? (
+            <Spinner
+              className="absolute left-2 top-2 m-0 size-5 shrink-0 opacity-100"
+              style={{ cursor: "pointer" }}
+            />
+          ) : (
+            <ArrowClockwise
+              className="absolute left-2 top-2 m-0 size-5 shrink-0 cursor-pointer opacity-100"
+              size={24}
+              onClick={() => refetch()}
+            />
+          )}
           <p className="text-2xl font-semibold text-red-400" style={jibril.style}>
             Query of the day:
           </p>

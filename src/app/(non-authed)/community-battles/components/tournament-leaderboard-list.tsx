@@ -25,9 +25,14 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
     hasPreviousPage,
     fetchPreviousPage,
     isFetchingPreviousPage,
+    refetch,
   } = useGetTournamentLeaderboard({
     communityId,
   });
+
+  useEffect(() => {
+    refetch(); // This will refetch the data each time epoch changes
+  }, [communityId, refetch]);
 
   const { lastObjectRef: lastLeaderboardUserRef } = useIntersectionObserver({
     isFetchingNextPage,
