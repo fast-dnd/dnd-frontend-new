@@ -14,6 +14,7 @@ const BoxLeaderboardList = ({ epoch }: { epoch: number }) => {
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
   const scrollableRef = useRef<HTMLDivElement>(null);
 
+  // Modified hook to make sure it fetches from scratch whenever epoch changes
   const {
     data: leaderboardData,
     isError,
@@ -24,9 +25,15 @@ const BoxLeaderboardList = ({ epoch }: { epoch: number }) => {
     hasPreviousPage,
     fetchPreviousPage,
     isFetchingPreviousPage,
+    refetch, // Add refetch to trigger a manual reload
   } = useGetAiBoxLeaderboard({
-    epoch,
+    epoch, // Pass epoch to the hook
   });
+
+  // Whenever the epoch changes, refetch data from scratch
+  useEffect(() => {
+    refetch(); // This will refetch the data each time epoch changes
+  }, [epoch, refetch]);
 
   const { lastObjectRef: lastLeaderboardUserRef } = useIntersectionObserver({
     isFetchingNextPage,
@@ -47,7 +54,7 @@ const BoxLeaderboardList = ({ epoch }: { epoch: number }) => {
         previousRef.current?.pages?.[0]?.leaderboard?.[0]?.accountId &&
       scrollableRef.current
     ) {
-      //prevent scrolling to top when loaded previous
+      // Prevent scrolling to top when loaded previous data
       const numOfUsers = leaderboardData.pages[0].leaderboard.length;
       scrollableRef.current.scrollTop += numOfUsers * 52; // each leaderboard user is 52px
     }
@@ -124,7 +131,6 @@ const BoxLeaderboardList = ({ epoch }: { epoch: number }) => {
                             src={getChainImage(
                               leaderboardUser.transactions[0].chain as NetworkName,
                             )}
-                            // alt={leaderboardUser.transactions[0].chain}
                             style={{ height: "25px" }}
                           />
                           <a
