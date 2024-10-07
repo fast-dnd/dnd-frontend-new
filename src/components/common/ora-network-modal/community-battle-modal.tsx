@@ -141,7 +141,14 @@ const OraCommunityBattlesPromptModal = ({
             <CurrencyCircleDollar size={40} color="green" />
           </button>
         ) : roomState === "WIN" && aiJudgeProcessedQuery ? (
-          <Confetti size={32} color="green" />
+          <button
+            className={cn(
+              "flex cursor-pointer items-center justify-center rounded-full p-4 transition-all duration-200",
+            )}
+            disabled={true}
+          >
+            <Confetti size={32} color="green" />
+          </button>
         ) : null}
       </DialogTrigger>
       {isOpen && (
