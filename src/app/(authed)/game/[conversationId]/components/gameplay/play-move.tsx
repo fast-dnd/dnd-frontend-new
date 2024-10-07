@@ -76,6 +76,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
     <div>
       {gameMode === "normal" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Normal mode" className="text-2xl">
             ✍️
           </span>
@@ -84,6 +85,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "only_emoji" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Emoji mode" className="text-2xl">
             😃
           </span>
@@ -92,6 +94,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "overly_descriptive" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Overly descriptive mode" className="text-2xl">
             🎨
           </span>
@@ -103,6 +106,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "vagueness" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Vagueness mode" className="text-2xl">
             🌀
           </span>
@@ -114,6 +118,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "three_languages" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Multilingual mode" className="text-2xl">
             🌍
           </span>
@@ -124,6 +129,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "random_words" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Random words mode" className="text-2xl">
             🎲
           </span>
@@ -132,6 +138,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "smart" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Smart move" className="text-2xl">
             🧠
           </span>
@@ -140,6 +147,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "aggressive" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Aggressive move" className="text-2xl">
             💥
           </span>
@@ -148,6 +156,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "rap_battle" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Rap battle move" className="text-2xl">
             🎤
           </span>
@@ -158,6 +167,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "stupid" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Stupid move" className="text-2xl">
             🧟
           </span>
@@ -168,6 +178,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "emotional" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Emotional move" className="text-2xl">
             😢
           </span>
@@ -176,6 +187,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "sarcastic" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Sarcastic move" className="text-2xl">
             🙄
           </span>
@@ -184,6 +196,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "mysterious" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Mysterious move" className="text-2xl">
             🕵️‍♂️
           </span>
@@ -192,6 +205,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "heroic" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Heroic move" className="text-2xl">
             🦸
           </span>
@@ -200,6 +214,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "lazy" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Lazy move" className="text-2xl">
             😴
           </span>
@@ -208,6 +223,7 @@ function getModeTranslation(gameMode: string | null | undefined) {
       )}
       {gameMode === "flashy" && (
         <div className="flex items-center space-x-2">
+          <p>[handicap]</p>
           <span role="img" aria-label="Flashy move" className="text-2xl">
             ✨
           </span>

@@ -62,7 +62,8 @@ const Login = () => {
                   HOP RIGHT IN{" "}
                 </p>
                 <p className="min-h-[32px] text-sm font-light leading-[112%] tracking-[1px]">
-                  Engage in AI storytelling, play with your friends or create your own stories.
+                  Engage in AI storytelling, compete, earn rewards, play with your friends or create
+                  your own stories.
                 </p>
               </div>
               <Button
@@ -174,7 +175,8 @@ const Login = () => {
               <div className="flex flex-col gap-4">
                 <p className="text-4xl font-semibold uppercase">HOP RIGHT IN</p>
                 <p className=" text-xl tracking-[1.5px]">
-                  Engage in AI storytelling, play with your friends or create your own stories.
+                  Engage in AI storytelling, compete, earn rewards, play with your friends or create
+                  your own stories.{" "}
                 </p>
               </div>
               <Button

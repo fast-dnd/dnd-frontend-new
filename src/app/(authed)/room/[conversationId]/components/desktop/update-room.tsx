@@ -28,10 +28,10 @@ import usePlayerInfo from "../../hooks/use-player-info";
 import useRoomSocket from "../../hooks/use-room-socket";
 
 const imagesAudio = [
-  {
-    value: "images",
-    icon: <BiImages />,
-  },
+  // {
+  //   value: "images",
+  //   icon: <BiImages />,
+  // },
   {
     value: "audio",
     icon: <AiFillSound />,
@@ -68,13 +68,13 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
   const generateAudioImagesArray = () => {
     const audioImagesArray = [];
     if (roomData.generateAudio) audioImagesArray.push("audio");
-    if (roomData.generateImages) audioImagesArray.push("images");
+    // if (roomData.generateImages) audioImagesArray.push("images");
     return audioImagesArray;
   };
 
   const onChangeImagesAudio = (value: string[]) => {
-    if (value.includes("images")) setGenerateImages(true);
-    else setGenerateImages(false);
+    // if (value.includes("images")) setGenerateImages(true);
+    // else setGenerateImages(false);
 
     if (value.includes("audio")) setGenerateAudio(true);
     else setGenerateAudio(false);

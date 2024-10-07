@@ -80,16 +80,38 @@ const DesktopNavbar = () => {
                   {loggedIn ? "PLAY" : "LOG IN"}
                 </Link>
                 <div className="size-2 rotate-45 bg-white opacity-25" />
-                <Link
-                  href="/community-battles"
-                  className={cn(
-                    "mt-1 border-b-4 border-transparent pb-1 transition-all duration-300 hover:border-primary/50",
-                    pathname === "/community-battles" && "border-primary",
-                    !communityId && "hidden",
-                  )}
-                >
-                  COMMUNITY BATTLES
-                </Link>
+                <div className="relative inline-block">
+                  <Link
+                    href="/community-battles"
+                    className={cn(
+                      "mt-1 inline-block border-b-4 border-transparent pb-1 transition-all duration-300 hover:border-primary/50",
+                      pathname === "/community-battles" && "border-primary",
+                      !communityId && "hidden",
+                    )}
+                  >
+                    COMMUNITY BATTLES
+                  </Link>
+                  <span className="py-0.2 text-red absolute -top-7 right-6  translate-x-1/2 rounded-md px-1.5 text-[10px] font-bold text-red-600">
+                    {" "}
+                    BETA
+                  </span>
+                </div>
+                <div className="size-2 rotate-45 bg-white opacity-25" />
+                <div className="relative inline-block">
+                  <Link
+                    href="/ai-box"
+                    className={cn(
+                      "mt-1 border-b-4 border-transparent pb-1 transition-all duration-300 hover:border-primary/50",
+                      pathname === "/ai-box" && "border-primary",
+                      !communityId && "hidden",
+                    )}
+                  >
+                    AI BOX
+                  </Link>
+                  <span className="py-0.2 rounded-mdpx-1.5 absolute -top-7 right-6 translate-x-1/2  text-[10px] font-bold text-red-600">
+                    BETA
+                  </span>
+                </div>
 
                 <div className="size-2 rotate-45 bg-white opacity-25" />
                 <Link

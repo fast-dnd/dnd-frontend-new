@@ -2,6 +2,7 @@ import queryString from "query-string";
 
 import { leaderboardSchema } from "@/validations/leaderboard";
 import { tournamentSchema } from "@/validations/tournament";
+import { validateTournamentsResponseSchema } from "@/validations/tournaments";
 
 import createApi, { PAGINATION_LIMIT } from "./api-factory";
 
@@ -26,11 +27,18 @@ const getTournamentLeaderboard = async ({ communityId, pageParam }: IGetLeaderbo
     .then((res) => leaderboardSchema.parse(res.data));
 };
 
+const getLatestTournament = async () => {
+  return await tournamentApi
+    .get("latest")
+    .then((res) => validateTournamentsResponseSchema.parse(res.data));
+};
+
 const getTournament = async () => {
   return await tournamentApi.get("/latest").then((res) => tournamentSchema.parse(res.data));
 };
 
 const tournamentService = {
+  getLatestTournament,
   getTournament,
   getTournamentLeaderboard,
 };
