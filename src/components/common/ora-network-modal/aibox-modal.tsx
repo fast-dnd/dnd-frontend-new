@@ -112,7 +112,7 @@ const OraAiBoxPromptModal = ({ aiBoxId, prompt, shouldPop }: OraAiBoxPromptModal
               <IoMdSend className="text-3xl" /> {/* Ensure consistent size with emoji */}
             </Button>
           ) : (
-            <Tooltip content="Prompt has already been sent. It can take up to couple of minutes for it to resolve. Wait till tomorrow for new challenge !">
+            <Tooltip content="Prompt has already been sent. It can take up to couple of minutes for it to resolve. Refresh the page to check if it was processed. Wait till tomorrow for new challenge !">
               <Button
                 type="submit"
                 variant="ghost"
