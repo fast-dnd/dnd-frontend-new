@@ -12,7 +12,7 @@ const CommunityLeaderboard: React.FC<CommunityLeaderboardProps> = ({ communities
   return (
     <div className={cn("glass-effect-2", "relative flex flex-col items-center rounded-lg p-6")}>
       <p
-        className="mb-3 text-center text-3xl font-bold text-gold"
+        className="mb-3 text-center text-3xl font-bold text-red-400"
         style={{ fontFamily: jibril.style.fontFamily }}
       >
         Community Leaderboard

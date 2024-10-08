@@ -2,15 +2,15 @@
 
 import { useRouter } from "next/navigation";
 
-import Tournament from "./components/tournament";
+import AiBox from "./components/ai-box";
 
-const Leaderboard = () => {
+const AiBoxPage = () => {
   const router = useRouter();
   return (
     <>
-      <Tournament />
+      <AiBox />
     </>
   );
 };
 
-export default Leaderboard;
+export default AiBoxPage;

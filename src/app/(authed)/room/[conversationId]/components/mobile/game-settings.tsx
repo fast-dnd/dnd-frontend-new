@@ -78,12 +78,12 @@ const GameSettings = ({
           <DurationSlider duration={duration} setDuration={setDuration} disabled={disabled} />
           <div className="mt-4 h-[1px] w-full bg-black shadow-lobby" />
           <div className="flex w-full flex-wrap items-center justify-evenly gap-3 px-4">
-            <ImageAudioToggle
+            {/* <ImageAudioToggle
               generate={generateImages}
               setGenerate={setGenerateImages}
               disabled={disabled}
               type="Image"
-            />
+            /> */}
             <ImageAudioToggle
               generate={generateAudio}
               setGenerate={setGenerateAudio}

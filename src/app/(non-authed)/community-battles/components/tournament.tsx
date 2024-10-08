@@ -52,11 +52,15 @@ const Tournament = () => {
   };
 
   return (
-    <div className={cn("flex min-h-0 w-full flex-1 flex-col gap-8 overflow-y-auto p-4 lg:p-8")}>
+    <div
+      className={cn(
+        "no-scrollbar flex min-h-0 w-full flex-1 flex-col gap-8 overflow-hidden p-4 lg:p-8 ",
+      )}
+    >
       {" "}
       <div className="relative flex w-full  flex-row justify-between p-2">
         <div className="mb-4 flex flex-col items-center rounded-t-md ">
-          <h1 className="mb-4 text-4xl font-bold tracking-wide text-gold" style={jibril.style}>
+          <h1 className="mb-4 text-4xl font-bold tracking-wide text-red-400" style={jibril.style}>
             {name}
           </h1>
           <h2 className="mb-4 text-2xl font-semibold">Season {season}</h2>
@@ -70,7 +74,7 @@ const Tournament = () => {
         />
         <div className="relative mt-4 flex flex-col items-center rounded-t-md ">
           <h1
-            className="mb-4 text-4xl font-semibold text-gold"
+            className="mb-4 text-4xl font-semibold text-red-400"
             style={jibril.style}
           >{`Ultimate battle prize`}</h1>
           <h1 className="mt-4 font-mono text-6xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(0,255,255,0.8)]">
@@ -97,9 +101,9 @@ const Tournament = () => {
             rel="noopener noreferrer"
             className="group flex items-center space-x-2"
           >
-            <h1 className="text-center text-lg font-bold tracking-wide text-blue-500 group-hover:underline">
-              Click here to get free Arbitrum tokens
-            </h1>
+            <p className="text-center text-lg font-bold tracking-wide text-red-400 group-hover:underline">
+              Click to get free testnet tokens on Arbitrum
+            </p>
           </a>
         </div>
       </div>
