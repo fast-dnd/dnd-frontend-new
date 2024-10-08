@@ -10,7 +10,7 @@ import { ILeaderBoard } from "@/validations/leaderboard";
 
 import useGetAiBoxLeaderboard from "../hooks/use-get-leaderboard";
 
-const BoxLeaderboardList = ({ epoch }: { epoch: number }) => {
+const BoxLeaderboardList = ({ epoch, lastRefetch }: { epoch: number; lastRefetch: number }) => {
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
   const scrollableRef = useRef<HTMLDivElement>(null);
 
@@ -33,7 +33,7 @@ const BoxLeaderboardList = ({ epoch }: { epoch: number }) => {
   // Whenever the epoch changes, refetch data from scratch
   useEffect(() => {
     refetch(); // This will refetch the data each time epoch changes
-  }, [epoch, refetch]);
+  }, [epoch, lastRefetch, refetch]);
 
   const { lastObjectRef: lastLeaderboardUserRef } = useIntersectionObserver({
     isFetchingNextPage,

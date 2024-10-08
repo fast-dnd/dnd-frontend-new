@@ -22,6 +22,8 @@ const AiBox = () => {
 
   const [playerPrompt, setPlayerPrompt] = useState<string>("");
   const [selectedEpoch, setSelectedEpoch] = useState<number>(1);
+  const [lastRefetch, setLastRefetch] = useState<number>(1);
+
   const maxCharacters = 250;
 
   useEffect(() => {
@@ -35,9 +37,9 @@ const AiBox = () => {
     }
   }, [data]);
 
-  // useEffect(() => {
-  //   refetch();
-  // }, []);
+  useEffect(() => {
+    refetch();
+  }, [lastRefetch]);
 
   if (isLoading) {
     return <AiBoxSkeleton />;
@@ -76,7 +78,9 @@ const AiBox = () => {
             <ArrowClockwise
               className="absolute left-2 top-2 m-0 size-5 shrink-0 cursor-pointer opacity-100"
               size={24}
-              onClick={() => refetch()}
+              onClick={() => {
+                setLastRefetch(Date.now());
+              }}
             />
           )}
           <p className="text-2xl font-semibold text-red-400" style={jibril.style}>
@@ -227,7 +231,7 @@ const AiBox = () => {
             );
           })}
         </div>
-        <BoxLeaderboardList epoch={selectedEpoch} />
+        <BoxLeaderboardList epoch={selectedEpoch} lastRefetch={lastRefetch} />
       </div>
     </div>
   );
