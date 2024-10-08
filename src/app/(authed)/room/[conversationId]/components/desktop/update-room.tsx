@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { AiFillSound, AiFillStar } from "react-icons/ai";
-import { BiImages } from "react-icons/bi";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import GoldCoinIcon from "@/components/icons/gold-coin-icon";
