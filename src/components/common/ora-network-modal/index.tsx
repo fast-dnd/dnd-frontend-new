@@ -59,15 +59,11 @@ export async function calculateAiTx(
   const contractAddress = contractAddresses[networkChoice];
   const contract = new web3.eth.Contract(oraAbi, contractAddress);
   const modelId = 11;
-  // const estimatedFeeClean = estimatedFee.replace(/n$/, "");
-  const estimatedFeeBigInt = BigInt(estimatedFee);
 
-  // Multiply the fee by 1.2 using BigInt arithmetic
-  const multipliedFee = (estimatedFeeBigInt * BigInt(25)) / BigInt(10);
   // Encode the transaction data
   const tx = await contract.methods.calculateAIResult(modelId, query).send({
     from: selectedAccount,
-    value: multipliedFee.toString(),
+    value: estimatedFee,
   });
 
   // Serialize the transaction for backend validation
