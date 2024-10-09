@@ -92,7 +92,7 @@ const AiBox = () => {
           <TimerComponent endDate={data.endDate} currentEpoch={data.epoch} />
           <div className="flex w-full flex-col gap-1">
             <div className="relative flex flex-1">
-              <span className="absolute right-1 top-1 text-xs text-white/50">
+              <span className="absolute right-2 top-2 text-xs text-white/50">
                 {playerPrompt.length}/{maxCharacters}
               </span>
 
