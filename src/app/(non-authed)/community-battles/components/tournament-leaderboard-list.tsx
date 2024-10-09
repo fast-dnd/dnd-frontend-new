@@ -11,7 +11,13 @@ import { ILeaderBoard } from "@/validations/leaderboard";
 import useGetTournamentLeaderboard from "../hooks/use-get-leaderboard";
 import OraTransactionsModel from "./ora-transactions-modal";
 
-const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => {
+const TournamentLeaderboardList = ({
+  lastRefetch,
+  communityId,
+}: {
+  lastRefetch: number;
+  communityId: string;
+}) => {
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
   const scrollableRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +38,7 @@ const TournamentLeaderboardList = ({ communityId }: { communityId: string }) => 
 
   useEffect(() => {
     refetch(); // This will refetch the data each time epoch changes
-  }, [communityId, refetch]);
+  }, [communityId, lastRefetch, refetch]);
 
   const { lastObjectRef: lastLeaderboardUserRef } = useIntersectionObserver({
     isFetchingNextPage,
