@@ -163,6 +163,11 @@ const AiBox = () => {
           <p className="text-center text-base">
             The player with the <strong>highest rating</strong> gets the prize.
           </p>
+          <p className="text-center text-white">
+            *If transaction is not processed in{" "}
+            <strong className="font-semibold text-red-400">5 minutes</strong> ask on our discord for{" "}
+            <strong className="font-semibold text-red-400">help</strong>
+          </p>
         </div>
         <div style={{ height: "80%" }} className={cn("glass-effect-2", "flex flex-row gap-6")}>
           <img
@@ -175,7 +180,6 @@ const AiBox = () => {
               maskImage:
                 "linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,1) 80%, transparent 100%), linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, transparent 100%)",
               maskComposite: "intersect",
-
               marginRight: "-20px", // Adjust this as needed to create overlap with text
             }}
           />
