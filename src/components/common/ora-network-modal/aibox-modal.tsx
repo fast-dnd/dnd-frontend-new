@@ -38,7 +38,7 @@ const OraAiBoxPromptModal = ({ aiBoxId, prompt, shouldPop }: OraAiBoxPromptModal
     if (!isOpen) return;
     const fetchData = async () => {
       try {
-        const res = await aiBoxService.submitPrompt(aiBoxId, prompt);
+        const res = await aiBoxService.submitPrompt(aiBoxId, prompt, "request");
         setAiJudgeQueryNormalized(res.oraQuery);
       } catch (error) {
         console.error("Failed to fetch ai judge query:", error);
@@ -84,14 +84,16 @@ const OraAiBoxPromptModal = ({ aiBoxId, prompt, shouldPop }: OraAiBoxPromptModal
             toast.success(`Transaction successful`);
           } catch (error) {
             setTransactionStatus("error");
-            toast.error(`An error occurred with MetaMask: ${error}`);
+            console.log(JSON.stringify(error));
+            toast.error(`An error occurred with MetaMask}`);
           }
         } else {
           toast.error("Invalid network selection or network not supported.");
         }
       } catch (error) {
         setTransactionStatus("error");
-        toast.error(`An error occurred whille creating transaction: ${error}`);
+        console.log(JSON.stringify(error));
+        toast.error(`An error occurred whille creating transaction`);
       }
     } else {
       toast.error(`MetaMask is not installed. Please install it to proceed`);
