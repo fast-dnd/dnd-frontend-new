@@ -29,9 +29,9 @@ const getLatestAiBox = async () => {
   return await aiBoxApi.get("latest").then((res) => aiBoxSchema.parse(res.data));
 };
 
-const submitPrompt = async (aiBoxId: string, prompt: string) => {
+const submitPrompt = async (aiBoxId: string, prompt: string, method: string) => {
   return await aiBoxApi
-    .post(`/prompt/${aiBoxId}`, { prompt })
+    .post(`/prompt/${aiBoxId}`, { prompt, method })
     .then((res) => aiBoxPromptSchema.parse(res.data));
 };
 
