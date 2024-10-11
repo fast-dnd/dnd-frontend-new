@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable @next/next/no-img-element */
@@ -5,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { ArrowClockwise } from "@phosphor-icons/react";
 import EmojiPicker, { Theme } from "emoji-picker-react";
 
+import OraAiCancelBoxPromptModal from "@/components/common/ora-network-modal/aibox-cancel-modal";
 import OraAiBoxPromptModal from "@/components/common/ora-network-modal/aibox-modal";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import Spinner from "@/components/ui/spinner"; // Importing Spinner component
@@ -145,6 +147,60 @@ const AiBox = () => {
               </div>
             </div>
           </div>
+          <div className="mt-2 flex space-x-2">
+            {/* Check if rating is 0 and there's no aiJudgeQueryTxHash */}
+            {data.rating === 0 && !data.aiJudgeQueryTxHash ? (
+              <p className="font-bold text-gray-500">
+                Today's Rating: To be determined after submitting request
+              </p>
+            ) : data.rating === 0 && data.aiJudgeQueryTxHash ? (
+              // If rating is 0 but aiJudgeQueryTxHash exists, show 'Rating: Pending' with the tx hash link
+              <>
+                <p className="font-bold text-yellow-500">
+                  Today's Rating: Pending{" "}
+                  <span className="text-red-400">
+                    (tx:
+                    <a
+                      href={`https://sepolia.arbiscan.io/tx/${data.aiJudgeQueryTxHash}#eventlog`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:underline"
+                    >
+                      {` ${data.aiJudgeQueryTxHash.slice(0, 6)}...${data.aiJudgeQueryTxHash.slice(
+                        -4,
+                      )}`}
+                    </a>
+                    )
+                  </span>
+                </p>
+                <OraAiCancelBoxPromptModal aiBoxId={data.aiBoxId} />
+              </>
+            ) : data.rating !== 0 && data.aiJudgeQueryTxHash ? (
+              // If both rating and aiJudgeQueryTxHash exist, show rating and tx hash link
+              <div className="flex items-center space-x-4">
+                <p className="font-bold text-green-500">
+                  Today's Rating: {data.rating}{" "}
+                  <span className="text-red-400">
+                    (tx:
+                    <a
+                      href={`https://sepolia.arbiscan.io/tx/${data.aiJudgeQueryTxHash}#eventlog`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:underline"
+                    >
+                      {` ${data.aiJudgeQueryTxHash.slice(0, 6)}...${data.aiJudgeQueryTxHash.slice(
+                        -4,
+                      )}`}
+                    </a>
+                    )
+                  </span>
+                </p>
+                <OraAiCancelBoxPromptModal aiBoxId={data.aiBoxId} />
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
         <div className={cn("flex flex-1 flex-col gap-4 rounded-lg  p-4 shadow-md")}>
           <h3 className="mb-2 text-center text-xl font-semibold text-red-400">How it works?</h3>
@@ -166,7 +222,7 @@ const AiBox = () => {
           <p className="text-center text-white">
             *If transaction is not processed in{" "}
             <strong className="font-semibold text-red-400">5 minutes</strong> ask on our discord for{" "}
-            <strong className="font-semibold text-red-400">help</strong>
+            <strong className="font-semibold text-red-400">help</strong> or cancel request.
           </p>
         </div>
         <div style={{ height: "80%" }} className={cn("glass-effect-2", "flex flex-row gap-6")}>
