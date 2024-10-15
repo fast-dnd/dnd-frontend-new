@@ -41,7 +41,9 @@ export const NetworkSelectionButton: React.FC<NetworkButtonProps> = ({
           className="network-logo"
         />
         <span className="network-name">
-          {["Arbitrum", "Linea"].includes(networkName) ? "(x1.3)" : "Testnet"}
+          {["Arbitrum", "Linea", "Optimism", "Polygon"].includes(networkName)
+            ? "Mainnet(x1.3)"
+            : "Testnet"}
         </span>
       </button>
     </div>
