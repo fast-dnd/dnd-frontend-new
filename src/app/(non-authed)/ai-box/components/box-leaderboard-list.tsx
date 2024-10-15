@@ -206,13 +206,15 @@ const BoxLeaderboardList = ({ epoch, lastRefetch }: { epoch: number; lastRefetch
   );
 };
 
-type NetworkName = "Arbitrum" | "ArbitrumSepoliaTestnet";
+type NetworkName = "Arbitrum" | "ArbitrumSepoliaTestnet" | "Linea";
 
 const getChainImage = (chainName: NetworkName) => {
   switch (chainName) {
     case "Arbitrum":
     case "ArbitrumSepoliaTestnet":
       return "/images/logos/arbitrum-arb-logo.png";
+    case "Linea":
+      return "/images/logos/linea-logo.png";
     // Add more cases here if you have other chains
     default:
       return "/images/logos/default-logo.png"; // A default image if chain is unrecognized
