@@ -204,7 +204,10 @@ const OraCommunityBattlesPromptModal = ({
                 By executing transaction selected transcript will be evaulated by AI Judge and
                 depending on its rating you will climb in selected community leaderboard.
               </p>
-              <div className="flex cursor-pointer" onClick={toggleAdditionalDescription}>
+              <div
+                className="flex cursor-pointer items-center"
+                onClick={toggleAdditionalDescription}
+              >
                 <p className="-mt-0.5 truncate text-xl tracking-[0.15em]">Additional Information</p>
                 <span className="ml-2">
                   {isAdditionalDescriptionVisible ? (

@@ -155,9 +155,10 @@ type NetworkName =
   | "Arbitrum"
   | "ArbitrumSepoliaTestnet"
   | "Linea"
-  | "Optimism"
-  | "Optimism Sepolia"
+  // | "Optimism"
+  // | "Optimism Sepolia"
   | "Polygon";
+// | "Mantle"
 
 const getChainImage = (chainName: NetworkName) => {
   switch (chainName) {
@@ -166,12 +167,14 @@ const getChainImage = (chainName: NetworkName) => {
       return "/images/logos/arbitrum-arb-logo.png";
     case "Linea":
       return "/images/logos/linea-logo.png";
-    case "Optimism":
-      return "/images/logos/optimism-logo.png";
-    case "Optimism Sepolia":
-      return "/images/logos/optimism-logo.png";
+    // case "Optimism":
+    // return "/images/logos/optimism-logo.png";
+    // case "Optimism Sepolia":
+    // return "/images/logos/optimism-logo.png";
     case "Polygon":
       return "/images/logos/polygon.png";
+    // case "Mantle":
+    // return "/images/logos/mantle-logo.png";
     default:
       return "/images/logos/default-logo.png"; // A default image if chain is unrecognized
   }
