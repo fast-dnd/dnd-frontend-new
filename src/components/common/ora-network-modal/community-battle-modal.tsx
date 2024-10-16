@@ -205,10 +205,12 @@ const OraCommunityBattlesPromptModal = ({
                 depending on its rating you will climb in selected community leaderboard.
               </p>
               <div
-                className="flex cursor-pointer items-center"
+                className="flex cursor-pointer items-center justify-center"
                 onClick={toggleAdditionalDescription}
               >
-                <p className="-mt-0.5 truncate text-xl tracking-[0.15em]">Additional Information</p>
+                <p className="-mt-0.5  text-center text-xl tracking-[0.15em]">
+                  Additional Information
+                </p>{" "}
                 <span className="ml-2">
                   {isAdditionalDescriptionVisible ? (
                     <svg
@@ -244,12 +246,14 @@ const OraCommunityBattlesPromptModal = ({
                 </span>
               </div>
               {isAdditionalDescriptionVisible && (
-                <ul className="lg:text-mid list-inside list-disc font-light lg:tracking-[1.5px]">
-                  <li>1st transaction of the day gets 100% of AI Judge value.</li>
-                  <li>2nd transaction of the day gets 30% of AI Judge value.</li>
-                  <li>3rd transaction of the day gets 10% of AI Judge value.</li>
-                  <li>All subsequent transactions get exponentially lower.</li>
-                </ul>
+                <div className="flex justify-center">
+                  <ul className="lg:text-mid list-inside list-disc text-center font-light lg:tracking-[1.5px]">
+                    <li>1st transaction of the day gets 100% of AI Judge value.</li>
+                    <li>2nd transaction of the day gets 30% of AI Judge value.</li>
+                    <li>3rd transaction of the day gets 10% of AI Judge value.</li>
+                    <li>All subsequent transactions get exponentially lower.</li>
+                  </ul>
+                </div>
               )}
 
               {/* TODO: Return query to be seen somehow */}
