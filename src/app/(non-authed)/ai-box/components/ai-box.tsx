@@ -225,7 +225,7 @@ const AiBox = () => {
             <strong className="font-semibold text-red-400">help</strong> or cancel request.
           </p>
         </div>
-        <div style={{ height: "80%" }} className={cn("glass-effect-2", "flex flex-row gap-6")}>
+        <div style={{ height: "80%" }} className={cn("flex flex-row gap-6")}>
           <img
             src="/images/aibox.jpg"
             alt="ora logo"
@@ -251,7 +251,7 @@ const AiBox = () => {
               <div className="flex flex-col items-center">
                 <div className="flex flex-row items-center ">
                   <h1 className="text-center text-lg font-bold tracking-wide text-white">
-                    Powered by Ora Protocol
+                    Powered by ORA Protocol
                   </h1>
                   <img
                     src="/images/logos/ora-logo.png"

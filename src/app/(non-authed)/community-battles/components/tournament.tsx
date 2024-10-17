@@ -98,7 +98,7 @@ const Tournament = () => {
             <div className="flex flex-col items-center">
               <div className="flex flex-row items-center ">
                 <h1 className="text-center text-lg font-bold tracking-wide text-white">
-                  Powered by Ora Protocol
+                  Powered by ORA Protocol
                 </h1>
                 <img
                   src="/images/logos/ora-logo.png"
