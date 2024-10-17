@@ -151,14 +151,30 @@ const OraTransactionsModal = ({
   );
 };
 
-type NetworkName = "Arbitrum" | "ArbitrumSepoliaTestnet";
+type NetworkName =
+  | "Arbitrum"
+  | "ArbitrumSepoliaTestnet"
+  | "Linea"
+  // | "Optimism"
+  // | "Optimism Sepolia"
+  | "Polygon";
+// | "Mantle"
 
 const getChainImage = (chainName: NetworkName) => {
   switch (chainName) {
     case "Arbitrum":
     case "ArbitrumSepoliaTestnet":
       return "/images/logos/arbitrum-arb-logo.png";
-    // Add more cases here if you have other chains
+    case "Linea":
+      return "/images/logos/linea-logo.png";
+    // case "Optimism":
+    // return "/images/logos/optimism-logo.png";
+    // case "Optimism Sepolia":
+    // return "/images/logos/optimism-logo.png";
+    case "Polygon":
+      return "/images/logos/polygon.png";
+    // case "Mantle":
+    // return "/images/logos/mantle-logo.png";
     default:
       return "/images/logos/default-logo.png"; // A default image if chain is unrecognized
   }
