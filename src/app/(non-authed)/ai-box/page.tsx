@@ -2,13 +2,13 @@
 
 import { useRouter } from "next/navigation";
 
-import AiBox from "./components/ai-box";
+import AiBoxWrapper from "./components/ai-box";
 
 const AiBoxPage = () => {
   const router = useRouter();
   return (
     <>
-      <AiBox />
+      <AiBoxWrapper />
     </>
   );
 };
