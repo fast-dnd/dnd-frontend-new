@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import Tournament from "./components/tournament";
 
-const Leaderboard = () => {
+const CommunityBattle = () => {
   const router = useRouter();
   return (
     <>
@@ -13,4 +13,4 @@ const Leaderboard = () => {
   );
 };
 
-export default Leaderboard;
+export default CommunityBattle;

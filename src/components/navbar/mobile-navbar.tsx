@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DiscordLogo, InstagramLogo, Toolbox, TwitterLogo } from "@phosphor-icons/react";
+import { DiscordLogo, InstagramLogo, Sword, Toolbox, TwitterLogo } from "@phosphor-icons/react";
 import { BiChevronLeft } from "react-icons/bi";
 import { FaDiscord, FaUsers } from "react-icons/fa";
 import { IoMdMenu } from "react-icons/io";
@@ -153,7 +153,7 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                   href="/community-battles"
                   variant={pathname === "/community-battles" ? "primary" : "sidebar"}
                 >
-                  <Toolbox className="size-5 shrink-0 fill-white" fillOpacity={1} />
+                  <Sword className="size-5 shrink-0 fill-white" fillOpacity={1} />
                   <p className="flex-1 text-center">Community Battles</p>
                 </Button>
 

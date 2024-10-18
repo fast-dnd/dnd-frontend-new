@@ -7,6 +7,8 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useEffect, useState } from "react";
 import { ArrowFatDown } from "@phosphor-icons/react";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { AiOutlineClose } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
 import { toast } from "sonner";
 
@@ -129,7 +131,12 @@ const OraAiBoxPromptModal = ({ aiBoxId, prompt, shouldPop }: OraAiBoxPromptModal
         </div>
       </DialogTrigger>
       {isOpen && shouldPop && (
-        <DialogContent className="z-[100] flex flex-col gap-12 bg-black p-4 max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:p-8">
+        <DialogContent className="z-[100] flex flex-col gap-12 bg-black p-4 max-lg:size-full max-lg:max-h-[80vh] max-lg:max-w-full max-lg:overflow-y-auto max-lg:rounded-none max-lg:bg-dark-900 lg:p-8">
+          <div className="flex justify-end lg:hidden">
+            <DialogClose>
+              <AiOutlineClose />
+            </DialogClose>
+          </div>
           {transactionStatus === "loading" && (
             <div className="relative flex flex-col items-center justify-center text-xl">
               <p>Transaction in progress</p>
