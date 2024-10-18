@@ -102,7 +102,7 @@ const OraAiBoxPromptModal = ({ aiBoxId, prompt, shouldPop }: OraAiBoxPromptModal
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild className="max-lg:hidden">
+      <DialogTrigger>
         <div>
           {shouldPop ? (
             <Button
