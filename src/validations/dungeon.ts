@@ -40,7 +40,7 @@ export const baseDungeonSchema = z.object({
     .nullish(),
   publiclySeen: z.boolean(),
   background: rewardSchema.nullable(),
-  type: z.enum(["standard", "nft"]),
+  type: z.enum(["standard", "nft", "tournament"]),
   communityId: z.string().optional(),
   creatorWalletAddress: z.string().nullish(),
   transaction: z.string().optional(),
