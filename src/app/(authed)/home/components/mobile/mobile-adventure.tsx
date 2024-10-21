@@ -130,6 +130,14 @@ export const MobileAdventure = React.forwardRef<HTMLDivElement, IMobileAdventure
               <p className="whitespace-nowrap text-sm font-bold">
                 {adventure.rating + " (" + adventure.numOfRatings + ")"}
               </p>
+              {adventure.type === "tournament" && (
+                <span
+                  className="flex size-5 rounded-md  px-2 py-0.5 text-sm text-white"
+                  title="This adventure is inside of community battles tournament"
+                >
+                  🔥
+                </span>
+              )}
             </div>
           </div>
 
@@ -142,6 +150,7 @@ export const MobileAdventure = React.forwardRef<HTMLDivElement, IMobileAdventure
             >
               {adventure.name}
             </p>
+
             {adventure.tags.length > 0 && (
               <div
                 className={cn(
