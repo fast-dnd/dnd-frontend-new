@@ -5,6 +5,7 @@ import { InfiniteData } from "@tanstack/react-query";
 
 import Spinner from "@/components/ui/spinner";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
+import chainService from "@/services/chain-service";
 import { cn } from "@/utils/style-utils";
 import { ILeaderBoard } from "@/validations/leaderboard";
 
@@ -134,7 +135,9 @@ const BoxLeaderboardList = ({ epoch, lastRefetch }: { epoch: number; lastRefetch
                             style={{ height: "25px" }}
                           />
                           <a
-                            href={`https://sepolia.arbiscan.io/tx/${leaderboardUser.transactions[0].txHash}#eventlog`}
+                            href={`${chainService.getExplorerUrl(
+                              leaderboardUser.transactions[0].chain,
+                            )}${leaderboardUser.transactions[0].txHash}#eventlog`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-red-400 hover:underline"
