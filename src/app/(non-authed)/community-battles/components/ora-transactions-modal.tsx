@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import chainService from "@/services/chain-service";
 
 interface OraTransactionsModalProps {
   imageUrl: string;
@@ -105,7 +106,9 @@ const OraTransactionsModal = ({
                       </td>
                       <td className="px-4 py-2">
                         <a
-                          href={`https://sepolia.arbiscan.io/tx/${transaction.txHash}#eventlog`}
+                          href={`${chainService.getExplorerUrl(transaction.chain)}${
+                            transaction.txHash
+                          }#eventlog`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-red-400 hover:underline"

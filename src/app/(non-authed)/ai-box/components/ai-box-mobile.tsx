@@ -11,6 +11,7 @@ import OraAiBoxPromptModal from "@/components/common/ora-network-modal/aibox-mod
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import Spinner from "@/components/ui/spinner";
 import { TextArea } from "@/components/ui/text-area";
+import chainService from "@/services/chain-service";
 import { jibril } from "@/utils/fonts";
 
 import useGetAiBox from "../hooks/use-get-aibox";
@@ -151,7 +152,9 @@ const AiBoxMobile = () => {
               <span className="text-red-400">
                 (tx:
                 <a
-                  href={`https://sepolia.arbiscan.io/tx/${data.aiJudgeQueryTxHash}#eventlog`}
+                  href={`${chainService.getExplorerUrl(data.transactions[0].chain)}${
+                    data.aiJudgeQueryTxHash
+                  }#eventlog`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:underline"
@@ -170,7 +173,9 @@ const AiBoxMobile = () => {
               <span className="text-red-400">
                 (tx:
                 <a
-                  href={`https://sepolia.arbiscan.io/tx/${data.aiJudgeQueryTxHash}#eventlog`}
+                  href={`${chainService.getExplorerUrl(data.transactions[0].chain)}${
+                    data.aiJudgeQueryTxHash
+                  }#eventlog`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:underline"
