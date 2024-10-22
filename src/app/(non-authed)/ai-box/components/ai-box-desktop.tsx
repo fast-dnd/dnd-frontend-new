@@ -162,9 +162,7 @@ const AiBoxDesktop = () => {
                   <span className="text-red-400">
                     (tx:
                     <a
-                      href={`${chainService.getExplorerUrl(data.transactions[0].chain)}${
-                        data.aiJudgeQueryTxHash
-                      }#eventlog`}
+                      href={`https://sepolia.arbiscan.io/tx/${data.aiJudgeQueryTxHash}#eventlog`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="underline hover:underline"
