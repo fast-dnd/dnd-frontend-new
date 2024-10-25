@@ -7,8 +7,6 @@ import MobileNavbar from "@/components/navbar/mobile-navbar";
 
 import TournamentDesktop from "./tournament-desktop";
 
-// import TournamentMobile from "./tournament-mobile";
-
 const Tournament = () => {
   return (
     <>

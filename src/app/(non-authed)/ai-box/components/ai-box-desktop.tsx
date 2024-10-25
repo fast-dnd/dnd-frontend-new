@@ -3,12 +3,12 @@
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
-import { ArrowClockwise } from "@phosphor-icons/react";
 
 import OraAiCancelBoxPromptModal from "@/components/common/ora-network-modal/aibox-cancel-modal";
 import OraAiBoxPromptModal from "@/components/common/ora-network-modal/aibox-modal";
 import { TextArea } from "@/components/ui/text-area";
 import chainService from "@/services/chain-service";
+import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
 import useGetAiBox from "../hooks/use-get-aibox";
@@ -50,26 +50,16 @@ const AiBoxDesktop = () => {
   }
 
   return (
-    <div className="relative w-full  p-6">
+    <div className="relative w-full p-6">
       {/* Glowing border effect */}
-      <div className="absolute inset-0 bg-gradient-to-b  to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-7xl rounded-xl bg-gray-900/80 p-8 backdrop-blur-xl">
         {/* Header Section */}
-        <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-4xl font-bold tracking-wider text-white">AI Challenge</h1>
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => setLastRefetch(Date.now())}
-              className="rounded-full bg-gray-800 p-2 transition-all hover:bg-gray-700"
-            >
-              {isFetching ? (
-                <div className="h-6 w-6 animate-spin rounded-full border-2 border-red-400 border-t-transparent" />
-              ) : (
-                <ArrowClockwise className="h-6 w-6 text-red-400" />
-              )}
-            </button>
-          </div>
+        <div className="mb-8 flex items-center justify-center">
+          <h1 className="text-4xl font-bold tracking-wider text-red-400" style={jibril.style}>
+            AI Challenge
+          </h1>
         </div>
 
         {/* Main Content Grid */}
@@ -77,13 +67,15 @@ const AiBoxDesktop = () => {
           {/* Left Column - Query and Input */}
           <div className="space-y-6">
             <div className="rounded-lg bg-gray-800/50 p-6">
-              <h2 className="mb-4 text-2xl font-semibold text-red-400">Box Query</h2>
-              <p className="mb-4 text-lg text-white">{data.query + data.handicap}</p>
+              <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">📦 Box Query</h2>
+              <p className="mb-4 space-y-3 text-xl text-gray-300">{data.query + data.handicap}</p>
               <TimerComponent endDate={data.endDate} currentEpoch={data.epoch} />
             </div>
 
             <div className="rounded-lg bg-gray-800/50 p-6">
-              <h2 className="mb-4 text-2xl font-semibold text-red-400">Your Response</h2>
+              <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">
+                ✍️ Your Response
+              </h2>
 
               <div className="relative">
                 <TextArea
@@ -119,7 +111,7 @@ const AiBoxDesktop = () => {
                             rel="noopener noreferrer"
                             className="underline hover:underline"
                           >
-                            {` ${data.aiJudgeQueryTxHash.slice(
+                            {`${data.aiJudgeQueryTxHash.slice(
                               0,
                               6,
                             )}...${data.aiJudgeQueryTxHash.slice(-4)}`}
@@ -144,7 +136,7 @@ const AiBoxDesktop = () => {
                             rel="noopener noreferrer"
                             className="underline hover:underline"
                           >
-                            {` ${data.aiJudgeQueryTxHash.slice(
+                            {`${data.aiJudgeQueryTxHash.slice(
                               0,
                               6,
                             )}...${data.aiJudgeQueryTxHash.slice(-4)}`}
@@ -170,8 +162,10 @@ const AiBoxDesktop = () => {
           {/* Right Column - Prize and Info */}
           <div className="space-y-6">
             <div className="rounded-lg bg-gray-800/50 p-6 text-center">
-              <h2 className="mb-4 text-2xl font-semibold text-red-400">Today's Prize</h2>
-              <p className="text-5xl font-bold text-white">
+              <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">
+                🏆 Today's Prize
+              </h2>
+              <p className="text-5xl font-bold text-yellow-200">
                 {data.prize} {data.prizeToken}
               </p>
               <div className="mt-4 inline-flex items-center space-x-2 rounded-full bg-red-400/10 px-4 py-2 text-red-400">
@@ -187,34 +181,37 @@ const AiBoxDesktop = () => {
             </div>
 
             <div className="rounded-lg bg-gray-800/50 p-6">
-              <h2 className="mb-4 text-2xl font-semibold text-red-400">How it Works</h2>
+              <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">
+                How it Works?
+              </h2>
               <p className="mb-2 space-y-3 text-gray-300">
                 Each day is a new chance to win rewards inside of the AI-BOX.
               </p>
               <ul className="space-y-3 text-gray-300">
                 <li className="flex items-start">
                   <span className="mr-2 rounded-full bg-red-400/20 px-2 py-1 text-sm text-red-400">
-                    1
+                    1️
                   </span>
                   Think and respond to the daily query
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 rounded-full bg-red-400/20 px-2 py-1 text-sm text-red-400">
-                    2
+                    2️
                   </span>
                   Submit your response for AI evaluation
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 rounded-full bg-red-400/20 px-2 py-1 text-sm text-red-400">
-                    3
+                    3️
                   </span>
                   Highest rated response wins the prize
                 </li>
               </ul>
               <p className="mt-2 space-y-3 text-gray-300">
                 *If transaction is not processed in{" "}
-                <strong className="font-semibold text-red-400">5 minutes</strong> ask on our discord
-                for <strong className="font-semibold text-red-400">help</strong> or cancel request.
+                <strong className="font-semibold text-red-400">5 minutes</strong>, ask on our
+                Discord for <strong className="font-semibold text-red-400">help</strong> or cancel
+                request.
               </p>
             </div>
           </div>
