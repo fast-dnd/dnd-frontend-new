@@ -19,7 +19,7 @@ function TimerComponent({ endDate, currentEpoch }: { endDate: number; currentEpo
 
       const formattedTimer = `${hours.toString().padStart(2, "0")}h ${minutes
         .toString()
-        .padStart(2, "0")}m left   [ day : ${currentEpoch} ]`;
+        .padStart(2, "0")}m left`;
 
       setTimer(formattedTimer);
     }
@@ -28,9 +28,17 @@ function TimerComponent({ endDate, currentEpoch }: { endDate: number; currentEpo
     const intervalId = setInterval(updateTimer, 60000); // Update every minute
 
     return () => clearInterval(intervalId);
-  }, [endDate, currentEpoch]);
+  }, [endDate]);
 
-  return <p className="text-lg">{timer}</p>;
+  return (
+    <div className="mt-4 flex flex-col items-center">
+      <div className="mt-4 flex items-center justify-center space-x-4">
+        <span className="text-2xl">⏰</span>
+        <p className="text-xl font-semibold text-white">{timer}</p>
+        <p className="text-xl text-gray-400">📅 Day: {currentEpoch}</p>
+      </div>
+    </div>
+  );
 }
 
 export default TimerComponent;

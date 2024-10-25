@@ -1,8 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 
-import { jibril } from "@/utils/fonts";
-
 interface CommunityTrackProps {
   communities: Array<any>;
   selectedCommunity: any;
@@ -19,16 +17,12 @@ const CommunityTrack: React.FC<CommunityTrackProps> = ({
   }
   return (
     <div className="relative flex flex-col items-center ">
-      <p className="mb-4 text-4xl font-bold tracking-wide text-red-400" style={jibril.style}>
-        Communities
-      </p>
-      <div className="mt-2 flex space-x-6 overflow-x-auto">
+      <div className="mt-2 flex space-x-6 overflow-x-auto px-6">
         {communities.map((community) => (
           <div
             key={community._id}
-            // className="flex cursor-pointer flex-col items-center"
-            className={`flex cursor-pointer flex-col items-center ${
-              selectedCommunity._id === community._id ? "animate-pulse" : ""
+            className={`flex cursor-pointer flex-col items-center transition-transform ${
+              selectedCommunity._id === community._id ? "shadow-lg shadow-blue-500/50" : ""
             }`}
             onClick={() => handleSelectCommunity(community)}
           >
@@ -41,6 +35,7 @@ const CommunityTrack: React.FC<CommunityTrackProps> = ({
           </div>
         ))}
       </div>
+      <p className="mt-4 text-sm text-gray-400">Click on community icon to view its leaderboard</p>
     </div>
   );
 };
