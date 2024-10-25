@@ -6,7 +6,6 @@ import { ArrowClockwise } from "@phosphor-icons/react";
 
 // import Spinner from "@/components/ui/spinner"; // Importing Spinner component
 import { jibril } from "@/utils/fonts";
-import { cn } from "@/utils/style-utils";
 
 import useGetTournament from "../hooks/use-get-tournament";
 import CommunityCarosel from "./community-carosel";
@@ -61,7 +60,7 @@ const TournamentDesktop = () => {
         {/* Header Section */}
         <div className="mb-8 flex items-center justify-center">
           <h1
-            className="text-center text-4xl font-bold tracking-wider text-yellow-400"
+            className="text-center text-4xl font-bold tracking-wider text-red-400"
             style={jibril.style}
           >
             {name} - Season {season} ⚔️
@@ -86,12 +85,12 @@ const TournamentDesktop = () => {
           <div className="space-y-6">
             <div className="rounded-lg bg-gray-800/50 p-6">
               <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">
-                How it Works? 🤔
+                How it Works?
               </h2>
 
               {/* Community Track Section */}
               <div className="mb-6">
-                <h3 className="mb-2 text-center text-xl font-semibold text-blue-400">
+                <h3 className="mb-2 text-center text-xl font-semibold text-red-200">
                   🌍 Communities that Participate 🌍
                 </h3>
                 <CommunityTrack
@@ -102,46 +101,46 @@ const TournamentDesktop = () => {
               </div>
 
               {/* Start and End Dates Section */}
-              <div className="mb-6 rounded-lg border-4 border-green-500 bg-gray-700/50 p-4 shadow-lg">
-                <h3 className="mb-2 text-center text-xl font-semibold text-green-300">
+              <div className="mb-6 rounded-lg border-4 border-blue-200 bg-gray-800/50 p-4 shadow-md">
+                <h3 className="mb-2 text-center text-xl font-semibold text-red-200">
                   🏆 Tournament Dates 🏆
                 </h3>
-                <p className="text-lg font-bold italic text-green-200">
+                <p className="text-lg font-bold italic text-gray-300">
                   🚀 Starts: {formatDate(startDate)}
                 </p>
-                <p className="text-lg font-bold italic text-green-200">
+                <p className="text-lg font-bold italic text-gray-300">
                   🏁 Ends: {formatDate(endDate)}
                 </p>
               </div>
 
               {/* Ultimate Battle Prize Section */}
-              <div className="relative mb-6 rounded-lg border-4 border-green-500 bg-gray-700/50 p-4 shadow-lg">
+              <div className="relative mb-6 flex flex-col items-center justify-center rounded-lg border-4 border-blue-200 bg-gray-800/50 p-4 shadow-md">
                 <div
-                  className="pointer-events-none absolute inset-0 rounded-lg border-4 border-double border-green-600 opacity-70"
+                  className="pointer-events-none absolute inset-0 rounded-lg border-4 border-double border-blue-300 opacity-70"
                   style={{ transform: "rotate(-2deg)" }}
                 ></div>
-                <h3 className="mb-2 text-center text-xl font-semibold text-green-300">
+                <h3 className="mb-2 text-center text-xl font-semibold text-red-200">
                   🎁 Ultimate Battle Prize 🎁
                 </h3>
-                <p className="text-center text-5xl font-bold text-yellow-400">
+                <p className="text-center text-5xl font-bold text-yellow-200">
                   {prize} {prizeToken} 💎
                 </p>
-                <div className="mt-4 inline-flex items-center justify-center space-x-2 rounded-full bg-red-400/10 px-4 py-2 text-red-400">
+                <div className="mt-4 flex items-center justify-center space-x-2 rounded-full bg-red-300/10 px-4 py-2 text-red-200">
                   <a href="https://www.ora.io/" target="_blank" rel="noopener noreferrer">
                     <span>Powered by ORA Protocol</span>
                   </a>
                   <img
                     src="/images/logos/ora-logo.png"
                     alt="ora logo"
-                    style={{ width: "30px", height: "30px", objectFit: "contain" }}
+                    className="h-8 w-8 object-contain"
                   />
                 </div>
               </div>
 
-              {/* How it Works List Section */}
+              {/* How To get Points List Section */}
               <div className="rounded-lg bg-gray-800/50 p-6">
                 <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">
-                  How it Works 📝
+                  How to get points? 📝
                 </h2>
                 <p className="mb-2 space-y-3 text-gray-300">
                   Each day, try to post at least 1 transcript since it will count in the
@@ -149,20 +148,20 @@ const TournamentDesktop = () => {
                 </p>
                 <ul className="space-y-3 text-gray-300">
                   <li className="flex items-start">
-                    <span className="mr-2 rounded-full bg-red-400/20 px-2 py-1 text-sm text-red-400">
+                    <span className="mr-2 rounded-full bg-red-200/20 px-2 py-1 text-sm text-red-400">
                       1
                     </span>
                     Play a full game and try to win 🎮
                   </li>
                   <li className="flex items-start">
-                    <span className="mr-2 rounded-full bg-red-400/20 px-2 py-1 text-sm text-red-400">
+                    <span className="mr-2 rounded-full bg-red-200/20 px-2 py-1 text-sm text-red-400">
                       2
                     </span>
                     When you win, in match history you will see a 💲 sign next to the game you
                     played. Click on that to pay for AI judge to process your transcript 🤖
                   </li>
                   <li className="flex items-start">
-                    <span className="mr-2 rounded-full bg-red-400/20 px-2 py-1 text-sm text-red-400">
+                    <span className="mr-2 rounded-full bg-red-200/20 px-2 py-1 text-sm text-red-400">
                       3
                     </span>
                     Get rated on your moves and climb the leaderboard 🚀
@@ -170,8 +169,8 @@ const TournamentDesktop = () => {
                 </ul>
                 <p className="mt-2 space-y-3 text-gray-300">
                   *Note: If the transaction is not processed in
-                  <strong className="font-semibold text-red-400"> 5 minutes</strong>, ask on our
-                  Discord for <strong className="font-semibold text-red-400">help</strong> or cancel
+                  <strong className="font-semibold text-red-200"> 5 minutes</strong>, ask on our
+                  Discord for <strong className="font-semibold text-red-200">help</strong> or cancel
                   the request.
                 </p>
               </div>
@@ -228,26 +227,6 @@ const TournamentDesktop = () => {
 
         {/* Leaderboard Section */}
         <div className="mt-8">
-          <div className="mb-4 flex justify-center space-x-2">
-            {Array.from({ length: Math.min(data.season, 3) }, (_, index) => {
-              const seasonValue = data.season - index;
-              return (
-                <button
-                  key={seasonValue}
-                  className={cn(
-                    "rounded-lg px-4 py-2 font-medium transition-all",
-                    selectedCommunity?.season === seasonValue
-                      ? "bg-red-400 text-white"
-                      : "bg-gray-800 text-gray-400 hover:bg-gray-700",
-                  )}
-                  onClick={() => setSelectedCommunity(communities[seasonValue - 1])}
-                >
-                  Season {seasonValue}
-                </button>
-              );
-            })}
-          </div>
-
           <div className="rounded-lg bg-gray-800/50 p-6">
             <TournamentLeaderboardList
               lastRefetch={lastRefetch}
