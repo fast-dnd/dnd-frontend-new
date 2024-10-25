@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 
-import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
 interface CommunityLeaderboardProps {
@@ -11,12 +10,6 @@ interface CommunityLeaderboardProps {
 const CommunityLeaderboard: React.FC<CommunityLeaderboardProps> = ({ communities }) => {
   return (
     <div className={cn("glass-effect-2", "relative flex flex-col items-center rounded-lg p-6")}>
-      <p
-        className="mb-3 text-center text-3xl font-bold text-red-400"
-        style={{ fontFamily: jibril.style.fontFamily }}
-      >
-        Community Leaderboard
-      </p>
       <div className="w-full overflow-x-auto">
         <table className="min-w-full table-auto text-left text-white">
           <thead className="">

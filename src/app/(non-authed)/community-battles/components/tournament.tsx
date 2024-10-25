@@ -6,7 +6,8 @@ import React from "react";
 import MobileNavbar from "@/components/navbar/mobile-navbar";
 
 import TournamentDesktop from "./tournament-desktop";
-import TournamentMobile from "./tournament-mobile";
+
+// import TournamentMobile from "./tournament-mobile";
 
 const Tournament = () => {
   return (
@@ -16,7 +17,7 @@ const Tournament = () => {
       </div>
       <div className="relative flex flex-col lg:hidden">
         <MobileNavbar className="fixed h-16 items-start" />
-        <TournamentMobile />
+        <TournamentDesktop />
       </div>
     </>
   );

@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from "react";
 import { ArrowClockwise } from "@phosphor-icons/react";
 
-import Spinner from "@/components/ui/spinner"; // Importing Spinner component
+// import Spinner from "@/components/ui/spinner"; // Importing Spinner component
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
@@ -16,20 +16,9 @@ import TournamentLeaderboardList from "./tournament-leaderboard-list";
 import TournamentSkeleton from "./tournament-skeleton";
 
 const TournamentDesktop = () => {
-  const { data, isLoading, error } = useGetTournament();
+  const { data, isLoading, error, refetch, isFetching } = useGetTournament();
   const [selectedCommunity, setSelectedCommunity] = useState<any | null>(null);
   const [lastRefetch, setLastRefetch] = useState<number>(1);
-  const [isArrowSpinning, setIsArrowSpinning] = useState(false);
-
-  const handleArrowSpinning = () => {
-    setIsArrowSpinning(true); // Show the spinner
-
-    // Simulate a 3-second delay
-    setTimeout(() => {
-      setIsArrowSpinning(false); // Show the arrow again after 3 seconds
-      setLastRefetch(Date.now());
-    }, 3000);
-  };
 
   useEffect(() => {
     if (data && data.communities.length > 0) {
@@ -37,24 +26,22 @@ const TournamentDesktop = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    refetch();
+  }, [lastRefetch]);
+
   if (isLoading) {
     return <TournamentSkeleton />;
   }
 
-  if (error) {
+  if (error || !data) {
     return (
-      <div className="mb-4 flex flex-col items-center rounded-t-md py-6">
-        <h1 className="text-4xl font-bold tracking-wide text-white">
-          Error loading tournament data
-        </h1>
-      </div>
-    );
-  }
-
-  if (!data) {
-    return (
-      <div className="mb-4 flex flex-col items-center rounded-t-md py-6">
-        <h1 className="text-4xl font-bold tracking-wide text-white">No data found </h1>
+      <div className="flex h-96 items-center justify-center">
+        <div className="rounded-lg bg-gray-900/60 p-8 text-center backdrop-blur-lg">
+          <h1 className="text-2xl font-bold text-red-400">
+            {error ? "Error loading tournament data" : "No data found"}
+          </h1>
+        </div>
       </div>
     );
   }
@@ -66,92 +53,152 @@ const TournamentDesktop = () => {
   };
 
   return (
-    <div
-      className={cn(
-        "no-scrollbar flex min-h-0 w-full flex-1 flex-col gap-2 overflow-hidden p-4 lg:p-8 ",
-      )}
-    >
-      {" "}
-      <div className="relative flex w-full  flex-row justify-between p-2">
-        <div className="mb-4 flex flex-col items-center rounded-t-md ">
-          <h1 className="mb-4 text-4xl font-bold tracking-wide text-red-400" style={jibril.style}>
-            {name}
+    <div className="relative w-full p-6">
+      {/* Glowing border effect */}
+      <div className="absolute inset-0 bg-gradient-to-b to-transparent" />
+
+      <div className="relative z-10 mx-auto max-w-7xl rounded-xl bg-gray-900/80 p-8 backdrop-blur-xl">
+        {/* Header Section */}
+        <div className="mb-8 flex items-center justify-between">
+          <h1 className="text-4xl font-bold tracking-wider text-white" style={jibril.style}>
+            {name} - Season {season}
           </h1>
-          <h2 className="mb-4 text-2xl font-semibold">Season {season}</h2>
-          <h2 className="text-2xl font-semibold">Starts: {formatDate(startDate)}</h2>
-          <h2 className="text-2xl font-semibold">Ends: {formatDate(endDate)}</h2>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setLastRefetch(Date.now())}
+              className="rounded-full bg-gray-800 p-2 transition-all hover:bg-gray-700"
+            >
+              {isFetching ? (
+                <div className="h-6 w-6 animate-spin rounded-full border-2 border-red-400 border-t-transparent" />
+              ) : (
+                <ArrowClockwise className="h-6 w-6 text-red-400" />
+              )}
+            </button>
+          </div>
         </div>
-        <CommunityTrack
-          communities={communities}
-          selectedCommunity={selectedCommunity}
-          handleSelectCommunity={handleSelectCommunity}
-        />
-        <div className="relative mt-4 flex flex-col items-center rounded-t-md ">
-          <h1
-            className="mb-4 text-4xl font-semibold text-red-400"
-            style={jibril.style}
-          >{`Ultimate battle prize`}</h1>
-          <h1 className="mt-4 font-mono text-6xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(0,255,255,0.8)]">
-            {`${prize} ${prizeToken}`}
-          </h1>
-          <a href="https://www.ora.io/" target="_blank" rel="noopener noreferrer">
-            <div className="flex flex-col items-center">
-              <div className="flex flex-row items-center ">
-                <h1 className="text-center text-lg font-bold tracking-wide text-white">
-                  Powered by ORA Protocol
-                </h1>
-                <img
-                  src="/images/logos/ora-logo.png"
-                  alt="ora logo"
-                  style={{ width: "40px", height: "40px", objectFit: "contain" }}
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          {/* Left Column - How it Works Section */}
+          <div className="space-y-6">
+            <div className="rounded-lg bg-gray-800/50 p-6">
+              <h2 className="mb-4 text-2xl font-semibold text-red-400">How it Works?</h2>
+
+              {/* Community Track Section */}
+              <div className="mb-6">
+                <h3 className="mb-2 text-xl font-semibold text-white">
+                  Communities that Participate
+                </h3>
+                <CommunityTrack
+                  communities={communities}
+                  selectedCommunity={selectedCommunity}
+                  handleSelectCommunity={handleSelectCommunity}
                 />
               </div>
+
+              {/* Start and End Dates Section */}
+              <div className="mb-6 rounded-lg bg-gray-700/50 p-4">
+                <h3 className="mb-2 text-xl font-semibold text-white">Tournament Dates</h3>
+                <p className="text-lg text-white">Starts: {formatDate(startDate)}</p>
+                <p className="text-lg text-white">Ends: {formatDate(endDate)}</p>
+              </div>
+
+              {/* Ultimate Battle Prize Section */}
+              <div className="mb-6 rounded-lg bg-gray-700/50 p-4">
+                <h3 className="mb-2 text-xl font-semibold text-white">Ultimate Battle Prize</h3>
+                <p className="text-5xl font-bold text-white">
+                  {prize} {prizeToken}
+                </p>
+                <div className="mt-4 inline-flex items-center space-x-2 rounded-full bg-red-400/10 px-4 py-2 text-red-400">
+                  <a href="https://www.ora.io/" target="_blank" rel="noopener noreferrer">
+                    <span>Powered by ORA Protocol</span>
+                  </a>
+                  <img
+                    src="/images/logos/ora-logo.png"
+                    alt="ora logo"
+                    style={{ width: "30px", height: "30px", objectFit: "contain" }}
+                  />
+                </div>
+              </div>
+
+              {/* How it Works List Section */}
+              <div className="rounded-lg bg-gray-800/50 p-6">
+                <h2 className="mb-4 text-2xl font-semibold text-red-400">How it Works</h2>
+                <p className="mb-2 space-y-3 text-gray-300">
+                  Each day try to post at least 1 transcript since it will count in the leaderboard.
+                </p>
+                <ul className="space-y-3 text-gray-300">
+                  <li className="flex items-start">
+                    <span className="mr-2 rounded-full bg-red-400/20 px-2 py-1 text-sm text-red-400">
+                      1
+                    </span>
+                    Play a full game and try to win
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2 rounded-full bg-red-400/20 px-2 py-1 text-sm text-red-400">
+                      2
+                    </span>
+                    When you win, in match history you will see a $ sign next to the game you
+                    played. Click on that to pay for AI judge to process your transcript
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2 rounded-full bg-red-400/20 px-2 py-1 text-sm text-red-400">
+                      3
+                    </span>
+                    Get rated on your moves and climb the leaderboard
+                  </li>
+                </ul>
+                <p className="mt-2 space-y-3 text-gray-300">
+                  *Note: If the transaction is not processed in
+                  <strong className="font-semibold text-red-400"> 5 minutes</strong>, ask on our
+                  Discord for <strong className="font-semibold text-red-400">help</strong> or cancel
+                  the request.
+                </p>
+              </div>
             </div>
-          </a>
-          <br />
-          <a
-            href="https://www.alchemy.com/faucets/arbitrum-sepolia"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center space-x-2"
-          >
-            <p className="text-center text-lg font-bold tracking-wide text-red-400 group-hover:underline">
-              Click to get free testnet tokens on Arbitrum
-            </p>
-          </a>
-        </div>
-      </div>
-      <div className="flex flex-row gap-3">
-        {isArrowSpinning ? (
-          <Spinner className="m-0 size-5 shrink-0 opacity-100" style={{ cursor: "pointer" }} />
-        ) : (
-          <ArrowClockwise
-            className="m-0 size-5 shrink-0 cursor-pointer opacity-100"
-            size={24}
-            onClick={handleArrowSpinning}
-          />
-        )}
-        <p className="text-sm text-white">
-          It can take up to <strong className="font-semibold text-red-400">2 minutes</strong> for
-          the AI to rate your query after a successful transaction. Please{" "}
-          <strong className="font-semibold text-red-400">refresh the page</strong> to see the
-          result.
-        </p>
-      </div>
-      <div className="relative mt-3 flex flex-row gap-4 ">
-        <div className={cn("flex  w-1/4 flex-shrink-0 flex-col")}>
-          <div className="mb-12 flex flex-col ">
-            <CommunityCarosel selectedCommunity={selectedCommunity} />
           </div>
-          <div>
-            <CommunityLeaderboard communities={communities} />
+
+          {/* Right Column - Community Carousel and Leaderboard */}
+          <div className="space-y-6">
+            <div className="rounded-lg bg-gray-800/50 p-6">
+              <CommunityCarosel selectedCommunity={selectedCommunity} />
+            </div>
+
+            <div className="rounded-lg bg-gray-800/50 p-6">
+              <h2 className="mb-4 text-2xl font-semibold text-red-400">Community Leaderboard</h2>
+              <CommunityLeaderboard communities={communities} />
+            </div>
           </div>
         </div>
-        <div className={cn("w-full ")}>
-          <TournamentLeaderboardList
-            lastRefetch={lastRefetch}
-            communityId={selectedCommunity ? selectedCommunity._id : ""}
-          />
+
+        {/* Leaderboard Section */}
+        <div className="mt-8">
+          <div className="mb-4 flex space-x-2">
+            {Array.from({ length: Math.min(data.season, 3) }, (_, index) => {
+              const seasonValue = data.season - index;
+              return (
+                <button
+                  key={seasonValue}
+                  className={cn(
+                    "rounded-lg px-4 py-2 font-medium transition-all",
+                    selectedCommunity?.season === seasonValue
+                      ? "bg-red-400 text-white"
+                      : "bg-gray-800 text-gray-400 hover:bg-gray-700",
+                  )}
+                  onClick={() => setSelectedCommunity(communities[seasonValue - 1])}
+                >
+                  Season {seasonValue}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="rounded-lg bg-gray-800/50 p-6">
+            <TournamentLeaderboardList
+              lastRefetch={lastRefetch}
+              communityId={selectedCommunity ? selectedCommunity._id : ""}
+            />
+          </div>
         </div>
       </div>
     </div>
