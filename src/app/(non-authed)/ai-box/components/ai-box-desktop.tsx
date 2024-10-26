@@ -3,6 +3,7 @@
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
+import { ArrowClockwise } from "@phosphor-icons/react";
 
 import OraAiCancelBoxPromptModal from "@/components/common/ora-network-modal/aibox-cancel-modal";
 import OraAiBoxPromptModal from "@/components/common/ora-network-modal/aibox-modal";
@@ -11,6 +12,7 @@ import chainService from "@/services/chain-service";
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
 
+import useGuest from "../../guest/hooks/use-guest";
 import useGetAiBox from "../hooks/use-get-aibox";
 import AiBoxSkeleton from "./ai-box-skeleton";
 import BoxLeaderboardList from "./box-leaderboard-list";
@@ -21,6 +23,7 @@ const AiBoxDesktop = () => {
   const [playerPrompt, setPlayerPrompt] = useState("");
   const [selectedEpoch, setSelectedEpoch] = useState(1);
   const [lastRefetch, setLastRefetch] = useState(1);
+  const guestData = useGuest();
 
   const maxCharacters = 250;
 
@@ -58,8 +61,20 @@ const AiBoxDesktop = () => {
         {/* Header Section */}
         <div className="mb-8 flex items-center justify-center">
           <h1 className="text-4xl font-bold tracking-wider text-red-400" style={jibril.style}>
-            AI Challenge
+            AI BOX Challenge
           </h1>
+          <div className="absolute right-8 flex items-center space-x-4">
+            <button
+              onClick={() => setLastRefetch(Date.now())}
+              className="rounded-full bg-gray-800 p-2 transition-all hover:bg-gray-700"
+            >
+              {isFetching ? (
+                <div className="h-6 w-6 animate-spin rounded-full border-2 border-red-400 border-t-transparent" />
+              ) : (
+                <ArrowClockwise className="h-6 w-6 text-red-400" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Main Content Grid */}
