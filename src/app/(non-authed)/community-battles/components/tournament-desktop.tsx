@@ -52,10 +52,9 @@ const TournamentDesktop = () => {
   };
 
   return (
-    <div className="relative w-full p-6">
+    <div className="relative w-full  p-6">
       {/* Glowing border effect */}
-      <div className="absolute inset-0 bg-gradient-to-b to-transparent" />
-
+      {/* <div className="absolute inset-0 bg-gradient-to-b to-transparent" /> */}
       <div className="relative z-10 mx-auto max-w-7xl rounded-xl bg-gray-900/80 p-8 backdrop-blur-xl">
         {/* Header Section */}
         <div className="mb-8 flex items-center justify-center">
