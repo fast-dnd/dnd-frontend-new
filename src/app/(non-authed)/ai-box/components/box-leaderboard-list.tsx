@@ -11,7 +11,15 @@ import { ILeaderBoard } from "@/validations/leaderboard";
 
 import useGetAiBoxLeaderboard from "../hooks/use-get-leaderboard";
 
-const BoxLeaderboardList = ({ epoch, lastRefetch }: { epoch: number; lastRefetch: number }) => {
+const BoxLeaderboardList = ({
+  epoch,
+  lastRefetch,
+  onUserRankDataFetched,
+}: {
+  epoch: number;
+  lastRefetch: number;
+  onUserRankDataFetched: Function;
+}) => {
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
   const scrollableRef = useRef<HTMLDivElement>(null);
 
@@ -34,6 +42,13 @@ const BoxLeaderboardList = ({ epoch, lastRefetch }: { epoch: number; lastRefetch
   // Whenever the epoch changes, refetch data from scratch
   useEffect(() => {
     refetch(); // This will refetch the data each time epoch changes
+  }, [epoch, lastRefetch, refetch]);
+
+  useEffect(() => {
+    if (leaderboardData && leaderboardData.pages?.[0].userRank) {
+      debugger;
+      onUserRankDataFetched(leaderboardData.pages?.[0].userRank);
+    }
   }, [epoch, lastRefetch, refetch]);
 
   const { lastObjectRef: lastLeaderboardUserRef } = useIntersectionObserver({

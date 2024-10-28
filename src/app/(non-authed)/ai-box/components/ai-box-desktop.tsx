@@ -3,11 +3,13 @@
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { ArrowClockwise } from "@phosphor-icons/react";
 
 import OraAiCancelBoxPromptModal from "@/components/common/ora-network-modal/aibox-cancel-modal";
 import OraAiBoxPromptModal from "@/components/common/ora-network-modal/aibox-modal";
 import { TextArea } from "@/components/ui/text-area";
+import useAuth from "@/hooks/helpers/use-auth";
 import chainService from "@/services/chain-service";
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
@@ -23,7 +25,9 @@ const AiBoxDesktop = () => {
   const [playerPrompt, setPlayerPrompt] = useState("");
   const [selectedEpoch, setSelectedEpoch] = useState(1);
   const [lastRefetch, setLastRefetch] = useState(1);
+  const [userRankData, setUserRankData] = useState(null);
   const guestData = useGuest();
+  const { user, loggedIn } = useAuth();
 
   const maxCharacters = 250;
 
@@ -231,6 +235,46 @@ const AiBoxDesktop = () => {
             </div>
           </div>
         </div>
+        {/* User rank */}
+        <div className="mt-4 rounded-lg bg-gray-800/50 p-6 text-center">
+          <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">🎖️ My Rank</h2>
+
+          {/* User Avatar */}
+          <div className="mb-4 flex justify-center">
+            <Image
+              src={
+                loggedIn && user?.account.imageUrl
+                  ? user.account.imageUrl
+                  : "/images/default-avatar.png"
+              }
+              alt="avatar"
+              width={75}
+              height={75}
+              className="rounded-full"
+            />
+          </div>
+
+          {/* Username */}
+          <p className="text-lg font-semibold text-gray-300">
+            {loggedIn ? user?.account.username : guestData?.guestName}
+          </p>
+
+          {/* Rank */}
+          <p className="text-xl font-bold text-yellow-200">
+            {userRankData ? `Rank: #${userRankData}` : "Not ranked yet"}
+          </p>
+
+          {/* Rating */}
+          <p className="mt-2 text-gray-300">
+            {data?.rating !== 0 ? (
+              `Rating: ${data.rating}`
+            ) : (
+              <span className="font-bold text-gray-500">
+                Rating: To be determined after submitting request
+              </span>
+            )}
+          </p>
+        </div>
 
         {/* Leaderboard Section */}
         <div className="mt-8">
@@ -255,7 +299,11 @@ const AiBoxDesktop = () => {
           </div>
 
           <div className="rounded-lg bg-gray-800/50 p-6">
-            <BoxLeaderboardList epoch={selectedEpoch} lastRefetch={lastRefetch} />
+            <BoxLeaderboardList
+              epoch={selectedEpoch}
+              lastRefetch={lastRefetch}
+              onUserRankDataFetched={setUserRankData}
+            />
           </div>
         </div>
       </div>
