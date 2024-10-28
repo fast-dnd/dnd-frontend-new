@@ -48,7 +48,7 @@ const BoxLeaderboardList = ({
 
   useEffect(() => {
     if (leaderboardData) {
-      onUserRankDataFetched(leaderboardData.pages?.[0].userRank);
+      onUserRankDataFetched(leaderboardData.pages?.[0]);
     }
   }, [epoch, lastRefetch, refetch, leaderboardData]);
 

@@ -30,7 +30,7 @@ const AiBoxDesktop = () => {
   const [playerPrompt, setPlayerPrompt] = useState("");
   const [selectedEpoch, setSelectedEpoch] = useState(1);
   const [lastRefetch, setLastRefetch] = useState(1);
-  const [userRankData, setUserRankData] = useState(null);
+  const [userRankData, setUserRankData] = useState<any | null>(null);
   const guestData = useGuest();
   const { user, loggedIn } = useAuth();
   const [isSendingCasualRequest, setIsSendingCasualRequest] = useState(false);
@@ -349,13 +349,15 @@ const AiBoxDesktop = () => {
 
           {/* Rank */}
           <p className="text-xl font-bold text-yellow-200">
-            {userRankData ? `Rank: #${userRankData}` : "Not ranked yet"}
+            {userRankData && userRankData.userRank
+              ? `Rank: #${userRankData.userRank}`
+              : "Not ranked yet"}
           </p>
 
           {/* Rating */}
           <p className="mt-2 text-gray-300">
-            {data?.rating !== 0 ? (
-              `Rating: ${data.rating}`
+            {userRankData && userRankData.userRating && userRankData?.userRating !== 0 ? (
+              `Rating: ${userRankData.userRating}`
             ) : (
               <span className="font-bold text-gray-500">
                 Rating: To be determined after submitting request
