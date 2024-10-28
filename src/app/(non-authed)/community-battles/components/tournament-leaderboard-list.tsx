@@ -14,9 +14,11 @@ import OraTransactionsModel from "./ora-transactions-modal";
 const TournamentLeaderboardList = ({
   lastRefetch,
   communityId,
+  onUserRankDataFetched,
 }: {
   lastRefetch: number;
   communityId: string;
+  onUserRankDataFetched: Function;
 }) => {
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
   const scrollableRef = useRef<HTMLDivElement>(null);
@@ -39,6 +41,13 @@ const TournamentLeaderboardList = ({
   useEffect(() => {
     refetch(); // This will refetch the data each time epoch changes
   }, [communityId, lastRefetch, refetch]);
+
+  useEffect(() => {
+    if (leaderboardData) {
+      debugger;
+      onUserRankDataFetched(leaderboardData.pages?.[0]);
+    }
+  }, [lastRefetch, refetch, leaderboardData]);
 
   const { lastObjectRef: lastLeaderboardUserRef } = useIntersectionObserver({
     isFetchingNextPage,

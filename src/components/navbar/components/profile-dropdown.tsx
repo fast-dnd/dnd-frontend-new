@@ -184,7 +184,7 @@ const ProfileDropdown = () => {
                 target="_blank"
               >
                 <DiscordLogo className="size-7" />
-                Join us on Discord
+                Join our Discord
               </Link>
             </>
           )}

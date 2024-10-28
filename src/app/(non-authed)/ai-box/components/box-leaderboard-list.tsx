@@ -11,7 +11,17 @@ import { ILeaderBoard } from "@/validations/leaderboard";
 
 import useGetAiBoxLeaderboard from "../hooks/use-get-leaderboard";
 
-const BoxLeaderboardList = ({ epoch, lastRefetch }: { epoch: number; lastRefetch: number }) => {
+const BoxLeaderboardList = ({
+  epoch,
+  lastRefetch,
+  verifiable,
+  onUserRankDataFetched,
+}: {
+  epoch: number;
+  lastRefetch: number;
+  verifiable: boolean;
+  onUserRankDataFetched: Function;
+}) => {
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
   const scrollableRef = useRef<HTMLDivElement>(null);
 
@@ -35,6 +45,12 @@ const BoxLeaderboardList = ({ epoch, lastRefetch }: { epoch: number; lastRefetch
   useEffect(() => {
     refetch(); // This will refetch the data each time epoch changes
   }, [epoch, lastRefetch, refetch]);
+
+  useEffect(() => {
+    if (leaderboardData) {
+      onUserRankDataFetched(leaderboardData.pages?.[0]);
+    }
+  }, [epoch, lastRefetch, refetch, leaderboardData]);
 
   const { lastObjectRef: lastLeaderboardUserRef } = useIntersectionObserver({
     isFetchingNextPage,
@@ -125,7 +141,7 @@ const BoxLeaderboardList = ({ epoch, lastRefetch }: { epoch: number; lastRefetch
                         <span className="text-lg">{leaderboardUser.username}</span>
                       </div>
                     </td>
-                    <td className="flex flex-row gap-2 px-4 py-2 font-semibold">
+                    <td className="flex flex-row gap-2 px-4 py-4 font-semibold">
                       {leaderboardUser.transactions && leaderboardUser.transactions.length > 0 ? (
                         <>
                           <img
@@ -133,6 +149,7 @@ const BoxLeaderboardList = ({ epoch, lastRefetch }: { epoch: number; lastRefetch
                               leaderboardUser.transactions[0].chain as NetworkName,
                             )}
                             style={{ height: "25px" }}
+                            alt="Chain Icon"
                           />
                           <a
                             href={`${chainService.getExplorerUrl(
@@ -149,7 +166,9 @@ const BoxLeaderboardList = ({ epoch, lastRefetch }: { epoch: number; lastRefetch
                           </a>
                         </>
                       ) : (
-                        <span className="text-gray-500">No transactions</span>
+                        <span className="text-gray-500">
+                          {verifiable ? "No transactions" : "rated by v3"}
+                        </span>
                       )}
                     </td>
                     <td className="px-4 py-2 font-semibold">{leaderboardUser.rating}</td>

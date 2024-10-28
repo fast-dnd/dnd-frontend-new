@@ -4,6 +4,8 @@ import { toast } from "sonner";
 import { logout } from "@/utils/auth";
 import { env } from "@/utils/env.mjs";
 
+import { GuestData } from "@/app/(non-authed)/guest/hooks/use-guest";
+
 const handleInterceptors = (apiInstance: AxiosInstance) => {
   apiInstance.defaults.headers.common["Content-Type"] = "application/json";
 
@@ -22,10 +24,28 @@ const handleInterceptors = (apiInstance: AxiosInstance) => {
 
   apiInstance.interceptors.request.use(
     (config) => {
-      const token = JSON.parse(localStorage.getItem("jwtToken") || "null");
+      const token = localStorage.getItem("jwtToken");
+      const guestData = localStorage.getItem("guest");
 
-      if (token) config.headers["Authorization"] = `Bearer ${token}`;
-
+      if (token) {
+        // User is authenticated
+        config.headers["Authorization"] = `Bearer ${JSON.parse(token)}`;
+      } else if (guestData) {
+        // User is a guest
+        try {
+          const guest = JSON.parse(guestData) as GuestData;
+          if (guest.guestId) {
+            config.headers["x-guest-id"] = guest.guestId;
+          }
+          if (guest.guestName) {
+            config.headers["x-guest-name"] = guest.guestName;
+          }
+        } catch (e) {
+          console.error("Failed to parse guest data from localStorage:", e);
+          // Optionally handle the error, e.g., clear invalid guest data
+          localStorage.removeItem("guest");
+        }
+      }
       return config;
     },
     (error) => Promise.reject(error),

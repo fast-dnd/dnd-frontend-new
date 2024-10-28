@@ -6,6 +6,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { ArrowFatDown } from "@phosphor-icons/react";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { AiOutlineClose } from "react-icons/ai";
@@ -14,6 +15,7 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Tooltip } from "@/components/ui/tooltip";
+import useAuth from "@/hooks/helpers/use-auth";
 import aiBoxService from "@/services/aibox-service";
 import oraService from "@/services/ora-network-service";
 import { IOraABoxCommitToTxHash } from "@/types/ora-network";
@@ -35,9 +37,10 @@ const OraAiBoxPromptModal = ({ aiBoxId, prompt, shouldPop }: OraAiBoxPromptModal
   const [selectedNetwork, setSelectedNetwork] = useState<NetworkName | "">("");
   const [selectedAiJudgeQueryNormalized, setAiJudgeQueryNormalized] = useState<string>("");
   const [transactionStatus, setTransactionStatus] = useState("idle"); // 'idle', 'loading', 'success', 'error'
+  const { loggedIn } = useAuth();
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !loggedIn) return;
     const fetchData = async () => {
       try {
         const res = await aiBoxService.submitPrompt(aiBoxId, prompt, "request");
@@ -137,7 +140,18 @@ const OraAiBoxPromptModal = ({ aiBoxId, prompt, shouldPop }: OraAiBoxPromptModal
               <AiOutlineClose />
             </DialogClose>
           </div>
-          {transactionStatus === "loading" && (
+          {!loggedIn && (
+            <div className="relative flex flex-col items-center justify-center text-2xl">
+              <p className="text-center">
+                To compete in <span className="font-bold text-red-500">🔒verifiable box</span>, you
+                need to first{" "}
+                <Link href="/login">
+                  <p className="font-bold text-blue-500 underline hover:text-blue-700">login</p>
+                </Link>
+              </p>
+            </div>
+          )}
+          {loggedIn && transactionStatus === "loading" && (
             <div className="relative flex flex-col items-center justify-center text-xl">
               <p>Transaction in progress</p>
               <img
@@ -148,7 +162,7 @@ const OraAiBoxPromptModal = ({ aiBoxId, prompt, shouldPop }: OraAiBoxPromptModal
               />
             </div>
           )}
-          {transactionStatus === "success" && (
+          {loggedIn && transactionStatus === "success" && (
             <div className="flex flex-col items-center justify-center text-xl text-green-500">
               <p>Transaction successfully created. System will be processing it soon (~1min).</p>
               <img
@@ -159,7 +173,7 @@ const OraAiBoxPromptModal = ({ aiBoxId, prompt, shouldPop }: OraAiBoxPromptModal
               />
             </div>
           )}
-          {transactionStatus === "error" && (
+          {loggedIn && transactionStatus === "error" && (
             <div className="flex flex-col items-center justify-center text-xl text-red-400">
               <p>Transaction failed. Please try again</p>
               <img
@@ -170,7 +184,7 @@ const OraAiBoxPromptModal = ({ aiBoxId, prompt, shouldPop }: OraAiBoxPromptModal
               />
             </div>
           )}
-          {transactionStatus === "idle" && (
+          {loggedIn && transactionStatus === "idle" && (
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-center gap-4">
                 <div className="size-2 shrink-0 rotate-45 bg-primary" />

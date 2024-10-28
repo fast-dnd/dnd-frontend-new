@@ -25,32 +25,32 @@ const CommunityCarousel: React.FC<CommunityCarouselProps> = ({ selectedCommunity
         <img
           src={currentCommunity.cardImageUrl}
           alt={currentCommunity.name}
-          className="mb-2 h-32 w-32"
+          className="mb-4 h-32 w-32 rounded-full shadow-lg"
         />
 
         <div className="flex flex-row items-center gap-4">
-          <h2 className="text-3xl font-extrabold text-white drop-shadow-lg">
+          <h2 className="text-3xl font-extrabold text-red-200 drop-shadow-lg">
             {currentCommunity.name}
           </h2>
           {/* Social Media Icons */}
           <div className="flex flex-row gap-2">
             <a href={currentCommunity.twitterUrl} target="_blank" rel="noopener noreferrer">
-              <FaTwitter className="bg-blue h-10 w-10 text-white hover:text-blue-400" />
+              <FaTwitter className="h-10 w-10 transform text-blue-500 transition-transform hover:scale-110 hover:text-blue-400" />
             </a>
           </div>
         </div>
       </div>
 
       {/* Prize and Token */}
-      <div className="mt-4 flex w-full justify-center">
-        <p className="font-mono text-4xl font-extrabold text-white drop-shadow-[0_0_10px_rgba(0,255,255,0.8)]">
-          Prize: {currentCommunity.prize} {currentCommunity.prizeToken}
+      <div className="mt-6 flex w-full justify-center">
+        <p className="text-center text-5xl font-bold text-yellow-200">
+          🎁 {currentCommunity.prize} {currentCommunity.prizeToken}
         </p>
       </div>
 
       {/* Community Description */}
-      <div className="mt-4 flex w-full items-center justify-center text-center">
-        <p className="text-xl text-white">{currentCommunity.description}</p>
+      <div className="mt-6 flex w-full items-center justify-center text-center">
+        <p className="text-xl text-gray-300">📜 {currentCommunity.description}</p>
       </div>
     </div>
   );
