@@ -6,12 +6,15 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { ArrowClockwise } from "@phosphor-icons/react";
 import { IoMdSend } from "react-icons/io";
+import { toast } from "sonner";
 
 import OraAiCancelBoxPromptModal from "@/components/common/ora-network-modal/aibox-cancel-modal";
 import OraAiBoxPromptModal from "@/components/common/ora-network-modal/aibox-modal";
 import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/text-area";
+import { Tooltip } from "@/components/ui/tooltip";
 import useAuth from "@/hooks/helpers/use-auth";
+import aiBoxService from "@/services/aibox-service";
 import chainService from "@/services/chain-service";
 import { jibril } from "@/utils/fonts";
 import { cn } from "@/utils/style-utils";
@@ -30,6 +33,7 @@ const AiBoxDesktop = () => {
   const [userRankData, setUserRankData] = useState(null);
   const guestData = useGuest();
   const { user, loggedIn } = useAuth();
+  const [isSendingCasualRequest, setIsSendingCasualRequest] = useState(false);
 
   const maxCharacters = 250;
 
@@ -57,6 +61,19 @@ const AiBoxDesktop = () => {
       </div>
     );
   }
+
+  const handleCasualBoxSubmitPrompt = async (aiBoxId: string, prompt: string) => {
+    setIsSendingCasualRequest(true);
+    try {
+      await aiBoxService.submitPrompt(aiBoxId, prompt, "request");
+      toast.success(`Request sent, wait for ~10sec for it to be processed`);
+    } catch (error) {
+      console.error("Error submitting prompt:", error);
+      toast.error(`Error: ${JSON.stringify(error)}`);
+    } finally {
+      setIsSendingCasualRequest(false);
+    }
+  };
 
   return (
     <div className="relative w-full p-6">
@@ -122,7 +139,7 @@ const AiBoxDesktop = () => {
                   placeholder="I think ..."
                   value={playerPrompt}
                   onChange={(e) => setPlayerPrompt(e.target.value.slice(0, maxCharacters))}
-                  disabled={!!data.aiJudgeQueryTxHash}
+                  disabled={data.aiJudgeQueryTxHash || data.rating > 0 ? true : false}
                 />
                 <span className="absolute bottom-4 right-2 text-sm text-gray-400">
                   {playerPrompt.length}/{maxCharacters}
@@ -136,13 +153,13 @@ const AiBoxDesktop = () => {
                       {/* Check if rating is 0 and there's no aiJudgeQueryTxHash */}
                       {data.rating === 0 && !data.aiJudgeQueryTxHash ? (
                         <p className="font-bold text-gray-500">
-                          Today's Rating: To be determined after submitting request
+                          Rating: To be determined after submitting request
                         </p>
                       ) : data.rating === 0 && data.aiJudgeQueryTxHash ? (
                         // If rating is 0 but aiJudgeQueryTxHash exists, show 'Rating: Pending' with the tx hash link
                         <>
                           <p className="font-bold text-yellow-500">
-                            Today's Rating: Pending{" "}
+                            Rating: Pending{" "}
                             <span className="text-red-400">
                               (tx:
                               <a
@@ -165,7 +182,7 @@ const AiBoxDesktop = () => {
                         // If both rating and aiJudgeQueryTxHash exist, show rating and tx hash link
                         <div className="flex items-center space-x-4">
                           <p className="font-bold text-green-500">
-                            Today's Rating: {data.rating}{" "}
+                            Rating: {data.rating}{" "}
                             <span className="text-red-400">
                               (tx:
                               <a
@@ -197,29 +214,47 @@ const AiBoxDesktop = () => {
                     />
                   </div>
                 ) : (
-                  <div className=" flex items-center justify-between">
-                    {/* Rating Section with nowrap and limited width */}
+                  <div className=" flex w-full items-center justify-between">
                     <div className=" flex-1 text-ellipsis whitespace-nowrap">
                       {data.rating === 0 ? (
                         <p className="font-bold text-gray-500">
-                          Today's Rating: To be determined after submitting request
+                          Rating: To be determined after submitting request
                         </p>
                       ) : data.rating !== 0 ? (
-                        <p className="font-bold text-green-500">Today's Rating: {data.rating}</p>
+                        <p className="font-bold text-green-500">Rating: {data.rating}</p>
                       ) : (
                         <></>
                       )}
                     </div>
 
-                    {/* Button aligned to the far right */}
-                    <Button
-                      type="submit"
-                      variant="ghost"
-                      className="text-primary"
-                      aria-label="Send"
-                    >
-                      <IoMdSend className="text-3xl" />
-                    </Button>
+                    {data.rating === 0 ? (
+                      <Button
+                        type="submit"
+                        variant="ghost"
+                        className="flex items-center justify-center text-primary"
+                        aria-label="Send"
+                        disabled={isSendingCasualRequest}
+                        onClick={() => handleCasualBoxSubmitPrompt(data.aiBoxId, playerPrompt)}
+                      >
+                        {isSendingCasualRequest ? (
+                          <div className="h-6 w-6 animate-spin rounded-full border-2 border-red-400 border-t-transparent" />
+                        ) : (
+                          <IoMdSend className="text-3xl" /> // Send icon when not loading
+                        )}{" "}
+                      </Button>
+                    ) : (
+                      <Tooltip content="Prompt has already been sent. It can take up to a couple of minutes for it to resolve. Refresh the page to check if it was processed.">
+                        <Button
+                          type="submit"
+                          variant="ghost"
+                          className="flex items-center justify-center text-primary"
+                          aria-label="Send"
+                          disabled
+                        >
+                          <IoMdSend className="text-3xl" />{" "}
+                        </Button>
+                      </Tooltip>
+                    )}
                   </div>
                 )}
               </div>
@@ -235,7 +270,7 @@ const AiBoxDesktop = () => {
                 style={{ transform: "rotate(-2deg)" }}
               ></div>
               <h3 className="mb-2 text-center text-xl font-semibold text-red-200">
-                🎁 Today's Prize 🎁
+                🎁 Box Prize 🎁
               </h3>
               <p className="text-center text-5xl font-bold text-yellow-200">
                 {data.prize} {data.prizeToken}
@@ -355,6 +390,7 @@ const AiBoxDesktop = () => {
             <BoxLeaderboardList
               epoch={selectedEpoch}
               lastRefetch={lastRefetch}
+              verifiable={data.verifiable}
               onUserRankDataFetched={setUserRankData}
             />
           </div>

@@ -14,10 +14,12 @@ import useGetAiBoxLeaderboard from "../hooks/use-get-leaderboard";
 const BoxLeaderboardList = ({
   epoch,
   lastRefetch,
+  verifiable,
   onUserRankDataFetched,
 }: {
   epoch: number;
   lastRefetch: number;
+  verifiable: boolean;
   onUserRankDataFetched: Function;
 }) => {
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
@@ -139,7 +141,7 @@ const BoxLeaderboardList = ({
                         <span className="text-lg">{leaderboardUser.username}</span>
                       </div>
                     </td>
-                    <td className="flex flex-row gap-2 px-4 py-2 font-semibold">
+                    <td className="flex flex-row gap-2 px-4 py-4 font-semibold">
                       {leaderboardUser.transactions && leaderboardUser.transactions.length > 0 ? (
                         <>
                           <img
@@ -147,6 +149,7 @@ const BoxLeaderboardList = ({
                               leaderboardUser.transactions[0].chain as NetworkName,
                             )}
                             style={{ height: "25px" }}
+                            alt="Chain Icon"
                           />
                           <a
                             href={`${chainService.getExplorerUrl(
@@ -163,7 +166,9 @@ const BoxLeaderboardList = ({
                           </a>
                         </>
                       ) : (
-                        <span className="text-gray-500">No transactions</span>
+                        <span className="text-gray-500">
+                          {verifiable ? "No transactions" : "rated by v3"}
+                        </span>
                       )}
                     </td>
                     <td className="px-4 py-2 font-semibold">{leaderboardUser.rating}</td>
