@@ -89,7 +89,7 @@ const AiBoxDesktop = () => {
               className="hover:underline"
               title={
                 data.verifiable
-                  ? "Verifiable box is powered by ORA Protocol. Each query is rated by decentralized AI. A transaction is provided as proof of rating."
+                  ? "Verifiable box is powered by ORA Protocol. Each query is rated by decentralized AI. Transaction is provided as proof of rating."
                   : "Casual box is rated by V3RPG AI judge. This is a centralized mechanism, providing an immediate rating without on-chain proof."
               }
             >
@@ -148,7 +148,7 @@ const AiBoxDesktop = () => {
 
               <div className="flex items-center justify-between">
                 {data.verifiable ? (
-                  <div className="flex items-center justify-between">
+                  <div className="flex w-full items-center justify-between">
                     <div className=" flex space-x-2">
                       {/* Check if rating is 0 and there's no aiJudgeQueryTxHash */}
                       {data.rating === 0 && !data.aiJudgeQueryTxHash ? (
