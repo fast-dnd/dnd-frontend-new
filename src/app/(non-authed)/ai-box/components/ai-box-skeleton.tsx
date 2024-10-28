@@ -2,44 +2,127 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 
-import { cn } from "@/utils/style-utils";
-
 /* eslint-disable tailwindcss/no-custom-classname */
 const AiBoxSkeleton = () => {
   return (
-    <div className={cn("flex min-h-0 w-full flex-1 flex-col gap-8 overflow-hidden p-4 lg:p-8")}>
-      <div className="relative flex w-full flex-row justify-between gap-2 p-2">
-        {/* Left Section - Query and Text Area Skeleton */}
-        <div className="mb-4 flex w-1/2 flex-col items-center justify-center rounded-t-md p-4 shadow-lg backdrop-blur-lg">
-          <div className="mb-4 h-8 w-32 rounded-lg bg-gray-600" /> {/* Skeleton for Query title */}
-          <div className="mb-8 h-6 w-64 rounded-lg bg-gray-600" />{" "}
-          {/* Skeleton for Query content */}
-          <div className="h-32 w-full rounded-lg bg-gray-600" /> {/* Skeleton for Text Area */}
+    <div className="relative w-full p-6">
+      {/* Glowing border effect */}
+      <div className="absolute inset-0 bg-gradient-to-b to-transparent" />
+
+      <div className="relative z-10 mx-auto max-w-7xl rounded-xl bg-gray-900/80 p-8 backdrop-blur-xl">
+        {/* Header Section */}
+        <div className="mb-8 flex items-center justify-center">
+          {/* Skeleton for AI Challenge Title */}
+          <div className="h-10 w-48 animate-pulse rounded-lg bg-gray-600"></div>
         </div>
 
-        {/* Middle Section - "How It Works" Skeleton */}
-        <div className="flex flex-1 flex-col gap-4 rounded-lg p-4 shadow-md">
-          <div className="mb-4 h-8 w-48 rounded-lg bg-gray-600" /> {/* Skeleton for Title */}
-          <div className="mb-2 h-4 w-72 rounded-lg bg-gray-600" /> {/* Skeleton for Step 1 */}
-          <div className="mb-2 h-4 w-72 rounded-lg bg-gray-600" /> {/* Skeleton for Step 2 */}
-          <div className="h-4 w-72 rounded-lg bg-gray-600" /> {/* Skeleton for Step 3 */}
-        </div>
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          {/* Left Column - Query and Input */}
+          <div className="space-y-6">
+            {/* Box Query Card Skeleton */}
+            <div className="rounded-lg bg-gray-800/50 p-6">
+              <div className="mx-auto mb-4 h-8 w-32 animate-pulse rounded-lg bg-gray-600"></div>{" "}
+              {/* Title */}
+              <div className="mb-4 h-6 w-full animate-pulse rounded-lg bg-gray-600"></div>{" "}
+              {/* Query content */}
+              <div className="mt-4 flex items-center justify-center space-x-4">
+                <div className="h-6 w-6 animate-pulse rounded-full bg-gray-600"></div>{" "}
+                {/* Clock emoji */}
+                <div className="h-6 w-32 animate-pulse rounded-lg bg-gray-600"></div> {/* Timer */}
+                <div className="h-6 w-24 animate-pulse rounded-lg bg-gray-600"></div> {/* Day */}
+              </div>
+            </div>
 
-        {/* Right Section - Prize Information Skeleton */}
-        <div style={{ height: "80%" }} className={cn("flex flex-col items-center gap-4 p-4")}>
-          <div className="h-40 w-32 rounded-lg bg-gray-600" /> {/* Skeleton for Image */}
-          <div className="mt-4 h-8 w-48 rounded-lg bg-gray-600" /> {/* Skeleton for Prize Title */}
-          <div className="mt-4 h-16 w-48 rounded-lg bg-gray-600" /> {/* Skeleton for Prize Value */}
-          <div className="mt-4 flex items-center gap-2">
-            <div className="h-6 w-32 rounded-lg bg-gray-600" /> {/* Skeleton for Powered by Text */}
-            <div className="h-8 w-8 rounded-full bg-gray-600" /> {/* Skeleton for Ora Logo */}
+            {/* Your Response Card Skeleton */}
+            <div className="rounded-lg bg-gray-800/50 p-6">
+              <div className="mx-auto mb-4 h-8 w-40 animate-pulse rounded-lg bg-gray-600"></div>{" "}
+              {/* Title */}
+              <div className="relative">
+                <div className="h-32 w-full animate-pulse rounded-lg bg-gray-600"></div>{" "}
+                {/* TextArea */}
+                <div className="absolute bottom-4 right-2 h-4 w-16 animate-pulse rounded-lg bg-gray-600"></div>{" "}
+                {/* Character count */}
+              </div>
+              <div className="mt-4 flex items-center justify-between">
+                <div className="mt-2 h-6 w-48 animate-pulse rounded-lg bg-gray-600"></div>{" "}
+                {/* Rating info */}
+                <div className="h-10 w-32 animate-pulse rounded-lg bg-gray-600"></div>{" "}
+                {/* Submit button */}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Prize and Info */}
+          <div className="space-y-6">
+            {/* Today's Prize Card Skeleton */}
+            <div className="rounded-lg bg-gray-800/50 p-6 text-center">
+              <div className="mx-auto mb-4 h-8 w-40 animate-pulse rounded-lg bg-gray-600"></div>{" "}
+              {/* Title */}
+              <div className="mx-auto h-12 w-48 animate-pulse rounded-lg bg-gray-600"></div>{" "}
+              {/* Prize amount */}
+              <div className="mt-4 inline-flex items-center justify-center space-x-2">
+                <div className="h-6 w-32 animate-pulse rounded-lg bg-gray-600"></div>{" "}
+                {/* Powered by text */}
+                <div className="h-6 w-6 animate-pulse rounded-full bg-gray-600"></div>{" "}
+                {/* Ora logo */}
+              </div>
+            </div>
+
+            {/* How it Works Card Skeleton */}
+            <div className="rounded-lg bg-gray-800/50 p-6">
+              <div className="mx-auto mb-4 h-8 w-40 animate-pulse rounded-lg bg-gray-600"></div>{" "}
+              {/* Title */}
+              <div className="mb-2 h-4 w-full animate-pulse rounded-lg bg-gray-600"></div>{" "}
+              {/* Paragraph */}
+              <ul className="space-y-3">
+                {/* Step 1 */}
+                <li className="flex items-start">
+                  <div className="mr-2 h-6 w-6 animate-pulse rounded-full bg-gray-600"></div>{" "}
+                  {/* Step number */}
+                  <div className="h-4 w-full animate-pulse rounded-lg bg-gray-600"></div>{" "}
+                  {/* Step description */}
+                </li>
+                {/* Step 2 */}
+                <li className="flex items-start">
+                  <div className="mr-2 h-6 w-6 animate-pulse rounded-full bg-gray-600"></div>
+                  <div className="h-4 w-full animate-pulse rounded-lg bg-gray-600"></div>
+                </li>
+                {/* Step 3 */}
+                <li className="flex items-start">
+                  <div className="mr-2 h-6 w-6 animate-pulse rounded-full bg-gray-600"></div>
+                  <div className="h-4 w-full animate-pulse rounded-lg bg-gray-600"></div>
+                </li>
+              </ul>
+              <div className="mt-2 h-4 w-full animate-pulse rounded-lg bg-gray-600"></div>{" "}
+              {/* Additional note */}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Section - Leaderboard List Skeleton */}
-      <div className="w-full">
-        <div className="h-64 w-full rounded-lg bg-gray-600" /> {/* Skeleton for Leaderboard */}
+        {/* Leaderboard Section */}
+        <div className="mt-8">
+          <div className="mb-4 flex space-x-2">
+            {/* Buttons for days */}
+            <div className="h-10 w-24 animate-pulse rounded-lg bg-gray-600"></div>
+            <div className="h-10 w-24 animate-pulse rounded-lg bg-gray-600"></div>
+            <div className="h-10 w-24 animate-pulse rounded-lg bg-gray-600"></div>
+          </div>
+          <div className="rounded-lg bg-gray-800/50 p-6">
+            {/* Leaderboard list skeleton */}
+            <div className="space-y-4">
+              {/* Simulate a few leaderboard items */}
+              {[...Array(5)].map((_, index) => (
+                <div key={index} className="flex items-center space-x-4">
+                  <div className="h-8 w-8 animate-pulse rounded-full bg-gray-600"></div>{" "}
+                  {/* Rank */}
+                  <div className="h-8 w-full animate-pulse rounded-lg bg-gray-600"></div>{" "}
+                  {/* Player info */}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

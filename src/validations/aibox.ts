@@ -21,6 +21,7 @@ export const aiBoxSchema = z.object({
   aiJudgeQueryTxHash: z.string().nullable(),
   rating: z.number(),
   transactions: z.array(txSchema),
+  verifiable: z.boolean(),
 });
 
 export const aiBoxPromptSchema = z.object({
