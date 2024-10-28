@@ -75,3 +75,91 @@ body {
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+.ai-box-menu-switcher {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 400px;
+  height: auto;
+  background: rgba(20, 20, 20, 0.8);
+  border-radius: 150px 0 0 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
+  transition: width 0.3s ease;
+  z-index: 20;
+}
+
+.ai-box-menu-switcher.collapsed {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-box-toggle-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2.5rem;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.3s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ai-box-menu-switcher:not(.collapsed) .ai-box-toggle-button {
+  top: auto;
+  left: 20px;
+  transform: none;
+}
+
+.ai-box-menu-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.ai-box-menu-items.hidden {
+  display: none; /* Hide when in collapsed mode */
+}
+
+.ai-box-menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ai-box-menu-item .icon {
+  font-size: 2rem;
+}
+
+.ai-box-menu-item .label {
+  font-size: 1rem;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.ai-box-menu-item.active .icon,
+.ai-box-menu-item:hover .icon {
+  color: #ff4d4f;
+  text-shadow: 0 0 8px #ff4d4f;
+}
+
+@media (max-width: 768px) {
+  .ai-box-menu-switcher {
+    width: 50px; /* Start collapsed on smaller screens */
+  }
+}
