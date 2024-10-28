@@ -5,9 +5,11 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { ArrowClockwise } from "@phosphor-icons/react";
+import { IoMdSend } from "react-icons/io";
 
 import OraAiCancelBoxPromptModal from "@/components/common/ora-network-modal/aibox-cancel-modal";
 import OraAiBoxPromptModal from "@/components/common/ora-network-modal/aibox-modal";
+import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/text-area";
 import useAuth from "@/hooks/helpers/use-auth";
 import chainService from "@/services/chain-service";
@@ -74,7 +76,7 @@ const AiBoxDesktop = () => {
                   : "Casual box is rated by V3RPG AI judge. This is a centralized mechanism, providing an immediate rating without on-chain proof."
               }
             >
-              {data.verifiable ? "🔒 Verifiable" : "🌐 Casual"}
+              {data.verifiable ? "🔒 Verifiable mode" : "🌴 Casual mode"}
             </span>
           </div>
 
@@ -127,70 +129,99 @@ const AiBoxDesktop = () => {
                 </span>
               </div>
 
-              <div className="mt-4 flex items-center justify-between">
-                <div className="mt-2 flex space-x-2">
-                  {/* Check if rating is 0 and there's no aiJudgeQueryTxHash */}
-                  {data.rating === 0 && !data.aiJudgeQueryTxHash ? (
-                    <p className="font-bold text-gray-500">
-                      Today's Rating: To be determined after submitting request
-                    </p>
-                  ) : data.rating === 0 && data.aiJudgeQueryTxHash ? (
-                    // If rating is 0 but aiJudgeQueryTxHash exists, show 'Rating: Pending' with the tx hash link
-                    <>
-                      <p className="font-bold text-yellow-500">
-                        Today's Rating: Pending{" "}
-                        <span className="text-red-400">
-                          (tx:
-                          <a
-                            href={`https://sepolia.arbiscan.io/tx/${data.aiJudgeQueryTxHash}#eventlog`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="underline hover:underline"
-                          >
-                            {`${data.aiJudgeQueryTxHash.slice(
-                              0,
-                              6,
-                            )}...${data.aiJudgeQueryTxHash.slice(-4)}`}
-                          </a>
-                          )
-                        </span>
-                      </p>
-                      <OraAiCancelBoxPromptModal aiBoxId={data.aiBoxId} />
-                    </>
-                  ) : data.rating !== 0 && data.aiJudgeQueryTxHash ? (
-                    // If both rating and aiJudgeQueryTxHash exist, show rating and tx hash link
-                    <div className="flex items-center space-x-4">
-                      <p className="font-bold text-green-500">
-                        Today's Rating: {data.rating}{" "}
-                        <span className="text-red-400">
-                          (tx:
-                          <a
-                            href={`${chainService.getExplorerUrl(data.transactions[0].chain)}${
-                              data.aiJudgeQueryTxHash
-                            }#eventlog`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="underline hover:underline"
-                          >
-                            {`${data.aiJudgeQueryTxHash.slice(
-                              0,
-                              6,
-                            )}...${data.aiJudgeQueryTxHash.slice(-4)}`}
-                          </a>
-                          )
-                        </span>
-                      </p>
-                      <OraAiCancelBoxPromptModal aiBoxId={data.aiBoxId} />
+              <div className="flex items-center justify-between">
+                {data.verifiable ? (
+                  <div className="flex items-center justify-between">
+                    <div className=" flex space-x-2">
+                      {/* Check if rating is 0 and there's no aiJudgeQueryTxHash */}
+                      {data.rating === 0 && !data.aiJudgeQueryTxHash ? (
+                        <p className="font-bold text-gray-500">
+                          Today's Rating: To be determined after submitting request
+                        </p>
+                      ) : data.rating === 0 && data.aiJudgeQueryTxHash ? (
+                        // If rating is 0 but aiJudgeQueryTxHash exists, show 'Rating: Pending' with the tx hash link
+                        <>
+                          <p className="font-bold text-yellow-500">
+                            Today's Rating: Pending{" "}
+                            <span className="text-red-400">
+                              (tx:
+                              <a
+                                href={`https://sepolia.arbiscan.io/tx/${data.aiJudgeQueryTxHash}#eventlog`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline hover:underline"
+                              >
+                                {`${data.aiJudgeQueryTxHash.slice(
+                                  0,
+                                  6,
+                                )}...${data.aiJudgeQueryTxHash.slice(-4)}`}
+                              </a>
+                              )
+                            </span>
+                          </p>
+                          <OraAiCancelBoxPromptModal aiBoxId={data.aiBoxId} />
+                        </>
+                      ) : data.rating !== 0 && data.aiJudgeQueryTxHash ? (
+                        // If both rating and aiJudgeQueryTxHash exist, show rating and tx hash link
+                        <div className="flex items-center space-x-4">
+                          <p className="font-bold text-green-500">
+                            Today's Rating: {data.rating}{" "}
+                            <span className="text-red-400">
+                              (tx:
+                              <a
+                                href={`${chainService.getExplorerUrl(data.transactions[0].chain)}${
+                                  data.aiJudgeQueryTxHash
+                                }#eventlog`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline hover:underline"
+                              >
+                                {`${data.aiJudgeQueryTxHash.slice(
+                                  0,
+                                  6,
+                                )}...${data.aiJudgeQueryTxHash.slice(-4)}`}
+                              </a>
+                              )
+                            </span>
+                          </p>
+                          <OraAiCancelBoxPromptModal aiBoxId={data.aiBoxId} />
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </div>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-                <OraAiBoxPromptModal
-                  aiBoxId={data.aiBoxId}
-                  prompt={playerPrompt}
-                  shouldPop={!data.aiJudgeQueryTxHash}
-                />
+                    <OraAiBoxPromptModal
+                      aiBoxId={data.aiBoxId}
+                      prompt={playerPrompt}
+                      shouldPop={!data.aiJudgeQueryTxHash}
+                    />
+                  </div>
+                ) : (
+                  <div className=" flex items-center justify-between">
+                    {/* Rating Section with nowrap and limited width */}
+                    <div className=" flex-1 text-ellipsis whitespace-nowrap">
+                      {data.rating === 0 ? (
+                        <p className="font-bold text-gray-500">
+                          Today's Rating: To be determined after submitting request
+                        </p>
+                      ) : data.rating !== 0 ? (
+                        <p className="font-bold text-green-500">Today's Rating: {data.rating}</p>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+
+                    {/* Button aligned to the far right */}
+                    <Button
+                      type="submit"
+                      variant="ghost"
+                      className="text-primary"
+                      aria-label="Send"
+                    >
+                      <IoMdSend className="text-3xl" />
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -251,8 +282,8 @@ const AiBoxDesktop = () => {
               <p className="mt-2 space-y-3 text-gray-300">
                 *If transaction is not processed in{" "}
                 <strong className="font-semibold text-red-400">5 minutes</strong>, ask on our
-                Discord for <strong className="font-semibold text-red-400">help</strong> or cancel
-                request.
+                Discord for <strong className="font-semibold text-red-400">help</strong>
+                {data.verifiable && <> or cancel request.</>}
               </p>
             </div>
           </div>
