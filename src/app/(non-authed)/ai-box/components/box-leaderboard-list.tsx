@@ -45,11 +45,11 @@ const BoxLeaderboardList = ({
   }, [epoch, lastRefetch, refetch]);
 
   useEffect(() => {
-    if (leaderboardData && leaderboardData.pages?.[0].userRank) {
-      debugger;
+    if (leaderboardData) {
+      console.log("Leaderboard data updated:", leaderboardData.pages?.[0].userRank);
       onUserRankDataFetched(leaderboardData.pages?.[0].userRank);
     }
-  }, [epoch, lastRefetch, refetch]);
+  }, [epoch, lastRefetch, refetch, leaderboardData]);
 
   const { lastObjectRef: lastLeaderboardUserRef } = useIntersectionObserver({
     isFetchingNextPage,
