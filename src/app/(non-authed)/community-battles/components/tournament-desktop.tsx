@@ -2,11 +2,14 @@
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { ArrowClockwise } from "@phosphor-icons/react";
 
+import useAuth from "@/hooks/helpers/use-auth";
 // import Spinner from "@/components/ui/spinner"; // Importing Spinner component
 import { jibril } from "@/utils/fonts";
 
+import useGuest from "../../guest/hooks/use-guest";
 import useGetTournament from "../hooks/use-get-tournament";
 import CommunityCarosel from "./community-carosel";
 import CommunityLeaderboard from "./community-leaderboard";
@@ -18,6 +21,9 @@ const TournamentDesktop = () => {
   const { data, isLoading, error, refetch, isFetching } = useGetTournament();
   const [selectedCommunity, setSelectedCommunity] = useState<any | null>(null);
   const [lastRefetch, setLastRefetch] = useState<number>(1);
+  const guestData = useGuest();
+  const [userRankData, setUserRankData] = useState<any | null>(null);
+  const { user, loggedIn } = useAuth();
 
   useEffect(() => {
     if (data && data.communities.length > 0) {
@@ -189,37 +195,59 @@ const TournamentDesktop = () => {
               <CommunityLeaderboard communities={communities} />
             </div>
 
-            {/* Player Rating Section */}
-            <div className="rounded-lg bg-gray-800/50 p-6">
-              <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">
-                Player Ratings 🌟
-              </h2>
-              <table className="w-full text-left text-gray-300">
-                <thead>
-                  <tr>
-                    <th className="border-b border-gray-600 px-4 py-2">Player</th>
-                    <th className="border-b border-gray-600 px-4 py-2">Rating</th>
-                    <th className="border-b border-gray-600 px-4 py-2">Rank</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="border-b border-gray-700 px-4 py-2">Player 1</td>
-                    <td className="border-b border-gray-700 px-4 py-2">1500</td>
-                    <td className="border-b border-gray-700 px-4 py-2">1</td>
-                  </tr>
-                  <tr>
-                    <td className="border-b border-gray-700 px-4 py-2">Player 2</td>
-                    <td className="border-b border-gray-700 px-4 py-2">1450</td>
-                    <td className="border-b border-gray-700 px-4 py-2">2</td>
-                  </tr>
-                  <tr>
-                    <td className="border-b border-gray-700 px-4 py-2">Player 3</td>
-                    <td className="border-b border-gray-700 px-4 py-2">1400</td>
-                    <td className="border-b border-gray-700 px-4 py-2">3</td>
-                  </tr>
-                </tbody>
-              </table>
+            {/* User rank */}
+            <div className="mt-4 rounded-lg bg-gray-800/50 p-6">
+              {/* Header */}
+              <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">🎖️ My Rank</h2>
+
+              {/* Flex container for avatar, username, rank, and rating */}
+              <div className="flex items-center justify-center">
+                {/* User Avatar and Username */}
+                <div className="mr-4 flex flex-col items-center">
+                  <Image
+                    src={
+                      loggedIn && user?.account.imageUrl
+                        ? user.account.imageUrl
+                        : "/images/default-avatar.png"
+                    }
+                    alt="avatar"
+                    width={75}
+                    height={75}
+                    className="mb-2 rounded-full"
+                  />
+                  {/* Username */}
+                  <p className="text-lg font-semibold text-gray-300">
+                    {loggedIn ? user?.account.username : guestData?.guestName}
+                  </p>
+                </div>
+
+                {/* Rank and Rating */}
+                <div className="text-center">
+                  {loggedIn ? (
+                    <>
+                      {/* Rank */}
+                      <p className="text-xl font-bold text-yellow-200">
+                        {userRankData ? `Rank: #${userRankData.userRank}` : "Not ranked yet"}
+                      </p>
+
+                      {/* Rating */}
+                      <p className="mt-2 text-gray-300">
+                        {userRankData && userRankData.userRating !== 0 ? (
+                          `Rating: ${userRankData.userRating}`
+                        ) : (
+                          <span className="font-bold text-gray-500">
+                            Rating: To be determined after submitting request
+                          </span>
+                        )}
+                      </p>
+                    </>
+                  ) : (
+                    <div className="mt-4 font-semibold text-gray-500">
+                      You need to log in to be able to get points
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -230,6 +258,7 @@ const TournamentDesktop = () => {
             <TournamentLeaderboardList
               lastRefetch={lastRefetch}
               communityId={selectedCommunity ? selectedCommunity._id : ""}
+              onUserRankDataFetched={setUserRankData}
             />
           </div>
         </div>

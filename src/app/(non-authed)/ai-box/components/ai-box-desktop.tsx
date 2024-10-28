@@ -62,11 +62,28 @@ const AiBoxDesktop = () => {
       <div className="absolute inset-0 bg-gradient-to-b to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-7xl rounded-xl bg-gray-900/80 p-8 backdrop-blur-xl">
-        {/* Header Section */}
-        <div className="mb-8 flex items-center justify-center">
+        {/* Header Section with Box Type Indicator */}
+        <div className="relative mb-8 flex items-center justify-center">
+          {/* Box Type Indicator with Hover Tooltip */}
+          <div className="absolute left-8 cursor-pointer text-lg text-gray-300">
+            <span
+              className="hover:underline"
+              title={
+                data.verifiable
+                  ? "Verifiable box is powered by ORA Protocol. Each query is rated by decentralized AI. A transaction is provided as proof of rating."
+                  : "Casual box is rated by V3RPG AI judge. This is a centralized mechanism, providing an immediate rating without on-chain proof."
+              }
+            >
+              {data.verifiable ? "🔒 Verifiable" : "🌐 Casual"}
+            </span>
+          </div>
+
+          {/* Main Header */}
           <h1 className="text-4xl font-bold tracking-wider text-red-400" style={jibril.style}>
-            AI BOX Challenge
+            AI CHALLENGE BOX
           </h1>
+
+          {/* Refresh Button */}
           <div className="absolute right-8 flex items-center space-x-4">
             <button
               onClick={() => setLastRefetch(Date.now())}
@@ -180,21 +197,26 @@ const AiBoxDesktop = () => {
 
           {/* Right Column - Prize and Info */}
           <div className="space-y-6">
-            <div className="rounded-lg bg-gray-800/50 p-6 text-center">
-              <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">
-                🏆 Today's Prize
-              </h2>
-              <p className="text-5xl font-bold text-yellow-200">
+            {/* Ultimate Battle Prize Section */}
+            <div className="relative mb-6 flex flex-col items-center justify-center rounded-lg border-4 border-blue-200 bg-gray-800/50 p-4 shadow-md">
+              <div
+                className="pointer-events-none absolute inset-0 rounded-lg border-4 border-double border-blue-300 opacity-70"
+                style={{ transform: "rotate(-2deg)" }}
+              ></div>
+              <h3 className="mb-2 text-center text-xl font-semibold text-red-200">
+                🎁 Today's Prize 🎁
+              </h3>
+              <p className="text-center text-5xl font-bold text-yellow-200">
                 {data.prize} {data.prizeToken}
               </p>
-              <div className="mt-4 inline-flex items-center space-x-2 rounded-full bg-red-400/10 px-4 py-2 text-red-400">
+              <div className="mt-4 flex items-center justify-center space-x-2 rounded-full bg-red-300/10 px-4 py-2 text-red-200">
                 <a href="https://www.ora.io/" target="_blank" rel="noopener noreferrer">
                   <span>Powered by ORA Protocol</span>
                 </a>
                 <img
                   src="/images/logos/ora-logo.png"
                   alt="ora logo"
-                  style={{ width: "30px", height: "30px", objectFit: "contain" }}
+                  className="h-8 w-8 object-contain"
                 />
               </div>
             </div>

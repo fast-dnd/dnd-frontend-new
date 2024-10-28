@@ -93,37 +93,27 @@ const TournamentSkeleton = () => {
 
             {/* Player Ratings Skeleton */}
             <div className="rounded-lg bg-gray-800/50 p-6">
-              <div className="mx-auto mb-4 h-8 w-64 animate-pulse rounded-lg bg-gray-600"></div>
-              <table className="w-full">
-                <thead>
-                  <tr>
-                    <th className="border-b border-gray-600 px-4 py-2">
-                      <div className="h-4 w-full animate-pulse rounded-lg bg-gray-600"></div>
-                    </th>
-                    <th className="border-b border-gray-600 px-4 py-2">
-                      <div className="h-4 w-full animate-pulse rounded-lg bg-gray-600"></div>
-                    </th>
-                    <th className="border-b border-gray-600 px-4 py-2">
-                      <div className="h-4 w-full animate-pulse rounded-lg bg-gray-600"></div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[...Array(3)].map((_, index) => (
-                    <tr key={index}>
-                      <td className="border-b border-gray-700 px-4 py-2">
-                        <div className="h-4 w-full animate-pulse rounded-lg bg-gray-600"></div>
-                      </td>
-                      <td className="border-b border-gray-700 px-4 py-2">
-                        <div className="h-4 w-full animate-pulse rounded-lg bg-gray-600"></div>
-                      </td>
-                      <td className="border-b border-gray-700 px-4 py-2">
-                        <div className="h-4 w-full animate-pulse rounded-lg bg-gray-600"></div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              {/* Header */}
+              <div className="mx-auto mb-4 h-8 w-48 animate-pulse rounded-lg bg-gray-600"></div>
+
+              {/* Flex container for avatar, username, rank, and rating */}
+              <div className="flex items-center justify-center">
+                {/* Avatar and Username Skeleton */}
+                <div className="mr-4 flex flex-col items-center">
+                  {/* Avatar */}
+                  <div className="mb-2 h-16 w-16 animate-pulse rounded-full bg-gray-600"></div>
+                  {/* Username */}
+                  <div className="h-4 w-24 animate-pulse rounded-lg bg-gray-600"></div>
+                </div>
+
+                {/* Rank and Rating Skeleton */}
+                <div className="text-center">
+                  {/* Rank */}
+                  <div className="mb-2 h-4 w-20 animate-pulse rounded-lg bg-gray-600"></div>
+                  {/* Rating */}
+                  <div className="h-4 w-24 animate-pulse rounded-lg bg-gray-600"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
