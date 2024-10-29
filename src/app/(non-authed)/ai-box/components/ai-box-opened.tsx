@@ -91,9 +91,9 @@ const OpenedBox: React.FC = () => {
           </span>
         </div>
 
-        {/* Main Header */}
+        {/* Main Header in Center */}
         <h1
-          className="absolute inset-0 flex items-center justify-center text-4xl font-bold tracking-wider text-red-400"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-bold tracking-wider text-red-400"
           style={jibril.style}
         >
           DAILY BOX
@@ -103,7 +103,7 @@ const OpenedBox: React.FC = () => {
         <div className="flex w-full items-center justify-center space-x-4 md:w-auto md:justify-end">
           <button
             onClick={() => setLastRefetch(Date.now())}
-            className="rounded-full bg-gray-800 p-2 transition-all hover:bg-gray-700"
+            className="relative z-10 rounded-full bg-gray-800 p-2 transition-all hover:bg-gray-700"
           >
             {isFetching ? (
               <div className="h-6 w-6 animate-spin rounded-full border-2 border-red-400 border-t-transparent" />
