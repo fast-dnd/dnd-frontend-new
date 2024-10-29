@@ -89,7 +89,7 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
       }, 2000);
     } catch (error) {
       console.error("Error submitting prompt:", error);
-      toast.error(`Error: ${JSON.stringify(error)}`);
+      //   toast.error(`Error: ${JSON.stringify(error)}`);
     } finally {
       setIsSendingCasualRequest(false);
     }
