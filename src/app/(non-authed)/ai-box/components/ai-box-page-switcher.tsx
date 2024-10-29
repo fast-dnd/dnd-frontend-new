@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const AiBoxModeSwitcher = ({
+const AiBoxPageSwitcher = ({
   selectedSection,
   onSelectSection,
 }: {
@@ -8,14 +9,20 @@ const AiBoxModeSwitcher = ({
   onSelectSection: Function;
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const router = useRouter();
 
   const sections = [
-    { id: "daily", label: "Daily Box", icon: "🎁" },
-    { id: "create", label: "Create Box", icon: "✍️" },
-    { id: "my", label: "My Boxes", icon: "📦" },
+    { id: "daily", label: "Daily Box", icon: "🎁", path: "/ai-box/daily" },
+    { id: "create", label: "Create Box", icon: "✍️", path: "/ai-box/create" },
+    { id: "my", label: "My Boxes", icon: "📦", path: "/ai-box/collection" },
   ];
 
   const handleToggle = () => setIsCollapsed(!isCollapsed);
+
+  const handleSectionClick = (sectionId: string, path: string) => {
+    onSelectSection(sectionId); // Update the state if needed
+    router.push(path); // Navigate to the new page
+  };
 
   return (
     <div className={`ai-box-menu-switcher ${isCollapsed ? "collapsed" : ""}`}>
@@ -28,7 +35,7 @@ const AiBoxModeSwitcher = ({
             <div
               key={section.id}
               className={`ai-box-menu-item ${selectedSection === section.id ? "active" : ""}`}
-              onClick={() => onSelectSection(section.id)}
+              onClick={() => handleSectionClick(section.id, section.path)}
             >
               <span className="icon">{section.icon}</span>
               <span className="label">{section.label}</span>
@@ -40,4 +47,4 @@ const AiBoxModeSwitcher = ({
   );
 };
 
-export default AiBoxModeSwitcher;
+export default AiBoxPageSwitcher;

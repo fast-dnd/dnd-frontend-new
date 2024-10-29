@@ -99,10 +99,10 @@ const DesktopNavbar = () => {
                 <div className="size-2 rotate-45 bg-white opacity-25" />
                 <div className="relative inline-block">
                   <Link
-                    href="/ai-box"
+                    href="/ai-box/daily"
                     className={cn(
                       "mt-1 border-b-4 border-transparent pb-1 transition-all duration-300 hover:border-primary/50",
-                      pathname === "/ai-box" && "border-primary",
+                      pathname === "/ai-box/daily" && "border-primary",
                       !communityId && "hidden",
                     )}
                   >

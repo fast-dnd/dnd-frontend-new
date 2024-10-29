@@ -4,13 +4,17 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 
-import AiBoxModeSwitcher from "./ai-box-mode-switcher";
 import OpenedBox from "./ai-box-opened";
+import AiBoxPageSwitcher from "./ai-box-page-switcher";
 import CreateBox from "./create-ai-box";
 import MyBoxes from "./my-boxes";
 
-const AiBoxSwitcher = () => {
-  const [selectedSection, setSelectedSection] = useState("daily");
+interface AiBoxSwitcherProps {
+  state?: string;
+}
+
+const AiBoxSwitcher: React.FC<AiBoxSwitcherProps> = ({ state = "daily" }) => {
+  const [selectedSection, setSelectedSection] = useState(state);
 
   const handleSelectSection = (section: string) => {
     setSelectedSection(section);
@@ -27,7 +31,7 @@ const AiBoxSwitcher = () => {
       </div>
 
       {/* Right Side Half-Circle Menu */}
-      <AiBoxModeSwitcher selectedSection={selectedSection} onSelectSection={handleSelectSection} />
+      <AiBoxPageSwitcher selectedSection={selectedSection} onSelectSection={handleSelectSection} />
     </div>
   );
 };
