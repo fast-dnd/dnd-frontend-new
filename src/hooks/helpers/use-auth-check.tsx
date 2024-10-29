@@ -20,10 +20,19 @@ const useAuthCheck = () => {
   useEffect(() => {
     if (!pathname) return;
 
-    const nonAuthURLs = ["/guide", "/transcript", "/ai-box", "/community-battles", "/mobile-wip"];
+    const nonAuthURLs = [
+      "/guide",
+      "/transcript",
+      "/ai-box",
+      "/ai-box/daily",
+      "/community-battles",
+      "/mobile-wip",
+    ];
     const isNonAuthURL = nonAuthURLs.some((url) => pathname.includes(url));
 
-    if (isNonAuthURL) return;
+    const isDynamicBoxURL = pathname.startsWith("/ai-box/") && pathname.split("/").length === 3;
+
+    if (isNonAuthURL || isDynamicBoxURL) return;
 
     if (!["/communities", "/login"].includes(pathname) && !communityId) {
       redirect("/communities");
