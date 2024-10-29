@@ -11,9 +11,10 @@ import MyBoxes from "./my-boxes";
 
 interface AiBoxSwitcherProps {
   state?: string;
+  boxId?: string;
 }
 
-const AiBoxSwitcher: React.FC<AiBoxSwitcherProps> = ({ state = "daily" }) => {
+const AiBoxSwitcher: React.FC<AiBoxSwitcherProps> = ({ state = "open", boxId }) => {
   const [selectedSection, setSelectedSection] = useState(state);
 
   const handleSelectSection = (section: string) => {
@@ -25,7 +26,7 @@ const AiBoxSwitcher: React.FC<AiBoxSwitcherProps> = ({ state = "daily" }) => {
       <div className="mx-auto max-w-screen-xl	 flex-grow rounded-xl p-8 backdrop-blur-xl">
         {/* Glowing border effect */}
         <div className="absolute inset-0 bg-gradient-to-b to-transparent" />
-        {selectedSection === "daily" && <OpenedBox />}
+        {selectedSection === "open" && <OpenedBox boxId={boxId} />}
         {selectedSection === "create" && <CreateBox />}
         {selectedSection === "my" && <MyBoxes />}
       </div>

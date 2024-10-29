@@ -5,7 +5,7 @@ import AiBoxWrapper from "./components/ai-box";
 const AiBoxPage = () => {
   return (
     <>
-      <AiBoxWrapper state="daily" />
+      <AiBoxWrapper state="open" />
     </>
   );
 };

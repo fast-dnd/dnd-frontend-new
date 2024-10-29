@@ -23,8 +23,12 @@ import AiBoxSkeleton from "./ai-box-skeleton";
 import BoxLeaderboardList from "./box-leaderboard-list";
 import TimerComponent from "./timer";
 
-const OpenedBox: React.FC = () => {
-  const { data, isLoading, error, refetch, isFetching } = useGetAiBox();
+interface OpenBoxProps {
+  boxId?: string;
+}
+
+const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
+  const { data, isLoading, error, refetch, isFetching } = useGetAiBox(boxId);
   const [playerPrompt, setPlayerPrompt] = useState("");
   const [selectedEpoch, setSelectedEpoch] = useState(1);
   const [lastRefetch, setLastRefetch] = useState(1);

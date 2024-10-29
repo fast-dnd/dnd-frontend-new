@@ -4,12 +4,15 @@ function TimerComponent({ endDate, currentEpoch }: { endDate: number; currentEpo
   const [timer, setTimer] = useState("");
 
   useEffect(() => {
-    function updateTimer() {
-      const endTimestamp = endDate;
-      const currentTimestamp = Math.floor(Date.now() / 1000);
-      let timeDifference = endTimestamp - currentTimestamp;
+    let intervalId: NodeJS.Timeout;
 
-      if (timeDifference < 0) {
+    function updateTimer() {
+      const currentTimestamp = Math.floor(Date.now() / 1000);
+      let timeDifference = endDate - currentTimestamp;
+
+      console.log("currentTimestamp:", currentTimestamp);
+      console.log("endDate:", endDate);
+      if (timeDifference <= 0) {
         timeDifference = 0;
         clearInterval(intervalId);
       }
@@ -25,7 +28,7 @@ function TimerComponent({ endDate, currentEpoch }: { endDate: number; currentEpo
     }
 
     updateTimer();
-    const intervalId = setInterval(updateTimer, 60000); // Update every minute
+    intervalId = setInterval(updateTimer, 60000);
 
     return () => clearInterval(intervalId);
   }, [endDate]);

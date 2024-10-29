@@ -7,7 +7,7 @@ import AiBoxWrapper from "../components/ai-box";
 const AiBoxDaily = () => {
   return (
     <>
-      <AiBoxWrapper state="daily" />
+      <AiBoxWrapper state="open" />
     </>
   );
 };

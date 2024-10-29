@@ -1,57 +1,48 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
+import aiBoxService from "@/services/aibox-service";
 import { jibril } from "@/utils/fonts";
 
-// Define the shape of box data for better type safety
-interface BoxData {
-  name: string;
-  isVerifiable: boolean;
-  questions: string[];
-  boxDuration: number;
-}
-
 const CreateBox: React.FC = () => {
-  // State variables with types
-  const [boxName, setBoxName] = useState<string>(""); // New state for box name
+  const router = useRouter();
+
+  const [boxName, setBoxName] = useState<string>(""); // Box name state
   const [isVerifiable, setIsVerifiable] = useState<boolean>(false);
   const [questions, setQuestions] = useState<string[]>([]);
   const [newQuestion, setNewQuestion] = useState<string>("");
-  const [boxDuration, setBoxDuration] = useState<number>(10); // Default duration is 10 minutes
+  const [boxDuration, setBoxDuration] = useState<number>(10); // Duration in minutes
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  // Handler to add a question with a limit of 5 questions
   const handleAddQuestion = (): void => {
     if (newQuestion.trim() && questions.length < 5) {
       setQuestions([...questions, newQuestion.trim()]);
-      setNewQuestion(""); // Clear the input
+      setNewQuestion("");
     } else if (questions.length >= 5) {
       alert("You can only add up to 5 questions.");
     }
   };
 
-  // Handler to remove a question
   const handleRemoveQuestion = (index: number): void => {
     setQuestions(questions.filter((_, i) => i !== index));
   };
 
-  // Handler to submit the form
-  const handleSubmit = (): void => {
-    const boxData: BoxData = {
-      name: boxName,
-      isVerifiable,
-      questions,
-      boxDuration,
-    };
-
-    // You would replace this with your API call or form handling logic
-    console.log("Creating Box with data:", boxData);
-
-    // Reset form (optional)
-    setBoxName("");
-    setIsVerifiable(false);
-    setQuestions([]);
-    setBoxDuration(10);
-    alert("AI Box Created Successfully!");
+  const handleSubmit = async (): Promise<void> => {
+    setIsSubmitting(true);
+    try {
+      await aiBoxService.createAiBox({
+        name: boxName,
+        duration: boxDuration,
+        verifiable: isVerifiable,
+        questions,
+      });
+      router.push("/ai-box/collection"); // Redirect on success
+    } catch (error) {
+      console.error("Error creating AI Box:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -76,7 +67,7 @@ const CreateBox: React.FC = () => {
             placeholder="Enter box name..."
             className="w-full rounded-lg border border-gray-700 bg-gray-900/50 p-4 text-white placeholder:text-gray-400 focus:border-red-400 focus:ring-1 focus:ring-red-400"
             value={boxName}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBoxName(e.target.value)}
+            onChange={(e) => setBoxName(e.target.value)}
           />
         </div>
 
@@ -122,7 +113,7 @@ const CreateBox: React.FC = () => {
               placeholder="Enter a question..."
               className="w-full rounded-lg border border-gray-700 bg-gray-900/50 p-4 text-white placeholder:text-gray-400 focus:border-red-400 focus:ring-1 focus:ring-red-400"
               value={newQuestion}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewQuestion(e.target.value)}
+              onChange={(e) => setNewQuestion(e.target.value)}
             />
             <button
               onClick={handleAddQuestion}
@@ -170,9 +161,7 @@ const CreateBox: React.FC = () => {
               max={1440}
               step={10}
               value={boxDuration}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setBoxDuration(Number(e.target.value))
-              }
+              onChange={(e) => setBoxDuration(Number(e.target.value))}
               className="w-3/4"
             />
             <span className="ml-4 text-xl text-gray-300">{boxDuration} mins</span>
@@ -183,9 +172,10 @@ const CreateBox: React.FC = () => {
         <div className="mt-6 flex items-center justify-center">
           <button
             onClick={handleSubmit}
+            disabled={isSubmitting}
             className="w-full rounded-lg bg-red-400 py-3 text-xl font-semibold text-gray-900 transition-all hover:bg-red-300 md:w-1/2"
           >
-            Create Box
+            {isSubmitting ? "Creating..." : "Create Box"}
           </button>
         </div>
       </div>

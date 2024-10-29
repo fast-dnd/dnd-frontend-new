@@ -4,10 +4,11 @@ import React from "react";
 
 import AiBoxWrapper from "../components/ai-box";
 
-const AiBoxCustom = () => {
+const AiBoxCustom = ({ params }: { params: { boxId: string } }) => {
+  const boxId = params.boxId;
   return (
     <>
-      <AiBoxWrapper state="daily" />
+      <AiBoxWrapper state="open" boxId={boxId} />
     </>
   );
 };
