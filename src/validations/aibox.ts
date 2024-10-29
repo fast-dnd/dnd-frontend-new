@@ -7,8 +7,22 @@ export const txSchema = z.object({
   rating: z.number(),
 });
 
+export const aiShortBoxSchema = z.object({
+  aiBoxId: z.string(),
+  name: z.string(),
+  startDate: z.number(),
+  endDate: z.number(),
+  verifiable: z.boolean(),
+});
+
+export const aiShortBoxesSchema = z.object({
+  boxes: z.array(aiShortBoxSchema),
+  total: z.number(),
+});
+
 export const aiBoxSchema = z.object({
   aiBoxId: z.string(),
+  name: z.string().nullable().optional(),
   epoch: z.number(),
   startDate: z.number(),
   endDate: z.number(),

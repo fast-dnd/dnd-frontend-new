@@ -5,12 +5,13 @@ import { PAGINATION_LIMIT } from "@/services/api-factory";
 
 interface IUseGetAiBoxLeaderboardProps {
   epoch: number;
+  boxId?: string;
 }
 
-const useGetAiBoxLeaderboard = ({ epoch }: IUseGetAiBoxLeaderboardProps) => {
+const useGetAiBoxLeaderboard = ({ epoch, boxId }: IUseGetAiBoxLeaderboardProps) => {
   return useInfiniteQuery({
-    queryKey: [aiBoxKey, epoch],
-    queryFn: ({ pageParam = 1 }) => aiBoxService.getAiBoxLeaderboard({ epoch, pageParam }),
+    queryKey: [aiBoxKey, epoch, boxId],
+    queryFn: ({ pageParam = 1 }) => aiBoxService.getAiBoxLeaderboard({ epoch, boxId, pageParam }),
     getNextPageParam: (lastPage, allPages) => {
       const nextPage =
         lastPage.leaderboard.length === PAGINATION_LIMIT ? allPages.length + 1 : undefined;

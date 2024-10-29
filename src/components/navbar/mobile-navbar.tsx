@@ -141,8 +141,8 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
                 )}
                 <Button
                   className="gap-4 whitespace-nowrap py-4"
-                  href="/ai-box"
-                  variant={pathname === "/ai-box" ? "primary" : "sidebar"}
+                  href="/ai-box/daily"
+                  variant={pathname === "/ai-box/daily" ? "primary" : "sidebar"}
                 >
                   <Toolbox className="size-5 shrink-0 fill-white" fillOpacity={1} />
                   <p className="flex-1 text-center">AI-BOX</p>

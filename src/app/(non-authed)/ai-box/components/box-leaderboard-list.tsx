@@ -15,11 +15,13 @@ const BoxLeaderboardList = ({
   epoch,
   lastRefetch,
   verifiable,
+  boxId,
   onUserRankDataFetched,
 }: {
   epoch: number;
   lastRefetch: number;
   verifiable: boolean;
+  boxId?: string;
   onUserRankDataFetched: Function;
 }) => {
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
@@ -39,6 +41,7 @@ const BoxLeaderboardList = ({
     refetch, // Add refetch to trigger a manual reload
   } = useGetAiBoxLeaderboard({
     epoch, // Pass epoch to the hook
+    boxId,
   });
 
   // Whenever the epoch changes, refetch data from scratch
