@@ -31,7 +31,7 @@ const MyBoxes: React.FC = () => {
   };
 
   return (
-    <div className="relative z-10 min-h-[800px] rounded-xl bg-gray-900/80 p-8 backdrop-blur-xl">
+    <div className="relative z-10 flex min-h-[800px] flex-col rounded-xl bg-gray-900/80 p-8 backdrop-blur-xl">
       {/* Header Section */}
       <div className="relative mb-8 flex flex-wrap items-center justify-between space-y-2 md:space-y-0">
         <h1
@@ -87,6 +87,16 @@ const MyBoxes: React.FC = () => {
           )}
         </>
       )}
+
+      {/* Share Note - positioned at the bottom */}
+      <div className="mt-auto text-center text-gray-400">
+        Open the box and copy the URL. Share it with your friends and let them try to beat you!
+        Example:
+        <span className="font-semibold text-red-400">
+          {" "}
+          https://play.v3rpg.com/ai-box/672..63b6c
+        </span>
+      </div>
     </div>
   );
 };

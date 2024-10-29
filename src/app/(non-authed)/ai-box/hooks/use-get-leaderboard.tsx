@@ -9,7 +9,6 @@ interface IUseGetAiBoxLeaderboardProps {
 }
 
 const useGetAiBoxLeaderboard = ({ epoch, boxId }: IUseGetAiBoxLeaderboardProps) => {
-  console.log("BOXID: ", boxId);
   return useInfiniteQuery({
     queryKey: [aiBoxKey, epoch, boxId],
     queryFn: ({ pageParam = 1 }) => aiBoxService.getAiBoxLeaderboard({ epoch, boxId, pageParam }),

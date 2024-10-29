@@ -82,8 +82,11 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
   const handleCasualBoxSubmitPrompt = async (aiBoxId: string, prompt: string) => {
     setIsSendingCasualRequest(true);
     try {
+      toast.success(`Request sent, wait for ~5sec for it to be processed, and refresh the page`);
       await aiBoxService.submitPrompt(aiBoxId, prompt, "request");
-      toast.success(`Request sent, wait for ~10sec for it to be processed`);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.error("Error submitting prompt:", error);
       toast.error(`Error: ${JSON.stringify(error)}`);
@@ -308,16 +311,6 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
                 <p className="text-center text-5xl font-bold text-yellow-200">
                   {data.prize} {data.prizeToken}
                 </p>
-                <div className="mt-4 flex items-center justify-center space-x-2 rounded-full bg-red-300/10 px-4 py-2 text-red-200">
-                  <a href="https://www.ora.io/" target="_blank" rel="noopener noreferrer">
-                    <span>Powered by ORA Protocol</span>
-                  </a>
-                  <img
-                    src="/images/logos/ora-logo.png"
-                    alt="ora logo"
-                    className="h-8 w-8 object-contain"
-                  />
-                </div>
               </>
             ) : (
               <>
@@ -328,6 +321,20 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
                   Check daily box if you are interestend in claiming cool rewards
                 </p>
               </>
+            )}
+            {data.verifiable ? (
+              <div className="mt-4 flex items-center justify-center space-x-2 rounded-full bg-red-300/10 px-4 py-2 text-red-200">
+                <a href="https://www.ora.io/" target="_blank" rel="noopener noreferrer">
+                  <span>Powered by ORA Protocol</span>
+                </a>
+                <img
+                  src="/images/logos/ora-logo.png"
+                  alt="ora logo"
+                  className="h-8 w-8 object-contain"
+                />
+              </div>
+            ) : (
+              <></>
             )}
           </div>
 
@@ -439,7 +446,7 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
             epoch={selectedEpoch}
             lastRefetch={lastRefetch}
             verifiable={data.verifiable}
-            boxId={data.aiBoxId}
+            boxId={customBox ? data.aiBoxId : ""}
             onUserRankDataFetched={setUserRankData}
           />
         </div>

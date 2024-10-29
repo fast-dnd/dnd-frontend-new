@@ -1,7 +1,7 @@
-/* eslint-disable tailwindcss/no-custom-classname */
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import ToggleSwitch from "@/components/common/toggle-switch";
 import aiBoxService from "@/services/aibox-service";
 import { jibril } from "@/utils/fonts";
 
@@ -12,7 +12,7 @@ const CreateBox: React.FC = () => {
   const [isVerifiable, setIsVerifiable] = useState<boolean>(false);
   const [questions, setQuestions] = useState<string[]>([]);
   const [newQuestion, setNewQuestion] = useState<string>("");
-  const [boxDuration, setBoxDuration] = useState<number>(10); // Duration in minutes
+  const [boxDuration, setBoxDuration] = useState<number>(20); // Duration in minutes
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const handleAddQuestion = (): void => {
@@ -75,7 +75,7 @@ const CreateBox: React.FC = () => {
         <div className="rounded-lg bg-gray-800/50 p-6">
           <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">📦 Box Type</h2>
           <div className="flex items-center justify-center space-x-4">
-            <label className="flex items-center space-x-2">
+            {/* <label className="flex items-center space-x-2">
               <input
                 type="radio"
                 name="boxType"
@@ -96,7 +96,15 @@ const CreateBox: React.FC = () => {
                 className="form-radio h-5 w-5 text-red-500"
               />
               <span className="text-gray-300">🔒 Verifiable Box</span>
-            </label>
+            </label> */}
+            <ToggleSwitch
+              on={!isVerifiable}
+              setOn={() => setIsVerifiable(!isVerifiable)}
+              items={[
+                { text: "Verifiable Box", icon: <>🔒</> },
+                { text: "Casual Box", icon: <>🌴</> },
+              ]}
+            />
           </div>
         </div>
 
@@ -152,12 +160,12 @@ const CreateBox: React.FC = () => {
         <div className="rounded-lg bg-gray-800/50 p-6">
           <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">⏰ Box Duration</h2>
           <p className="mb-4 text-center text-gray-300">
-            Select how long you want your box to last (10 minutes to 24 hours).
+            Select how long you want your box to last (20 minutes to 24 hours).
           </p>
           <div className="flex items-center justify-center">
             <input
               type="range"
-              min={10}
+              min={20}
               max={1440}
               step={10}
               value={boxDuration}
