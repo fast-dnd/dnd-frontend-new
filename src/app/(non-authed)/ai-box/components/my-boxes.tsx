@@ -65,7 +65,7 @@ const MyBoxes: React.FC = () => {
                   </span>
                 </p>
                 <p className="text-center text-gray-300">
-                  <TimerComponent endDate={box.endDate} currentEpoch={1} />
+                  <TimerComponent endDate={box.endDate} currentEpoch={-1} />
                 </p>
               </div>
             ))}

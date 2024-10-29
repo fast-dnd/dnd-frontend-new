@@ -33,16 +33,21 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
   const [selectedEpoch, setSelectedEpoch] = useState(1);
   const [lastRefetch, setLastRefetch] = useState(1);
   const [userRankData, setUserRankData] = useState<any | null>(null);
+  const [gameEnd, setGameEnd] = useState<boolean>(false);
   const guestData = useGuest();
   const { user, loggedIn } = useAuth();
   const [isSendingCasualRequest, setIsSendingCasualRequest] = useState(false);
 
+  const customBox = !!boxId; // true if boxId is defined
   const maxCharacters = 250;
 
   useEffect(() => {
     if (data) {
       if (data.epoch) setSelectedEpoch(data.epoch);
       if (data.prompt) setPlayerPrompt(data.prompt);
+      if (checkGameEnds(data.endDate)) {
+        setGameEnd(true);
+      }
     }
   }, [data]);
 
@@ -63,6 +68,16 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
       </div>
     );
   }
+
+  const checkGameEnds = (endDate: number) => {
+    const currentTimestamp = Math.floor(Date.now() / 1000);
+    let timeDifference = endDate - currentTimestamp;
+
+    if (timeDifference <= 0) {
+      return true;
+    }
+    return false;
+  };
 
   const handleCasualBoxSubmitPrompt = async (aiBoxId: string, prompt: string) => {
     setIsSendingCasualRequest(true);
@@ -96,12 +111,21 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
         </div>
 
         {/* Main Header in Center */}
-        <h1
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-bold tracking-wider text-red-400"
-          style={jibril.style}
-        >
-          DAILY BOX
-        </h1>
+        {!customBox ? (
+          <h1
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-bold tracking-wider text-red-400"
+            style={jibril.style}
+          >
+            DAILY BOX
+          </h1>
+        ) : (
+          <h1
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-bold tracking-wider text-red-400"
+            style={jibril.style}
+          >
+            {data.name}
+          </h1>
+        )}
 
         {/* Refresh Button */}
         <div className="flex w-full items-center justify-center space-x-4 md:w-auto md:justify-end">
@@ -125,7 +149,11 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
           <div className="rounded-lg bg-gray-800/50 p-6">
             <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">📦 Box Query</h2>
             <p className="mb-4 space-y-3 text-xl text-gray-300">{data.query + data.handicap}</p>
-            <TimerComponent endDate={data.endDate} currentEpoch={data.epoch} />
+            {!customBox ? (
+              <TimerComponent endDate={data.endDate} currentEpoch={data.epoch} />
+            ) : (
+              <TimerComponent endDate={data.endDate} currentEpoch={-1} />
+            )}
           </div>
 
           <div className="rounded-lg bg-gray-800/50 p-6">
@@ -152,7 +180,9 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
                 <div className="flex w-full items-center justify-between">
                   <div className=" flex space-x-2">
                     {/* Check if rating is 0 and there's no aiJudgeQueryTxHash */}
-                    {data.rating === 0 && !data.aiJudgeQueryTxHash ? (
+                    {gameEnd ? (
+                      <></>
+                    ) : data.rating === 0 && !data.aiJudgeQueryTxHash ? (
                       <p className="font-bold text-gray-500">
                         Rating: To be determined after submitting request
                       </p>
@@ -228,7 +258,9 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
                     )}
                   </div>
 
-                  {data.rating === 0 ? (
+                  {gameEnd ? (
+                    <></>
+                  ) : data.rating === 0 ? (
                     <Button
                       type="submit"
                       variant="ghost"
@@ -271,19 +303,32 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
               style={{ transform: "rotate(-2deg)" }}
             ></div>
             <h3 className="mb-2 text-center text-xl font-semibold text-red-200">🎁 Box Prize 🎁</h3>
-            <p className="text-center text-5xl font-bold text-yellow-200">
-              {data.prize} {data.prizeToken}
-            </p>
-            <div className="mt-4 flex items-center justify-center space-x-2 rounded-full bg-red-300/10 px-4 py-2 text-red-200">
-              <a href="https://www.ora.io/" target="_blank" rel="noopener noreferrer">
-                <span>Powered by ORA Protocol</span>
-              </a>
-              <img
-                src="/images/logos/ora-logo.png"
-                alt="ora logo"
-                className="h-8 w-8 object-contain"
-              />
-            </div>
+            {!customBox ? (
+              <>
+                <p className="text-center text-5xl font-bold text-yellow-200">
+                  {data.prize} {data.prizeToken}
+                </p>
+                <div className="mt-4 flex items-center justify-center space-x-2 rounded-full bg-red-300/10 px-4 py-2 text-red-200">
+                  <a href="https://www.ora.io/" target="_blank" rel="noopener noreferrer">
+                    <span>Powered by ORA Protocol</span>
+                  </a>
+                  <img
+                    src="/images/logos/ora-logo.png"
+                    alt="ora logo"
+                    className="h-8 w-8 object-contain"
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="text-center text-lg font-semibold text-gray-300">
+                  Custom boxes do not have prizes
+                </p>
+                <p className="text-center text-sm font-semibold text-gray-300">
+                  Check daily box if you are interestend in claiming cool rewards
+                </p>
+              </>
+            )}
           </div>
 
           <div className="rounded-lg bg-gray-800/50 p-6">
@@ -365,31 +410,36 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
 
       {/* Leaderboard Section */}
       <div className="mt-8">
-        <div className="mb-4 flex space-x-2">
-          {Array.from({ length: Math.min(data.epoch, 3) }, (_, index) => {
-            const epochValue = data.epoch - index;
-            return (
-              <button
-                key={epochValue}
-                className={cn(
-                  "rounded-lg px-4 py-2 font-medium transition-all",
-                  selectedEpoch === epochValue
-                    ? "bg-red-400 text-white"
-                    : "bg-gray-800 text-gray-400 hover:bg-gray-700",
-                )}
-                onClick={() => setSelectedEpoch(epochValue)}
-              >
-                Day {epochValue}
-              </button>
-            );
-          })}
-        </div>
+        {!customBox ? (
+          <div className="mb-4 flex space-x-2">
+            {Array.from({ length: Math.min(data.epoch, 3) }, (_, index) => {
+              const epochValue = data.epoch - index;
+              return (
+                <button
+                  key={epochValue}
+                  className={cn(
+                    "rounded-lg px-4 py-2 font-medium transition-all",
+                    selectedEpoch === epochValue
+                      ? "bg-red-400 text-white"
+                      : "bg-gray-800 text-gray-400 hover:bg-gray-700",
+                  )}
+                  onClick={() => setSelectedEpoch(epochValue)}
+                >
+                  Day {epochValue}
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <></>
+        )}
 
         <div className="rounded-lg bg-gray-800/50 p-6">
           <BoxLeaderboardList
             epoch={selectedEpoch}
             lastRefetch={lastRefetch}
             verifiable={data.verifiable}
+            boxId={data.aiBoxId}
             onUserRankDataFetched={setUserRankData}
           />
         </div>

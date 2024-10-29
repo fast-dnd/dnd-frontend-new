@@ -22,6 +22,7 @@ export const aiShortBoxesSchema = z.object({
 
 export const aiBoxSchema = z.object({
   aiBoxId: z.string(),
+  name: z.string().nullable().optional(),
   epoch: z.number(),
   startDate: z.number(),
   endDate: z.number(),
