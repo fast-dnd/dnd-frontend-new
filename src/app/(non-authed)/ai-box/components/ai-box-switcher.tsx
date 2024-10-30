@@ -23,7 +23,7 @@ const AiBoxSwitcher: React.FC<AiBoxSwitcherProps> = ({ state = "open", boxId }) 
 
   return (
     <div className="relative flex w-full ">
-      <div className="mx-auto mt-10 max-w-screen-xl flex-grow rounded-xl">
+      <div className="mx-auto mt-14 max-w-screen-xl flex-grow rounded-xl lg:mt-2">
         {/* Glowing border effect */}
         {selectedSection === "open" && <OpenedBox boxId={boxId} />}
         {selectedSection === "create" && <CreateBox />}

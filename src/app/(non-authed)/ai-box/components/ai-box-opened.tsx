@@ -96,7 +96,7 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
   };
 
   return (
-    <div className="relative rounded-xl bg-gray-900/80 p-4 backdrop-blur-xl">
+    <div className="relative rounded-xl bg-gray-900/80 p-1 backdrop-blur-xl lg:p-4">
       {/* Header Section with Box Type Indicator */}
       <div className="relative mb-8 flex flex-wrap items-center justify-between space-y-2 md:space-y-0">
         {/* Box Type Indicator with Hover Tooltip */}
