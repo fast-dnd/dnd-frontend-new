@@ -96,7 +96,7 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
   };
 
   return (
-    <div className="relative z-10  rounded-xl bg-gray-900/80 p-8 backdrop-blur-xl">
+    <div className="relative rounded-xl bg-gray-900/80 p-4 backdrop-blur-xl">
       {/* Header Section with Box Type Indicator */}
       <div className="relative mb-8 flex flex-wrap items-center justify-between space-y-2 md:space-y-0">
         {/* Box Type Indicator with Hover Tooltip */}
@@ -441,15 +441,13 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
           <></>
         )}
 
-        <div className="rounded-lg bg-gray-800/50 p-6">
-          <BoxLeaderboardList
-            epoch={selectedEpoch}
-            lastRefetch={lastRefetch}
-            verifiable={data.verifiable}
-            boxId={customBox ? data.aiBoxId : ""}
-            onUserRankDataFetched={setUserRankData}
-          />
-        </div>
+        <BoxLeaderboardList
+          epoch={selectedEpoch}
+          lastRefetch={lastRefetch}
+          verifiable={data.verifiable}
+          boxId={customBox ? data.aiBoxId : ""}
+          onUserRankDataFetched={setUserRankData}
+        />
       </div>
     </div>
   );

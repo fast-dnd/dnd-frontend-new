@@ -46,7 +46,7 @@ const CreateBox: React.FC = () => {
   };
 
   return (
-    <div className="relative z-10 rounded-xl bg-gray-900/80 p-8 backdrop-blur-xl">
+    <div className="relative z-10 rounded-xl bg-gray-900/80 p-4 backdrop-blur-xl">
       {/* Header Section */}
       <div className="relative mb-8 flex flex-wrap items-center justify-between space-y-2 md:space-y-0">
         <h1

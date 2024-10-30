@@ -58,7 +58,7 @@ const TournamentDesktop = () => {
   };
 
   return (
-    <div className="relative w-full  p-6">
+    <div className="relative w-full p-4">
       {/* Glowing border effect */}
       {/* <div className="absolute inset-0 bg-gradient-to-b to-transparent" /> */}
       <div className="relative z-10 mx-auto max-w-screen-xl rounded-xl bg-gray-900/80 p-8 backdrop-blur-xl">
@@ -254,13 +254,11 @@ const TournamentDesktop = () => {
 
         {/* Leaderboard Section */}
         <div className="mt-8">
-          <div className="rounded-lg bg-gray-800/50 p-6">
-            <TournamentLeaderboardList
-              lastRefetch={lastRefetch}
-              communityId={selectedCommunity ? selectedCommunity._id : ""}
-              onUserRankDataFetched={setUserRankData}
-            />
-          </div>
+          <TournamentLeaderboardList
+            lastRefetch={lastRefetch}
+            communityId={selectedCommunity ? selectedCommunity._id : ""}
+            onUserRankDataFetched={setUserRankData}
+          />
         </div>
       </div>
     </div>
