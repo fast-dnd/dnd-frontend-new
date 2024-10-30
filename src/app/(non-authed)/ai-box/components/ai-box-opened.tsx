@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
@@ -96,42 +97,26 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
   };
 
   return (
-    <div className="relative rounded-xl bg-gray-900/80 p-1 backdrop-blur-xl lg:p-4">
-      {/* Header Section with Box Type Indicator */}
-      <div className="relative mb-8 flex flex-wrap items-center justify-between space-y-2 md:space-y-0">
-        {/* Box Type Indicator with Hover Tooltip */}
-        <div className="w-full cursor-pointer text-center text-lg text-gray-300 md:w-auto md:text-left">
-          <span
-            className="hover:underline"
-            title={
-              data.verifiable
-                ? "Verifiable box is powered by ORA Protocol. Each query is rated by decentralized AI. Transaction is provided as proof of rating."
-                : "Casual box is rated by V3RPG AI judge. This is a centralized mechanism, providing an immediate rating without on-chain proof."
-            }
-          >
-            {data.verifiable ? "🔒 Verifiable mode" : "🌴 Casual mode"}
-          </span>
-        </div>
+    <div className="relative rounded-xl p-1 backdrop-blur-xl lg:bg-gray-900/80 lg:p-4">
+      {/* Header Section */}
+      <div className="mb-8 flex flex-col space-y-4">
+        {/* Mode Indicator and Refresh Button */}
+        <div className="flex items-center justify-between">
+          {/* Box Type Indicator with Hover Tooltip */}
+          <div className="cursor-pointer text-lg text-gray-300">
+            <span
+              className="hover:underline"
+              title={
+                data.verifiable
+                  ? "Verifiable box is powered by ORA Protocol. Each query is rated by decentralized AI. Transaction is provided as proof of rating."
+                  : "Casual box is rated by V3RPG AI judge. This is a centralized mechanism, providing an immediate rating without on-chain proof."
+              }
+            >
+              {data.verifiable ? "🔒 Verifiable mode" : "🌴 Casual mode"}
+            </span>
+          </div>
 
-        {/* Main Header in Center */}
-        {!customBox ? (
-          <h1
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-bold tracking-wider text-red-400"
-            style={jibril.style}
-          >
-            DAILY BOX
-          </h1>
-        ) : (
-          <h1
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-bold tracking-wider text-red-400"
-            style={jibril.style}
-          >
-            {data.name}
-          </h1>
-        )}
-
-        {/* Refresh Button */}
-        <div className="flex w-full items-center justify-center space-x-4 md:w-auto md:justify-end">
+          {/* Refresh Button */}
           <button
             onClick={() => setLastRefetch(Date.now())}
             className="relative z-10 rounded-full bg-gray-800 p-2 transition-all hover:bg-gray-700"
@@ -143,6 +128,18 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
             )}
           </button>
         </div>
+
+        {/* Main Title */}
+        {!customBox ? (
+          <></>
+        ) : (
+          <h1
+            className="text-center text-4xl font-bold tracking-wider text-red-400"
+            style={jibril.style}
+          >
+            {data.name}
+          </h1>
+        )}
       </div>
 
       {/* Main Content Grid */}
@@ -171,7 +168,7 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
                 placeholder="I think ..."
                 value={playerPrompt}
                 onChange={(e) => setPlayerPrompt(e.target.value.slice(0, maxCharacters))}
-                disabled={data.aiJudgeQueryTxHash || data.rating > 0 ? true : false}
+                disabled={data.aiJudgeQueryTxHash || data.rating > 0 || gameEnd ? true : false}
               />
               <span className="absolute bottom-4 right-2 text-sm text-gray-400">
                 {playerPrompt.length}/{maxCharacters}
@@ -241,15 +238,21 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
                       <></>
                     )}
                   </div>
-                  <OraAiBoxPromptModal
-                    aiBoxId={data.aiBoxId}
-                    prompt={playerPrompt}
-                    shouldPop={!data.aiJudgeQueryTxHash}
-                  />
+                  {gameEnd ? (
+                    <>
+                      <p className="font-bold text-green-500">game ended, can't post a prompt </p>
+                    </>
+                  ) : (
+                    <OraAiBoxPromptModal
+                      aiBoxId={data.aiBoxId}
+                      prompt={playerPrompt}
+                      shouldPop={!data.aiJudgeQueryTxHash}
+                    />
+                  )}
                 </div>
               ) : (
                 <div className=" flex w-full items-center justify-between">
-                  <div className=" flex-1 text-ellipsis whitespace-nowrap">
+                  <div className=" flex-1 text-ellipsis">
                     {data.rating === 0 ? (
                       <p className="font-bold text-gray-500">
                         Rating: To be determined after submitting request
