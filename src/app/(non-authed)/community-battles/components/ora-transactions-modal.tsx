@@ -2,6 +2,8 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState } from "react";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { AiOutlineClose } from "react-icons/ai";
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import chainService from "@/services/chain-service";
@@ -51,7 +53,10 @@ const OraTransactionsModal = ({
       <DialogTrigger asChild>
         <button className="rounded-full border-black text-red-400">See all transactions</button>
       </DialogTrigger>
-      <DialogContent className="z-50 flex flex-col gap-4 rounded-lg bg-black p-6">
+      <DialogContent className="z-[100] flex flex-col gap-12 bg-black p-4 max-lg:size-full max-lg:max-h-[80vh] max-lg:max-w-full max-lg:overflow-y-auto max-lg:rounded-none max-lg:bg-dark-900 lg:p-8">
+        <DialogClose>
+          <AiOutlineClose />
+        </DialogClose>{" "}
         {/* Header */}
         <div className="flex items-start justify-between">
           {/* Rank */}
