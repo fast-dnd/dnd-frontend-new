@@ -178,7 +178,7 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
             <div className="flex items-center justify-between">
               {data.verifiable ? (
                 <div className="flex w-full items-center justify-between">
-                  <div className=" flex space-x-2">
+                  <div className="flex space-x-2">
                     {/* Check if rating is 0 and there's no aiJudgeQueryTxHash */}
                     {gameEnd ? (
                       <></>
@@ -251,8 +251,8 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
                   )}
                 </div>
               ) : (
-                <div className=" flex w-full items-center justify-between">
-                  <div className=" flex-1 text-ellipsis">
+                <div className="flex w-full flex-row items-center justify-between ">
+                  <div className="flex flex-1 space-x-2 ">
                     {data.rating === 0 ? (
                       <p className="font-bold text-gray-500">
                         Rating: To be determined after submitting request
@@ -263,37 +263,38 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
                       <></>
                     )}
                   </div>
-
-                  {gameEnd ? (
-                    <></>
-                  ) : data.rating === 0 ? (
-                    <Button
-                      type="submit"
-                      variant="ghost"
-                      className="flex items-center justify-center text-primary"
-                      aria-label="Send"
-                      disabled={isSendingCasualRequest}
-                      onClick={() => handleCasualBoxSubmitPrompt(data.aiBoxId, playerPrompt)}
-                    >
-                      {isSendingCasualRequest ? (
-                        <div className="h-6 w-6 animate-spin rounded-full border-2 border-red-400 border-t-transparent" />
-                      ) : (
-                        <IoMdSend className="text-3xl" /> // Send icon when not loading
-                      )}{" "}
-                    </Button>
-                  ) : (
-                    <Tooltip content="Prompt has already been sent. It can take up to a couple of minutes for it to resolve. Refresh the page to check if it was processed.">
+                  <div>
+                    {gameEnd ? (
+                      <></>
+                    ) : data.rating === 0 ? (
                       <Button
                         type="submit"
                         variant="ghost"
-                        className="flex items-center justify-center text-primary"
+                        className=" text-primary"
                         aria-label="Send"
-                        disabled
+                        disabled={isSendingCasualRequest}
+                        onClick={() => handleCasualBoxSubmitPrompt(data.aiBoxId, playerPrompt)}
                       >
-                        <IoMdSend className="text-3xl" />{" "}
+                        {isSendingCasualRequest ? (
+                          <div className="h-6 w-6 animate-spin rounded-full border-2 border-red-400 border-t-transparent" />
+                        ) : (
+                          <IoMdSend className="text-3xl" /> // Send icon when not loading
+                        )}{" "}
                       </Button>
-                    </Tooltip>
-                  )}
+                    ) : (
+                      <Tooltip content="Prompt has already been sent. It can take up to a couple of minutes for it to resolve. Refresh the page to check if it was processed.">
+                        <Button
+                          type="submit"
+                          variant="ghost"
+                          className=" text-primary"
+                          aria-label="Send"
+                          disabled
+                        >
+                          <IoMdSend className="text-3xl" />{" "}
+                        </Button>
+                      </Tooltip>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
