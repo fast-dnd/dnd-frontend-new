@@ -82,7 +82,6 @@ body {
   top: 50%;
   transform: translateY(-50%);
   width: 400px;
-  height: auto;
   background: rgba(20, 20, 20, 0.8);
   border-radius: 150px 0 0 150px;
   display: flex;
@@ -129,10 +128,6 @@ body {
   gap: 15px;
 }
 
-.ai-box-menu-items.hidden {
-  display: none; /* Hide when in collapsed mode */
-}
-
 .ai-box-menu-item {
   display: flex;
   flex-direction: column;
@@ -158,8 +153,34 @@ body {
   text-shadow: 0 0 8px #ff4d4f;
 }
 
+/* Mobile adjustments */
 @media (max-width: 768px) {
   .ai-box-menu-switcher {
-    width: 50px; /* Start collapsed on smaller screens */
+    width: 280px; /* Reduced width for mobile */
+    padding: 10px;
+    border-radius: 100px 0 0 100px; /* Adjusted for half-circle on mobile */
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.5); /* Slightly smaller shadow */
+  }
+
+  .ai-box-menu-switcher.collapsed {
+    width: 80px; /* Smaller width when collapsed on mobile */
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .ai-box-menu-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ai-box-menu-item .icon {
+    font-size: 1.8rem; /* Smaller icons for mobile */
+  }
+
+  .ai-box-menu-item .label {
+    font-size: 0.9rem; /* Smaller labels for mobile */
   }
 }

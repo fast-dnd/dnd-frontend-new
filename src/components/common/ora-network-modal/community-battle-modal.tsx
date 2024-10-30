@@ -77,6 +77,13 @@ const OraCommunityBattlesPromptModal = ({
   }, [conversationId, isOpen]);
 
   const handleNetworkSelection = (network: NetworkName) => {
+    const unstableNetworks = ["Linea", "Arbitrum"];
+
+    if (unstableNetworks.includes(network)) {
+      toast.warning(`${network} is currently not listed due to instability in our platform`);
+      return;
+    }
+
     setSelectedNetwork(network);
   };
 

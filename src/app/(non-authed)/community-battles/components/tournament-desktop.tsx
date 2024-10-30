@@ -58,14 +58,12 @@ const TournamentDesktop = () => {
   };
 
   return (
-    <div className="relative w-full  p-6">
-      {/* Glowing border effect */}
-      {/* <div className="absolute inset-0 bg-gradient-to-b to-transparent" /> */}
-      <div className="relative z-10 mx-auto max-w-screen-xl rounded-xl bg-gray-900/80 p-8 backdrop-blur-xl">
+    <div className="relative mt-10 w-full p-1 lg:mt-1 lg:p-4">
+      <div className="relative z-10 mx-auto max-w-screen-xl rounded-xl p-8 backdrop-blur-xl lg:bg-gray-900/80">
         {/* Header Section */}
         <div className="mb-8 flex items-center justify-center">
           <h1
-            className="text-center text-4xl font-bold tracking-wider text-red-400"
+            className="hidden text-center text-4xl font-bold tracking-wider text-red-400 lg:block"
             style={jibril.style}
           >
             {name} - Season {season} ⚔️
@@ -254,13 +252,11 @@ const TournamentDesktop = () => {
 
         {/* Leaderboard Section */}
         <div className="mt-8">
-          <div className="rounded-lg bg-gray-800/50 p-6">
-            <TournamentLeaderboardList
-              lastRefetch={lastRefetch}
-              communityId={selectedCommunity ? selectedCommunity._id : ""}
-              onUserRankDataFetched={setUserRankData}
-            />
-          </div>
+          <TournamentLeaderboardList
+            lastRefetch={lastRefetch}
+            communityId={selectedCommunity ? selectedCommunity._id : ""}
+            onUserRankDataFetched={setUserRankData}
+          />
         </div>
       </div>
     </div>

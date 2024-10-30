@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
