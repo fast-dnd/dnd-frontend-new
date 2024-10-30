@@ -31,7 +31,7 @@ const MyBoxes: React.FC = () => {
   };
 
   return (
-    <div className="relative z-10 flex min-h-[800px] flex-col rounded-xl bg-gray-900/80 p-8 backdrop-blur-xl">
+    <div className="relative z-10 flex min-h-[800px] flex-col rounded-xl p-1 backdrop-blur-xl lg:bg-gray-900/80 lg:p-4">
       {/* Header Section */}
       <div className="relative mb-8 flex flex-wrap items-center justify-between space-y-2 md:space-y-0">
         <h1
@@ -73,7 +73,7 @@ const MyBoxes: React.FC = () => {
 
           {/* Load More Button */}
           {hasNextPage && (
-            <div className="mt-8 flex justify-center">
+            <div className="mb-4 mt-8 flex justify-center">
               <button
                 onClick={() => fetchNextPage()}
                 disabled={isFetchingNextPage}

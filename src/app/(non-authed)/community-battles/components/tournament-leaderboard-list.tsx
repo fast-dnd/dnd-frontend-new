@@ -44,7 +44,6 @@ const TournamentLeaderboardList = ({
 
   useEffect(() => {
     if (leaderboardData) {
-      debugger;
       onUserRankDataFetched(leaderboardData.pages?.[0]);
     }
   }, [lastRefetch, refetch, leaderboardData]);

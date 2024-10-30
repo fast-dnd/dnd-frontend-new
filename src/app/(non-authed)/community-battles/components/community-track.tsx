@@ -29,7 +29,7 @@ const CommunityTrack: React.FC<CommunityTrackProps> = ({
             <img
               src={community.logoImageUrl}
               alt={community.name}
-              className="mb-2 h-32 w-32 rounded-full hover:opacity-80"
+              className="mb-2 h-14 w-14 rounded-full hover:opacity-80 lg:h-32 lg:w-32"
             />
             <p className="text-lg text-white">{community.name}</p>
           </div>

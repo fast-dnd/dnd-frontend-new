@@ -46,7 +46,7 @@ const CreateBox: React.FC = () => {
   };
 
   return (
-    <div className="relative z-10 rounded-xl bg-gray-900/80 p-8 backdrop-blur-xl">
+    <div className="relative rounded-xl p-1 backdrop-blur-xl lg:bg-gray-900/80 lg:p-4">
       {/* Header Section */}
       <div className="relative mb-8 flex flex-wrap items-center justify-between space-y-2 md:space-y-0">
         <h1
@@ -75,28 +75,6 @@ const CreateBox: React.FC = () => {
         <div className="rounded-lg bg-gray-800/50 p-6">
           <h2 className="mb-4 text-center text-2xl font-semibold text-red-400">📦 Box Type</h2>
           <div className="flex items-center justify-center space-x-4">
-            {/* <label className="flex items-center space-x-2">
-              <input
-                type="radio"
-                name="boxType"
-                value="casual"
-                checked={!isVerifiable}
-                onChange={() => setIsVerifiable(false)}
-                className="form-radio h-5 w-5 text-red-500"
-              />
-              <span className="text-gray-300">🌴 Casual Box</span>
-            </label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="radio"
-                name="boxType"
-                value="verifiable"
-                checked={isVerifiable}
-                onChange={() => setIsVerifiable(true)}
-                className="form-radio h-5 w-5 text-red-500"
-              />
-              <span className="text-gray-300">🔒 Verifiable Box</span>
-            </label> */}
             <ToggleSwitch
               on={!isVerifiable}
               setOn={() => setIsVerifiable(!isVerifiable)}
