@@ -1,5 +1,5 @@
 # For local development:
- 
+
 ### 1. Use correct node version by running: `nvm use`
 
 ### 2. Install **pnpm**: `npm i -g pnpm`
