@@ -145,7 +145,7 @@ const BoxLeaderboardList = ({
                         <span className="text-xs sm:text-lg">{leaderboardUser.username}</span>
                       </div>
                     </td>
-                    <td className="flex items-center space-x-2 px-2 py-1 text-xs font-semibold sm:px-4 sm:py-4 sm:text-base">
+                    <td className="flex items-center space-x-2 px-2 py-1 text-xs font-semibold sm:p-4 sm:text-base">
                       {leaderboardUser.transactions && leaderboardUser.transactions.length > 0 ? (
                         <>
                           <img
