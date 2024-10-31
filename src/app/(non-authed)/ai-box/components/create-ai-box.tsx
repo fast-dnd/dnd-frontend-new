@@ -67,8 +67,10 @@ const CreateBox: React.FC = () => {
             placeholder="Enter box name..."
             className="w-full rounded-lg border border-gray-700 bg-gray-900/50 p-4 text-white placeholder:text-gray-400 focus:border-red-400 focus:ring-1 focus:ring-red-400"
             value={boxName}
-            onChange={(e) => setBoxName(e.target.value)}
+            onChange={(e) => setBoxName(e.target.value.slice(0, 15))}
+            maxLength={15}
           />
+          <p className="mt-2 text-right text-gray-500">{boxName.length}/15</p>
         </div>
 
         {/* 2. Box Type Selector */}
@@ -93,20 +95,24 @@ const CreateBox: React.FC = () => {
           </h2>
 
           {/* Add New Question Input */}
-          <div className="mb-4 flex items-center space-x-2">
-            <input
-              type="text"
-              placeholder="Enter a question..."
-              className="w-full rounded-lg border border-gray-700 bg-gray-900/50 p-4 text-white placeholder:text-gray-400 focus:border-red-400 focus:ring-1 focus:ring-red-400"
-              value={newQuestion}
-              onChange={(e) => setNewQuestion(e.target.value)}
-            />
-            <button
-              onClick={handleAddQuestion}
-              className="rounded-full bg-red-400 p-3 transition-all hover:bg-red-300"
-            >
-              ➕
-            </button>
+          <div className="mb-4 space-y-1">
+            <div className="flex items-center space-x-2">
+              <input
+                type="text"
+                placeholder="Enter a question..."
+                className="w-full rounded-lg border border-gray-700 bg-gray-900/50 p-4 text-white placeholder:text-gray-400 focus:border-red-400 focus:ring-1 focus:ring-red-400"
+                value={newQuestion}
+                onChange={(e) => setNewQuestion(e.target.value.slice(0, 150))}
+                maxLength={150}
+              />
+              <button
+                onClick={handleAddQuestion}
+                className="rounded-full bg-red-400 p-3 transition-all hover:bg-red-300"
+              >
+                ➕
+              </button>
+            </div>
+            <p className="pr-14 text-right text-gray-500">{newQuestion.length}/150</p>
           </div>
 
           {/* List of Questions */}

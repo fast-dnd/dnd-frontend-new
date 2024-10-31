@@ -6,7 +6,7 @@ import { InfiniteData } from "@tanstack/react-query";
 import Spinner from "@/components/ui/spinner";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import chainService from "@/services/chain-service";
-import { cn } from "@/utils/style-utils";
+// import { cn } from "@/utils/style-utils";
 import { ILeaderBoard } from "@/validations/leaderboard";
 
 import useGetAiBoxLeaderboard from "../hooks/use-get-leaderboard";
@@ -27,7 +27,6 @@ const BoxLeaderboardList = ({
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
   const scrollableRef = useRef<HTMLDivElement>(null);
 
-  // Modified hook to make sure it fetches from scratch whenever epoch changes
   const {
     data: leaderboardData,
     isError,
@@ -38,15 +37,14 @@ const BoxLeaderboardList = ({
     hasPreviousPage,
     fetchPreviousPage,
     isFetchingPreviousPage,
-    refetch, // Add refetch to trigger a manual reload
+    refetch,
   } = useGetAiBoxLeaderboard({
-    epoch, // Pass epoch to the hook
+    epoch,
     boxId,
   });
 
-  // Whenever the epoch changes, refetch data from scratch
   useEffect(() => {
-    refetch(); // This will refetch the data each time epoch changes
+    refetch();
   }, [epoch, lastRefetch, refetch]);
 
   useEffect(() => {
@@ -74,25 +72,23 @@ const BoxLeaderboardList = ({
         previousRef.current?.pages?.[0]?.leaderboard?.[0]?.accountId &&
       scrollableRef.current
     ) {
-      // Prevent scrolling to top when loaded previous data
       const numOfUsers = leaderboardData.pages[0].leaderboard.length;
-      scrollableRef.current.scrollTop += numOfUsers * 52; // each leaderboard user is 52px
+      scrollableRef.current.scrollTop += numOfUsers * 52;
     }
     previousRef.current = leaderboardData;
   }, [leaderboardData]);
 
   if (isLoading)
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col space-y-2">
         {Array.from({ length: 10 }).map((_, i) => (
-          <div key={i} className="flex w-full justify-between bg-black/20 p-2">
-            <div className="flex items-center gap-4">
-              <div className="size-2 rounded-lg bg-gray-600" />
-
-              <div className="size-9 rounded-full bg-gray-600" />
-              <div className="h-5 w-32 rounded-full bg-gray-600" />
+          <div key={i} className="flex w-full justify-between space-x-4 bg-black/20 p-2">
+            <div className="flex items-center space-x-4">
+              <div className="h-8 w-8 rounded-lg bg-gray-600" />
+              <div className="h-9 w-9 rounded-full bg-gray-600" />
+              <div className="h-5 w-20 rounded-full bg-gray-600" />
             </div>
-            <div className="size-5 rounded-lg bg-gray-600" />
+            <div className="h-5 w-10 rounded-lg bg-gray-600" />
           </div>
         ))}
       </div>
@@ -102,15 +98,18 @@ const BoxLeaderboardList = ({
 
   const content = (
     <div className="flex w-full flex-1 flex-col items-center px-1">
-      <div className="w-full flex-1 overflow-y-auto" style={{ maxHeight: "600px" }}>
+      <div
+        className="w-full flex-1 overflow-y-auto"
+        style={{ maxHeight: "600px" }}
+        ref={scrollableRef}
+      >
         <table className="mb-2 w-full table-auto text-left text-white">
-          <thead className="sticky top-0 z-20 bg-[#1a1d2e] font-bold uppercase text-white">
-            {" "}
+          <thead className="sticky top-0 z-20 bg-[#1a1d2e] text-xs font-bold uppercase text-white sm:text-sm">
             <tr>
-              <th className="px-4 py-2">Rank</th>
-              <th className="px-4 py-2">User</th>
-              <th className="px-4 py-2">Transaction</th>
-              <th className="px-4 py-2">Rating</th>
+              <th className="px-2 py-1 sm:px-4 sm:py-2">Rank</th>
+              <th className="px-2 py-1 sm:px-4 sm:py-2">User</th>
+              <th className="px-2 py-1 sm:px-4 sm:py-2">Transaction</th>
+              <th className="px-2 py-1 sm:px-4 sm:py-2">Rating</th>
             </tr>
           </thead>
           <tbody>
@@ -133,25 +132,27 @@ const BoxLeaderboardList = ({
                     ref={isLastItem ? lastLeaderboardUserRef : null}
                     className="border-b border-gray-700"
                   >
-                    <td className="px-4 py-2 font-semibold">{overallIndex}</td>
-                    <td className="px-4 py-2">
-                      <div className="flex items-center space-x-4">
+                    <td className="px-2 py-1 text-xs font-semibold sm:px-4 sm:py-2 sm:text-base">
+                      {overallIndex}
+                    </td>
+                    <td className="px-2 py-1 sm:px-4 sm:py-2">
+                      <div className="flex items-center space-x-2 sm:space-x-4">
                         <img
                           src={leaderboardUser.imageUrl || "/images/default-avatar.png"}
                           alt={leaderboardUser.username}
-                          className="h-12 w-12 rounded-full"
+                          className="h-8 w-8 rounded-full sm:h-12 sm:w-12"
                         />
-                        <span className="text-lg">{leaderboardUser.username}</span>
+                        <span className="text-xs sm:text-lg">{leaderboardUser.username}</span>
                       </div>
                     </td>
-                    <td className="flex flex-row gap-2 px-4 py-4 font-semibold">
+                    <td className="flex items-center space-x-2 px-2 py-1 text-xs font-semibold sm:p-4 sm:text-base">
                       {leaderboardUser.transactions && leaderboardUser.transactions.length > 0 ? (
                         <>
                           <img
                             src={getChainImage(
                               leaderboardUser.transactions[0].chain as NetworkName,
                             )}
-                            style={{ height: "25px" }}
+                            className="h-4 sm:h-6"
                             alt="Chain Icon"
                           />
                           <a
@@ -169,45 +170,45 @@ const BoxLeaderboardList = ({
                           </a>
                         </>
                       ) : (
-                        <span className="text-gray-500">
+                        <span className="text-xs text-gray-500 sm:text-base">
                           {verifiable ? "No transactions" : "rated by v3"}
                         </span>
                       )}
                     </td>
-                    <td className="px-4 py-2 font-semibold">{leaderboardUser.rating}</td>
+                    <td className="px-2 py-1 text-xs font-semibold sm:px-4 sm:py-2 sm:text-base">
+                      {leaderboardUser.rating}
+                    </td>
                   </tr>
                 );
               }),
             )}
 
-            {/* Render placeholders if there are fewer than 10 users */}
             {Array.from({
               length: Math.max(
                 0,
                 10 - leaderboardData?.pages.flatMap((page) => page.leaderboard).length,
               ),
             }).map((_, index) => (
-              <tr key={`placeholder-${index}`} className="border-b border-gray-700">
-                <td className="px-4 py-2">
+              <tr key={`placeholder-${index}`} className="border-b border-gray-700 ">
+                <td className="px-2 py-1 sm:px-4 sm:py-2">
                   {leaderboardData?.pages.flatMap((page) => page.leaderboard).length + index + 1}
                 </td>
-                <td className="px-4 py-2">
-                  <div className="h-12 w-12 "></div>
+                <td className="px-2 py-1 sm:px-4 sm:py-2">
+                  <div className="h-8 w-8 rounded-full  sm:h-12 sm:w-12"></div>
                 </td>
-                <td className="px-4 py-2">
-                  <div className="h-4 w-full"></div>
+                <td className="px-2 py-1 sm:px-4 sm:py-2">
+                  <div className="h-4 w-full rounded-full "></div>
                 </td>
-                <td className="px-4 py-2">
-                  <div className="h-4 w-full "></div>
+                <td className="px-2 py-1 sm:px-4 sm:py-2">
+                  <div className="h-4 w-full rounded-full "></div>
                 </td>
               </tr>
             ))}
 
-            {/* Spinner for loading more data */}
             {isFetchingNextPage && (
               <tr className="border-b border-gray-700">
-                <td className="px-4 py-2 text-center">
-                  <Spinner className="m-0 size-8" />
+                <td colSpan={4} className="px-4 py-2 text-center">
+                  <Spinner className="m-0 h-4 sm:h-8" />
                 </td>
               </tr>
             )}
@@ -218,12 +219,12 @@ const BoxLeaderboardList = ({
   );
 
   return (
-    <div className={cn("glass-effect-2", "relative flex  flex-1 flex-col overflow-hidden")}>
-      <div className={cn("flex flex-1 flex-col overscroll-auto")} ref={scrollableRef}>
+    <div className="relative flex flex-1 flex-col overflow-hidden p-2 sm:p-4">
+      <div className="flex flex-1 flex-col overscroll-auto" ref={scrollableRef}>
         {content}
         {isFetchingNextPage && (
-          <div className="flex h-10 justify-center">
-            <Spinner className="m-0 size-8" />
+          <div className="flex h-8 justify-center sm:h-10">
+            <Spinner className="m-0 h-4 sm:h-8" />
           </div>
         )}
       </div>

@@ -35,7 +35,7 @@ const CommunityCarousel: React.FC<CommunityCarouselProps> = ({ selectedCommunity
           {/* Social Media Icons */}
           <div className="flex flex-row gap-1 sm:gap-2">
             <a href={currentCommunity.twitterUrl} target="_blank" rel="noopener noreferrer">
-              <FaTwitter className="h-8 w-8 transform text-blue-500 transition-transform hover:scale-110 hover:text-blue-400 sm:h-10 sm:w-10" />
+              <FaTwitter className="h-8 w-8 text-blue-500 transition-transform hover:scale-110 hover:text-blue-400 sm:h-10 sm:w-10" />
             </a>
           </div>
         </div>

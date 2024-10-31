@@ -95,9 +95,10 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
       setIsSendingCasualRequest(false);
     }
   };
+  // <div className="relative z-10 flex min-h-[800px] flex-col rounded-xl p-1 backdrop-blur-xl lg:bg-gray-900/80 lg:p-4">
 
   return (
-    <div className="relative rounded-xl p-1 backdrop-blur-xl lg:bg-gray-900/80 lg:p-4">
+    <div className="relative flex flex-col rounded-xl p-1 backdrop-blur-xl lg:bg-gray-900/80 lg:p-4">
       {/* Header Section */}
       <div className="mb-8 flex flex-col space-y-4">
         {/* Mode Indicator and Refresh Button */}
