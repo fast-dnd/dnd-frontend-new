@@ -28,10 +28,9 @@ const handleInterceptors = (apiInstance: AxiosInstance) => {
       const guestData = localStorage.getItem("guest");
 
       if (token) {
-        // User is authenticated
         config.headers["Authorization"] = `Bearer ${JSON.parse(token)}`;
-      } else if (guestData) {
-        // User is a guest
+      }
+      if (guestData) {
         try {
           const guest = JSON.parse(guestData) as GuestData;
           if (guest.guestId) {
