@@ -134,7 +134,7 @@ const TournamentLeaderboardList = ({
                           alt={leaderboardUser.username}
                           className="h-8 w-8 rounded-full sm:h-12 sm:w-12"
                         />
-                        <span className="text-lg">{leaderboardUser.username}</span>
+                        <span className="text-xs sm:text-lg">{leaderboardUser.username}</span>
                       </div>
                     </td>
                     <td className="flex items-center space-x-2 px-2 py-1 text-xs font-semibold sm:p-4 sm:text-base">
