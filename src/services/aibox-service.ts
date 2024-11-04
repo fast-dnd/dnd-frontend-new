@@ -1,6 +1,11 @@
 import queryString from "query-string";
 
-import { aiBoxPromptSchema, aiBoxSchema, aiShortBoxesSchema } from "@/validations/aibox";
+import {
+  aiBoxPromptSchema,
+  aiBoxSchema,
+  aiBoxViewPromptSchema,
+  aiShortBoxesSchema,
+} from "@/validations/aibox";
 import { leaderboardSchema } from "@/validations/leaderboard";
 
 import createApi, { PAGINATION_LIMIT } from "./api-factory";
@@ -47,6 +52,16 @@ const getAiBoxes = async ({ pageParam }: { pageParam: number }) => {
   return await aiBoxApi.get("?" + queryParams).then((res) => aiShortBoxesSchema.parse(res.data));
 };
 
+const getAiBoxPrompt = async ({ boxId, userId }: { boxId?: string; userId: string }) => {
+  const queryParams = queryString.stringify({
+    boxId: boxId,
+    userId: userId,
+  });
+  return await aiBoxApi
+    .get("prompt?" + queryParams)
+    .then((res) => aiBoxViewPromptSchema.parse(res.data));
+};
+
 const submitPrompt = async (aiBoxId: string, prompt: string, method: string) => {
   return await aiBoxApi
     .post(`/prompt/${aiBoxId}`, { prompt, method })
@@ -73,6 +88,7 @@ export const createAiBox = async ({ name, duration, verifiable, questions }: Cre
 const aiBoxService = {
   getAiBoxLeaderboard,
   getAiBoxes,
+  getAiBoxPrompt,
   getAiBox,
   submitPrompt,
   createAiBox,

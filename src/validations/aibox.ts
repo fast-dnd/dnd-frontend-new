@@ -38,6 +38,13 @@ export const aiBoxSchema = z.object({
   verifiable: z.boolean(),
 });
 
+export const aiBoxViewPromptSchema = z.object({
+  aiBoxId: z.string(),
+  userId: z.string(),
+  prompt: z.string(),
+  question: z.string(),
+});
+
 export const aiBoxPromptSchema = z.object({
   prompt: z.string(),
   oraQuery: z.string(),
