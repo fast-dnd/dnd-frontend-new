@@ -1,5 +1,5 @@
 /* eslint-disable tailwindcss/no-custom-classname */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { Tooltip } from "@/components/ui/tooltip"; // Import Tooltip component
@@ -22,6 +22,18 @@ const AiBoxPageSwitcher = ({
     { id: "create", label: "Create Box", icon: "✍️", path: "/ai-box/create" },
     { id: "my", label: "My Boxes", icon: "📦", path: "/ai-box/collection" },
   ];
+
+  // Set isCollapsed based on screen size on initial load
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsCollapsed(window.innerWidth < 768); // Assuming 768px as the breakpoint for mobile
+    };
+
+    checkScreenSize(); // Set the initial state
+    window.addEventListener("resize", checkScreenSize); // Update on resize
+
+    return () => window.removeEventListener("resize", checkScreenSize); // Cleanup listener on unmount
+  }, []);
 
   const handleToggle = () => setIsCollapsed(!isCollapsed);
 
