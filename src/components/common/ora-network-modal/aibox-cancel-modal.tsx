@@ -6,6 +6,8 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useState } from "react";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { AiOutlineClose } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import { toast } from "sonner";
 
@@ -55,6 +57,11 @@ const OraAiCancelBoxPromptModal = ({ aiBoxId }: OraAiBoxCancelPromptModalProps) 
         </div>
       </DialogTrigger>
       <DialogContent className="z-[100] flex flex-col gap-12 bg-black p-4 max-lg:size-full max-lg:max-w-full max-lg:rounded-none max-lg:bg-dark-900 lg:p-8">
+        <div className="flex justify-end lg:hidden">
+          <DialogClose>
+            <AiOutlineClose />
+          </DialogClose>
+        </div>
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-center gap-4">
             <div className="size-2 shrink-0 rotate-45 bg-primary" />
