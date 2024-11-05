@@ -7,6 +7,7 @@ import { ArrowClockwise } from "@phosphor-icons/react";
 import { IoMdSend } from "react-icons/io";
 import { toast } from "sonner";
 
+import AiboxCancelCasualBoxModal from "@/components/common/ora-network-modal/aibox-cancel-casual-modal";
 import OraAiCancelBoxPromptModal from "@/components/common/ora-network-modal/aibox-cancel-modal";
 import OraAiBoxPromptModal from "@/components/common/ora-network-modal/aibox-modal";
 import { Button } from "@/components/ui/button";
@@ -259,7 +260,10 @@ const OpenedBox: React.FC<OpenBoxProps> = ({ boxId }) => {
                         Rating: To be determined after submitting request
                       </p>
                     ) : data.rating !== 0 ? (
-                      <p className="font-bold text-green-500">Rating: {data.rating}</p>
+                      <div className="flex items-center space-x-4">
+                        <p className="font-bold text-green-500">Rating: {data.rating}</p>
+                        <AiboxCancelCasualBoxModal aiBoxId={data.aiBoxId} />
+                      </div>
                     ) : (
                       <></>
                     )}
