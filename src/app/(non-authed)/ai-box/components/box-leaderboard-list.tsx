@@ -5,7 +5,6 @@ import { InfiniteData } from "@tanstack/react-query";
 
 import OraAiViewBoxPromptModal from "@/components/common/ora-network-modal/aibox-view-prompt-modal";
 import Spinner from "@/components/ui/spinner";
-import useAuth from "@/hooks/helpers/use-auth";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import chainService from "@/services/chain-service";
 // import { cn } from "@/utils/style-utils";
@@ -28,8 +27,6 @@ const BoxLeaderboardList = ({
 }) => {
   const previousRef = useRef<InfiniteData<ILeaderBoard>>();
   const scrollableRef = useRef<HTMLDivElement>(null);
-
-  const { loggedIn } = useAuth();
 
   const {
     data: leaderboardData,
