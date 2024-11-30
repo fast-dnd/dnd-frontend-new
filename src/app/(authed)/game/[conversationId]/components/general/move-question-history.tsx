@@ -47,8 +47,9 @@ const MoveQuestionHistory = ({
       ))}
       {Array.from({ length: asciiMovieHistory.length }, (_, i) => (
         <div key={i} className="flex flex-col gap-4">
-          <Markdown className="markdown">{asciiMovieHistory[i]}</Markdown>
-          {Array.isArray(moveHistory[i]) && <MoveList moves={moveHistory[i]} />}
+          <div className="overflow-x-auto">
+            <Markdown className="markdown whitespace-pre">{asciiMovieHistory[i]}</Markdown>
+          </div>
         </div>
       ))}
 
