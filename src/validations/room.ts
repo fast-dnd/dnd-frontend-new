@@ -114,6 +114,7 @@ export const roomDetailSchema = baseRoomSchema.extend({
   link: z.string(),
   queuedMoves: z.array(moveSchema),
   currentRound: z.number(),
+  asciiMovie: z.array(z.string()),
   chatGptResponses: z.array(z.string()),
   generatedImages: z.array(z.string().nullable()),
   generatedAudio: z.array(z.string()),

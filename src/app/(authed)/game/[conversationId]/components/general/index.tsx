@@ -14,7 +14,7 @@ import Player from "./player";
 
 const General = ({ conversationId }: { conversationId: string }) => {
   const { currentPlayer } = useGetCurrentPlayer(conversationId);
-  const { roomData, moveHistory, questionHistory, canAsk, asking, setAsking } =
+  const { roomData, moveHistory, questionHistory, canAsk, asking, setAsking, asciiMovieHistory } =
     useGeneral(conversationId);
 
   const [statsOpened, setStatsOpened] = useState(false);
@@ -44,6 +44,7 @@ const General = ({ conversationId }: { conversationId: string }) => {
             moveHistory={moveHistory}
             questionHistory={questionHistory}
             thinking={asking}
+            asciiMovieHistory={asciiMovieHistory}
           />
 
           <AskQuestion

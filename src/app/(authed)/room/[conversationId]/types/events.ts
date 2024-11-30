@@ -6,6 +6,7 @@ export interface IRoomSocketEvent {
     | "PLAYER_EDIT"
     | "REQUEST_SENT_TO_DM"
     | "GAME_STARTED"
-    | "ROOM_SETTINGS_CHANGED";
+    | "ROOM_SETTINGS_CHANGED"
+    | "ASCII_MOVIE";
   data: IRoomDetail;
 }

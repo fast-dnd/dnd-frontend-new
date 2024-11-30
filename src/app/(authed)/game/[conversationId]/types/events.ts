@@ -3,7 +3,11 @@ import { IReward } from "@/types/reward";
 import { IPlayer, IRoomDetail } from "@/types/room";
 
 export type IGameplaySocketEvent = ISocketEvent | IChunkEvent;
-export type IGeneralSocketEvent = ISocketEvent | IPlayerMoveEvent | IQuestionEvent;
+export type IGeneralSocketEvent =
+  | ISocketEvent
+  | IPlayerMoveEvent
+  | IQuestionEvent
+  | IAsciiMovieEvent;
 
 export interface ISocketEvent {
   event: "REQUEST_SENT_TO_DM" | "ROUND_STORY" | "GAME_ENDED";
@@ -33,6 +37,13 @@ export interface IAnswerEvent {
 export interface IRewardEvent {
   event: "REWARD_EARNED";
   data: { accountId: string; player: IPlayer; reward: IReward };
+}
+
+export interface IAsciiMovieEvent {
+  event: "ASCII_MOVIE";
+  data: {
+    asciiChunk: Array<string>;
+  };
 }
 
 export type IQuestionEvent = IAskEvent | IAnswerEvent;

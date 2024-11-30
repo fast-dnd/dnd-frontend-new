@@ -7,7 +7,7 @@ import { roomKey } from "@/services/room-service";
 import { IQuestion } from "@/types/room";
 
 import { moveStore } from "../stores/move-store";
-import { IGeneralSocketEvent } from "../types/events";
+import { IAsciiMovieEvent, IGeneralSocketEvent } from "../types/events";
 
 const useGeneralSocket = (conversationId: string) => {
   const accountId = useReadLocalStorage<string>("accountId");
@@ -15,6 +15,7 @@ const useGeneralSocket = (conversationId: string) => {
 
   const [canAsk, setCanAsk] = useState(true);
   const [questionAsked, setQuestionAsked] = useState<Partial<IQuestion>>();
+  const [asciiScenes, setAsciiScenes] = useState<Array<string>>([]);
   const [asking, setAsking] = useState(false);
 
   useEffect(() => {
@@ -46,6 +47,14 @@ const useGeneralSocket = (conversationId: string) => {
           break;
         case "REQUEST_SENT_TO_DM":
           setCanAsk(false);
+        case "ASCII_MOVIE":
+          if ("asciiChunk" in event.data) {
+            setAsciiScenes((prevScenes) => [
+              ...prevScenes,
+              ...(event as IAsciiMovieEvent).data.asciiChunk,
+            ]);
+          }
+          break;
         case "ROUND_STORY":
           setCanAsk(true);
           break;
@@ -58,7 +67,7 @@ const useGeneralSocket = (conversationId: string) => {
     };
   }, [accountId, conversationId, queryClient, questionAsked]);
 
-  return { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking };
+  return { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking, asciiScenes };
 };
 
 export default useGeneralSocket;
