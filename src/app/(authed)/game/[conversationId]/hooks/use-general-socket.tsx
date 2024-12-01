@@ -47,7 +47,7 @@ const useGeneralSocket = (conversationId: string) => {
           break;
         case "REQUEST_SENT_TO_DM":
           setCanAsk(false);
-        case "ASCII_MOVIE":
+        case "ASCII_MOVIE_CHUNK":
           if ("asciiChunk" in event.data) {
             setAsciiScenes((prevScenes) => [
               ...prevScenes,

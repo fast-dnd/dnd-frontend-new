@@ -40,7 +40,7 @@ export interface IRewardEvent {
 }
 
 export interface IAsciiMovieEvent {
-  event: "ASCII_MOVIE";
+  event: "ASCII_MOVIE_CHUNK";
   data: {
     asciiChunk: Array<string>;
   };

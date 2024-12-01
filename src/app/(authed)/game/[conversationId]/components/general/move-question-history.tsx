@@ -1,5 +1,3 @@
-import Markdown from "react-markdown";
-
 import Spinner from "@/components/ui/spinner";
 import useAutoScrollToBottom from "@/hooks/helpers/use-auto-scroll-to-bottom";
 import { IMove, IQuestion } from "@/types/room";
@@ -12,14 +10,12 @@ interface IMoveQuestionHistoryProps {
   moveHistory: IMove[][];
   questionHistory: Partial<IQuestion>[];
   thinking: boolean;
-  asciiMovieHistory: Array<string>;
 }
 
 const MoveQuestionHistory = ({
   moveHistory,
   questionHistory,
   thinking,
-  asciiMovieHistory,
 }: IMoveQuestionHistoryProps) => {
   const { autoBottomScrollDiv } = useAutoScrollToBottom([moveHistory, questionHistory, thinking]);
 
@@ -43,13 +39,6 @@ const MoveQuestionHistory = ({
             <Question question={questionHistory[i]} />
           )}
           {Array.isArray(moveHistory[i]) && <MoveList moves={moveHistory[i]} />}
-        </div>
-      ))}
-      {Array.from({ length: asciiMovieHistory.length }, (_, i) => (
-        <div key={i} className="flex flex-col gap-4">
-          <div className="overflow-x-auto">
-            <Markdown className="markdown whitespace-pre">{asciiMovieHistory[i]}</Markdown>
-          </div>
         </div>
       ))}
 
