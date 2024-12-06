@@ -1,10 +1,8 @@
+/* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from "react";
-// import { AiOutlineLeft } from "react-icons/ai";
-import Markdown from "react-markdown";
 
 import { Box } from "@/components/ui/box";
-// import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/style-utils";
 
 import useGeneral from "../../hooks/use-general";
@@ -136,7 +134,7 @@ const General = ({ conversationId }: { conversationId: string }) => {
                   className="relative mx-auto w-11/12 max-w-3xl rounded-lg border-4 border-red-400 bg-gray-800 p-6 shadow-lg"
                 >
                   {/* Fancy frame title (optional) */}
-                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 transform rounded-md bg-red-400 px-4 py-1 font-bold text-gray-800">
+                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 transform rounded-md bg-red-400 px-4 py-1 text-sm font-bold text-gray-800">
                     🎬 SCENE {index + 1}/{asciiMovieHistory.length} 🎥
                   </div>
 
