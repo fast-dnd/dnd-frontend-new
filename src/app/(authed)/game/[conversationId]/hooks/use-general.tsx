@@ -34,7 +34,9 @@ const useGeneral = (conversationId: string) => {
       const moves = roomData.moves || [];
       setMoveHistory(roomData.queuedMoves.length > 0 ? [...moves, roomData.queuedMoves] : moves);
       const asciiMovieParts: string[] = roomData.asciiMovie || [];
-      setAsciiMovieHistory(asciiScenes ? [...asciiMovieParts, ...asciiScenes] : asciiMovieParts);
+      setAsciiMovieHistory(
+        asciiScenes.length > asciiMovieParts.length ? [...asciiScenes] : asciiMovieParts,
+      );
     }
   }, [questionAsked, asciiScenes, roomData, setCanAsk, setQuestionAsked]);
 
