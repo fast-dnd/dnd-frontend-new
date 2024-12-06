@@ -129,10 +129,28 @@ const General = ({ conversationId }: { conversationId: string }) => {
           )}
 
           {activeTab === "movie" && (
-            <div className="flex w-full flex-1 flex-col gap-8 ">
+            <div className="mt-8 flex w-full flex-1 flex-col gap-8">
               {asciiMovieHistory.map((movie, index) => (
-                <div key={index} className="flex w-full flex-1 rounded-md bg-white/5  lg:text-lg">
-                  <Markdown className="markdown w-full whitespace-pre">{movie}</Markdown>
+                <div
+                  key={index}
+                  className="relative mx-auto w-11/12 max-w-3xl rounded-lg border-4 border-red-400 bg-gray-800 p-6 shadow-lg"
+                >
+                  {/* Fancy frame title (optional) */}
+                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 transform rounded-md bg-red-400 px-4 py-1 font-bold text-gray-800">
+                    🎬 SCENE {index + 1}/{asciiMovieHistory.length} 🎥
+                  </div>
+
+                  {/* Movie Content */}
+                  <div
+                    className="flex justify-center text-lg text-white"
+                    style={{
+                      fontFamily: "monospace", // Monospace font for ASCII art
+                      whiteSpace: "pre", // Preserves ASCII art spacing
+                      textAlign: "left", // Ensures left alignment
+                    }}
+                  >
+                    {movie}
+                  </div>
                 </div>
               ))}
             </div>
