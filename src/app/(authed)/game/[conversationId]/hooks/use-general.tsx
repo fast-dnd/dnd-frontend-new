@@ -10,8 +10,9 @@ const useGeneral = (conversationId: string) => {
 
   const [moveHistory, setMoveHistory] = useState<IMove[][]>([]);
   const [questionHistory, setQuestionHistory] = useState<Partial<IQuestion>[]>([]);
+  const [asciiMovieHistory, setAsciiMovieHistory] = useState<Partial<string>[]>([]);
 
-  const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking } =
+  const { canAsk, setCanAsk, questionAsked, setQuestionAsked, asking, setAsking, asciiScenes } =
     useGeneralSocket(conversationId);
 
   useEffect(() => {
@@ -32,10 +33,14 @@ const useGeneral = (conversationId: string) => {
       setQuestionHistory(questionAsked ? [...questions, questionAsked] : questions);
       const moves = roomData.moves || [];
       setMoveHistory(roomData.queuedMoves.length > 0 ? [...moves, roomData.queuedMoves] : moves);
+      const asciiMovieParts: string[] = roomData.asciiMovie || [];
+      setAsciiMovieHistory(
+        asciiScenes.length > asciiMovieParts.length ? [...asciiScenes] : asciiMovieParts,
+      );
     }
-  }, [questionAsked, roomData, setCanAsk, setQuestionAsked]);
+  }, [questionAsked, asciiScenes, roomData, setCanAsk, setQuestionAsked]);
 
-  return { roomData, moveHistory, questionHistory, canAsk, asking, setAsking };
+  return { roomData, moveHistory, questionHistory, canAsk, asking, setAsking, asciiMovieHistory };
 };
 
 export default useGeneral;
