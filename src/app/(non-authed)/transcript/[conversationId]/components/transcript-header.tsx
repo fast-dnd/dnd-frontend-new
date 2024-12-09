@@ -75,7 +75,11 @@ const TranscriptHeader = ({
           <div className="flex flex-col items-start">
             <button
               className="flex items-center gap-1 font-semibold lg:text-lg"
-              onClick={() => onCopy(window.location.href)}
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  onCopy(window.location.href);
+                }
+              }}
             >
               SHARE
               <PiShareFatFill />
