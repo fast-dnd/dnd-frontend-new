@@ -35,4 +35,5 @@ export const transcriptSchema = z.object({
   title: z.string(),
   createdAt: z.coerce.date(),
   seenCount: z.number(),
+  asciiMovie: z.array(z.string()),
 });
