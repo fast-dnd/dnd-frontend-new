@@ -93,7 +93,7 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
           setShowMovie={setShowMovie}
         />
 
-        <div className="mt-48 flex flex-col gap-6 px-4 pb-6">
+        <div className="mt-60 flex flex-col gap-6 px-4 pb-6">
           {/* Conditionally render text or movie */}
           {showMovie && hasMovies ? (
             <div className="mt-20 flex flex-col gap-6 rounded-md p-1 pb-6 lg:p-8">

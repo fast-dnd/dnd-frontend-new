@@ -5,7 +5,6 @@ import { format } from "date-fns";
 import { motion, useScroll } from "framer-motion";
 import { PiShareFatFill } from "react-icons/pi";
 
-import ToggleSwitch from "@/components/common/toggle-switch";
 import useCopy from "@/hooks/helpers/use-copy";
 import { ITranscript } from "@/types/transcript";
 import { jibril } from "@/utils/fonts";
@@ -90,15 +89,30 @@ const TranscriptHeader = ({
         />
       </div>
       {hasMovies && (
-        <div className=" mt-4 flex w-full items-center justify-center ">
-          <ToggleSwitch
-            on={showMovie}
-            setOn={setShowMovie}
-            items={[
-              { text: "Text", icon: <span>📖</span> },
-              { text: "Movie", icon: <span>🎥</span> },
-            ]}
-          />
+        <div className="mt-4 flex w-full items-center justify-center">
+          <div className="flex w-auto rounded-lg border border-gray-300 bg-white shadow-md">
+            {/* Tab for Text */}
+            <button
+              onClick={() => setShowMovie(false)}
+              className={`px-6 py-2 text-sm font-medium transition-all duration-300 ${
+                !showMovie
+                  ? "rounded-l-lg bg-primary text-white"
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              📖 Text
+            </button>
+
+            {/* Tab for Movie */}
+            <button
+              onClick={() => setShowMovie(true)}
+              className={`px-6 py-2 text-sm font-medium transition-all duration-300 ${
+                showMovie ? "rounded-r-lg bg-primary text-white" : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              🎥 Movie
+            </button>
+          </div>
         </div>
       )}
     </div>
