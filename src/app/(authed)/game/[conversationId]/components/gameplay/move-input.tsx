@@ -31,7 +31,6 @@ const MoveInput = ({ champion, gameMode, wordsChallenge }: IMoveInputProps) => {
   );
 
   const isWordsChallenge = gameMode == "random_words";
-  console.log("Is words challenge", isWordsChallenge);
   useEffect(() => {
     if (wordChallengeForPlayer) {
       moveStore.wordsChallenge.set([

@@ -41,6 +41,7 @@ const MoveQuestionHistory = ({
           {Array.isArray(moveHistory[i]) && <MoveList moves={moveHistory[i]} />}
         </div>
       ))}
+
       <div ref={autoBottomScrollDiv} className="flex justify-center">
         {thinking && (
           <div className="flex items-center gap-2">
