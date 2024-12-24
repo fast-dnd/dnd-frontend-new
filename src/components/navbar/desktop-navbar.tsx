@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 import {
   DiscordLogo,
   InstagramLogo,
+  PersonSimpleWalk,
   RocketLaunch,
-  Steps,
   Sword,
   Toolbox,
   TwitterLogo,
@@ -19,7 +19,6 @@ import { cn } from "@/utils/style-utils";
 
 import ClaimRewardModal from "../common/claim-reward-modal";
 import MusicSettingsModal from "../common/music-settings-modal";
-import SwordsIcon from "../icons/swords-icon";
 import ProfileDropdown from "./components/profile-dropdown";
 import RewardPool from "./components/reward-pool";
 
@@ -126,7 +125,7 @@ const DesktopNavbar = () => {
                 </div>
 
                 <div className="size-2 rotate-45 bg-white opacity-25" />
-                <Steps className="size-8 shrink-0 fill-white" fillOpacity={1} />
+                <PersonSimpleWalk className="size-8 shrink-0 fill-white" fillOpacity={1} />
                 <Link
                   href="/leaderboard"
                   className={cn(

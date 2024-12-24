@@ -3,7 +3,7 @@ import { AiFillSound, AiFillStar } from "react-icons/ai";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import GoldCoinIcon from "@/components/icons/gold-coin-icon";
-import { Button } from "@/components/ui/button";
+import { Button, SoundEffect } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -183,6 +183,7 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
           className="px-8 uppercase"
           disabled={!isAdmin || !canBegin || gameStarting}
           isLoading={isGameStarting || gameStarting}
+          sound={SoundEffect.CLICK_ARROW}
           onClick={onStartGame}
         >
           START{" "}

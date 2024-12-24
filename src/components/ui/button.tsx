@@ -63,12 +63,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, disabled, href, isLoading, children, variant, sound, onClick, ...props }, ref) => {
     const { soundEnabled, soundVolume } = useSoundSystem();
     const composedClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-      console.log("SOUND ENABLED", soundEnabled);
       if (sound && soundEnabled) {
-        console.log("PLAYING SOUND BRO");
         const audio = new Audio(SOUND_PATHS[sound]);
         audio.volume = soundVolume / 100;
-        console.log("AUDIO VOLUME:", audio.volume);
         audio.play().catch(console.error);
       }
       if (onClick) onClick(e);
