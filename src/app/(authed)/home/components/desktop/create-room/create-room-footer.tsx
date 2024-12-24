@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocalStorage } from "usehooks-ts";
 
-import { Button } from "@/components/ui/button";
+import { Button, SoundEffect } from "@/components/ui/button";
 import { IChampion } from "@/types/dungeon";
 
 import useCreateRoom from "../../../hooks/use-create-room";
@@ -51,6 +51,7 @@ const CreateRoomFooter = ({ dungeonDetailId }: { dungeonDetailId: string }) => {
         className="w-fit whitespace-nowrap px-10 py-5"
         isLoading={isCreatingRoom || loadingRoom}
         onClick={onCreateRoom}
+        sound={SoundEffect.CLICK_ARROW}
       >
         CLICK TO START
       </Button>

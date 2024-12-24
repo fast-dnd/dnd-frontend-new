@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Game, Star1 } from "iconsax-react";
 import { AiOutlineClose } from "react-icons/ai";
 
-import { Button } from "@/components/ui/button";
+import { Button, SoundEffect } from "@/components/ui/button";
 import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import { IChampion } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
@@ -128,6 +128,7 @@ const MobileAdventureDetail = ({
               isLoading={isCreatingRoom}
               onClick={onCreateRoom}
               className="pointer-events-auto flex w-fit gap-2"
+              sound={SoundEffect.CLICK_ARROW}
             >
               CLICK TO START
             </Button>

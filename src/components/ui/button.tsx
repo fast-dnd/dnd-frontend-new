@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { cva, VariantProps } from "class-variance-authority";
@@ -9,10 +11,14 @@ import Spinner from "./spinner";
 
 export enum SoundEffect {
   DICE_ROLL = "dice-roll",
+  CLICK_ARROW = "click-arrow",
+  BONUS_REACHED = "bonus-reached",
 }
 
 const SOUND_PATHS: Record<SoundEffect, string> = {
   [SoundEffect.DICE_ROLL]: "/sounds/dice-roll.mp3",
+  [SoundEffect.CLICK_ARROW]: "/sounds/arrow-whoosh.wav",
+  [SoundEffect.BONUS_REACHED]: "/sounds/bonus-reached.wav",
 };
 
 export const buttonVariants = cva(
@@ -57,6 +63,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, disabled, href, isLoading, children, variant, sound, onClick, ...props }, ref) => {
     const { soundEnabled, soundVolume } = useSoundSystem();
     const composedClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+      console.log("SOUND ENABLED", soundEnabled);
       if (sound && soundEnabled) {
         console.log("PLAYING SOUND BRO");
         const audio = new Audio(SOUND_PATHS[sound]);

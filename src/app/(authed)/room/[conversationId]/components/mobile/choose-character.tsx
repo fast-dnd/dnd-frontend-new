@@ -11,7 +11,7 @@ import { useReadLocalStorage, useWindowSize } from "usehooks-ts";
 import CreateHeroModal from "@/components/common/dungeon-detail/components/create-hero-modal";
 import MobileSwiper from "@/components/common/mobile-swiper";
 import HelmetIcon from "@/components/icons/helmet-icon";
-import { Button } from "@/components/ui/button";
+import { Button, SoundEffect } from "@/components/ui/button";
 import { IChampion, IDungeonDetail } from "@/types/dungeon";
 import { IPlayer } from "@/types/room";
 import { cn } from "@/utils/style-utils";
@@ -148,6 +148,7 @@ const CharacterCard = ({
               index !== currentIndex && "pointer-events-none",
             )}
             onClick={() => onChangeChampion?.(champion)}
+            sound={SoundEffect.CLICK_ARROW}
           >
             <HelmetIcon className="size-5" />
             SELECT THIS CHARACTER

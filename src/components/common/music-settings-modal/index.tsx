@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { MusicNote } from "@phosphor-icons/react";
 import { DialogClose } from "@radix-ui/react-dialog";
@@ -27,6 +29,10 @@ const MusicSettingsModal = () => {
     setSoundVolume,
   } = useSoundSystem();
 
+  useEffect(() => {
+    useSoundSystem.getState().hydrateFromLocalStorage();
+  }, []);
+
   const [currentTrackIndex, setCurrentTrackIndex] = useState(() =>
     Math.floor(Math.random() * soundtracks.length),
   );
@@ -55,7 +61,7 @@ const MusicSettingsModal = () => {
         newAudio = null;
       }
     };
-  }, [musicEnabled, currentTrackIndex, musicVolume]);
+  }, [musicEnabled, currentTrackIndex, musicVolume, soundVolume, soundEnabled]);
 
   return (
     <Dialog>
