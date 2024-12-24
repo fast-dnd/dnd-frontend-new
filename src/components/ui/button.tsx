@@ -4,7 +4,16 @@ import { cva, VariantProps } from "class-variance-authority";
 
 import { cn } from "@/utils/style-utils";
 
+import { useSoundSystem } from "../common/music-settings-modal/sound-system";
 import Spinner from "./spinner";
+
+export enum SoundEffect {
+  DICE_ROLL = "dice-roll",
+}
+
+const SOUND_PATHS: Record<SoundEffect, string> = {
+  [SoundEffect.DICE_ROLL]: "/sounds/dice-roll.mp3",
+};
 
 export const buttonVariants = cva(
   "inline-flex w-full flex-row items-center justify-center rounded-md py-2 text-center text-sm font-bold uppercase tracking-wider transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 lg:text-xl lg:tracking-normal",
@@ -41,10 +50,22 @@ export interface ButtonProps
   href?: string;
   target?: "_blank" | "_self" | "_parent" | "_top" | (string & {});
   isLoading?: boolean;
+  sound?: SoundEffect;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, disabled, href, isLoading, children, variant, ...props }, ref) => {
+  ({ className, disabled, href, isLoading, children, variant, sound, onClick, ...props }, ref) => {
+    const { soundEnabled, soundVolume } = useSoundSystem();
+    const composedClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (sound && soundEnabled) {
+        console.log("PLAYING SOUND BRO");
+        const audio = new Audio(SOUND_PATHS[sound]);
+        audio.volume = soundVolume / 100;
+        console.log("AUDIO VOLUME:", audio.volume);
+        audio.play().catch(console.error);
+      }
+      if (onClick) onClick(e);
+    };
     if (href) {
       return (
         <Link
@@ -62,6 +83,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           className={cn(buttonVariants({ variant, className }), disabled && "opacity-50")}
           ref={ref}
           {...props}
+          onClick={composedClickHandler}
         >
           {isLoading && <Spinner />}
           {children}
