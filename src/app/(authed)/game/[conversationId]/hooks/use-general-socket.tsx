@@ -55,9 +55,8 @@ const useGeneralSocket = (conversationId: string) => {
           setCanAsk(false);
         case "ASCII_MOVIE_CHUNK":
           if (event.data && "asciiChunk" in event.data) {
-            console.log("ASCII MOVIE: ,", soundEnabled);
             if (soundEnabled) {
-              const audio = new Audio("/sounds/bonus-reached.wav");
+              const audio = new Audio("/sounds/notification1.wav");
               audio.volume = soundVolume / 100;
               audio.play().catch(console.error);
             }

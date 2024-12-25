@@ -21,7 +21,7 @@ const GoBackButton = ({ onClick, className, text, href }: IGoBackButtonProps) =>
 
   const composedClickHandler: MouseEventHandler<HTMLAnchorElement | HTMLDivElement> = (e) => {
     if (soundEnabled) {
-      const audio = new Audio("/sounds/arrow-whoosh.wav");
+      const audio = new Audio("/sounds/click.wav");
       audio.volume = soundVolume / 100;
       audio.play().catch(console.error);
     }

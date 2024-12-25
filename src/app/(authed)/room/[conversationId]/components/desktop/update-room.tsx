@@ -183,7 +183,7 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
           className="px-8 uppercase"
           disabled={!isAdmin || !canBegin || gameStarting}
           isLoading={isGameStarting || gameStarting}
-          sound={SoundEffect.CLICK_ARROW}
+          sound={SoundEffect.DRUMS}
           onClick={onStartGame}
         >
           START{" "}
