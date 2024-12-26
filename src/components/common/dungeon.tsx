@@ -11,6 +11,7 @@ import { cn } from "@/utils/style-utils";
 import { Tooltip } from "../ui/tooltip";
 import AddToFavorites from "./add-to-favorites";
 import DeleteModal from "./delete-modal";
+import { useSoundSystem } from "./music-settings-modal/sound-system";
 
 interface IDungeonProps {
   dungeon: IBaseDungeon;
@@ -35,7 +36,13 @@ export const Dungeon = React.forwardRef<HTMLDivElement, IDungeonProps>(
     },
     ref,
   ) => {
+    const { soundEnabled, soundVolume } = useSoundSystem();
     const onClick = () => {
+      if (soundEnabled) {
+        const audio = new Audio("/sounds/click.wav");
+        audio.volume = soundVolume / 100;
+        audio.play().catch(console.error);
+      }
       if (addToCampaign) {
         addToCampaign(dungeon);
       }

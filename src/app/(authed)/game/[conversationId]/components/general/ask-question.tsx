@@ -1,7 +1,7 @@
 import { FormEventHandler, useState } from "react";
 import { IoMdSend } from "react-icons/io";
 
-import { Button } from "@/components/ui/button";
+import { Button, SoundEffect } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/style-utils";
 
@@ -44,6 +44,7 @@ const AskQuestion = ({ conversationId, canAsk, asking, setAsking }: IAskQuestion
         className={cn("flex w-fit items-center justify-center pr-0 text-primary", asking && "pb-5")}
         isLoading={asking}
         aria-label="Send"
+        sound={SoundEffect.TICK_TOCK}
       >
         {!asking && <IoMdSend className="size-10" />}
       </Button>

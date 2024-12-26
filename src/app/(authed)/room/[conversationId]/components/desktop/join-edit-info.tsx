@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 
 import { Box } from "@/components/ui/box";
-import { Button } from "@/components/ui/button";
+import { Button, SoundEffect } from "@/components/ui/button";
 import useCopy from "@/hooks/helpers/use-copy";
 import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import useGetRoomData from "@/hooks/queries/use-get-room-data";
@@ -44,6 +44,7 @@ const JoinEditInfo = ({ conversationId }: { conversationId: string }) => {
         <Button
           onClick={() => onCopy(roomData.link)}
           variant={copied ? "primary" : "outline"}
+          sound={SoundEffect.CLICK_ARROW}
           className="w-full flex-1 whitespace-nowrap px-8 text-lg uppercase lg:w-fit"
         >
           {copied ? "Copied" : "Copy ID"}

@@ -2,7 +2,7 @@
 
 import RoomItem from "@/components/common/room-item";
 import QuillIcon from "@/components/icons/quill-icon";
-import { Button } from "@/components/ui/button";
+import { Button, SoundEffect } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 import Spinner from "@/components/ui/spinner";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
@@ -71,7 +71,9 @@ const GameHistory = ({ showFull = false }: { showFull?: boolean }) => {
             )}
             {!showFull && (
               <div className="mt-auto">
-                <Button href="/profile?activeTab=GAME HISTORY">SHOW ENTIRE GAME HISTORY</Button>
+                <Button href="/profile?activeTab=GAME HISTORY" sound={SoundEffect.CLICK_ARROW}>
+                  SHOW ENTIRE GAME HISTORY
+                </Button>
               </div>
             )}
           </>
