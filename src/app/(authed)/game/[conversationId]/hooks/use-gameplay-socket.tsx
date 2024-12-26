@@ -13,10 +13,9 @@ const useGameplaySocket = (conversationId: string) => {
   const queryClient = useQueryClient();
   const [lastStory, setLastStory] = useState("");
 
-  // 1. Access your sound settings
   const { soundEnabled, soundVolume } = useSoundSystem();
 
-  // 2. A ref to hold our looping keyboard audio
+  // A ref to hold our looping keyboard audio
   const keyboardAudioRef = useRef<HTMLAudioElement | null>(null);
 
   // Restore local sound prefs

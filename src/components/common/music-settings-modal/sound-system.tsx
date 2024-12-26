@@ -24,17 +24,23 @@ interface SoundState {
 export const useSoundSystem = create<SoundState>((set) => ({
   musicEnabled: false,
   musicVolume: 40,
-  soundEnabled: false,
-  soundVolume: 20,
+  soundEnabled: true,
+  soundVolume: 50,
 
   // On the client, call this to sync with localStorage
   hydrateFromLocalStorage: () => {
     if (typeof window === "undefined") return;
     set({
-      musicEnabled: localStorage.getItem(STORAGE_KEYS.MUSIC_ENABLED) === "true",
+      musicEnabled:
+        localStorage.getItem(STORAGE_KEYS.MUSIC_ENABLED) != null
+          ? localStorage.getItem(STORAGE_KEYS.MUSIC_ENABLED) === "true"
+          : false,
       musicVolume: Number(localStorage.getItem(STORAGE_KEYS.MUSIC_VOLUME)) || 40,
-      soundEnabled: localStorage.getItem(STORAGE_KEYS.SOUND_ENABLED) === "true",
-      soundVolume: Number(localStorage.getItem(STORAGE_KEYS.SOUND_VOLUME)) || 30,
+      soundEnabled:
+        localStorage.getItem(STORAGE_KEYS.SOUND_ENABLED) != null
+          ? localStorage.getItem(STORAGE_KEYS.SOUND_ENABLED) === "true"
+          : true,
+      soundVolume: Number(localStorage.getItem(STORAGE_KEYS.SOUND_VOLUME)) || 50,
     });
   },
 

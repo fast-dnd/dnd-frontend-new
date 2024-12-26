@@ -13,6 +13,7 @@ export enum SoundEffect {
   DICE_ROLL = "dice-roll",
   CLICK_ARROW = "click-arrow",
   BONUS_REACHED = "bonus-reached",
+  TICK_TOCK = "tick-tock",
   DRUMS = "drums",
 }
 
@@ -21,6 +22,7 @@ const SOUND_PATHS: Record<SoundEffect, string> = {
   [SoundEffect.CLICK_ARROW]: "/sounds/click.wav",
   [SoundEffect.BONUS_REACHED]: "/sounds/bonus-reached.wav",
   [SoundEffect.DRUMS]: "/sounds/drums.wav",
+  [SoundEffect.TICK_TOCK]: "/sounds/tick-tock.wav",
 };
 
 export const buttonVariants = cva(

@@ -34,6 +34,11 @@ export interface IAnswerEvent {
   data: { question: string; answer: string };
 }
 
+export interface IBobThought {
+  event: "PLAYER_MOVE_BOB_THOUGHT";
+  data: { aiRating: number; aiDescriptionForRating: string };
+}
+
 export interface IRewardEvent {
   event: "REWARD_EARNED";
   data: { accountId: string; player: IPlayer; reward: IReward };
