@@ -1,6 +1,6 @@
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Box } from "@/components/ui/box";
 import { cn } from "@/utils/style-utils";
@@ -13,6 +13,9 @@ import MoveQuestionHistory from "./move-question-history";
 import Player from "./player";
 
 const General = ({ conversationId }: { conversationId: string }) => {
+  // ---------------------------
+  // 1. HOOKS DECLARATION FIRST
+  // ---------------------------
   const { currentPlayer } = useGetCurrentPlayer(conversationId);
   const {
     roomData,
@@ -31,7 +34,8 @@ const General = ({ conversationId }: { conversationId: string }) => {
     asciiMovieHistory.length,
   );
 
-  // Update last viewed counts when the active tab changes
+  const contentRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (activeTab === "events") {
       setLastViewedMoveHistoryCount(moveHistory.length);
@@ -39,6 +43,12 @@ const General = ({ conversationId }: { conversationId: string }) => {
       setLastViewedAsciiMovieHistoryCount(asciiMovieHistory.length);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTop = contentRef.current.scrollHeight;
+    }
   }, [activeTab]);
 
   const newEventsCount =
@@ -57,9 +67,16 @@ const General = ({ conversationId }: { conversationId: string }) => {
     { name: "Movie", key: "movie", newCount: newMovieCountDisplay },
   ];
 
-  // After hooks are declared, you can safely return early if needed
-  if (!roomData || !currentPlayer) return <GeneralSkeleton />;
+  // ------------------------------------------
+  // 2. ONLY AFTER ALL HOOKS, DO EARLY RETURN
+  // ------------------------------------------
+  if (!roomData || !currentPlayer) {
+    return <GeneralSkeleton />;
+  }
 
+  // -----------------------
+  // 3. RENDER YOUR MARKUP
+  // -----------------------
   return (
     <Box
       title="general"
@@ -90,9 +107,8 @@ const General = ({ conversationId }: { conversationId: string }) => {
               {tab.name}
               {tab.newCount > 0 && activeTab !== tab.key && (
                 <span
-                  className="absolute right-2 top-1 flex h-5 w-5 animate-bounce items-center 
-                         justify-center rounded-full bg-red-600 text-xs 
-                         text-white"
+                  className="absolute right-2 top-1 flex h-5 w-5 animate-bounce
+                  items-center justify-center rounded-full bg-red-600 text-xs text-white"
                 >
                   {tab.newCount}
                 </span>
@@ -101,8 +117,11 @@ const General = ({ conversationId }: { conversationId: string }) => {
           ))}
         </div>
 
-        {/* Tab Content */}
-        <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto lg:gap-8">
+        {/* Attach the ref to the content container */}
+        <div
+          ref={contentRef}
+          className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto lg:gap-8"
+        >
           {activeTab === "events" && (
             <>
               <MoveQuestionHistory

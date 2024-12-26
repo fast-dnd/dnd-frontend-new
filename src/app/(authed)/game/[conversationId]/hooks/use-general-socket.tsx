@@ -56,7 +56,6 @@ const useGeneralSocket = (conversationId: string) => {
         case "ASCII_MOVIE_CHUNK":
           if (event.data && "asciiChunk" in event.data) {
             if (soundEnabled) {
-              console.log("Ascii chunk sound");
               const audio = new Audio("/sounds/notification1.wav");
               audio.volume = soundVolume / 100;
               audio.play().catch(console.error);
