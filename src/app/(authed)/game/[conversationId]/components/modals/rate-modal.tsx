@@ -4,7 +4,7 @@ import { Star1 } from "iconsax-react";
 import { AiOutlineClose } from "react-icons/ai";
 import { useMediaQuery } from "usehooks-ts";
 
-import { Button } from "@/components/ui/button";
+import { Button, SoundEffect } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -116,6 +116,7 @@ const RateModal = ({ dungeon, conversationId }: IRateModalProps) => {
               rateDungeon();
               close();
             }}
+            sound={SoundEffect.CLICK_ARROW}
           >
             rate this adventure
           </Button>

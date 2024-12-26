@@ -47,7 +47,7 @@ const AdventureHeader = ({
                 statusUpdate.lostHealth && "text-red-500",
               )}
             >
-              <VscHeartFilled />
+              <VscHeartFilled color="red" />
               {currentPlayer.health}
             </div>
             <div
@@ -56,7 +56,7 @@ const AdventureHeader = ({
                 statusUpdate.bonus && "text-fuchsia-500",
               )}
             >
-              <BsFillLightningFill />
+              <BsFillLightningFill color="yellow" />
               {currentPlayer.bonusForNextRound}
             </div>
             <div
@@ -65,7 +65,7 @@ const AdventureHeader = ({
                 statusUpdate.mana && "text-cyan-500",
               )}
             >
-              <HiSparkles />
+              <HiSparkles color="blue" />
               {currentPlayer.mana}
             </div>
             <p className="w-8 font-bold text-primary">{timeToDisplay()}</p>

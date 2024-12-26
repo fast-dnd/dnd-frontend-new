@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useReadLocalStorage } from "usehooks-ts";
 
+import { useSoundSystem } from "@/components/common/music-settings-modal/sound-system";
 import { socketIO } from "@/lib/socket";
 import { roomKey } from "@/services/room-service";
 import { IQuestion } from "@/types/room";
@@ -17,6 +18,11 @@ const useGeneralSocket = (conversationId: string) => {
   const [questionAsked, setQuestionAsked] = useState<Partial<IQuestion>>();
   const [asciiScenes, setAsciiScenes] = useState<Array<string>>([]);
   const [asking, setAsking] = useState(false);
+  const { soundEnabled, soundVolume } = useSoundSystem();
+
+  useEffect(() => {
+    useSoundSystem.getState().hydrateFromLocalStorage();
+  }, []);
 
   useEffect(() => {
     const onEvent = (event: IGeneralSocketEvent) => {
@@ -48,8 +54,12 @@ const useGeneralSocket = (conversationId: string) => {
         case "REQUEST_SENT_TO_DM":
           setCanAsk(false);
         case "ASCII_MOVIE_CHUNK":
-          console.log("ASCII_MOVIE_CHUNK Event object:", event);
           if (event.data && "asciiChunk" in event.data) {
+            if (soundEnabled) {
+              const audio = new Audio("/sounds/notification1.wav");
+              audio.volume = soundVolume / 100;
+              audio.play().catch(console.error);
+            }
             setAsciiScenes((prevScenes) => [
               ...prevScenes,
               ...(event as IAsciiMovieEvent).data.asciiChunk,

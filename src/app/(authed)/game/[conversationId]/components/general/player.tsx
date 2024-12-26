@@ -117,8 +117,8 @@ const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: bo
               disabled={player.health <= 0}
               triggerClassName={getClassName("health")}
             >
-              <VscHeartFilled />
-              <span className="mt-0.5">{Math.max(0, player.health)}</span>
+              <VscHeartFilled color="red" />
+              <span className="mt-0.5 ">{Math.max(0, player.health)}</span>
             </Tooltip>
           </div>
           <div>
@@ -127,7 +127,7 @@ const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: bo
               disabled={player.health <= 0}
               triggerClassName={getClassName("bonus")}
             >
-              <BsFillLightningFill />
+              <BsFillLightningFill color="yellow" />
               <span className="mt-0.5">{player.bonusForNextRound}</span>
             </Tooltip>
           </div>
@@ -137,7 +137,7 @@ const Player = ({ player, currentPlayer }: { player: IPlayer; currentPlayer?: bo
               disabled={player.health <= 0}
               triggerClassName={getClassName("mana")}
             >
-              <HiSparkles />
+              <HiSparkles color="blue" />
               <span className="mt-0.5">{player.mana}</span>
             </Tooltip>
           </div>

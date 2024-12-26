@@ -56,7 +56,6 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
           )}
           onClick={shopOpen ? () => setShopOpen(false) : onClickBack}
         />
-
         <Link href="/home" className="pointer-events-auto">
           <Image src="/images/navbar-logo.png" width={94} height={32} alt="logo" />
         </Link>
@@ -69,7 +68,9 @@ const MobileNavbar = ({ className, onClickBack }: IMobileNavbarProps) => {
         <Link href="https://twitter.com/v3rpg" className="pointer-events-auto">
           <TwitterLogo className="size-4" />
         </Link>
-        <MusicSettingsModal></MusicSettingsModal>
+        <div className="pointer-events-auto">
+          <MusicSettingsModal></MusicSettingsModal>
+        </div>
       </div>
       <div className="flex items-center gap-3">
         <MobileProfile setShopOpen={setShopOpen} />

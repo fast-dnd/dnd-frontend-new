@@ -173,6 +173,9 @@ importers:
       zod-validation-error:
         specifier: ^1.5.0
         version: 1.5.0(zod@3.22.2)
+      zustand:
+        specifier: ^5.0.2
+        version: 5.0.2(@types/react@18.2.8)(react@18.2.0)(use-sync-external-store@1.2.0(react@18.2.0))
     devDependencies:
       '@hookform/devtools':
         specifier: ^4.3.1
@@ -3193,6 +3196,7 @@ packages:
 
   acorn-import-assertions@1.9.0:
     resolution: {integrity: sha512-cmMwop9x+8KFhxvKrKfPYmN6/pKTYYHBqLa0DfvVZcKMJWNyWLnaqND7dx/qn66R7ewM1UX5XMaDVP5wlVTaVA==}
+    deprecated: package has been renamed to acorn-import-attributes
     peerDependencies:
       acorn: ^8
 
@@ -6871,6 +6875,7 @@ packages:
 
   sudo-prompt@9.2.1:
     resolution: {integrity: sha512-Mu7R0g4ig9TUuGSxJavny5Rv0egCEtpZRNMrZaYS1vxkiIxGiGUwoezU3LazIQ+KE04hTrTfNPgxU5gzi7F5Pw==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   superjson@1.13.3:
     resolution: {integrity: sha512-mJiVjfd2vokfDxsQPOwJ/PtanO87LhpYY88ubI5dUB1Ab58Txbyje3+jpm+/83R/fevaq/107NNhtYBLuoTrFg==}
@@ -7643,6 +7648,24 @@ packages:
 
   zod@3.22.2:
     resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}
+
+  zustand@5.0.2:
+    resolution: {integrity: sha512-8qNdnJVJlHlrKXi50LDqqUNmUbuBjoKLrYQBnoChIbVph7vni+sY+YpvdjXG9YLd/Bxr6scMcR+rm5H3aSqPaw==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=18.0.0'
+      immer: '>=9.0.6'
+      react: '>=18.0.0'
+      use-sync-external-store: '>=1.2.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      immer:
+        optional: true
+      react:
+        optional: true
+      use-sync-external-store:
+        optional: true
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -16989,5 +17012,11 @@ snapshots:
       zod: 3.22.2
 
   zod@3.22.2: {}
+
+  zustand@5.0.2(@types/react@18.2.8)(react@18.2.0)(use-sync-external-store@1.2.0(react@18.2.0)):
+    optionalDependencies:
+      '@types/react': 18.2.8
+      react: 18.2.0
+      use-sync-external-store: 1.2.0(react@18.2.0)
 
   zwitch@2.0.4: {}

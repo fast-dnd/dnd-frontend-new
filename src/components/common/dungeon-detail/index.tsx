@@ -8,7 +8,7 @@ import useGetDungeon from "@/hooks/queries/use-get-dungeon";
 import { IChampion } from "@/types/dungeon";
 import { cn } from "@/utils/style-utils";
 
-import { Button } from "../../ui/button";
+import { Button, SoundEffect } from "../../ui/button";
 import CreateHeroModal from "./components/create-hero-modal";
 import { DungeonDetailSkeleton } from "./components/dungeon-detail-skeleton";
 
@@ -116,6 +116,7 @@ const DungeonDetail = ({
                     variant="primary"
                     className="w-fit"
                     disabled={isTaken(champion)}
+                    sound={SoundEffect.CLICK_ARROW}
                     onClick={() => onChangeChampion(champion)}
                   >
                     {isTaken(champion)

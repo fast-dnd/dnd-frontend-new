@@ -20,7 +20,7 @@ const Leaderboard = () => {
     <>
       <Box
         wrapperClassName="lg:flex flex-1 hidden min-h-0 w-[1200px] max-w-7xl flex-1 flex-col self-center pb-12"
-        title="HEROIC RANKINGS"
+        title="LEADERBOARD"
         className="flex min-h-0 flex-1 p-8"
       >
         <div className="flex w-full flex-col">

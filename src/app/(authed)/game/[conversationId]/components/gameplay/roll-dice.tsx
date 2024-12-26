@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FaDice } from "react-icons/fa";
 import Lottie from "react-lottie";
 
-import { Button } from "@/components/ui/button";
+import { Button, SoundEffect } from "@/components/ui/button";
 import { IPlayer, IRoomDetail } from "@/types/room";
 import animationData from "@/utils/lotties/dice-explosion.json";
 import { cn } from "@/utils/style-utils";
@@ -50,6 +50,7 @@ const RollDice = ({ conversationId, roomData, currentPlayer }: IRollDiceProps) =
           store.buttonState !== "DEFAULT" && "bg-white/5 text-white",
         )}
         onClick={onPlay}
+        sound={SoundEffect.DICE_ROLL}
         onMouseDown={() => {
           if (!animate) {
             setAnimate(true);

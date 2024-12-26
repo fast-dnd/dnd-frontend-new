@@ -2,7 +2,7 @@
 "use client";
 
 import GoldCoinIcon from "@/components/icons/gold-coin-icon";
-import { Button } from "@/components/ui/button";
+import { Button, SoundEffect } from "@/components/ui/button";
 import useCommunity from "@/hooks/helpers/use-community";
 import useGetCurrentCommunity from "@/hooks/queries/use-get-current-community";
 import { IChampion } from "@/types/dungeon";
@@ -97,6 +97,7 @@ const GameSettings = ({
             className="w-full whitespace-nowrap"
             disabled={disabled || !canBegin}
             isLoading={isGameStarting || gameStarting}
+            sound={SoundEffect.DRUMS}
             onClick={onStartGame}
           >
             START{" "}

@@ -3,7 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DiscordLogo, InstagramLogo, TwitterLogo } from "@phosphor-icons/react";
+import {
+  DiscordLogo,
+  InstagramLogo,
+  PersonSimpleWalk,
+  RocketLaunch,
+  Sword,
+  Toolbox,
+  TwitterLogo,
+} from "@phosphor-icons/react";
 
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
@@ -69,6 +77,7 @@ const DesktopNavbar = () => {
           <>
             {!!communityId && (
               <>
+                <RocketLaunch className="size-8 shrink-0 fill-white" fillOpacity={1} />
                 <Link
                   href={loggedIn ? "/home" : "/login"}
                   className={cn(
@@ -80,7 +89,8 @@ const DesktopNavbar = () => {
                   {loggedIn ? "PLAY" : "LOG IN"}
                 </Link>
                 <div className="size-2 rotate-45 bg-white opacity-25" />
-                <div className="relative inline-block">
+                <div className="relative flex flex-row gap-3">
+                  <Sword className="size-8 shrink-0 fill-white" fillOpacity={1} />
                   <Link
                     href="/community-battles"
                     className={cn(
@@ -97,7 +107,8 @@ const DesktopNavbar = () => {
                   </span>
                 </div>
                 <div className="size-2 rotate-45 bg-white opacity-25" />
-                <div className="relative inline-block">
+                <div className="relative flex flex-row gap-3">
+                  <Toolbox className="size-8 shrink-0 fill-white" fillOpacity={1} />
                   <Link
                     href="/ai-box/daily"
                     className={cn(
@@ -114,6 +125,7 @@ const DesktopNavbar = () => {
                 </div>
 
                 <div className="size-2 rotate-45 bg-white opacity-25" />
+                <PersonSimpleWalk className="size-8 shrink-0 fill-white" fillOpacity={1} />
                 <Link
                   href="/leaderboard"
                   className={cn(
@@ -122,7 +134,7 @@ const DesktopNavbar = () => {
                     !communityId && "hidden",
                   )}
                 >
-                  HEROIC RANKINGS
+                  LEADERBOARD
                 </Link>
                 {!isDefault && (
                   <>

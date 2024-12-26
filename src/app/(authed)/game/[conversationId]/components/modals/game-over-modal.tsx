@@ -2,7 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
+import { Button, SoundEffect } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -113,6 +113,7 @@ const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
             className="flex px-4 text-base max-lg:w-64 lg:text-xl"
             onClick={rate}
             autoFocus
+            sound={SoundEffect.CLICK_ARROW}
           >
             RATE THIS ADVENTURE
           </Button>
@@ -123,6 +124,7 @@ const GameOverModal = ({ result, dungeon, players }: GameOverModalProps) => {
               setGoingHome(true);
               router.push("/home");
             }}
+            sound={SoundEffect.CLICK_ARROW}
             isLoading={goingHome}
           >
             GO BACK HOME

@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { useLocalStorage } from "usehooks-ts";
 
-import { Button } from "@/components/ui/button";
+import { Button, SoundEffect } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 // import UploadImage from "@/components/ui/upload-image";
@@ -84,7 +84,11 @@ const CreateHeroModal = ({
               EDIT <span className="max-lg:hidden">CHARACTER</span>
             </button>
           ) : (
-            <Button variant="primary" className="w-fit gap-2 max-lg:w-full max-lg:rounded-t-none">
+            <Button
+              variant="primary"
+              className="w-fit gap-2 max-lg:w-full max-lg:rounded-t-none"
+              sound={SoundEffect.CLICK_ARROW}
+            >
               <PlusCircle />
               CRAFT NEW
             </Button>
@@ -151,7 +155,9 @@ const CreateHeroModal = ({
             <div className="h-0.5 w-full bg-black shadow-lobby" />
 
             <div className="flex max-lg:pb-4">
-              <Button isLoading={isLoading}>ADD NEW HERO</Button>
+              <Button isLoading={isLoading} sound={SoundEffect.CLICK_ARROW}>
+                ADD NEW HERO
+              </Button>
             </div>
           </div>
         </form>
