@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { useSoundSystem } from "@/components/common/music-settings-modal/sound-system";
@@ -12,8 +12,14 @@ import { IGameplaySocketEvent } from "../types/events";
 const useGameplaySocket = (conversationId: string) => {
   const queryClient = useQueryClient();
   const [lastStory, setLastStory] = useState("");
+
+  // 1. Access your sound settings
   const { soundEnabled, soundVolume } = useSoundSystem();
 
+  // 2. A ref to hold our looping keyboard audio
+  const keyboardAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Restore local sound prefs
   useEffect(() => {
     useSoundSystem.getState().hydrateFromLocalStorage();
   }, []);
@@ -21,25 +27,28 @@ const useGameplaySocket = (conversationId: string) => {
   useEffect(() => {
     const onEvent = (event: IGameplaySocketEvent) => {
       switch (event.event) {
-        case "ROUND_STORY_CHUNK":
-          setLastStory(`${lastStory}${event.data.chunk}`);
+        case "ROUND_STORY_CHUNK": {
+          setLastStory((prev) => `${prev}${event.data.chunk}`);
           if (soundEnabled) {
-            console.log("ROUND_STORY_CHUNK");
-            const audio = new Audio("/sounds/keyboard.wav");
-            audio.volume = soundVolume / 100;
-            audio.play().catch(console.error);
+            // If we're not already playing the keyboard sound, create a new audio
+            if (!keyboardAudioRef.current) {
+              keyboardAudioRef.current = new Audio("/sounds/keyboard.mp3");
+              keyboardAudioRef.current.loop = true;
+              keyboardAudioRef.current.volume = soundVolume / 100;
+              keyboardAudioRef.current.play().catch(console.error);
+            }
+          }
+          gameStore.loadingText.set(true);
+          break;
+        }
+        case "ROUND_STORY": {
+          if (keyboardAudioRef.current) {
+            keyboardAudioRef.current.pause();
+            keyboardAudioRef.current.currentTime = 0;
+            keyboardAudioRef.current = null;
           }
 
-          gameStore.loadingText.set(true);
-          break;
-        case "REQUEST_SENT_TO_DM":
-          if (event.data)
-            queryClient.setQueryData([roomKey, conversationId], roomDetailSchema.parse(event.data));
-          gameStore.loadingText.set(true);
-          break;
-        case "ROUND_STORY":
           if (soundEnabled) {
-            console.log("ROUND_STORY");
             const audio = new Audio("/sounds/drums.wav");
             audio.volume = soundVolume / 100;
             audio.play().catch(console.error);
@@ -49,9 +58,22 @@ const useGameplaySocket = (conversationId: string) => {
             gameStore.loadingText.set(false);
           });
           break;
-        case "GAME_ENDED":
+        }
+        case "REQUEST_SENT_TO_DM": {
+          if (event.data) {
+            queryClient.setQueryData([roomKey, conversationId], roomDetailSchema.parse(event.data));
+          }
+          gameStore.loadingText.set(true);
+          break;
+        }
+        case "GAME_ENDED": {
+          if (keyboardAudioRef.current) {
+            keyboardAudioRef.current.pause();
+            keyboardAudioRef.current.currentTime = 0;
+            keyboardAudioRef.current = null;
+          }
+
           if (soundEnabled) {
-            console.log("GAME_ENDED");
             const audio = new Audio("/sounds/trumpet.wav");
             audio.volume = soundVolume / 100;
             audio.play().catch(console.error);
@@ -61,18 +83,18 @@ const useGameplaySocket = (conversationId: string) => {
             gameStore.loadingText.set(false);
           });
           break;
+        }
       }
     };
+
     socketIO.on(conversationId, onEvent);
 
     return () => {
       socketIO.off(conversationId, onEvent);
     };
-  }, [conversationId, lastStory, queryClient]);
+  }, [conversationId, lastStory, queryClient, soundEnabled, soundVolume]);
 
-  return {
-    lastStory,
-  };
+  return { lastStory };
 };
 
 export default useGameplaySocket;

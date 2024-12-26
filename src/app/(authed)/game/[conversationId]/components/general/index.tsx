@@ -89,7 +89,11 @@ const General = ({ conversationId }: { conversationId: string }) => {
             >
               {tab.name}
               {tab.newCount > 0 && activeTab !== tab.key && (
-                <span className="absolute right-2 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs text-white">
+                <span
+                  className="absolute right-2 top-1 flex h-5 w-5 animate-bounce items-center 
+                         justify-center rounded-full bg-red-600 text-xs 
+                         text-white"
+                >
                   {tab.newCount}
                 </span>
               )}
