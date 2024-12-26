@@ -106,13 +106,13 @@ const MobilePlayMove = ({ roomData, conversationId, currentPlayer }: IPlayMovePr
                 />
               )}
             </div>
-            <div className="flex border border-gray-800">
+            <div className="flex border">
               <PickPowerup currentMana={currentPlayer.mana} />
-              <div className="flex w-full bg-primary px-6">
+              <div className="flex w-full  px-6">
                 <Button
                   onClick={onPlay}
                   disabled={!store.canPlay || (!store.freeWill && !store.wordsChallenge.length)}
-                  className="flex w-full items-center gap-1 rounded-none border-none py-1.5 text-xs"
+                  className="flex w-full  items-center gap-1 rounded-none border-none bg-red-600 py-1.5 text-xs"
                 >
                   <FaDice /> Roll the dice
                 </Button>
