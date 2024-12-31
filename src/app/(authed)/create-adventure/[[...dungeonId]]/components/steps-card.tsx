@@ -149,9 +149,17 @@ const StepsCard = ({ dungeonId }: { dungeonId: string | undefined }) => {
           </div>
         ))}
       </div>
-      <Button className="w-fit" onClick={onFinishForm} isLoading={isCreating || isUpdating}>
-        {dungeonId ? "SAVE CHANGES" : "PUBLISH"}
-      </Button>
+      <div className="flex w-full flex-col gap-4">
+        <p className="text-center text-lg">
+          <span className="font-bold text-red-500">Note:</span> After publishing your adventure, go
+          to the <span className="font-bold text-red-500">PLAY</span> page and change the filter
+          from <span className="font-bold text-red-500">recommended</span> to{" "}
+          <span className="font-bold text-red-500">owned</span> to see it.
+        </p>
+        <Button className="w-full" onClick={onFinishForm} isLoading={isCreating || isUpdating}>
+          {dungeonId ? "SAVE CHANGES" : "PUBLISH"}
+        </Button>
+      </div>
       <StatusModal
         type="ADVENTURE"
         open={!!modalContent}
