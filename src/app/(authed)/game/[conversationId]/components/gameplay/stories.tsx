@@ -96,8 +96,22 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
     let match;
     let id = 0;
 
+    let lastIndex = 0; // Track the last processed index in the story string
+
     while ((match = dialogueRegex.exec(story)) !== null) {
-      const [_, narrator, character, dialogue] = match;
+      const [fullMatch, narrator, character, dialogue] = match;
+
+      // Capture any text between the last match and this match as normal text
+      if (lastIndex < match.index) {
+        const normalText = story.substring(lastIndex, match.index).trim();
+        if (normalText) {
+          parsedDialogues.push({
+            id: id++,
+            type: "normal",
+            text: normalText,
+          });
+        }
+      }
 
       if (narrator) {
         // Narrator text (e.g., [ text ])
@@ -121,6 +135,21 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
           character: trimmedCharacter,
           text: dialogue.trim(),
           avatar: avatarMapRef.current[trimmedCharacter],
+        });
+      }
+
+      // Update the last index to the end of the current match
+      lastIndex = match.index + fullMatch.length;
+    }
+
+    // Capture any remaining text after the last match
+    if (lastIndex < story.length) {
+      const remainingText = story.substring(lastIndex).trim();
+      if (remainingText) {
+        parsedDialogues.push({
+          id: id++,
+          type: "normal",
+          text: remainingText,
         });
       }
     }
@@ -209,7 +238,10 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
                     );
                   } else {
                     return (
-                      <Markdown key={dialogue.id} className="text-xl text-primary-100">
+                      <Markdown
+                        key={dialogue.id}
+                        className="text-xl font-semibold italic text-blue-300"
+                      >
                         {dialogue.text}
                       </Markdown>
                     );
