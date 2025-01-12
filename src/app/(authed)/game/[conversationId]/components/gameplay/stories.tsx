@@ -78,7 +78,6 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
     "/images/default-characters/c38.png",
     "/images/default-characters/c39.png",
     "/images/default-characters/c40.png",
-    "/images/default-characters/c41.png",
   ];
 
   const avatarMap: Record<string, string> = {}; // Global avatar map for consistency
@@ -190,15 +189,28 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
                     );
                   } else if (dialogue.type === "character") {
                     return (
-                      <div key={dialogue.id} className="flex items-start space-x-6">
-                        <img
-                          src={dialogue.avatar}
-                          alt={dialogue.character}
-                          className="h-12 w-12 rounded-full"
-                        />
-                        <div>
-                          <span className="font-bold text-primary-200">{dialogue.character}: </span>
-                          <Markdown className="text-primary-100">{dialogue.text}</Markdown>
+                      <div key={dialogue.id} className="flex w-full items-end gap-3">
+                        {/* Avatar */}
+                        <div className="relative">
+                          <img
+                            src={dialogue.avatar}
+                            alt={dialogue.character}
+                            className="h-12 w-12 rounded-full"
+                          />
+                        </div>
+
+                        {/* Chat bubble */}
+                        <div className="relative max-w-[75%]">
+                          <div className="bg-secondary-700 relative rounded-lg border border-gray-500 px-4 py-2 text-primary-100">
+                            {/* Tail of the bubble */}
+                            <div className="bg-secondary-700 absolute -left-2.5 bottom-1.5 h-3 w-3 rotate-45 border-b border-l border-gray-500"></div>
+                            {/* Message text */}
+                            <Markdown>{dialogue.text}</Markdown>
+                          </div>
+                          {/* Character name */}
+                          <span className="mt-1 block text-sm text-primary-200">
+                            {dialogue.character}
+                          </span>
                         </div>
                       </div>
                     );
