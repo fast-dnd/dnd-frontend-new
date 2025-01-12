@@ -82,7 +82,8 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
   const avatarMap: Record<string, string> = {}; // Global avatar map for consistency
 
   const assignAvatars = (story: string) => {
-    const dialogueRegex = /\[([^\]]*?)\]|([^\[]*?):\s?(.*)/g;
+    const dialogueRegex = /\[([^\]]+)\]|([\w\s\(\)]+)\s\$\s(.+)/g;
+
     const parsedDialogues: Array<{
       id: number;
       type: "narrator" | "character" | "normal";
@@ -90,6 +91,8 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
       text: string;
       avatar?: string;
     }> = [];
+
+    const avatarMap: Record<string, string> = {}; // Map to store dynamic avatars
     let match;
     let id = 0;
 
@@ -97,41 +100,26 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
       const [_, narrator, character, dialogue] = match;
 
       if (narrator) {
-        // Narrator text (e.g., inside square brackets)
         parsedDialogues.push({
           id: id++,
           type: "narrator",
           text: narrator.trim(),
         });
       } else if (character) {
-        if (character.toLowerCase().includes("narrator")) {
-          // Treat as narrator if "narrator" is part of the character name
-          parsedDialogues.push({
-            id: id++,
-            type: "narrator",
-            text: dialogue.trim(),
-          });
-        } else if (!character.toLowerCase().includes("scene")) {
-          // Character dialogue
-          if (!avatarMap[character.trim()]) {
-            const randomAvatar = avatarPool[Math.floor(Math.random() * avatarPool.length)];
-            avatarMap[character.trim()] = randomAvatar;
-          }
-          parsedDialogues.push({
-            id: id++,
-            type: "character",
-            character: character.trim(),
-            text: dialogue.trim(),
-            avatar: avatarMap[character.trim()],
-          });
-        } else {
-          // Normal text (e.g., contains "scene" in the character field)
-          parsedDialogues.push({
-            id: id++,
-            type: "normal",
-            text: character ? `${character}: ${dialogue}`.trim() : dialogue.trim(),
-          });
+        const trimmedCharacter = character.trim();
+
+        if (!avatarMap[trimmedCharacter]) {
+          const randomAvatar = avatarPool[Math.floor(Math.random() * avatarPool.length)];
+          avatarMap[trimmedCharacter] = randomAvatar;
         }
+
+        parsedDialogues.push({
+          id: id++,
+          type: "character",
+          character: trimmedCharacter,
+          text: dialogue.trim(),
+          avatar: avatarMap[trimmedCharacter],
+        });
       }
     }
 
