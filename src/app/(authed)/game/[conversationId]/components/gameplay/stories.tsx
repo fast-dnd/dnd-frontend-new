@@ -77,7 +77,6 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
     "/images/default-characters/c37.png",
     "/images/default-characters/c38.png",
     "/images/default-characters/c39.png",
-    "/images/default-characters/c40.png",
   ];
 
   const avatarMap: Record<string, string> = {}; // Global avatar map for consistency
@@ -98,32 +97,41 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
       const [_, narrator, character, dialogue] = match;
 
       if (narrator) {
-        // Narrator text
+        // Narrator text (e.g., inside square brackets)
         parsedDialogues.push({
           id: id++,
           type: "narrator",
           text: narrator.trim(),
         });
-      } else if (character && !character.toLowerCase().includes("scene")) {
-        // Character dialogue
-        if (!avatarMap[character.trim()]) {
-          const randomAvatar = avatarPool[Math.floor(Math.random() * avatarPool.length)];
-          avatarMap[character.trim()] = randomAvatar;
+      } else if (character) {
+        if (character.toLowerCase().includes("narrator")) {
+          // Treat as narrator if "narrator" is part of the character name
+          parsedDialogues.push({
+            id: id++,
+            type: "narrator",
+            text: dialogue.trim(),
+          });
+        } else if (!character.toLowerCase().includes("scene")) {
+          // Character dialogue
+          if (!avatarMap[character.trim()]) {
+            const randomAvatar = avatarPool[Math.floor(Math.random() * avatarPool.length)];
+            avatarMap[character.trim()] = randomAvatar;
+          }
+          parsedDialogues.push({
+            id: id++,
+            type: "character",
+            character: character.trim(),
+            text: dialogue.trim(),
+            avatar: avatarMap[character.trim()],
+          });
+        } else {
+          // Normal text (e.g., contains "scene" in the character field)
+          parsedDialogues.push({
+            id: id++,
+            type: "normal",
+            text: character ? `${character}: ${dialogue}`.trim() : dialogue.trim(),
+          });
         }
-        parsedDialogues.push({
-          id: id++,
-          type: "character",
-          character: character.trim(),
-          text: dialogue.trim(),
-          avatar: avatarMap[character.trim()],
-        });
-      } else {
-        // Normal text (e.g., contains "scene" in the character field)
-        parsedDialogues.push({
-          id: id++,
-          type: "normal",
-          text: character ? `${character}: ${dialogue}`.trim() : dialogue.trim(),
-        });
       }
     }
 
@@ -150,13 +158,11 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
                 <span className="whitespace-nowrap text-white/40">
                   ROUND {i + 1}/{roomData.maxRounds + 1}
                 </span>
-                <span>&zwnj; {dungeonData.locations[Math.floor(i / 2)]?.name}</span>
               </p>
               <p className="mt-0.5 max-w-full font-semibold uppercase tracking-tight lg:hidden">
                 <span className="whitespace-nowrap text-white/30">
                   ROUND {i + 1}/{roomData.maxRounds + 1}
                 </span>
-                <span>&zwnj; {dungeonData.locations[Math.floor(i / 2)]?.name}</span>
               </p>
               <div className="size-2 shrink-0 rotate-45 bg-white max-lg:hidden" />
             </div>
@@ -183,7 +189,7 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
                 {parsedDialogues.map((dialogue) => {
                   if (dialogue.type === "narrator") {
                     return (
-                      <div key={dialogue.id} className="text-secondary-300 text-lg italic">
+                      <div key={dialogue.id} className="text-xl font-semibold italic text-blue-300">
                         [{dialogue.text}]
                       </div>
                     );
@@ -201,22 +207,19 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
 
                         {/* Chat bubble */}
                         <div className="relative max-w-[75%]">
-                          <div className="bg-secondary-700 relative rounded-lg border border-gray-500 px-4 py-2 text-primary-100">
-                            {/* Tail of the bubble */}
-                            <div className="bg-secondary-700 absolute -left-2.5 bottom-1.5 h-3 w-3 rotate-45 border-b border-l border-gray-500"></div>
+                          <div className="relative rounded-2xl bg-primary-800 px-4 py-3 text-primary-100 shadow-sm">
                             {/* Message text */}
+                            <div className="mb-1 font-bold text-orange-400">
+                              {dialogue.character}
+                            </div>
                             <Markdown>{dialogue.text}</Markdown>
                           </div>
-                          {/* Character name */}
-                          <span className="mt-1 block text-sm text-primary-200">
-                            {dialogue.character}
-                          </span>
                         </div>
                       </div>
                     );
                   } else {
                     return (
-                      <Markdown key={dialogue.id} className="text-lg text-primary-100">
+                      <Markdown key={dialogue.id} className="text-xl text-primary-100">
                         {dialogue.text}
                       </Markdown>
                     );
