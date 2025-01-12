@@ -1,7 +1,7 @@
 /* eslint-disable tailwindcss/migration-from-tailwind-2 */
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -15,6 +15,7 @@ import useGetTranscript from "./hooks/use-get-transcript";
 const Transcript = ({ params }: { params: { conversationId: string } }) => {
   const router = useRouter();
   const { conversationId } = params;
+  const avatarMapRef = useRef<Record<string, string>>({});
 
   // State for toggling between story and movie
   const [showMovie, setShowMovie] = useState(false);
@@ -76,7 +77,12 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
                     </div>
                   ))
                 : transcripts.story.map((story, index) => (
-                    <Story key={index} story={story} transcripts={transcripts} />
+                    <Story
+                      key={index}
+                      story={story}
+                      transcripts={transcripts}
+                      avatarMapRef={avatarMapRef}
+                    />
                   ))}
             </div>
             <div className="sticky bottom-0 h-24 w-full bg-gradient-to-t from-black/90" />
@@ -123,7 +129,12 @@ const Transcript = ({ params }: { params: { conversationId: string } }) => {
             </div>
           ) : (
             transcripts.story.map((story, index) => (
-              <Story key={index} story={story} transcripts={transcripts} />
+              <Story
+                key={index}
+                story={story}
+                transcripts={transcripts}
+                avatarMapRef={avatarMapRef}
+              />
             ))
           )}
         </div>
