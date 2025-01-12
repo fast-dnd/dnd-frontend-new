@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable tailwindcss/no-custom-classname */
+import { useRef } from "react";
 import Markdown from "react-markdown";
 
 import SkeletonIcon from "@/components/icons/skeleton-icon";
@@ -36,50 +37,50 @@ interface IStoryListProps {
   stories: string[];
 }
 
-const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
-  const avatarPool = [
-    "/images/default-characters/c1.png",
-    "/images/default-characters/c2.png",
-    "/images/default-characters/c3.png",
-    "/images/default-characters/c4.png",
-    "/images/default-characters/c5.png",
-    "/images/default-characters/c6.png",
-    "/images/default-characters/c7.png",
-    "/images/default-characters/c8.png",
-    "/images/default-characters/c9.png",
-    "/images/default-characters/c10.png",
-    "/images/default-characters/c11.png",
-    "/images/default-characters/c12.png",
-    "/images/default-characters/c13.png",
-    "/images/default-characters/c14.png",
-    "/images/default-characters/c15.png",
-    "/images/default-characters/c16.png",
-    "/images/default-characters/c17.png",
-    "/images/default-characters/c18.png",
-    "/images/default-characters/c19.png",
-    "/images/default-characters/c20.png",
-    "/images/default-characters/c21.png",
-    "/images/default-characters/c22.png",
-    "/images/default-characters/c23.png",
-    "/images/default-characters/c24.png",
-    "/images/default-characters/c25.png",
-    "/images/default-characters/c26.png",
-    "/images/default-characters/c27.png",
-    "/images/default-characters/c28.png",
-    "/images/default-characters/c29.png",
-    "/images/default-characters/c30.png",
-    "/images/default-characters/c31.png",
-    "/images/default-characters/c32.png",
-    "/images/default-characters/c33.png",
-    "/images/default-characters/c34.png",
-    "/images/default-characters/c35.png",
-    "/images/default-characters/c36.png",
-    "/images/default-characters/c37.png",
-    "/images/default-characters/c38.png",
-    "/images/default-characters/c39.png",
-  ];
+const avatarPool = [
+  "/images/default-characters/c1.png",
+  "/images/default-characters/c2.png",
+  "/images/default-characters/c3.png",
+  "/images/default-characters/c4.png",
+  "/images/default-characters/c5.png",
+  "/images/default-characters/c6.png",
+  "/images/default-characters/c7.png",
+  "/images/default-characters/c8.png",
+  "/images/default-characters/c9.png",
+  "/images/default-characters/c10.png",
+  "/images/default-characters/c11.png",
+  "/images/default-characters/c12.png",
+  "/images/default-characters/c13.png",
+  "/images/default-characters/c14.png",
+  "/images/default-characters/c15.png",
+  "/images/default-characters/c16.png",
+  "/images/default-characters/c17.png",
+  "/images/default-characters/c18.png",
+  "/images/default-characters/c19.png",
+  "/images/default-characters/c20.png",
+  "/images/default-characters/c21.png",
+  "/images/default-characters/c22.png",
+  "/images/default-characters/c23.png",
+  "/images/default-characters/c24.png",
+  "/images/default-characters/c25.png",
+  "/images/default-characters/c26.png",
+  "/images/default-characters/c27.png",
+  "/images/default-characters/c28.png",
+  "/images/default-characters/c29.png",
+  "/images/default-characters/c30.png",
+  "/images/default-characters/c31.png",
+  "/images/default-characters/c32.png",
+  "/images/default-characters/c33.png",
+  "/images/default-characters/c34.png",
+  "/images/default-characters/c35.png",
+  "/images/default-characters/c36.png",
+  "/images/default-characters/c37.png",
+  "/images/default-characters/c38.png",
+  "/images/default-characters/c39.png",
+];
 
-  const avatarMap: Record<string, string> = {}; // Global avatar map for consistency
+const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
+  const avatarMapRef = useRef<Record<string, string>>({});
 
   const assignAvatars = (story: string) => {
     const dialogueRegex = /\[([^\]]+)\]|([\w\s\(\)]+)\s\$\s(.+)/g;
@@ -92,7 +93,6 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
       avatar?: string;
     }> = [];
 
-    const avatarMap: Record<string, string> = {}; // Map to store dynamic avatars
     let match;
     let id = 0;
 
@@ -100,6 +100,7 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
       const [_, narrator, character, dialogue] = match;
 
       if (narrator) {
+        // Narrator text (e.g., [ text ])
         parsedDialogues.push({
           id: id++,
           type: "narrator",
@@ -108,9 +109,10 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
       } else if (character) {
         const trimmedCharacter = character.trim();
 
-        if (!avatarMap[trimmedCharacter]) {
+        // Assign avatar globally if not already assigned
+        if (!avatarMapRef.current[trimmedCharacter]) {
           const randomAvatar = avatarPool[Math.floor(Math.random() * avatarPool.length)];
-          avatarMap[trimmedCharacter] = randomAvatar;
+          avatarMapRef.current[trimmedCharacter] = randomAvatar;
         }
 
         parsedDialogues.push({
@@ -118,7 +120,7 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
           type: "character",
           character: trimmedCharacter,
           text: dialogue.trim(),
-          avatar: avatarMap[trimmedCharacter],
+          avatar: avatarMapRef.current[trimmedCharacter],
         });
       }
     }
@@ -221,5 +223,4 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
     </>
   );
 };
-
 export default Stories;
