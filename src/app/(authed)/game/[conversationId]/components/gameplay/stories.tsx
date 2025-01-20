@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable tailwindcss/no-custom-classname */
 import { useRef } from "react";
@@ -10,7 +11,6 @@ import { IRoomDetail } from "@/types/room";
 import { jibril } from "@/utils/fonts";
 
 import useUpdateStories from "../../hooks/use-update-stories";
-import ImageModal from "../modals/image-modal";
 import StyledAudio from "./styled-audio";
 
 interface IStoriesProps {
@@ -187,47 +187,71 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
             </div>
 
             <div className="w-full">
-              {roomData.generateImages && i % 2 === 0 && (
-                <div className="mb-6 flex aspect-video w-full shrink-0 justify-center lg:float-left lg:mr-6 lg:inline-block lg:aspect-square lg:size-72">
-                  {generatedImage && generatedImage.length > 0 ? (
-                    <ImageModal image={generatedImage} />
-                  ) : (
-                    <div className="flex size-full animate-pulse items-center justify-center rounded bg-gray-600">
-                      <SkeletonIcon className="size-24 text-gray-200" />
+              {/* Image with enhanced styling */}
+              {roomData.generateImages && (
+                <div className="mb-8 flex justify-center md:float-right md:ml-4 md:w-auto lg:max-w-[40%]">
+                  {/* Decorative frame container */}
+                  <div className="relative">
+                    {/* Background decorative elements */}
+                    <div className="absolute -inset-2 rounded-xl bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-lg" />
+                    <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-purple-500/20 to-blue-500/20" />
+
+                    {/* Main image container with border */}
+                    <div className="relative flex aspect-video h-40 w-40 justify-center overflow-hidden sm:h-60 sm:w-60 lg:aspect-square lg:h-96 lg:w-96">
+                      {generatedImage && generatedImage.length > 0 ? (
+                        <div className="group relative w-full">
+                          <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 opacity-75" />
+                          <img
+                            className="relative h-full w-full rounded-lg bg-red-600 object-cover shadow-lg"
+                            src={generatedImage}
+                            alt="Generated"
+                          />
+                          {/* Subtle shine effect */}
+                          <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/10 to-transparent opacity-50" />
+                        </div>
+                      ) : (
+                        <div className="relative w-full">
+                          <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 opacity-75" />
+                          <div className="relative flex h-full w-full animate-pulse items-center justify-center rounded-lg bg-gray-600 shadow-lg">
+                            <SkeletonIcon className="h-16 w-16 text-gray-200" />
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
+                  </div>
                 </div>
               )}
 
-              <div className="space-y-6 tracking-widest lg:text-[24px] lg:leading-10">
+              {/* Text content - unchanged */}
+              <div className="tracking-widest lg:text-[24px] lg:leading-10">
                 {roomData.generateAudio && (
-                  <div className="mb-4 max-lg:w-full">
+                  <div className="mb-4 w-full">
                     <StyledAudio audio={roomData.generatedAudio[i]} />
                   </div>
                 )}
+
                 {parsedDialogues.map((dialogue) => {
                   if (dialogue.type === "narrator") {
                     return (
-                      <div key={dialogue.id} className="text-xl font-semibold italic text-blue-300">
+                      <div
+                        key={dialogue.id}
+                        className="mb-4 text-xl font-semibold italic text-blue-300"
+                      >
                         [{dialogue.text}]
                       </div>
                     );
                   } else if (dialogue.type === "character") {
                     return (
-                      <div key={dialogue.id} className="flex w-full items-end gap-3">
-                        {/* Avatar */}
-                        <div className="relative">
+                      <div key={dialogue.id} className="mb-4 flex items-end gap-3">
+                        <div className="relative shrink-0">
                           <img
                             src={dialogue.avatar}
                             alt={dialogue.character}
                             className="h-12 w-12 rounded-full"
                           />
                         </div>
-
-                        {/* Chat bubble */}
-                        <div className="relative max-w-[75%]">
+                        <div className="relative">
                           <div className="relative rounded-2xl bg-primary-800 px-4 py-3 text-primary-100 shadow-sm">
-                            {/* Message text */}
                             <div className="mb-1 font-bold text-orange-400">
                               {dialogue.character}
                             </div>
@@ -240,7 +264,7 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
                     return (
                       <Markdown
                         key={dialogue.id}
-                        className="text-xl font-semibold italic text-blue-300"
+                        className="mb-4 text-xl font-semibold italic text-blue-300"
                       >
                         {dialogue.text}
                       </Markdown>
@@ -248,6 +272,8 @@ const StoryList = ({ roomData, dungeonData, stories }: IStoryListProps) => {
                   }
                 })}
               </div>
+
+              <div className="clear-both" />
             </div>
           </div>
         );
