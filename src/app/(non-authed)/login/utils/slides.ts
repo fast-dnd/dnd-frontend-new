@@ -15,9 +15,9 @@ export const slides = [
   },
   {
     image: "/images/login-bg-3.png",
-    headerStart: "SETTLE INTO YOUR",
-    headerEnd: "FAMILIAR DND SETTING",
+    headerStart: "COMPETE WITH OTHER PLAYERS",
+    headerEnd: "AND WIN PRIZES",
     description:
-      "So you've made your move. But how did it turn out? That's where our dice come in. The AI will use them to decide the outcome.",
+      "Climb the leaderboards while playing. Participate in seasonal tournaments and claim cool rewards !",
   },
 ];
