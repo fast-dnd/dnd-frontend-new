@@ -6,7 +6,6 @@ import Markdown from "react-markdown";
 import { ITranscript, ITranscriptStory } from "@/types/transcript";
 
 import ChatItem from "./chat-item";
-import ImageModal from "./image-modal";
 
 const avatarPool = [
   "/images/default-characters/c1.png",
@@ -137,61 +136,87 @@ const Story = ({
   const parsedDialogues = assignAvatars(story.storyChunk);
 
   return (
-    <div className="flex flex-col gap-6 rounded-md bg-dark-900 p-1 pb-6 lg:p-8">
-      {story.image && <ImageModal image={story.image} />}
-      <div className="flex flex-col gap-6 max-lg:px-4">
-        <div className="flex flex-col gap-1">
-          <p className="text-lg font-bold lg:text-4xl">{story.title}</p>
-        </div>
+    <div className="flex w-full flex-col gap-6 rounded-md bg-dark-900 p-1 pb-6 lg:p-8">
+      <div>
+        {story.image && (
+          <div className="mb-8 flex justify-center md:float-right md:ml-4 md:w-auto lg:max-w-[40%]">
+            {/* Decorative frame container */}
+            <div className="relative">
+              {/* Background decorative elements */}
+              <div className="absolute -inset-2 rounded-xl bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-lg" />
+              <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-purple-500/20 to-blue-500/20" />
 
-        <div className="space-y-4">
-          {parsedDialogues.map((dialogue: any) => {
-            if (dialogue.type === "narrator") {
-              return (
-                <div key={dialogue.id} className="text-xl font-semibold italic text-blue-300">
-                  [{dialogue.text}]
+              {/* Main image container with border */}
+              <div className="relative flex aspect-video h-40 w-40 justify-center overflow-hidden sm:h-60 sm:w-60 lg:aspect-square lg:h-96 lg:w-96">
+                <div className="group relative w-full">
+                  <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 opacity-75" />
+                  <img
+                    className="relative h-full w-full rounded-lg bg-red-600 object-cover shadow-lg"
+                    src={story.image}
+                    alt="Generated"
+                  />
+                  {/* Subtle shine effect */}
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/10 to-transparent opacity-50" />
                 </div>
-              );
-            } else if (dialogue.type === "character") {
-              return (
-                <div key={dialogue.id} className="flex w-full items-end gap-3">
-                  {/* Avatar */}
-                  <div className="relative">
-                    <img
-                      src={dialogue.avatar}
-                      alt={dialogue.character}
-                      className="h-12 w-12 rounded-full"
-                    />
-                  </div>
+              </div>
+            </div>
+          </div>
+        )}{" "}
+        <div className="flex flex-col gap-6 max-lg:px-4">
+          <div className="flex flex-col gap-1">
+            <p className="text-lg font-bold lg:text-4xl">{story.title}</p>
+          </div>
 
-                  {/* Chat bubble */}
-                  <div className="relative max-w-[75%]">
-                    <div className="relative rounded-2xl bg-primary-800 px-4 py-3 text-primary-100 shadow-sm">
-                      {/* Message text */}
-                      <div className="mb-1 font-bold text-orange-400">{dialogue.character}</div>
-                      <Markdown>{dialogue.text}</Markdown>
+          <div className="space-y-4">
+            {parsedDialogues.map((dialogue: any) => {
+              if (dialogue.type === "narrator") {
+                return (
+                  <div key={dialogue.id} className="text-xl font-semibold italic text-blue-300">
+                    [{dialogue.text}]
+                  </div>
+                );
+              } else if (dialogue.type === "character") {
+                return (
+                  <div key={dialogue.id} className="flex w-full items-end gap-3">
+                    {/* Avatar */}
+                    <div className="relative">
+                      <img
+                        src={dialogue.avatar}
+                        alt={dialogue.character}
+                        className="h-12 w-12 rounded-full"
+                      />
+                    </div>
+
+                    {/* Chat bubble */}
+                    <div className="relative max-w-[75%]">
+                      <div className="relative rounded-2xl bg-primary-800 px-4 py-3 text-primary-100 shadow-sm">
+                        {/* Message text */}
+                        <div className="mb-1 font-bold text-orange-400">{dialogue.character}</div>
+                        <Markdown>{dialogue.text}</Markdown>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            } else {
-              return (
-                <Markdown key={dialogue.id} className="text-xl font-semibold italic text-blue-300">
-                  {dialogue.text}
-                </Markdown>
-              );
-            }
-          })}
+                );
+              } else {
+                return (
+                  <Markdown
+                    key={dialogue.id}
+                    className="text-xl font-semibold italic text-blue-300"
+                  >
+                    {dialogue.text}
+                  </Markdown>
+                );
+              }
+            })}
+          </div>
         </div>
       </div>
-
       {story.question && story.answer && story.playerAsking && (
         <>
           <ChatItem playerAsking={story.playerAsking} text={story.question} />
           <ChatItem text={story.answer} />
         </>
       )}
-
       {story.movesInRound?.map((move) => {
         const player = transcripts.players.find(
           (player) => player.accountId === move.playerAccountId,

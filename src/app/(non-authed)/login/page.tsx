@@ -103,25 +103,28 @@ const Login = () => {
       </div>
 
       <div className="relative hidden size-full lg:flex">
-        <div className="relative flex h-full w-1/2 shrink-0 grow-0">
+        <div className="relative flex h-full w-3/5 shrink-0 grow-0">
           <div className="absolute inset-0 z-[-5] flex size-full bg-gradient-to-b from-black via-black/10 via-35% to-black" />
-          <div className={`absolute inset-0 -z-10 size-full`}>
+          <div className="absolute inset-0 -z-10 size-full">
             <div
-              className="flex h-full w-[300%] overflow-hidden transition duration-300 ease-out"
+              className="flex h-full transition-transform duration-300 ease-out"
               style={{
-                transform: `translateX(-${(100 * current) / 3}%)`,
+                transform: `translateX(-${current * 100}%)`,
               }}
             >
-              {slides.map((slide) => (
-                <div key={slide.image} className="flex h-full w-1/3">
+              {slides.map((slide, index) => (
+                <div key={slide.image} className="h-full w-full flex-shrink-0">
                   <Image
                     src={slide.image}
                     alt={slide.description}
                     width={0}
                     height={0}
                     sizes="100vw"
-                    className="size-full object-cover"
                     quality={100}
+                    className={`
+              h-full w-full 
+              ${index < 3 ? "bg-black object-contain" : "object-cover"}
+            `}
                   />
                 </div>
               ))}
@@ -151,23 +154,21 @@ const Login = () => {
             </div>
 
             <div className="flex gap-3">
-              {slides.map((_, i) => {
-                return (
-                  <button
-                    aria-label={`Slide ${i + 1}`}
-                    onClick={() => setCurrent(i)}
-                    key={"Slide" + i}
-                    className={cn(
-                      "h-1.5 w-20 rounded-md bg-white/25 transition-all duration-200 hover:bg-white/60 active:bg-white/90",
-                      i === current && "bg-primary hover:bg-primary active:bg-primary",
-                    )}
-                  />
-                );
-              })}
+              {slides.map((_, i) => (
+                <button
+                  aria-label={`Slide ${i + 1}`}
+                  onClick={() => setCurrent(i)}
+                  key={"Slide" + i}
+                  className={cn(
+                    "h-1.5 w-20 rounded-md bg-white/25 transition-all duration-200 hover:bg-white/60 active:bg-white/90",
+                    i === current && "bg-primary hover:bg-primary active:bg-primary",
+                  )}
+                />
+              ))}
             </div>
           </div>
         </div>
-        <div className="relative flex h-full w-1/2 shrink-0 grow-0 flex-col items-center justify-center gap-14 bg-dark-900">
+        <div className="relative flex h-full w-2/5 shrink-0 grow-0 flex-col items-center justify-center gap-14 bg-dark-900">
           <div className="flex w-[580px] gap-9">
             <Game className="size-[75px] shrink-0 opacity-30" />
 
