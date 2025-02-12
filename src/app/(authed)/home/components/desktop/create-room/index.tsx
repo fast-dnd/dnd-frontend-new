@@ -8,6 +8,7 @@ import Campaigns from "@/components/common/campaigns";
 import DungeonDetail from "@/components/common/dungeon-detail";
 import GoBackButton from "@/components/common/go-back-button";
 import { Box } from "@/components/ui/box";
+import { Tooltip } from "@/components/ui/tooltip";
 import useAuth from "@/hooks/helpers/use-auth";
 import useCommunity from "@/hooks/helpers/use-community";
 
@@ -20,7 +21,7 @@ import Tabs from "./tabs";
 const CreateRoom = () => {
   const { isDefault } = useCommunity();
 
-  const { loggedIn } = useAuth();
+  const { loggedIn, user } = useAuth();
 
   const subTab = tabStore.subTab.use();
 
@@ -30,6 +31,8 @@ const CreateRoom = () => {
 
   const [dungeonDetailId, setDungeonDetailId] = useState<string>();
   const [campaignDetailId, setCampaignDetailId] = useState<string>();
+
+  const isCampaignsLocked = (user?.account?.level ?? 0) <= 1;
 
   const onGoBack = () => {
     if (dungeonDetailId && campaignDetailId) setDungeonDetailId(undefined);
@@ -72,13 +75,21 @@ const CreateRoom = () => {
             />
           )}
           {activeBaseTab === "campaigns" && (
-            <Campaigns
-              filter={subTab}
-              setCampaignDetailId={setCampaignDetailId}
-              isOwned={subTab === "owned"}
-              searchName={searchName}
-              addFavorite
-            />
+            <Tooltip
+              content="Campaigns are unlocked after completing your first adventure!"
+              contentClassName="p-4 w-[270px] whitespace-normal"
+              disabled={!isCampaignsLocked}
+            >
+              <div className={isCampaignsLocked ? "pointer-events-none opacity-50" : ""}>
+                <Campaigns
+                  filter={subTab}
+                  setCampaignDetailId={setCampaignDetailId}
+                  isOwned={subTab === "owned"}
+                  searchName={searchName}
+                  addFavorite
+                />
+              </div>
+            </Tooltip>
           )}
           {subTab === "favourite" && <AddFavoriteFooter />}
         </>

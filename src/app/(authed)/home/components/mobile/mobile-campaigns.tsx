@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useDebounce } from "usehooks-ts";
 
+import { Tooltip } from "@/components/ui/tooltip";
+import useAuth from "@/hooks/helpers/use-auth";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetCampaigns from "@/hooks/queries/use-get-campaigns";
 import { cn } from "@/utils/style-utils";
@@ -28,6 +30,9 @@ const MobileCampaigns = ({
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchName, setSearchName] = useState<string>();
   const debouncedName = useDebounce<string | undefined>(searchName, 500);
+
+  const { user } = useAuth();
+  const isCampaignsLocked = (user?.account?.level ?? 0) <= 1;
 
   const [filter, setFilter] = useState(false);
   const subTab = tabStore.subTab.use();
@@ -110,7 +115,20 @@ const MobileCampaigns = ({
           ))}
         </div>
       ) : (
-        <div className={cn("flex flex-col gap-4")}>{content}</div>
+        <Tooltip
+          content="Campaigns are unlocked after completing your first adventure!"
+          contentClassName="p-4 w-[270px] whitespace-normal"
+          disabled={!isCampaignsLocked}
+        >
+          <div
+            className={cn(
+              "flex flex-col gap-4",
+              isCampaignsLocked && "pointer-events-none opacity-50",
+            )}
+          >
+            {content}
+          </div>
+        </Tooltip>
       )}
     </div>
   );
