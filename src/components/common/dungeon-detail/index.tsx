@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { FiExternalLink } from "react-icons/fi";
 import { useReadLocalStorage } from "usehooks-ts";
 
@@ -32,7 +33,6 @@ const DungeonDetail = ({
   conversationId,
 }: IDungeonDetailProps) => {
   const { data: dungeon, isLoading } = useGetDungeon(dungeonDetailId ?? "");
-
   const customChampion = useReadLocalStorage<IChampion | null>("customChampion");
 
   if (isLoading) return <DungeonDetailSkeleton />;
@@ -44,6 +44,32 @@ const DungeonDetail = ({
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto border-b-2 border-b-white/20 pr-4">
+      {!conversationId && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-4 rounded-lg bg-primary-600/20 p-4"
+        >
+          <p className="text-center font-medium text-primary-400">
+            ℹ️ This card shows adventure details. Check out the available characters and adventure
+            description below, then click start to create a room.
+          </p>
+        </motion.div>
+      )}
+
+      {conversationId && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-4 rounded-lg bg-primary-600/20 p-4"
+        >
+          <p className="text-center font-medium text-primary-400">
+            🎮 Room created! Select an existing character or create your own, adjust settings on the
+            right, then click <span className="animate-pulse font-bold">START</span> to begin.
+          </p>
+        </motion.div>
+      )}
+
       <Dungeon dungeon={dungeon} addFavorite={addFavorite} />
 
       <div className="flex w-full items-center justify-center"></div>
