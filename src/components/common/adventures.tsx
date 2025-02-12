@@ -7,6 +7,7 @@ import { Dungeon } from "@/components/common/dungeon";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 import Spinner from "@/components/ui/spinner";
+import useAuth from "@/hooks/helpers/use-auth";
 import useIntersectionObserver from "@/hooks/helpers/use-intersection-observer";
 import useGetDungeons from "@/hooks/queries/use-get-dungeons";
 import { IBaseDungeon } from "@/types/dungeon";
@@ -39,6 +40,8 @@ const Adventures = ({
   addFavorite,
 }: IAdventuresProps) => {
   const debouncedName = useDebounce<string | undefined>(searchName, 500);
+  const { loggedIn, user } = useAuth();
+  const isNewPlayer = Boolean(user?.account?.coins === 50 && user?.account?.level === 1);
 
   const {
     data: dungeonsData,

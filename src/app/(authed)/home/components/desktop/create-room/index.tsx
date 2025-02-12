@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 import Adventures from "@/components/common/adventures";
 import CampaignDetail from "@/components/common/campaign-detail";
@@ -46,6 +47,15 @@ const CreateRoom = () => {
       className="flex min-h-0 w-full flex-1 flex-col gap-8 overflow-y-auto p-4 lg:p-8"
       wrapperClassName="w-3/4 min-w-0"
     >
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="rounded-lg bg-primary-600/20 p-4"
+      >
+        <p className="font-medium text-primary-400">
+          👋 Welcome! Start your journey by selecting adventure below
+        </p>
+      </motion.div>
       {loggedIn && !isDefault && <CommunityInfo />}
       {dungeonDetailId || campaignDetailId ? (
         <GoBackButton onClick={onGoBack} />
