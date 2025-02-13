@@ -1,8 +1,10 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { cva, type VariantProps } from "class-variance-authority";
 import { AiFillCheckCircle } from "react-icons/ai";
+import { FiChevronDown } from "react-icons/fi";
 import { GiCancel } from "react-icons/gi";
 
 import { cn } from "@/utils/style-utils";
@@ -36,7 +38,20 @@ export interface SelectProps extends VariantProps<typeof selectContainerVariants
   className?: string;
 }
 
-export function Select({
+export interface SelectOption {
+  value: string;
+  imgUrl?: string;
+  name?: string;
+  description?: string;
+  longDescription?: string;
+}
+
+export interface SelectWithImagesProps extends Omit<SelectProps, "options"> {
+  options: SelectOption[];
+  selectedOption?: SelectOption;
+}
+
+export function SelectWithImages({
   state,
   label,
   successMessage,
@@ -46,7 +61,10 @@ export function Select({
   onChange,
   disabled,
   className,
-}: SelectProps) {
+  selectedOption,
+}: SelectWithImagesProps) {
+  const currentOption = selectedOption || options.find((opt) => opt.value === value);
+
   return (
     <div className="relative">
       {label && (
@@ -61,16 +79,38 @@ export function Select({
           {label}
         </div>
       )}
-      <div className={cn(selectContainerVariants({ state, className }))}>
+      <div className={cn(selectContainerVariants({ state, className }), "relative")}>
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-between px-4">
+          <div className="flex flex-row items-center gap-4">
+            {currentOption && (
+              <>
+                {currentOption.imgUrl && (
+                  <Image
+                    src={currentOption.imgUrl}
+                    alt={currentOption.value}
+                    width={80}
+                    height={80}
+                    className="size-20 rounded-lg"
+                  />
+                )}
+                <div className="flex flex-col gap-1 text-start">
+                  <p className="text-xl font-semibold">{currentOption.name}</p>
+                  <p className="text-sm">{currentOption.longDescription}</p>
+                </div>
+              </>
+            )}
+          </div>
+          <FiChevronDown className="h-5 w-5 opacity-50" />
+        </div>
         <select
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
           disabled={disabled}
-          className="w-full bg-transparent outline-none"
+          className="relative z-10 w-full bg-transparent py-8 opacity-0"
         >
           {options.map((option) => (
-            <option key={option.value} value={option.value} className="bg-select text-white">
-              {typeof option.label === "string" ? option.label : option.value}
+            <option key={option.value} value={option.value}>
+              {option.name || option.value}
             </option>
           ))}
         </select>
