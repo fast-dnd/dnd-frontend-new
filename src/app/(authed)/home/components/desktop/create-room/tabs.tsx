@@ -2,14 +2,7 @@ import React from "react";
 
 import { tabsWithIcons } from "@/components/common/tabs-with-icons";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select } from "@/components/ui/select";
 import { cn } from "@/utils/style-utils";
 
 import { BaseTabType, subTabs, SubTabType, tabStore } from "../../../stores/tab-store";
@@ -51,21 +44,10 @@ const Tabs = ({
 
         <Select
           value={activeSubTab}
-          onValueChange={(value) => tabStore.subTab.set(value as SubTabType)}
-        >
-          <SelectTrigger className="mb-0 w-52 capitalize" aria-label="Select dungeon type">
-            <SelectValue placeholder="Select adventure type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {subTabs.map((subTab) => (
-                <SelectItem key={subTab} value={subTab} className="capitalize">
-                  {subTab}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+          onChange={(value) => tabStore.subTab.set(value as SubTabType)}
+          options={subTabs.map((tab) => ({ value: tab, label: tab }))}
+          className="mb-0 w-52 capitalize"
+        />
       </div>
     </div>
   );
