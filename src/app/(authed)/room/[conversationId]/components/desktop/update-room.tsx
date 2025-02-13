@@ -1,17 +1,9 @@
-import Image from "next/image";
 import { AiFillSound, AiFillStar } from "react-icons/ai";
 import { useReadLocalStorage } from "usehooks-ts";
 
 import GoldCoinIcon from "@/components/icons/gold-coin-icon";
 import { Button, SoundEffect } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SelectWithImages } from "@/components/ui/select-images";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip } from "@/components/ui/tooltip";
 import useCommunity from "@/hooks/helpers/use-community";
@@ -133,50 +125,29 @@ const UpdateRoom = ({ conversationId, roomData, dungeonData }: IUpdateRoomProps)
 
       <p className="text-lg font-semibold">AI MODEL</p>
 
-      <Select value={roomData.aiModel} onValueChange={(value) => setAiModel(value as IAiModel)}>
-        <SelectTrigger className="w-full bg-black p-3" aria-label="Select ai model">
-          <SelectValue placeholder="Select AI model">
-            <div className="flex flex-row items-center gap-4">
-              <Image
-                src={selectedAiModel.imgUrl}
-                alt={selectedAiModel.aiModel}
-                width={80}
-                height={80}
-                className="size-20 rounded-lg"
-              />
-              <div className="flex flex-col gap-1 text-start">
-                <p className="text-xl font-semibold">{selectedAiModel.name}</p>
-                <p className="text-sm">{selectedAiModel.longDescription}</p>
-              </div>
-            </div>
-          </SelectValue>
-        </SelectTrigger>
-        <SelectContent className="bg-black opacity-100">
-          <SelectGroup>
-            {aiModels.map((aiModel) => (
-              <SelectItem
-                key={aiModel.aiModel}
-                value={aiModel.aiModel}
-                className="bg-[#151515] focus:bg-white/20"
-              >
-                <div className="flex flex-row items-center gap-4">
-                  <Image
-                    src={aiModel.imgUrl}
-                    alt={aiModel.aiModel}
-                    width={36}
-                    height={36}
-                    className="size-9 rounded-lg"
-                  />
-                  <div className="flex flex-col">
-                    <p className="font-semibold">{aiModel.name}</p>
-                    <p className="text-sm">{aiModel.description}</p>
-                  </div>
-                </div>
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <SelectWithImages
+        value={roomData.aiModel}
+        onChange={(value) => setAiModel(value as IAiModel)}
+        options={aiModels.map((aiModel) => ({
+          value: aiModel.aiModel,
+          imgUrl: aiModel.imgUrl,
+          name: aiModel.name,
+          description: aiModel.description,
+          longDescription: aiModel.longDescription,
+        }))}
+        selectedOption={
+          aiModels.find((model) => model.aiModel === roomData.aiModel)
+            ? {
+                value: selectedAiModel.aiModel,
+                imgUrl: selectedAiModel.imgUrl,
+                name: selectedAiModel.name,
+                description: selectedAiModel.description,
+                longDescription: selectedAiModel.longDescription,
+              }
+            : undefined
+        }
+        className="w-full bg-black p-3"
+      />
 
       <Tooltip content="Wait for all players to choose their role and avatar" disabled={canBegin}>
         <Button
