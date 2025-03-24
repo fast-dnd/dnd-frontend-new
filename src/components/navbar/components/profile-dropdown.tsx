@@ -61,7 +61,7 @@ const ProfileDropdown = () => {
           width={45}
           height={45}
           alt="avatar"
-          className="size-fit rounded-full bg-white"
+          className="rounded-full bg-white"
         />
         {isDefault ? (
           <p className="font-medium">{user?.account.username ?? "-----------"}</p>
